@@ -1,4 +1,99 @@
-<!DOCTYPE html>
+import os
+import glob
+import re
+
+files = glob.glob('d:/Users/expor/Downloads/Codes/gemini-code-*.html')
+data = []
+
+# Syllabus Mapping for auto-categorization based on chapter number or title keywords
+SYLLABUS = {
+    'Social Science': [1, 2, 6, 7, 8, 13, 14, 17],
+    'ICT': ['number system', 'excel', 'artificial intelligence', 'html', 'css', 'lists and images'],
+    'Science': ['adolescence', 'life processes', 'acids', 'bases', 'metals', 'electricity', 'heat transfer', 'measurement'],
+    'Maths': ['numbers around us', 'arithmetic', 'peek beyond', 'expressions', 'parallel', 'intersecting', 'number play', 'fractions'],
+    'English': ['where learning begins', 'wanderlust', 'real-life heroes', 'story writing', 'paragraph', 'unseen'],
+    'Hindi': ['literature', 'grammar', 'writing', 'comprehension', 'anucheed', 'chitra varnan'],
+    'Sanskrit': ['vandebharatam', 'shlok', 'mitraya namah', 'drakshaphalam']
+}
+
+for f in files:
+    with open(f, 'r', encoding='utf-8', errors='replace') as file:
+        content = file.read()
+        match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE)
+        title = match.group(1) if match else 'No Title'
+        
+        chap_match = re.search(r'Chapter\s*(\d+)', title, re.IGNORECASE)
+        if not chap_match:
+            chap_match = re.search(r'Chapter\s*(\d+)', content, re.IGNORECASE)
+            
+        chapter = int(chap_match.group(1)) if chap_match else -1
+        
+        ts_match = re.search(r'(\d+)', os.path.basename(f))
+        ts = int(ts_match.group(1)) if ts_match else 0
+        
+        # Clean the title safely
+        clean = title
+        if '\ufffd' in clean:
+            clean = clean.split('\ufffd')[0]
+        elif '—' in clean:
+            clean = clean.split('—')[0]
+        elif '-' in clean:
+            clean = clean.split('-')[0]
+            
+        clean = clean.replace('Chapter ' + str(chapter) + ':', '').replace('Chapter ' + str(chapter), '').strip()
+        if not clean:
+            clean = "Overview"
+            
+        # Determine Subject
+        subject = "Other"
+        clean_lower = clean.lower()
+        title_lower = title.lower()
+        
+        # Rule 1: Social Science known chapters
+        if chapter in [1, 2, 6, 7, 8, 13, 14, 17] and "social" not in clean_lower and "ict" not in clean_lower:
+            subject = "Social Science"
+            
+        # Rule 2: Keyword matching
+        for subj, keywords in SYLLABUS.items():
+            if subject != "Other":
+                break
+            for kw in keywords:
+                if isinstance(kw, str) and (kw in clean_lower or kw in title_lower):
+                    subject = subj
+                    break
+        
+        # Fallback for the current known files if they got missed
+        if subject == "Other" and chapter != -1:
+             subject = "Social Science" # Assuming all current numbered chapters are SS
+        
+        data.append({
+            'file': os.path.basename(f), 
+            'title': clean, 
+            'chapter': chapter, 
+            'ts': ts,
+            'subject': subject
+        })
+
+# Get latest file for each (Subject, Chapter) combination
+latest_files = {}
+for d in data:
+    if d['chapter'] != -1:
+        key = f"{d['subject']}_{d['chapter']}"
+        if key not in latest_files or d['ts'] > latest_files[key]['ts']:
+            latest_files[key] = d
+
+# Group by Subject
+grouped = {}
+for key, d in latest_files.items():
+    subj = d['subject']
+    if subj not in grouped:
+        grouped[subj] = []
+    grouped[subj].append(d)
+
+for subj in grouped:
+    grouped[subj] = sorted(grouped[subj], key=lambda x: x['chapter'])
+
+html_content = '''<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -181,110 +276,47 @@
         <p>Master Study Dashboard</p>
     </div>
     <div class="nav-container">
+'''
 
+# Subject emojis for UI
+EMOJIS = {
+    'Social Science': '🌍',
+    'ICT': '💻',
+    'Science': '🔬',
+    'Maths': '🔢',
+    'English': '📝',
+    'Hindi': '🗣️',
+    'Sanskrit': '🕉️',
+    'Other': '📂'
+}
+
+# Display all subjects even if empty right now, to show the structure
+for subj in ['ICT', 'Maths', 'Science', 'Social Science', 'English', 'Hindi', 'Sanskrit']:
+    emoji = EMOJIS.get(subj, '')
+    html_content += f'''
         <div class="subject-group" onclick="toggleGroup(this)">
-            <div class="subject-title">💻 ICT</div>
+            <div class="subject-title">{emoji} {subj}</div>
             <ul class="nav-links">
-
-                <li class="nav-item empty-state">Chapters coming soon!</li>
+'''
+    if subj in grouped and grouped[subj]:
+        for ch in grouped[subj]:
+            html_content += f'''
+                <li class="nav-item">
+                    <button class="nav-btn" onclick="loadChapter(event, '{ch['file']}', this)">
+                        <span class="chap-num">Ch {ch['chapter']}</span>
+                        <span class="chap-title">{ch['title']}</span>
+                    </button>
+                </li>'''
+    else:
+        html_content += f'''
+                <li class="nav-item empty-state">Chapters coming soon!</li>'''
+                
+    html_content += '''
             </ul>
         </div>
+'''
 
-        <div class="subject-group" onclick="toggleGroup(this)">
-            <div class="subject-title">🔢 Maths</div>
-            <ul class="nav-links">
-
-                <li class="nav-item empty-state">Chapters coming soon!</li>
-            </ul>
-        </div>
-
-        <div class="subject-group" onclick="toggleGroup(this)">
-            <div class="subject-title">🔬 Science</div>
-            <ul class="nav-links">
-
-                <li class="nav-item empty-state">Chapters coming soon!</li>
-            </ul>
-        </div>
-
-        <div class="subject-group" onclick="toggleGroup(this)">
-            <div class="subject-title">🌍 Social Science</div>
-            <ul class="nav-links">
-
-                <li class="nav-item">
-                    <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786806264249.html', this)">
-                        <span class="chap-num">Ch 1</span>
-                        <span class="chap-title">Interior of the Earth</span>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786807311533 (1).html', this)">
-                        <span class="chap-num">Ch 2</span>
-                        <span class="chap-title">Our Changing Earth</span>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786868059204.html', this)">
-                        <span class="chap-num">Ch 6</span>
-                        <span class="chap-title">The First Indian Empire</span>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786869713516.html', this)">
-                        <span class="chap-num">Ch 7</span>
-                        <span class="chap-title">India in the Iron Age</span>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786554270939.html', this)">
-                        <span class="chap-num">Ch 8</span>
-                        <span class="chap-title">Ultimate Master Visual Hub</span>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786870843828.html', this)">
-                        <span class="chap-num">Ch 13</span>
-                        <span class="chap-title">Understanding Gender</span>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786873269831.html', this)">
-                        <span class="chap-num">Ch 14</span>
-                        <span class="chap-title">How Does Democracy Work?</span>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786875375575.html', this)">
-                        <span class="chap-num">Ch 17</span>
-                        <span class="chap-title">Markets Around Us</span>
-                    </button>
-                </li>
-            </ul>
-        </div>
-
-        <div class="subject-group" onclick="toggleGroup(this)">
-            <div class="subject-title">📝 English</div>
-            <ul class="nav-links">
-
-                <li class="nav-item empty-state">Chapters coming soon!</li>
-            </ul>
-        </div>
-
-        <div class="subject-group" onclick="toggleGroup(this)">
-            <div class="subject-title">🗣️ Hindi</div>
-            <ul class="nav-links">
-
-                <li class="nav-item empty-state">Chapters coming soon!</li>
-            </ul>
-        </div>
-
-        <div class="subject-group" onclick="toggleGroup(this)">
-            <div class="subject-title">🕉️ Sanskrit</div>
-            <ul class="nav-links">
-
-                <li class="nav-item empty-state">Chapters coming soon!</li>
-            </ul>
-        </div>
-
+html_content += '''
     </div>
 </div>
 
@@ -321,3 +353,9 @@
 </script>
 </body>
 </html>
+'''
+
+with open('d:/Users/expor/Downloads/Codes/index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("Successfully generated index.html with Subjects!")
