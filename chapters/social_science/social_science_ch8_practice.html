@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 8 Test — Pushti's Practice Booklet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sandstone:#F1E6CE; --sandstone-deep:#E4D3AC;
+    --ink:#2B2620; --maroon:#7A2A2E; --maroon-deep:#5A1E22;
+    --copper:#B8863C; --teal:#2F5D5A; --teal-deep:#204140;
+    --card-bg:#FBF6E8; --good:#2F6E52; --good-bg:#E3F1E9;
+    --bad:#A23B36; --bad-bg:#FBE6E4;
+    --shadow:0 6px 18px rgba(43,38,32,0.15);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:
+      radial-gradient(circle at 15% 8%, rgba(184,134,60,0.10), transparent 40%),
+      radial-gradient(circle at 85% 95%, rgba(47,93,90,0.10), transparent 40%),
+      var(--sandstone);
+    color:var(--ink); font-family:'Nunito',sans-serif; line-height:1.55;}
+  .wrap{max-width:900px; margin:0 auto; padding:26px 16px 120px;}
+  header.hero{text-align:center; padding:30px 14px 26px; border-bottom:3px double var(--copper); margin-bottom:8px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--maroon-deep); margin-bottom:8px;}
+  h1{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:clamp(1.8rem,5vw,2.7rem); margin:0 0 8px; color:var(--maroon-deep);}
+  .sub{font-size:0.98rem; color:#5c5548;}
+  .name-tag{display:inline-block; margin-top:12px; padding:5px 16px; border:1.5px solid var(--copper); border-radius:100px; font-family:'JetBrains Mono',monospace; font-size:0.76rem; color:var(--teal-deep); background:rgba(184,134,60,0.08);}
+  .icon{width:34px; height:34px; vertical-align:middle;}
+
+  .instructions{background:var(--card-bg); border:1px dashed var(--copper); border-radius:10px; padding:14px 18px; margin:22px 0 30px; font-size:0.9rem;}
+  .instructions b{color:var(--maroon-deep);}
+
+  section{margin-bottom:40px;}
+  .section-label{font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--copper); margin-bottom:4px;}
+  h2{font-family:'Cormorant Garamond',serif; font-size:1.7rem; color:var(--maroon-deep); margin:0 0 6px; display:flex; align-items:center; gap:10px; border-left:5px solid var(--teal); padding-left:12px;}
+  .section-note{font-size:0.85rem; color:#6b6353; margin:0 0 16px 17px;}
+
+  .q{background:var(--card-bg); border:1px solid var(--sandstone-deep); border-radius:10px; padding:14px 18px; margin-bottom:12px; box-shadow:var(--shadow);}
+  .q-text{font-weight:700; margin-bottom:8px; font-size:0.96rem;}
+  .q-text .num{color:var(--maroon); font-family:'JetBrains Mono',monospace; margin-right:6px;}
+  .opts label{display:block; padding:6px 10px; border-radius:6px; margin-bottom:4px; cursor:pointer; font-size:0.9rem; border:1px solid transparent;}
+  .opts label:hover{background:rgba(184,134,60,0.08);}
+  .opts input{margin-right:8px;}
+  .fillblank input[type=text]{padding:6px 10px; border:1px solid var(--sandstone-deep); border-radius:6px; font-family:'Nunito',sans-serif; font-size:0.92rem; width:220px; background:#fff;}
+  .tf-row{display:flex; gap:14px; align-items:center; margin-bottom:6px;}
+  .tf-row label{font-size:0.9rem; cursor:pointer;}
+  select{padding:5px 8px; border-radius:6px; border:1px solid var(--sandstone-deep); font-family:'Nunito',sans-serif; font-size:0.88rem; background:#fff;}
+  .feedback{margin-top:8px; padding:8px 12px; border-radius:6px; font-size:0.85rem; display:none;}
+  .feedback.correct{background:var(--good-bg); color:var(--good); display:block;}
+  .feedback.incorrect{background:var(--bad-bg); color:var(--bad); display:block;}
+  .points-tag{float:right; font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--teal-deep); background:rgba(47,93,90,0.1); padding:2px 8px; border-radius:100px;}
+
+  .match-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:center;}
+  .match-left{font-size:0.9rem; padding:6px 0;}
+  .match-right{font-size:0.9rem; display:flex; justify-content:space-between; align-items:center; gap:8px;}
+  .bank{font-size:0.82rem; color:#6b6353; margin-bottom:10px; font-style:italic;}
+
+  .subjective textarea{width:100%; min-height:70px; border:1px solid var(--sandstone-deep); border-radius:8px; padding:10px; font-family:'Nunito',sans-serif; font-size:0.92rem; background:#fff; resize:vertical;}
+  details{margin-top:8px;}
+  details summary{cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--teal-deep); font-weight:700;}
+  details .model{margin-top:6px; font-size:0.88rem; background:rgba(47,93,90,0.07); border-left:3px solid var(--teal); padding:8px 12px; border-radius:0 6px 6px 0;}
+  .self-assess{margin-top:10px; display:flex; align-items:center; gap:8px; font-size:0.85rem;}
+
+  .kicker{display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:0.72rem; background:var(--maroon); color:#fff; padding:3px 10px; border-radius:100px; margin-bottom:10px;}
+
+  .grade-bar{position:fixed; left:0; right:0; bottom:0; background:var(--maroon-deep); color:#fff; padding:12px 16px; display:flex; align-items:center; justify-content:center; gap:14px; box-shadow:0 -6px 18px rgba(0,0,0,0.25); z-index:50; flex-wrap:wrap;}
+  .grade-bar button{background:var(--copper); color:#2B2620; border:none; padding:10px 22px; border-radius:100px; font-weight:800; font-family:'Nunito',sans-serif; font-size:0.95rem; cursor:pointer;}
+  .grade-bar button:hover{filter:brightness(1.08);}
+  .score-readout{font-family:'JetBrains Mono',monospace; font-size:0.9rem;}
+
+  .result-panel{display:none; background:var(--card-bg); border:2px solid var(--copper); border-radius:14px; padding:22px; text-align:center; margin-top:10px; box-shadow:var(--shadow);}
+  .result-panel.show{display:block;}
+  .result-panel .score-big{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:2.6rem; color:var(--maroon-deep);}
+  .result-panel .msg{font-size:1rem; margin-top:6px;}
+
+  footer{text-align:center; font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:#8a8371; padding-top:16px; border-top:1px solid var(--sandstone-deep); margin-top:30px;}
+  @media(max-width:600px){.match-grid{grid-template-columns:1fr;} .match-right{justify-content:flex-start;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <svg class="icon" viewBox="0 0 48 48" fill="none"><path d="M24 4L44 16H4L24 4Z" fill="#7A2A2E"/><rect x="8" y="18" width="4" height="20" fill="#B8863C"/><rect x="16" y="18" width="4" height="20" fill="#B8863C"/><rect x="24" y="18" width="4" height="20" fill="#B8863C"/><rect x="32" y="18" width="4" height="20" fill="#B8863C"/><rect x="6" y="40" width="36" height="4" fill="#2F5D5A"/></svg>
+    <div class="eyebrow">Tapestry of the Past · Chapter 8 · Test &amp; Practice</div>
+    <h1>India from the 4th to the 7th Century CE</h1>
+    <div class="sub">Full test with book exercises, plus extra practice — scored as you go</div>
+    <div class="name-tag">Pushti · Class 7 · CBSE History</div>
+  </header>
+
+  <div class="instructions">
+    <b>How this works:</b> Answer the objective questions (fill-ups, MCQs, true/false, matching, sequencing) — these are auto-checked. For the written questions, jot your answer, then tap <i>"Show model answer"</i> and rate yourself honestly. Scroll to the bottom and tap <b>Grade My Test</b> anytime to see your score.
+  </div>
+
+  <!-- ============ BOOK SECTION A: FILL IN THE BLANKS ============ -->
+  <section id="sec-fillbook">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><path d="M4 4h16v16H4z" fill="none" stroke="#7A2A2E" stroke-width="1.5"/><path d="M7 8h10M7 12h10M7 16h6" stroke="#B8863C" stroke-width="1.5"/></svg>A. Fill in the Blanks</h2>
+    <p class="section-note">From your textbook exercises</p>
+    <div id="fillbook-container"></div>
+  </section>
+
+  <!-- ============ BOOK SECTION B: MCQ ============ -->
+  <section id="sec-mcqbook">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="none" stroke="#7A2A2E" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="#2F5D5A" stroke-width="1.8" fill="none"/></svg>B. Choose the Correct Answer</h2>
+    <p class="section-note">From your textbook exercises</p>
+    <div id="mcqbook-container"></div>
+  </section>
+
+  <!-- ============ BOOK SECTION C: TRUE FALSE ============ -->
+  <section id="sec-tfbook">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><path d="M4 6l6 6-6 6M20 6l-6 6 6 6" stroke="#7A2A2E" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>C. True or False</h2>
+    <p class="section-note">Rewrite the false statements correctly in your head, then check below</p>
+    <div id="tfbook-container"></div>
+  </section>
+
+  <!-- ============ BOOK SECTION D: ARRANGE CHRONOLOGICALLY ============ -->
+  <section id="sec-arrange">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><path d="M4 12h16M4 12l4-4M4 12l4 4" stroke="#7A2A2E" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>D. Arrange Oldest to Newest</h2>
+    <p class="section-note">Assign each kingdom a rank: 1 = oldest founded, 4 = newest founded</p>
+    <div class="q" id="arrange-container"></div>
+  </section>
+
+  <!-- ============ BOOK SECTION E: SHORT ANSWER ============ -->
+  <section id="sec-short">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><path d="M4 20l1-4L16 5l3 3-11 11-4 1z" fill="none" stroke="#7A2A2E" stroke-width="1.5"/></svg>E. Answer in Brief</h2>
+    <p class="section-note">Write your own answer first, then compare with the model answer</p>
+    <div id="short-container"></div>
+  </section>
+
+  <!-- ============ BOOK SECTION F: LONG ANSWER ============ -->
+  <section id="sec-long">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><path d="M4 20l1-4L16 5l3 3-11 11-4 1z" fill="none" stroke="#7A2A2E" stroke-width="1.5"/></svg>F. Answer in Detail</h2>
+    <p class="section-note">Longer answers — aim for full explanations with examples</p>
+    <div id="long-container"></div>
+  </section>
+
+  <!-- ============ BOOK SECTION G: HOTS ============ -->
+  <section id="sec-hots">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="9" r="5" fill="none" stroke="#7A2A2E" stroke-width="1.5"/><path d="M9 20h6M10 17h4" stroke="#B8863C" stroke-width="1.5"/></svg>G. HOTS — Think and Answer</h2>
+    <div id="hots-container"></div>
+  </section>
+
+  <!-- ============ BOOK SECTION H: COMPETENCY ============ -->
+  <section id="sec-comp">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="9" r="5" fill="none" stroke="#7A2A2E" stroke-width="1.5"/><path d="M9 20h6M10 17h4" stroke="#B8863C" stroke-width="1.5"/></svg>H. Competency-Based Questions</h2>
+    <div id="comp-container"></div>
+  </section>
+
+  <hr style="border:none; border-top:3px double var(--copper); margin:44px 0;">
+
+  <div class="kicker">✦ Extra practice, made for Pushti ✦</div>
+
+  <!-- ============ EXTRA MCQ ============ -->
+  <section id="sec-mcqextra">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="9" fill="none" stroke="#2F5D5A" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="#7A2A2E" stroke-width="1.8" fill="none"/></svg>Extra MCQs</h2>
+    <div id="mcqextra-container"></div>
+  </section>
+
+  <!-- ============ EXTRA FILL BLANKS ============ -->
+  <section id="sec-fillextra">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><path d="M4 4h16v16H4z" fill="none" stroke="#2F5D5A" stroke-width="1.5"/><path d="M7 8h10M7 12h10M7 16h6" stroke="#7A2A2E" stroke-width="1.5"/></svg>Extra Fill in the Blanks</h2>
+    <div id="fillextra-container"></div>
+  </section>
+
+  <!-- ============ EXTRA TRUE FALSE ============ -->
+  <section id="sec-tfextra">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><path d="M4 6l6 6-6 6M20 6l-6 6 6 6" stroke="#2F5D5A" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>Extra True or False</h2>
+    <div id="tfextra-container"></div>
+  </section>
+
+  <!-- ============ MATCH THE FOLLOWING ============ -->
+  <section id="sec-match">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><circle cx="6" cy="7" r="2" fill="#7A2A2E"/><circle cx="18" cy="17" r="2" fill="#2F5D5A"/><path d="M6 7l12 10" stroke="#B8863C" stroke-width="1.5"/></svg>Match the Following</h2>
+    <div class="q">
+      <div class="q-text">Set 1 — Match the ruler to their kingdom <span class="points-tag">4 pts</span></div>
+      <div class="bank">Options: Guptas · Chalukyas · Pallavas · Pushyabhuti dynasty</div>
+      <div id="match1-container" class="match-grid"></div>
+      <div class="feedback" id="match1-feedback"></div>
+    </div>
+    <div class="q">
+      <div class="q-text">Set 2 — Match the term to its meaning <span class="points-tag">4 pts</span></div>
+      <div class="bank">Options: Poem in praise of a ruler · A province in the Gupta Empire · Land grant given to Brahmanas · Powerful landholding army official</div>
+      <div id="match2-container" class="match-grid"></div>
+      <div class="feedback" id="match2-feedback"></div>
+    </div>
+  </section>
+
+  <!-- ============ TIMELINE SEQUENCING ============ -->
+  <section id="sec-sequence">
+    <h2><svg class="icon" viewBox="0 0 24 24" width="22" height="22"><path d="M4 12h16" stroke="#7A2A2E" stroke-width="1.8"/><circle cx="6" cy="12" r="2" fill="#B8863C"/><circle cx="12" cy="12" r="2" fill="#2F5D5A"/><circle cx="18" cy="12" r="2" fill="#7A2A2E"/></svg>Timeline Sequencing Challenge</h2>
+    <p class="section-note">Timelines can be tricky! Put these 8 events in order — 1 is the earliest, 8 is the latest.</p>
+    <div class="q" id="sequence-container"></div>
+  </section>
+
+  <div class="result-panel" id="resultPanel">
+    <div class="score-big" id="scoreBig">0 / 0</div>
+    <div class="msg" id="scoreMsg"></div>
+  </div>
+
+  <footer>Chapter 8 · Tapestry of the Past · Practice booklet prepared for Pushti</footer>
+</div>
+
+<div class="grade-bar">
+  <span class="score-readout" id="liveCount">0 objective questions answered</span>
+  <button onclick="gradeAll()">Grade My Test</button>
+</div>
+
+<script>
+let totalMax = 0;
+let totalScore = 0;
+
+/* ---------- BOOK: FILL IN THE BLANKS ---------- */
+const fillBook = [
+ {q:"Poems written by court poets to praise the rulers are called ______.", a:["prashasti","prashastis"]},
+ {q:"The ______ Empire emerged almost 500 years after the Mauryan Empire.", a:["gupta"]},
+ {q:"______ is remembered as the last powerful ruler in northern India in the ancient period.", a:["harshavardhana","harsha"]},
+ {q:"______ was the capital city of the Chalukyas.", a:["badami"]},
+ {q:"Mahendravarman I was also called ______.", a:["mamalla"]}
+];
+renderFill('fillbook-container', fillBook, 'fb');
+
+/* ---------- BOOK: MCQ ---------- */
+const mcqBook = [
+ {q:"Which among the following Gupta kings captured nine kingdoms in the northern plains?", options:["Chandragupta I","Samudragupta","Chandragupta II","Kumaragupta"], answer:1},
+ {q:"Which of the following was the capital of Harshavardhana?", options:["Mathura","Ujjain","Kanauj","Pataliputra"], answer:2},
+ {q:"Who among the following rulers was defeated by the Chalukya ruler, Pulakesin II?", options:["Samudragupta","Chandragupta II","Harshavardhana","Chandragupta I"], answer:2},
+ {q:"What were the provinces in the Gupta Empire called?", options:["Uparikas","Bhuktis","Vishyas","Mandalas"], answer:1},
+ {q:"Who was the famous writer in Harshavardhana's court who wrote Harshacharita?", options:["Dandin","Kalidasa","Banabhatta","Bharavi"], answer:2}
+];
+renderMCQ('mcqbook-container', mcqBook, 'mb');
+
+/* ---------- BOOK: TRUE/FALSE ---------- */
+const tfBook = [
+ {s:"Samudragupta defeated 12 kingdoms in the Deccan and South India.", answer:true, correction:""},
+ {s:"Chandragupta II took the title of Maharajadhiraja.", answer:false, correction:"Correction: Chandragupta II took the title Vikramaditya (it was Samudragupta who took the title Maharajadhiraja)."},
+ {s:"The Narmada River was the southern boundary of Harsha's empire.", answer:true, correction:""},
+ {s:"The Gupta Empire's biggest source of income was trade.", answer:false, correction:"Correction: The biggest source of income was tax collected from land."},
+ {s:"The Pallava kings gave Brahmanas special grants in the form of villages.", answer:true, correction:""}
+];
+renderTF('tfbook-container', tfBook, 'tb');
+
+/* ---------- BOOK: ARRANGE CHRONOLOGICALLY ---------- */
+const arrangeItems = [
+ {name:"The Pallava kingdom", correct:3},
+ {name:"Harsha's empire", correct:4},
+ {name:"The Gupta Empire", correct:1},
+ {name:"The Chalukya kingdom", correct:2}
+];
+renderArrange('arrange-container', arrangeItems, 'ar');
+
+/* ---------- BOOK: SHORT ANSWER ---------- */
+const shortBook = [
+ {q:"What are the three types of archaeological sources that provide information about the period between the 4th and 7th centuries CE? Give examples of each.",
+  model:"Coins (e.g. gold coins issued by the Gupta emperors), Monuments (e.g. temples at Aihole and Mandagapattu), and Inscriptions (e.g. the Allahabad/Prayagraj pillar inscription)."},
+ {q:"Who were Xuanzang and Fa Xian? Why are they important to the study of India between the 4th and 7th centuries CE?",
+  model:"They were Chinese travellers who visited India and wrote detailed accounts of what they saw. Their writings are an important literary source of information about life in India during this period."},
+ {q:"Who was Narasimhavarman I, and why is he remembered in history?",
+  model:"He was a Pallava ruler (630–668 CE) remembered for defeating the Chalukya king Pulakesin II in battle."},
+ {q:"Why did the Chalukya and Pallava rulers claim that they were descended from Lord Brahma?",
+  model:"They claimed this to assert that their right to rule had been given to them by God, which strengthened their authority."},
+ {q:"What was the contribution of the Chalukyas and the Pallavas to architecture? Give examples.",
+  model:"They built grand temples — the Chalukyas built rock-cut temples at Pattadakal, Badami, and Aihole; the Pallavas built the Shore Temple and the Pancha Pandava Rathas at Mamallapuram."}
+];
+renderSubjective('short-container', shortBook, 'sb', 2);
+
+/* ---------- BOOK: LONG ANSWER ---------- */
+const longBook = [
+ {q:"Explain the importance of prashastis in learning about rulers and dynasties.",
+  model:"Prashastis are poems written by court poets in praise of a ruler, often inscribed on pillars or rocks. They tell us about a ruler's conquests, titles, and achievements, giving valuable detail historians can't find elsewhere. However, since the poets worked for the ruler, prashastis only describe good qualities — they don't mention failures or give a complete, unbiased picture."},
+ {q:"Explain the achievements of the following Gupta rulers in the expansion of the empire: (a) Chandragupta I (b) Samudragupta (c) Chandragupta II",
+  model:"(a) Chandragupta I married a Lichchhavi princess, gaining their support to defeat smaller kingdoms in Bihar and UP, founding a large empire with Pataliputra as capital. (b) Samudragupta expanded the empire hugely — he conquered nine kingdoms directly in the north, defeated 12 kingdoms in the Deccan/South (letting them keep ruling in exchange for tribute), received tribute from distant regions, and formed alliances through marriage. (c) Chandragupta II expanded the empire into western India (Gujarat, Maharashtra) and, like his grandfather, used marriage alliances too — his rule is seen as the empire's peak."},
+ {q:"Why did the Chalukyas and the Pallavas fight frequently? What effects did this warfare have on the two kingdoms?",
+  model:"They were neighbouring kingdoms and each wanted to expand its own size and wealth by defeating the other. This constant warfare weakened both kingdoms over time, and by the end of the 9th century CE both dynasties came to an end, with the Cholas rising to power in the south afterward."},
+ {q:"Describe the administration of the Gupta Empire.",
+  model:"The emperor held supreme authority and was assisted by a council of ministers (mantris). The empire was divided into provinces called bhuktis, ruled by governors (uparikas); bhuktis were divided into districts called vishyas, ruled by officers (vishyapatis); and each district had villages ruled by village administrators (gramikas). Powerful army officials called samantas were paid with land instead of money, and trade guilds of artisans/merchants also advised officials."},
+ {q:"Describe the economic life of people in India between the 4th and 7th centuries CE.",
+  model:"Most villagers were farmers and herders, while cities had traders and craftspeople. The Gupta Empire traded with the Roman Empire, Asia, and Africa. There was a gap between rich traders/samantas and ordinary farmers who led simpler lives. The caste system grew stronger during this period, and often determined people's occupations."}
+];
+renderSubjective('long-container', longBook, 'lb', 3);
+
+/* ---------- BOOK: HOTS ---------- */
+const hotsBook = [
+ {q:"'Chandragupta I used not only wars but other strategies as well to expand his empire.' Explain this statement with examples.",
+  model:"Besides warfare, Chandragupta I used marriage alliances — marrying a Lichchhavi princess gave him the support of the powerful Lichchhavi clan, which helped him gain strength before he went on to militarily defeat smaller kingdoms in Bihar and Uttar Pradesh."},
+ {q:"While Samudragupta was able to bring some rulers in southern India under his control, Harsha was unable to do so. Why do you think this happened?",
+  model:"By Harsha's time, the powerful Chalukya kingdom under Pulakesin II had risen in the Deccan. When Harsha tried to expand south, Pulakesin II defeated him at the Narmada river, stopping his advance — unlike in Samudragupta's time, when there wasn't such a strong rival power blocking expansion into the south."}
+];
+renderSubjective('hots-container', hotsBook, 'hb', 3);
+
+/* ---------- BOOK: COMPETENCY ---------- */
+const compBook = [
+ {q:"Imagine you read a prashasti about Samudragupta's expansion of the Gupta Empire. (a) Write two words you might find in the prashasti to describe Samudragupta, and explain why. (b) Would this prashasti be a complete source of information on him? Why or why not?",
+  model:"(a) Words like 'invincible' or 'conqueror' might appear, since prashastis were written by court poets to praise a ruler's military success and greatness. (b) No — a prashasti would not be complete, since poets only wrote about a ruler's good qualities and achievements, leaving out failures or unpopular actions."},
+ {q:"Imagine you are living in the Gupta Empire during the 'Golden Age' of India. (a) Why is the Gupta Empire often called the 'Golden Age'? (b) How important was the support of rulers for new ideas and discoveries? (c) Which area — science, literature, or architecture — would you want to study, and how would you use it to help your community?",
+  model:"(a) It's called the Golden Age because of the great achievements made in science, mathematics, and literature during this time — scholars like Aryabhata and Kalidasa flourished. (b) Ruler support was very important — the Guptas funded institutions like Nalanda university, which attracted scholars from distant lands, showing that royal patronage helped ideas grow. (c) This is a personal answer — think about how your chosen field could genuinely benefit people around you, e.g. science for better tools, literature for spreading ideas, or architecture for building useful structures."}
+];
+renderSubjective('comp-container', compBook, 'cb', 4);
+
+/* ---------- EXTRA: MCQ ---------- */
+const mcqExtra = [
+ {q:"In which year did the Gupta Empire come to an end?", options:["450 CE","500 CE","550 CE","600 CE"], answer:2},
+ {q:"Which Gupta ruler performed the Ashwamedha yagna to show his supremacy?", options:["Chandragupta I","Samudragupta","Chandragupta II","Kumaragupta"], answer:1},
+ {q:"What religion did Harshavardhana follow?", options:["Hinduism","Buddhism","Jainism","Zoroastrianism"], answer:1},
+ {q:"Who wrote the play Shakuntala?", options:["Banabhatta","Kalidasa","Dandin","Vishakhadatta"], answer:1},
+ {q:"Which two cities served as capitals of the Gupta Empire?", options:["Pataliputra & Ujjain","Kanauj & Thaneshwar","Badami & Vatapi","Kanchipuram & Mamallapuram"], answer:0},
+ {q:"The Chalukya and Pallava kings claimed descent from which god to justify their right to rule?", options:["Vishnu","Shiva","Brahma","Indra"], answer:2},
+ {q:"What were village land grants given to Brahmanas in the Pallava kingdom called?", options:["Bhuktis","Brahmadeya","Vishyas","Samantas"], answer:1},
+ {q:"Who founded the Chalukya dynasty and made Badami its capital?", options:["Pulakesin I","Pulakesin II","Simhavishnu","Harshavardhana"], answer:0}
+];
+renderMCQ('mcqextra-container', mcqExtra, 'me');
+
+/* ---------- EXTRA: FILL BLANKS ---------- */
+const fillExtra = [
+ {q:"The great university of ______ became a centre of learning during the Gupta period.", a:["nalanda"]},
+ {q:"Harshavardhana held a massive religious gathering every ______ years.", a:["five","5"]},
+ {q:"The famous astronomer of the Gupta period was ______.", a:["aryabhata"]},
+ {q:"The Pallava capital was ______.", a:["kanchipuram"]},
+ {q:"Powerful landholding army officials in the Gupta Empire were called ______.", a:["samantas","samanta"]}
+];
+renderFill('fillextra-container', fillExtra, 'fe');
+
+/* ---------- EXTRA: TRUE/FALSE ---------- */
+const tfExtra = [
+ {s:"Xuanzang and Fa Xian were Indian court poets.", answer:false, correction:"Correction: They were Chinese travellers who wrote accounts of India."},
+ {s:"Pulakesin II was the greatest ruler of the Chalukya dynasty.", answer:true, correction:""},
+ {s:"The caste system grew weaker during this period.", answer:false, correction:"Correction: The caste system actually grew stronger during this period."},
+ {s:"Narasimhavarman I defeated Pulakesin II in battle.", answer:true, correction:""},
+ {s:"Harsha had a son who inherited his empire after his death.", answer:false, correction:"Correction: Harsha had no heir — his empire was divided among his officials after he died."}
+];
+renderTF('tfextra-container', tfExtra, 'te');
+
+/* ---------- MATCH THE FOLLOWING ---------- */
+const match1 = [
+ {left:"Chandragupta II", options:["Guptas","Chalukyas","Pallavas","Pushyabhuti dynasty"], correct:0},
+ {left:"Pulakesin II", options:["Guptas","Chalukyas","Pallavas","Pushyabhuti dynasty"], correct:1},
+ {left:"Narasimhavarman I", options:["Guptas","Chalukyas","Pallavas","Pushyabhuti dynasty"], correct:2},
+ {left:"Harshavardhana", options:["Guptas","Chalukyas","Pallavas","Pushyabhuti dynasty"], correct:3}
+];
+renderMatch('match1-container', match1, 'm1', 'match1-feedback');
+
+const match2 = [
+ {left:"Prashasti", options:["Poem in praise of a ruler","A province in the Gupta Empire","Land grant given to Brahmanas","Powerful landholding army official"], correct:0},
+ {left:"Bhukti", options:["Poem in praise of a ruler","A province in the Gupta Empire","Land grant given to Brahmanas","Powerful landholding army official"], correct:1},
+ {left:"Brahmadeya", options:["Poem in praise of a ruler","A province in the Gupta Empire","Land grant given to Brahmanas","Powerful landholding army official"], correct:2},
+ {left:"Samanta", options:["Poem in praise of a ruler","A province in the Gupta Empire","Land grant given to Brahmanas","Powerful landholding army official"], correct:3}
+];
+renderMatch('match2-container', match2, 'm2', 'match2-feedback');
+
+/* ---------- TIMELINE SEQUENCING ---------- */
+const sequenceEventsOrdered = [
+ "Chandragupta I becomes the first Gupta ruler (320 CE)",
+ "Chandragupta II begins his rule; the empire reaches its largest size (380 CE)",
+ "Pulakesin I founds the Chalukya dynasty, makes Badami his capital (543 CE)",
+ "The Gupta Empire comes to an end (550 CE)",
+ "Simhavishnu becomes an independent Pallava king (575 CE)",
+ "Harshavardhana becomes king at age 16 (606 CE)",
+ "Pulakesin II becomes the greatest Chalukya ruler (610 CE)",
+ "Harshavardhana dies; his empire is divided among his officials (647 CE)"
+];
+renderSequence('sequence-container', sequenceEventsOrdered, 'sq');
+
+/* ================= RENDER FUNCTIONS ================= */
+
+function renderFill(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className = 'q fillblank';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}<span class="points-tag">1 pt</span></div>
+      <input type="text" id="${prefix}-${i}" placeholder="type your answer">
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='fill'; c.dataset.prefix=prefix; c.dataset.count=data.length;
+  c.fillData = data;
+}
+
+function renderMCQ(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className='q';
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}<span class="points-tag">1 pt</span></div>
+      <div class="opts">${opts}</div>
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='mcq'; c.dataset.prefix=prefix; c.dataset.count=data.length;
+  c.mcqData = data;
+}
+
+function renderTF(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className='q';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.s}<span class="points-tag">1 pt</span></div>
+      <div class="tf-row">
+        <label><input type="radio" name="${prefix}-${i}" value="true"> True</label>
+        <label><input type="radio" name="${prefix}-${i}" value="false"> False</label>
+      </div>
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='tf'; c.dataset.prefix=prefix; c.dataset.count=data.length;
+  c.tfData = data;
+}
+
+function renderArrange(containerId, items, prefix){
+  const c = document.getElementById(containerId);
+  totalMax += items.length;
+  let html = `<div class="q-text">Assign a rank to each kingdom <span class="points-tag">${items.length} pts</span></div>`;
+  items.forEach((item,i)=>{
+    let opts = [1,2,3,4].map(n=>`<option value="${n}">${n}</option>`).join('');
+    html += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <span style="font-size:0.9rem;">${item.name}</span>
+      <select id="${prefix}-${i}"><option value="">Rank</option>${opts}</select>
+    </div>`;
+  });
+  html += `<div class="feedback" id="${prefix}-fb"></div>`;
+  c.innerHTML = html;
+  c.dataset.type='arrange'; c.dataset.prefix=prefix;
+  c.arrangeData = items;
+}
+
+function renderSubjective(containerId, data, prefix, maxPts){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += maxPts;
+    const div = document.createElement('div');
+    div.className='q subjective';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}<span class="points-tag">${maxPts} pts</span></div>
+      <textarea id="${prefix}-txt-${i}" placeholder="write your answer here..."></textarea>
+      <details><summary>Show model answer</summary><div class="model">${item.model}</div></details>
+      <div class="self-assess">
+        Self-mark:
+        <select id="${prefix}-self-${i}">
+          <option value="1">Excellent — full marks</option>
+          <option value="0.5">Good — partly there</option>
+          <option value="0">Needs another look</option>
+        </select>
+      </div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='subjective'; c.dataset.prefix=prefix; c.dataset.count=data.length; c.dataset.maxpts=maxPts;
+}
+
+function renderMatch(containerId, data, prefix, feedbackId){
+  const c = document.getElementById(containerId);
+  totalMax += data.length;
+  data.forEach((item,i)=>{
+    const left = document.createElement('div');
+    left.className='match-left';
+    left.textContent = item.left;
+    const right = document.createElement('div');
+    right.className='match-right';
+    let opts = item.options.map((o,j)=>`<option value="${j}">${o}</option>`).join('');
+    right.innerHTML = `<select id="${prefix}-${i}"><option value="">-- choose --</option>${opts}</select>`;
+    c.appendChild(left); c.appendChild(right);
+  });
+  c.dataset.type='match'; c.dataset.prefix=prefix; c.dataset.feedback=feedbackId;
+  c.matchData = data;
+}
+
+function renderSequence(containerId, orderedEvents, prefix){
+  const c = document.getElementById(containerId);
+  totalMax += orderedEvents.length;
+  const shuffled = orderedEvents.map((e,i)=>({text:e, correct:i+1})).sort(()=>Math.random()-0.5);
+  let html = '';
+  shuffled.forEach((item,i)=>{
+    let opts = [1,2,3,4,5,6,7,8].map(n=>`<option value="${n}">${n}</option>`).join('');
+    html += `<div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:10px; padding-bottom:8px; border-bottom:1px dashed var(--sandstone-deep);">
+      <span style="font-size:0.88rem; flex:1;">${item.text}</span>
+      <select id="${prefix}-${i}"><option value="">#</option>${opts}</select>
+    </div>`;
+  });
+  html += `<div class="feedback" id="${prefix}-fb"></div>`;
+  c.innerHTML = html;
+  c.dataset.type='sequence'; c.dataset.prefix=prefix;
+  c.sequenceData = shuffled;
+}
+
+/* ================= GRADING ================= */
+function gradeAll(){
+  totalScore = 0;
+  gradeSection('fillbook-container');
+  gradeSection('mcqbook-container');
+  gradeSection('tfbook-container');
+  if(document.getElementById('arrange-container')) gradeArrange('arrange-container');
+  gradeSubjective('short-container');
+  gradeSubjective('long-container');
+  gradeSubjective('hots-container');
+  gradeSubjective('comp-container');
+  gradeSection('mcqextra-container');
+  gradeSection('fillextra-container');
+  gradeSection('tfextra-container');
+  if(document.getElementById('match1-container')) gradeMatch('match1-container');
+  if(document.getElementById('match2-container')) gradeMatch('match2-container');
+  if(document.getElementById('sequence-container')) gradeSequence('sequence-container');
+
+  document.getElementById('scoreBig').textContent = totalScore.toFixed(1) + ' / ' + totalMax;
+  const pct = Math.round((totalScore/totalMax)*100);
+  let msg = '';
+  if(pct>=90) msg = "Outstanding, Pushti! You've mastered Chapter 8. 🏆";
+  else if(pct>=70) msg = "Great work! Just revisit the topics you missed. 🌟";
+  else if(pct>=50) msg = "Good effort — go over the sections you got wrong once more. 📖";
+  else msg = "Let's revise the chapter together and try again. You've got this! 💪";
+  document.getElementById('scoreMsg').textContent = `${pct}% — ${msg}`;
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('resultPanel').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function gradeSection(containerId){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  const type = c.dataset.type; const prefix = c.dataset.prefix;
+  if(type==='fill'){
+    c.fillData.forEach((item,i)=>{
+      const val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
+      const fb = document.getElementById(`${prefix}-fb-${i}`);
+      const correct = item.a.includes(val);
+      if(correct){ totalScore+=1; fb.className='feedback correct'; fb.textContent='Correct!'; }
+      else { fb.className='feedback incorrect'; fb.textContent='Answer: ' + item.a[0]; }
+    });
+  } else if(type==='mcq'){
+    c.mcqData.forEach((item,i)=>{
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      const fb = document.getElementById(`${prefix}-fb-${i}`);
+      if(sel && parseInt(sel.value)===item.answer){ totalScore+=1; fb.className='feedback correct'; fb.textContent='Correct!'; }
+      else { fb.className='feedback incorrect'; fb.textContent='Answer: ' + String.fromCharCode(97+item.answer)+') '+item.options[item.answer]; }
+    });
+  } else if(type==='tf'){
+    c.tfData.forEach((item,i)=>{
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      const fb = document.getElementById(`${prefix}-fb-${i}`);
+      const userVal = sel ? (sel.value==='true') : null;
+      if(userVal===item.answer){ totalScore+=1; fb.className='feedback correct'; fb.textContent = item.answer ? 'Correct — True!' : 'Correct — False!'; }
+      else { fb.className='feedback incorrect'; fb.textContent = (item.answer?'Answer: True.':'Answer: False.') + (item.correction? ' '+item.correction:''); }
+    });
+  }
+}
+
+function gradeArrange(containerId){
+  const c = document.getElementById(containerId);
+  const prefix = c.dataset.prefix;
+  let allCorrect = true;
+  c.arrangeData.forEach((item,i)=>{
+    const val = parseInt(document.getElementById(`${prefix}-${i}`).value);
+    if(val===item.correct) totalScore+=1; else allCorrect=false;
+  });
+  const fb = document.getElementById(`${prefix}-fb`);
+  fb.className = 'feedback ' + (allCorrect?'correct':'incorrect');
+  fb.textContent = allCorrect ? 'All correct! Order: Gupta Empire (1) → Chalukya kingdom (2) → Pallava kingdom (3) → Harsha\'s empire (4)'
+    : 'Correct order: Gupta Empire (1) → Chalukya kingdom (2) → Pallava kingdom (3) → Harsha\'s empire (4)';
+}
+
+function gradeSubjective(containerId){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  const prefix = c.dataset.prefix; const count = parseInt(c.dataset.count); const maxpts = parseFloat(c.dataset.maxpts);
+  for(let i=0;i<count;i++){
+    const sel = document.getElementById(`${prefix}-self-${i}`);
+    if(sel){ totalScore += parseFloat(sel.value) * maxpts; }
+  }
+}
+
+function gradeMatch(containerId){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  const prefix = c.dataset.prefix; const feedbackId = c.dataset.feedback;
+  let allCorrect = true;
+  c.matchData.forEach((item,i)=>{
+    const val = document.getElementById(`${prefix}-${i}`).value;
+    if(val!=='' && parseInt(val)===item.correct) totalScore+=1; else allCorrect=false;
+  });
+  const fb = document.getElementById(feedbackId);
+  fb.className = 'feedback ' + (allCorrect?'correct':'incorrect');
+  fb.textContent = allCorrect ? 'All matched correctly!' : 'Some matches need review — check your notes and try again.';
+}
+
+function gradeSequence(containerId){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  const prefix = c.dataset.prefix;
+  let allCorrect = true;
+  c.sequenceData.forEach((item,i)=>{
+    const val = parseInt(document.getElementById(`${prefix}-${i}`).value);
+    if(val===item.correct) totalScore+=1; else allCorrect=false;
+  });
+  const fb = document.getElementById(`${prefix}-fb`);
+  fb.className = 'feedback ' + (allCorrect?'correct':'incorrect');
+  fb.textContent = allCorrect ? 'Perfect sequence!' : 'Correct order (earliest→latest): 320 CE Chandragupta I → 380 CE Chandragupta II → 543 CE Pulakesin I founds Chalukyas → 550 CE Gupta Empire ends → 575 CE Simhavishnu (Pallavas) → 606 CE Harsha becomes king → 610 CE Pulakesin II → 647 CE Harsha dies.';
+}
+
+/* live counter */
+document.addEventListener('change', ()=>{
+  document.getElementById('liveCount').textContent = 'Answers are being saved — tap Grade My Test when ready';
+});
+</script>
+<!-- FIREBASE INJECTION START -->
+<script type="module">
+    import { db, doc, onSnapshot } from '../../firebase-config.js';
+    const settingsDoc = doc(db, 'settings', 'global');
+    onSnapshot(settingsDoc, (docSnap) => {
+        const data = docSnap.data() || { showAnswers: true };
+        const buttons = Array.from(document.querySelectorAll('input, select, textarea, button'));
+
+        if (data.showAnswers === false) {
+            buttons.forEach(b => { b.disabled = true; });
+            if (!document.getElementById('lock-msg')) {
+                const msg = document.createElement('div');
+                msg.id = 'lock-msg';
+                msg.style.padding = '15px'; msg.style.margin = '20px 0';
+                msg.style.backgroundColor = '#FFF1F2'; msg.style.color = '#9F1239';
+                msg.style.border = '1px solid #F43F5E'; msg.style.fontWeight = 'bold';
+                msg.style.textAlign = 'center';
+                msg.textContent = '[SYSTEM LOCK] Practice mode is locked by Parent Administrator.';
+                document.querySelector('.instructions').insertAdjacentElement('beforebegin', msg);
+            } else { document.getElementById('lock-msg').style.display = 'block'; }
+        } else {
+            buttons.forEach(b => { b.disabled = false; });
+            if (document.getElementById('lock-msg')) { document.getElementById('lock-msg').style.display = 'none'; }
+        }
+    });
+</script>
+<!-- FIREBASE INJECTION END -->
+</body>
+</html>
