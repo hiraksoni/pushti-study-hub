@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 2: Adolescence</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-color: #E8EDF2;
+    --surface: #FFFFFF;
+    --primary: #4338CA;
+    --primary-light: #EEF2FF;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --border: #CBD5E1;
+    --ready: #10B981;
+    --danger: #F43F5E;
+    --border-radius: 0px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--surface);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    padding: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: hidden; 
+  }
+
+  header.hero {
+    text-align: left;
+    background: var(--primary-light);
+    color: var(--text-main);
+    padding: 32px 24px;
+    border: 2px solid var(--primary);
+    margin-bottom: 24px;
+    position: relative;
+  }
+  
+  header.hero::after {
+      content: '';
+      position: absolute;
+      top: 4px; left: 4px; right: -6px; bottom: -6px;
+      border: 2px solid var(--primary);
+      z-index: -1;
+  }
+
+  header h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    letter-spacing: -0.02em;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    color: var(--primary);
+  }
+
+  .tagline { font-size: 0.95rem; color: var(--text-muted); font-family: 'Space Mono', monospace; }
+
+  .badge-bar { margin-top: 16px; display: flex; justify-content: flex-start; gap: 8px; flex-wrap: wrap; }
+  .badge { background: var(--surface); padding: 4px 12px; font-family: 'Space Mono', monospace; font-size: 0.75rem; border: 1px solid var(--border); color: var(--text-main); text-transform: uppercase; }
+
+  .tab-nav { display: flex; flex-wrap: wrap; gap: 0px; margin-bottom: 24px; border-bottom: 2px solid var(--border); }
+  .tab-btn { flex: 1 1 auto; min-width: 120px; text-align: center; background: #F8FAFC; border: 1px solid var(--border); border-bottom: none; padding: 12px 16px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.15s ease; }
+  .tab-btn:hover { background: #F1F5F9; color: var(--text-main); }
+  .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .card { background: var(--surface); padding: 24px; border: 1px solid var(--border); margin-bottom: 24px; box-shadow: 4px 4px 0 rgba(0,0,0,0.03); }
+  .card-title { font-family: 'Outfit', sans-serif; color: var(--text-main); font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.02em; }
+  .topic-badge { font-family: 'Space Mono', monospace; font-size: 0.75rem; background: var(--primary-light); color: var(--primary); border: 1px solid rgba(67,56,202,0.2); padding: 4px 8px; }
+
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .sub-box { padding: 16px; border: 1px solid var(--border); font-size: 0.9rem; background: #F8FAFC; }
+  .sub-box.key { border-top: 4px solid var(--primary); }
+  .sub-box.facts { border-top: 4px solid var(--ready); }
+  .sub-box.fun { border-top: 4px solid var(--danger); }
+  .sub-box h4 { font-family: 'Outfit', sans-serif; font-size: 0.95rem; margin-bottom: 8px; text-transform: uppercase; }
+  .sub-box.key h4 { color: var(--primary); }
+  .sub-box.facts h4 { color: var(--ready); }
+  .sub-box.fun h4 { color: var(--danger); }
+  .sub-box ul { padding-left: 16px; margin-top: 8px; }
+
+  .mcq-box { background: var(--surface); border: 1px solid var(--border); padding: 20px; margin-bottom: 16px; border-left: 4px solid var(--border); }
+  .mcq-q { font-weight: 600; font-size: 0.95rem; margin-bottom: 12px; color: var(--text-main); font-family: 'Inter', sans-serif; }
+  .mcq-opt { display: block; width: 100%; text-align: left; background: #F8FAFC; border: 1px solid var(--border); padding: 10px 16px; margin-bottom: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: all 0.15s; }
+  .mcq-opt:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+  .mcq-opt.correct { background: #ECFDF5 !important; border-color: var(--ready) !important; color: #065F46; font-weight: 600; }
+  .mcq-opt.wrong { background: #FFF1F2 !important; border-color: var(--danger) !important; color: #9F1239; }
+  .mcq-explain { display: none; margin-top: 12px; padding: 12px 16px; background: #F1F5F9; border-left: 3px solid var(--primary); font-size: 0.85rem; color: var(--text-main); }
+
+  .qa-card { background: var(--surface); border: 1px solid var(--border); padding: 16px; margin-bottom: 16px; }
+  .qa-q { font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text-main); font-size: 0.95rem; }
+  .qa-q::after { content: '[ + ] REVEAL'; font-size: 0.75rem; font-family: 'Space Mono', monospace; color: var(--primary); background: var(--primary-light); padding: 4px 8px; border: 1px solid rgba(67,56,202,0.2); white-space: nowrap; }
+  .qa-card.open .qa-q::after { content: '[ - ] HIDE'; background: #FFF1F2; color: var(--danger); border-color: rgba(244,63,94,0.2); }
+  .qa-a { display: none; margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border); font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+  .qa-card.open .qa-a { display: block; }
+
+  .media-link-card { display: flex; align-items: center; gap: 16px; background: #F8FAFC; padding: 16px; margin-top: 12px; border: 1px solid var(--border); text-decoration: none; color: var(--text-main); font-size: 0.9rem; font-weight: 500; transition: all 0.2s; }
+  .media-link-card:hover { background: var(--surface); border-color: var(--primary); color: var(--primary); box-shadow: 4px 4px 0 rgba(67,56,202,0.1); }
+  .media-icon { font-size: 1.8rem; }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <h1>Adolescence: A Stage of Growth</h1>
+    <div class="tagline">Understanding physical, emotional, and biological changes.</div>
+    <div class="badge-bar">
+      <span class="badge">Pushti - Class 7</span>
+      <span class="badge">Science (Biology)</span>
+      <span class="badge">Chapter 2</span>
+    </div>
+  </header>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="openTab(event, 'notes')">Concepts & Notes</button>
+    <button class="tab-btn" onclick="openTab(event, 'mcq')">Interactive MCQs</button>
+    <button class="tab-btn" onclick="openTab(event, 'qa')">Subjective Q&A</button>
+  </div>
+
+  <div id="notes" class="tab-content active">
+    <div class="card">
+      <div class="card-title">1. Introduction to Adolescence <span class="topic-badge">PUBERTY</span></div>
+      <p>The life of a human is divided into infancy, childhood, adolescence, adulthood, and old age. <b>Adolescence</b> is the transitional stage of human development from childhood to adulthood. During this period, physical, psychological, and social transitions occur.</p>
+      <ul>
+        <li><b>WHO Definition:</b> The period of life between 10 to 19 years of age.</li>
+        <li><b>Puberty:</b> The stage during which an adolescent attains sexual maturity (9-12 years in girls, 10-14 years in boys).</li>
+      </ul>
+      
+    <a href="https://www.youtube.com/results?search_query=Class+7+Science+Adolescence+and+Puberty" target="_blank" class="media-link-card">
+       <span class="media-icon">▶️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">Watch Video Lesson: Adolescence and Puberty</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search YouTube for visual explanation</div>
+       </div>
+    </a>
+    <a href="https://www.google.com/search?tbm=isch&q=Adolescence+and+Puberty+diagram+biology" target="_blank" class="media-link-card">
+       <span class="media-icon">🖼️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">View High-Res Diagrams</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search Google Images for clear illustrations of Adolescence and Puberty</div>
+       </div>
+    </a>
+    
+    </div>
+
+    <div class="card">
+      <div class="card-title">2. Physical Changes During Puberty <span class="topic-badge">GROWTH</span></div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>Height & Body Shape</h4>
+          <ul>
+            <li>Sudden increase in height due to growth of leg and arm bones. Girls initially grow faster than boys.</li>
+            <li>In boys: Shoulders broaden and chest becomes wide. Muscles grow prominent.</li>
+            <li>In girls: Pelvic region widens, breasts develop (mammary glands enlarge).</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>Voice Box & Glands</h4>
+          <ul>
+            <li><b>Adam's Apple:</b> Protruding voice box in boys causing a deep, hoarse voice. Girls have a high-pitched voice.</li>
+            <li>Increased activity of sweat and sebaceous (oil) glands, leading to acne and pimples.</li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>Secondary Sexual Characteristics</h4>
+          <ul>
+            <li>Growth of facial hair (moustache, beard) in boys.</li>
+            <li>Growth of hair in armpits and pubic region in both boys and girls.</li>
+            <li>Controlled by <b>Testosterone</b> (males) and <b>Estrogen/Progesterone</b> (females).</li>
+          </ul>
+        </div>
+      </div>
+      
+    <a href="https://www.youtube.com/results?search_query=Class+7+Science+Changes+during+puberty+Adam's+apple" target="_blank" class="media-link-card">
+       <span class="media-icon">▶️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">Watch Video Lesson: Changes during puberty Adam's apple</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search YouTube for visual explanation</div>
+       </div>
+    </a>
+    <a href="https://www.google.com/search?tbm=isch&q=Changes+during+puberty+Adam's+apple+diagram+biology" target="_blank" class="media-link-card">
+       <span class="media-icon">🖼️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">View High-Res Diagrams</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search Google Images for clear illustrations of Changes during puberty Adam's apple</div>
+       </div>
+    </a>
+    
+    </div>
+
+    <div class="card">
+      <div class="card-title">3. Reproductive Capability & Menstrual Cycle <span class="topic-badge">BIOLOGY</span></div>
+      <p>In females, reproductive age starts at puberty and continues till 45-55 years. The release of an ovum (egg) by an ovary is called <b>ovulation</b>.</p>
+      <p><b>Menstrual Cycle (28-30 days):</b></p>
+      <ul>
+        <li><b>Menstrual phase (1st-5th day):</b> Uterus wall breaks down, bleeding occurs (menstruation).</li>
+        <li><b>Proliferative phase (6th-13th day):</b> Uterine wall thickens.</li>
+        <li><b>Ovulatory phase (14th day):</b> Ovulation occurs.</li>
+        <li><b>Secretory phase (15th-28th day):</b> Uterine glands produce mucus for implantation.</li>
+      </ul>
+      <p><i>Note: The first menstrual flow is called <b>menarche</b>. The stoppage of menstruation at 45-50 years is called <b>menopause</b>.</i></p>
+      
+    <a href="https://www.youtube.com/results?search_query=Class+7+Science+Menstrual+Cycle+biology" target="_blank" class="media-link-card">
+       <span class="media-icon">▶️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">Watch Video Lesson: Menstrual Cycle biology</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search YouTube for visual explanation</div>
+       </div>
+    </a>
+    <a href="https://www.google.com/search?tbm=isch&q=Menstrual+Cycle+biology+diagram+biology" target="_blank" class="media-link-card">
+       <span class="media-icon">🖼️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">View High-Res Diagrams</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search Google Images for clear illustrations of Menstrual Cycle biology</div>
+       </div>
+    </a>
+    
+    </div>
+
+    <div class="card">
+      <div class="card-title">4. Making Adolescence Joyful <span class="topic-badge">LIFESTYLE</span></div>
+      <p>Health is a state of complete physical, mental, and social well-being.</p>
+      <ul>
+        <li><b>Balanced Diet:</b> Crucial for rapid growth. Includes proteins, carbs, fats, vitamins. Lack of iron/B12 causes <b>Anaemia</b>. Government schemes like WIFS (Weekly Iron and Folic Acid Supplementation) help prevent this.</li>
+        <li><b>Personal Hygiene:</b> Daily bathing prevents infections. Menstrual hygiene is critical to avoid RTIs.</li>
+        <li><b>Physical Exercise:</b> Keeps body fit, boosts mood.</li>
+        <li><b>Say NO to Harmful Substances:</b> Avoid drugs, alcohol, tobacco. Government initiatives like <i>Nasha Mukt Bharat Abhiyaan</i> aim to spread awareness.</li>
+      </ul>
+      
+    <a href="https://www.youtube.com/results?search_query=Class+7+Science+Balanced+diet+for+adolescents" target="_blank" class="media-link-card">
+       <span class="media-icon">▶️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">Watch Video Lesson: Balanced diet for adolescents</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search YouTube for visual explanation</div>
+       </div>
+    </a>
+    <a href="https://www.google.com/search?tbm=isch&q=Balanced+diet+for+adolescents+diagram+biology" target="_blank" class="media-link-card">
+       <span class="media-icon">🖼️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">View High-Res Diagrams</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search Google Images for clear illustrations of Balanced diet for adolescents</div>
+       </div>
+    </a>
+    
+    </div>
+  </div>
+
+  <div id="mcq" class="tab-content">
+    <div class="mcq-box">
+      <div class="mcq-q">1. What is the protruding voice box found in boys called?</div>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Pharynx</button>
+      <button class="mcq-opt" data-correct="true" onclick="checkAnswer(this)">Adam's apple</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Trachea</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Epiglottis</button>
+      <div class="mcq-explain">Correct! The voice box (larynx) grows larger in boys during puberty and protrudes out, known as Adam's apple.</div>
+    </div>
+    
+    <div class="mcq-box">
+      <div class="mcq-q">2. The stoppage of menstruation at 45 to 55 years of age is termed as:</div>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Menarche</button>
+      <button class="mcq-opt" data-correct="true" onclick="checkAnswer(this)">Menopause</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Ovulation</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Puberty</button>
+      <div class="mcq-explain">Correct! Menarche is the first flow, while menopause is the permanent stoppage.</div>
+    </div>
+
+    <div class="mcq-box">
+      <div class="mcq-q">3. Which hormone is responsible for pubertal changes in males?</div>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Estrogen</button>
+      <button class="mcq-opt" data-correct="true" onclick="checkAnswer(this)">Testosterone</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Insulin</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Thyroxine</button>
+      <div class="mcq-explain">Correct! Testes secrete testosterone which regulates male secondary sexual characteristics.</div>
+    </div>
+
+    <div class="mcq-box">
+      <div class="mcq-q">4. The primary cause of acne and pimples during adolescence is the increased activity of:</div>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Salivary glands</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Thyroid glands</button>
+      <button class="mcq-opt" data-correct="true" onclick="checkAnswer(this)">Sweat and sebaceous glands</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Adrenal glands</button>
+      <div class="mcq-explain">Correct! Sebaceous (oil) glands become highly active during puberty.</div>
+    </div>
+  </div>
+
+  <div id="qa" class="tab-content">
+    <div class="qa-card">
+      <div class="qa-q" onclick="toggleQA(this)">Q1. Why do acne and pimples appear during the adolescent period?</div>
+      <div class="qa-a">During the adolescent period, both sweat glands and sebaceous (oil) glands become more active, especially on the face. This increased secretion often clogs skin pores and attracts bacteria, leading to the appearance of acne and pimples. Maintaining facial hygiene is crucial.</div>
+    </div>
+    
+    <div class="qa-card">
+      <div class="qa-q" onclick="toggleQA(this)">Q2. Differentiate between menarche and menopause.</div>
+      <div class="qa-a"><b>Menarche:</b> The very first menstrual flow that begins at puberty, marking the onset of female reproductive capability.<br><b>Menopause:</b> The permanent stoppage of menstruation, typically occurring between 45 to 55 years of age, marking the end of the reproductive phase.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q" onclick="toggleQA(this)">Q3. Define cyberbullying. What are its effects?</div>
+      <div class="qa-a">Cyberbullying involves the use of digital devices and online platforms to harass others by sending misleading messages, spreading false rumours, or sharing personal information without consent. It causes severe emotional distress, anxiety, and social withdrawal in adolescents.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q" onclick="toggleQA(this)">Q4. Why is a balanced diet critical during adolescence? Give examples of nutrient deficiencies.</div>
+      <div class="qa-a">Adolescence is a stage of rapid physical growth requiring ample nutrients. A balanced diet provides proteins for tissue building, calcium for bones, and vitamins/minerals for overall health. A common deficiency is lack of Iron or Vitamin B12, which leads to <b>Anaemia</b>, causing fatigue and paleness.</div>
+    </div>
+  </div>
+
+<script>
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tab-btn");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  function toggleQA(element) {
+    element.parentElement.classList.toggle('open');
+  }
+
+  function checkAnswer(btn, isCorrect) {
+    let container = btn.parentElement;
+    let allBtns = container.querySelectorAll('.mcq-opt');
+    allBtns.forEach(b => {
+      b.disabled = true;
+      if (b.dataset.correct === "true") b.classList.add('correct');
+      else b.classList.add('wrong');
+    });
+    container.querySelector('.mcq-explain').style.display = 'block';
+  }
+</script>
+
+<!-- FIREBASE INJECTION START -->
+<script type="module">
+    import { db, doc, onSnapshot } from '../../firebase-config.js';
+    const settingsDoc = doc(db, 'settings', 'global');
+    onSnapshot(settingsDoc, (docSnap) => {
+        const data = docSnap.data() || { showAnswers: true };
+        const buttons = Array.from(document.querySelectorAll('.mcq-opt'));
+        const qaCards = Array.from(document.querySelectorAll('.qa-q'));
+
+        if (data.showAnswers === false) {
+            buttons.forEach(b => { b.style.pointerEvents = 'none'; });
+            qaCards.forEach(b => { b.style.pointerEvents = 'none'; b.parentElement.classList.remove('open'); });
+            if (!document.getElementById('lock-msg')) {
+                const msg = document.createElement('div');
+                msg.id = 'lock-msg';
+                msg.style.padding = '15px'; msg.style.margin = '20px 0';
+                msg.style.backgroundColor = '#FFF1F2'; msg.style.color = '#9F1239';
+                msg.style.border = '1px solid #F43F5E'; msg.style.fontWeight = 'bold';
+                msg.textContent = '[SYSTEM LOCK] Answers are currently disabled by the Parent Administrator.';
+                document.body.insertBefore(msg, document.body.firstChild);
+            } else { document.getElementById('lock-msg').style.display = 'block'; }
+        } else {
+            buttons.forEach(b => { b.style.pointerEvents = 'auto'; });
+            qaCards.forEach(b => { b.style.pointerEvents = 'auto'; });
+            if (document.getElementById('lock-msg')) { document.getElementById('lock-msg').style.display = 'none'; }
+        }
+    });
+</script>
+<!-- FIREBASE INJECTION END -->
+</body>
+</html>

@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 3: Life Processes in Animals</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-color: #E8EDF2;
+    --surface: #FFFFFF;
+    --primary: #4338CA;
+    --primary-light: #EEF2FF;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --border: #CBD5E1;
+    --ready: #10B981;
+    --danger: #F43F5E;
+    --border-radius: 0px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--surface);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    padding: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: hidden; 
+  }
+
+  header.hero {
+    text-align: left;
+    background: var(--primary-light);
+    color: var(--text-main);
+    padding: 32px 24px;
+    border: 2px solid var(--primary);
+    margin-bottom: 24px;
+    position: relative;
+  }
+  
+  header.hero::after {
+      content: '';
+      position: absolute;
+      top: 4px; left: 4px; right: -6px; bottom: -6px;
+      border: 2px solid var(--primary);
+      z-index: -1;
+  }
+
+  header h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    letter-spacing: -0.02em;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    color: var(--primary);
+  }
+
+  .tagline { font-size: 0.95rem; color: var(--text-muted); font-family: 'Space Mono', monospace; }
+
+  .badge-bar { margin-top: 16px; display: flex; justify-content: flex-start; gap: 8px; flex-wrap: wrap; }
+  .badge { background: var(--surface); padding: 4px 12px; font-family: 'Space Mono', monospace; font-size: 0.75rem; border: 1px solid var(--border); color: var(--text-main); text-transform: uppercase; }
+
+  .tab-nav { display: flex; flex-wrap: wrap; gap: 0px; margin-bottom: 24px; border-bottom: 2px solid var(--border); }
+  .tab-btn { flex: 1 1 auto; min-width: 120px; text-align: center; background: #F8FAFC; border: 1px solid var(--border); border-bottom: none; padding: 12px 16px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.15s ease; }
+  .tab-btn:hover { background: #F1F5F9; color: var(--text-main); }
+  .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .card { background: var(--surface); padding: 24px; border: 1px solid var(--border); margin-bottom: 24px; box-shadow: 4px 4px 0 rgba(0,0,0,0.03); }
+  .card-title { font-family: 'Outfit', sans-serif; color: var(--text-main); font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.02em; }
+  .topic-badge { font-family: 'Space Mono', monospace; font-size: 0.75rem; background: var(--primary-light); color: var(--primary); border: 1px solid rgba(67,56,202,0.2); padding: 4px 8px; }
+
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .sub-box { padding: 16px; border: 1px solid var(--border); font-size: 0.9rem; background: #F8FAFC; }
+  .sub-box.key { border-top: 4px solid var(--primary); }
+  .sub-box.facts { border-top: 4px solid var(--ready); }
+  .sub-box.fun { border-top: 4px solid var(--danger); }
+  .sub-box h4 { font-family: 'Outfit', sans-serif; font-size: 0.95rem; margin-bottom: 8px; text-transform: uppercase; }
+  .sub-box.key h4 { color: var(--primary); }
+  .sub-box.facts h4 { color: var(--ready); }
+  .sub-box.fun h4 { color: var(--danger); }
+  .sub-box ul { padding-left: 16px; margin-top: 8px; }
+
+  .mcq-box { background: var(--surface); border: 1px solid var(--border); padding: 20px; margin-bottom: 16px; border-left: 4px solid var(--border); }
+  .mcq-q { font-weight: 600; font-size: 0.95rem; margin-bottom: 12px; color: var(--text-main); font-family: 'Inter', sans-serif; }
+  .mcq-opt { display: block; width: 100%; text-align: left; background: #F8FAFC; border: 1px solid var(--border); padding: 10px 16px; margin-bottom: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: all 0.15s; }
+  .mcq-opt:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+  .mcq-opt.correct { background: #ECFDF5 !important; border-color: var(--ready) !important; color: #065F46; font-weight: 600; }
+  .mcq-opt.wrong { background: #FFF1F2 !important; border-color: var(--danger) !important; color: #9F1239; }
+  .mcq-explain { display: none; margin-top: 12px; padding: 12px 16px; background: #F1F5F9; border-left: 3px solid var(--primary); font-size: 0.85rem; color: var(--text-main); }
+
+  .qa-card { background: var(--surface); border: 1px solid var(--border); padding: 16px; margin-bottom: 16px; }
+  .qa-q { font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text-main); font-size: 0.95rem; }
+  .qa-q::after { content: '[ + ] REVEAL'; font-size: 0.75rem; font-family: 'Space Mono', monospace; color: var(--primary); background: var(--primary-light); padding: 4px 8px; border: 1px solid rgba(67,56,202,0.2); white-space: nowrap; }
+  .qa-card.open .qa-q::after { content: '[ - ] HIDE'; background: #FFF1F2; color: var(--danger); border-color: rgba(244,63,94,0.2); }
+  .qa-a { display: none; margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border); font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+  .qa-card.open .qa-a { display: block; }
+
+  .media-link-card { display: flex; align-items: center; gap: 16px; background: #F8FAFC; padding: 16px; margin-top: 12px; border: 1px solid var(--border); text-decoration: none; color: var(--text-main); font-size: 0.9rem; font-weight: 500; transition: all 0.2s; }
+  .media-link-card:hover { background: var(--surface); border-color: var(--primary); color: var(--primary); box-shadow: 4px 4px 0 rgba(67,56,202,0.1); }
+  .media-icon { font-size: 1.8rem; }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <h1>Life Processes in Animals</h1>
+    <div class="tagline">Nutrition, Digestion, and Respiration mechanisms.</div>
+    <div class="badge-bar">
+      <span class="badge">Pushti - Class 7</span>
+      <span class="badge">Science (Biology)</span>
+      <span class="badge">Chapter 3</span>
+    </div>
+  </header>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="openTab(event, 'notes')">Concepts & Notes</button>
+    <button class="tab-btn" onclick="openTab(event, 'mcq')">Interactive MCQs</button>
+    <button class="tab-btn" onclick="openTab(event, 'qa')">Subjective Q&A</button>
+  </div>
+
+  <div id="notes" class="tab-content active">
+    <div class="card">
+      <div class="card-title">1. Introduction to Animal Nutrition <span class="topic-badge">DIGESTION</span></div>
+      <p>Animals are heterotrophic and cannot make their own food. The process of obtaining nutrition involves ingestion, digestion, absorption, assimilation, and egestion.</p>
+      <ul>
+        <li><b>Digestion:</b> The breakdown of complex food substances (carbohydrates, proteins, fats) into simple soluble forms inside a long tube called the <b>alimentary canal</b>.</li>
+      </ul>
+      
+    <a href="https://www.youtube.com/results?search_query=Class+7+Science+Animal+Nutrition+Alimentary+Canal" target="_blank" class="media-link-card">
+       <span class="media-icon">▶️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">Watch Video Lesson: Animal Nutrition Alimentary Canal</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search YouTube for visual explanation</div>
+       </div>
+    </a>
+    <a href="https://www.google.com/search?tbm=isch&q=Animal+Nutrition+Alimentary+Canal+diagram+biology" target="_blank" class="media-link-card">
+       <span class="media-icon">🖼️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">View High-Res Diagrams</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search Google Images for clear illustrations of Animal Nutrition Alimentary Canal</div>
+       </div>
+    </a>
+    
+    </div>
+
+    <div class="card">
+      <div class="card-title">2. Human Digestive System <span class="topic-badge">ANATOMY</span></div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>Mouth & Buccal Cavity</h4>
+          <ul>
+            <li>Food is <i>ingested</i> here. Teeth chew food (mastication).</li>
+            <li>Salivary glands secrete <b>saliva</b> containing salivary amylase, which breaks down starch into sugars.</li>
+            <li>Tongue mixes saliva with food.</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>Stomach</h4>
+          <ul>
+            <li>J-shaped, thick-walled bag.</li>
+            <li>Inner lining secretes mucus, <b>Hydrochloric Acid (HCl)</b> (kills bacteria), and digestive juices (pepsin breaks down proteins).</li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>Small & Large Intestine</h4>
+          <ul>
+            <li><b>Small Intestine:</b> ~7.5m long. Highly coiled. Site of complete digestion and absorption via finger-like projections called <b>villi</b>. Receives bile from liver and pancreatic juice from pancreas.</li>
+            <li><b>Large Intestine:</b> Absorbs water and salts. Waste moves to rectum and exits via anus (egestion).</li>
+          </ul>
+        </div>
+      </div>
+      
+    <a href="https://www.youtube.com/results?search_query=Class+7+Science+Human+Digestive+System+3D+Animation" target="_blank" class="media-link-card">
+       <span class="media-icon">▶️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">Watch Video Lesson: Human Digestive System 3D Animation</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search YouTube for visual explanation</div>
+       </div>
+    </a>
+    <a href="https://www.google.com/search?tbm=isch&q=Human+Digestive+System+3D+Animation+diagram+biology" target="_blank" class="media-link-card">
+       <span class="media-icon">🖼️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">View High-Res Diagrams</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search Google Images for clear illustrations of Human Digestive System 3D Animation</div>
+       </div>
+    </a>
+    
+    </div>
+
+    <div class="card">
+      <div class="card-title">3. Digestion in Other Animals <span class="topic-badge">ADAPTATIONS</span></div>
+      <p><b>Ruminants (Cow, Buffalo, Sheep):</b></p>
+      <ul>
+        <li>Stomach has 4 chambers: Rumen, Reticulum, Omasum, Abomasum.</li>
+        <li>They quickly swallow grass, storing it in the <b>rumen</b> where bacteria partially digest cellulose, forming <b>cud</b>.</li>
+        <li>The cud returns to the mouth in small lumps to be thoroughly chewed (rumination).</li>
+      </ul>
+      <p><b>Birds:</b></p>
+      <ul>
+        <li>Lack teeth; use beaks. Food is stored in the <b>Crop</b>, passes to the <b>Proventriculus</b> (juices added), and then ground up in the muscular <b>Gizzard</b> (often using swallowed stones/grit).</li>
+      </ul>
+      
+    <a href="https://www.youtube.com/results?search_query=Class+7+Science+Ruminant+Stomach+Cow+Digestion" target="_blank" class="media-link-card">
+       <span class="media-icon">▶️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">Watch Video Lesson: Ruminant Stomach Cow Digestion</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search YouTube for visual explanation</div>
+       </div>
+    </a>
+    <a href="https://www.google.com/search?tbm=isch&q=Ruminant+Stomach+Cow+Digestion+diagram+biology" target="_blank" class="media-link-card">
+       <span class="media-icon">🖼️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">View High-Res Diagrams</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search Google Images for clear illustrations of Ruminant Stomach Cow Digestion</div>
+       </div>
+    </a>
+    
+    </div>
+
+    <div class="card">
+      <div class="card-title">4. Respiration in Animals <span class="topic-badge">RESPIRATION</span></div>
+      <p>Respiration is the biochemical breakdown of food (glucose) to release energy.</p>
+      <ul>
+        <li><b>Aerobic Respiration:</b> Uses oxygen. Releases CO2, Water, and Energy.</li>
+        <li><b>Anaerobic Respiration:</b> Occurs without oxygen (e.g., in yeast, producing alcohol and CO2).</li>
+      </ul>
+      <p><b>Human Respiratory System:</b></p>
+      <ul>
+        <li>Path: Nostrils &rarr; Nasal Cavity &rarr; Pharynx &rarr; Trachea (windpipe) &rarr; Bronchi &rarr; Lungs &rarr; Alveoli.</li>
+        <li><b>Inhalation:</b> Ribs move upward/outward, diaphragm moves down (flattens), volume increases, air rushes in.</li>
+        <li><b>Exhalation:</b> Ribs move downward/inward, diaphragm moves up (dome-shaped), volume decreases, air pushed out.</li>
+      </ul>
+      <p><i>Note: Fish use Gills. Frogs use Skin and Lungs. Earthworms use moist skin. Insects use spiracles and tracheae.</i></p>
+      
+    <a href="https://www.youtube.com/results?search_query=Class+7+Science+Human+Respiratory+System+Breathing+Mechanism" target="_blank" class="media-link-card">
+       <span class="media-icon">▶️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">Watch Video Lesson: Human Respiratory System Breathing Mechanism</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search YouTube for visual explanation</div>
+       </div>
+    </a>
+    <a href="https://www.google.com/search?tbm=isch&q=Human+Respiratory+System+Breathing+Mechanism+diagram+biology" target="_blank" class="media-link-card">
+       <span class="media-icon">🖼️</span>
+       <div>
+           <div style="font-weight: 700; color: var(--primary);">View High-Res Diagrams</div>
+           <div style="font-size: 0.8rem; color: var(--text-muted);">Search Google Images for clear illustrations of Human Respiratory System Breathing Mechanism</div>
+       </div>
+    </a>
+    
+    </div>
+  </div>
+
+  <div id="mcq" class="tab-content">
+    <div class="mcq-box">
+      <div class="mcq-q">1. The largest gland in the human body is:</div>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Pancreas</button>
+      <button class="mcq-opt" data-correct="true" onclick="checkAnswer(this)">Liver</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Stomach</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Kidney</button>
+      <div class="mcq-explain">Correct! The liver is a reddish-brown gland situated in the upper part of the abdomen and is the largest gland. It secretes bile juice.</div>
+    </div>
+    
+    <div class="mcq-box">
+      <div class="mcq-q">2. During inhalation, what happens to the diaphragm?</div>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">It moves upward</button>
+      <button class="mcq-opt" data-correct="true" onclick="checkAnswer(this)">It moves downward</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">It expands sideways</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">It does not move</button>
+      <div class="mcq-explain">Correct! The diaphragm moves downward (flattening) to increase the volume of the chest cavity.</div>
+    </div>
+
+    <div class="mcq-box">
+      <div class="mcq-q">3. Which part of a ruminant's stomach is responsible for storing partially chewed food?</div>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Abomasum</button>
+      <button class="mcq-opt" data-correct="true" onclick="checkAnswer(this)">Rumen</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Omasum</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Reticulum</button>
+      <div class="mcq-explain">Correct! The rumen stores food and houses bacteria that help ferment and digest cellulose.</div>
+    </div>
+
+    <div class="mcq-box">
+      <div class="mcq-q">4. The tiny finger-like projections in the small intestine that increase surface area for absorption are called:</div>
+      <button class="mcq-opt" data-correct="true" onclick="checkAnswer(this)">Villi</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Alveoli</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Cilia</button>
+      <button class="mcq-opt" data-correct="false" onclick="checkAnswer(this)">Tentacles</button>
+      <div class="mcq-explain">Correct! Villi significantly increase the surface area of the small intestine to absorb digested food into the bloodstream.</div>
+    </div>
+  </div>
+
+  <div id="qa" class="tab-content">
+    <div class="qa-card">
+      <div class="qa-q" onclick="toggleQA(this)">Q1. What is the role of HCl secreted by the inner lining of the stomach?</div>
+      <div class="qa-a">Hydrochloric Acid (HCl) serves two main purposes: 1) It kills harmful bacteria that enter the stomach along with food. 2) It makes the medium in the stomach acidic, which is necessary for digestive enzymes (like pepsin) to act and break down proteins.</div>
+    </div>
+    
+    <div class="qa-card">
+      <div class="qa-q" onclick="toggleQA(this)">Q2. Cows and buffaloes are usually seen chewing continuously even when they are not grazing. Explain.</div>
+      <div class="qa-a">Cows and buffaloes are ruminants. While grazing, they quickly swallow grass and store it in a stomach chamber called the rumen. Here it is partially digested to form 'cud'. Later, while resting, this cud returns to the mouth in small lumps so the animal can chew it thoroughly. This process is called rumination.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q" onclick="toggleQA(this)">Q3. Explain the mechanism of breathing in humans during inhalation.</div>
+      <div class="qa-a">During inhalation (breathing in), two main muscle movements occur: the ribs move upward and outward, and the diaphragm moves downward. This combined movement increases the volume of the thoracic cavity, causing a decrease in air pressure inside the lungs. Air from the atmosphere rushes in to fill this space.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-q" onclick="toggleQA(this)">Q4. How does the digestion of food take place in birds?</div>
+      <div class="qa-a">Birds don't have teeth. They swallow food whole using their beaks. Food passes down the oesophagus into the <b>Crop</b> for storage. From there, it enters the stomach, which has two parts: the <b>Proventriculus</b> (where digestive juices are added) and the <b>Gizzard</b> (a muscular organ that grinds the food, often aided by swallowed stones/grit).</div>
+    </div>
+  </div>
+
+<script>
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tab-btn");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  function toggleQA(element) {
+    element.parentElement.classList.toggle('open');
+  }
+
+  function checkAnswer(btn, isCorrect) {
+    let container = btn.parentElement;
+    let allBtns = container.querySelectorAll('.mcq-opt');
+    allBtns.forEach(b => {
+      b.disabled = true;
+      if (b.dataset.correct === "true") b.classList.add('correct');
+      else b.classList.add('wrong');
+    });
+    container.querySelector('.mcq-explain').style.display = 'block';
+  }
+</script>
+
+<!-- FIREBASE INJECTION START -->
+<script type="module">
+    import { db, doc, onSnapshot } from '../../firebase-config.js';
+    const settingsDoc = doc(db, 'settings', 'global');
+    onSnapshot(settingsDoc, (docSnap) => {
+        const data = docSnap.data() || { showAnswers: true };
+        const buttons = Array.from(document.querySelectorAll('.mcq-opt'));
+        const qaCards = Array.from(document.querySelectorAll('.qa-q'));
+
+        if (data.showAnswers === false) {
+            buttons.forEach(b => { b.style.pointerEvents = 'none'; });
+            qaCards.forEach(b => { b.style.pointerEvents = 'none'; b.parentElement.classList.remove('open'); });
+            if (!document.getElementById('lock-msg')) {
+                const msg = document.createElement('div');
+                msg.id = 'lock-msg';
+                msg.style.padding = '15px'; msg.style.margin = '20px 0';
+                msg.style.backgroundColor = '#FFF1F2'; msg.style.color = '#9F1239';
+                msg.style.border = '1px solid #F43F5E'; msg.style.fontWeight = 'bold';
+                msg.textContent = '[SYSTEM LOCK] Answers are currently disabled by the Parent Administrator.';
+                document.body.insertBefore(msg, document.body.firstChild);
+            } else { document.getElementById('lock-msg').style.display = 'block'; }
+        } else {
+            buttons.forEach(b => { b.style.pointerEvents = 'auto'; });
+            qaCards.forEach(b => { b.style.pointerEvents = 'auto'; });
+            if (document.getElementById('lock-msg')) { document.getElementById('lock-msg').style.display = 'none'; }
+        }
+    });
+</script>
+<!-- FIREBASE INJECTION END -->
+</body>
+</html>
