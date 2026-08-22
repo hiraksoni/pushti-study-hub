@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 8 Ultimate Master Visual Hub — Pushti's Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sandstone: #F9F5EC;
+    --card-bg: #FFFFFF;
+    --ink: #2B2620;
+    --maroon: #7A2A2E;
+    --gold: #C59B27;
+    --gold-light: #FFF8E7;
+    --teal: #2F5D5A;
+    --teal-light: #EBF4F3;
+    --purple: #4C4478;
+    --purple-light: #F0EEF8;
+    --shadow: 0 4px 15px rgba(0,0,0,0.06);
+    --border-radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--sandstone);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    padding: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: hidden;
+  }
+
+  header.hero {
+    text-align: center;
+    background: linear-gradient(135deg, var(--maroon), #4A1A1D);
+    color: white;
+    padding: 24px 16px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    border-bottom: 4px solid var(--gold);
+  }
+
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    color: #FFF;
+  }
+
+  .tagline { font-size: 0.9rem; opacity: 0.9; }
+
+  .badge-bar {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .tab-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #E2D9C5;
+    padding-bottom: 8px;
+  }
+
+  .tab-btn {
+    flex: 1 1 auto;
+    min-width: 120px;
+    text-align: center;
+    background: #EAE3D2;
+    border: none;
+    outline: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .tab-btn:hover { background: #DFCFAF; }
+  .tab-btn.active { background: var(--maroon); color: white; }
+
+  .tab-content { display: none; animation: fadeIn 0.25s ease-in-out; }
+  .tab-content.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid #EAE3D2;
+    margin-bottom: 18px;
+  }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    color: var(--maroon);
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    border-bottom: 2px solid var(--gold-light);
+    padding-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .ruler-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    background: var(--gold-light);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  /* Visual Memory Banner Grid */
+  .ruler-visual-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 16px;
+    align-items: start;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 650px) {
+    .ruler-visual-grid { grid-template-columns: 1fr; }
+  }
+
+  .visual-card {
+    background: #FFFBF2;
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .visual-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #DDD;
+  }
+
+  .visual-caption {
+    font-size: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--maroon);
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .sub-box { padding: 12px 14px; border-radius: 8px; font-size: 0.9rem; }
+  .sub-box.key { background: #FFFBF2; border-left: 4px solid var(--gold); }
+  .sub-box.facts { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .sub-box.fun { background: var(--purple-light); border-left: 4px solid var(--purple); }
+
+  .sub-box h4 { font-family: 'Cinzel', serif; font-size: 0.92rem; margin-bottom: 4px; }
+  .sub-box.key h4 { color: var(--maroon); }
+  .sub-box.facts h4 { color: var(--teal); }
+  .sub-box.fun h4 { color: var(--purple); }
+  .sub-box ul { padding-left: 16px; }
+
+  .mcq-box {
+    background: #FFFBF2;
+    border: 1px solid #EAE3D2;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .mcq-q { font-weight: 700; font-size: 0.95rem; margin-bottom: 10px; color: var(--ink); }
+
+  .mcq-opt {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: #FFF;
+    border: 1px solid #CCC;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.88rem;
+    transition: all 0.15s;
+  }
+
+  .mcq-opt:hover { background: #F0F0F0; }
+  .mcq-opt.correct { background: #D4EDDA !important; border-color: #28A745 !important; color: #155724; font-weight: 700; }
+  .mcq-opt.wrong { background: #F8D7DA !important; border-color: #DC3545 !important; color: #721C24; }
+
+  .mcq-explain {
+    display: none;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #EBF4F3;
+    border-left: 3px solid var(--teal);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #222;
+  }
+
+  .qa-card {
+    background: var(--card-bg);
+    border-left: 4px solid var(--teal);
+    padding: 14px 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+  }
+
+  .qa-q {
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--ink);
+    font-size: 0.95rem;
+  }
+
+  .qa-q::after {
+    content: '+ Show Answer';
+    font-size: 0.72rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--teal);
+    background: var(--teal-light);
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .qa-card.open .qa-q::after {
+    content: '- Hide Answer';
+    background: #FADBD8;
+    color: var(--maroon);
+  }
+
+  .qa-a {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #DDD;
+    font-size: 0.92rem;
+    color: #333;
+  }
+
+  .qa-card.open .qa-a { display: block; }
+
+  .media-link-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #F4F0E6;
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-top: 8px;
+    border: 1px solid #DFD7C0;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 0.88rem;
+    transition: all 0.2s;
+  }
+
+  .media-link-card:hover {
+    background: #EAE2CF;
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .media-icon { font-size: 1.5rem; }
+
+  footer {
+    text-align: center; margin-top: 24px; font-size: 0.78rem; color: #777; font-family: 'JetBrains Mono', monospace;
+  }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <h1>India: 4th to 7th Century CE</h1>
+    <div class="tagline">Complete Chapter Visual Study Dashboard & Interactive Testing Hub</div>
+    <div class="badge-bar">
+      <span class="badge">Pushti · Class 7 CBSE</span>
+      <span class="badge">Tapestry of the Past</span>
+      <span class="badge">Chapter 8</span>
+    </div>
+  </header>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="openTab('guptas')">👑 Gupta Dynasty</button>
+    <button class="tab-btn" onclick="openTab('harsha')">🗡️ Harshavardhana</button>
+    <button class="tab-btn" onclick="openTab('chalukyas')">🏛️ Chalukya Dynasty</button>
+    <button class="tab-btn" onclick="openTab('pallavas')">🌊 Pallava Dynasty</button>
+    <button class="tab-btn" onclick="openTab('lifestyle')">📜 Admin & Life</button>
+    <button class="tab-btn" onclick="openTab('mcq-4opt')">🎯 12 Master MCQs</button>
+    <button class="tab-btn" onclick="openTab('mcq-confusing')">⚡ Confusing Fill-Blanks</button>
+    <button class="tab-btn" onclick="openTab('mcq-tf')">❓ True / False Arena</button>
+    <button class="tab-btn" onclick="openTab('textbook-all')">📖 All Written Answers</button>
+    <button class="tab-btn" onclick="openTab('media')">🖼️ Visual & Video Anchors</button>
+  </div>
+
+  <!-- TAB 1: THE GUPTA DYNASTY -->
+  <div id="guptas" class="tab-content active">
+    <div class="card" style="border-left: 5px solid var(--maroon);">
+      <div class="card-title">The Gupta Empire Overview <span class="ruler-badge">320 CE – 550 CE</span></div>
+      <p>Emerging almost 500 years after the fall of the Mauryan Empire, the Gupta Empire transformed a small kingdom in Magadha into one of ancient India's greatest powers[cite: 1, 2]. Capitals were <b>Pataliputra</b> and <b>Ujjain</b>[cite: 1, 2].</p>
+    </div>
+
+    <!-- 1. Chandragupta I -->
+    <div class="card">
+      <div class="card-title">1. Chandragupta I <span class="ruler-badge">320 CE – 335 CE</span></div>
+      
+      <div class="ruler-visual-grid">
+        <div class="visual-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Coin_of_Chandragupta_I.jpg/300px-Coin_of_Chandragupta_I.jpg" alt="Gold Coin of Chandragupta I and Kumaradevi" onError="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80'">
+          <div class="visual-caption">Gold Coin: Chandragupta I & Princess Kumaradevi</div>
+        </div>
+
+        <div class="grid-3">
+          <div class="sub-box key">
+            <h4>👑 Key Factors & Conquests</h4>
+            <ul>
+              <li>First major Gupta emperor and founder[cite: 1, 2].</li>
+              <li>Conquered neighboring kingdoms across Magadha (Bihar & UP)[cite: 1, 2].</li>
+              <li>Ruled from imperial capital at <b>Pataliputra</b>[cite: 1, 2].</li>
+            </ul>
+          </div>
+          <div class="sub-box facts">
+            <h4>📌 Important Textbook Facts</h4>
+            <ul>
+              <li>Married Princess Kumaradevi of the <b>Lichchhavi kingdom</b> (Bihar/Nepal)[cite: 1, 2].</li>
+              <li>Secured army and political support via marriage[cite: 1, 2].</li>
+            </ul>
+          </div>
+          <div class="sub-box fun">
+            <h4>💡 Memory Anchor</h4>
+            <ul>
+              <li>Look at the coin! The king and queen stand side-by-side to celebrate their powerful alliance[cite: 1, 2].</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Samudragupta -->
+    <div class="card">
+      <div class="card-title">2. Samudragupta <span class="ruler-badge">335 CE – 380 CE</span></div>
+      
+      <div class="ruler-visual-grid">
+        <div class="visual-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Coin_of_Samudragupta_playing_the_veena.jpg/300px-Coin_of_Samudragupta_playing_the_veena.jpg" alt="Samudragupta Veena Gold Coin" onError="this.src='https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=300&q=80'">
+          <div class="visual-caption">Gold Dinar: Samudragupta playing the Veena</div>
+        </div>
+
+        <div class="grid-3">
+          <div class="sub-box key">
+            <h4>👑 Key Factors & Conquests</h4>
+            <ul>
+              <li>Expanded via 4 distinct policies:
+                <ol>
+                  <li>Directly annexed 9 Aryavarta kingdoms[cite: 2].</li>
+                  <li>Defeated 12 South Indian kings (annual tributes)[cite: 2].</li>
+                  <li>Extracted tributes from forest tribes & Assam/Nepal[cite: 2].</li>
+                  <li>Formed marriage alliances with frontier chiefs[cite: 2].</li>
+                </ol>
+              </li>
+            </ul>
+          </div>
+          <div class="sub-box facts">
+            <h4>📌 Important Textbook Facts</h4>
+            <ul>
+              <li>Source: <b>Prayagraj Prashasti</b> by poet <b>Harisena</b>[cite: 1, 2].</li>
+              <li>Title: <b>Maharajadhiraja</b> ("King of Kings")[cite: 2].</li>
+              <li>Performed <b>Ashwamedha Yagna</b>[cite: 2].</li>
+            </ul>
+          </div>
+          <div class="sub-box fun">
+            <h4>💡 Memory Anchor</h4>
+            <ul>
+              <li>The coin shows him playing a <b>Veena</b> sitting on a couch[cite: 1, 2]—he was both a conqueror and a musician!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Chandragupta II -->
+    <div class="card">
+      <div class="card-title">3. Chandragupta II <span class="ruler-badge">380 CE – 415 CE</span></div>
+      
+      <div class="ruler-visual-grid">
+        <div class="visual-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Chandragupta_II_gold_coin.jpg/300px-Chandragupta_II_gold_coin.jpg" alt="Chandragupta II Gold Coin" onError="this.src='https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=300&q=80'">
+          <div class="visual-caption">Gold Dinar: Chandragupta II 'Vikramaditya'</div>
+        </div>
+
+        <div class="grid-3">
+          <div class="sub-box key">
+            <h4>👑 Key Factors & Conquests</h4>
+            <ul>
+              <li>Expanded westward into Gujarat/Maharashtra, taking wealthy sea ports[cite: 2].</li>
+              <li>Brought Gupta Empire to its maximum prosperity[cite: 2].</li>
+            </ul>
+          </div>
+          <div class="sub-box facts">
+            <h4>📌 Important Textbook Facts</h4>
+            <ul>
+              <li>Title: <b>Vikramaditya</b> ("Mighty as the Sun")[cite: 1, 2].</li>
+              <li>His era is known as the <b>"Golden Age of India"</b>[cite: 1, 2].</li>
+            </ul>
+          </div>
+          <div class="sub-box fun">
+            <h4>💡 Memory Anchor</h4>
+            <ul>
+              <li>Patron of the 9 Court Jewels including poet <b>Kalidasa</b> and astronomer <b>Aryabhata</b>[cite: 1, 2]!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: HARSHAVARDHANA -->
+  <div id="harsha" class="tab-content">
+    <div class="card" style="border-left: 5px solid var(--gold);">
+      <div class="card-title">Harshavardhana <span class="ruler-badge">606 CE – 647 CE</span></div>
+      
+      <div class="ruler-visual-grid">
+        <div class="visual-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Emperor_Harsha_pays_homage_to_Buddha.jpg/300px-Emperor_Harsha_pays_homage_to_Buddha.jpg" alt="Emperor Harsha painting" onError="this.src='https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=300&q=80'">
+          <div class="visual-caption">Emperor Harsha Paying Homage to Buddha</div>
+        </div>
+
+        <div class="grid-3">
+          <div class="sub-box key">
+            <h4>👑 Key Factors & Conquests</h4>
+            <ul>
+              <li>Pushyabhuti family; crowned king at age <b>16</b> in 606 CE[cite: 1, 2].</li>
+              <li>Controlled UP, Bihar, Bengal, Odisha, and Punjab[cite: 1, 2].</li>
+              <li>Shifted capital from <b>Thaneshwar</b> to strategic <b>Kanauj</b>[cite: 1, 2].</li>
+              <li>Southward expansion halted at <b>Narmada River</b> by Pulakesin II[cite: 1, 2].</li>
+            </ul>
+          </div>
+          <div class="sub-box facts">
+            <h4>📌 Important Textbook Facts</h4>
+            <ul>
+              <li>Remembered as <b>last powerful ancient ruler of Northern India</b>[cite: 1, 2].</li>
+              <li>Authored Sanskrit plays: <i>Ratnavali</i> & <i>Nagananda</i>[cite: 1, 2].</li>
+              <li>Court biographer <b>Banabhatta</b> wrote <i>Harshacharita</i> & <i>Kadambari</i>[cite: 2].</li>
+              <li>Patronized <b>Nalanda University</b>[cite: 1, 2].</li>
+            </ul>
+          </div>
+          <div class="sub-box fun">
+            <h4>💡 Memory Anchor</h4>
+            <ul>
+              <li>The painting captures his devotion—every 5 years at Prayagraj, Harsha donated his royal wealth to monks and the poor[cite: 2]!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: THE CHALUKYAS -->
+  <div id="chalukyas" class="tab-content">
+    <div class="card" style="border-left: 5px solid var(--teal);">
+      <div class="card-title">The Chalukyas of Badami <span class="ruler-badge">543 CE – 753 CE</span></div>
+      
+      <div class="ruler-visual-grid">
+        <div class="visual-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Badami_Cave_Temples_Karnataka_India.jpg/300px-Badami_Cave_Temples_Karnataka_India.jpg" alt="Badami Rock Cut Cave Temple" onError="this.src='https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=300&q=80'">
+          <div class="visual-caption">Chalukya Rock-Cut Caves at Badami</div>
+        </div>
+
+        <div class="grid-3">
+          <div class="sub-box key">
+            <h4>👑 Pulakesin I (543–566 CE)</h4>
+            <ul>
+              <li>Founded the dynasty in 543 CE[cite: 1, 2].</li>
+              <li>Fortified <b>Badami</b> as capital and annexed Krishna-Tungabhadra rivers[cite: 1, 2].</li>
+            </ul>
+          </div>
+          <div class="sub-box facts">
+            <h4>📌 Pulakesin II (610–642 CE)</h4>
+            <ul>
+              <li>Greatest Chalukya ruler; ruled Karnataka, Andhra, & Telangana[cite: 1, 2].</li>
+              <li>Defeated King Harsha at the Narmada River[cite: 1, 2].</li>
+              <li>Achievements recorded in <b>Aihole Prashasti</b> by poet <b>Ravikirti</b>[cite: 2].</li>
+            </ul>
+          </div>
+          <div class="sub-box fun">
+            <h4>💡 Memory Anchor</h4>
+            <ul>
+              <li>Look at the red sandstone cliff caves—Chalukya kings carved whole temples out of solid rock face[cite: 1, 2]!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: THE PALLAVAS -->
+  <div id="pallavas" class="tab-content">
+    <div class="card" style="border-left: 5px solid var(--purple);">
+      <div class="card-title">The Pallavas of Kanchipuram <span class="ruler-badge">575 CE – 668 CE+</span></div>
+      
+      <div class="ruler-visual-grid">
+        <div class="visual-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Shore_Temple_Mahabalipuram.jpg/300px-Shore_Temple_Mahabalipuram.jpg" alt="Shore Temple at Mamallapuram" onError="this.src='https://images.unsplash.com/photo-1600100397608-f020f7f32997?auto=format&fit=crop&w=300&q=80'">
+          <div class="visual-caption">Shore Temple at Mamallapuram</div>
+        </div>
+
+        <div class="grid-3">
+          <div class="sub-box key">
+            <h4> Simhavishnu & Mahendravarman I</h4>
+            <ul>
+              <li><b>Simhavishnu (575–600 CE):</b> Founded independent rule[cite: 1, 2].</li>
+              <li><b>Mahendravarman I (600–630 CE):</b> Initiated wars against Chalukyas[cite: 1, 2].</li>
+            </ul>
+          </div>
+          <div class="sub-box facts">
+            <h4>🏛️ Narasimhavarman I 'Mamalla'</h4>
+            <ul>
+              <li>Ruled 630–668 CE; defeated Chalukya king Pulakesin II[cite: 1, 2].</li>
+              <li>Constructed coastal <b>Mamallapuram</b> (Mahabalipuram)[cite: 1, 2].</li>
+            </ul>
+          </div>
+          <div class="sub-box fun">
+            <h4>💡 Memory Anchor</h4>
+            <ul>
+              <li>"Mamalla" means <b>"Great Wrestler"</b>—the magnificent coastal temples stand directly at the sea shore[cite: 1, 2]!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: LIFESTYLE & ADMIN -->
+  <div id="lifestyle" class="tab-content">
+    <div class="card">
+      <div class="card-title">Administration, Society & Economy</div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>🏛️ Gupta Hierarchy</h4>
+          <ul>
+            <li><b>Emperor:</b> Supreme head + Council of Mantris[cite: 1, 2].</li>
+            <li><b>Bhuktis (Provinces):</b> Ruled by Uparikas[cite: 1, 2].</li>
+            <li><b>Vishyas (Districts):</b> Ruled by Vishyapatis[cite: 1, 2].</li>
+            <li><b>Gramas (Villages):</b> Managed by Gramikas[cite: 1, 2].</li>
+            <li><b>Samantas:</b> Feudal military chiefs paid in land grants[cite: 2].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>📜 Southern Features & Tax</h4>
+          <ul>
+            <li><b>Divine Descent:</b> Chalukya/Pallava kings claimed descent from Lord Brahma[cite: 1, 2].</li>
+            <li><b>Brahmadeya:</b> Tax-free villages granted to Brahmanas[cite: 1, 2].</li>
+            <li><b>Assemblies:</b> Sabha (Brahmana), Ur (non-Brahmana), Nagaram (Trade towns)[cite: 1, 2].</li>
+            <li><b>Taxes:</b> Primary source was land tax; also taxed trade and sales[cite: 1, 2].</li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>🎨 Cultural Achievements</h4>
+          <ul>
+            <li><b>Aryabhata:</b> Astronomy & mathematics pioneer[cite: 1, 2].</li>
+            <li><b>Kalidasa:</b> Authored the play <i>Shakuntala</i>[cite: 1, 2].</li>
+            <li><b>Vishakhadatta:</b> Authored play <i>Devichandraguptam</i>[cite: 1, 2].</li>
+            <li><b>Nalanda:</b> Premier university attracting global scholars[cite: 1, 2].</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6: 12 MASTER MCQS -->
+  <div id="mcq-4opt" class="tab-content">
+    <div class="card">
+      <div class="card-title">12 Master Multiple Choice Questions (Detailed Explanations)</div>
+      
+      <div class="mcq-box">
+        <div class="mcq-q">1. Who captured nine kingdoms in Aryavarta and brought them under direct rule?[cite: 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">a) Chandragupta I</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-1')">b) Samudragupta</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">c) Chandragupta II</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">d) Kumaragupta</button>
+        <div class="mcq-explain" id="mcq-1">
+          <b>Explanation:</b> Samudragupta directly annexed 9 kingdoms in Aryavarta[cite: 2]. Chandragupta I founded the empire[cite: 1, 2], while Chandragupta II conquered western Shaka territories[cite: 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. Which strategic trade city became Harshavardhana's new capital after Thaneshwar?[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">a) Mathura</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">b) Ujjain</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-2')">c) Kanauj</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">d) Pataliputra</button>
+        <div class="mcq-explain" id="mcq-2">
+          <b>Explanation:</b> Harsha shifted his capital to <b>Kanauj</b> to better control northern trade routes[cite: 1, 2]. Ujjain and Pataliputra were Gupta capitals[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">3. Which Chalukya ruler defeated Harshavardhana at the Narmada River?[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">a) Pulakesin I</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-3')">b) Pulakesin II</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">c) Simhavishnu</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">d) Mahendravarman I</button>
+        <div class="mcq-explain" id="mcq-3">
+          <b>Explanation:</b> Pulakesin II defeated Harsha on the banks of the Narmada, stopping his southward march[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">4. What were governors of provinces (Bhuktis) called in the Gupta Empire?[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-4')">a) Uparikas</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">b) Vishyapatis</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">c) Gramikas</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">d) Samantas</button>
+        <div class="mcq-explain" id="mcq-4">
+          <b>Explanation:</b> Provinces were called <i>Bhuktis</i> (ruled by <b>Uparikas</b>)[cite: 1, 2]. Districts were <i>Vishyas</i> (ruled by Vishyapatis)[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">5. Who authored the biography Harshacharita and the novel Kadambari?[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">a) Dandin</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">b) Kalidasa</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-5')">c) Banabhatta</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">d) Harisena</button>
+        <div class="mcq-explain" id="mcq-5">
+          <b>Explanation:</b> Court poet <b>Banabhatta</b> authored <i>Harshacharita</i> and <i>Kadambari</i>[cite: 1, 2]. Harisena wrote the Prayagraj Prashasti[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">6. Which Pallava ruler took the title 'Mamalla' and constructed Mamallapuram?[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">a) Simhavishnu</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">b) Mahendravarman I</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-6')">c) Narasimhavarman I</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">d) Pulakesin II</button>
+        <div class="mcq-explain" id="mcq-6">
+          <b>Explanation:</b> Narasimhavarman I was nicknamed Mamalla ("Great Wrestler") and founded Mamallapuram[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">7. What was the assembly in non-Brahmana villages under the Pallava kingdom?[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">a) Sabha</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-7')">b) Ur</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">c) Nagaram</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">d) Bhukti</button>
+        <div class="mcq-explain" id="mcq-7">
+          <b>Explanation:</b> <b>Ur</b> was for non-Brahmana villages[cite: 1, 2], <i>Sabha</i> was for Brahmana villages[cite: 1, 2], and <i>Nagaram</i> was for market towns[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">8. What was a 'Brahmadeya' land grant in the Pallava kingdom?[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">a) Land given to army generals</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-8')">b) Tax-free village grants given to Brahmanas</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">c) Land reserved for royal palaces</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">d) Market towns for trade guilds</button>
+        <div class="mcq-explain" id="mcq-8">
+          <b>Explanation:</b> <i>Brahmadeya</i> were special tax-free village grants given to Brahmanas who collected taxes from residents[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">9. Who were the 'Samantas' in the Gupta administration?[cite: 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">a) Foreign Chinese pilgrims</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">b) Village heads in districts</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-9')">c) High-ranking military chiefs paid in land grants</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">d) Court poets who wrote prashastis</button>
+        <div class="mcq-explain" id="mcq-9">
+          <b>Explanation:</b> Samantas were army chiefs who received land grants instead of cash salaries and commanded troops[cite: 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">10. Which Central Asian warrior tribe repeatedly attacked and ended the Gupta Empire?[cite: 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">a) Shakas</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-10')">b) Huns</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">c) Kushanas</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">d) Cholas</button>
+        <div class="mcq-explain" id="mcq-10">
+          <b>Explanation:</b> The <b>Huns</b> from Central Asia invaded repeatedly around 550 CE, destroying Gupta authority[cite: 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">11. Who composed the Aihole Prashasti describing the achievements of Pulakesin II?[cite: 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">a) Harisena</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">b) Banabhatta</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-11')">c) Ravikirti</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">d) Kalidasa</button>
+        <div class="mcq-explain" id="mcq-11">
+          <b>Explanation:</b> Court poet <b>Ravikirti</b> composed the Aihole Prashasti for Pulakesin II[cite: 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">12. What was the primary source of income for ancient empires in this period?[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-12')">a) Taxes collected on land</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">b) Taxes collected on sea trade</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">c) Fine money from courts</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">d) Gold mining in South India</button>
+        <div class="mcq-explain" id="mcq-12">
+          <b>Explanation:</b> Land tax (agricultural land, grazing land, wasteland) was the biggest source of royal income[cite: 1, 2].
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 7: CONFUSING 2-CHOICE FILL IN BLANKS -->
+  <div id="mcq-confusing" class="tab-content">
+    <div class="card">
+      <div class="card-title">Confusing Two-Choice Drills (Master the Tricks)</div>
+      <p style="margin-bottom:14px; font-size:0.88rem;">Each question contains ONE correct answer and ONE dangerously confusing wrong answer!</p>
+
+      <div class="mcq-box">
+        <div class="mcq-q">1. Chandragupta II assumed the famous title ________.[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-1')">[A] Vikramaditya</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-1')">[B] Maharajadhiraja</button>
+        <div class="mcq-explain" id="c-1">
+          <b>Why confusion happens:</b> Students confuse grandfather and grandson! <i>Chandragupta I</i> and <i>Samudragupta</i> took Maharajadhiraja[cite: 2], but <b>Chandragupta II</b> specifically took <b>Vikramaditya</b>[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. The Prayagraj Prashasti in praise of Samudragupta was composed by ________.[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-2')">[A] Harisena</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-2')">[B] Ravikirti</button>
+        <div class="mcq-explain" id="c-2">
+          <b>Why confusion happens:</b> Both were famous court poets who wrote prashastis! <b>Harisena</b> wrote for Samudragupta at Prayagraj[cite: 1, 2], whereas <i>Ravikirti</i> wrote the Aihole Prashasti for Pulakesin II[cite: 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">3. Chinese traveler Xuanzang visited India during the reign of ________.[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-3')">[A] Harshavardhana</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-3')">[B] Chandragupta II</button>
+        <div class="mcq-explain" id="c-3">
+          <b>Why confusion happens:</b> Two Chinese travelers visited during different eras! <b>Xuanzang</b> visited during <b>Harsha's</b> rule[cite: 1, 2], whereas <i>Fa Xian</i> visited during the Gupta rule[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">4. District-level administrative units in the Gupta Empire were called ________.[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-4')">[A] Vishyas</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-4')">[B] Bhuktis</button>
+        <div class="mcq-explain" id="c-4">
+          <b>Why confusion happens:</b> <i>Bhuktis</i> were larger <b>provinces</b>[cite: 1, 2], while <b>Vishyas</b> were the smaller <b>districts</b> inside those provinces[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">5. Samudragupta allowed defeated rulers in South India to continue ruling in exchange for ________.[cite: 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-5')">[A] Annual Tributes</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-5')">[B] Direct Annexation</button>
+        <div class="mcq-explain" id="c-5">
+          <b>Why confusion happens:</b> Samudragupta directly annexed northern Aryavarta kings[cite: 2], but used <b>indirect rule (annual tributes)</b> for distant southern kings[cite: 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">6. In the Pallava kingdom, the village assembly for Brahmana villages was called ________.[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-6')">[A] Sabha</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-6')">[B] Ur</button>
+        <div class="mcq-explain" id="c-6">
+          <b>Why confusion happens:</b> <b>Sabha</b> was for Brahmana landholders[cite: 1, 2], while <i>Ur</i> was for general non-Brahmana villages[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">7. King Harshavardhana shifted his capital from Thaneshwar to ________.[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-7')">[A] Kanauj</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-7')">[B] Pataliputra</button>
+        <div class="mcq-explain" id="c-7">
+          <b>Why confusion happens:</b> <i>Pataliputra</i> was the historic capital of the Guptas[cite: 1, 2]. Harsha shifted his capital to <b>Kanauj</b>[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">8. The Chalukya capital city Vatapi is known today as ________.[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-8')">[A] Badami</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-8')">[B] Kanchipuram</button>
+        <div class="mcq-explain" id="c-8">
+          <b>Why confusion happens:</b> <i>Kanchipuram</i> was the Pallava capital[cite: 1, 2], while <b>Badami</b> was the Chalukya capital[cite: 1, 2].
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 8: TRUE / FALSE ARENA -->
+  <div id="mcq-tf" class="tab-content">
+    <div class="card">
+      <div class="card-title">Interactive True / False Arena (With Historical Reasons)</div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">1. Samudragupta defeated 12 kingdoms in the Deccan and South India.[cite: 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-1')">[TRUE]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-1')">[FALSE]</button>
+        <div class="mcq-explain" id="tf-1">
+          <b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> He defeated 12 kings in the south (Dakshinapatha) but reinstated them as tributary rulers[cite: 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. Chandragupta II took the title of Maharajadhiraja.[cite: 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-2')">[TRUE]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-2')">[FALSE]</button>
+        <div class="mcq-explain" id="tf-2">
+          <b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Chandragupta II took the title <b>Vikramaditya</b>[cite: 1, 2]. Chandragupta I and Samudragupta were the ones who took Maharajadhiraja[cite: 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">3. The Narmada River was the southern boundary of Harsha's empire.[cite: 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-3')">[TRUE]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-3')">[FALSE]</button>
+        <div class="mcq-explain" id="tf-3">
+          <b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Pulakesin II defeated Harsha at the Narmada River, making it the permanent southern border of Harsha's state[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">4. The Gupta Empire's biggest source of income was trade tax.[cite: 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-4')">[TRUE]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-4')">[FALSE]</button>
+        <div class="mcq-explain" id="tf-4">
+          <b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> The largest source of revenue was taxes collected on <b>land</b> (farming, grazing, forests)[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">5. Pallava kings gave Brahmanas special tax-free land grants called Brahmadeya.[cite: 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-5')">[TRUE]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-5')">[FALSE]</button>
+        <div class="mcq-explain" id="tf-5">
+          <b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Pallava kings granted tax-exempt villages to Brahmanas, who collected revenue from local inhabitants[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">6. Prashastis written by court poets give a completely balanced view of kings.[cite: 1, 2]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-6')">[TRUE]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-6')">[FALSE]</button>
+        <div class="mcq-explain" id="tf-6">
+          <b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Prashastis are biased eulogies praising only victories and virtues while omitting failures[cite: 1, 2].
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 9: ALL TEXTBOOK ANSWERS -->
+  <div id="textbook-all" class="tab-content">
+    <div class="card">
+      <div class="card-title">Complete Written Textbook Answers (Short, Long, HOTS)</div>
+
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise D: Arrange in chronological order[cite: 2]</div>
+        <div class="qa-a">
+          <b>Correct Sequence:</b><br>
+          1. <b>The Gupta Empire</b> (320 CE)[cite: 1, 2]<br>
+          2. <b>The Chalukya kingdom</b> (543 CE)[cite: 1, 2]<br>
+          3. <b>The Pallava kingdom</b> (575 CE)[cite: 1, 2]<br>
+          4. <b>Harsha's empire</b> (606 CE)[cite: 1, 2]
+        </div>
+      </div>
+
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise E: Short Answer Questions (E1 to E5)[cite: 2]</div>
+        <div class="qa-a">
+          <b>E1. Three types of archaeological sources & examples:</b>[cite: 2]<br>
+          • <i>Coins:</i> Gold coins issued by Gupta emperors[cite: 1, 2].<br>
+          • <i>Monuments:</i> Rock-cut temples at Aihole and Mandagapattu[cite: 1, 2].<br>
+          • <i>Inscriptions:</i> Prayagraj/Allahabad Pillar inscription by Harisena[cite: 1, 2].<br><br>
+
+          <b>E2. Who were Xuanzang and Fa Xian? Why are they important?</b>[cite: 2]<br>
+          They were Chinese Buddhist pilgrims who traveled across India[cite: 1, 2]. Their travelogues provide valuable firsthand knowledge of administration, religion, Nalanda, and social conditions[cite: 1, 2].<br><br>
+
+          <b>E3. Who was Narasimhavarman I, and why is he remembered?</b>[cite: 2]<br>
+          He was a Pallava king (nicknamed <i>Mamalla</i>)[cite: 1, 2]. He defeated Chalukya king Pulakesin II and built the port city of Mamallapuram[cite: 1, 2].<br><br>
+
+          <b>E4. Why did Chalukya and Pallava rulers claim descent from Lord Brahma?</b>[cite: 2]<br>
+          To assert divine sanction for their rule, reinforcing authority among subjects and rivals[cite: 1, 2].<br><br>
+
+          <b>E5. Architectural contributions of Chalukyas and Pallavas:</b>[cite: 2]<br>
+          • <i>Chalukyas:</i> Rock-cut cave temples at Badami, Pattadakal, and Aihole[cite: 1, 2].<br>
+          • <i>Pallavas:</i> Shore Temple and Pancha Pandava Rathas at Mamallapuram[cite: 1, 2].
+        </div>
+      </div>
+
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise F: Detailed Long Answer Questions (F1 to F5)[cite: 2]</div>
+        <div class="qa-a">
+          <b>F1. Importance and limitations of Prashastis:</b>[cite: 2]<br>
+          <i>Prashastis</i> are court poems written to praise rulers[cite: 2]. They help historians map conquests, borders, and genealogies[cite: 1, 2]. Limitation: They are biased sources because poets highlighted victories while ignoring military setbacks or royal flaws[cite: 1, 2].<br><br>
+
+          <b>F2. Achievements of Gupta Rulers:</b>[cite: 2]<br>
+          • <i>Chandragupta I:</i> Married Princess Kumaradevi of the Lichchhavis to secure political power and establish Pataliputra[cite: 1, 2].<br>
+          • <i>Samudragupta:</i> Directly annexed 9 northern kingdoms[cite: 2], extracted tribute from 12 southern kings[cite: 2], and secured frontier alliances[cite: 2].<br>
+          • <i>Chandragupta II:</i> Conquered Shaka territories in western India, capturing sea trade ports in Gujarat and Maharashtra[cite: 2].<br><br>
+
+          <b>F3. Conflict between Chalukyas and Pallavas:</b>[cite: 2]<br>
+          They fought over fertile land between the Krishna and Tungabhadra rivers and coastal trade dominance[cite: 2]. Continuous warfare weakened both dynasties, paving the way for the Cholas[cite: 2].<br><br>
+
+          <b>F4. Gupta Administration:</b>[cite: 2]<br>
+          Hierarchy: Emperor → <i>Bhuktis</i> (Provinces led by <i>Uparikas</i>) → <i>Vishyas</i> (Districts led by <i>Vishyapatis</i>) → Villages (led by <i>Gramikas</i>)[cite: 1, 2]. Feudal chiefs (<i>Samantas</i>) supplied military forces[cite: 2].<br><br>
+
+          <b>F5. Economic Life (4th to 7th Century CE):</b>[cite: 2]<br>
+          Agriculture was the primary occupation, and land tax was the main revenue source[cite: 1, 2]. Guilds regulated crafts, and trade flourished with Rome, Southeast Asia, and Africa[cite: 2].
+        </div>
+      </div>
+
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise G & H: HOTS & Competency Questions[cite: 2]</div>
+        <div class="qa-a">
+          <b>G1. Non-war strategies of Chandragupta I:</b> Used matrimonial diplomacy by marrying Princess Kumaradevi of the Lichchhavis, securing power without warfare[cite: 1, 2].<br><br>
+          <b>G2. Samudragupta vs Harsha in South India:</b> Samudragupta used indirect rule (tributes)[cite: 2], whereas Harsha attempted direct conquest across the Narmada River and was defeated by Pulakesin II[cite: 1, 2].
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 10: VISUAL & VIDEO ANCHORS -->
+  <div id="media" class="tab-content">
+    <div class="card">
+      <div class="card-title">Visual Anchors & Recommended Creator Videos</div>
+      <p style="margin-bottom:14px; font-size:0.9rem;">Click these curated links to view authentic photos of monuments and explore animated history storytelling and visual documentaries:</p>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+        
+        <a class="media-link-card" href="https://commons.wikimedia.org/wiki/Category:Allahabad_Pillar" target="_blank">
+          <span class="media-icon">📜</span>
+          <div><b>Prayagraj Pillar Inscription Photos</b><br><small>View detailed photos of Harisena's prashasti carved into stone[cite: 1, 2].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://commons.wikimedia.org/wiki/Category:Gupta_coins" target="_blank">
+          <span class="media-icon">🪙</span>
+          <div><b>Gupta Empire Gold Coin Gallery</b><br><small>See Samudragupta playing the veena on gold coins[cite: 1, 2].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://commons.wikimedia.org/wiki/Category:Shore_Temple" target="_blank">
+          <span class="media-icon">🛕</span>
+          <div><b>Shore Temple at Mamallapuram</b><br><small>Explore high-resolution photos of Pallava sea architecture[cite: 1, 2].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://commons.wikimedia.org/wiki/Category:Badami_Cave_Temples" target="_blank">
+          <span class="media-icon">⛰️</span>
+          <div><b>Badami Cave Temples</b><br><small>View Chalukya rock-cut cave temples carved into sandstone cliffs[cite: 1, 2].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Gupta+Empire+Golden+Age+animated+history" target="_blank">
+          <span class="media-icon">🎬</span>
+          <div><b>Animated History: The Gupta Golden Age</b><br><small>Search engaging animated storytelling videos about the Guptas[cite: 1, 2].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Harshavardhana+and+Pulakesin+II+battle+Narmada" target="_blank">
+          <span class="media-icon">⚔️</span>
+          <div><b>Battle of Narmada River: Harsha vs Pulakesin II</b><br><small>Watch animated breakdowns of the famous clash at the Narmada[cite: 1, 2].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Pallavas+and+Chalukyas+architecture+documentary" target="_blank">
+          <span class="media-icon">🏛️</span>
+          <div><b>Visual Documentary: Pallava & Chalukya Architecture</b><br><small>Explore cinematic video tours of Mamallapuram & Pattadakal temples[cite: 1, 2].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=NCERT+Class+7+History+Chapter+8+India+4th+to+7th+Century" target="_blank">
+          <span class="media-icon">▶️</span>
+          <div><b>NCERT Class 7 History Video Modules</b><br><small>Search animated NCERT visual lessons on Chapter 8[cite: 1, 2].</small></div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Chapter 8 Study Hub · Prepared for Pushti · CBSE Class 7 History
+  </footer>
+
+<script>
+  function openTab(tabId) {
+    const contents = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-btn');
+    contents.forEach(content => content.classList.remove('active'));
+    buttons.forEach(btn => btn.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function toggleQA(cardElement) {
+    cardElement.classList.toggle('open');
+  }
+
+  function checkMCQ(btnElement, isCorrect, explainId) {
+    const parentBox = btnElement.parentElement;
+    const buttons = parentBox.querySelectorAll('.mcq-opt');
+    const explanation = document.getElementById(explainId);
+
+    buttons.forEach(btn => btn.disabled = true);
+
+    if (isCorrect) {
+      btnElement.classList.add('correct');
+    } else {
+      btnElement.classList.add('wrong');
+    }
+
+    if (explanation) {
+      explanation.style.display = 'block';
+    }
+  }
+</script>
+</body>
+</html>

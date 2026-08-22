@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 13: Understanding Gender — Master Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sandstone: #F9F5EC;
+    --card-bg: #FFFFFF;
+    --ink: #2B2620;
+    --maroon: #7A2A2E;
+    --gold: #C59B27;
+    --gold-light: #FFF8E7;
+    --teal: #2F5D5A;
+    --teal-light: #EBF4F3;
+    --purple: #4C4478;
+    --purple-light: #F0EEF8;
+    --shadow: 0 4px 15px rgba(0,0,0,0.06);
+    --border-radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--sandstone);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    padding: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: hidden; 
+  }
+
+  header.hero {
+    text-align: center;
+    background: linear-gradient(135deg, var(--teal), #1A3634);
+    color: white;
+    padding: 24px 16px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    border-bottom: 4px solid var(--gold);
+  }
+
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    color: #FFF;
+  }
+
+  .tagline { font-size: 0.95rem; opacity: 0.95; font-weight: 600; color: #FFF8E7; }
+
+  .badge-bar {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .tab-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #E2D9C5;
+    padding-bottom: 8px;
+  }
+
+  .tab-btn {
+    flex: 1 1 auto;
+    min-width: 120px;
+    text-align: center;
+    background: #EAE3D2;
+    border: none;
+    outline: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .tab-btn:hover { background: #DFCFAF; }
+  .tab-btn.active { background: var(--teal); color: white; }
+
+  .tab-content { display: none; animation: fadeIn 0.25s ease-in-out; }
+  .tab-content.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid #EAE3D2;
+    margin-bottom: 18px;
+  }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    color: var(--teal);
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    border-bottom: 2px solid var(--gold-light);
+    padding-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .topic-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    background: var(--teal-light);
+    color: var(--teal);
+    border: 1px solid var(--teal);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .sub-box { padding: 12px 14px; border-radius: 8px; font-size: 0.9rem; }
+  .sub-box.key { background: #FFFBF2; border-left: 4px solid var(--gold); }
+  .sub-box.facts { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .sub-box.fun { background: var(--purple-light); border-left: 4px solid var(--purple); }
+
+  .sub-box h4 { font-family: 'Cinzel', serif; font-size: 0.92rem; margin-bottom: 4px; }
+  .sub-box.key h4 { color: #8A6D1C; }
+  .sub-box.facts h4 { color: var(--teal); }
+  .sub-box.fun h4 { color: var(--purple); }
+  .sub-box ul { padding-left: 16px; margin-top: 4px; }
+  .sub-box li { margin-bottom: 4px; }
+
+  .mcq-box {
+    background: #FFFBF2;
+    border: 1px solid #EAE3D2;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .mcq-q { font-weight: 700; font-size: 0.95rem; margin-bottom: 10px; color: var(--ink); }
+
+  .mcq-opt {
+    display: block; width: 100%; text-align: left; background: #FFF; border: 1px solid #CCC;
+    padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; cursor: pointer;
+    font-family: inherit; font-size: 0.88rem; transition: all 0.15s;
+  }
+
+  .mcq-opt:hover { background: #F0F0F0; }
+  .mcq-opt.correct { background: #D4EDDA !important; border-color: #28A745 !important; color: #155724; font-weight: 700; }
+  .mcq-opt.wrong { background: #F8D7DA !important; border-color: #DC3545 !important; color: #721C24; }
+
+  .mcq-explain {
+    display: none; margin-top: 8px; padding: 8px 12px; background: #EBF4F3;
+    border-left: 3px solid var(--teal); border-radius: 4px; font-size: 0.85rem; color: #222;
+  }
+
+  .qa-card {
+    background: var(--card-bg); border-left: 4px solid var(--teal); padding: 14px 16px;
+    border-radius: 8px; margin-bottom: 12px; box-shadow: var(--shadow);
+  }
+
+  .qa-q {
+    font-weight: 700; cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; color: var(--ink); font-size: 0.95rem;
+  }
+
+  .qa-q::after {
+    content: '+ Show Answer'; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+    color: var(--teal); background: var(--teal-light); padding: 2px 8px; border-radius: 4px; white-space: nowrap;
+  }
+
+  .qa-card.open .qa-q::after { content: '- Hide Answer'; background: #FADBD8; color: var(--maroon); }
+
+  .qa-a {
+    display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #DDD; font-size: 0.92rem; color: #333;
+  }
+
+  .qa-card.open .qa-a { display: block; }
+
+  .media-link-card {
+    display: flex; align-items: center; gap: 12px; background: #F4F0E6; padding: 12px 14px;
+    border-radius: 8px; margin-top: 8px; border: 1px solid #DFD7C0; text-decoration: none;
+    color: var(--ink); font-size: 0.88rem; transition: all 0.2s;
+  }
+
+  .media-link-card:hover { background: #EAE2CF; border-color: var(--gold); transform: translateY(-2px); }
+  .media-icon { font-size: 1.5rem; }
+
+  footer { text-align: center; margin-top: 24px; font-size: 0.78rem; color: #777; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <h1>Understanding Gender</h1>
+    <div class="tagline">Pushti's Road to 20/20: Interactive Master Visual Dashboard</div>
+    <div class="badge-bar">
+      <span class="badge">CBSE Class 7</span>
+      <span class="badge">Civics / Social & Political Life</span>
+      <span class="badge">Chapter 13</span>
+    </div>
+  </header>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="openTab('meaning')">♀️ Sex vs Gender</button>
+    <button class="tab-btn" onclick="openTab('inequality')">⚖️ Stereotypes & Work</button>
+    <button class="tab-btn" onclick="openTab('reformers')">📜 Reformers & Laws</button>
+    <button class="tab-btn" onclick="openTab('mcq-4opt')">🎯 Master MCQs</button>
+    <button class="tab-btn" onclick="openTab('mcq-confusing')">⚡ Confusing Blanks</button>
+    <button class="tab-btn" onclick="openTab('mcq-tf')">❓ True / False</button>
+    <button class="tab-btn" onclick="openTab('textbook-all')">📖 All Textbook Solutions (A to H)</button>
+    <button class="tab-btn" onclick="openTab('media')">🎬 Enriched Topic Videos</button>
+  </div>
+
+  <!-- TAB 1: SEX VS GENDER -->
+  <div id="meaning" class="tab-content active">
+    <div class="card" style="border-left: 5px solid var(--teal);">
+      <div class="card-title">13.1 Meaning of Gender <span class="topic-badge">Social Construct</span></div>
+      <p><b>Sex</b> is the biological difference between males and females that we are born with[cite: 5]. <b>Gender</b>, on the other hand, refers to the social and cultural roles, expectations, and behaviors that society expects from boys, girls, men, and women[cite: 5]. Gender is a <b>social construct</b>—it is learned and changes over time and across different societies[cite: 5].</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Case Studies: Growing Up in Different Societies <span class="topic-badge">Meghalaya vs Haryana</span></div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>🍃 Khasi Tribe (Meghalaya)</h4>
+          <ul>
+            <li>Matrilineal society where lineage and family name pass through the mother[cite: 5].</li>
+            <li>Daughters inherit a larger share of parental property[cite: 5].</li>
+            <li>Youngest daughter takes care of aging parents[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>🌾 Traditional Haryana Household</h4>
+          <ul>
+            <li>Patrilineal structure where the father is the primary breadwinner[cite: 5].</li>
+            <li>Sons traditionally receive property inheritance to care for parents in old age[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>💡 Takeaway</h4>
+          <ul>
+            <li>These contrasting examples prove that gender roles are not natural or fixed; they are created by human societies[cite: 5]!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: STEREOTYPES & WORK -->
+  <div id="inequality" class="tab-content">
+    <div class="card">
+      <div class="card-title">13.2 & 13.3 Stereotypes & Devaluing Women's Work <span class="topic-badge">Impact on Society</span></div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>🔒 What is a Stereotype?</h4>
+          <ul>
+            <li>A fixed, oversimplified, or biased belief about a group of people[cite: 5].</li>
+            <li><i>Examples:</i> "Boys don't cry," "Girls are good at cooking," "Boys are better at sports/maths"[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>🏠 Devaluing Unpaid Care Work</h4>
+          <ul>
+            <li>Women spend long hours cooking, cleaning, and caring for children/elders[cite: 5].</li>
+            <li>Society often views this as "natural duty" rather than actual work, leaving women with no monetary pay or leisure time[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>⚖️ Double Burden</h4>
+          <ul>
+            <li>Working women face a double burden—earning money outside while still managing all household chores at home[cite: 5].</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: REFORMERS & LAWS -->
+  <div id="reformers" class="tab-content">
+    <div class="card">
+      <div class="card-title">13.5 & 13.6 Social Reformers & Government Initiatives <span class="topic-badge">Fighting for Rights</span></div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>📜 Key Social Reformers</h4>
+          <ul>
+            <li><b>Raja Rammohan Roy:</b> Led movement to abolish Sati in 1829[cite: 5].</li>
+            <li><b>Ishwar Chandra Vidyasagar:</b> Fought for the Hindu Widow Remarriage Act (1856)[cite: 5].</li>
+            <li><b>Savitribai & Jyotirao Phule:</b> Started the first Indian school for girls in Pune (1848)[cite: 5].</li>
+            <li><b>Pandita Ramabai:</b> Founded <i>Sarada Sadan</i> in Mumbai for widows[cite: 5].</li>
+            <li><b>Begum Rokeya Sakhawat Hossain:</b> Championed Muslim girls' education[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>🏛️ Constitutional & Legal Provisions</h4>
+          <ul>
+            <li><b>Right to Equality:</b> Prohibits discrimination based on sex; guarantees equal pay for equal work[cite: 5].</li>
+            <li><b>Right to Education (RTE):</b> Free, compulsory education for children aged 6 to 14[cite: 5].</li>
+            <li><b>33% Reservation:</b> 33% of seats in Panchayati Raj local bodies reserved for women[cite: 5].</li>
+            <li><b>Anti-Dowry & Domestic Violence Laws:</b> Strict protection against exploitation[cite: 5].</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: MASTER MCQS -->
+  <div id="mcq-4opt" class="tab-content">
+    <div class="card">
+      <div class="card-title">Master Multiple Choice Questions</div>
+      
+      <div class="mcq-box">
+        <div class="mcq-q">1. Which of the following is NOT an example of a gender stereotype?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">a) Boys are naughty and girls are quiet[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">b) Girls cook better food than boys[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-1')">c) Both girls and boys can play cricket[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">d) Only boys are good at sports[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-1"><b>Explanation:</b> Saying both boys and girls can play cricket breaks stereotypes and promotes equality[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. Who led the movement that successfully abolished Sati in 1829?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">a) Savitribai Phule[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-2')">b) Raja Rammohan Roy[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">c) Pandita Ramabai[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">d) Ishwar Chandra Vidyasagar[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-2"><b>Explanation:</b> Raja Rammohan Roy campaigned against Sati, leading to its legal abolition in 1829[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">3. What percentage of seats are reserved for women in Panchayati Raj local bodies?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">a) 25%[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">b) 50%[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-3')">c) 33%[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">d) 10%[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-3"><b>Explanation:</b> The government has reserved 33% (one-third) of seats in Panchayats for women leaders[cite: 5].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: CONFUSING 2-CHOICE FILL IN BLANKS -->
+  <div id="mcq-confusing" class="tab-content">
+    <div class="card">
+      <div class="card-title">Confusing Two-Choice Drills</div>
+      
+      <div class="mcq-box">
+        <div class="mcq-q">1. Sex is a biological difference, whereas Gender is a ________ construct[cite: 5].</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-1')">[A] Social[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-1')">[B] Biological[cite: 5]</button>
+        <div class="mcq-explain" id="c-1"><b>Why confusion happens:</b> Sex is biological (born with); Gender is social (learned roles)[cite: 5]!</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. Sarada Sadan was established by ________ to help widows learn skills[cite: 5].</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-2')">[A] Pandita Ramabai[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-2')">[B] Savitribai Phule[cite: 5]</button>
+        <div class="mcq-explain" id="c-2"><b>Why confusion happens:</b> Savitribai Phule opened girls' schools; Pandita Ramabai opened Sarada Sadan[cite: 5].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6: TRUE / FALSE ARENA -->
+  <div id="mcq-tf" class="tab-content">
+    <div class="card">
+      <div class="card-title">Interactive True / False Arena</div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">1. Widow remarriage became legal in 1856 due to efforts by Savitribai Phule[cite: 5].</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-1')">[TRUE][cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-1')">[FALSE][cite: 5]</button>
+        <div class="mcq-explain" id="tf-1"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> It became legal in 1856 due to efforts by Ishwar Chandra Vidyasagar[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. The Khasi tribe of Meghalaya follows a matrilineal family structure[cite: 5].</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-2')">[TRUE][cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-2')">[FALSE][cite: 5]</button>
+        <div class="mcq-explain" id="tf-2"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> In Khasi society, property and family names pass through the mother[cite: 5].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 7: 100% COMPLETE TEXTBOOK SOLUTIONS -->
+  <div id="textbook-all" class="tab-content">
+    <div class="card">
+      <div class="card-title">100% Complete Textbook Exercise Solutions (A to H)</div>
+
+      <!-- EXERCISE A -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise A: Fill in the blanks (All 5 Questions)[cite: 5]</div>
+        <div class="qa-a">
+          1. Gender is a <b>social</b> construct[cite: 5].<br>
+          2. Gender stereotypes lead to gender <b>inequality / discrimination</b>[cite: 5].<br>
+          3. Families can either strengthen or <b>break</b> gender stereotypes[cite: 5].<br>
+          4. <b>Pandita Ramabai</b> opened Sarada Sadan where widows were encouraged to get educated and learn skills[cite: 5].<br>
+          5. 33% of seats in <b>Panchayats</b> are reserved for women[cite: 5].
+        </div>
+      </div>
+
+      <!-- EXERCISE B -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise B: Choose the correct answer (All 4 Questions)[cite: 5]</div>
+        <div class="qa-a">
+          1. Which of the following is NOT an example of a gender stereotype? <b>(c) Both girls and boys can play cricket</b>[cite: 5].<br>
+          2. Which of the following is an impact of gender inequality on women? <b>(b) Devaluing the work done by women</b>[cite: 5].<br>
+          3. Who led the movement to abolish sati in 1829? <b>(b) Raja Rammohan Roy</b>[cite: 5].<br>
+          4. Which right guarantees equal opportunities for employment and equal pay for equal work? <b>(d) Right to Equality</b>[cite: 5].
+        </div>
+      </div>
+
+      <!-- EXERCISE C -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise C: Write True or False. Rewrite false statements.[cite: 5]</div>
+        <div class="qa-a">
+          1. When people are treated differently or unequally because of their gender, it is known as gender discrimination. <span style="color:green; font-weight:700;">TRUE</span>[cite: 5].<br><br>
+          2. Our preconceived ideas and opinions on how boys and girls should behave lead to gender equality. <span style="color:red; font-weight:700;">FALSE</span><br>
+          <i>(Correction: Preconceived ideas lead to gender inequality and stereotypes.)[cite: 5]</i><br><br>
+          3. Widow remarriage became legal in 1856 because of the efforts of Savitribai Phule. <span style="color:red; font-weight:700;">FALSE</span><br>
+          <i>(Correction: It became legal due to the efforts of Ishwar Chandra Vidyasagar.)[cite: 5]</i><br><br>
+          4. Right to Equality promotes gender equality by giving equal educational opportunities to both boys and girls. <span style="color:green; font-weight:700;">TRUE</span>[cite: 5].<br><br>
+          5. We should encourage people around us to follow gender stereotypes. <span style="color:red; font-weight:700;">FALSE</span><br>
+          <i>(Correction: We should encourage people around us to break gender stereotypes.)[cite: 5]</i>
+        </div>
+      </div>
+
+      <!-- EXERCISE D -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise D: Name the following (All 4 Questions)[cite: 5]</div>
+        <div class="qa-a">
+          1. A social reformer who worked for the abolition of Sati: <b>Raja Rammohan Roy</b>[cite: 5].<br>
+          2. A social reformer who worked to make widow remarriage legal: <b>Ishwar Chandra Vidyasagar</b>[cite: 5].<br>
+          3. Two social reformers who established the first Indian school for girls: <b>Savitribai Phule and Jyotirao Phule</b>[cite: 5].<br>
+          4. A woman social reformer who was also a freedom fighter: <b>Sarojini Naidu</b>[cite: 5].
+        </div>
+      </div>
+
+      <!-- EXERCISE E -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise E: Answer the following questions in brief (All 5 Questions)[cite: 5]</div>
+        <div class="qa-a">
+          <b>1. What do you understand by the term gender equality? Answer in about 20–30 words.</b>[cite: 5]<br>
+          Gender equality means providing equal rights, opportunities, responsibilities, and respect to all human beings regardless of whether they are born male or female[cite: 5].<br><br>
+
+          <b>2. What are gender stereotypes? How are gender stereotypes strengthened?</b>[cite: 5]<br>
+          Gender stereotypes are fixed, biased beliefs about how men and women should behave[cite: 5]. They are strengthened when families, schools, and media reinforce rigid roles (e.g., buying toy cars for boys and dolls for girls)[cite: 5].<br><br>
+
+          <b>3. Explain why gender equality is important for us.</b>[cite: 5]<br>
+          Gender equality allows every individual to fulfill their full potential without discrimination, leading to a just, progressive, and prosperous society[cite: 5].<br><br>
+
+          <b>4. Do you think it is only the government's responsibility to ensure gender equality? Why/Why not?</b>[cite: 5]<br>
+          No, it is a shared responsibility of both the government and individuals[cite: 5]. While the government passes laws, individuals and families must break everyday biases at home and in public[cite: 5].<br><br>
+
+          <b>5. List any three ways in which we can play a positive role in reducing gender inequality.</b>[cite: 5]<br>
+          • Sharing household chores equally between boys and girls[cite: 5].<br>
+          • Encouraging girls to pursue higher education and careers of their choice[cite: 5].<br>
+          • Speaking up against gender discrimination and stereotypes in our daily lives[cite: 5].
+        </div>
+      </div>
+
+      <!-- EXERCISE F -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise F: Answer the following questions in detail (All 5 Questions)[cite: 5]</div>
+        <div class="qa-a">
+          <b>1. Using an example, explain how gender stereotypes lead to gender inequality.</b>[cite: 5]<br>
+          Stereotypes set fixed expectations[cite: 5]. For instance, if a family believes "men are breadwinners and women should only cook," they may invest money in a son's higher education while denying the daughter school access[cite: 5]. This leads to gender inequality in literacy, jobs, and financial independence[cite: 5].<br><br>
+
+          <b>2. Describe any two factors that lead to gender inequality in not more than 80 words.</b>[cite: 5]<br>
+          • <b>Stereotypes & Biases:</b> Deep-rooted societal beliefs that men are superior or more capable than women limit opportunities for girls[cite: 5].<br>
+          • <b>Devaluing Household Work:</b> Expecting women to perform unpaid domestic care work deprives them of financial independence, rest, and career growth[cite: 5].<br><br>
+
+          <b>3. How do women get affected by the unpaid work they do?</b>[cite: 5]<br>
+          Because household cooking, cleaning, and caregiving are uncounted in national income, women's work is devalued[cite: 5]. Women face a double burden (working outside and managing home) and suffer from lack of leisure time, financial independence, and social recognition[cite: 5].<br><br>
+
+          <b>4. Explain the historical evolution of the women's movement in India in about 100 words.</b>[cite: 5]<br>
+          In 19th-century India, social reformers like Raja Rammohan Roy and Ishwar Chandra Vidyasagar fought against social evils like Sati and child marriage[cite: 5]. Women leaders like Pandita Ramabai and Savitribai Phule championed girls' education and widow empowerment[cite: 5]. During the freedom struggle, women actively participated alongside men[cite: 5]. After Independence, the Indian Constitution guaranteed equal rights, equal pay, and educational access for women[cite: 5].<br><br>
+
+          <b>5. Describe any two laws that the government has passed to promote gender equality.</b>[cite: 5]<br>
+          • <b>Right to Education Act (RTE):</b> Guarantees free and compulsory education for all children aged 6 to 14, ensuring girls get equal schooling[cite: 5].<br>
+          • <b>33% Panchayat Reservation:</b> Reserves one-third of local governance seats for women, empowering female leadership[cite: 5].
+        </div>
+      </div>
+
+      <!-- EXERCISE G & H -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise G & H: HOTS, Competency Scenarios & Reflections[cite: 5]</div>
+        <div class="qa-a">
+          <b>G1 (Growing Up Experience):</b> Narrating experiences where boys are expected to do outdoor work while girls are asked to help in the kitchen, proving social expectations differ[cite: 5].<br><br>
+          <b>G2 (Positive Changes):</b> Increased women joining STEM careers/sports and equal sharing of housework in modern homes[cite: 5].<br><br>
+          <b>H1 (Scenario Analysis):</b><br>
+          • Scenario (c) (Only boys allowed to go to school) is an example of gender inequality because it denies girls their Right to Education[cite: 5].<br><br>
+          <b>H2 (Classroom Presentation Scenario):</b><br>
+          • Assigning presentation roles by gender (boys doing research/speaking while girls make posters) is unfair because skill is not determined by gender[cite: 5].<br>
+          • The teacher should allow students to choose roles based on interest or rotate tasks[cite: 5].<br><br>
+          <b>Reflections:</b> Realizing gender is a social construct and actively breaking stereotypes in everyday life[cite: 5].
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TAB 8: ENRICHED TOPIC VIDEOS -->
+  <div id="media" class="tab-content">
+    <div class="card">
+      <div class="card-title">Enriched Topic-Wise Recommended Videos</div>
+      <p style="margin-bottom:14px; font-size:0.9rem;">Click these curated links for visual animations and documentaries specifically organized by chapter topics[cite: 5]:</p>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+        
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Difference+between+Sex+and+Gender+animation+for+students" target="_blank">
+          <span class="media-icon">♀️</span>
+          <div><b>Topic 1: Sex vs Gender & Social Constructs</b><br><small>Visual animations explaining biological vs social differences[cite: 5].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Gender+stereotypes+and+unpaid+care+work+animation" target="_blank">
+          <span class="media-icon">🏠</span>
+          <div><b>Topic 2: Gender Stereotypes & Unpaid Care Work</b><br><small>Short films on devaluing domestic work and double burden[cite: 5].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Social+Reformers+for+women+rights+in+India+Raja+Rammohan+Roy+Savitribai+Phule" target="_blank">
+          <span class="media-icon">📜</span>
+          <div><b>Topic 3: 19th Century Social Reformers</b><br><small>Documentaries on Raja Rammohan Roy, Savitribai Phule & Pandita Ramabai[cite: 5].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Laws+for+women+empowerment+in+India+CBSE+Civics" target="_blank">
+          <span class="media-icon">⚖️</span>
+          <div><b>Topic 4: Constitutional Rights & Government Laws</b><br><small>Videos covering Right to Equality, RTE, and 33% Panchayat Reservation[cite: 5].</small></div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Chapter 13 Master Study Hub · Prepared for Pushti · CBSE Class 7 Civics
+  </footer>
+
+<script>
+  function openTab(tabId) {
+    const contents = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-btn');
+    contents.forEach(content => content.classList.remove('active'));
+    buttons.forEach(btn => btn.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function toggleQA(cardElement) { cardElement.classList.toggle('open'); }
+
+  function checkMCQ(btnElement, isCorrect, explainId) {
+    const parentBox = btnElement.parentElement;
+    const buttons = parentBox.querySelectorAll('.mcq-opt');
+    const explanation = document.getElementById(explainId);
+
+    buttons.forEach(btn => btn.disabled = true);
+
+    if (isCorrect) { btnElement.classList.add('correct'); } 
+    else { btnElement.classList.add('wrong'); }
+
+    if (explanation) { explanation.style.display = 'block'; }
+  }
+</script>
+</body>
+</html>

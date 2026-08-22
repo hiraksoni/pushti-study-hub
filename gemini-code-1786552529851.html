@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 8 Interactive Study Hub — Pushti's Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sandstone: #F9F5EC;
+    --card-bg: #FFFFFF;
+    --ink: #2B2620;
+    --maroon: #7A2A2E;
+    --maroon-light: #9E3B40;
+    --gold: #C59B27;
+    --gold-light: #FFF8E7;
+    --teal: #2F5D5A;
+    --teal-light: #EBF4F3;
+    --shadow: 0 4px 15px rgba(0,0,0,0.06);
+    --border-radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--sandstone);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  header.hero {
+    text-align: center;
+    background: linear-gradient(135deg, var(--maroon), #4A1A1D);
+    color: white;
+    padding: 28px 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    border-bottom: 4px solid var(--gold);
+  }
+
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    color: #FFF;
+  }
+
+  .tagline {
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+
+  .badge-bar {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  /* Navigation Tabs */
+  .tab-nav {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #E2D9C5;
+  }
+
+  .tab-btn {
+    background: #EAE3D2;
+    border: none;
+    outline: none;
+    padding: 12px 18px;
+    border-radius: 8px 8px 0 0;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--ink);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+
+  .tab-btn:hover {
+    background: #DFCFAF;
+  }
+
+  .tab-btn.active {
+    background: var(--maroon);
+    color: white;
+  }
+
+  /* Tab Content Panels */
+  .tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Cards & Layouts */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid #EAE3D2;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    color: var(--maroon);
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--gold-light);
+    padding-bottom: 6px;
+  }
+
+  /* Timeline Cards */
+  .timeline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .t-box {
+    border-left: 4px solid var(--gold);
+    background: #FFFBF2;
+    padding: 14px 16px;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .t-box.gupta { border-left-color: var(--maroon); }
+  .t-box.chalukya { border-left-color: var(--teal); }
+  .t-box.pallava { border-left-color: #5A4E8C; }
+  .t-box.harsha { border-left-color: var(--gold); }
+
+  .t-years {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: #666;
+  }
+
+  .t-head {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+
+  /* Interactive Click-to-Reveal Questions */
+  .qa-card {
+    background: var(--card-bg);
+    border-left: 4px solid var(--teal);
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+  }
+
+  .qa-q {
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--ink);
+  }
+
+  .qa-q::after {
+    content: '+ Click to reveal answer';
+    font-size: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--teal);
+    background: var(--teal-light);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .qa-card.open .qa-q::after {
+    content: '- Hide answer';
+    background: #FADBD8;
+    color: var(--maroon);
+  }
+
+  .qa-a {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #DDD;
+    font-size: 0.93rem;
+    color: #333;
+  }
+
+  .qa-card.open .qa-a {
+    display: block;
+  }
+
+  /* Interactive Quiz Arena */
+  .quiz-container {
+    background: var(--card-bg);
+    padding: 24px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+  }
+
+  .quiz-q {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .opt-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: #F5F5F5;
+    border: 1px solid #DDD;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.92rem;
+    transition: background 0.2s;
+  }
+
+  .opt-btn:hover {
+    background: #EAEAEA;
+  }
+
+  .opt-btn.correct {
+    background: #D4EDDA !important;
+    border-color: #28A745 !important;
+    color: #155724;
+    font-weight: 700;
+  }
+
+  .opt-btn.wrong {
+    background: #F8D7DA !important;
+    border-color: #DC3545 !important;
+    color: #721C24;
+  }
+
+  .quiz-score-box {
+    margin-top: 20px;
+    padding: 16px;
+    background: var(--gold-light);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 700;
+    display: none;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 0.88rem;
+  }
+
+  th, td {
+    padding: 10px 12px;
+    border: 1px solid #EAE3D2;
+    text-align: left;
+  }
+
+  th {
+    background: var(--maroon);
+    color: white;
+    font-family: 'Cinzel', serif;
+  }
+
+  tr:nth-child(even) { background: #FFFBF2; }
+
+  .highlight-tag {
+    display: inline-block;
+    background: var(--teal-light);
+    color: var(--teal);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 4px;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.8rem;
+    color: #777;
+    font-family: 'JetBrains Mono', monospace;
+  }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <h1>India: 4th to 7th Century CE</h1>
+    <div class="tagline">Interactive All-in-One Study Dashboard & Quiz Center</div>
+    <div class="badge-bar">
+      <span class="badge">Pushti · Class 7 CBSE</span>
+      <span class="badge">Tapestry of the Past</span>
+      <span class="badge">Chapter 8</span>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="openTab('timeline')">⏱️ Timelines & Kingdoms</button>
+    <button class="tab-btn" onclick="openTab('sources')">📜 Sources & Admin</button>
+    <button class="tab-btn" onclick="openTab('culture')">🎨 Achievements & Life</button>
+    <button class="tab-btn" onclick="openTab('textbook')">📖 Textbook Solutions</button>
+    <button class="tab-btn" onclick="openTab('quiz')">🎯 Interactive Test Arena</button>
+  </div>
+
+  <!-- TAB 1: TIMELINE & KINGDOMS -->
+  <div id="timeline" class="tab-content active">
+    <div class="card">
+      <div class="card-title">Chronological Overview of the Four Empires</div>
+      <div class="timeline-list">
+        <div class="t-box gupta">
+          <div class="t-years">320 CE – 550 CE</div>
+          <div class="t-head">1. The Gupta Empire (Capitals: Pataliputra, Ujjain)</div>
+          <p><b>Key Rulers:</b> Chandragupta I (founded with Lichchhavi alliance), Samudragupta (expanded across Aryavarta & South India), Chandragupta II 'Vikramaditya'. Ended due to Huna attacks.</p>
+        </div>
+        <div class="t-box chalukya">
+          <div class="t-years">543 CE – 753 CE</div>
+          <div class="t-head">2. The Chalukyas of Badami (Capital: Badami)</div>
+          <p><b>Key Rulers:</b> Pulakesin I (founder), Pulakesin II (greatest ruler; stopped Harsha at Narmada River). Known for rock-cut cave temples at Badami and Pattadakal.</p>
+        </div>
+        <div class="t-box pallava">
+          <div class="t-years">575 CE – 668 CE+</div>
+          <div class="t-head">3. The Pallavas of Kanchipuram (Capital: Kanchipuram)</div>
+          <p><b>Key Rulers:</b> Simhavishnu (independent founder), Mahendravarman I, Narasimhavarman I 'Mamalla' (built Mamallapuram, defeated Pulakesin II).</p>
+        </div>
+        <div class="t-box harsha">
+          <div class="t-years">606 CE – 647 CE</div>
+          <div class="t-head">4. Harshavardhana's Empire (Capitals: Thaneshwar, Kanauj)</div>
+          <p><b>Key Rulers:</b> Harshavardhana (Pushyabhuti family, took throne at age 16). Patron of Nalanda; wrote <i>Ratnavali</i> & <i>Nagananda</i>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: SOURCES & ADMIN -->
+  <div id="sources" class="tab-content">
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Historical Sources</div>
+        <p><span class="highlight-tag">Literary</span> <b>Puranas</b>, plays (*Ratnavali*, *Devichandraguptam*), and foreign accounts by Chinese pilgrims <b>Xuanzang</b> and <b>Fa Xian</b>.</p>
+        <p style="margin-top:10px;"><span class="highlight-tag">Archaeological</span> Gold coins (Guptas), rock-cut monuments, and <b>Prashastis</b> (eulogy inscriptions in praise of rulers like Prayagraj Prashasti by Harisena).</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Gupta Administrative Hierarchy</div>
+        <ul>
+          <li><b>Emperor:</b> Supreme head, advised by <i>Mantris</i>.</li>
+          <li><b>Bhuktis (Provinces):</b> Governed by <i>Uparikas</i>.</li>
+          <li><b>Vishyas (Districts):</b> Governed by <i>Vishyapatis</i>.</li>
+          <li><b>Gramas (Villages):</b> Managed by <i>Gramikas</i>.</li>
+          <li><b>Samantas:</b> Military chiefs paid in land grants.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Special Administrative Features in the South</div>
+      <table>
+        <tr><th>Feature</th><th>Description</th></tr>
+        <tr><td><b>Divine Lineage</b></td><td>Chalukyas and Pallavas claimed descent from Lord Brahma to legitimize rule.</td></tr>
+        <tr><td><b>Brahmadeya</b></td><td>Tax-free land/village grants given to Brahmanas by Pallava kings.</td></tr>
+        <tr><td><b>Assemblies</b></td><td><b>Sabha</b> (Brahmana villages) · <b>Ur</b> (non-Brahmana villages) · <b>Nagaram</b> (Market towns).</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB 3: ACHIEVEMENTS & LIFE -->
+  <div id="culture" class="tab-content">
+    <div class="card">
+      <div class="card-title">Cultural & Scientific Achievements</div>
+      <table>
+        <tr><th>Kingdom</th><th>Key Contributors & Achievements</th></tr>
+        <tr><td><b>Guptas</b></td><td>"Golden Age" — Astronomer Aryabhata, Poet Kalidasa (*Shakuntala*), Writer Vishakhadatta. Center of learning: Nalanda University.</td></tr>
+        <tr><td><b>Harsha</b></td><td>Plays written by Harsha: *Ratnavali*, *Nagananda*. Court poet Banabhatta wrote *Harshacharita* and *Kadambari*.</td></tr>
+        <tr><td><b>Chalukyas & Pallavas</b></td><td>Chalukya rock-cut temples at Badami & Pattadakal. Pallava *Shore Temple* and *Pancha Pandava Rathas* at Mamallapuram.</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Everyday Life of the People</div>
+      <div class="grid-2">
+        <div>
+          <b>Economy & Tax</b>
+          <ul>
+            <li>Main occupation: Farming and animal rearing.</li>
+            <li>Main source of revenue: Land taxes.</li>
+            <li>Trade conducted with Rome, Southeast Asia, and Africa.</li>
+          </ul>
+        </div>
+        <div>
+          <b>Society & Religion</b>
+          <ul>
+            <li>Rigid caste system determined occupations.</li>
+            <li>Religious tolerance: Hinduism, Buddhism, and Jainism coexisted peacefully.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: TEXTBOOK SOLUTIONS -->
+  <div id="textbook" class="tab-content">
+    <div class="card">
+      <div class="card-title">Textbook Exercises — Interactive Q&A (Click to Reveal Answers)</div>
+
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Q1. Who captured nine kingdoms in Aryavarta? (MCQ)</div>
+        <div class="qa-a"><b>Answer:</b> Samudragupta[cite: 2].</div>
+      </div>
+
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Q2. What was the capital city of Harshavardhana? (MCQ)</div>
+        <div class="qa-a"><b>Answer:</b> Kanauj (shifted from Thaneshwar)[cite: 1, 2].</div>
+      </div>
+
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Q3. Which Chalukya ruler defeated Harshavardhana at the Narmada River? (MCQ)</div>
+        <div class="qa-a"><b>Answer:</b> Pulakesin II[cite: 1, 2].</div>
+      </div>
+
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Q4. What were the governors of provinces (Bhuktis) called in the Gupta Empire? (MCQ)</div>
+        <div class="qa-a"><b>Answer:</b> Uparikas[cite: 1, 2].</div>
+      </div>
+
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Q5. Who wrote *Harshacharita* in Harsha's court? (MCQ)</div>
+        <div class="qa-a"><b>Answer:</b> Banabhatta[cite: 1, 2].</div>
+      </div>
+
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Q6. True/False: Chandragupta II took the title of Maharajadhiraja.</div>
+        <div class="qa-a"><b>Answer: False.</b> Chandragupta II took the title of <i>Vikramaditya</i>[cite: 1, 2]. (Chandragupta I and Samudragupta took the title Maharajadhiraja)[cite: 2].</div>
+      </div>
+
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Q7. What was a 'Prashasti' and what was its main limitation?</div>
+        <div class="qa-a"><b>Answer:</b> A <i>prashasti</i> is a Sanskrit poem composed by court poets in praise of a king[cite: 2]. Its main limitation is that it only describes the victories and good qualities of rulers, ignoring their failures[cite: 1, 2].</div>
+      </div>
+
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Q8. Arrange chronologically: Harsha, Guptas, Chalukyas, Pallavas.</div>
+        <div class="qa-a"><b>Answer:</b> The Gupta Empire (320 CE) → Chalukyas (543 CE) → Pallavas (575 CE) → Harsha's Empire (606 CE)[cite: 1, 2].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: INTERACTIVE QUIZ ARENA -->
+  <div id="quiz" class="tab-content">
+    <div class="quiz-container">
+      <div class="card-title">Pushti's Self-Testing Quiz Arena</div>
+      <p style="margin-bottom:16px; font-size:0.9rem;">Click on your chosen option for immediate feedback and scoring!</p>
+
+      <div id="quiz-body">
+        <!-- Dynamic Quiz Rendered via JS -->
+      </div>
+
+      <div id="quiz-score-box" class="quiz-score-box"></div>
+    </div>
+  </div>
+
+  <footer>
+    Chapter 8 Study Dashboard · Created for Pushti · CBSE Class 7 History
+  </footer>
+
+<script>
+  // Tab Navigation Logic
+  function openTab(tabId) {
+    const contents = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-btn');
+
+    contents.forEach(content => content.classList.remove('active'));
+    buttons.forEach(btn => btn.classList.remove('active'));
+
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  // Click to Reveal Answer Logic
+  function toggleQA(cardElement) {
+    cardElement.classList.toggle('open');
+  }
+
+  // Interactive Quiz Logic
+  const quizData = [
+    {
+      q: "Which Chinese pilgrim wrote detailed accounts during Harshavardhana's reign?",
+      opts: ["Fa Xian", "Xuanzang", "I-Qing", "Megasthenes"],
+      ans: 1
+    },
+    {
+      q: "What was the capital of the Chalukya dynasty?",
+      opts: ["Kanchipuram", "Kanauj", "Badami", "Pataliputra"],
+      ans: 2
+    },
+    {
+      q: "Which Pallava ruler defeated Pulakesin II and built Mamallapuram?",
+      opts: ["Simhavishnu", "Mahendravarman I", "Narasimhavarman I (Mamalla)", "Chandragupta II"],
+      ans: 2
+    },
+    {
+      q: "What was the assembly of non-Brahmana villages in the Pallava kingdom called?",
+      opts: ["Sabha", "Ur", "Nagaram", "Vishya"],
+      ans: 1
+    },
+    {
+      q: "Which river served as the southern boundary of Harshavardhana's empire?",
+      opts: ["Ganga", "Godavari", "Narmada", "Krishna"],
+      ans: 2
+    }
+  ];
+
+  let currentScore = 0;
+  let answeredCount = 0;
+
+  function renderQuiz() {
+    const container = document.getElementById('quiz-body');
+    container.innerHTML = '';
+
+    quizData.forEach((item, index) => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'card';
+      qDiv.style.marginBottom = '14px';
+
+      let html = `<div class="quiz-q">Q${index + 1}. ${item.q}</div>`;
+      item.opts.forEach((opt, oIdx) => {
+        html += `<button class="opt-btn" onclick="checkAnswer(${index}, ${oIdx}, this)">${opt}</button>`;
+      });
+
+      qDiv.innerHTML = html;
+      container.appendChild(qDiv);
+    });
+  }
+
+  function checkAnswer(qIdx, selectedIdx, btn) {
+    const parent = btn.parentElement;
+    const buttons = parent.querySelectorAll('.opt-btn');
+
+    // Prevent re-answering
+    buttons.forEach(b => b.disabled = true);
+
+    const correctIdx = quizData[qIdx].ans;
+    if (selectedIdx === correctIdx) {
+      btn.classList.add('correct');
+      currentScore++;
+    } else {
+      btn.classList.add('wrong');
+      buttons[correctIdx].classList.add('correct');
+    }
+
+    answeredCount++;
+
+    if (answeredCount === quizData.length) {
+      const scoreBox = document.getElementById('quiz-score-box');
+      scoreBox.style.display = 'block';
+      scoreBox.innerHTML = `🎉 Quiz Complete! Pushti scored ${currentScore} out of ${quizData.length}!`;
+    }
+  }
+
+  // Initialize Quiz on Load
+  renderQuiz();
+</script>
+</body>
+</html>
