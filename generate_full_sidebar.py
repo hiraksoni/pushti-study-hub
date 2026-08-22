@@ -1,4 +1,125 @@
-<!DOCTYPE html>
+import os
+import glob
+import re
+
+files = glob.glob('d:/Users/expor/Downloads/Codes/gemini-code-*.html')
+existing_files = {}
+
+for f in files:
+    with open(f, 'r', encoding='utf-8', errors='replace') as file:
+        content = file.read()
+        match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE)
+        title = match.group(1) if match else 'No Title'
+        
+        chap_match = re.search(r'Chapter\s*(\d+)', title, re.IGNORECASE)
+        if not chap_match:
+            chap_match = re.search(r'Chapter\s*(\d+)', content, re.IGNORECASE)
+            
+        chapter = int(chap_match.group(1)) if chap_match else -1
+        
+        ts_match = re.search(r'(\d+)', os.path.basename(f))
+        ts = int(ts_match.group(1)) if ts_match else 0
+        
+        if chapter != -1:
+            if chapter not in existing_files or ts > existing_files[chapter]['ts']:
+                existing_files[chapter] = {
+                    'file': os.path.basename(f),
+                    'ts': ts
+                }
+
+SYLLABUS = [
+    {
+        'subject': 'ICT',
+        'emoji': '💻',
+        'chapters': [
+            {'num': 'Ch-1', 'title': 'Number System'},
+            {'num': 'Ch-2', 'title': 'Advanced Features of Excel'},
+            {'num': 'Ch-3', 'title': 'Artificial Intelligence'},
+            {'num': 'Ch-4', 'title': 'Working with HTML Tags and CSS'},
+            {'num': 'Ch-5', 'title': 'Lists and Images in HTML'}
+        ]
+    },
+    {
+        'subject': 'Maths',
+        'emoji': '🔢',
+        'chapters': [
+            {'num': '-', 'title': 'Large Numbers Around Us'},
+            {'num': '-', 'title': 'Arithmetic Expressions'},
+            {'num': '-', 'title': 'A Peek Beyond the Point'},
+            {'num': '-', 'title': 'Expressions using Letter-Numbers'},
+            {'num': '-', 'title': 'Parallel and Intersecting Lines'},
+            {'num': '-', 'title': 'Number Play'},
+            {'num': '-', 'title': 'A Tale of Three Intersecting Lines'},
+            {'num': '-', 'title': 'Working with Fractions'}
+        ]
+    },
+    {
+        'subject': 'Science',
+        'emoji': '🔬',
+        'chapters': [
+            {'num': 'Bio Ch.2', 'title': 'Adolescence'},
+            {'num': 'Bio Ch.3', 'title': 'Life processes in Animals'},
+            {'num': 'Chem Ch.1', 'title': 'Acids, Bases and neutral'},
+            {'num': 'Chem Ch.2', 'title': 'The world of metals and non-metals'},
+            {'num': 'Phy Ch.1', 'title': 'Electricity'},
+            {'num': 'Phy Ch.2', 'title': 'Heat transfer'},
+            {'num': 'Phy Ch.3', 'title': 'Measurement of time and motion'}
+        ]
+    },
+    {
+        'subject': 'Social Science',
+        'emoji': '🌍',
+        'chapters': [
+            {'num': 'Ch 1', 'title': 'Interior of the Earth', 'ss_id': 1},
+            {'num': 'Ch 2', 'title': 'Our Changing Earth', 'ss_id': 2},
+            {'num': 'Ch 6', 'title': 'The first Indian Empires', 'ss_id': 6},
+            {'num': 'Ch 7', 'title': 'India in the Iron Age', 'ss_id': 7},
+            {'num': 'Ch 8', 'title': 'India from the 4th -7th Century CE', 'ss_id': 8},
+            {'num': 'Ch 13', 'title': 'Understanding Gender', 'ss_id': 13},
+            {'num': 'Ch 14', 'title': 'How does Democracy Work', 'ss_id': 14},
+            {'num': 'Ch 17', 'title': 'Market around us', 'ss_id': 17}
+        ]
+    },
+    {
+        'subject': 'English',
+        'emoji': '📝',
+        'chapters': [
+            {'num': 'Lit U1', 'title': 'Where Learning Begins (Ch 1,2,3)'},
+            {'num': 'Lit U2', 'title': 'Wanderlust (Ch 1,2,3)'},
+            {'num': 'Lit U3', 'title': 'Real-Life Heroes (Ch 1,2,3)'},
+            {'num': 'Writing', 'title': 'Story, Summary, Paragraph, Letter'},
+            {'num': 'Reading', 'title': 'Unseen Passages'},
+            {'num': 'Grammar', 'title': 'L-1 to 10 & 17'},
+            {'num': 'Vocab', 'title': 'Homonyms, suffixes, phrases'}
+        ]
+    },
+    {
+        'subject': 'Hindi',
+        'emoji': '🗣️',
+        'chapters': [
+            {'num': 'Lit', 'title': 'Poem 1, 3, 8 | Chapter 2, 4, 5, 6, 7'},
+            {'num': 'Grammar', 'title': 'Chapter 1, 2, 3, 4, 6, 7, 22 | Extra'},
+            {'num': 'Writing', 'title': 'Letter, Anucheed, Chitra Varnan...'},
+            {'num': 'Reading', 'title': 'Unseen Comprehension'}
+        ]
+    },
+    {
+        'subject': 'Sanskrit',
+        'emoji': '🕉️',
+        'chapters': [
+            {'num': 'Ch 1', 'title': 'वन्देभारतम्'},
+            {'num': 'Ch 2', 'title': 'नित्यं पिबामः सुभाषितरसम्'},
+            {'num': 'Ch 3', 'title': 'मित्राय नम:'},
+            {'num': 'Ch 4', 'title': 'न लभ्यते चेत् अम्लं द्राक्षाफलम्'},
+            {'num': 'Ch 5', 'title': 'सेवा हि परमो धर्म:'},
+            {'num': 'Ch 6', 'title': 'क्रीडाम: वयं श्लोकनाटकशालम्'},
+            {'num': 'Vyakaran', 'title': 'वर्णमाला, शब्दरूपाणि...'},
+            {'num': 'Rachna', 'title': 'पत्रलेखनम्, चित्रवर्णनम्...'}
+        ]
+    }
+]
+
+html_content = '''<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -162,385 +283,41 @@
             </div>
         </div>
         <div class="nav-container" id="nav-container">
+'''
 
+for subj in SYLLABUS:
+    html_content += f'''
             <div class="subject-group" onclick="toggleGroup(this)">
-                <div class="subject-title">💻 ICT</div>
+                <div class="subject-title">{subj['emoji']} {subj['subject']}</div>
                 <ul class="nav-links">
-
+'''
+    for ch in subj['chapters']:
+        file_path = ''
+        is_ready = False
+        
+        if 'ss_id' in ch and ch['ss_id'] in existing_files:
+            file_path = existing_files[ch['ss_id']]['file']
+            is_ready = True
+            
+        btn_class = 'nav-btn' + ('' if is_ready else ' pending')
+        dot_class = 'dot-ready' if is_ready else 'dot-pending'
+        onclick = f"loadChapter(event, '{file_path}', '{subj['subject']}', '{ch['title']}', this)" if is_ready else "showPending(event)"
+        
+        html_content += f'''
                     <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Ch-1</span>
-                            <span class="chap-title">Number System</span>
-                            <span class="status-dot dot-pending"></span>
+                        <button class="{btn_class}" onclick="{onclick}">
+                            <span class="chap-num">{ch['num']}</span>
+                            <span class="chap-title">{ch['title']}</span>
+                            <span class="status-dot {dot_class}"></span>
                         </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Ch-2</span>
-                            <span class="chap-title">Advanced Features of Excel</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Ch-3</span>
-                            <span class="chap-title">Artificial Intelligence</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Ch-4</span>
-                            <span class="chap-title">Working with HTML Tags and CSS</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Ch-5</span>
-                            <span class="chap-title">Lists and Images in HTML</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
+                    </li>'''
+                
+    html_content += '''
                 </ul>
             </div>
+'''
 
-            <div class="subject-group" onclick="toggleGroup(this)">
-                <div class="subject-title">🔢 Maths</div>
-                <ul class="nav-links">
-
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">-</span>
-                            <span class="chap-title">Large Numbers Around Us</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">-</span>
-                            <span class="chap-title">Arithmetic Expressions</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">-</span>
-                            <span class="chap-title">A Peek Beyond the Point</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">-</span>
-                            <span class="chap-title">Expressions using Letter-Numbers</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">-</span>
-                            <span class="chap-title">Parallel and Intersecting Lines</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">-</span>
-                            <span class="chap-title">Number Play</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">-</span>
-                            <span class="chap-title">A Tale of Three Intersecting Lines</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">-</span>
-                            <span class="chap-title">Working with Fractions</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="subject-group" onclick="toggleGroup(this)">
-                <div class="subject-title">🔬 Science</div>
-                <ul class="nav-links">
-
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Bio Ch.2</span>
-                            <span class="chap-title">Adolescence</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Bio Ch.3</span>
-                            <span class="chap-title">Life processes in Animals</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Chem Ch.1</span>
-                            <span class="chap-title">Acids, Bases and neutral</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Chem Ch.2</span>
-                            <span class="chap-title">The world of metals and non-metals</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Phy Ch.1</span>
-                            <span class="chap-title">Electricity</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Phy Ch.2</span>
-                            <span class="chap-title">Heat transfer</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Phy Ch.3</span>
-                            <span class="chap-title">Measurement of time and motion</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="subject-group" onclick="toggleGroup(this)">
-                <div class="subject-title">🌍 Social Science</div>
-                <ul class="nav-links">
-
-                    <li class="nav-item">
-                        <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786806264249.html', 'Social Science', 'Interior of the Earth', this)">
-                            <span class="chap-num">Ch 1</span>
-                            <span class="chap-title">Interior of the Earth</span>
-                            <span class="status-dot dot-ready"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786807311533 (1).html', 'Social Science', 'Our Changing Earth', this)">
-                            <span class="chap-num">Ch 2</span>
-                            <span class="chap-title">Our Changing Earth</span>
-                            <span class="status-dot dot-ready"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786868059204.html', 'Social Science', 'The first Indian Empires', this)">
-                            <span class="chap-num">Ch 6</span>
-                            <span class="chap-title">The first Indian Empires</span>
-                            <span class="status-dot dot-ready"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786869713516.html', 'Social Science', 'India in the Iron Age', this)">
-                            <span class="chap-num">Ch 7</span>
-                            <span class="chap-title">India in the Iron Age</span>
-                            <span class="status-dot dot-ready"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786554270939.html', 'Social Science', 'India from the 4th -7th Century CE', this)">
-                            <span class="chap-num">Ch 8</span>
-                            <span class="chap-title">India from the 4th -7th Century CE</span>
-                            <span class="status-dot dot-ready"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786870843828.html', 'Social Science', 'Understanding Gender', this)">
-                            <span class="chap-num">Ch 13</span>
-                            <span class="chap-title">Understanding Gender</span>
-                            <span class="status-dot dot-ready"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786873269831.html', 'Social Science', 'How does Democracy Work', this)">
-                            <span class="chap-num">Ch 14</span>
-                            <span class="chap-title">How does Democracy Work</span>
-                            <span class="status-dot dot-ready"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn" onclick="loadChapter(event, 'gemini-code-1786875375575.html', 'Social Science', 'Market around us', this)">
-                            <span class="chap-num">Ch 17</span>
-                            <span class="chap-title">Market around us</span>
-                            <span class="status-dot dot-ready"></span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="subject-group" onclick="toggleGroup(this)">
-                <div class="subject-title">📝 English</div>
-                <ul class="nav-links">
-
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Lit U1</span>
-                            <span class="chap-title">Where Learning Begins (Ch 1,2,3)</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Lit U2</span>
-                            <span class="chap-title">Wanderlust (Ch 1,2,3)</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Lit U3</span>
-                            <span class="chap-title">Real-Life Heroes (Ch 1,2,3)</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Writing</span>
-                            <span class="chap-title">Story, Summary, Paragraph, Letter</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Reading</span>
-                            <span class="chap-title">Unseen Passages</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Grammar</span>
-                            <span class="chap-title">L-1 to 10 & 17</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Vocab</span>
-                            <span class="chap-title">Homonyms, suffixes, phrases</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="subject-group" onclick="toggleGroup(this)">
-                <div class="subject-title">🗣️ Hindi</div>
-                <ul class="nav-links">
-
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Lit</span>
-                            <span class="chap-title">Poem 1, 3, 8 | Chapter 2, 4, 5, 6, 7</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Grammar</span>
-                            <span class="chap-title">Chapter 1, 2, 3, 4, 6, 7, 22 | Extra</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Writing</span>
-                            <span class="chap-title">Letter, Anucheed, Chitra Varnan...</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Reading</span>
-                            <span class="chap-title">Unseen Comprehension</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="subject-group" onclick="toggleGroup(this)">
-                <div class="subject-title">🕉️ Sanskrit</div>
-                <ul class="nav-links">
-
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Ch 1</span>
-                            <span class="chap-title">वन्देभारतम्</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Ch 2</span>
-                            <span class="chap-title">नित्यं पिबामः सुभाषितरसम्</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Ch 3</span>
-                            <span class="chap-title">मित्राय नम:</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Ch 4</span>
-                            <span class="chap-title">न लभ्यते चेत् अम्लं द्राक्षाफलम्</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Ch 5</span>
-                            <span class="chap-title">सेवा हि परमो धर्म:</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Ch 6</span>
-                            <span class="chap-title">क्रीडाम: वयं श्लोकनाटकशालम्</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Vyakaran</span>
-                            <span class="chap-title">वर्णमाला, शब्दरूपाणि...</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-btn pending" onclick="showPending(event)">
-                            <span class="chap-num">Rachna</span>
-                            <span class="chap-title">पत्रलेखनम्, चित्रवर्णनम्...</span>
-                            <span class="status-dot dot-pending"></span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-
+html_content += '''
         </div>
     </div>
 
@@ -663,3 +440,9 @@
 </script>
 </body>
 </html>
+'''
+
+with open('d:/Users/expor/Downloads/Codes/index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print("index.html updated successfully.")
