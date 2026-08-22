@@ -1,48 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>[Subject] Chapter [X] — Pushti's Notes</title>
-<!-- Google Fonts & Custom CSS Rules -->
-<style>
-  /* Base Rules: Sandstone theme, Multi-line wrapping tabs, Vector grid styling, MCQ feedback colors */
-</style>
-</head>
-<body>
+import glob
+import re
 
-  <header class="hero">
-    <h1>[CHAPTER TITLE]</h1>
-    <div class="tagline">Complete Chapter Study Dashboard & Interactive Testing Hub</div>
-    <div class="badge-bar">
-      <span class="badge">Pushti · Class 7 CBSE</span>
-      <span class="badge">[Book Name]</span>
-      <span class="badge">Chapter [X]</span>
-    </div>
-  </header>
+files = glob.glob('d:/Users/expor/Downloads/Codes/gemini-code-*.html')
 
-  <!-- Multi-Line Wrap Navigation Bar -->
-  <div class="tab-nav">
-    <!-- Concept Tabs -->
-    <!-- Interactive Quiz Tabs -->
-    <!-- Written Answer Tabs -->
-    <!-- Visual & Video Anchor Tab -->
-  </div>
-
-  <!-- TAB PANELS -->
-  <!-- 1. Topic Breakdown Cards with Embedded SVG Artwork -->
-  <!-- 2. 12+ Interactive 4-Option MCQs -->
-  <!-- 3. Confusing 2-Choice Drills -->
-  <!-- 4. True/False Arena with Explanations -->
-  <!-- 5. Complete Textbook Solutions (Short, Long, HOTS, Competency) -->
-  <!-- 6. Visual Media Links & Video Search Anchors -->
-
-<script>
-  // Tab Switcher Function
-  // Accordion Toggle Function
-  // Interactive Option Checker Function (Disable on click, reveal color + explanation)
-</script>
-
+injection_script = '''
 <!-- FIREBASE INJECTION START -->
 <script type="module">
     import { db, doc, onSnapshot } from './firebase-config.js';
@@ -92,6 +53,15 @@
     });
 </script>
 <!-- FIREBASE INJECTION END -->
+'''
 
-</body>
-</html>
+for f in files:
+    with open(f, 'r', encoding='utf-8', errors='replace') as file:
+        content = file.read()
+        
+    if 'FIREBASE INJECTION START' not in content:
+        content = content.replace('</body>', injection_script + '\n</body>')
+        with open(f, 'w', encoding='utf-8') as file:
+            file.write(content)
+            
+print("Successfully injected Firebase listener into all chapter files.")
