@@ -77,6 +77,15 @@
   section{margin-bottom:40px;}
   h2{font-family:'Cormorant Garamond',serif; font-size:1.7rem; color:var(--maroon-deep); margin:0 0 16px; display:flex; align-items:center; gap:10px; border-left:5px solid var(--teal); padding-left:12px;}
 
+  /* MODE SWITCH */
+  .mode-switch { display: flex; justify-content: center; gap: 0; margin-bottom: 20px; border-radius: 100px; overflow: hidden; border: 2px solid var(--copper); max-width: 320px; margin: 0 auto 20px auto; }
+  .mode-btn { flex: 1; padding: 10px; border: none; background: var(--card-bg); color: var(--teal-deep); font-size:0.9rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; transition: 0.3s; }
+  .mode-btn.active { background: var(--copper); color: var(--card-bg); }
+  #test-intro { background: var(--card-bg); border: 2px dashed var(--copper); border-radius: 12px; padding: 40px 20px; text-align: center; margin-bottom: 30px; box-shadow: var(--shadow); }
+  #test-intro h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--maroon-deep); margin-top: 0; }
+  .btn-start { background: var(--maroon-deep); color: white; border: none; padding: 14px 34px; font-size: 1.1rem; font-weight: 700; font-family:'Nunito',sans-serif; border-radius: 100px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 10px rgba(90, 30, 34, 0.3); transition: 0.2s; }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(90, 30, 34, 0.4); }
+
   /* QUESTION STYLES */
   .q{background:var(--card-bg); border:1px solid var(--sandstone-deep); border-radius:10px; padding:14px 18px; margin-bottom:12px; box-shadow:var(--shadow);}
   .q-text{font-weight:700; margin-bottom:8px; font-size:0.96rem;}
@@ -124,15 +133,17 @@
   .concept-tree li a:hover { background: var(--copper); color: white; border-color: var(--copper); }
 
   /* BOTTOM GRADE BAR */
-  .grade-bar{position:fixed; left:0; right:0; bottom:0; background:var(--maroon-deep); color:#fff; padding:12px 16px; display:flex; align-items:center; justify-content:center; gap:14px; box-shadow:0 -6px 18px rgba(0,0,0,0.25); z-index:50; flex-wrap:wrap;}
+  .grade-bar{position:fixed; left:0; right:0; bottom:0; background:var(--maroon-deep); color:#fff; padding:12px 16px; display:flex; align-items:center; justify-content:center; gap:14px; box-shadow:0 -6px 18px rgba(0,0,0,0.25); z-index:50; flex-wrap:wrap; display:none;}
   .grade-bar button{background:var(--copper); color:#2B2620; border:none; padding:10px 22px; border-radius:100px; font-weight:800; font-family:'Nunito',sans-serif; font-size:0.95rem; cursor:pointer;}
   .grade-bar button:hover{filter:brightness(1.08);}
-  .score-readout{font-family:'JetBrains Mono',monospace; font-size:0.9rem;}
+  .score-readout{font-family:'JetBrains Mono',monospace; font-size:1.1rem; font-weight:700;}
+  .score-readout.urgent{color:#ff9999; animation: pulse 1s infinite;}
+  @keyframes pulse { 0% { opacity:1;} 50% {opacity:0.5;} 100% {opacity:1;} }
 
-  .result-panel{display:none; background:var(--card-bg); border:2px solid var(--copper); border-radius:14px; padding:22px; text-align:center; margin-top:20px; box-shadow:var(--shadow);}
+  .result-panel{display:none; background:var(--card-bg); border:2px solid var(--copper); border-radius:14px; padding:22px; text-align:center; margin-bottom:40px; box-shadow:var(--shadow);}
   .result-panel.show{display:block;}
   .result-panel .score-big{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:2.6rem; color:var(--maroon-deep);}
-  .result-panel .msg{font-size:1rem; margin-top:6px;}
+  .result-panel .msg{font-size:1.1rem; margin-top:6px; line-height:1.6;}
 
 </style>
 </head>
@@ -251,21 +262,40 @@
 
   <!-- TAB 2: OMR -->
   <div id="tab-omr" class="tab-content">
-    <div class="instructions">
-      <b>How this works:</b> Answer the objective questions (fill-ups, MCQs, true/false) — these are auto-checked. Tap "Grade My Test" at the bottom anytime.
+    <div class="mode-switch">
+      <button id="btn-practice" class="mode-btn active" onclick="setMode('practice')">Practice/Learning Mode</button>
+      <button id="btn-test" class="mode-btn" onclick="setMode('test')">Time-Bound Test Mode</button>
     </div>
-    <h2>OMR Practice (1 Mark MCQs)</h2>
-    <div id="mcqbook-container"></div>
-    <h2>Fill in the Blanks</h2>
-    <div id="fillbook-container"></div>
-    <h2>True or False</h2>
-    <div id="tfbook-container"></div>
+
+    <div id="test-intro" style="display:none;">
+      <h3>Ready for the Test?</h3>
+      <p style="font-size: 1.1rem;">You have <b id="t-count" style="color:var(--maroon-deep);"></b> objective questions to answer.</p>
+      <p style="font-size: 1.1rem;">Time Allowed: <b id="t-time" style="color:var(--maroon-deep);"></b> minutes (1 min per mark).</p>
+      <button class="btn-start" onclick="startTest()">Start Test Now</button>
+    </div>
+
+    <div id="resultPanel" class="result-panel">
+      <div class="score-big" id="scoreBig">0 / 0</div>
+      <div class="msg" id="scoreMsg"></div>
+    </div>
+
+    <div id="omr-content">
+      <div class="instructions" id="omr-instructions">
+        <b>Practice Mode Active:</b> Click any option or type an answer to get instant correct/incorrect feedback! Use this to learn.
+      </div>
+      <h2>OMR Practice (1 Mark MCQs)</h2>
+      <div id="mcqbook-container"></div>
+      <h2>Fill in the Blanks</h2>
+      <div id="fillbook-container"></div>
+      <h2>True or False</h2>
+      <div id="tfbook-container"></div>
+    </div>
   </div>
 
   <!-- TAB 3: SHORT -->
   <div id="tab-short" class="tab-content">
     <div class="instructions">
-      <b>How this works:</b> These are subjective questions. Try to recall the answer in your head, then click "Show Detailed Answer" to study the complete, elaborated explanation.
+      <b>Mental Flashcards:</b> These are subjective questions. Try to recall the answer in your head, then click "Show Detailed Answer" to study the complete, elaborated explanation.
     </div>
     <h2>2 and 3 Marks Questions</h2>
     <div id="short-container"></div>
@@ -274,7 +304,7 @@
   <!-- TAB 4: LONG -->
   <div id="tab-long" class="tab-content">
     <div class="instructions">
-      <b>How this works:</b> These are Case Based and 4+ mark questions. Try to formulate the answer, then click "Show Detailed Answer" to study the complete textbook-level explanation.
+      <b>Mental Flashcards:</b> These are Case Based and 4+ mark questions. Try to formulate the answer, then click "Show Detailed Answer" to study the complete textbook-level explanation.
     </div>
     <h2>4+ Marks & Case Based Questions</h2>
     <div id="long-container"></div>
@@ -289,19 +319,18 @@
     <div id="extra-container"></div>
   </div>
 
-  <div class="result-panel" id="resultPanel">
-    <div class="score-big" id="scoreBig">0 / 0</div>
-    <div class="msg" id="scoreMsg"></div>
-  </div>
-
 </div> <!-- end wrap -->
 
-<div class="grade-bar">
-  <span class="score-readout" id="liveCount">0 objective questions answered</span>
-  <button onclick="gradeAll()">Grade My Test</button>
+<div class="grade-bar" id="grade-bar">
+  <span class="score-readout" id="liveCount">00:00</span>
+  <button id="grade-btn" onclick="gradeAll()">Grade My Test</button>
 </div>
 
 <script>
+window.currentMode = 'practice'; // 'practice' or 'test'
+window.testTimer = null;
+window.timeRemaining = 0; // seconds
+
 function openTab(evt, tabName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tab-content");
@@ -320,7 +349,6 @@ function openTab(evt, tabName) {
 }
 
 let totalMax = 0;
-let totalScore = 0;
 
 function renderFill(containerId, data, prefix){
   const c = document.getElementById(containerId);
@@ -329,7 +357,7 @@ function renderFill(containerId, data, prefix){
     const div = document.createElement('div');
     div.className = 'q fillblank';
     div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
-      <input type="text" id="${prefix}-${i}" placeholder="type your answer">
+      <input type="text" id="${prefix}-${i}" placeholder="type your answer" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('fill', '${prefix}', ${i})">
       <div class="feedback" id="${prefix}-fb-${i}"></div>`;
     c.appendChild(div);
   });
@@ -343,7 +371,7 @@ function renderMCQ(containerId, data, prefix){
     totalMax += 1;
     const div = document.createElement('div');
     div.className='q';
-    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('mcq', '${prefix}', ${i})"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
     div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
       <div class="opts">${opts}</div>
       <div class="feedback" id="${prefix}-fb-${i}"></div>`;
@@ -361,8 +389,8 @@ function renderTF(containerId, data, prefix){
     div.className='q';
     div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.s}</div>
       <div class="tf-row">
-        <label><input type="radio" name="${prefix}-${i}" value="true"> True</label>
-        <label><input type="radio" name="${prefix}-${i}" value="false"> False</label>
+        <label><input type="radio" name="${prefix}-${i}" value="true" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> True</label>
+        <label><input type="radio" name="${prefix}-${i}" value="false" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> False</label>
       </div>
       <div class="feedback" id="${prefix}-fb-${i}"></div>`;
     c.appendChild(div);
@@ -382,85 +410,164 @@ function renderSubjective(containerId, data, prefix){
   });
 }
 
-function gradeAll(){
-  totalScore = 0;
-  gradeSection('fillbook-container');
-  gradeSection('mcqbook-container');
-  gradeSection('tfbook-container');
-
-  document.getElementById('scoreBig').textContent = totalScore.toFixed(0) + ' / ' + totalMax;
-  const pct = Math.round((totalScore/totalMax)*100);
-  let msg = '';
-  if(pct>=90) msg = "Outstanding, Pushti! You've mastered Chapter 2. 🏆";
-  else if(pct>=70) msg = "Great work! Just revisit the topics you missed. 🌟";
-  else if(pct>=50) msg = "Good effort — go over the sections you got wrong once more. 📖";
-  else msg = "Let's revise the chapter together and try again. You've got this! 💪";
-  document.getElementById('scoreMsg').textContent = `${pct}% — ${msg}`;
-  document.getElementById('resultPanel').classList.add('show');
-  document.getElementById('resultPanel').scrollIntoView({behavior:'smooth', block:'center'});
+function gradeSpecificQuestion(type, prefix, i) {
+   let item, val, correct, answerText;
+   const fb = document.getElementById(`${prefix}-fb-${i}`);
+   if(type === 'fill') {
+      const container = document.getElementById('fillbook-container');
+      item = container.fillData[i];
+      val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
+      correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+      answerText = 'Answer: ' + item.a[0];
+      if(val === '') { fb.style.display = 'none'; return; }
+   } else if(type === 'mcq') {
+      const container = document.getElementById('mcqbook-container');
+      item = container.mcqData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = parseInt(sel.value);
+      correct = (val === item.answer);
+      answerText = 'Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+   } else if(type === 'tf') {
+      const container = document.getElementById('tfbook-container');
+      item = container.tfData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = (sel.value === 'true');
+      correct = (val === item.answer);
+      answerText = (item.answer ? 'Answer: True' : 'Answer: False') + (item.correction ? ' - ' + item.correction : '');
+   }
+   
+   if(correct) {
+      fb.className = 'feedback correct'; fb.textContent = 'Correct!';
+   } else {
+      fb.className = 'feedback incorrect'; fb.textContent = answerText;
+   }
+   fb.style.display = 'block';
 }
 
-function gradeSection(containerId){
-  const c = document.getElementById(containerId);
-  if(!c) return;
-  const type = c.dataset.type; const prefix = c.dataset.prefix;
-  if(type==='fill'){
-    c.fillData.forEach((item,i)=>{
-      const val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
-      const fb = document.getElementById(`${prefix}-fb-${i}`);
-      const correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
-      if(correct && val !== ''){ totalScore+=1; fb.className='feedback correct'; fb.textContent='Correct!'; }
-      else { fb.className='feedback incorrect'; fb.textContent='Answer: ' + item.a[0]; }
-    });
-  } else if(type==='mcq'){
-    c.mcqData.forEach((item,i)=>{
-      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
-      const fb = document.getElementById(`${prefix}-fb-${i}`);
-      if(sel && parseInt(sel.value)===item.answer){ totalScore+=1; fb.className='feedback correct'; fb.textContent='Correct!'; }
-      else { fb.className='feedback incorrect'; fb.textContent='Answer: ' + String.fromCharCode(97+item.answer)+') '+item.options[item.answer]; }
-    });
-  } else if(type==='tf'){
-    c.tfData.forEach((item,i)=>{
-      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
-      const fb = document.getElementById(`${prefix}-fb-${i}`);
-      const userVal = sel ? (sel.value==='true') : null;
-      if(userVal===item.answer){ totalScore+=1; fb.className='feedback correct'; fb.textContent = item.answer ? 'Correct — True!' : 'Correct — False!'; }
-      else { fb.className='feedback incorrect'; fb.textContent = (item.answer?'Answer: True.':'Answer: False.') + (item.correction? ' '+item.correction:''); }
-    });
+function setMode(mode) {
+  if(window.testTimer) clearInterval(window.testTimer);
+  window.currentMode = mode;
+  document.getElementById('btn-practice').classList.toggle('active', mode==='practice');
+  document.getElementById('btn-test').classList.toggle('active', mode==='test');
+  
+  resetAllAnswers();
+  
+  if(mode === 'test') {
+    document.getElementById('omr-content').style.display = 'none';
+    document.getElementById('test-intro').style.display = 'block';
+    document.getElementById('t-count').textContent = totalMax;
+    document.getElementById('t-time').textContent = totalMax; 
+    document.getElementById('grade-bar').style.display = 'none';
+  } else {
+    document.getElementById('omr-content').style.display = 'block';
+    document.getElementById('test-intro').style.display = 'none';
+    document.getElementById('grade-bar').style.display = 'none'; 
+    document.getElementById('omr-instructions').style.display = 'block';
   }
 }
 
-document.addEventListener('change', ()=>{
-  document.getElementById('liveCount').textContent = 'Answers are being saved — tap Grade My Test when ready';
-});
-</script>
+function startTest() {
+  document.getElementById('test-intro').style.display = 'none';
+  document.getElementById('omr-content').style.display = 'block';
+  document.getElementById('omr-instructions').style.display = 'none'; // hide instructions in test mode
+  document.getElementById('grade-bar').style.display = 'flex';
+  
+  window.timeRemaining = totalMax * 60; // 1 min per Q
+  updateTimerDisplay();
+  window.testTimer = setInterval(() => {
+    window.timeRemaining--;
+    updateTimerDisplay();
+    if(window.timeRemaining <= 0) {
+       clearInterval(window.testTimer);
+       gradeAll();
+    }
+  }, 1000);
+}
 
-<!-- FIREBASE INJECTION START -->
-<script type="module">
-    import { db, doc, onSnapshot } from '../../firebase-config.js';
-    const settingsDoc = doc(db, 'settings', 'global');
-    onSnapshot(settingsDoc, (docSnap) => {
-        const data = docSnap.data() || { showAnswers: true };
-        const buttons = Array.from(document.querySelectorAll('input, select, button'));
-        if (data.showAnswers === false) {
-            buttons.forEach(b => { if(!b.classList.contains('tab-btn')) b.disabled = true; });
-            if (!document.getElementById('lock-msg')) {
-                const msg = document.createElement('div');
-                msg.id = 'lock-msg';
-                msg.style.padding = '15px'; msg.style.margin = '20px 0';
-                msg.style.backgroundColor = '#FFF1F2'; msg.style.color = '#9F1239';
-                msg.style.border = '1px solid #F43F5E'; msg.style.fontWeight = 'bold';
-                msg.style.textAlign = 'center';
-                msg.textContent = '[SYSTEM LOCK] Practice mode is locked by Parent Administrator.';
-                document.querySelector('.tabs-wrapper').insertAdjacentElement('afterend', msg);
-            } else { document.getElementById('lock-msg').style.display = 'block'; }
-        } else {
-            buttons.forEach(b => { b.disabled = false; });
-            if (document.getElementById('lock-msg')) { document.getElementById('lock-msg').style.display = 'none'; }
-        }
-    });
+function updateTimerDisplay() {
+  let m = Math.floor(window.timeRemaining / 60);
+  let s = window.timeRemaining % 60;
+  const readout = document.getElementById('liveCount');
+  readout.textContent = `⏱ Time Remaining: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  if(window.timeRemaining <= 60) {
+     readout.classList.add('urgent');
+  } else {
+     readout.classList.remove('urgent');
+  }
+}
+
+function resetAllAnswers() {
+   document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
+   document.querySelectorAll('#omr-content input[type="text"]').forEach(r => r.value = '');
+   document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+   document.getElementById('resultPanel').classList.remove('show');
+}
+
+function gradeAll() {
+  if(window.testTimer) clearInterval(window.testTimer);
+  
+  let totalCorrect = 0;
+  let totalIncorrect = 0;
+  let totalUnanswered = 0;
+  
+  // Grade Fill
+  const fillContainer = document.getElementById('fillbook-container');
+  fillContainer.fillData.forEach((item, i) => {
+     const val = document.getElementById(`${fillContainer.dataset.prefix}-${i}`).value.trim().toLowerCase();
+     const fb = document.getElementById(`${fillContainer.dataset.prefix}-fb-${i}`);
+     if(val === '') { totalUnanswered++; fb.className='feedback incorrect'; fb.textContent = 'Unanswered. Correct Answer: ' + item.a[0]; fb.style.display='block'; return; }
+     const correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+     if(correct) { totalCorrect++; fb.className='feedback correct'; fb.textContent='Correct!'; fb.style.display='block'; }
+     else { totalIncorrect++; fb.className='feedback incorrect'; fb.textContent = 'Incorrect. Answer: ' + item.a[0]; fb.style.display='block'; }
+  });
+  
+  // Grade MCQ
+  const mcqContainer = document.getElementById('mcqbook-container');
+  mcqContainer.mcqData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${mcqContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${mcqContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+     if(!sel) { totalUnanswered++; fb.className='feedback incorrect'; fb.textContent = 'Unanswered. Correct Answer: ' + rightAnsText; fb.style.display='block'; return; }
+     if(parseInt(sel.value) === item.answer) { totalCorrect++; fb.className='feedback correct'; fb.textContent='Correct!'; fb.style.display='block'; }
+     else { totalIncorrect++; fb.className='feedback incorrect'; fb.textContent = 'Incorrect. Answer: ' + rightAnsText; fb.style.display='block'; }
+  });
+  
+  // Grade TF
+  const tfContainer = document.getElementById('tfbook-container');
+  tfContainer.tfData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${tfContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${tfContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = (item.answer ? 'True' : 'False') + (item.correction ? ' - ' + item.correction : '');
+     if(!sel) { totalUnanswered++; fb.className='feedback incorrect'; fb.textContent = 'Unanswered. Correct Answer: ' + rightAnsText; fb.style.display='block'; return; }
+     if((sel.value === 'true') === item.answer) { totalCorrect++; fb.className='feedback correct'; fb.textContent='Correct!'; fb.style.display='block'; }
+     else { totalIncorrect++; fb.className='feedback incorrect'; fb.textContent = 'Incorrect. Answer: ' + rightAnsText; fb.style.display='block'; }
+  });
+  
+  document.getElementById('scoreBig').textContent = totalCorrect + ' / ' + totalMax;
+  const pct = Math.round((totalCorrect/totalMax)*100);
+  let msg = `<strong>Score Breakdown:</strong><br><span style="color:var(--good); font-weight:bold;">✔ Correct: ${totalCorrect}</span> &nbsp;|&nbsp; <span style="color:var(--bad); font-weight:bold;">✘ Incorrect: ${totalIncorrect}</span> &nbsp;|&nbsp; <span>⊝ Unanswered: ${totalUnanswered}</span><br><br>`;
+  if(pct>=90) msg += "Outstanding, Pushti! You crushed the time-bound test. 🏆";
+  else if(pct>=70) msg += "Great work! Just review the questions marked in red below. 🌟";
+  else if(pct>=50) msg += "Good effort — scroll down to see the correct answers for the ones you missed. 📖";
+  else msg += "Time-bound tests can be tricky! Review the correct answers below and try again later. 💪";
+  
+  document.getElementById('scoreMsg').innerHTML = msg;
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('grade-bar').style.display = 'none';
+  
+  window.scrollTo({top: document.getElementById('resultPanel').offsetTop - 100, behavior: 'smooth'});
+}
+
+// Initialize
+window.onload = function() {
+   setMode('practice');
+};
+
 </script>
-<!-- FIREBASE INJECTION END -->
+</body>
+</html>
 
 <script>
 
