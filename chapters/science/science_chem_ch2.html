@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 2 - The world of metals and non-metals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #FFFFFF;
+    --bg-card: #F8FAFC;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --accent: #38BDF8;
+    --border: #E2E8F0;
+    --border-hover: #CBD5E1;
+    --good: #059669;
+    --good-bg: #D1FAE5;
+    --bad: #E11D48;
+    --bad-bg: #FFE4E6;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-main: #0F172A;
+      --bg-card: #1E293B;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --primary: #6366F1;
+      --primary-hover: #818CF8;
+      --accent: #0EA5E9;
+      --border: #334155;
+      --border-hover: #475569;
+      --good: #34D399;
+      --good-bg: #064E3B;
+      --bad: #F87171;
+      --bad-bg: #7F1D1D;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{margin:0; background: var(--bg-main); color: var(--text-main); font-family:'Nunito',sans-serif; line-height:1.6;}
+  .wrap{max-width:1100px; margin:0 auto; padding:26px 16px 120px;}
+  
+  header.hero{text-align:center; padding:30px 14px 26px; border-bottom:1px solid var(--border); margin-bottom:0px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--primary); margin-bottom:8px; font-weight:600;}
+  h1{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:clamp(1.8rem,5vw,2.7rem); margin:0 0 8px; color:var(--text-main);}
+  .sub{font-size:1rem; color:var(--text-muted);}
+  
+  /* STICKY TABS */
+  .tabs-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(var(--bg-main), 0.95);
+    backdrop-filter: blur(10px);
+    padding: 12px 0;
+    box-shadow: 0 4px 10px -10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tabs-container {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; max-width: 1000px; margin: 0 auto; overflow-x: auto; padding: 0 10px;
+  }
+  .tab-btn {
+    padding: 8px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { border-color: var(--border-hover); color: var(--text-main); }
+  .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: var(--shadow); }
+  
+  .tab-content { display: none; animation: fadeIn 0.4s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .instructions { background: var(--bg-card); border: 1px dashed var(--primary); border-radius: 12px; padding: 14px 20px; margin: 22px 0 30px; font-size: 0.95rem; color: var(--text-main); }
+  .instructions b { color: var(--primary); }
+
+  /* COLLAPSIBLE HEADERS */
+  .collapsible-header {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--text-main); margin: 0 0 16px; 
+    display: flex; align-items: center; gap: 10px; border-left: 4px solid var(--primary); padding-left: 12px;
+    cursor: pointer; user-select: none; transition: 0.2s;
+  }
+  .collapsible-header:hover { opacity: 0.8; }
+  .count-badge { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--text-muted); font-weight: 500; }
+  .chevron { width: 32px; height: 32px; fill: var(--primary); background: rgba(79,70,229,0.08); border-radius: 50%; padding: 4px; transition: all 0.3s; margin-left: auto; }
+.collapsible-header:hover .chevron { background: rgba(79,70,229,0.15); }
+  .collapsible-header.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-content { overflow: hidden; transition: max-height 0.3s ease-out; }
+  .collapsible-content.collapsed { display: none; }
+
+  /* MODE SWITCH */
+  .mode-switch { display: flex; justify-content: center; gap: 0; margin-bottom: 20px; border-radius: 100px; overflow: hidden; border: 1px solid var(--primary); max-width: 380px; margin: 0 auto 20px auto; background:var(--bg-card); }
+  .mode-btn { flex: 1; padding: 10px 15px; border: none; background: transparent; color: var(--text-muted); font-size:0.95rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; transition: 0.3s; }
+  .mode-btn.active { background: var(--primary); color: #fff; }
+  #test-intro { background: var(--bg-card); border: 2px dashed var(--border); border-radius: 12px; padding: 40px 20px; text-align: center; margin-bottom: 30px; box-shadow: var(--shadow); }
+  #test-intro h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-main); margin-top: 0; }
+  .btn-start { background: var(--primary); color: white; border: none; padding: 14px 34px; font-size: 1.1rem; font-weight: 700; font-family:'Nunito',sans-serif; border-radius: 100px; cursor: pointer; margin-top: 15px; box-shadow: var(--shadow); transition: 0.2s; }
+  .btn-start:hover { transform: translateY(-2px); background: var(--primary-hover); }
+
+  /* QUESTION STYLES */
+  .q { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; box-shadow: var(--shadow); }
+  .q-text { font-weight: 700; margin-bottom: 10px; font-size: 1rem; color: var(--text-main); }
+  .q-text .num { color: var(--primary); font-family: 'JetBrains Mono', monospace; margin-right: 8px; }
+  .opts label { display: block; padding: 8px 12px; border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.95rem; border: 1px solid transparent; transition: 0.2s; }
+  .opts label:hover { background: rgba(79, 70, 229, 0.05); }
+  .opts input { margin-right: 10px; }
+  .fillblank input[type=text] { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; width: 250px; background: var(--bg-main); color: var(--text-main); }
+  .tf-row { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+  .tf-row label { font-size: 0.95rem; cursor: pointer; }
+  
+  .feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.5; }
+  .feedback.correct { background: var(--good-bg); color: var(--good); display: block; border: 1px solid var(--good); }
+  .feedback.incorrect { background: var(--bad-bg); color: var(--bad); display: block; border: 1px solid var(--bad); }
+  .feedback .exp { display: block; margin-top: 6px; font-style: italic; opacity: 0.9; }
+
+  details { margin-top: 14px; }
+  details summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--primary); font-weight: 700; }
+  details .model { margin-top: 12px; font-size: 0.95rem; background: rgba(79, 70, 229, 0.05); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: 0 8px 8px 0; line-height: 1.6; }
+
+  /* BOTTOM GRADE BAR */
+  .grade-bar{position:fixed; left:0; right:0; bottom:0; background:var(--bg-card); border-top: 1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:center; gap:16px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index:50; display:none;}
+  .grade-bar button{background:var(--primary); color:#fff; border:none; padding:12px 28px; border-radius:100px; font-weight:700; font-family:'Nunito',sans-serif; font-size:1rem; cursor:pointer;}
+  .grade-bar button:hover{background:var(--primary-hover);}
+  .score-readout{font-family:'JetBrains Mono',monospace; font-size:1.15rem; font-weight:700; color:var(--text-main);}
+  .score-readout.urgent{color:var(--bad); animation: pulse 1s infinite;}
+  @keyframes pulse { 0% { opacity:1;} 50% {opacity:0.5;} 100% {opacity:1;} }
+
+  .result-panel{display:none; background:var(--bg-card); border:2px solid var(--border); border-radius:14px; padding:24px; text-align:center; margin-bottom:40px; box-shadow:var(--shadow);}
+  .result-panel.show{display:block;}
+  .result-panel .score-big{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:2.8rem; color:var(--primary);}
+  .result-panel .msg{font-size:1.1rem; margin-top:10px; line-height:1.6;}
+
+  /* VIDEO LINKS (TAB 1) */
+  .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .topic-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); position:relative; }
+  .topic-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
+  .video-btn { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(79, 70, 229, 0.05); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text-main); font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; transition: 0.2s; }
+  .video-btn:hover { background: rgba(79, 70, 229, 0.1); border-color: var(--border-hover); }
+  .thumb-wrapper { position: relative; width: 44px; height: 28px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+  .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+  .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(79, 70, 229, 0.9); border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+  .play-icon svg { width: 8px; height: 8px; fill: white; margin-left: 2px; }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="eyebrow">Biology · Chapter 3</div>
+    <h1>The world of metals and non-metals</h1>
+    <div class="sub">Complete Chapter Guide & Practice Module</div>
+  </header>
+
+<div class="tabs-wrapper">
+  <div class="tabs-container">
+    <button class="tab-btn active" onclick="openTab(event, 'tab-video')">1. Videos & Map</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-omr')">2. OMR (1 Mark)</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-short')">3. 2/3 Marks</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-long')">4. 4+ Marks</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-extra')">5. Extra Knowledge</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- TAB 1: VIDEOS & CONCEPT MAP -->
+  <div id="tab-video" class="tab-content active">
+    <div class="instructions">
+      <b>How to use:</b> Watch the video explanations for each topic by clicking the thumbnails. Then review the Concept Map below to see how everything connects!
+    </div>
+
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('video-grid', this)">
+      <span>Chapter Topics & Videos</span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="video-grid" class="collapsible-content collapsed topics-grid">
+      <div class="topic-card">
+        <div class="topic-title">1. Animal Nutrition Basics</div>
+        <a href="https://www.youtube.com/watch?v=B1J2_Z8C6i8" target="_blank" class="video-btn"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/B1J2_Z8C6i8/hqdefault.jpg"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><span>Introduction to Metals & Non-metals</span></a>
+      </div>
+      <div class="topic-card">
+        <div class="topic-title">2. The Digestive System</div>
+        <a href="https://www.youtube.com/watch?v=hJbOebHj0iA" target="_blank" class="video-btn"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/hJbOebHj0iA/hqdefault.jpg"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><span>Physical Properties</span></a>
+      </div>
+      <div class="topic-card">
+        <div class="topic-title">3. Digestion Process in Humans</div>
+        <a href="https://www.youtube.com/watch?v=3v0X3-pA9dM" target="_blank" class="video-btn"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/3v0X3-pA9dM/hqdefault.jpg"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><span>Chemical Properties</span></a>
+      </div>
+      <div class="topic-card">
+        <div class="topic-title">4. Villi & Absorption</div>
+        <a href="https://www.youtube.com/watch?v=3T_j7-H8kO8" target="_blank" class="video-btn"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/3T_j7-H8kO8/hqdefault.jpg"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><span>Corrosion & Alloys</span></a>
+      </div>
+    </div>
+  </div>
+  <!-- TAB 2: OMR -->
+  <div id="tab-omr" class="tab-content">
+    <div class="mode-switch">
+      <button id="btn-practice" class="mode-btn active" onclick="setMode('practice')">Practice Mode</button>
+      <button id="btn-test" class="mode-btn" onclick="setMode('test')">Test Mode</button>
+    </div>
+
+    <div id="test-intro" style="display:none;">
+      <h3>Ready for the Test?</h3>
+      <p style="font-size: 1.1rem;">You have <b id="t-count" style="color:var(--primary);"></b> objective questions.</p>
+      <p style="font-size: 1.1rem;">Time Allowed: <b id="t-time" style="color:var(--primary);"></b> minutes.</p>
+      <button class="btn-start" onclick="startTest()">Start Test Now</button>
+    </div>
+
+    <div id="resultPanel" class="result-panel">
+      <div class="score-big" id="scoreBig">0 / 0</div>
+      <div class="msg" id="scoreMsg"></div>
+    </div>
+
+    <div id="omr-content">
+      <div class="instructions" id="omr-instructions">
+        <b>Practice Mode Active:</b> Click any option or type an answer to get instant correct/incorrect feedback along with explanations!
+      </div>
+      
+      <h2 class="collapsible-header collapsed" onclick="toggleSection('mcqbook-container', this)">
+        <span>OMR Practice (MCQs)</span> <span class="count-badge" id="mcq-count"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </h2>
+      <div id="mcqbook-container" class="collapsible-content collapsed"></div>
+      
+      <h2 class="collapsible-header collapsed" onclick="toggleSection('fillbook-container', this)">
+        <span>Fill in the Blanks</span> <span class="count-badge" id="fill-count"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </h2>
+      <div id="fillbook-container" class="collapsible-content collapsed"></div>
+      
+      <h2 class="collapsible-header collapsed" onclick="toggleSection('tfbook-container', this)">
+        <span>True or False</span> <span class="count-badge" id="tf-count"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </h2>
+      <div id="tfbook-container" class="collapsible-content collapsed"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: SHORT -->
+  <div id="tab-short" class="tab-content">
+    <div class="instructions">
+      <b>Mental Flashcards:</b> Try to recall the answer in your head, then click "Show Detailed Answer".
+    </div>
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('short-container', this)">
+      <span>2 and 3 Marks Questions</span> <span class="count-badge" id="short-count"></span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="short-container" class="collapsible-content collapsed"></div>
+  </div>
+
+  <!-- TAB 4: LONG -->
+  <div id="tab-long" class="tab-content">
+    <div class="instructions">
+      <b>Mental Flashcards:</b> Formulate the answer, then study the complete textbook-level explanation.
+    </div>
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('long-container', this)">
+      <span>4+ Marks & Case Based</span> <span class="count-badge" id="long-count"></span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="long-container" class="collapsible-content collapsed"></div>
+  </div>
+
+  <!-- TAB 5: EXTRA KNOWLEDGE -->
+  <div id="tab-extra" class="tab-content">
+    <div class="instructions">
+      <b>For the Bookworms:</b> Deep-dive questions and fascinating facts!
+    </div>
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('extra-container', this)">
+      <span>Knowledge Topics & Trivia</span> <span class="count-badge" id="extra-count"></span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="extra-container" class="collapsible-content collapsed"></div>
+  </div>
+
+</div> <!-- end wrap -->
+
+<div class="grade-bar" id="grade-bar">
+  <span class="score-readout" id="liveCount">00:00</span>
+  <button id="grade-btn" onclick="gradeAll()">Grade My Test</button>
+</div>
+
+<script>
+window.currentMode = 'practice'; 
+window.testTimer = null;
+window.timeRemaining = 0;
+
+function toggleSection(contentId, headerEl) {
+    const el = document.getElementById(contentId);
+    el.classList.toggle('collapsed');
+    headerEl.classList.toggle('collapsed');
+}
+
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+    tabcontent[i].classList.remove("active");
+  }
+  tablinks = document.getElementsByClassName("tab-btn");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  document.getElementById(tabName).classList.add("active");
+  evt.currentTarget.className += " active";
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+let totalMax = 0;
+
+function renderFill(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className = 'q fillblank';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <input type="text" id="${prefix}-${i}" placeholder="type your answer" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('fill', '${prefix}', ${i})">
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='fill'; c.dataset.prefix=prefix;
+  c.fillData = data;
+}
+
+function renderMCQ(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className='q';
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('mcq', '${prefix}', ${i})"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <div class="opts">${opts}</div>
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='mcq'; c.dataset.prefix=prefix;
+  c.mcqData = data;
+}
+
+function renderTF(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className='q';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.s}</div>
+      <div class="tf-row">
+        <label><input type="radio" name="${prefix}-${i}" value="true" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> True</label>
+        <label><input type="radio" name="${prefix}-${i}" value="false" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> False</label>
+      </div>
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='tf'; c.dataset.prefix=prefix;
+  c.tfData = data;
+}
+
+function renderSubjective(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    const div = document.createElement('div');
+    div.className='q subjective';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <details><summary>Show Detailed Answer</summary><div class="model">${item.model}</div></details>`;
+    c.appendChild(div);
+  });
+}
+
+function gradeSpecificQuestion(type, prefix, i) {
+   let item, val, correct, answerText, expText;
+   const fb = document.getElementById(`${prefix}-fb-${i}`);
+   if(type === 'fill') {
+      const container = document.getElementById('fillbook-container');
+      item = container.fillData[i];
+      val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
+      correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+      answerText = 'Correct Answer: ' + item.a[0];
+      expText = item.exp;
+      if(val === '') { fb.style.display = 'none'; return; }
+   } else if(type === 'mcq') {
+      const container = document.getElementById('mcqbook-container');
+      item = container.mcqData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = parseInt(sel.value);
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+      expText = item.exp;
+   } else if(type === 'tf') {
+      const container = document.getElementById('tfbook-container');
+      item = container.tfData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = (sel.value === 'true');
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+      expText = item.exp;
+   }
+   
+   if(correct) {
+      fb.className = 'feedback correct'; 
+      fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${expText}</span>`;
+   } else {
+      fb.className = 'feedback incorrect'; 
+      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText} <span class="exp">${expText}</span>`;
+   }
+   fb.style.display = 'block';
+}
+
+function setMode(mode) {
+  if(window.testTimer) clearInterval(window.testTimer);
+  window.currentMode = mode;
+  document.getElementById('btn-practice').classList.toggle('active', mode==='practice');
+  document.getElementById('btn-test').classList.toggle('active', mode==='test');
+  
+  resetAllAnswers();
+  
+  if(mode === 'test') {
+    document.getElementById('omr-content').style.display = 'none';
+    document.getElementById('test-intro').style.display = 'block';
+    document.getElementById('t-count').textContent = totalMax;
+    document.getElementById('t-time').textContent = totalMax; 
+    document.getElementById('grade-bar').style.display = 'none';
+  } else {
+    document.getElementById('omr-content').style.display = 'block';
+    document.getElementById('test-intro').style.display = 'none';
+    document.getElementById('grade-bar').style.display = 'none'; 
+    document.getElementById('omr-instructions').style.display = 'block';
+  }
+}
+
+function startTest() {
+  document.getElementById('test-intro').style.display = 'none';
+  document.getElementById('omr-content').style.display = 'block';
+  document.getElementById('omr-instructions').style.display = 'none'; 
+  document.getElementById('grade-bar').style.display = 'flex';
+  
+  // EXPAND ALL TABS FOR TEST
+  document.getElementById('mcqbook-container').classList.remove('collapsed');
+  document.getElementById('mcqbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('fillbook-container').classList.remove('collapsed');
+  document.getElementById('fillbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('tfbook-container').classList.remove('collapsed');
+  document.getElementById('tfbook-container').previousElementSibling.classList.remove('collapsed');
+
+  window.timeRemaining = totalMax * 60; // 1 min per Q
+  updateTimerDisplay();
+  window.testTimer = setInterval(() => {
+    window.timeRemaining--;
+    updateTimerDisplay();
+    if(window.timeRemaining <= 0) {
+       clearInterval(window.testTimer);
+       gradeAll();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  let m = Math.floor(window.timeRemaining / 60);
+  let s = window.timeRemaining % 60;
+  const readout = document.getElementById('liveCount');
+  readout.textContent = `⏱ Time Remaining: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  if(window.timeRemaining <= 60) {
+     readout.classList.add('urgent');
+  } else {
+     readout.classList.remove('urgent');
+  }
+}
+
+function resetAllAnswers() {
+   document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
+   document.querySelectorAll('#omr-content input[type="text"]').forEach(r => r.value = '');
+   document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+   document.getElementById('resultPanel').classList.remove('show');
+}
+
+function gradeAll() {
+  if(window.testTimer) clearInterval(window.testTimer);
+  
+  let totalCorrect = 0;
+  let totalIncorrect = 0;
+  let totalUnanswered = 0;
+  
+  const gradeItem = (type, val, item, fb, rightAnsText) => {
+      let correct = false;
+      if(val === null || val === '') {
+          totalUnanswered++; 
+          fb.className='feedback incorrect'; 
+          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+      } else {
+          if(type==='fill') correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+          if(type==='mcq') correct = (val === item.answer);
+          if(type==='tf') correct = (val === item.answer);
+          
+          if(correct) {
+              totalCorrect++; 
+              fb.className='feedback correct'; 
+              fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${item.exp}</span>`;
+          } else {
+              totalIncorrect++; 
+              fb.className='feedback incorrect'; 
+              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+          }
+      }
+      fb.style.display='block';
+  };
+
+  const fillContainer = document.getElementById('fillbook-container');
+  fillContainer.fillData.forEach((item, i) => {
+     const val = document.getElementById(`${fillContainer.dataset.prefix}-${i}`).value.trim().toLowerCase();
+     const fb = document.getElementById(`${fillContainer.dataset.prefix}-fb-${i}`);
+     gradeItem('fill', val, item, fb, 'Correct Answer: ' + item.a[0]);
+  });
+  
+  const mcqContainer = document.getElementById('mcqbook-container');
+  mcqContainer.mcqData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${mcqContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${mcqContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+     gradeItem('mcq', sel ? parseInt(sel.value) : null, item, fb, rightAnsText);
+  });
+  
+  const tfContainer = document.getElementById('tfbook-container');
+  tfContainer.tfData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${tfContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${tfContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+     gradeItem('tf', sel ? (sel.value === 'true') : null, item, fb, rightAnsText);
+  });
+  
+  document.getElementById('scoreBig').textContent = totalCorrect + ' / ' + totalMax;
+  const pct = Math.round((totalCorrect/totalMax)*100);
+  let msg = `<strong>Score Breakdown:</strong><br><span style="color:var(--good); font-weight:bold;">✔ Correct: ${totalCorrect}</span> &nbsp;|&nbsp; <span style="color:var(--bad); font-weight:bold;">✘ Incorrect: ${totalIncorrect}</span> &nbsp;|&nbsp; <span>⊝ Unanswered: ${totalUnanswered}</span><br><br>`;
+  if(pct>=90) msg += "Outstanding! You crushed the time-bound test. 🏆";
+  else if(pct>=70) msg += "Great work! Just review the questions marked in red below. 🌟";
+  else if(pct>=50) msg += "Good effort — scroll down to study the explanations for the ones you missed. 📖";
+  else msg += "Time-bound tests can be tricky! Review the correct answers below and try again later. 💪";
+  
+  document.getElementById('scoreMsg').innerHTML = msg;
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('grade-bar').style.display = 'none';
+  
+  window.scrollTo({top: document.getElementById('resultPanel').offsetTop - 100, behavior: 'smooth'});
+}
+
+window.onload = function() {
+   setMode('practice');
+};
+
+</script>
+</body>
+</html>
+
+<script>
+
+const mcqBook = [{"q": "Which metal is commonly used to make food packaging materials as it is cheaper, and its thin sheets can be folded easily into any shape?", "options": ["Aluminium", "Copper", "Iron", "Gold"], "answer": 0, "exp": "According to the chapter's biological concepts: Aluminium is correct."}, {"q": "Which of the following metal catches fire when it comes in contact with water?", "options": ["Copper", "Aluminium", "Zinc", "Sodium"], "answer": 3, "exp": "According to the chapter's biological concepts: Sodium is correct."}, {"q": "When a substance X is hit with a hammer, it expands in size but does not break. This is because the substance is", "options": ["ductile", "hard", "elastic", "malleable"], "answer": 3, "exp": "According to the chapter's biological concepts: malleable is correct."}, {"q": "Which of the following is not a property of aluminium?", "options": ["It is a good conductor of heat and electricity.", "It is malleable.", "It is heavy.", "It is ductile."], "answer": 2, "exp": "According to the chapter's biological concepts: It is heavy. is correct."}, {"q": "Mercury is used in thermometers because", "options": ["it does not stick to the glass", "it expands on heating", "it is a liquid", "all of these"], "answer": 3, "exp": "According to the chapter's biological concepts: all of these is correct."}, {"q": "Copper sulphate solution can be safely kept in a container made of", "options": ["aluminium", "lead", "silver", "zinc"], "answer": 2, "exp": "According to the chapter's biological concepts: silver is correct."}, {"q": "Which of the following metals occurs in free state in nature?", "options": ["Aluminium", "Calcium", "Gold", "Sodium"], "answer": 2, "exp": "According to the chapter's biological concepts: Gold is correct."}, {"q": "Aluminium is a type of metal that is used to make", "options": ["wires and bulb filaments", "tanks and magnets", "drink cans, foils and aeroplanes", "food containers and tooth fillings"], "answer": 2, "exp": "According to the chapter's biological concepts: drink cans, foils and aeroplanes is correct."}, {"q": "The reason(s) why aluminium is preferred over copper for making overhead transmission cables (i) aluminium is lighter than copper (ii) aluminium is harder than copper (iii) aluminium is less soluble in water than copper.", "options": ["Only (i)", "Only (iii)", "Only (i) and (ii)", "(i), (ii) and (iii)"], "answer": 0, "exp": "According to the chapter's biological concepts: Only (i) is correct."}, {"q": "A coil of copper wire can be made by pulling a larger piece of copper metal. This is due to which of the following properties of copper?", "options": ["Malleability", "Ductility", "Tensile strength", "Conductivity"], "answer": 1, "exp": "According to the chapter's biological concepts: Ductility is correct."}, {"q": "A copper coin is kept immersed in a solution of silver nitrate for some time. What will happen to the coin and the colour of the solution?", "options": ["Silver metal will be deposited on coin and solution will turn blue.", "Solution will remain colourless and coin will turn blue.", "Both solution and the coin will turn blue.", "Both solution and the coin will become colourless."], "answer": 0, "exp": "According to the chapter's biological concepts: Silver metal will be deposited on coin and solution will turn blue. is correct."}, {"q": "A metal dissolved in mercury is called a/an", "options": ["suspension", "emulsion", "amalgam", "solution"], "answer": 2, "exp": "According to the chapter's biological concepts: amalgam is correct."}, {"q": "When a metal X is added to dilute HCl solution, there is no evolution of gas. The metal X is", "options": ["K", "Na", "Ag", "Zn"], "answer": 2, "exp": "According to the chapter's biological concepts: Ag is correct."}, {"q": "The correct order of increasing chemical reactivity is", "options": ["Zn < Fe < Mg < K", "Fe < Mg < Zn < K", "Fe < Mg < K < Zn", "Fe < Zn < Mg < K"], "answer": 3, "exp": "According to the chapter's biological concepts: Fe < Zn < Mg < K is correct."}, {"q": "Which of the following elements produces basic oxide on reacting with oxygen?", "options": ["Chlorine", "Sulphur", "Phosphorus", "Magnesium"], "answer": 3, "exp": "According to the chapter's biological concepts: Magnesium is correct."}, {"q": "Tungsten is used in electric bulbs because", "options": ["it is sonorous", "it has high melting point", "it has high tensile strength", "it has high density"], "answer": 1, "exp": "According to the chapter's biological concepts: it has high melting point is correct."}, {"q": "Which of the following metal does not react with water?", "options": ["Na", "Mg", "Cu", "Fe"], "answer": 2, "exp": "According to the chapter's biological concepts: Cu is correct."}, {"q": "Identify the most reactive metal.", "options": ["Iron", "Gold", "Zinc", "Potassium"], "answer": 3, "exp": "According to the chapter's biological concepts: Potassium is correct."}, {"q": "An element X forms an oxide XO which turns red litmus blue. Identify X.", "options": ["A metal", "A non-metal", "A metalloid", "Any of these"], "answer": 0, "exp": "According to the chapter's biological concepts: A metal is correct."}, {"q": "When steam is passed through zinc then", "options": ["zinc oxide is formed", "zinc hydroxide is formed", "hydrochloric acid is formed", "water is formed"], "answer": 0, "exp": "According to the chapter's biological concepts: zinc oxide is formed is correct."}, {"q": "Metal which does not react with steam is", "options": ["potassium", "iron", "magnesium", "silver"], "answer": 3, "exp": "According to the chapter's biological concepts: silver is correct."}, {"q": "An alloy used in making bodies of aircraft is", "options": ["duralumin", "steel", "zinc-amalgam", "solder"], "answer": 0, "exp": "According to the chapter's biological concepts: duralumin is correct."}, {"q": "The metals are eaten away when they are exposed to water, oxygen and other chemicals. What is this process known as?", "options": ["Vulcanization", "Corrosion", "Galvanisation", "Amalgamation"], "answer": 1, "exp": "According to the chapter's biological concepts: Corrosion is correct."}, {"q": "Bronze is an example of", "options": ["an element", "a compound of copper and zinc", "a mixture of copper and lead", "a mixture of copper and tin"], "answer": 3, "exp": "According to the chapter's biological concepts: a mixture of copper and tin is correct."}, {"q": "The metal which is present in brass, bronze and German silver is", "options": ["Mg", "Zn", "Cu", "Al"], "answer": 2, "exp": "According to the chapter's biological concepts: Cu is correct."}, {"q": "The metal that forms a self protecting film of oxide to prevent corrosion is", "options": ["Cu", "Al", "Pt", "Au"], "answer": 1, "exp": "According to the chapter's biological concepts: Al is correct."}, {"q": "Two metals are melted and mixed together. The resulting mass is cooled to solidify. What is this solid called?", "options": ["An alloy", "A non-metal", "An oxide", "A mineral"], "answer": 0, "exp": "According to the chapter's biological concepts: An alloy is correct."}, {"q": "Which of the following methods is suitable for preventing an iron frying pan from rusting?", "options": ["Applying grease", "Applying paint", "Applying a coating of zinc", "All of the above"], "answer": 2, "exp": "According to the chapter's biological concepts: Applying a coating of zinc is correct."}, {"q": "Which of these elements is used as an antiseptic in medicine?", "options": ["Carbon", "Oxygen", "Nitrogen", "Iodine"], "answer": 3, "exp": "According to the chapter's biological concepts: Iodine is correct."}, {"q": "Which of the following does not contain a metallic element?", "options": ["Sodium chloride", "Silicon dioxide", "Magnesium oxide", "Calcium hydroxide"], "answer": 1, "exp": "According to the chapter's biological concepts: Silicon dioxide is correct."}, {"q": "The non-metal used in vulcanization of rubber is", "options": ["sulphur", "carbon", "phosphorus", "nitrogen"], "answer": 0, "exp": "According to the chapter's biological concepts: sulphur is correct."}, {"q": "Which of the following is a non-metal?", "options": ["Tungsten", "Mercury", "Graphite", "Platinum"], "answer": 2, "exp": "According to the chapter's biological concepts: Graphite is correct."}, {"q": "Which of the following is not a property of a non-metal?", "options": ["Forms anions", "Forms acidic oxides", "High tensile strength", "Low density"], "answer": 2, "exp": "According to the chapter's biological concepts: High tensile strength is correct."}, {"q": "Which of the following is not a basic oxide?", "options": ["Sodium oxide", "Calcium oxide", "Nitrogen dioxide", "Iron oxide"], "answer": 2, "exp": "According to the chapter's biological concepts: Nitrogen dioxide is correct."}, {"q": "An unknown metal X when placed in copper sulphate solution gives a red brown deposit. When placed in magnesium sulphate solution, gives no reaction. Identify element X.", "options": ["Sodium", "Potassium", "Silver", "Iron"], "answer": 3, "exp": "According to the chapter's biological concepts: Iron is correct."}, {"q": "Which of the following metals on reaction with sodium hydroxide solution produce hydrogen gas? 1. Cu 2. Al 3. Fe 4. Zn", "options": ["2 and 3", "2 and 4", "1 and 4", "2 only"], "answer": 1, "exp": "According to the chapter's biological concepts: 2 and 4 is correct."}, {"q": "Which of the following is not a correct match? (P) Sodium - It is so soft that it can be cut with a knife (Q) Phosphorus - Stored in water (R) Copper - Acquires a dull green coating on exposure to air (S) Charcoal - On burning produces a basic gas", "options": ["P", "Q", "R", "S"], "answer": 3, "exp": "According to the chapter's biological concepts: S is correct."}, {"q": "In which test tubes, the rusting of iron nail will take place? (Based on the figure showing nails in different conditions: I. water, II. boiled water with oil, III. tap water, IV. dry air)", "options": ["I and IV", "I, II and IV", "II and III", "I and III only"], "answer": 3, "exp": "According to the chapter's biological concepts: I and III only is correct."}, {"q": "A highly reactive element X is stored under water. It readily reacts with oxygen of air to give a compound Y which dissolves in water. The aqueous solution of Y changes blue litmus solution to red. The element X is", "options": ["sodium", "sulphur", "phosphorus", "potassium"], "answer": 2, "exp": "According to the chapter's biological concepts: phosphorus is correct."}, {"q": "Two elements A and B on burning in air give corresponding oxides. Oxides of both A and B are soluble in water. The aqueous solution of oxide of A is alkaline and reacts with aqueous solution of oxide of B to give another compound. Identify A and B.", "options": ["A and B both are metals.", "A and B both are non-metals.", "A is metal and B is non-metal.", "A is non-metal and B is metal."], "answer": 2, "exp": "According to the chapter's biological concepts: A is metal and B is non-metal. is correct."}, {"q": "When few granules of sample X are added to a solution of copper sulphate, the changes observed are shown in the figure (colourless solution and red deposit). Identify sample X and red deposit.", "options": ["Fe, Zn", "Zn, Cu", "Cu, Zn", "Fe, Cu"], "answer": 1, "exp": "According to the chapter's biological concepts: Zn, Cu is correct."}, {"q": "Choose the reactions which are not feasible: I. Iron + Zinc sulphate -> Iron sulphate + Zinc II. Magnesium + Silver nitrate -> Magnesium nitrate + Silver III. Copper + dil. Sulphuric acid -> Copper sulphate + Hydrogen IV. Zinc + Iron sulphate -> Iron + Zinc sulphate", "options": ["I, II and III", "III and IV only", "I and III only", "I, II, III and IV"], "answer": 2, "exp": "According to the chapter's biological concepts: I and III only is correct."}, {"q": "Neha sets up an electric circuit as shown in the figure by using copper wire. She repeated the experiment with : I -> Aluminium foil, II -> Iron nail, III -> Coal, IV -> Graphite. In which cases the bulb will light up?", "options": ["I and II only", "III and IV only", "I, II and IV", "I, II, III and IV"], "answer": 2, "exp": "According to the chapter's biological concepts: I, II and IV is correct."}, {"q": "Study the table carefully and select the appropriate option. (W: Conductor, Malleable, Lustrous. X: Conductor, Not Malleable, Lustrous. Y: Conductor, Not Malleable, Not Lustrous. Z: Not Conductor, Not Malleable, Not Lustrous)", "options": ["Potassium, Sodium, Graphite, Aluminium", "Graphite, Aluminium, Sodium, Potassium", "Sodium, Aluminium, Potassium, Graphite", "Aluminium, Sodium, Graphite, Iodine"], "answer": 3, "exp": "According to the chapter's biological concepts: Aluminium, Sodium, Graphite, Iodine is correct."}, {"q": "Some materials like magnesium ribbon, aluminium foil, copper wire and charcoal (powder) were taken in different test tubes labelled as P, Q, R and S. 5 mL of dilute hydrochloric acid was added to each test tube. When a burning matchstick is brought near the mouth of each test tube, in which cases pop sound would be heard?", "options": ["Only P", "Only P and Q", "Only Q and S", "Only P, Q and R"], "answer": 1, "exp": "According to the chapter's biological concepts: Only P and Q is correct."}, {"q": "When a copper vessel is exposed to moist air for long, it acquires a dull green coating. The reaction can be represented as\n2Cu + W + X + Y -> Cu(OH)2 + Z\n(moist air)\nW, X, Y and Z are respectively", "options": ["(a) N2, CO2, O2 and CuO", "(b) H2O, N2, CO2 and O2", "(c) H2O, CO2, O2 and CuCO3", "(d) H2O, CO2, O2 and CuO"], "answer": 2, "exp": "According to the chapter's biological concepts: (c) H2O, CO2, O2 and CuCO3 is correct."}, {"q": "Ms. Komal, a science teacher demonstrated an activity in the science lab and the experiment was set up as shown in the figure. [Steam -> Metal X -> Heat, gas collected in syringe]. The metal 'X' reacts with steam to form a gas 'Y' which is collected in the syringe. Which of the following best describes the metal 'X' and gas 'Y'?", "options": ["(a) Metal 'X' is silver and gas 'Y' is hydrogen which burns with a pop sound.", "(b) Metal 'X' is sodium and gas 'Y' is carbon dioxide which gives white precipitate with lime water.", "(c) Metal 'X' is iron and gas 'Y' is hydrogen which burns with a pop sound.", "(d) Metal 'X' is magnesium and gas 'Y' is carbon dioxide which gives white precipitate with lime water."], "answer": 2, "exp": "According to the chapter's biological concepts: (c) Metal 'X' is iron and gas 'Y' is hydrogen which burns with a pop sound. is correct."}, {"q": "A copper vessel exposed to moist air for a long time is shown in figure I and sulphur powder is burnt in oxygen as shown in figure II. 1, 2, 3 and 4 are respectively", "options": ["(a) CuO, CO2, SO2, H2SO3", "(b) CuCO3, Cu(OH)2, H2SO3, SO2", "(c) Cu, CuO, H2S, H2SO4", "(d) Cu(OH)2, CuCO3, SO2, H2SO3"], "answer": 3, "exp": "According to the chapter's biological concepts: (d) Cu(OH)2, CuCO3, SO2, H2SO3 is correct."}, {"q": "Rashmi has performed an activity to test whether the following materials conduct electricity or not by putting them in the circuit, one at a time as shown in the figure. Materials: 1 Aluminium foil, 2 A piece of stone, 3 Copper wire, 4 Graphite, 5 Sulphur, 6 Silver coin. Materials X and Y could be", "options": ["(a) 1, 3, 4, 6 ; 2, 5", "(b) 1, 5, 6 ; 2, 3, 4", "(c) 1, 3, 6 ; 2, 4, 5", "(d) 2, 3, 4, 5 ; 1, 6"], "answer": 0, "exp": "According to the chapter's biological concepts: (a) 1, 3, 4, 6 ; 2, 5 is correct."}, {"q": "Each of the given beakers contains two metal strips of same size fastened together and immersed in hydrochloric acid. [Beaker 1: P,Q; Beaker 2: R,S; Beaker 3: Q,R; Beaker 4: S,T]. After 5 minutes, amount of Q ions formed is greater than P ions in beaker 1, S ions is greater than R ions in beaker 2, R ions is greater than Q ions in beaker 3, and T ions is greater than S ions in beaker 4. Correct order of reactivity of these metals is", "options": ["(a) P > Q > R > S > T", "(b) R < P < T < S < Q", "(c) T > R > Q > P > S", "(d) P < Q < R < S < T"], "answer": 3, "exp": "According to the chapter's biological concepts: (d) P < Q < R < S < T is correct."}, {"q": "Read the table carefully.\n1. Copper vessel exposed to moist air -> Green coating -> Turns red litmus solution blue\n2. Aluminium foil dipped in fresh solution of sodium hydroxide -> Colourless, odourless gas -> Burns with a pop sound\n3. Rusting of iron -> Reddish brown deposit -> Turns red litmus solution blue\n4. Burning of sulphur powder -> Colourless, suffocating gas -> Turns blue litmus solution red\nIdentify the products formed and their nature.", "options": ["(a) (1) Cu(OH)2.CuCO3; basic (2) H2; neutral (3) Fe2O3; basic (4) SO2; acidic", "(b) (1) CuO; basic (2) O2; neutral (3) Fe3O4; basic (4) H2S; acidic", "(c) (1) Cu(OH)2.CuCO3; basic (2) H2; neutral (3) Fe2O3; acidic (4) SO2; basic", "(d) (1) Cu; basic (2) H2O; neutral (3) FeO; basic (4) SO3; basic"], "answer": 0, "exp": "According to the chapter's biological concepts: (a) (1) Cu(OH)2.CuCO3; basic (2) H2; neutral (3) Fe2O3; basic (4) SO2; acidic is correct."}, {"q": "Gitika, a class VII student arranged the following experimental set-up and observed the changes carefully. [Fe in CuSO4 -> Blue coloured solution changed to green, Cu in ZnSO4 -> No colour change observed, Zn in FeSO4 -> Green coloured solution changed to colourless]. On the basis of her observations identify the correct order of reactivity.", "options": ["(a) Zn > Cu > Fe", "(b) Zn > Fe > Cu", "(c) Fe > Zn > Cu", "(d) Cu > Fe > Zn"], "answer": 1, "exp": "According to the chapter's biological concepts: (b) Zn > Fe > Cu is correct."}, {"q": "Niharika categorised the different elements as shown below :\n(i) Metal: Na(\u2713), Al(\u2713), S(\u2717), Fe(\u2713), Cu(\u2713), P(\u2717)\n(ii) Hardness: Na(\u2713), Al(\u2717), S(\u2717), Fe(\u2713), Cu(\u2713), P(\u2717)\n(iii) Malleability: Na(\u2717), Al(\u2713), S(\u2717), Fe(\u2717), Cu(\u2713), P(\u2713)\n(iv) Ductility: Na(\u2717), Al(\u2717), S(\u2713), Fe(\u2713), Cu(\u2713), P(\u2717)\n(v) Conductor of electricity: Na(\u2713), Al(\u2713), S(\u2717), Fe(\u2713), Cu(\u2713), P(\u2717)\nWhich of the characteristics is not correctly matched by Niharika?", "options": ["(a) (i), (iii) and (v)", "(b) (i), (ii), (iv) and (v)", "(c) (ii), (iii) and (iv)", "(d) (i), (ii), (iii), (iv) and (v)"], "answer": 2, "exp": "According to the chapter's biological concepts: (c) (ii), (iii) and (iv) is correct."}, {"q": "Any article of iron if left in open for some time, acquires a film of brownish substance (rust) having chemical formula _____", "options": ["(a) Fe3O4", "(b) Fe2O3.xH2O", "(c) FeO", "(d) Fe(OH)2"], "answer": 1, "exp": "According to the chapter's biological concepts: (b) Fe2O3.xH2O is correct."}, {"q": "Few uses of metals are shown below. [X: Corrugated sheets, Y: Aluminium foil, Z: Bell]. Identify the properties which are responsible for the uses X, Y and Z respectively.", "options": ["(a) Conductivity, Malleability, Ductility", "(b) Ductility, Malleability, Sonorous", "(c) Sonorous, Malleability, Ductility", "(d) Malleability, Ductility, Sonorous"], "answer": 1, "exp": "According to the chapter's biological concepts: (b) Ductility, Malleability, Sonorous is correct."}, {"q": "A student performed the first set of experiments with four test tubes containing solutions and metal pieces as indicated in the figure [P: Zn in ZnSO4, Q: Cu in FeSO4, R: Mg in MgSO4, S: Fe in CuSO4]. In the second set of experiments, the metal pieces are interchanged between test tubes P and Q and also between test tubes R and S. In which test tube(s), no reaction will occur in both sets of experiments?", "options": ["(a) P and Q", "(b) R", "(c) S", "(d) P and R"], "answer": 3, "exp": "According to the chapter's biological concepts: (d) P and R is correct."}, {"q": "The given diagrams show the reactions of three metals with dilute hydrochloric acid. What are metals P, Q and R? [P: no bubbles, Q: few bubbles, R: many bubbles]", "options": ["(a) P: Copper, Q: Magnesium, R: Zinc", "(b) P: Copper, Q: Zinc, R: Magnesium", "(c) P: Magnesium, Q: Zinc, R: Copper", "(d) P: Zinc, Q: Magnesium, R: Copper"], "answer": 1, "exp": "According to the chapter's biological concepts: (b) P: Copper, Q: Zinc, R: Magnesium is correct."}, {"q": "Three experiments to investigate the reactivities of three metals are shown as : [Chromium in Aqueous nickel sulphate -> Nickel displaced, Manganese in Aqueous nickel sulphate -> Nickel displaced, Chromium in Aqueous manganese sulphate -> Manganese not displaced]. What is the correct order of reactivity (most reactive -> least reactive) for these three metals?", "options": ["(a) Chromium, Manganese, Nickel", "(b) Manganese, Chromium, Nickel", "(c) Manganese, Nickel, Chromium", "(d) Nickel, Chromium, Manganese"], "answer": 1, "exp": "According to the chapter's biological concepts: (b) Manganese, Chromium, Nickel is correct."}, {"q": "Identify A, B, C and D in the given sequence of reactions.\n2A + 2B -> 2AOH + H2\nS + O2 -> C\nC + B -> D", "options": ["(a) Na, H2O, SO2, H2SO3", "(b) Na, H2O, SO2, H2SO4", "(c) K, H2O, SO2, H2SO4", "(d) K, H2O, SO3, H2SO3"], "answer": 0, "exp": "According to the chapter's biological concepts: (a) Na, H2O, SO2, H2SO3 is correct."}, {"q": "Ritika noted the initial colour of the solutions in beakers I, II, III and IV. After inserting zinc rods in each solution and leaving undisturbed for two hours, she noted the colour of each solution again. Mark the beakers in which colour change is observed? [I: Al2(SO4)3, II: ZnSO4, III: FeSO4, IV: CuSO4]", "options": ["(a) I and II", "(b) II and III", "(c) III and IV", "(d) I and IV"], "answer": 2, "exp": "According to the chapter's biological concepts: (c) III and IV is correct."}, {"q": "Samples of four different oxides were taken and dissolved in water separately to form the respective oxide solution. The four solutions were then tested for their acidic/basic nature. When dissolved in water, which of the following oxides, is likely to turn blue litmus red?", "options": ["(a) SO2", "(b) MgO", "(c) Fe2O3", "(d) CaO"], "answer": 0, "exp": "According to the chapter's biological concepts: (a) SO2 is correct."}, {"q": "Mona tries an experiment with four different metals namely sodium, magnesium, zinc, and copper taken in four different test tubes respectively, and added 5 mL of water to each test tube. Mona observed that hydrogen gas is evolved in test tube 3, only when it was boiled. Test tube 3 contains only _____.", "options": ["(a) Zn", "(b) Na", "(c) Mg", "(d) Cu"], "answer": 2, "exp": "According to the chapter's biological concepts: (c) Mg is correct."}, {"q": "Assertion: Iron is found in free state in nature.\nReason: Iron is not highly reactive metal.", "options": ["If both assertion and reason are true and reason is the correct explanation of assertion.", "If both assertion and reason are true but reason is not the correct explanation of assertion.", "If assertion is true but reason is false.", "If both assertion and reason are false."], "answer": 3, "exp": "According to the chapter's biological concepts: If both assertion and reason are false. is correct."}, {"q": "Assertion: Zinc is used in galvanisation of iron.\nReason: Its coating on iron articles increases their life by protecting them from rusting.", "options": ["If both assertion and reason are true and reason is the correct explanation of assertion.", "If both assertion and reason are true but reason is not the correct explanation of assertion.", "If assertion is true but reason is false.", "If both assertion and reason are false."], "answer": 0, "exp": "According to the chapter's biological concepts: If both assertion and reason are true and reason is the correct explanation of assertion. is correct."}, {"q": "Assertion: Copper cannot displace hydrogen from acids.\nReason: It lies above hydrogen in the reactivity series.", "options": ["If both assertion and reason are true and reason is the correct explanation of assertion.", "If both assertion and reason are true but reason is not the correct explanation of assertion.", "If assertion is true but reason is false.", "If both assertion and reason are false."], "answer": 2, "exp": "According to the chapter's biological concepts: If assertion is true but reason is false. is correct."}, {"q": "Assertion: Aluminium appears dull in colour and does not react with water, acids or alkalies.\nReason: It has a protective layer of oxide on it.", "options": ["If both assertion and reason are true and reason is the correct explanation of assertion.", "If both assertion and reason are true but reason is not the correct explanation of assertion.", "If assertion is true but reason is false.", "If both assertion and reason are false."], "answer": 0, "exp": "According to the chapter's biological concepts: If both assertion and reason are true and reason is the correct explanation of assertion. is correct."}, {"q": "Assertion: If a piece of copper is placed in silver nitrate solution, the solution becomes blue.\nReason: Displacement reaction takes place and copper goes into the solution.", "options": ["If both assertion and reason are true and reason is the correct explanation of assertion.", "If both assertion and reason are true but reason is not the correct explanation of assertion.", "If assertion is true but reason is false.", "If both assertion and reason are false."], "answer": 0, "exp": "According to the chapter's biological concepts: If both assertion and reason are true and reason is the correct explanation of assertion. is correct."}, {"q": "Assertion: On beating with the help of a hammer, coal is converted into small pieces and finally into a powder.\nReason: Coal is made up of carbon which is malleable in nature.", "options": ["If both assertion and reason are true and reason is the correct explanation of assertion.", "If both assertion and reason are true but reason is not the correct explanation of assertion.", "If assertion is true but reason is false.", "If both assertion and reason are false."], "answer": 2, "exp": "According to the chapter's biological concepts: If assertion is true but reason is false. is correct."}, {"q": "Assertion: Most of the metals can be beaten into sheets.\nReason: Most of the metals are ductile.", "options": ["If both assertion and reason are true and reason is the correct explanation of assertion.", "If both assertion and reason are true but reason is not the correct explanation of assertion.", "If assertion is true but reason is false.", "If both assertion and reason are false."], "answer": 1, "exp": "According to the chapter's biological concepts: If both assertion and reason are true but reason is not the correct explanation of assertion. is correct."}, {"q": "Assertion: Graphite is a non-metal.\nReason: It is the only non-metal which is good conductor of electricity.", "options": ["If both assertion and reason are true and reason is the correct explanation of assertion.", "If both assertion and reason are true but reason is not the correct explanation of assertion.", "If assertion is true but reason is false.", "If both assertion and reason are false."], "answer": 1, "exp": "According to the chapter's biological concepts: If both assertion and reason are true but reason is not the correct explanation of assertion. is correct."}, {"q": "Assertion: A solution of carbon dioxide in water turns red litmus blue.\nReason: Carbon dioxide is basic oxide.", "options": ["If both assertion and reason are true and reason is the correct explanation of assertion.", "If both assertion and reason are true but reason is not the correct explanation of assertion.", "If assertion is true but reason is false.", "If both assertion and reason are false."], "answer": 3, "exp": "According to the chapter's biological concepts: If both assertion and reason are false. is correct."}, {"q": "Assertion: Copper and aluminium are used to make electric wires.\nReason: Copper and aluminium are good conductors of electricity.", "options": ["If both assertion and reason are true and reason is the correct explanation of assertion.", "If both assertion and reason are true but reason is not the correct explanation of assertion.", "If assertion is true but reason is false.", "If both assertion and reason are false."], "answer": 0, "exp": "According to the chapter's biological concepts: If both assertion and reason are true and reason is the correct explanation of assertion. is correct."}, {"q": "PASSAGE-I: Aluminium does not react readily with air or water because", "options": ["it occupies high position in electrochemical series", "it lies below hydrogen in electrochemical series", "it is covered with a layer of oxide which does not rub off", "it is a noble metal"], "answer": 2, "exp": "According to the chapter's biological concepts: it is covered with a layer of oxide which does not rub off is correct."}, {"q": "PASSAGE-I: Iron reacts with air in presence of water and forms a brown powder which is called rust. Chemically rust is", "options": ["iron oxide", "hydrated iron oxide", "iron sulphate", "iron carbonate"], "answer": 1, "exp": "According to the chapter's biological concepts: hydrated iron oxide is correct."}, {"q": "PASSAGE-I: Silver metal on exposure to air for a long time becomes black in colour. What is the reason behind it?", "options": ["Silver reacts with sulphur present in air and forms silver sulphide.", "Silver reacts with carbon dioxide present in air to form silver carbonate.", "Silver reacts with water to form silver hydroxide.", "Silver reacts with air to form silver oxide."], "answer": 0, "exp": "According to the chapter's biological concepts: Silver reacts with sulphur present in air and forms silver sulphide. is correct."}, {"q": "PASSAGE-I: The green layer developed on copper surface on exposure to air is due to", "options": ["copper sulphate layer", "basic copper carbonate layer", "copper sulphate layer", "copper nitrate layer"], "answer": 1, "exp": "According to the chapter's biological concepts: basic copper carbonate layer is correct."}, {"q": "PASSAGE-II: If a zinc rod is dipped in copper sulphate solution, following changes will be noticed. (i) Zinc rod slowly loses its weight. (ii) Copper settles at the bottom of the beaker. (iii) Blue colour of copper sulphate disappears. Mark the correct observations.", "options": ["(i) and (ii) only", "(i), (ii), and (iii)", "(i) and (iii) only", "(iii) only"], "answer": 1, "exp": "According to the chapter's biological concepts: (i), (ii), and (iii) is correct."}, {"q": "PASSAGE-II: Take aqueous solution of copper sulphate in one test tube and ferrous sulphate in another test tube. Dip an iron nail in copper sulphate and copper wire in ferrous sulphate solution. Mark the correct observation.", "options": ["Blue colour in first test tube changes to light green and green in the second test tube changes to blue.", "There is no reaction in both the test tubes.", "Blue colour in first test tube changes to light green and no change in second test tube.", "Blue colour remains as such and green colour in second test tube changes to blue."], "answer": 2, "exp": "According to the chapter's biological concepts: Blue colour in first test tube changes to light green and no change in second test tube. is correct."}, {"q": "PASSAGE-II: The above observations show that", "options": ["copper is present above iron in the reactivity series", "iron is present above copper in the reactivity series", "both iron and copper are present above hydrogen in the reactivity series", "reactivity series does not decide reactivity of the metals"], "answer": 1, "exp": "According to the chapter's biological concepts: iron is present above copper in the reactivity series is correct."}, {"q": "PASSAGE-III: The oxides of non-metals dissolve in water to give", "options": ["alkalies", "acids", "carbonates", "sulphates"], "answer": 1, "exp": "According to the chapter's biological concepts: acids is correct."}, {"q": "PASSAGE-III: Sulphur is burnt in air to give sulphur dioxide. It is dissolved in water and tested with litmus paper. Mark the correct observation.", "options": ["Red litmus paper turns blue", "Blue litmus paper turns red", "There is no change in the litmus paper.", "Red litmus paper changes to green."], "answer": 1, "exp": "According to the chapter's biological concepts: Blue litmus paper turns red is correct."}, {"q": "PASSAGE-III: Magnesium ribbon on burning in air gives a white powder which when dissolved in water turns red litmus blue. The reason for this change is that", "options": ["MgO is a basic oxide", "MgO is an acidic oxide", "MgO is a very reactive oxide", "MgO is not a reactive oxide"], "answer": 0, "exp": "According to the chapter's biological concepts: MgO is a basic oxide is correct."}, {"q": "PASSAGE-IV: Which metal would not produce bubbles of hydrogen gas when added to dilute hydrochloric acid?", "options": ["Magnesium", "Sodium", "Iron", "Silver"], "answer": 3, "exp": "According to the chapter's biological concepts: Silver is correct."}, {"q": "PASSAGE-IV: Pieces of copper, lead, aluminium and zinc are added to dilute hydrochloric acid. Which of the following test tubes most likely contains zinc? (Assuming test tubes show varying amounts of gas bubbles)", "options": ["(I) - no bubbles", "(II) - few bubbles", "(III) - moderate bubbles", "(IV) - many bubbles"], "answer": 3, "exp": "According to the chapter's biological concepts: (IV) - many bubbles is correct."}, {"q": "PASSAGE-IV: Silver and gold do not react with oxygen even at very high temperature while copper reacts on prolonged heating. The reactivity of these metals is", "options": ["Cu > Ag > Au", "Cu = Ag > Au", "Cu = Ag = Au", "Au > Cu > Ag"], "answer": 0, "exp": "According to the chapter's biological concepts: Cu > Ag > Au is correct."}, {"q": "Case I: 1. The property of metals by which they can be beaten into thin sheets is called", "options": ["ductility", "sonorosity", "lustre", "malleability."], "answer": 3, "exp": "According to the chapter's biological concepts: malleability. is correct."}, {"q": "Case I: 2. Which of the following elements is soft in nature?", "options": ["Sodium", "Aluminium", "Copper", "Iron"], "answer": 0, "exp": "According to the chapter's biological concepts: Sodium is correct."}, {"q": "Case I: 3. Some elements are given below: (i) Sulphur (ii) Oxygen (iii) Phosphorus (iv) Copper (v) Sodium. Which of the given elements are non-metals?", "options": ["(ii), (iii) and (iv)", "(i), (ii) and (iii)", "(i), (iv) and (v)", "(i), (iii) and (v)"], "answer": 1, "exp": "According to the chapter's biological concepts: (i), (ii) and (iii) is correct."}, {"q": "Case I: 4. Class-7th students performed an activity in their class as shown in the figure. They used several other materials listed below, in place of the iron nail: Iron rod, Copper wire, Coal piece, Wood piece, Sulphur, Aluminium foil, A small stone. In which of the following groups (i) to (iv) bulb will not glow at all? (i) Coal piece and sulphur (ii) Iron rod, coal piece, small stone (iii) Iron rod, copper wire, aluminium foil (iv) Wood piece and small stone", "options": ["(ii) and (iii) only", "(i) and (iii) only", "(iv) only", "(i) and (iv) only"], "answer": 3, "exp": "According to the chapter's biological concepts: (i) and (iv) only is correct."}, {"q": "Case I: 5. Which of the following materials can be drawn into long wire?", "options": ["Aluminium, iron, gold", "Coal, sulphur, wood", "Coal, sulphur, aluminium", "Copper, carbon, aluminium"], "answer": 0, "exp": "According to the chapter's biological concepts: Aluminium, iron, gold is correct."}, {"q": "Case II: 1. When a copper vessel is exposed to moist air for long time, it acquires a dull green coating. The green material is a mixture of (I) copper oxide (II) copper hydroxide (III) copper carbonate (IV) copper sulphide", "options": ["I and II", "I and III", "II and III", "III and IV"], "answer": 2, "exp": "According to the chapter's biological concepts: II and III is correct."}, {"q": "Case II: 2. Sulphur is burnt in a glass tumbler and the tumbler was covered with a lid so that the gas produced does not escape. Now, a small quantity of water is added to the tumbler and the solution is checked with litmus paper. Identify the gas produced and the colour change in litmus paper.", "options": ["CO2, blue litmus to red", "CO2, red litmus to blue", "SO2, red litmus to blue", "SO2, blue litmus to red"], "answer": 3, "exp": "According to the chapter's biological concepts: SO2, blue litmus to red is correct."}, {"q": "Case II: 3. Which of the following is not a basic oxide?", "options": ["Na2O", "CO2", "CaO", "MgO"], "answer": 1, "exp": "According to the chapter's biological concepts: CO2 is correct."}, {"q": "Case II: 4. Check the following reactions: Mg + Oxygen -> Oxide (water) -> (i), Fe + Oxygen -> Oxide (water) -> (ii), Cu + Oxygen -> Oxide (water) -> (iii), S + Oxygen -> Oxide (water) -> (iv), C + Oxygen -> Oxide (water) -> (v). Select the correct statement regarding acidic and basic nature of compounds (i) to (v)?", "options": ["(i) to (iii) are acidic while (iv) and (v) are basic.", "(i) to (iii) are basic while (iv) and (v) are acidic.", "(i), (ii) are basic while (iii) to (v) are acidic.", "(i), (ii) are acidic while (iii) to (v) are basic."], "answer": 1, "exp": "According to the chapter's biological concepts: (i) to (iii) are basic while (iv) and (v) are acidic. is correct."}, {"q": "Case II: 5. Phosphorus is kept in water because", "options": ["it is a very reactive metal and reacts explosively with air", "it is a noble metal and catches fire when reacts with air", "it is an inert non-metal and reacts with oxygen from air", "it is a very reactive non-metal and catches fire when reacts with oxygen from air."], "answer": 3, "exp": "According to the chapter's biological concepts: it is a very reactive non-metal and catches fire when reacts with oxygen from air. is correct."}, {"q": "Case III: 1. Name the gas evolved when a metal reacts with water and how the gas can be tested?", "options": ["Hydrogen, burns with a pop sound", "Carbon dioxide, burns with a pop sound", "Carbon dioxide, turns lime water milky", "Hydrogen, turns lime water milky"], "answer": 0, "exp": "According to the chapter's biological concepts: Hydrogen, burns with a pop sound is correct."}, {"q": "Case III: 2. The metals which react slowly even on reaction with steam are", "options": ["Mg and Cu", "Na and Cu", "Na and K", "Zn and Fe"], "answer": 3, "exp": "According to the chapter's biological concepts: Zn and Fe is correct."}, {"q": "Case III: 3. How does metals and non-metals react with dilute acids?", "options": ["Both form water and salt.", "Both form water and oxygen.", "Metals form salt and hydrogen while non-metals do not react with dilute acids.", "Both do not react with dilute acids."], "answer": 2, "exp": "According to the chapter's biological concepts: Metals form salt and hydrogen while non-metals do not react with dilute acids. is correct."}, {"q": "Case III: 4. Which of the following is not correct about copper?", "options": ["Copper does not react with water.", "Copper does not react with dil. HCl.", "Copper reacts with moist air to form basic green coating.", "None of these"], "answer": 3, "exp": "According to the chapter's biological concepts: None of these is correct."}, {"q": "Case III: 5. Which of the following is/are correct? (i) Sodium + Water -> Sodium hydroxide + Hydrogen gas (ii) Sulphur + Water -> No reaction (iii) Zinc + Sodium hydroxide -> Sodium zincate + Hydrogen gas", "options": ["(i) and (ii) only", "(i), (ii) and (iii)", "(iii) only", "(ii) only"], "answer": 1, "exp": "According to the chapter's biological concepts: (i), (ii) and (iii) is correct."}, {"q": "Case IV: 1. In which of the given beakers, reaction will not take place? (i) CuSO4 + Zn (ii) CuSO4 + Fe (iii) ZnSO4 + Cu (iv) FeSO4 + Cu (v) FeSO4 + Zn", "options": ["(i), (ii) and (iii) only", "(iii), (iv) and (v) only", "(ii), (iii) and (iv) only", "(iii) and (iv) only"], "answer": 3, "exp": "According to the chapter's biological concepts: (iii) and (iv) only is correct."}, {"q": "Case IV: 2. When a strip of zinc is placed in iron sulphate solution, then zinc metal displaces iron metal from iron sulphate solution this implies that", "options": ["zinc is less reactive than iron", "iron is less reactive than zinc", "both are equally reactive", "it has nothing to do with reactivity."], "answer": 1, "exp": "According to the chapter's biological concepts: iron is less reactive than zinc is correct."}, {"q": "Case IV: 3. A zinc rod is dipped in copper sulphate solution. Which of the following represent(s) the correct observation(s). (i) Zinc rod slowly loses its weight. (ii) Copper settles at the bottom of the beaker. (iii) Blue colour of copper sulphate solution disappears.", "options": ["(i) and (ii) only", "(i) and (iii) only", "(iii) only", "All observations are correct."], "answer": 3, "exp": "According to the chapter's biological concepts: All observations are correct. is correct."}, {"q": "Case IV: 4. When a strip of iron metal is placed in a copper sulphate solution for sometime, then", "options": ["blue colour of CuSO4 fades and reddish-brown coating of copper metal is deposited on the iron strip", "blue colour of CuSO4 fades and grey coating of copper metal is deposited on iron strip", "no reaction will take place", "blue colour of copper sulphate changes to brownish."], "answer": 0, "exp": "According to the chapter's biological concepts: blue colour of CuSO4 fades and reddish-brown coating of copper metal is deposited on the iron strip is correct."}, {"q": "Case IV: 5. Which of the following pairs will not give displacement reaction? (i) Sodium chloride solution and copper metal (ii) Magnesium chloride solution and aluminium metal (iii) Iron sulphate solution and silver metal (iv) Silver nitrate solution and copper metal", "options": ["(ii) and (iv) only", "(i) and (iv) only", "(i), (ii) and (iii) only", "(iv) only"], "answer": 2, "exp": "According to the chapter's biological concepts: (i), (ii) and (iii) only is correct."}, {"q": "Case V: 1. Which of the following non-metals is used in fertilizers to enhance the fertility of soil?", "options": ["Oxygen", "Nitrogen", "Chlorine", "Potassium"], "answer": 1, "exp": "According to the chapter's biological concepts: Nitrogen is correct."}, {"q": "Case V: 2. Which of the following metals is used for making both cooking utensils and electric wires?", "options": ["Magnesium", "Zinc", "Sodium", "Copper"], "answer": 3, "exp": "According to the chapter's biological concepts: Copper is correct."}, {"q": "Case V: 3. Which of the following non-metals is used as an antiseptic?", "options": ["Iodine", "Chlorine", "Hydrogen", "Sulphur"], "answer": 0, "exp": "According to the chapter's biological concepts: Iodine is correct."}];
+renderMCQ('mcqbook-container', mcqBook, 'mb');
+document.getElementById('mcq-count').textContent = `(${mcqBook.length})`;
+
+const fillBook = [{"q": "Some metals like _______ are so soft that they can be even cut with knife.", "a": ["sodium"], "exp": "According to the chapter's biological concepts: sodium is correct."}, {"q": "Metals have a tendency to _______ electrons to form positive ions.", "a": ["lose"], "exp": "According to the chapter's biological concepts: lose is correct."}, {"q": "Unreactive metals, such as _______ and _______ can exist in uncombined state in nature.", "a": ["gold, silver"], "exp": "According to the chapter's biological concepts: gold, silver is correct."}, {"q": "Silver, gold and platinum do not react with oxygen even at very high temperature and are called _______ metals.", "a": ["noble"], "exp": "According to the chapter's biological concepts: noble is correct."}, {"q": "Coating iron surface with a more reactive metal, like zinc is called _______.", "a": ["galvanization"], "exp": "According to the chapter's biological concepts: galvanization is correct."}, {"q": "Non-metals do not possess any lustre, except _______ which is a non-metallic solid with lustre.", "a": ["iodine"], "exp": "According to the chapter's biological concepts: iodine is correct."}, {"q": "_______ is a liquid non-metal.", "a": ["bromine"], "exp": "According to the chapter's biological concepts: bromine is correct."}, {"q": "_______ and _______ are stored under kerosene oil.", "a": ["sodium, potassium"], "exp": "According to the chapter's biological concepts: sodium, potassium is correct."}, {"q": "_______ does not react with cold water but reacts with hot water.", "a": ["magnesium"], "exp": "According to the chapter's biological concepts: magnesium is correct."}, {"q": "Coal break into small pieces on hammering, this shows that coal is _______ in nature.", "a": ["brittle"], "exp": "According to the chapter's biological concepts: brittle is correct."}, {"q": "Aluminium, zinc and _______ neither react with hot water nor with cold water, they only react with steam.", "a": ["iron"], "exp": "According to the chapter's biological concepts: iron is correct."}, {"q": "Out of Ca, Zn, Fe, Mg and Cu the most reactive metal is _______.", "a": ["Ca"], "exp": "According to the chapter's biological concepts: Ca is correct."}, {"q": "When a few granules of _______ are added to copper sulphate solution then the solution fades to colourless and red deposits are seen at the bottom of the test tube.", "a": ["zinc"], "exp": "According to the chapter's biological concepts: zinc is correct."}, {"q": "The alloy _______ contains Mg and Al and used to make light instruments and balance beams.", "a": ["magnalium"], "exp": "According to the chapter's biological concepts: magnalium is correct."}, {"q": "A non-metal _______ is used in safety matches and in fire crackers.", "a": ["phosphorus"], "exp": "According to the chapter's biological concepts: phosphorus is correct."}, {"q": "Number of metals which lie above hydrogen out of the following is _______. (Sodium, lead, copper, platinum, zinc, mercury)", "a": ["3 (Sodium, lead, zinc)"], "exp": "According to the chapter's biological concepts: 3 (Sodium, lead, zinc) is correct."}, {"q": "In the reaction, xNa + O2 -> (x/2) Na2O, x is _______.", "a": ["4"], "exp": "According to the chapter's biological concepts: 4 is correct."}, {"q": "Number of elements which form basic oxide is _______. (Magnesium, aluminium, carbon, sulphur, iron, potassium, zinc)", "a": ["5 (Magnesium, aluminium, iron, potassium, zinc)"], "exp": "According to the chapter's biological concepts: 5 (Magnesium, aluminium, iron, potassium, zinc) is correct."}, {"q": "Number of elements which will not react even with boiling water is _______. (Sodium, iron, zinc, copper, magnesium, silver)", "a": ["2 (copper, silver)"], "exp": "According to the chapter's biological concepts: 2 (copper, silver) is correct."}, {"q": "5. Number of possible reactions out of the following is _______\nCu + 2AgNO3 -> 2Ag + Cu(NO3)2\nCu + ZnSO4 -> CuSO4 + Zn\nMg + CuSO4 -> MgSO4 + Cu\nZn + PbSO4 -> ZnSO4 + Pb", "a": ["3"], "exp": "According to the chapter's biological concepts: 3 is correct."}];
+renderFill('fillbook-container', fillBook, 'fb');
+document.getElementById('fill-count').textContent = `(${fillBook.length})`;
+
+const tfBook = [{"s": "Aluminium and copper are examples of non-metals used for making utensils and statues", "answer": false, "exp": "According to the chapter's biological concepts: False is correct."}, {"s": "Metals form oxides when combined with oxygen, the solution of which turns blue litmus paper to red", "answer": false, "exp": "According to the chapter's biological concepts: False is correct."}, {"s": "Oxygen is a non-metal essential for respiration", "answer": true, "exp": "According to the chapter's biological concepts: True is correct."}, {"s": "Copper vessels are used for boiling water because they are good conductors of electricity.", "answer": false, "exp": "According to the chapter's biological concepts: False is correct."}, {"s": "Steel is a mixture of elements but made up of mostly iron.", "answer": true, "exp": "According to the chapter's biological concepts: True is correct."}, {"s": "Copper and unreactive metals below it in the reactivity series do not react with dilute hydrochloric acid.", "answer": true, "exp": "According to the chapter's biological concepts: True is correct."}, {"s": "A less reactive metal is able to displace a more reactive metal from its aqueous salt solution.", "answer": false, "exp": "According to the chapter's biological concepts: False is correct."}, {"s": "Rust is hydrated iron(III) oxide i.e., Fe2O3.xH2O.", "answer": true, "exp": "According to the chapter's biological concepts: True is correct."}, {"s": "Non-metals are soft and brittle. The only exception is graphite, an allotropic form of carbon, which is a non-metal but is the hardest natural substance known.", "answer": false, "exp": "According to the chapter's biological concepts: False is correct."}, {"s": "Magnesium ribbon burns with dazzling pink light to form magnesium oxide.", "answer": false, "exp": "According to the chapter's biological concepts: False is correct."}, {"s": "When iron rod is dipped in zinc sulphate solution, slowly colour of the solution turns light green and weight of iron rod keep on decreasing.", "answer": false, "exp": "According to the chapter's biological concepts: False is correct."}, {"s": "Green layer deposited on copper on exposure to air is due to the formation of basic copper carbonate layer.", "answer": true, "exp": "According to the chapter's biological concepts: True is correct."}, {"s": "Melting and boiling points of metals are very high except mercury and gallium.", "answer": true, "exp": "According to the chapter's biological concepts: True is correct."}, {"s": "Copper does not burn in air even on strong heating. However, on heating in air for a long time, it is covered with a layer of green coloured copper(I) oxide.", "answer": false, "exp": "According to the chapter's biological concepts: False is correct."}, {"s": "Lemon pickle is stored in aluminium vessel to keep it fresh for long time.", "answer": false, "exp": "According to the chapter's biological concepts: False is correct."}, {"s": "Coal can be drawn into wires.", "answer": false, "exp": "According to the chapter's biological concepts: False is correct."}, {"s": "Phosphorus is used in the vulcanization of rubber.", "answer": false, "exp": "According to the chapter's biological concepts: False is correct."}, {"s": "Copper cannot displace silver from its salt solution but can displace iron.", "answer": false, "exp": "According to the chapter's biological concepts: False is correct."}, {"s": "Nitrogen is used as preservative due to its inert nature. Some compounds of nitrogen are used as explosives as well.", "answer": true, "exp": "According to the chapter's biological concepts: True is correct."}];
+renderTF('tfbook-container', tfBook, 'tb');
+document.getElementById('tf-count').textContent = `(${tfBook.length})`;
+
+const shortBook = [];
+renderSubjective('short-container', shortBook, 'sb');
+document.getElementById('short-count').textContent = `(${shortBook.length})`;
+
+const longBook = [];
+renderSubjective('long-container', longBook, 'lb');
+document.getElementById('long-count').textContent = `(${longBook.length})`;
+
+const extraBook = [{"q": "Did you know? Why doesn't the stomach digest itself?", "model": "The stomach secretes a thick layer of alkaline mucus that physically coats the stomach wall, neutralizing the acid before it can burn the tissue. If this mucus layer is damaged, the acid can cause a painful sore called an ulcer!"}, {"q": "Can you swallow upside down?", "model": "Yes! Because the oesophagus uses powerful, wave-like muscular contractions called peristalsis to push food into the stomach, you can drink or eat even while standing on your head. Gravity is not required for swallowing!"}, {"q": "How long is your entire digestive tract?", "model": "If stretched out, the human adult alimentary canal is about 9 meters (30 feet) long! The small intestine alone makes up about 7.5 meters of that length."}];
+renderSubjective('extra-container', extraBook, 'eb');
+document.getElementById('extra-count').textContent = `(${extraBook.length})`;
+
+</script>
+</body>
+</html>
