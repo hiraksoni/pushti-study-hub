@@ -35,7 +35,7 @@
     top: 0;
     z-index: 100;
     background: var(--sandstone);
-    padding: 15px 0;
+    padding: 12px 0;
     box-shadow: 0 10px 15px -10px rgba(0,0,0,0.1);
     margin-bottom: 30px;
     border-bottom: 1px solid var(--sandstone-deep);
@@ -43,40 +43,32 @@
   .tabs-container {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
+    gap: 6px;
+    flex-wrap: nowrap;
     max-width: 1000px;
     margin: 0 auto;
+    overflow-x: auto;
+    padding: 0 10px;
   }
   .tab-btn {
-    padding: 10px 20px;
+    padding: 8px 16px;
     background: var(--card-bg);
     border: 2px solid var(--copper);
     color: var(--teal-deep);
     font-family: 'Nunito', sans-serif;
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     border-radius: 100px;
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    white-space: nowrap;
   }
-  .tab-btn:hover {
-    background: rgba(184,134,60,0.1);
-  }
-  .tab-btn.active {
-    background: var(--copper);
-    color: var(--card-bg);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-  }
+  .tab-btn:hover { background: rgba(184,134,60,0.1); }
+  .tab-btn.active { background: var(--copper); color: var(--card-bg); box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); }
   
-  .tab-content {
-    display: none;
-    animation: fadeIn 0.4s ease;
-  }
-  .tab-content.active {
-    display: block;
-  }
+  .tab-content { display: none; animation: fadeIn 0.4s ease; }
+  .tab-content.active { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
   .instructions{background:var(--card-bg); border:1px dashed var(--copper); border-radius:10px; padding:14px 18px; margin:22px 0 30px; font-size:0.9rem;}
@@ -95,17 +87,13 @@
   .fillblank input[type=text]{padding:6px 10px; border:1px solid var(--sandstone-deep); border-radius:6px; font-family:'Nunito',sans-serif; font-size:0.92rem; width:220px; background:#fff;}
   .tf-row{display:flex; gap:14px; align-items:center; margin-bottom:6px;}
   .tf-row label{font-size:0.9rem; cursor:pointer;}
-  select{padding:5px 8px; border-radius:6px; border:1px solid var(--sandstone-deep); font-family:'Nunito',sans-serif; font-size:0.88rem; background:#fff;}
   .feedback{margin-top:8px; padding:8px 12px; border-radius:6px; font-size:0.85rem; display:none;}
   .feedback.correct{background:var(--good-bg); color:var(--good); display:block;}
   .feedback.incorrect{background:var(--bad-bg); color:var(--bad); display:block;}
-  .points-tag{float:right; font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--teal-deep); background:rgba(47,93,90,0.1); padding:2px 8px; border-radius:100px;}
-
-  .subjective textarea{width:100%; min-height:90px; border:1px solid var(--sandstone-deep); border-radius:8px; padding:10px; font-family:'Nunito',sans-serif; font-size:0.92rem; background:#fff; resize:vertical; margin-top:10px;}
-  details{margin-top:8px;}
+  
+  details{margin-top:12px;}
   details summary{cursor:pointer; font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--teal-deep); font-weight:700;}
-  details .model{margin-top:6px; font-size:0.88rem; background:rgba(47,93,90,0.07); border-left:3px solid var(--teal); padding:12px; border-radius:0 6px 6px 0;}
-  .self-assess{margin-top:10px; display:flex; align-items:center; gap:8px; font-size:0.85rem;}
+  details .model{margin-top:10px; font-size:0.92rem; background:rgba(47,93,90,0.05); border-left:4px solid var(--teal); padding:14px 18px; border-radius:0 8px 8px 0; line-height: 1.6;}
 
   /* VIDEO LINKS (TAB 1) */
   .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 40px; }
@@ -159,10 +147,10 @@
 
 <div class="tabs-wrapper">
   <div class="tabs-container">
-    <button class="tab-btn active" onclick="openTab(event, 'tab-video')">1. Videos & Concept Map</button>
-    <button class="tab-btn" onclick="openTab(event, 'tab-omr')">2. OMR Practice (1 Mark)</button>
-    <button class="tab-btn" onclick="openTab(event, 'tab-short')">3. 2/3 Marks Questions</button>
-    <button class="tab-btn" onclick="openTab(event, 'tab-long')">4. 4+ Marks & Case Based</button>
+    <button class="tab-btn active" onclick="openTab(event, 'tab-video')">1. Videos & Map</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-omr')">2. OMR (1 Mark)</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-short')">3. 2/3 Marks</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-long')">4. 4+ Marks</button>
     <button class="tab-btn" onclick="openTab(event, 'tab-extra')">5. Extra Knowledge</button>
   </div>
 </div>
@@ -277,7 +265,7 @@
   <!-- TAB 3: SHORT -->
   <div id="tab-short" class="tab-content">
     <div class="instructions">
-      <b>How this works:</b> These are 2 and 3 marks questions. Write your answers in the box, then click "Show explanation" to verify. Self-mark yourself out of 2 points.
+      <b>How this works:</b> These are subjective questions. Try to recall the answer in your head, then click "Show Detailed Answer" to study the complete, elaborated explanation.
     </div>
     <h2>2 and 3 Marks Questions</h2>
     <div id="short-container"></div>
@@ -286,7 +274,7 @@
   <!-- TAB 4: LONG -->
   <div id="tab-long" class="tab-content">
     <div class="instructions">
-      <b>How this works:</b> These are 4+ marks and Case Based questions. Write your answers in the box, then click "Show explanation" to verify. Self-mark yourself out of 4 points.
+      <b>How this works:</b> These are Case Based and 4+ mark questions. Try to formulate the answer, then click "Show Detailed Answer" to study the complete textbook-level explanation.
     </div>
     <h2>4+ Marks & Case Based Questions</h2>
     <div id="long-container"></div>
@@ -340,12 +328,12 @@ function renderFill(containerId, data, prefix){
     totalMax += 1;
     const div = document.createElement('div');
     div.className = 'q fillblank';
-    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}<span class="points-tag">1 pt</span></div>
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
       <input type="text" id="${prefix}-${i}" placeholder="type your answer">
       <div class="feedback" id="${prefix}-fb-${i}"></div>`;
     c.appendChild(div);
   });
-  c.dataset.type='fill'; c.dataset.prefix=prefix; c.dataset.count=data.length;
+  c.dataset.type='fill'; c.dataset.prefix=prefix;
   c.fillData = data;
 }
 
@@ -356,12 +344,12 @@ function renderMCQ(containerId, data, prefix){
     const div = document.createElement('div');
     div.className='q';
     let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
-    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}<span class="points-tag">1 pt</span></div>
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
       <div class="opts">${opts}</div>
       <div class="feedback" id="${prefix}-fb-${i}"></div>`;
     c.appendChild(div);
   });
-  c.dataset.type='mcq'; c.dataset.prefix=prefix; c.dataset.count=data.length;
+  c.dataset.type='mcq'; c.dataset.prefix=prefix;
   c.mcqData = data;
 }
 
@@ -371,7 +359,7 @@ function renderTF(containerId, data, prefix){
     totalMax += 1;
     const div = document.createElement('div');
     div.className='q';
-    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.s}<span class="points-tag">1 pt</span></div>
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.s}</div>
       <div class="tf-row">
         <label><input type="radio" name="${prefix}-${i}" value="true"> True</label>
         <label><input type="radio" name="${prefix}-${i}" value="false"> False</label>
@@ -379,23 +367,19 @@ function renderTF(containerId, data, prefix){
       <div class="feedback" id="${prefix}-fb-${i}"></div>`;
     c.appendChild(div);
   });
-  c.dataset.type='tf'; c.dataset.prefix=prefix; c.dataset.count=data.length;
+  c.dataset.type='tf'; c.dataset.prefix=prefix;
   c.tfData = data;
 }
 
-function renderSubjective(containerId, data, prefix, maxPts){
+function renderSubjective(containerId, data, prefix){
   const c = document.getElementById(containerId);
   data.forEach((item,i)=>{
-    totalMax += maxPts;
     const div = document.createElement('div');
     div.className='q subjective';
-    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}${maxPts > 0 ? `<span class="points-tag">${maxPts} pts</span>` : ''}</div>
-      <textarea id="${prefix}-txt-${i}" placeholder="write your thoughts here..."></textarea>
-      <details><summary>Show explanation</summary><div class="model">${item.model}</div></details>
-      ${maxPts > 0 ? `<div class="self-assess">Self-mark: <select id="${prefix}-self-${i}"><option value="${maxPts}">Excellent — full marks</option><option value="${maxPts/2}">Good — partly there</option><option value="0">Needs another look</option></select></div>` : ''}`;
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <details><summary>Show Detailed Answer</summary><div class="model">${item.model}</div></details>`;
     c.appendChild(div);
   });
-  c.dataset.type='subjective'; c.dataset.prefix=prefix; c.dataset.count=data.length; c.dataset.maxpts=maxPts;
 }
 
 function gradeAll(){
@@ -403,10 +387,8 @@ function gradeAll(){
   gradeSection('fillbook-container');
   gradeSection('mcqbook-container');
   gradeSection('tfbook-container');
-  gradeSubjective('short-container');
-  gradeSubjective('long-container');
 
-  document.getElementById('scoreBig').textContent = totalScore.toFixed(1) + ' / ' + totalMax;
+  document.getElementById('scoreBig').textContent = totalScore.toFixed(0) + ' / ' + totalMax;
   const pct = Math.round((totalScore/totalMax)*100);
   let msg = '';
   if(pct>=90) msg = "Outstanding, Pushti! You've mastered Chapter 2. 🏆";
@@ -448,17 +430,6 @@ function gradeSection(containerId){
   }
 }
 
-function gradeSubjective(containerId){
-  const c = document.getElementById(containerId);
-  if(!c) return;
-  const prefix = c.dataset.prefix; const count = parseInt(c.dataset.count); const maxpts = parseFloat(c.dataset.maxpts);
-  if(maxpts === 0) return; // Skip non-graded sections like Extra Knowledge
-  for(let i=0;i<count;i++){
-    const sel = document.getElementById(`${prefix}-self-${i}`);
-    if(sel){ totalScore += parseFloat(sel.value); }
-  }
-}
-
 document.addEventListener('change', ()=>{
   document.getElementById('liveCount').textContent = 'Answers are being saved — tap Grade My Test when ready';
 });
@@ -470,7 +441,7 @@ document.addEventListener('change', ()=>{
     const settingsDoc = doc(db, 'settings', 'global');
     onSnapshot(settingsDoc, (docSnap) => {
         const data = docSnap.data() || { showAnswers: true };
-        const buttons = Array.from(document.querySelectorAll('input, select, textarea, button'));
+        const buttons = Array.from(document.querySelectorAll('input, select, button'));
         if (data.showAnswers === false) {
             buttons.forEach(b => { if(!b.classList.contains('tab-btn')) b.disabled = true; });
             if (!document.getElementById('lock-msg')) {
@@ -503,13 +474,13 @@ const tfBook = [{"s": "Testes and ovaries release estrogen in males and testoste
 renderTF('tfbook-container', tfBook, 'tb');
 
 const shortBook = [{"q": "Assertion : Adolescence is a critical phase of human development. Reason : Adolescence is the phase of physical, psychological and social changes.<br><br><strong>Options:</strong><br>\n(a) Both A and R are true and R is the correct explanation of A.<br>\n(b) Both A and R are true but R is NOT the correct explanation of A.<br>\n(c) A is true but R is false.<br>\n(d) A is false but R is true.<br><br>", "model": "(a) Both A and R are true and R is correct explanation of A"}, {"q": "Assertion : Puberty is the age at which an individual becomes sexually mature. Reason : In girls, puberty occurs at younger age than boys.<br><br><strong>Options:</strong><br>\n(a) Both A and R are true and R is the correct explanation of A.<br>\n(b) Both A and R are true but R is NOT the correct explanation of A.<br>\n(c) A is true but R is false.<br>\n(d) A is false but R is true.<br><br>", "model": "(b) Both A and R are true but R is NOT the correct explanation"}, {"q": "When does the sudden and noticeable changes begin to appear in humans?", "model": "At puberty (10-11 years of age)."}, {"q": "What is puberty?", "model": "The biological stage when an individual attains sexual maturity."}, {"q": "Do both boys and girls grow at the same rate?", "model": "No, initially girls grow faster."}, {"q": "Why the adolescent girls are at a higher risk of developing blood related health issues?", "model": "Due to blood loss during menstruation (risk of anaemia)."}, {"q": "What is the full form of WHO?", "model": "World Health Organization."}, {"q": "What do you understand by balanced diet?", "model": "A diet providing adequate amounts of all necessary nutrients."}, {"q": "Name the male hormone released by the testes.", "model": "Testosterone."}, {"q": "Name the female hormone released by ovaries.", "model": "Estrogen."}, {"q": "What is the function of sweat glands?", "model": "Secretion of sweat to regulate body temperature."}, {"q": "What is menopause?", "model": "Stoppage of the menstrual cycle in late adulthood."}, {"q": "Testosterone and estrogen are secreted by which organs?", "model": "Testes and Ovaries respectively."}, {"q": "What do you understand by the term substance abuse?", "model": "Harmful or hazardous use of psychoactive substances, including drugs and alcohol."}, {"q": "Define menstrual cycle.", "model": "The 28-day reproductive cycle in females resulting in ovulation and menstruation."}, {"q": "What are the constituents of a balanced meal?", "model": "Proteins, carbohydrates, fats, vitamins, and minerals."}, {"q": "What are hormones?", "model": "Chemical messengers secreted directly into the blood by endocrine glands."}, {"q": "Who was Dorothy Hodgkin?", "model": "A Nobel Prize-winning chemist who determined the structure of Vitamin B12."}, {"q": "What are the changes in shape of the body of girls and boys during adolescence?", "model": "Boys get broader shoulders. Girls get wider hips and breasts develop."}, {"q": "Explain the development of sex organs in males and females.", "model": "Testes and ovaries mature and begin producing gametes (sperms and ova)."}, {"q": "What are the various food sources that help in bone growth?", "model": "Calcium-rich foods like milk, cheese, and curd."}, {"q": "Explain the changes occurring in the voice of boys and girls during puberty.", "model": "Boys' voices deepen (Adam's apple), girls' voices become high-pitched."}, {"q": "Why sanitary pads are preferred over cotton cloth?", "model": "To maintain hygiene and prevent reproductive tract infections."}];
-renderSubjective('short-container', shortBook, 'sb', 2);
+renderSubjective('short-container', shortBook, 'sb');
 
-const longBook = [{"q": "Describe various mental, intellectual and emotional changes taking place during adolescence.", "model": "Increased intellectual capacity, mood swings, self-consciousness, and emotional insecurity."}, {"q": "Elaborate on the reproductive cycle occurring in females.", "model": "The cycle involves maturation of an egg, ovulation, thickening of the uterus, and menstruation if fertilization doesn't occur."}, {"q": "<strong>Case Study Passage:</strong><br>\n<em>'X' is the period of life when the body undergoes changes, leading to reproductive maturity. It begins around the age of 11 and lasts up to 18 or 19 years of age. Since this period covers the 'teens', adolescents are also called 'teenagers'. In girls, 'X' may begin a year or two earlier than in boys. Also, the period of 'X' varies from person to person. The human body undergoes several changes during 'X'. These changes mark the onset of puberty. The most important change which marks puberty is that boys and girls become capable of reproduction.</em><br><br><strong>Question:</strong> What is represented by 'X' in the given passage?", "model": "Puberty"}, {"q": "<strong>Case Study Passage:</strong><br>\n<em>'X' is the period of life when the body undergoes changes, leading to reproductive maturity. It begins around the age of 11 and lasts up to 18 or 19 years of age. Since this period covers the 'teens', adolescents are also called 'teenagers'. In girls, 'X' may begin a year or two earlier than in boys. Also, the period of 'X' varies from person to person. The human body undergoes several changes during 'X'. These changes mark the onset of puberty. The most important change which marks puberty is that boys and girls become capable of reproduction.</em><br><br><strong>Question:</strong> Choose the correct statement regarding the case.", "model": "(a) Period X results in internal and observable changes in individuals."}];
-renderSubjective('long-container', longBook, 'lb', 4);
+const longBook = [{"q": "Describe various mental, intellectual and emotional changes taking place during adolescence.", "model": "During adolescence, significant psychological and intellectual changes occur:<br><strong>1. Intellectual Development:</strong> Adolescents spend more time thinking and become capable of abstract reasoning. The brain's capacity for learning is often at its peak.<br><strong>2. Emotional Changes:</strong> Due to hormonal fluctuations, adolescents often experience rapid mood swings and emotional insecurity as they try to adapt to their changing bodies.<br><strong>3. Self-Consciousness & Independence:</strong> They become more self-conscious, start prioritizing peer relationships, and seek greater independence and identity separate from their parents."}, {"q": "Elaborate on the reproductive cycle occurring in females.", "model": "The female reproductive cycle (Menstrual Cycle) typically lasts for 28-30 days and involves the following phases:<br><strong>1. Maturation of Egg:</strong> One of the ovaries begins to mature an ovum (egg) under the influence of FSH (Follicle Stimulating Hormone).<br><strong>2. Ovulation:</strong> Around the 14th day, the mature egg is released from the ovary into the fallopian tube.<br><strong>3. Uterine Thickening:</strong> Meanwhile, the wall of the uterus thickens with a rich blood supply in preparation to receive a fertilized egg.<br><strong>4. Menstruation:</strong> If fertilization does not occur, the egg, along with the thickened lining of the uterus and its blood vessels, is shed off. This causes bleeding in females, known as menstruation, which lasts for 3 to 5 days."}, {"q": "<strong>Case Study Passage:</strong><br>\n<em>'X' is the period of life when the body undergoes changes, leading to reproductive maturity. It begins around the age of 11 and lasts up to 18 or 19 years of age. Since this period covers the 'teens', adolescents are also called 'teenagers'. In girls, 'X' may begin a year or two earlier than in boys. Also, the period of 'X' varies from person to person. The human body undergoes several changes during 'X'. These changes mark the onset of puberty. The most important change which marks puberty is that boys and girls become capable of reproduction.</em><br><br><strong>Question:</strong> What is represented by 'X' in the given passage?", "model": "Puberty"}, {"q": "<strong>Case Study Passage:</strong><br>\n<em>'X' is the period of life when the body undergoes changes, leading to reproductive maturity. It begins around the age of 11 and lasts up to 18 or 19 years of age. Since this period covers the 'teens', adolescents are also called 'teenagers'. In girls, 'X' may begin a year or two earlier than in boys. Also, the period of 'X' varies from person to person. The human body undergoes several changes during 'X'. These changes mark the onset of puberty. The most important change which marks puberty is that boys and girls become capable of reproduction.</em><br><br><strong>Question:</strong> Choose the correct statement regarding the case.", "model": "(a) Period X results in internal and observable changes in individuals."}];
+renderSubjective('long-container', longBook, 'lb');
 
 const extraBook = [{"q": "Did you know? What triggers the brain to start puberty?", "model": "The hypothalamus in the brain starts releasing a hormone called GnRH (Gonadotropin-Releasing Hormone). This acts like a biological alarm clock that wakes up the pituitary gland, which then sends signals (FSH and LH) to the rest of the body to start maturing!"}, {"q": "Why is it biologically harder for teenagers to go to sleep early?", "model": "During adolescence, the brain's circadian rhythm shifts. The hormone melatonin (which makes you sleepy) is released later at night for teenagers than for adults or children. This is why teens naturally want to stay up late and sleep in!"}, {"q": "How does the Adam's apple actually change the voice?", "model": "The larynx (voice box) grows larger in boys due to testosterone. As it grows, the vocal cords inside it become thicker and longer. Just like thicker strings on a guitar produce a deeper pitch, thicker vocal cords produce a deeper voice."}, {"q": "Can frogs stay tadpoles forever?", "model": "Yes! If a tadpole lives in water that is completely lacking in iodine, its thyroid gland cannot produce thyroxine. Without thyroxine, the tadpole cannot undergo metamorphosis and will remain a giant tadpole forever!"}];
-renderSubjective('extra-container', extraBook, 'eb', 0); // No points for extra knowledge
+renderSubjective('extra-container', extraBook, 'eb'); 
 
 </script>
 </body>
