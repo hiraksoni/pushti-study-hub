@@ -381,7 +381,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="chapter-item" onclick="clearUpdatesDot(); loadChapter(event, 'midterm.html', 'Updates', 'Mid-Term Syllabus', this)">
+                    <li class="chapter-item" onclick="clearUpdatesDot(); loadChapter(event, 'midterm.html', 'Updates', 'Mid-Term Syllabus', this)" style="display:flex; align-items:center;">
                         <div style="flex-grow: 1;">
                             <div style="display:flex; align-items:center;">
                                 <span class="chap-num">🎯</span>
@@ -391,6 +391,7 @@
                                 Sep 26 - Oct 09
                             </div>
                         </div>
+                        <div id="sidebar-countdown" style="background: rgba(239, 68, 68, 0.1); color: #EF4444; border: 1px solid #EF4444; padding: 2px 6px; border-radius: 4px; font-weight: bold; font-family:'Space Mono', monospace; font-size: 0.7rem; white-space: nowrap; margin-left: 8px;"></div>
                     </li>
                 </ul>
             </div>
@@ -1496,6 +1497,24 @@
     window.addEventListener('beforeunload', endTimer);
 
     
+    
+    // Sidebar Countdown Logic
+    function updateSidebarCountdown() {
+        const el = document.getElementById('sidebar-countdown');
+        if (!el) return;
+        const targetDate = new Date('2026-09-26T00:00:00').getTime();
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+        if (diff > 0) {
+            const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            el.innerText = - Days;
+        } else {
+            el.style.display = 'none';
+        }
+    }
+    document.addEventListener('DOMContentLoaded', updateSidebarCountdown);
+    setInterval(updateSidebarCountdown, 60000);
+
     // Notification Logic
     document.addEventListener('DOMContentLoaded', () => {
         if (localStorage.getItem('seen_updates_v1') === 'true') {

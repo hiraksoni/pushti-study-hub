@@ -202,8 +202,13 @@
 <body>
 
     <div class="header">
-        <h1>Alpha 7 - Mid Term Assessment</h1>
-        <p>26th September to 9th October 2026</p>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+            <h1 style="margin-bottom:0;">Alpha 7 - Mid Term Assessment</h1>
+            <div id="main-countdown" style="background: rgba(239, 68, 68, 0.1); color: #EF4444; border: 2px solid #EF4444; padding: 6px 16px; border-radius: 8px; font-weight: 700; font-family: 'Space Mono', monospace; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(239,68,68,0.2);">
+                <span id="main-countdown-text"></span>
+            </div>
+        </div>
+        <p style="margin-top:12px;">26th September to 9th October 2026</p>
     </div>
 
     <div class="tt-wrapper">
@@ -401,6 +406,31 @@
             document.body.setAttribute('data-theme', 'dark');
         }
     
+        
+        // Countdown Logic
+        function updateMainCountdown() {
+            const el = document.getElementById('main-countdown-text');
+            const container = document.getElementById('main-countdown');
+            if (!el) return;
+            const targetDate = new Date('2026-09-26T00:00:00').getTime();
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            if (diff > 0) {
+                const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+                el.innerText = - Days;
+            } else if (diff > -14 * 24 * 60 * 60 * 1000) {
+                el.innerText = Ongoing!;
+                container.style.color = '#10B981';
+                container.style.borderColor = '#10B981';
+                container.style.background = 'rgba(16, 185, 129, 0.1)';
+            } else {
+                el.innerText = Completed;
+                container.style.display = 'none';
+            }
+        }
+        updateMainCountdown();
+        setInterval(updateMainCountdown, 60000);
+
         // Accordion Logic
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.s-category').forEach(header => {
