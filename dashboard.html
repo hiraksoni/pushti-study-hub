@@ -241,10 +241,20 @@
 
     <div id="sidebar">
         <div class="sidebar-header">
-            <h1 class="app-title">Pushti Hub</h1>
-            <div class="user-profile">
-                <span class="user-tag">USR_STUDENT</span>
-                <button class="logout-btn" id="logout-btn">EXIT</button>
+            <div style="display:flex; justify-content: space-between; align-items: center; width: 100%;">
+                <h1 class="app-title">Pushti Hub</h1>
+                <div style="display:flex; gap: 8px;">
+                    <button id="home-btn" onclick="window.location.href='index.html'" title="Home" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--primary);">??</button>
+                    <button id="theme-toggle" title="Toggle Theme" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-main);">??</button>
+                </div>
+            </div>
+            <div class="user-profile" style="display:flex; align-items:center; gap: 10px; margin-top: 12px; padding: 10px; background: var(--bg-color); border-radius: 8px; border: 1px solid var(--border);">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Pushti&backgroundColor=b6e3f4" alt="User Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+                <select id="user-role-select" style="padding: 6px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface); color: var(--text-main); font-family: 'Inter', sans-serif; flex-grow: 1;">
+                    <option value="student">Student</option>
+                    <option value="parent">Parent</option>
+                </select>
+                <button class="logout-btn" id="logout-btn" style="padding: 6px 10px;">EXIT</button>
             </div>
         </div>
         
@@ -542,7 +552,7 @@
                                 <span class="chap-title">Interior of the Earth</span>
                             </div>
                             <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 27 Aug 2026 15:05
+                                Updated: 27 Aug 2026 15:22
                             </div>
                         </div>
                         <div class="status-indicator ind-ready"></div>
@@ -998,6 +1008,27 @@
     import { auth, db, signInWithEmailAndPassword, signOut, onAuthStateChanged, collection, addDoc, serverTimestamp, doc, getDoc } from './firebase-config.js';
 
     let currentUser = null;
+
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = document.body.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('pushti-theme', newTheme);
+        
+        // Try to update iframe theme if it supports it
+        try {
+            const frame = document.getElementById('chapter-frame');
+            if (frame.contentWindow) {
+                frame.contentWindow.postMessage({ theme: newTheme }, '*');
+            }
+        } catch(e) {}
+    });
+    
+    // Set initial theme
+    const savedTheme = localStorage.getItem('pushti-theme') || 'light';
+    document.body.setAttribute('data-theme', savedTheme);
+
 
     document.getElementById('login-btn').addEventListener('click', async () => {
         const e = document.getElementById('email').value;
