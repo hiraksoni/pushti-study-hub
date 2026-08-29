@@ -79,6 +79,42 @@
             <button class="tab" data-tab="extras">&#128640; Extras</button>
         </div>
         <div class="tab-content-container">
+            
+<style>
+    /* Nested Tabs (Practice and Extras) */
+    .nested-tabs-container { display: flex; gap: 12px; margin-bottom: 25px; flex-wrap: wrap; border-bottom: 2px solid var(--border, #e2e8f0); padding-bottom: 10px; }
+    .nested-tab-btn {
+        background: transparent; border: 1px solid var(--border, #cbd5e1); color: var(--text-light, #64748b); font-size: 0.95rem; font-weight: 600; padding: 10px 20px; border-radius: 20px; cursor: pointer; transition: all 0.2s ease;
+    }
+    .nested-tab-btn:hover { border-color: var(--primary, #6366f1); color: var(--primary, #6366f1); }
+    .nested-tab-btn.active { background: var(--primary, #6366f1); color: #fff; border-color: var(--primary, #6366f1); }
+    
+    .nested-pane { display: none; animation: fadeIn 0.4s ease; }
+    .nested-pane.active { display: block; }
+    
+    /* Practice Questions */
+    .q-card { background: var(--surface, #fff); border: 1px solid var(--border, #e2e8f0); border-radius: 12px; padding: 20px; margin-bottom: 20px; color: var(--text, #1e293b); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+    .opt-btn { text-align: left; padding: 12px 16px; border: 1px solid var(--border, #cbd5e1); border-radius: 8px; background: transparent; color: var(--text, #1e293b); cursor: pointer; transition: all 0.2s; font-weight: 500; }
+    .opt-btn:hover { background: var(--bg-color, #f8fafc); border-color: var(--primary, #6366f1); }
+    .opt-btn.correct { background: #dcfce3; border-color: #22c55e; color: #166534; }
+    .opt-btn.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+    .feedback { margin-top: 12px; font-weight: 600; display: none; }
+    .ans-box { background: var(--bg-color, #f8fafc); border-left: 4px solid var(--primary, #6366f1); padding: 15px; margin-top: 15px; display: none; color: var(--text, #1e293b); border-radius: 0 8px 8px 0; }
+    
+    /* Dark Theme Overrides */
+    [data-theme="dark"] .nested-tab-btn { border-color: #334155; color: #94a3b8; }
+    [data-theme="dark"] .nested-tab-btn:hover { border-color: #6366f1; color: #e2e8f0; }
+    [data-theme="dark"] .q-card { background: #1e293b; border-color: #334155; color: #f8fafc; }
+    [data-theme="dark"] .opt-btn { border-color: #475569; color: #e2e8f0; }
+    [data-theme="dark"] .opt-btn:hover { background: #334155; }
+    [data-theme="dark"] .opt-btn.correct { background: #14532d; border-color: #22c55e; color: #dcfce3; }
+    [data-theme="dark"] .opt-btn.wrong { background: #7f1d1d; border-color: #ef4444; color: #fee2e2; }
+    [data-theme="dark"] .ans-box { background: #0f172a; color: #e2e8f0; }
+    
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
             <!-- TAB 1: NOTES -->
             <section class="tab-pane active" id="notes">
                 <div class="notes-layout">
@@ -757,30 +793,6 @@
             
             <!-- TAB 2: PRACTICE -->
             <section class="tab-pane" id="practice">
-                <style>
-                  .nested-tabs-container { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid var(--border-color, #e2e8f0); padding-bottom: 10px; flex-wrap: wrap; }
-                  .nested-tab-btn { background: transparent; border: 1px solid var(--border-color, #e2e8f0); color: var(--text-muted, #64748b); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-family: 'Nunito', 'Inter', sans-serif; font-weight: 700; }
-                  .nested-tab-btn.active { background: var(--primary, #4F46E5); color: #fff; border-color: var(--primary, #4F46E5); }
-                  .extras-nested-tabs .nested-tab-btn { font-size: 0.9rem; }
-                  .nested-pane { display: none; }
-                  .nested-pane.active { display: block; animation: fadeIn 0.3s ease; }
-                  
-                  /* Practice Mode Switch */
-                  .mode-switch { display: flex; gap: 10px; margin-bottom: 15px; }
-                  .mode-btn { padding: 6px 12px; border-radius: 4px; border: 1px solid #ccc; background: #eee; cursor: pointer; }
-                  .mode-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-                  
-                  .q-card { background: var(--bg-card, #fff); border: 1px solid var(--border, #e2e8f0); border-radius: 8px; padding: 15px; margin-bottom: 15px; color: var(--text-main); }
-                  .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-                  .opt-btn { text-align: left; padding: 10px; border: 1px solid var(--border-color, #cbd5e1); border-radius: 6px; background: var(--bg-card); color: var(--text-main); cursor: pointer; }
-                  .opt-btn:hover { background: var(--primary-light, #f1f5f9); }
-                  .opt-btn.correct { background: #dcfce3; border-color: #22c55e; color: #166534; }
-                  .opt-btn.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
-                  .feedback { margin-top: 10px; font-weight: 600; display: none; }
-                  .ans-box { background: var(--primary-light, #f8fafc); border-left: 3px solid var(--primary, #4F46E5); padding: 10px; margin-top: 10px; display: none; color: var(--text-main); }
-                  [data-theme="dark"] .opt-btn.correct { background: #166534; color: #dcfce3; border-color: #22c55e; }
-                  [data-theme="dark"] .opt-btn.wrong { background: #991b1b; color: #fee2e2; border-color: #ef4444; }
-                </style>
                 <div class="nested-tabs-container">
       <button class="nested-tab-btn active" onclick="openNestedTab('practice', event, 'tab-omr')">OMR (1 Mark)</button>
       <button class="nested-tab-btn" onclick="openNestedTab('practice', event, 'tab-short')">2/3 Marks</button>
@@ -805,69 +817,17 @@
       <div class="score-big" id="scoreBig">0 / 0</div>
       <div class="msg" id="scoreMsg"></div>
     </div>
-
-    <div id="omr-content">
-      <div class="instructions" id="omr-instructions">
-        <b>Practice Mode Active:</b> Click any option or type an answer to get instant correct/incorrect feedback along with explanations!
-      </div>
-      
-      <h2 class="collapsible-header collapsed" onclick="toggleSection('mcqbook-container', this)">
-        <span>OMR Practice (MCQs)</span> <span class="count-badge" id="mcq-count"></span>
-        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-      </h2>
-      <div id="mcqbook-container" class="collapsible-content collapsed"></div>
-      
-      <h2 class="collapsible-header collapsed" onclick="toggleSection('fillbook-container', this)">
-        <span>Fill in the Blanks</span> <span class="count-badge" id="fill-count"></span>
-        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-      </h2>
-      <div id="fillbook-container" class="collapsible-content collapsed"></div>
-      
-      <h2 class="collapsible-header collapsed" onclick="toggleSection('tfbook-container', this)">
-        <span>True or False</span> <span class="count-badge" id="tf-count"></span>
-        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-      </h2>
-      <div id="tfbook-container" class="collapsible-content collapsed"></div>
-    </div>
-  
-      </div>
-      <div id="tab-short" class="nested-tab-content" style="display:none;">
-        
-    <div class="instructions">
-      <b>Mental Flashcards:</b> Try to recall the answer in your head, then click "Show Detailed Answer".
-    </div>
-    <h2 class="collapsible-header collapsed" onclick="toggleSection('short-container', this)">
-      <span>2 and 3 Marks Questions</span> <span class="count-badge" id="short-count"></span>
-      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-    </h2>
-    <div id="short-container" class="collapsible-content collapsed"></div>
-  
-      </div>
-      <div id="tab-long" class="nested-tab-content" style="display:none;">
-        
-    <div class="instructions">
-      <b>Mental Flashcards:</b> Formulate the answer, then study the complete textbook-level explanation.
-    </div>
-    <h2 class="collapsible-header collapsed" onclick="toggleSection('long-container', this)">
-      <span>4+ Marks & Case Based</span> <span class="count-badge" id="long-count"></span>
-      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-    </h2>
-    <div id="long-container" class="collapsible-content collapsed"></div>
-  
-      </div>
-    </div>
-  
             </section>
             
             <!-- TAB 3: EXTRAS -->
             <section class="tab-pane" id="extras">
                 <div class="nested-tabs-container extras-nested-tabs">
-                    <button class="nested-tab-btn active" onclick="openNestedExtras(event, 'nested-overview')">Overview</button>
-                    <button class="nested-tab-btn" onclick="openNestedExtras(event, 'nested-deepdive')">Deep Dive</button>
-                    <button class="nested-tab-btn" onclick="openNestedExtras(event, 'nested-gallery')">Gallery</button>
-                    <button class="nested-tab-btn" onclick="openNestedExtras(event, 'nested-videos')">Videos</button>
-                    <button class="nested-tab-btn" onclick="openNestedExtras(event, 'nested-explore')">Explore</button>
-                    <button class="nested-tab-btn" onclick="openNestedExtras(event, 'nested-recall')">Recall</button>
+                    <button class="nested-tab-btn active" data-nested-target="nested-overview">Overview</button>
+                    <button class="nested-tab-btn" data-nested-target="nested-deepdive">Deep Dive</button>
+                    <button class="nested-tab-btn" data-nested-target="nested-gallery">Gallery</button>
+                    <button class="nested-tab-btn" data-nested-target="nested-videos">Videos</button>
+                    <button class="nested-tab-btn" data-nested-target="nested-explore">Explore</button>
+                    <button class="nested-tab-btn" data-nested-target="nested-recall">Recall</button>
                 </div>
                 
                 <div class="nested-tab-content-wrapper">
@@ -1480,26 +1440,31 @@
         </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Extras Nested Tabs Logic
+    const extrasTabs = document.querySelectorAll('.extras-nested-tabs .nested-tab-btn');
+    const extrasPanes = document.querySelectorAll('#extras .nested-pane');
+    
+    extrasTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            extrasTabs.forEach(t => t.classList.remove('active'));
+            extrasPanes.forEach(p => p.classList.remove('active'));
+            
+            tab.classList.add('active');
+            const targetId = tab.getAttribute('data-nested-target');
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
+});
+
+  // Practice Tabs Logic (legacy onclick support for OMR/Short/Long)
   function openNestedTab(group, evt, tabName) {
     let parent = document.getElementById('practice');
+    parent.querySelectorAll('.nested-pane').forEach(c => c.style.display = 'none');
     parent.querySelectorAll('.nested-tab-content').forEach(c => c.style.display = 'none');
-    parent.querySelectorAll('.nested-tab-btn').forEach(btn => btn.classList.remove('active'));
+    parent.querySelectorAll('#practice .nested-tab-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(tabName).style.display = 'block';
     evt.currentTarget.classList.add('active');
-  }
-  
-  function openNestedExtras(evt, tabName) {
-    let parent = document.getElementById('extras');
-    parent.querySelectorAll('.nested-pane').forEach(c => c.classList.remove('active'));
-    parent.querySelectorAll('.nested-tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(tabName).classList.add('active');
-    evt.currentTarget.classList.add('active');
-  }
-  
-  function setMode(mode) {
-    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('btn-' + mode).classList.add('active');
-    // Implement mode logic if needed
   }
   
   function checkOMR(btn, isCorrect, correctIdx) {
@@ -1512,14 +1477,14 @@
         btn.classList.add('correct');
         let fb = card.querySelector('.feedback');
         fb.textContent = 'Correct!';
-        fb.style.color = 'green';
+        fb.style.color = '#166534';
         fb.style.display = 'block';
     } else {
         btn.classList.add('wrong');
         opts[correctIdx].classList.add('correct');
         let fb = card.querySelector('.feedback');
         fb.textContent = 'Incorrect.';
-        fb.style.color = 'red';
+        fb.style.color = '#991b1b';
         fb.style.display = 'block';
     }
   }
