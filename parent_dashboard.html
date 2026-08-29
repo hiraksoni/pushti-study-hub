@@ -147,6 +147,23 @@
         </div>
     </div>
     
+    
+    <div class="card">
+        <h2>Time Analytics (Live)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Sub-Category</th>
+                    <th>Total Time Spent</th>
+                </tr>
+            </thead>
+            <tbody id="time-analytics-body">
+                <tr><td colspan="3" style="text-align: center; color: var(--text-muted);">Fetching time data...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
     <div class="card">
         <h2>System Telemetry</h2>
         <table>
@@ -167,6 +184,73 @@
 
 <script type="module">
     import { db, doc, onSnapshot, setDoc, collection, query, orderBy, limit } from './firebase-config.js';
+
+    // Time Analytics Fetcher
+    const statsRef = doc(db, "user_stats", "pushti_uid"); // We don't have the exact UID hardcoded, so let's query all or listen to the first document in user_stats.
+
+    const statsQuery = query(collection(db, "user_stats"), limit(1));
+    onSnapshot(statsQuery, (snapshot) => {
+        const tbody = document.getElementById('time-analytics-body');
+        if (snapshot.empty) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: var(--text-muted);">No study time recorded yet.</td></tr>';
+            return;
+        }
+        
+        tbody.innerHTML = '';
+        snapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            
+            // Total
+            const totalSec = data.total_time || 0;
+            const th = Math.floor(totalSec / 3600);
+            const tm = Math.floor((totalSec % 3600) / 60);
+            const ts = totalSec % 60;
+            
+            tbody.innerHTML += 
+                <tr style="background: var(--primary-light);">
+                    <td style="font-weight: bold; color: var(--primary);">OVERALL</td>
+                    <td style="font-weight: bold; color: var(--primary);">Total Study Time</td>
+                    <td style="font-weight: bold; color: var(--primary); font-family: 'Space Mono', monospace;">h m s</td>
+                </tr>
+            ;
+            
+            // Subjects
+            if (data.subjects) {
+                for (const [subj, sec] of Object.entries(data.subjects)) {
+                    const sh = Math.floor(sec / 3600);
+                    const sm = Math.floor((sec % 3600) / 60);
+                    const ss = sec % 60;
+                    
+                    tbody.innerHTML += 
+                        <tr style="background: #F8FAFC;">
+                            <td style="font-weight: 600;">Subject</td>
+                            <td style="font-weight: 600;"></td>
+                            <td style="font-family: 'Space Mono', monospace;">h m s</td>
+                        </tr>
+                    ;
+                }
+            }
+            
+            // Chapters
+            if (data.chapters) {
+                const sortedChapters = Object.entries(data.chapters).sort((a, b) => b[1] - a[1]);
+                for (const [chapKey, sec] of sortedChapters) {
+                    const ch = Math.floor(sec / 3600);
+                    const cm = Math.floor((sec % 3600) / 60);
+                    const cs = sec % 60;
+                    
+                    tbody.innerHTML += 
+                        <tr>
+                            <td style="color: var(--text-muted); font-size: 0.9em;">Chapter</td>
+                            <td style="color: var(--text-main);"></td>
+                            <td style="font-family: 'Space Mono', monospace; font-size: 0.9em;">h m s</td>
+                        </tr>
+                    ;
+                }
+            }
+        });
+    });
+
 
     const settingsDoc = doc(db, 'settings', 'global');
     

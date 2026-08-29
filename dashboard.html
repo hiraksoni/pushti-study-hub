@@ -1323,7 +1323,7 @@
     </div>
 
 <script type="module">
-    import { auth, db, signInWithEmailAndPassword, signOut, onAuthStateChanged, collection, addDoc, serverTimestamp, doc, getDoc } from './firebase-config.js';
+    import { auth, db, signInWithEmailAndPassword, signOut, onAuthStateChanged, collection, addDoc, serverTimestamp, doc, getDoc, setDoc, increment } from './firebase-config.js';
 
     let currentUser = null;
 
@@ -1405,10 +1405,45 @@
         }
     }
     window.logActivity = logActivity;
+    async function logTime(subject, chapter, durationSec) {
+        if (!currentUser) return;
+        try {
+            const statsRef = doc(db, "user_stats", currentUser.uid);
+            await setDoc(statsRef, {
+                total_time: increment(durationSec),
+                ["subjects." + subject]: increment(durationSec),
+                ["chapters." + subject + "|" + chapter]: increment(durationSec)
+            }, { merge: true });
+        } catch(e) {
+            console.log("Time logging error: ", e);
+        }
+    }
+    window.logTime = logTime;
+
 </script>
 
 <script>
     
+    
+    // Time Tracking Logic
+    let currentSession = null;
+
+    function startTimer(subject, title) {
+        if (currentSession) endTimer();
+        currentSession = { subject, title, startTime: Date.now() };
+    }
+
+    function endTimer() {
+        if (!currentSession) return;
+        const durationSec = Math.floor((Date.now() - currentSession.startTime) / 1000);
+        if (durationSec > 5 && window.logTime) {
+            window.logTime(currentSession.subject, currentSession.title, durationSec);
+        }
+        currentSession = null;
+    }
+
+    window.addEventListener('beforeunload', endTimer);
+
     // Sidebar Hover and Pin Logic
     const sidebar = document.getElementById('sidebar');
     const hoverZone = document.getElementById('hover-zone');
@@ -1484,6 +1519,7 @@
     }
 
     function loadChapter(event, path, subject, title, element) {
+        endTimer();
         document.querySelectorAll('.chapter-item').forEach(el => el.classList.remove('active'));
         element.classList.add('active');
         
@@ -1493,12 +1529,14 @@
         const frame = document.getElementById('chapter-frame');
         frame.src = path + "?t=" + new Date().getTime();
         
+        startTimer(subject, title);
         if (window.logActivity) {
             window.logActivity("open_chapter", `Opened ${subject}: ${title}`);
         }
     }
 
     function showPending(event) {
+        endTimer();
         document.querySelectorAll('.chapter-item').forEach(el => el.classList.remove('active'));
         if (event.currentTarget) {
             event.currentTarget.classList.add('active');
