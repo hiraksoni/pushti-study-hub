@@ -29,6 +29,7 @@
     }
     
     /* Sidebar */
+    
     #sidebar {
         width: 320px;
         background-color: var(--surface);
@@ -36,13 +37,79 @@
         display: flex;
         flex-direction: column;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 10;
+        z-index: 100;
         box-shadow: 4px 0 15px rgba(0,0,0,0.03);
+        position: absolute; /* Default to floating */
+        height: 100vh;
+        left: -320px;
     }
-    #sidebar.collapsed {
+    #sidebar.pinned {
+        position: relative;
+        left: 0;
+    }
+    #sidebar.hover-open {
+        left: 0;
+    }
+    #hover-zone {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 100vh;
+        z-index: 99;
+    }
+    
+    /* Toggle Switch CSS */
+    .role-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--surface);
+        padding: 4px 8px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 34px;
+        height: 20px;
+    }
+    .switch input { 
+        opacity: 0;
         width: 0;
-        border-right: none;
+        height: 0;
     }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: var(--primary-light);
+        transition: .4s;
+        border-radius: 34px;
+    }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 3px;
+        bottom: 3px;
+        background-color: var(--primary);
+        transition: .4s;
+        border-radius: 50%;
+    }
+    input:checked + .slider {
+        background-color: var(--ready);
+    }
+    input:checked + .slider:before {
+        transform: translateX(14px);
+        background-color: white;
+    }
+
+    
     
     #sidebar-toggle {
         position: absolute;
@@ -239,22 +306,28 @@
         </div>
     </div>
 
+    <div id="hover-zone"></div>
     <div id="sidebar">
         <div class="sidebar-header">
             <div style="display:flex; justify-content: space-between; align-items: center; width: 100%;">
                 <h1 class="app-title">Pushti Hub</h1>
                 <div style="display:flex; gap: 8px;">
-                    <button id="home-btn" onclick="window.location.href='index.html'" title="Home" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--primary);">??</button>
-                    <button id="theme-toggle" title="Toggle Theme" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-main);">??</button>
+                    <button id="pin-toggle" title="Pin Sidebar" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-main);">&#128204;</button>
+                    <button id="home-btn" onclick="window.location.href='index.html'" title="Home" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--primary);">&#127968;</button>
+                    <button id="theme-toggle" title="Toggle Theme" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-main);">&#127134;</button>
                 </div>
             </div>
-            <div class="user-profile" style="display:flex; align-items:center; gap: 10px; margin-top: 12px; padding: 10px; background: var(--bg-color); border-radius: 8px; border: 1px solid var(--border);">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Pushti&backgroundColor=b6e3f4" alt="User Profile" style="width: 40px; height: 40px; border-radius: 50%;">
-                <select id="user-role-select" style="padding: 6px; border-radius: 4px; border: 1px solid var(--border); background: var(--surface); color: var(--text-main); font-family: 'Inter', sans-serif; flex-grow: 1;">
-                    <option value="student">Student</option>
-                    <option value="parent">Parent</option>
-                </select>
-                <button class="logout-btn" id="logout-btn" style="padding: 6px 10px;">EXIT</button>
+            <div class="user-profile" style="display:flex; align-items:center; justify-content: space-between; gap: 5px; margin-top: 12px; padding: 10px; background: var(--bg-color); border-radius: 8px; border: 1px solid var(--border);">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Pushti&backgroundColor=b6e3f4" alt="User Profile" style="width: 35px; height: 35px; border-radius: 50%;">
+                <div class="role-toggle">
+                    <span style="color:var(--primary);">Student</span>
+                    <label class="switch">
+                        <input type="checkbox" id="role-checkbox">
+                        <span class="slider"></span>
+                    </label>
+                    <span style="color:var(--text-muted);">Parent</span>
+                </div>
+                <button class="logout-btn" id="logout-btn" style="padding: 6px 8px;">EXIT</button>
             </div>
         </div>
         
@@ -454,7 +527,7 @@
                                 <span class="chap-title">Adolescence</span>
                             </div>
                             <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 23 Aug 2026 20:57
+                                Updated: 29 Aug 2026 12:39
                             </div>
                         </div>
                         <div class="status-indicator ind-ready"></div>
@@ -1077,6 +1150,46 @@
 </script>
 
 <script>
+    
+    // Sidebar Hover and Pin Logic
+    const sidebar = document.getElementById('sidebar');
+    const hoverZone = document.getElementById('hover-zone');
+    const pinToggle = document.getElementById('pin-toggle');
+    
+    // Load pin state
+    let isPinned = localStorage.getItem('sidebar-pinned') === 'true';
+    if (isPinned) {
+        sidebar.classList.add('pinned');
+        pinToggle.style.color = 'var(--primary)';
+        hoverZone.style.display = 'none';
+    }
+    
+    hoverZone.addEventListener('mouseenter', () => {
+        if (!isPinned) sidebar.classList.add('hover-open');
+    });
+    sidebar.addEventListener('mouseleave', () => {
+        if (!isPinned) sidebar.classList.remove('hover-open');
+    });
+    
+    pinToggle.addEventListener('click', () => {
+        isPinned = !isPinned;
+        localStorage.setItem('sidebar-pinned', isPinned);
+        if (isPinned) {
+            sidebar.classList.add('pinned');
+            sidebar.classList.remove('hover-open');
+            pinToggle.style.color = 'var(--primary)';
+            hoverZone.style.display = 'none';
+        } else {
+            sidebar.classList.remove('pinned');
+            pinToggle.style.color = 'var(--text-main)';
+            hoverZone.style.display = 'block';
+        }
+    });
+
+    // Remove old sidebar-toggle button from content-area
+    const oldToggle = document.getElementById('sidebar-toggle');
+    if(oldToggle) oldToggle.style.display = 'none';
+
     // Accordion Logic
     const headers = document.querySelectorAll('.subject-title');
     headers.forEach(h => {
