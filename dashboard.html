@@ -38,6 +38,30 @@
         color: var(--text-main);
     }
     
+    
+    /* Notification Dot */
+    .notif-dot {
+        width: 8px;
+        height: 8px;
+        background-color: #EF4444;
+        border-radius: 50%;
+        display: inline-block;
+        margin-left: 8px;
+        box-shadow: 0 0 0 2px var(--surface);
+        animation: pulse 2s infinite;
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s;
+    }
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+        70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+    .notif-dot.blow-away {
+        transform: translateY(-20px) scale(2);
+        opacity: 0;
+        animation: none;
+    }
+
     /* Sidebar */
     
     #sidebar {
@@ -343,10 +367,10 @@
         </div>
         
         <div class="nav-container">
-            <div class="subject-section open">
-                <div class="subject-title"><span>🔔 Updates</span></div>
+            <div class="subject-section open" onclick="clearUpdatesDot()">
+                <div class="subject-title"><span>🔔 Updates<span class="notif-dot updates-dot"></span></span></div>
                 <ul class="chapter-list" style="display: block;">
-                    <li class="chapter-item" onclick="loadChapter(event, 'timetable.html', 'Updates', 'Time Table', this)">
+                    <li class="chapter-item" onclick="clearUpdatesDot(); loadChapter(event, 'timetable.html', 'Updates', 'Time Table', this)">
                         <div style="flex-grow: 1;">
                             <div style="display:flex; align-items:center;">
                                 <span class="chap-num">📅</span>
@@ -357,18 +381,17 @@
                             </div>
                         </div>
                     </li>
-                    <li class="chapter-item" onclick="loadChapter(event, 'midterm.html', 'Updates', 'Mid-Term Syllabus', this)">
+                    <li class="chapter-item" onclick="clearUpdatesDot(); loadChapter(event, 'midterm.html', 'Updates', 'Mid-Term Syllabus', this)">
                         <div style="flex-grow: 1;">
                             <div style="display:flex; align-items:center;">
                                 <span class="chap-num">🎯</span>
-                                <span class="chap-title" style="font-weight:600;">Mid-Term Syllabus</span>
+                                <span class="chap-title" style="font-weight:600;">Mid-Term Syllabus<span class="notif-dot updates-dot"></span></span>
                             </div>
                             <div style="font-size: 0.75rem; color: var(--ready); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
                                 Sep 26 - Oct 09
                             </div>
                         </div>
                     </li>
-
                 </ul>
             </div>
 
@@ -1472,6 +1495,24 @@
 
     window.addEventListener('beforeunload', endTimer);
 
+    
+    // Notification Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('seen_updates_v1') === 'true') {
+            document.querySelectorAll('.updates-dot').forEach(d => d.style.display = 'none');
+        }
+    });
+
+    function clearUpdatesDot() {
+        if (localStorage.getItem('seen_updates_v1') !== 'true') {
+            localStorage.setItem('seen_updates_v1', 'true');
+            document.querySelectorAll('.updates-dot').forEach(d => {
+                d.classList.add('blow-away');
+                setTimeout(() => { d.style.display = 'none'; }, 500);
+            });
+        }
+    }
+
     // Sidebar Hover and Pin Logic
     const sidebar = document.getElementById('sidebar');
     const hoverZone = document.getElementById('hover-zone');
@@ -1546,8 +1587,7 @@
         }
     }
 
-    function loadChapter(event, path, subject, title, element) {
-        endTimer();
+    function loadChapter(event, path, subject, title, element) {        endTimer();
         document.querySelectorAll('.chapter-item').forEach(el => el.classList.remove('active'));
         element.classList.add('active');
         
@@ -1557,14 +1597,12 @@
         const frame = document.getElementById('chapter-frame');
         frame.src = path + "?t=" + new Date().getTime();
         
-        startTimer(subject, title);
-        if (window.logActivity) {
+        startTimer(subject, title);        if (window.logActivity) {
             window.logActivity("open_chapter", `Opened ${subject}: ${title}`);
         }
     }
 
-    function showPending(event) {
-        endTimer();
+    function showPending(event) {        endTimer();
         document.querySelectorAll('.chapter-item').forEach(el => el.classList.remove('active'));
         if (event.currentTarget) {
             event.currentTarget.classList.add('active');
