@@ -82,6 +82,13 @@
 
       this.setTheme(initialTheme);
 
+      // Listen for theme change messages from parent frame
+      window.addEventListener('message', (event) => {
+        if (event.data && event.data.theme) {
+          this.setTheme(event.data.theme);
+        }
+      });
+      
       // Add event listener if toggle button exists
       if (this.toggleBtn) {
         this.toggleBtn.addEventListener('click', () => this.toggleTheme());
