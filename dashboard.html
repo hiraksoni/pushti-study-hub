@@ -1223,8 +1223,30 @@
             if (!wasOpen) parent.classList.add('open');
         });
     });
-    // Open Science by default
-    document.querySelectorAll('.subject-section')[2].classList.add('open');
+    
+    // Open subject from localStorage or default to Science
+    const targetSubject = localStorage.getItem('open-subject');
+    let subjectOpened = false;
+    if (targetSubject) {
+        document.querySelectorAll('.subject-section').forEach(section => {
+            const title = section.querySelector('.subject-title span').textContent.toLowerCase();
+            if (title.includes(targetSubject.replace('-', ' '))) {
+                section.classList.add('open');
+                subjectOpened = true;
+            }
+        });
+        localStorage.removeItem('open-subject'); // clear it
+    }
+    
+    if (!subjectOpened) {
+        // Default to Science if no specific subject was requested
+        const sections = document.querySelectorAll('.subject-section');
+        if (sections.length > 2) {
+            sections[2].classList.add('open');
+        } else if (sections.length > 0) {
+            sections[0].classList.add('open');
+        }
+    }
 
     function loadChapter(event, path, subject, title, element) {
         document.querySelectorAll('.chapter-item').forEach(el => el.classList.remove('active'));
