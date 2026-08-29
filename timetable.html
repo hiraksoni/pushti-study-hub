@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Time Table</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FAFAFA;
+            --surface: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --primary: #4F46E5;
+            
+            --sub-math: #EFF6FF;
+            --sub-math-txt: #1D4ED8;
+            --sub-sci: #F0FDF4;
+            --sub-sci-txt: #15803D;
+            --sub-lang: #FAF5FF;
+            --sub-lang-txt: #7E22CE;
+            --sub-soc: #FFFBEB;
+            --sub-soc-txt: #B45309;
+            --sub-tech: #ECFEFF;
+            --sub-tech-txt: #0E7490;
+            --sub-other: #F8FAFC;
+            --sub-other-txt: #475569;
+            --test-border: #EF4444;
+            --test-bg: #FEF2F2;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0F0F1A;
+            --surface: #16213E;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border: #2A2A40;
+            --primary: #818CF8;
+            
+            --sub-math: rgba(29, 78, 216, 0.2);
+            --sub-math-txt: #93C5FD;
+            --sub-sci: rgba(21, 128, 61, 0.2);
+            --sub-sci-txt: #86EFAC;
+            --sub-lang: rgba(126, 34, 206, 0.2);
+            --sub-lang-txt: #D8B4FE;
+            --sub-soc: rgba(180, 83, 9, 0.2);
+            --sub-soc-txt: #FCD34D;
+            --sub-tech: rgba(14, 116, 144, 0.2);
+            --sub-tech-txt: #67E8F9;
+            --sub-other: rgba(71, 85, 105, 0.2);
+            --sub-other-txt: #CBD5E1;
+            --test-border: #FCA5A5;
+            --test-bg: rgba(239, 68, 68, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            color: var(--text-main);
+        }
+        
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .tt-wrapper {
+            background: var(--surface);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            overflow-x: auto;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 12px 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: var(--bg-color);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .day-label {
+            font-weight: 700;
+            background-color: var(--bg-color);
+            width: 80px;
+        }
+
+        .break-cell {
+            background-color: var(--bg-color);
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            color: var(--text-muted);
+            width: 40px;
+        }
+
+        .cell {
+            border-radius: 6px;
+            margin: 2px;
+            padding: 8px 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            min-height: 70px;
+        }
+
+        .subj {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .teacher {
+            font-size: 0.75rem;
+            font-weight: 500;
+            opacity: 0.85;
+        }
+
+        .math { background-color: var(--sub-math); color: var(--sub-math-txt); }
+        .sci { background-color: var(--sub-sci); color: var(--sub-sci-txt); }
+        .lang { background-color: var(--sub-lang); color: var(--sub-lang-txt); }
+        .soc { background-color: var(--sub-soc); color: var(--sub-soc-txt); }
+        .tech { background-color: var(--sub-tech); color: var(--sub-tech-txt); }
+        .other { background-color: var(--sub-other); color: var(--sub-other-txt); }
+        
+        .test { 
+            border: 2px dashed var(--test-border); 
+            background-color: var(--test-bg);
+            color: var(--test-border);
+        }
+
+        /* Live highlight feature */
+        tr.active-day {
+            background-color: rgba(79, 70, 229, 0.05);
+        }
+        
+        td.active-period .cell {
+            box-shadow: 0 0 0 3px var(--primary);
+            transform: scale(1.02);
+            transition: all 0.2s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Weekly Time Table</h1>
+        <p>Live schedule with active period highlighting</p>
+    </div>
+
+    <div class="tt-wrapper">
+        <table id="timetable">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>1<br><span style="font-size:0.75rem; color:var(--text-muted)">7:45 - 8:25</span></th>
+                    <th>2<br><span style="font-size:0.75rem; color:var(--text-muted)">8:25 - 9:10</span></th>
+                    <th>3<br><span style="font-size:0.75rem; color:var(--text-muted)">9:10 - 9:50</span></th>
+                    <th>4<br><span style="font-size:0.75rem; color:var(--text-muted)">9:50 - 10:30</span></th>
+                    <th>Break<br><span style="font-size:0.75rem; color:var(--text-muted)">10:30 - 10:50</span></th>
+                    <th>5<br><span style="font-size:0.75rem; color:var(--text-muted)">10:50 - 11:30</span></th>
+                    <th>6<br><span style="font-size:0.75rem; color:var(--text-muted)">11:30 - 12:10</span></th>
+                    <th>7<br><span style="font-size:0.75rem; color:var(--text-muted)">12:10 - 12:50</span></th>
+                    <th>8<br><span style="font-size:0.75rem; color:var(--text-muted)">12:50 - 13:30</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Monday -->
+                <tr data-day="1">
+                    <td class="day-label">Monday</td>
+                    <td data-period="1"><div class="cell math"><span class="subj">Maths</span><span class="teacher">Phil</span></div></td>
+                    <td data-period="2"><div class="cell sci"><span class="subj">Chemistry</span><span class="teacher">Roger Iyer</span></div></td>
+                    <td data-period="3"><div class="cell lang"><span class="subj">Sanskrit</span><span class="teacher">Falguni R</span></div></td>
+                    <td data-period="4"><div class="cell lang"><span class="subj">Hindi</span><span class="teacher">Yogita</span></div></td>
+                    <td class="break-cell" rowspan="6">BREAK</td>
+                    <td data-period="5"><div class="cell test"><span class="subj">Maths Test</span><span class="teacher">Phil</span></div></td>
+                    <td data-period="6"><div class="cell soc"><span class="subj">Social Studies</span><span class="teacher">KG</span></div></td>
+                    <td data-period="7"><div class="cell sci"><span class="subj">Physics</span><span class="teacher">Roger Iyer</span></div></td>
+                    <td data-period="8"><div class="cell lang"><span class="subj">English</span><span class="teacher">Seema D</span></div></td>
+                </tr>
+                <!-- Tuesday -->
+                <tr data-day="2">
+                    <td class="day-label">Tuesday</td>
+                    <td data-period="1"><div class="cell math"><span class="subj">Maths</span><span class="teacher">Phil</span></div></td>
+                    <td data-period="2"><div class="cell lang"><span class="subj">Hindi</span><span class="teacher">Yogita</span></div></td>
+                    <td data-period="3"><div class="cell lang"><span class="subj">English</span><span class="teacher">Seema D</span></div></td>
+                    <td data-period="4"><div class="cell soc"><span class="subj">Social Studies</span><span class="teacher">KG</span></div></td>
+                    <td data-period="5"><div class="cell test"><span class="subj">Hindi Test</span><span class="teacher">Yogita</span></div></td>
+                    <td data-period="6"><div class="cell sci"><span class="subj">Chemistry</span><span class="teacher">Roger Iyer</span></div></td>
+                    <td data-period="7"><div class="cell tech"><span class="subj">AI / Robo</span><span class="teacher">VJ</span></div></td>
+                    <td data-period="8"><div class="cell lang"><span class="subj">Sanskrit</span><span class="teacher">Falguni R</span></div></td>
+                </tr>
+                <!-- Wednesday -->
+                <tr data-day="3">
+                    <td class="day-label">Wednesday</td>
+                    <td data-period="1"><div class="cell math"><span class="subj">Maths</span><span class="teacher">Phil</span></div></td>
+                    <td data-period="2"><div class="cell sci"><span class="subj">Chemistry</span><span class="teacher">Roger Iyer</span></div></td>
+                    <td data-period="3"><div class="cell lang"><span class="subj">English</span><span class="teacher">Seema D</span></div></td>
+                    <td data-period="4"><div class="cell tech"><span class="subj">AI / Robo</span><span class="teacher">VJ</span></div></td>
+                    <td data-period="5"><div class="cell test"><span class="subj">Science Test</span><span class="teacher">Roger Iyer</span></div></td>
+                    <td data-period="6"><div class="cell other"><span class="subj">HPE</span><span class="teacher">Sports Gr / Kartavya</span></div></td>
+                    <td data-period="7"><div class="cell soc"><span class="subj">Social Studies</span><span class="teacher">KG</span></div></td>
+                    <td data-period="8"><div class="cell lang"><span class="subj">Hindi</span><span class="teacher">Neelam</span></div></td>
+                </tr>
+                <!-- Thursday -->
+                <tr data-day="4">
+                    <td class="day-label">Thursday</td>
+                    <td data-period="1"><div class="cell math"><span class="subj">Maths</span><span class="teacher">Phil</span></div></td>
+                    <td data-period="2"><div class="cell soc"><span class="subj">Social Studies</span><span class="teacher">KG</span></div></td>
+                    <td data-period="3"><div class="cell sci"><span class="subj">Physics</span><span class="teacher">Roger Iyer</span></div></td>
+                    <td data-period="4"><div class="cell lang"><span class="subj">Hindi</span><span class="teacher">Yogita</span></div></td>
+                    <td data-period="5"><div class="cell test"><span class="subj">Social St. Test</span><span class="teacher">KG</span></div></td>
+                    <td data-period="6"><div class="cell lang"><span class="subj">English</span><span class="teacher">Seema D</span></div></td>
+                    <td data-period="7"><div class="cell tech"><span class="subj">ICT Theory</span><span class="teacher">Parita</span></div></td>
+                    <td data-period="8"><div class="cell other"><span class="subj">Lab Project</span><span class="teacher">Phil / Roger Iyer</span></div></td>
+                </tr>
+                <!-- Friday -->
+                <tr data-day="5">
+                    <td class="day-label">Friday</td>
+                    <td data-period="1"><div class="cell math"><span class="subj">Maths</span><span class="teacher">Phil</span></div></td>
+                    <td data-period="2"><div class="cell soc"><span class="subj">Social Studies</span><span class="teacher">KG</span></div></td>
+                    <td data-period="3"><div class="cell sci"><span class="subj">Biology</span><span class="teacher">Roger Iyer</span></div></td>
+                    <td data-period="4"><div class="cell lang"><span class="subj">Hindi</span><span class="teacher">Yogita</span></div></td>
+                    <td data-period="5"><div class="cell test"><span class="subj">English Test</span><span class="teacher">Seema D</span></div></td>
+                    <td data-period="6"><div class="cell lang"><span class="subj">Sanskrit</span><span class="teacher">Falguni R</span></div></td>
+                    <td data-period="7"><div class="cell lang"><span class="subj">English</span><span class="teacher">Seema D</span></div></td>
+                    <td data-period="8"><div class="cell other"><span class="subj">KB</span><span class="teacher">Roger Iyer</span></div></td>
+                </tr>
+                <!-- Saturday -->
+                <tr data-day="6">
+                    <td class="day-label">Saturday</td>
+                    <td data-period="1"><div class="cell math"><span class="subj">Maths</span><span class="teacher">Phil</span></div></td>
+                    <td data-period="2"><div class="cell lang"><span class="subj">English</span><span class="teacher">Seema D</span></div></td>
+                    <td data-period="3"><div class="cell lang"><span class="subj">Sanskrit</span><span class="teacher">Falguni R</span></div></td>
+                    <td data-period="4"><div class="cell soc"><span class="subj">Social Studies</span><span class="teacher">KG</span></div></td>
+                    <td data-period="5"><div class="cell tech"><span class="subj">ICT Practical</span><span class="teacher">Comp Lab, Parita</span></div></td>
+                    <td data-period="6"><div class="cell sci"><span class="subj">Physics</span><span class="teacher">Roger Iyer</span></div></td>
+                    <td data-period="7"><div class="cell other"><span class="subj">HPE</span><span class="teacher">Sports Gr / Kartavya</span></div></td>
+                    <td data-period="8"><div class="cell math"><span class="subj">Maths</span><span class="teacher">Phil</span></div></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Inherit Dark Mode from parent dashboard
+        window.addEventListener('message', (event) => {
+            if (event.data && event.data.theme) {
+                document.body.setAttribute('data-theme', event.data.theme);
+            }
+        });
+        // Initial check
+        if (window.parent && window.parent.document.body.getAttribute('data-theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+        }
+
+        // Live Highlighting Logic
+        function updateLiveHighlight() {
+            const now = new Date();
+            let day = now.getDay(); // 0 = Sun, 1 = Mon ... 6 = Sat
+            
+            // Clear previous highlights
+            document.querySelectorAll('tr').forEach(tr => tr.classList.remove('active-day'));
+            document.querySelectorAll('td').forEach(td => td.classList.remove('active-period'));
+
+            if (day >= 1 && day <= 6) {
+                const row = document.querySelector(	r[data-day=""]);
+                if (row) row.classList.add('active-day');
+
+                const hour = now.getHours();
+                const min = now.getMinutes();
+                const time = hour + min / 60; // decimal hours for easy comparison
+
+                let period = -1;
+                
+                if (time >= 7.75 && time < 8.416) period = 1; // 7:45 - 8:25 (8.416)
+                else if (time >= 8.416 && time < 9.166) period = 2; // 8:25 - 9:10
+                else if (time >= 9.166 && time < 9.833) period = 3; // 9:10 - 9:50
+                else if (time >= 9.833 && time < 10.5) period = 4; // 9:50 - 10:30
+                // 10:30 - 10:50 is Break
+                else if (time >= 10.833 && time < 11.5) period = 5; // 10:50 - 11:30
+                else if (time >= 11.5 && time < 12.166) period = 6; // 11:30 - 12:10
+                else if (time >= 12.166 && time < 12.833) period = 7; // 12:10 - 12:50
+                else if (time >= 12.833 && time < 13.5) period = 8; // 12:50 - 13:30
+
+                if (period !== -1 && row) {
+                    const pCell = row.querySelector(	d[data-period=""]);
+                    if (pCell) pCell.classList.add('active-period');
+                }
+            }
+        }
+
+        updateLiveHighlight();
+        setInterval(updateLiveHighlight, 60000); // Check every minute
+    </script>
+</body>
+</html>
