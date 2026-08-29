@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pushti's Study Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     :root {
         --bg-color: #E8EDF2;
@@ -314,7 +315,7 @@
                 <div style="display:flex; gap: 8px;">
                     <button id="pin-toggle" title="Pin Sidebar" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-main);">&#128204;</button>
                     <button id="home-btn" onclick="window.location.href='index.html'" title="Home" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--primary);">&#127968;</button>
-                    <button id="theme-toggle" title="Toggle Theme" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-main);">&#127134;</button>
+                    <button class="theme-toggle" title="Toggle Theme" style="background:none; border:none; cursor:pointer; font-size:1.2rem; color:var(--text-main);"><i class="fas fa-moon"></i></button>
                 </div>
             </div>
             <div class="user-profile" style="display:flex; align-items:center; justify-content: space-between; gap: 5px; margin-top: 12px; padding: 10px; background: var(--bg-color); border-radius: 8px; border: 1px solid var(--border);">
@@ -527,7 +528,7 @@
                                 <span class="chap-title">Adolescence</span>
                             </div>
                             <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 29 Aug 2026 12:39
+                                Updated: 29 Aug 2026 13:11
                             </div>
                         </div>
                         <div class="status-indicator ind-ready"></div>
@@ -1082,25 +1083,38 @@
 
     let currentUser = null;
 
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = document.body.getAttribute('data-theme') || 'light';
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        document.body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('pushti-theme', newTheme);
-        
-        // Try to update iframe theme if it supports it
-        try {
-            const frame = document.getElementById('chapter-frame');
-            if (frame.contentWindow) {
-                frame.contentWindow.postMessage({ theme: newTheme }, '*');
+    const themeToggleBtn = document.querySelector('.theme-toggle');
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('pushti-theme', newTheme);
+            
+            const icon = themeToggleBtn.querySelector('i');
+            if (icon) {
+                icon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
             }
-        } catch(e) {}
-    });
+            
+            // Try to update iframe theme if it supports it
+            try {
+                const frame = document.getElementById('chapter-frame');
+                if (frame.contentWindow) {
+                    frame.contentWindow.postMessage({ theme: newTheme }, '*');
+                }
+            } catch(e) {}
+        });
+    }
     
     // Set initial theme
     const savedTheme = localStorage.getItem('pushti-theme') || 'light';
     document.body.setAttribute('data-theme', savedTheme);
+    if (themeToggleBtn) {
+        const icon = themeToggleBtn.querySelector('i');
+        if (icon) {
+            icon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+    }
 
 
     document.getElementById('login-btn').addEventListener('click', async () => {
