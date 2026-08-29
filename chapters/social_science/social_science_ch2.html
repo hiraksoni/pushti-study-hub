@@ -1,1123 +1,582 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Chapter 2: Our Changing Earth — Road to 20/20</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --bg-color: #E8EDF2;
-    --surface: #FFFFFF;
-    --primary: #4338CA;
-    --primary-light: #EEF2FF;
+    --bg-main: #FFFFFF;
+    --bg-card: #F8FAFC;
     --text-main: #1E293B;
     --text-muted: #64748B;
-    --border: #CBD5E1;
-    --ready: #10B981;
-    --danger: #F43F5E;
-    --border-radius: 0px; /* Brutalist/Blueprint look */
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --accent: #38BDF8;
+    --border: #E2E8F0;
+    --border-hover: #CBD5E1;
+    --good: #059669;
+    --good-bg: #D1FAE5;
+    --bad: #E11D48;
+    --bad-bg: #FFE4E6;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background-color: var(--surface);
-    color: var(--text-main);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    padding: 24px;
-    max-width: 1100px;
-    margin: 0 auto;
-    overflow-x: hidden; 
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-main: #0F172A;
+      --bg-card: #1E293B;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --primary: #6366F1;
+      --primary-hover: #818CF8;
+      --accent: #0EA5E9;
+      --border: #334155;
+      --border-hover: #475569;
+      --good: #34D399;
+      --good-bg: #064E3B;
+      --bad: #F87171;
+      --bad-bg: #7F1D1D;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    }
   }
 
-  header.hero {
-    text-align: left;
-    background: var(--primary-light);
-    color: var(--text-main);
-    padding: 32px 24px;
-    border: 2px solid var(--primary);
-    margin-bottom: 24px;
-    position: relative;
-  }
+  *{box-sizing:border-box;}
+  body{margin:0; background: var(--bg-main); color: var(--text-main); font-family:'Nunito',sans-serif; line-height:1.6;}
+  .wrap{max-width:1100px; margin:0 auto; padding:26px 16px 120px;}
   
-  header.hero::after {
-      content: '';
-      position: absolute;
-      top: 4px; left: 4px; right: -6px; bottom: -6px;
-      border: 2px solid var(--primary);
-      z-index: -1;
+  header.hero{text-align:center; padding:30px 14px 26px; border-bottom:1px solid var(--border); margin-bottom:0px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--primary); margin-bottom:8px; font-weight:600;}
+  h1{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:clamp(1.8rem,5vw,2.7rem); margin:0 0 8px; color:var(--text-main);}
+  .sub{font-size:1rem; color:var(--text-muted);}
+  
+  /* STICKY TABS */
+  .tabs-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(var(--bg-main), 0.95);
+    backdrop-filter: blur(10px);
+    padding: 12px 0;
+    box-shadow: 0 4px 10px -10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border);
   }
-
-  header h1 {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
-    letter-spacing: -0.02em;
-    font-weight: 800;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    color: var(--primary);
+  .tabs-container {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; max-width: 1000px; margin: 0 auto; overflow-x: auto; padding: 0 10px;
   }
-
-  .tagline { font-size: 0.95rem; color: var(--text-muted); font-family: 'Space Mono', monospace; }
-
-  .badge-bar {
-    margin-top: 16px;
-    display: flex;
-    justify-content: flex-start;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .badge {
-    background: var(--surface);
-    padding: 4px 12px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    border: 1px solid var(--border);
-    color: var(--text-main);
-    text-transform: uppercase;
-  }
-
-  .tab-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0px;
-    margin-bottom: 24px;
-    border-bottom: 2px solid var(--border);
-  }
-
   .tab-btn {
-    flex: 1 1 auto;
-    min-width: 120px;
-    text-align: center;
-    background: #F8FAFC;
+    padding: 8px 18px;
+    background: var(--bg-card);
     border: 1px solid var(--border);
-    border-bottom: none;
-    outline: none;
-    padding: 12px 16px;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
     color: var(--text-muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 100px;
     cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: all 0.15s ease;
+    transition: all 0.3s;
+    white-space: nowrap;
   }
-
-  .tab-btn:hover { background: #F1F5F9; color: var(--text-main); }
-  .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-  .tab-content { display: none; }
+  .tab-btn:hover { border-color: var(--border-hover); color: var(--text-main); }
+  .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: var(--shadow); }
+  
+  .tab-content { display: none; animation: fadeIn 0.4s ease; }
   .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  .card {
-    background: var(--surface);
-    padding: 24px;
-    border: 1px solid var(--border);
-    margin-bottom: 24px;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.03);
+  .instructions { background: var(--bg-card); border: 1px dashed var(--primary); border-radius: 12px; padding: 14px 20px; margin: 22px 0 30px; font-size: 0.95rem; color: var(--text-main); }
+  .instructions b { color: var(--primary); }
+
+  /* COLLAPSIBLE HEADERS */
+  .collapsible-header {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--text-main); margin: 0 0 16px; 
+    display: flex; align-items: center; gap: 10px; border-left: 4px solid var(--primary); padding-left: 12px;
+    cursor: pointer; user-select: none; transition: 0.2s;
   }
+  .collapsible-header:hover { opacity: 0.8; }
+  .count-badge { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--text-muted); font-weight: 500; }
+  .chevron { width: 32px; height: 32px; fill: var(--primary); background: rgba(79,70,229,0.08); border-radius: 50%; padding: 4px; transition: all 0.3s; margin-left: auto; }
+.collapsible-header:hover .chevron { background: rgba(79,70,229,0.15); }
+  .collapsible-header.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-content { overflow: hidden; transition: max-height 0.3s ease-out; }
+  .collapsible-content.collapsed { display: none; }
 
-  .card-title {
-    font-family: 'Outfit', sans-serif;
-    color: var(--text-main);
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 16px;
-    border-bottom: 2px solid var(--primary);
-    padding-bottom: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    gap: 6px;
-  }
+  /* MODE SWITCH */
+  .mode-switch { display: flex; justify-content: center; gap: 0; margin-bottom: 20px; border-radius: 100px; overflow: hidden; border: 1px solid var(--primary); max-width: 380px; margin: 0 auto 20px auto; background:var(--bg-card); }
+  .mode-btn { flex: 1; padding: 10px 15px; border: none; background: transparent; color: var(--text-muted); font-size:0.95rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; transition: 0.3s; }
+  .mode-btn.active { background: var(--primary); color: #fff; }
+  #test-intro { background: var(--bg-card); border: 2px dashed var(--border); border-radius: 12px; padding: 40px 20px; text-align: center; margin-bottom: 30px; box-shadow: var(--shadow); }
+  #test-intro h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-main); margin-top: 0; }
+  .btn-start { background: var(--primary); color: white; border: none; padding: 14px 34px; font-size: 1.1rem; font-weight: 700; font-family:'Nunito',sans-serif; border-radius: 100px; cursor: pointer; margin-top: 15px; box-shadow: var(--shadow); transition: 0.2s; }
+  .btn-start:hover { transform: translateY(-2px); background: var(--primary-hover); }
 
-  .topic-badge {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    background: var(--primary-light);
-    color: var(--primary);
-    border: 1px solid rgba(67,56,202,0.2);
-    padding: 4px 8px;
-  }
+  /* QUESTION STYLES */
+  .q { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; box-shadow: var(--shadow); }
+  .q-text { font-weight: 700; margin-bottom: 10px; font-size: 1rem; color: var(--text-main); }
+  .q-text .num { color: var(--primary); font-family: 'JetBrains Mono', monospace; margin-right: 8px; }
+  .opts label { display: block; padding: 8px 12px; border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.95rem; border: 1px solid transparent; transition: 0.2s; }
+  .opts label:hover { background: rgba(79, 70, 229, 0.05); }
+  .opts input { margin-right: 10px; }
+  .fillblank input[type=text] { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; width: 250px; background: var(--bg-main); color: var(--text-main); }
+  .tf-row { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+  .tf-row label { font-size: 0.95rem; cursor: pointer; }
+  
+  .feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.5; }
+  .feedback.correct { background: var(--good-bg); color: var(--good); display: block; border: 1px solid var(--good); }
+  .feedback.incorrect { background: var(--bad-bg); color: var(--bad); display: block; border: 1px solid var(--bad); }
+  .feedback .exp { display: block; margin-top: 6px; font-style: italic; opacity: 0.9; }
 
-  .concept-visual-grid {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 24px;
-    align-items: start;
-    margin-top: 16px;
-  }
+  details { margin-top: 14px; }
+  details summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--primary); font-weight: 700; }
+  details .model { margin-top: 12px; font-size: 0.95rem; background: rgba(79, 70, 229, 0.05); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: 0 8px 8px 0; line-height: 1.6; }
 
-  @media (max-width: 650px) {
-    .concept-visual-grid { grid-template-columns: 1fr; }
-  }
+  /* BOTTOM GRADE BAR */
+  .grade-bar{position:fixed; left:0; right:0; bottom:0; background:var(--bg-card); border-top: 1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:center; gap:16px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index:50; display:none;}
+  .grade-bar button{background:var(--primary); color:#fff; border:none; padding:12px 28px; border-radius:100px; font-weight:700; font-family:'Nunito',sans-serif; font-size:1rem; cursor:pointer;}
+  .grade-bar button:hover{background:var(--primary-hover);}
+  .score-readout{font-family:'JetBrains Mono',monospace; font-size:1.15rem; font-weight:700; color:var(--text-main);}
+  .score-readout.urgent{color:var(--bad); animation: pulse 1s infinite;}
+  @keyframes pulse { 0% { opacity:1;} 50% {opacity:0.5;} 100% {opacity:1;} }
 
-  .visual-card-svg {
-    background: #F8FAFC;
-    border: 1px solid var(--border);
-    padding: 16px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+  .result-panel{display:none; background:var(--bg-card); border:2px solid var(--border); border-radius:14px; padding:24px; text-align:center; margin-bottom:40px; box-shadow:var(--shadow);}
+  .result-panel.show{display:block;}
+  .result-panel .score-big{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:2.8rem; color:var(--primary);}
+  .result-panel .msg{font-size:1.1rem; margin-top:10px; line-height:1.6;}
 
-  .visual-card-svg svg { width: 120px; height: 120px; }
-
-  .visual-caption {
-    font-size: 0.75rem;
-    font-family: 'Space Mono', monospace;
-    color: var(--text-muted);
-    margin-top: 12px;
-    text-transform: uppercase;
-  }
-
-  .grid-3 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-  }
-
-  .sub-box { padding: 16px; border: 1px solid var(--border); font-size: 0.9rem; background: #F8FAFC; }
-  .sub-box.key { border-top: 4px solid var(--primary); }
-  .sub-box.facts { border-top: 4px solid var(--ready); }
-  .sub-box.fun { border-top: 4px solid var(--danger); }
-
-  .sub-box h4 { font-family: 'Outfit', sans-serif; font-size: 0.95rem; margin-bottom: 8px; text-transform: uppercase; }
-  .sub-box.key h4 { color: var(--primary); }
-  .sub-box.facts h4 { color: var(--ready); }
-  .sub-box.fun h4 { color: var(--danger); }
-  .sub-box ul { padding-left: 16px; margin-top: 8px; }
-  .sub-box li { margin-bottom: 6px; }
-
-  .mcq-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 20px;
-    margin-bottom: 16px;
-    border-left: 4px solid var(--border);
-  }
-
-  .mcq-q { font-weight: 600; font-size: 0.95rem; margin-bottom: 12px; color: var(--text-main); font-family: 'Inter', sans-serif; }
-
-  .mcq-opt {
-    display: block; width: 100%; text-align: left; background: #F8FAFC; border: 1px solid var(--border);
-    padding: 10px 16px; margin-bottom: 8px; cursor: pointer;
-    font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: all 0.15s;
-  }
-
-  .mcq-opt:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
-  .mcq-opt.correct { background: #ECFDF5 !important; border-color: var(--ready) !important; color: #065F46; font-weight: 600; }
-  .mcq-opt.wrong { background: #FFF1F2 !important; border-color: var(--danger) !important; color: #9F1239; }
-
-  .mcq-explain {
-    display: none; margin-top: 12px; padding: 12px 16px; background: #F1F5F9;
-    border-left: 3px solid var(--primary); font-size: 0.85rem; color: var(--text-main);
-  }
-
-  .qa-card {
-    background: var(--surface); border: 1px solid var(--border); padding: 16px;
-    margin-bottom: 16px;
-  }
-
-  .qa-q {
-    font-weight: 600; cursor: pointer; display: flex; justify-content: space-between;
-    align-items: center; color: var(--text-main); font-size: 0.95rem;
-  }
-
-  .qa-q::after {
-    content: '[ + ] REVEAL'; font-size: 0.75rem; font-family: 'Space Mono', monospace;
-    color: var(--primary); background: var(--primary-light); padding: 4px 8px; border: 1px solid rgba(67,56,202,0.2); white-space: nowrap;
-  }
-
-  .qa-card.open .qa-q::after { content: '[ - ] HIDE'; background: #FFF1F2; color: var(--danger); border-color: rgba(244,63,94,0.2); }
-
-  .qa-a {
-    display: none; margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border); font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;
-  }
-
-  .qa-card.open .qa-a { display: block; }
-
-  table.textbook-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.9rem; }
-  table.textbook-table th, table.textbook-table td { border: 1px solid var(--border); padding: 12px 16px; text-align: left; }
-  table.textbook-table th { background-color: #F8FAFC; color: var(--text-main); font-family: 'Outfit', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
-
-  .media-link-card {
-    display: flex; align-items: center; gap: 16px; background: #F8FAFC; padding: 16px;
-    margin-top: 12px; border: 1px solid var(--border); text-decoration: none;
-    color: var(--text-main); font-size: 0.9rem; font-weight: 500; transition: all 0.2s;
-  }
-
-  .media-link-card:hover { background: var(--surface); border-color: var(--primary); color: var(--primary); box-shadow: 4px 4px 0 rgba(67,56,202,0.1); }
-  .media-icon { font-size: 1.5rem; }
-
-  footer { text-align: center; margin-top: 32px; font-size: 0.75rem; color: var(--text-muted); font-family: 'Space Mono', monospace; text-transform: uppercase; }
+  /* VIDEO LINKS (TAB 1) */
+  .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .topic-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); position:relative; }
+  .topic-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
+  .video-btn { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(79, 70, 229, 0.05); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text-main); font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; transition: 0.2s; }
+  .video-btn:hover { background: rgba(79, 70, 229, 0.1); border-color: var(--border-hover); }
+  .thumb-wrapper { position: relative; width: 44px; height: 28px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+  .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+  .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(79, 70, 229, 0.9); border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+  .play-icon svg { width: 8px; height: 8px; fill: white; margin-left: 2px; }
 </style>
 </head>
 <body>
-
-  <header class="hero">
-    <h1>Our Changing Earth</h1>
-    <div class="tagline">Pushti's Road to 20/20: Interactive Master Visual Dashboard</div>
-    <div class="badge-bar">
-      <span class="badge">CBSE Class 7</span>
-      <span class="badge">Geography</span>
-      <span class="badge">Chapter 2</span>
+<header class="hero">
+<div class="eyebrow">Biology · Chapter 3</div>
+<h1>Chapter 2: Our Changing Earth — Road to 20/20</h1>
+<div class="sub">Complete Chapter Guide &amp; Practice Module</div>
+</header>
+<div class="tabs-wrapper">
+<div class="tabs-container">
+<button class="tab-btn active" onclick="openTab(event, 'tab-video')">1. Videos &amp; Map</button>
+<button class="tab-btn" onclick="openTab(event, 'tab-omr')">2. OMR (1 Mark)</button>
+<button class="tab-btn" onclick="openTab(event, 'tab-short')">3. 2/3 Marks</button>
+<button class="tab-btn" onclick="openTab(event, 'tab-long')">4. 4+ Marks</button>
+<button class="tab-btn" onclick="openTab(event, 'tab-extra')">5. Extra Knowledge</button>
+</div>
+</div>
+<div class="wrap">
+<!-- TAB 1: VIDEOS & CONCEPT MAP -->
+<div class="tab-content active" id="tab-video">
+<div class="instructions">
+<b>How to use:</b> Watch the video explanations for each topic by clicking the thumbnails. Then review the Concept Map below to see how everything connects!
     </div>
-  </header>
-
-  <div class="tab-nav">
-    <button class="tab-btn active" onclick="openTab('endogenic')">🌋 Forces & Volcanoes</button>
-    <button class="tab-btn" onclick="openTab('earthquakes')">📉 Earthquakes & Safety</button>
-    <button class="tab-btn" onclick="openTab('rivers')">🏞️ River Landforms</button>
-    <button class="tab-btn" onclick="openTab('wind-waves-ice')">🏜️ Wind, Waves & Ice</button>
-    <button class="tab-btn" onclick="openTab('mcq-4opt')">🎯 Master MCQs</button>
-    <button class="tab-btn" onclick="openTab('mcq-confusing')">⚡ Confusing Blanks</button>
-    <button class="tab-btn" onclick="openTab('mcq-tf')">❓ True / False</button>
-    <button class="tab-btn" onclick="openTab('textbook-all')">📖 All Textbook Solutions (A to H)</button>
-    <button class="tab-btn" onclick="openTab('media')">🖼️ Visual Anchors</button>
-  </div>
-
-  <!-- TAB 1: FORCES & VOLCANOES -->
-  <div id="endogenic" class="tab-content active">
-    <div class="card" style="border-left: 5px solid var(--maroon);">
-      <div class="card-title">Earth Movements & Forces <span class="topic-badge">Endogenic vs Exogenic</span></div>
-      <p>The Earth's crust is made of several large and small broken pieces called <b>lithospheric plates</b> or <b>tectonic plates</b>[cite: 3]. These plates move constantly at a very slow rate of about <b>2 cm per year</b> due to heat currents in the mantle[cite: 3].<br>
-      • <b>Endogenic Forces:</b> Forces operating <i>below</i> the Earth's surface (e.g., volcanoes, earthquakes, mountain building)[cite: 3].<br>
-      • <b>Exogenic Forces:</b> Forces operating <i>above</i> the Earth's surface (e.g., rivers, wind, sea waves, glaciers)[cite: 3].</p>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('video-grid', this)">
+<span>Chapter Topics &amp; Videos</span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed topics-grid" id="video-grid">
+<div class="topic-card">
+<div class="topic-title">1. Endogenic &amp; Exogenic Forces</div>
+<a class="video-btn" href="https://www.youtube.com/watch?v=mB2oT2i4698" target="_blank"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/mB2oT2i4698/hqdefault.jpg"/><div class="play-icon"><svg viewbox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><span>Earth Movements</span></a>
+</div>
+<div class="topic-card">
+<div class="topic-title">2. Earthquakes &amp; Volcanoes</div>
+<a class="video-btn" href="https://www.youtube.com/watch?v=eXiVGEEPQ6c" target="_blank"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/eXiVGEEPQ6c/hqdefault.jpg"/><div class="play-icon"><svg viewbox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><span>Natural Disasters</span></a>
+</div>
+<div class="topic-card">
+<div class="topic-title">3. Work of a River</div>
+<a class="video-btn" href="https://www.youtube.com/watch?v=8a7p1IvwP6w" target="_blank"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/8a7p1IvwP6w/hqdefault.jpg"/><div class="play-icon"><svg viewbox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><span>River Landforms</span></a>
+</div>
+<div class="topic-card">
+<div class="topic-title">4. Work of Sea, Ice &amp; Wind</div>
+<a class="video-btn" href="https://www.youtube.com/watch?v=jPgE74Vltdc" target="_blank"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/jPgE74Vltdc/hqdefault.jpg"/><div class="play-icon"><svg viewbox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><span>Coastal &amp; Desert Landforms</span></a>
+</div>
+</div>
+</div>
+<!-- TAB 2: OMR -->
+<div class="tab-content" id="tab-omr">
+<div class="mode-switch">
+<button class="mode-btn active" id="btn-practice" onclick="setMode('practice')">Practice Mode</button>
+<button class="mode-btn" id="btn-test" onclick="setMode('test')">Test Mode</button>
+</div>
+<div id="test-intro" style="display:none;">
+<h3>Ready for the Test?</h3>
+<p style="font-size: 1.1rem;">You have <b id="t-count" style="color:var(--primary);"></b> objective questions.</p>
+<p style="font-size: 1.1rem;">Time Allowed: <b id="t-time" style="color:var(--primary);"></b> minutes.</p>
+<button class="btn-start" onclick="startTest()">Start Test Now</button>
+</div>
+<div class="result-panel" id="resultPanel">
+<div class="score-big" id="scoreBig">0 / 0</div>
+<div class="msg" id="scoreMsg"></div>
+</div>
+<div id="omr-content">
+<div class="instructions" id="omr-instructions">
+<b>Practice Mode Active:</b> Click any option or type an answer to get instant correct/incorrect feedback along with explanations!
+      </div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('mcqbook-container', this)">
+<span>OMR Practice (MCQs)</span> <span class="count-badge" id="mcq-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="mcqbook-container"></div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('fillbook-container', this)">
+<span>Fill in the Blanks</span> <span class="count-badge" id="fill-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="fillbook-container"></div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('tfbook-container', this)">
+<span>True or False</span> <span class="count-badge" id="tf-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="tfbook-container"></div>
+</div>
+</div>
+<!-- TAB 3: SHORT -->
+<div class="tab-content" id="tab-short">
+<div class="instructions">
+<b>Mental Flashcards:</b> Try to recall the answer in your head, then click "Show Detailed Answer".
     </div>
-
-    <!-- Tectonic Movements Diagram Card -->
-    <div class="card">
-      <div class="card-title">1. Tectonic Plate Movements <span class="topic-badge">Convergent, Divergent, Transform</span></div>
-      <div class="concept-visual-grid">
-        <div class="visual-card-svg">
-          <!-- SVG Schematic: Tectonic Movements -->
-          <svg viewBox="0 0 140 100">
-            <!-- Convergent -->
-            <rect x="10" y="10" width="50" height="20" fill="#7A2A2E"/>
-            <rect x="70" y="10" width="50" height="20" fill="#7A2A2E"/>
-            <path d="M 45 20 L 55 20" stroke="#FFF8E7" stroke-width="3" marker-end="url(#arrow)"/>
-            <path d="M 85 20 L 75 20" stroke="#FFF8E7" stroke-width="3" marker-end="url(#arrow)"/>
-            <text x="65" y="38" font-size="8" font-family="sans-serif" text-anchor="middle" fill="#7A2A2E">Convergent (Collision)</text>
-            
-            <!-- Divergent -->
-            <rect x="10" y="45" width="50" height="20" fill="#2F5D5A"/>
-            <rect x="70" y="45" width="50" height="20" fill="#2F5D5A"/>
-            <path d="M 35 55 L 20 55" stroke="#FFF8E7" stroke-width="3"/>
-            <path d="M 95 55 L 110 55" stroke="#FFF8E7" stroke-width="3"/>
-            <text x="65" y="73" font-size="8" font-family="sans-serif" text-anchor="middle" fill="#2F5D5A">Divergent (Dividing)</text>
-            
-            <!-- Transform -->
-            <rect x="10" y="78" width="50" height="15" fill="#D35400"/>
-            <rect x="70" y="78" width="50" height="15" fill="#D35400"/>
-            <text x="65" y="98" font-size="8" font-family="sans-serif" text-anchor="middle" fill="#D35400">Transform (Sliding)</text>
-          </svg>
-          <div class="visual-caption">3 Plate Boundary Movements</div>
-        </div>
-
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4>🗺️ Plate Movements</h4>
-            <ul>
-              <li><b>Convergent:</b> Plates move <i>towards each other</i> and collide, forming fold mountains like the Himalayas[cite: 3]!</li>
-              <li><b>Divergent:</b> Plates move <i>away from each other</i>[cite: 3].</li>
-              <li><b>Transform:</b> Plates <i>slide past each other</i>[cite: 3].</li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>📌 Textbook Facts</h4>
-            <ul>
-              <li>There are <b>7 major plates</b> and several minor plates composing the lithosphere[cite: 3].</li>
-              <li>Rate of movement: <b>~2 cm per year</b>[cite: 3].</li>
-              <li>Magma inside the mantle rises and cools in circular convection currents[cite: 3].</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>💡 Memory Anchor</h4>
-            <ul>
-              <li>The Indian Plate colliding into the Eurasian Plate pushed up the Earth's crust to build Mount Everest[cite: 3]!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('short-container', this)">
+<span>2 and 3 Marks Questions</span> <span class="count-badge" id="short-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="short-container"></div>
+</div>
+<!-- TAB 4: LONG -->
+<div class="tab-content" id="tab-long">
+<div class="instructions">
+<b>Mental Flashcards:</b> Formulate the answer, then study the complete textbook-level explanation.
     </div>
-
-    <!-- Volcano Diagram Card -->
-    <div class="card">
-      <div class="card-title">2. Volcano Anatomy & Types <span class="topic-badge">Structure & Classification</span></div>
-      <div class="concept-visual-grid">
-        <div class="visual-card-svg">
-          <!-- SVG Schematic: Volcano Anatomy -->
-          <svg viewBox="0 0 140 110">
-            <polygon points="10,95 70,25 130,95" fill="#8B4513"/>
-            <!-- Pipe/Vent -->
-            <rect x="65" y="45" width="10" height="50" fill="#C0392B"/>
-            <circle cx="70" cy="95" r="15" fill="#E74C3C"/>
-            <!-- Crater Opening -->
-            <ellipse cx="70" cy="25" rx="12" ry="4" fill="#900"/>
-            <!-- Lava Flow & Ash Cloud -->
-            <path d="M 70 21 Q 50 10 30 5 Q 70 -5 100 5 Q 90 15 70 21 Z" fill="#7f8c8d" opacity="0.8"/>
-            <path d="M 62 25 Q 50 40 40 60 L 48 65 Q 58 45 66 25 Z" fill="#F39C12"/>
-          </svg>
-          <div class="visual-caption">Volcano Cross-Section</div>
-        </div>
-
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4>🌋 Structure Parts</h4>
-            <ul>
-              <li><b>Magma Chamber:</b> Reservoir of molten rock below Earth's surface[cite: 3].</li>
-              <li><b>Vent / Pipe:</b> Central tube through which magma travels upward[cite: 3].</li>
-              <li><b>Crater:</b> Circular cone-shaped opening at the top[cite: 3].</li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>📌 3 Types of Volcanoes</h4>
-            <ul>
-              <li><b>Active:</b> Erupt frequently (e.g., Mt. Fuji in Japan, Barren Island in India)[cite: 3].</li>
-              <li><b>Dormant:</b> Sleeping for a long time, may erupt later (e.g., Mt. Kilimanjaro in Tanzania)[cite: 3].</li>
-              <li><b>Extinct:</b> Dead, unlikely to erupt again (e.g., Mt. Popa in Myanmar)[cite: 3].</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>💡 Memory Anchor</h4>
-            <ul>
-              <li>Magma is molten rock *inside* the Earth; Lava is molten rock that erupts *outside*[cite: 3]!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('long-container', this)">
+<span>4+ Marks &amp; Case Based</span> <span class="count-badge" id="long-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="long-container"></div>
+</div>
+<!-- TAB 5: EXTRA KNOWLEDGE -->
+<div class="tab-content" id="tab-extra">
+<div class="instructions">
+<b>For the Bookworms:</b> Deep-dive questions and fascinating facts!
     </div>
-  </div>
-
-  <!-- TAB 2: EARTHQUAKES & SAFETY -->
-  <div id="earthquakes" class="tab-content">
-    <div class="card">
-      <div class="card-title">Earthquakes: Origin & Safety <span class="topic-badge">Focus, Epicentre, Richter Scale</span></div>
-      <div class="concept-visual-grid">
-        <div class="visual-card-svg">
-          <!-- SVG Schematic: Earthquake Anatomy -->
-          <svg viewBox="0 0 140 110">
-            <!-- Earth Block -->
-            <rect x="10" y="30" width="120" height="70" fill="#E4D3AC" stroke="#5A1E22" stroke-width="2"/>
-            <!-- Focus Inside -->
-            <circle cx="70" cy="75" r="6" fill="#C0392B"/>
-            <!-- Seismic Wave Ripples -->
-            <circle cx="70" cy="75" r="18" fill="none" stroke="#E74C3C" stroke-width="1.5" stroke-dasharray="3 2"/>
-            <circle cx="70" cy="75" r="32" fill="none" stroke="#E74C3C" stroke-width="1.5" stroke-dasharray="4 2"/>
-            <!-- Epicentre on Surface -->
-            <line x1="70" y1="75" x2="70" y2="30" stroke="#7A2A2E" stroke-width="2" stroke-dasharray="2 2"/>
-            <circle cx="70" cy="30" r="7" fill="#F1C40F" stroke="#7A2A2E" stroke-width="2"/>
-            <text x="70" y="20" font-size="8" font-family="sans-serif" font-weight="bold" text-anchor="middle" fill="#7A2A2E">Epicentre (Surface)</text>
-            <text x="70" y="93" font-size="8" font-family="sans-serif" font-weight="bold" text-anchor="middle" fill="#FFF">Focus (Origin)</text>
-          </svg>
-          <div class="visual-caption">Focus vs Epicentre</div>
-        </div>
-
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4>📉 Earthquake Anatomy</h4>
-            <ul>
-              <li><b>Focus:</b> The exact point <i>inside the Earth</i> where the movement/earthquake originates[cite: 3].</li>
-              <li><b>Epicentre:</b> The point <i>on the surface</i> directly above the focus[cite: 3]. Seismic waves cause maximum destruction here[cite: 3]!</li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>📌 Richter Scale & Ring of Fire</h4>
-            <ul>
-              <li>Instrument measuring magnitude: <b>Richter scale</b>[cite: 3].</li>
-              <li><b>0-2.0:</b> Micro (unfelt) | <b>5.0-5.9:</b> Moderate | <b>7.0+:</b> Major destruction (e.g., 2001 Gujarat earthquake = 7.7)[cite: 3].</li>
-              <li><b>Ring of Fire:</b> Boundary around Pacific Ocean experiencing 90% of Earth's earthquakes and 75% of volcanoes[cite: 3]!</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>💡 Safety Guidelines</h4>
-            <ul>
-              <li><b>Indoor Safety:</b> Drop, Cover, and Hold under a sturdy kitchen table or desk[cite: 3]! Stay away from windows and glass[cite: 3].</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 3: RIVER LANDFORMS -->
-  <div id="rivers" class="tab-content">
-    <div class="card">
-      <div class="card-title">The Journey of a River <span class="topic-badge">Upper, Middle, & Lower Course</span></div>
-      <div class="concept-visual-grid">
-        <div class="visual-card-svg">
-          <!-- SVG Schematic: River Course -->
-          <svg viewBox="0 0 140 110">
-            <!-- Mountain Upper Course -->
-            <polygon points="10,40 35,10 60,40" fill="#8B4513"/>
-            <path d="M 35 15 L 35 40" stroke="#3498DB" stroke-width="3"/>
-            <!-- Waterfall -->
-            <rect x="33" y="40" width="5" height="15" fill="#2980B9"/>
-            <!-- Middle Course Meander -->
-            <path d="M 35 55 Q 80 50 60 70 Q 40 90 90 85" stroke="#3498DB" stroke-width="4" fill="none"/>
-            <!-- Lower Course Delta -->
-            <polygon points="90,85 130,70 130,100" fill="#2ECC71"/>
-            <line x1="90" y1="85" x2="130" y2="75" stroke="#3498DB" stroke-width="1.5"/>
-            <line x1="90" y1="85" x2="130" y2="85" stroke="#3498DB" stroke-width="1.5"/>
-            <line x1="90" y1="85" x2="130" y2="95" stroke="#3498DB" stroke-width="1.5"/>
-          </svg>
-          <div class="visual-caption">River Stages & Landforms</div>
-        </div>
-
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4>🏞️ Upper Course (Mountain)</h4>
-            <ul>
-              <li>Fast-flowing water erodes rocks vertically[cite: 3].</li>
-              <li>Landforms: Steep <b>V-shaped Valleys</b> and <b>Waterfalls</b> (e.g., Jog Falls, Dudhsagar Falls)[cite: 3].</li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>🔄 Middle Course (Plains)</h4>
-            <ul>
-              <li>River slows down and forms large S-shaped loops called <b>meanders</b>[cite: 3].</li>
-              <li>Sediment deposition across meander loops cuts off bends to form crescent-shaped <b>oxbow lakes</b> (e.g., Kanwar Lake)[cite: 3]!</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>🌊 Lower Course (Sea Entry)</h4>
-            <ul>
-              <li>River splits into small distributaries, depositing heavy silt[cite: 3].</li>
-              <li>Forms flat <b>floodplains</b> and triangular <b>deltas</b> (e.g., Sundarbans Delta)[cite: 3]!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 4: WIND, WAVES & ICE -->
-  <div id="wind-waves-ice" class="tab-content">
-    <!-- Sea Waves -->
-    <div class="card">
-      <div class="card-title">1. Action of Sea Waves <span class="topic-badge">Caves, Arches, Stacks, Beaches</span></div>
-      <div class="concept-visual-grid">
-        <div class="visual-card-svg">
-          <!-- SVG Schematic: Sea Cave to Stack -->
-          <svg viewBox="0 0 140 90">
-            <!-- Sea Cliff Block -->
-            <rect x="10" y="20" width="120" height="60" fill="#8B4513"/>
-            <!-- Cave -->
-            <ellipse cx="25" cy="60" rx="8" ry="12" fill="#2C3E50"/>
-            <!-- Arch -->
-            <path d="M 50 80 L 50 50 Q 60 40 70 50 L 70 80 Z" fill="#2471A3"/>
-            <!-- Stack Pillar -->
-            <rect x="100" y="35" width="12" height="45" fill="#8B4513"/>
-            <rect x="85" y="65" width="12" height="15" fill="#2471A3"/>
-            <!-- Sea Water Level -->
-            <rect x="0" y="65" width="140" height="25" fill="#3498DB" opacity="0.6"/>
-          </svg>
-          <div class="visual-caption">Sea Cave $\rightarrow$ Arch $\rightarrow$ Stack</div>
-        </div>
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4>🌊 Coastal Evolution</h4>
-            <ul>
-              <li><b>Sea Cave:</b> Hollow cavity eroded into sea cliff by waves[cite: 3].</li>
-              <li><b>Sea Arch:</b> Waves erode cave deeper until only the roof remains[cite: 3]!</li>
-              <li><b>Stack:</b> Arch roof collapses, leaving an isolated stone pillar[cite: 3]!</li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>📌 Depositional Coastal Feature</h4>
-            <ul>
-              <li><b>Beach:</b> Formed when sea waves deposit sand, pebbles, and sediments along flat shorelines[cite: 3].</li>
-              <li><b>Sea Cliff:</b> Steep vertical rocky coast eroded by wave action[cite: 3].</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>💡 Memory Sequence</h4>
-            <ul>
-              <li>Cave (Hollow) $\rightarrow$ Arch (Tunnel with Roof) $\rightarrow$ Stack (Single Pillar) $\rightarrow$ Beach (Deposited Sand)[cite: 3]!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Wind Action -->
-    <div class="card">
-      <div class="card-title">2. Action of Wind <span class="topic-badge">Mushroom Rocks, Sand Dunes, Loess</span></div>
-      <div class="concept-visual-grid">
-        <div class="visual-card-svg">
-          <!-- SVG Schematic: Mushroom Rock & Dune -->
-          <svg viewBox="0 0 140 90">
-            <!-- Mushroom Rock -->
-            <path d="M 20 20 Q 40 10 60 20 Q 50 40 45 65 L 35 65 Q 30 40 20 20 Z" fill="#D35400"/>
-            <rect x="10" y="65" width="60" height="15" fill="#EDBB99"/>
-            <!-- Sand Dune -->
-            <path d="M 80 65 Q 105 30 135 65 Z" fill="#E67E22"/>
-          </svg>
-          <div class="visual-caption">Mushroom Rock & Sand Dune</div>
-        </div>
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4>🏜️ Mushroom Rocks</h4>
-            <ul>
-              <li>Winds blow sand close to the ground, eroding the <i>bottom part</i> of desert rocks faster than the top[cite: 3].</li>
-              <li>Leaves a narrow base and broad top shaped like a mushroom[cite: 3]!</li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>📌 Sand Dunes & Loess</h4>
-            <ul>
-              <li><b>Sand Dunes:</b> Small hills of sand formed when wind drops sand grains in mounds[cite: 3].</li>
-              <li><b>Loess:</b> Fine, mineral-rich yellowish silt carried over long distances by wind (large deposits in China)[cite: 3].</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>💡 Memory Anchor</h4>
-            <ul>
-              <li>Why are mushroom rocks narrow at the bottom? Because wind-blown sand grains act like sandpaper on the lower rock face[cite: 3]!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Glacial Action -->
-    <div class="card">
-      <div class="card-title">3. Action of Glaciers (Rivers of Ice) <span class="topic-badge">Cirques, Tarn Lakes, Moraines</span></div>
-      <div class="concept-visual-grid">
-        <div class="visual-card-svg">
-          <!-- SVG Schematic: Cirque / Armchair Hollow -->
-          <svg viewBox="0 0 140 90">
-            <!-- Mountain Side -->
-            <path d="M 10 10 L 40 30 Q 30 70 80 70 L 130 80" stroke="#7F8C8D" stroke-width="4" fill="none"/>
-            <!-- Glacier / Lake in Armchair -->
-            <ellipse cx="55" cy="58" rx="20" ry="10" fill="#3498DB"/>
-            <text x="55" y="42" font-size="8" font-family="sans-serif" text-anchor="middle" fill="#2C3E50">Armchair Hollow (Cirque)</text>
-          </svg>
-          <div class="visual-caption">Glacial Cirque Hollow</div>
-        </div>
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4>🧊 Glacial Landforms</h4>
-            <ul>
-              <li><b>Glaciers:</b> Slow-moving rivers of ice carving steep mountain valleys[cite: 3].</li>
-              <li><b>Cirques:</b> Deep, hollow spaces carved in mountain slopes shaped like an <b>armchair</b>[cite: 3].</li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>📌 Glacial Lakes & Moraines</h4>
-            <ul>
-              <li><b>Glacial Lakes:</b> When ice melts inside cirque hollows, they fill with water to form lakes[cite: 3].</li>
-              <li><b>Glacial Moraines:</b> Piles of rocks, sand, and silt deposited by melting glaciers[cite: 3].</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>💡 Memory Anchor</h4>
-            <ul>
-              <li>Keyword to remember for Cirque: <b>"Armchair-shaped hollow"</b>[cite: 3]!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 5: 12 MASTER MCQS -->
-  <div id="mcq-4opt" class="tab-content">
-    <div class="card">
-      <div class="card-title">12 Master Multiple Choice Questions</div>
-      
-      <div class="mcq-box">
-        <div class="mcq-q">1. Which instrument is used to measure the intensity or magnitude of an earthquake?[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">a) Epicentre</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">b) Seismic wave</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-1')">c) Richter scale</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">d) Seismograph focus</button>
-        <div class="mcq-explain" id="mcq-1"><b>Explanation:</b> The Richter scale measures the magnitude/intensity of an earthquake[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">2. Which of the following is/are thrown out during a volcanic eruption?[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">a) Lava</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">b) Ash</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">c) Hot gases</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-2')">d) All of the above</button>
-        <div class="mcq-explain" id="mcq-2"><b>Explanation:</b> Volcanic eruptions discharge fiery hot lava, ash clouds, and toxic hot gases simultaneously[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">3. Which of the following landforms is formed in the lower course of a river?[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">a) Waterfalls</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">b) Valleys</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-3')">c) Delta</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">d) Stacks</button>
-        <div class="mcq-explain" id="mcq-3"><b>Explanation:</b> Deltas and floodplains are formed in the lower course when river currents slow down and deposit heavy silt[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">4. Which of the following are small hills of sand formed when wind carries and deposits sand in another location?[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">a) Mushroom rocks</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">b) Moraines</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-4')">c) Sand dunes</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">d) Loesses</button>
-        <div class="mcq-explain" id="mcq-4"><b>Explanation:</b> Sand dunes are small mounds/hills of sand deposited by wind action in deserts[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">5. Which statement correctly describes how glacial cirques are formed?[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">a) Formed when glaciers deposit rocks and sediments as they flow</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">b) Formed when sea waves deposit rocks along the shoreline</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">c) Formed when sea waves create hollow spaces in rocks</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-5')">d) Formed when glaciers create deep, hollow spaces in the shape of an armchair</button>
-        <div class="mcq-explain" id="mcq-5"><b>Explanation:</b> Cirques are carved out by glaciers on mountain slopes into armchair-shaped hollows[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">6. At what rate do tectonic plates move each year?[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">a) 2 metres per year</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-6')">b) 2 centimetres per year</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">c) 2 kilometres per year</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">d) 20 centimetres per year</button>
-        <div class="mcq-explain" id="mcq-6"><b>Explanation:</b> Tectonic plates move extremely slowly, at a rate of about 2 cm per year[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">7. What is the point on the Earth's surface directly above the earthquake focus called?[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">a) Vent</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-7')">b) Epicentre</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">c) Seismograph</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">d) Fault line</button>
-        <div class="mcq-explain" id="mcq-7"><b>Explanation:</b> The surface point directly above the interior origin (focus) is called the epicentre[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">8. What is the crescent-shaped lake formed when a river meander is cut off called?[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">a) Glacial lake</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-8')">b) Oxbow lake</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">c) Cirque lake</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">d) Lagoon</button>
-        <div class="mcq-explain" id="mcq-8"><b>Explanation:</b> Heavy sediment deposition cuts off a curved river meander to form an oxbow lake[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">9. Which of the following is an active volcano located in India?[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">a) Mt. Fuji</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-9')">b) Barren Island</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">c) Mt. Kilimanjaro</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">d) Mt. Popa</button>
-        <div class="mcq-explain" id="mcq-9"><b>Explanation:</b> Barren Island in the Andaman and Nicobar Islands is India's active volcano[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">10. What isolated stone pillar remains standing when the roof of a sea arch collapses?[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">a) Sea cave</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">b) Sea cliff</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-10')">c) Stack</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">d) Beach</button>
-        <div class="mcq-explain" id="mcq-10"><b>Explanation:</b> When continuous wave erosion collapses a sea arch roof, only vertical pillars called stacks remain[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">11. Deposits of fine silty soil blown by wind over vast distances are known as ________.[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">a) Moraines</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-11')">b) Loess</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">c) Sand dunes</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">d) Deltas</button>
-        <div class="mcq-explain" id="mcq-11"><b>Explanation:</b> Loess consists of fine, mineral-rich wind-carried silt deposits[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">12. What is the process of breaking down rocks on the Earth's surface into smaller pieces called?[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-12')">a) Weathering</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">b) Erosion</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">c) Deposition</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">d) Subduction</button>
-        <div class="mcq-explain" id="mcq-12"><b>Explanation:</b> Weathering is the breaking down of rocks. Carrying them away is Erosion, and dropping them is Deposition[cite: 3].</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 6: CONFUSING 2-CHOICE FILL IN BLANKS -->
-  <div id="mcq-confusing" class="tab-content">
-    <div class="card">
-      <div class="card-title">Confusing Two-Choice Drills</div>
-      
-      <div class="mcq-box">
-        <div class="mcq-q">1. Tectonic plates move at an average speed of about 2 ________ per year.[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-1')">[A] Centimetres (cm)</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-1')">[B] Kilometres (km)</button>
-        <div class="mcq-explain" id="c-1"><b>Why confusion happens:</b> Kilometres is dangerously wrong! Plates move as slowly as fingernail growth (~2 cm/year)[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">2. The place <i>inside the Earth</i> where an earthquake originates is the ________.[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-2')">[A] Focus</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-2')">[B] Epicentre</button>
-        <div class="mcq-explain" id="c-2"><b>Why confusion happens:</b> Focus is *inside* underground. Epicentre is the point on the *surface* directly above it[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">3. Weathering is the process where rocks are ________.[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-3')">[A] Broken down into smaller pieces</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-3')">[B] Carried away by wind or water</button>
-        <div class="mcq-explain" id="c-3"><b>Why confusion happens:</b> Breaking down rocks is Weathering. Carrying them away is Erosion[cite: 3]!</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">4. Waterfalls are formed in the ________ course of a river.[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-4')">[A] Upper course (Mountain)</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-4')">[B] Lower course (Sea entry)</button>
-        <div class="mcq-explain" id="c-4"><b>Why confusion happens:</b> Waterfalls form in the steep upper course. Deltas form in the flat lower course[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">5. Mt. Kilimanjaro in Tanzania is classified as a ________ volcano.[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-5')">[A] Dormant (Sleeping)</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-5')">[B] Active (Erupting)</button>
-        <div class="mcq-explain" id="c-5"><b>Why confusion happens:</b> Mt. Fuji is Active. Mt. Kilimanjaro is Dormant (hasn't erupted recently but can in future)[cite: 3].</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 7: TRUE / FALSE ARENA -->
-  <div id="mcq-tf" class="tab-content">
-    <div class="card">
-      <div class="card-title">Interactive True / False Arena</div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">1. Most tectonic plates move at a rate of 2 km per year.[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-1')">[TRUE]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-1')">[FALSE]</button>
-        <div class="mcq-explain" id="tf-1"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Tectonic plates move at a rate of about 2 cm (centimetres) per year, not kilometres[cite: 3]!</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">2. The focus is the place inside the earth where an earthquake originates.[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-2')">[TRUE]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-2')">[FALSE]</button>
-        <div class="mcq-explain" id="tf-2"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> The focus is the underground point of seismic origin[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">3. Weathering happens when rocks are carried away.[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-3')">[TRUE]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-3')">[FALSE]</button>
-        <div class="mcq-explain" id="tf-3"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Weathering is the breaking down of rocks. Carrying them away is Erosion[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">4. Deposition leaves sediments at a particular place.[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-4')">[TRUE]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-4')">[FALSE]</button>
-        <div class="mcq-explain" id="tf-4"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Deposition is the settling of eroded sediments[cite: 3].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">5. Waterfalls are formed in the lower course when rivers erode rocks vertically.[cite: 3]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-5')">[TRUE]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-5')">[FALSE]</button>
-        <div class="mcq-explain" id="tf-5"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Waterfalls are formed in the *upper course* in steep mountains, not the lower course[cite: 3].</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 8: 100% COMPLETE TEXTBOOK SOLUTIONS -->
-  <div id="textbook-all" class="tab-content">
-    <div class="card">
-      <div class="card-title">100% Complete Textbook Exercise Solutions (A to H)</div>
-
-      <!-- EXERCISE A -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise A: Fill in the blanks (All 6 Questions)[cite: 3]</div>
-        <div class="qa-a">
-          1. The individual pieces of the lithosphere are known as <b>lithospheric</b> plates or <b>tectonic</b> plates[cite: 3].<br>
-          2. An <b>earthquake</b> is the sudden shaking of the earth, caused due to the movement of the tectonic plates[cite: 3].<br>
-          3. Mt Fuji is an <b>active</b> volcano that erupts frequently[cite: 3].<br>
-          4. <b>Oxbow lakes</b> are formed by a river in its middle course when the deposition of sediments cuts off a bend in the meander[cite: 3].<br>
-          5. The landform created due to the deposition of sand and other sediments along the shores by the sea waves is called a <b>beach</b>[cite: 3].<br>
-          6. Glaciers deposit rocks and sediments as they flow, forming glacial <b>moraines</b>[cite: 3].
-        </div>
-      </div>
-
-      <!-- EXERCISE B -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise B: Write True or False. Rewrite false statements correctly.[cite: 3]</div>
-        <div class="qa-a">
-          1. Most tectonic plates move at a rate of 2 km per year. <span style="color:red; font-weight:700;">FALSE</span><br>
-          <i>(Correction: Most tectonic plates move at a rate of about 2 cm per year.)[cite: 3]</i><br><br>
-          2. The focus is the place inside the earth where an earthquake originates. <span style="color:green; font-weight:700;">TRUE</span>[cite: 3].<br><br>
-          3. Weathering happens when rocks are carried away. <span style="color:red; font-weight:700;">FALSE</span><br>
-          <i>(Correction: Weathering is the process by which rocks are broken down into smaller pieces. Erosion is when rocks are carried away.)[cite: 3]</i><br><br>
-          4. Deposition leaves sediments at a particular place. <span style="color:green; font-weight:700;">TRUE</span>[cite: 3].<br><br>
-          5. Waterfalls are formed in the lower course when rivers erode rocks vertically. <span style="color:red; font-weight:700;">FALSE</span><br>
-          <i>(Correction: Waterfalls are formed in the upper course when rivers erode rocks vertically.)[cite: 3]</i>
-        </div>
-      </div>
-
-      <!-- EXERCISE C -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise C: Choose the correct answer (All 5 Questions)[cite: 3]</div>
-        <div class="qa-a">
-          1. Which of the following is used to measure the intensity of an earthquake? <b>(c) Richter scale</b>[cite: 3].<br>
-          2. Which of the following is/are thrown out during a volcanic eruption? <b>(d) All of the above</b>[cite: 3].<br>
-          3. Which of the following landforms is formed in the lower course of a river? <b>(c) Delta</b>[cite: 3].<br>
-          4. Which of the following are small hills of sand formed when the wind carries and deposits grains of sand in another location? <b>(c) Sand dunes</b>[cite: 3].<br>
-          5. Which of the following statements correctly states how cirques are formed? <b>(d) Formed when glaciers create deep, hollow spaces in the shape of an armchair</b>[cite: 3].
-        </div>
-      </div>
-
-      <!-- EXERCISE D -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise D: Answer the following questions in brief (All 5 Questions)[cite: 3]</div>
-        <div class="qa-a">
-          <b>1. Define endogenic forces.</b>[cite: 3]<br>
-          Endogenic forces are internal forces that act below the surface of the earth, causing events such as volcanic eruptions, earthquakes, and plate movements[cite: 3].<br><br>
-
-          <b>2. What are tectonic plates?</b>[cite: 3]<br>
-          Tectonic plates (or lithospheric plates) are the large and small individual broken pieces of land that together make up the Earth's lithosphere[cite: 3].<br><br>
-
-          <b>3. What are active volcanoes? Give an example.</b>[cite: 3]<br>
-          Active volcanoes are volcanoes that erupt frequently or have erupted in recent times[cite: 3]. Example: Mt. Fuji in Japan or Barren Island in India[cite: 3].<br><br>
-
-          <b>4. What are sea arches, sea caves, and stacks?</b>[cite: 3]<br>
-          • <b>Sea caves:</b> Hollow cavities formed into sea cliffs by continuous wave erosion[cite: 3].<br>
-          • <b>Sea arches:</b> Tunnel-like structures formed when wave erosion hollows out a cave until only the roof remains[cite: 3].<br>
-          • <b>Stacks:</b> Isolated vertical stone pillars left standing when the roof of a sea arch collapses[cite: 3].<br><br>
-
-          <b>5. Describe the course of a river.</b>[cite: 3]<br>
-          A river originates in mountains in its <b>upper course</b> (fast-flowing, forms waterfalls and V-shaped valleys)[cite: 3]. In its <b>middle course</b>, it slows down on plains (forming meanders and oxbow lakes)[cite: 3]. In its <b>lower course</b>, it deposits heavy sediments before entering the sea (forming floodplains and deltas)[cite: 3].
-        </div>
-      </div>
-
-      <!-- EXERCISE E -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise E: Complete Table Matrix - Action of Exogenic Forces[cite: 3]</div>
-        <div class="qa-a">
-          <table class="textbook-table">
-            <tr>
-              <th>Action of Agent</th>
-              <th>Rivers</th>
-              <th>Sea Waves</th>
-              <th>Wind</th>
-              <th>Glaciers</th>
-            </tr>
-            <tr>
-              <td><b>Erosional Landforms</b></td>
-              <td>Waterfalls, V-shaped Valleys[cite: 3]</td>
-              <td>Sea Caves, Sea Arches, Stacks, Sea Cliffs[cite: 3]</td>
-              <td>Mushroom Rocks[cite: 3]</td>
-              <td>Cirques (armchair hollows)[cite: 3]</td>
-            </tr>
-            <tr>
-              <td><b>Depositional Landforms</b></td>
-              <td>Meanders, Oxbow Lakes, Floodplains, Deltas[cite: 3]</td>
-              <td>Beaches[cite: 3]</td>
-              <td>Sand Dunes, Loess[cite: 3]</td>
-              <td>Glacial Lakes, Glacial Moraines[cite: 3]</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-      <!-- EXERCISE F -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise F: Answer the following questions in detail (All 5 Questions)[cite: 3]</div>
-        <div class="qa-a">
-          <b>1. Explain the formation of mountains.</b>[cite: 3]<br>
-          Mountains are formed due to convergent tectonic movements[cite: 3]. When two tectonic plates move towards each other, they collide with immense force. Sometimes one plate is pushed down while the other plate crumples and folds upward, raising the land to form fold mountains (e.g., the Himalayas formed by collision of the Indian and Eurasian plates)[cite: 3].<br><br>
-
-          <b>2. Describe the origin of an earthquake.</b>[cite: 3]<br>
-          An earthquake originates underground at a point called the <b>focus</b>, where tectonic plates slip or collide[cite: 3]. The energy released travels outward in all directions as <b>seismic waves</b>[cite: 3]. The point on the Earth's surface directly above the focus is called the <b>epicentre</b>[cite: 3]. Seismic shock waves are strongest at the epicentre, causing maximum destruction to structures[cite: 3].<br><br>
-
-          <b>3. Explain how a volcano is formed.</b>[cite: 3]<br>
-          Deep inside the Earth's mantle, rocks melt due to extreme heat to form magma[cite: 3]. This magma collects in an underground magma chamber[cite: 3]. When pressure builds up, the molten magma is forced upward through a pipe-like opening called a vent in the Earth's crust[cite: 3]. Upon erupting onto the surface, it spreads as lava, ash, and gases, which cool down and pile up to form a cone-shaped volcanic mountain[cite: 3].<br><br>
-
-          <b>4. Explain how sand dunes and mushroom rocks are formed by wind action.</b>[cite: 3]<br>
-          • <b>Mushroom Rocks:</b> In deserts, winds carry sand grains close to the ground, eroding the lower section of rock faces faster than the upper section. This creates rocks with narrow bases and broad tops shaped like mushrooms[cite: 3].<br>
-          • <b>Sand Dunes:</b> When wind blowing sand slows down or hits an obstacle, it drops its sand load. The sand piles up to form small mounds or hills called sand dunes[cite: 3].<br><br>
-
-          <b>5. Explain how glaciers create landforms.</b>[cite: 3]<br>
-          Glaciers (slow-moving rivers of ice) carve out mountain slopes into deep, armchair-shaped hollows called <b>cirques</b>[cite: 3]. When the ice inside cirques melts, it fills the hollows with water to form <b>glacial lakes</b>[cite: 3]. As glaciers move downstream, they carry rocks, sand, and silt, depositing these piles along valley floors as <b>glacial moraines</b>[cite: 3].
-        </div>
-      </div>
-
-      <!-- EXERCISE G -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise G: HOTS - Mount Everest Analysis[cite: 3]</div>
-        <div class="qa-a">
-          <b>Scenario: Mount Everest is located in the Himalayas on the boundary of the Indian and Eurasian tectonic plates.</b>[cite: 3]<br>
-          <b>(a) How was Mount Everest formed?</b>[cite: 3]<br>
-          Mount Everest was formed when the Indian tectonic plate moved northward and collided with the Eurasian plate[cite: 3]. The intense compressive pressure forced the sea-floor sediments between them to buckle and fold upward, raising the Himalayan mountain range and Mount Everest[cite: 3].<br><br>
-
-          <b>(b) Why is its height increasing every year?</b>[cite: 3]<br>
-          Its height is increasing slightly every year because the Indian tectonic plate continues to push northward into the Eurasian plate at a rate of a few centimetres each year, constantly pushing Mount Everest higher[cite: 3].
-        </div>
-      </div>
-
-      <!-- EXERCISE H -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise H: Competency-Based Scenarios[cite: 3]</div>
-        <div class="qa-a">
-          <b>1. Picture Analysis Question:</b>[cite: 3]<br>
-          <b>(a) Identify the type of rock landform shown in the image.</b><br>
-          It is an armchair-shaped glacial hollow called a <b>Cirque</b>[cite: 3].<br>
-          <b>(b) Explain how this landform is formed.</b><br>
-          It is formed when slow-moving glacier ice scoops out steep hollows on mountain slopes[cite: 3]. When the ice melts, water fills the armchair hollow to form a cirque lake[cite: 3].<br><br>
-
-          <b>2. Real-Life Scenario — Riya's Travel to Japan & Mountains:</b>[cite: 3]<br>
-          <b>(a) Why is Japan on the 'Ring of Fire' and frequently experiences earthquakes and volcanoes?</b><br>
-          Japan lies directly on the boundary of major Pacific tectonic plates along the "Ring of Fire"[cite: 3]. Continuous plate collision and subduction cause 90% of global earthquakes and 75% of active volcanoes in this region[cite: 3].<br><br>
-
-          <b>(b) What safety steps can Riya's family take to stay safe during an earthquake?</b><br>
-          • <i>Indoors:</i> Drop, cover, and hold under a sturdy kitchen table or desk away from glass windows and tall furniture[cite: 3].<br>
-          • <i>Outdoors:</i> Move to an open area away from tall buildings, trees, and power lines[cite: 3].<br><br>
-
-          <b>(c) If traveling through mountain and river areas, what river landforms might Riya see?</b><br>
-          In mountain upper courses, she will see <b>V-shaped valleys</b> and <b>waterfalls</b>[cite: 3]. On lower plains, she will see winding <b>meanders</b>, <b>oxbow lakes</b>, and <b>deltas</b>[cite: 3].
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- TAB 8: VISUAL & VIDEO ANCHORS -->
-  <div id="media" class="tab-content">
-    <div class="card">
-      <div class="card-title">Visual Anchors & Recommended Creator Videos</div>
-      <p style="margin-bottom:14px; font-size:0.9rem;">Click these curated links to explore visual documentaries and animated geography storytelling to lock these concepts into memory:</p>
-
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
-        
-        <a class="media-link-card" href="https://commons.wikimedia.org/wiki/Category:Plate_tectonics" target="_blank">
-          <span class="media-icon">🗺️</span>
-          <div><b>Plate Tectonics Image Archive</b><br><small>View map diagrams of Convergent, Divergent & Transform boundaries[cite: 3].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://commons.wikimedia.org/wiki/Category:Volcano_diagrams" target="_blank">
-          <span class="media-icon">🌋</span>
-          <div><b>Volcano Cross-Section Diagrams</b><br><small>See high-resolution diagrams of Magma Chambers and Vents[cite: 3].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://commons.wikimedia.org/wiki/Category:Landforms_formed_by_rivers" target="_blank">
-          <span class="media-icon">🏞️</span>
-          <div><b>River Landforms Photo Gallery</b><br><small>Explore photos of Waterfalls, Meanders, Oxbow Lakes & Deltas[cite: 3].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Plate+Tectonics+and+Earthquakes+3D+animation" target="_blank">
-          <span class="media-icon">🎬</span>
-          <div><b>3D Animation: Plate Tectonics & Earthquakes</b><br><small>Watch engaging 3D animations of Focus, Epicentre & Seismic Waves[cite: 3].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Work+of+rivers+wind+waves+glaciers+animation" target="_blank">
-          <span class="media-icon">🌊</span>
-          <div><b>Exogenic Forces & Landforms Animation</b><br><small>Watch animated breakdowns of Sea Arches, Dunes & Glacial Cirques[cite: 3].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://www.youtube.com/results?search_query=NCERT+Class+7+Geography+Chapter+2+Our+Changing+Earth" target="_blank">
-          <span class="media-icon">▶️</span>
-          <div><b>NCERT Class 7 Geography Video Modules</b><br><small>Search animated NCERT visual lessons on Chapter 2[cite: 3].</small></div>
-        </a>
-
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    Chapter 2 Study Hub · Prepared for Pushti · CBSE Class 7 Geography
-  </footer>
-
+<h2 class="collapsible-header collapsed" onclick="toggleSection('extra-container', this)">
+<span>Knowledge Topics &amp; Trivia</span> <span class="count-badge" id="extra-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="extra-container"></div>
+</div>
+</div> <!-- end wrap -->
+<div class="grade-bar" id="grade-bar">
+<span class="score-readout" id="liveCount">00:00</span>
+<button id="grade-btn" onclick="gradeAll()">Grade My Test</button>
+</div>
 <script>
-  function openTab(tabId) {
-    const contents = document.querySelectorAll('.tab-content');
-    const buttons = document.querySelectorAll('.tab-btn');
-    contents.forEach(content => content.classList.remove('active'));
-    buttons.forEach(btn => btn.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    event.currentTarget.classList.add('active');
+window.currentMode = 'practice'; 
+window.testTimer = null;
+window.timeRemaining = 0;
+
+function toggleSection(contentId, headerEl) {
+    const el = document.getElementById(contentId);
+    el.classList.toggle('collapsed');
+    headerEl.classList.toggle('collapsed');
+}
+
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+    tabcontent[i].classList.remove("active");
   }
-
-  function toggleQA(cardElement) {
-    cardElement.classList.toggle('open');
+  tablinks = document.getElementsByClassName("tab-btn");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
+  document.getElementById(tabName).style.display = "block";
+  document.getElementById(tabName).classList.add("active");
+  evt.currentTarget.className += " active";
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
 
-  function checkMCQ(btnElement, isCorrect, explainId) {
-    const parentBox = btnElement.parentElement;
-    const buttons = parentBox.querySelectorAll('.mcq-opt');
-    const explanation = document.getElementById(explainId);
+let totalMax = 0;
 
-    buttons.forEach(btn => btn.disabled = true);
+function renderFill(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className = 'q fillblank';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <input type="text" id="${prefix}-${i}" placeholder="type your answer" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('fill', '${prefix}', ${i})">
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='fill'; c.dataset.prefix=prefix;
+  c.fillData = data;
+}
 
-    if (isCorrect) {
-      btnElement.classList.add('correct');
-    } else {
-      btnElement.classList.add('wrong');
+function renderMCQ(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className='q';
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('mcq', '${prefix}', ${i})"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <div class="opts">${opts}</div>
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='mcq'; c.dataset.prefix=prefix;
+  c.mcqData = data;
+}
+
+function renderTF(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className='q';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.s}</div>
+      <div class="tf-row">
+        <label><input type="radio" name="${prefix}-${i}" value="true" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> True</label>
+        <label><input type="radio" name="${prefix}-${i}" value="false" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> False</label>
+      </div>
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='tf'; c.dataset.prefix=prefix;
+  c.tfData = data;
+}
+
+function renderSubjective(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    const div = document.createElement('div');
+    div.className='q subjective';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <details><summary>Show Detailed Answer</summary><div class="model">${item.model}</div></details>`;
+    c.appendChild(div);
+  });
+}
+
+function gradeSpecificQuestion(type, prefix, i) {
+   let item, val, correct, answerText, expText;
+   const fb = document.getElementById(`${prefix}-fb-${i}`);
+   if(type === 'fill') {
+      const container = document.getElementById('fillbook-container');
+      item = container.fillData[i];
+      val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
+      correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+      answerText = 'Correct Answer: ' + item.a[0];
+      expText = item.exp;
+      if(val === '') { fb.style.display = 'none'; return; }
+   } else if(type === 'mcq') {
+      const container = document.getElementById('mcqbook-container');
+      item = container.mcqData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = parseInt(sel.value);
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+      expText = item.exp;
+   } else if(type === 'tf') {
+      const container = document.getElementById('tfbook-container');
+      item = container.tfData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = (sel.value === 'true');
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+      expText = item.exp;
+   }
+   
+   if(correct) {
+      fb.className = 'feedback correct'; 
+      fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${expText}</span>`;
+   } else {
+      fb.className = 'feedback incorrect'; 
+      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText} <span class="exp">${expText}</span>`;
+   }
+   fb.style.display = 'block';
+}
+
+function setMode(mode) {
+  if(window.testTimer) clearInterval(window.testTimer);
+  window.currentMode = mode;
+  document.getElementById('btn-practice').classList.toggle('active', mode==='practice');
+  document.getElementById('btn-test').classList.toggle('active', mode==='test');
+  
+  resetAllAnswers();
+  
+  if(mode === 'test') {
+    document.getElementById('omr-content').style.display = 'none';
+    document.getElementById('test-intro').style.display = 'block';
+    document.getElementById('t-count').textContent = totalMax;
+    document.getElementById('t-time').textContent = totalMax; 
+    document.getElementById('grade-bar').style.display = 'none';
+  } else {
+    document.getElementById('omr-content').style.display = 'block';
+    document.getElementById('test-intro').style.display = 'none';
+    document.getElementById('grade-bar').style.display = 'none'; 
+    document.getElementById('omr-instructions').style.display = 'block';
+  }
+}
+
+function startTest() {
+  document.getElementById('test-intro').style.display = 'none';
+  document.getElementById('omr-content').style.display = 'block';
+  document.getElementById('omr-instructions').style.display = 'none'; 
+  document.getElementById('grade-bar').style.display = 'flex';
+  
+  // EXPAND ALL TABS FOR TEST
+  document.getElementById('mcqbook-container').classList.remove('collapsed');
+  document.getElementById('mcqbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('fillbook-container').classList.remove('collapsed');
+  document.getElementById('fillbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('tfbook-container').classList.remove('collapsed');
+  document.getElementById('tfbook-container').previousElementSibling.classList.remove('collapsed');
+
+  window.timeRemaining = totalMax * 60; // 1 min per Q
+  updateTimerDisplay();
+  window.testTimer = setInterval(() => {
+    window.timeRemaining--;
+    updateTimerDisplay();
+    if(window.timeRemaining <= 0) {
+       clearInterval(window.testTimer);
+       gradeAll();
     }
+  }, 1000);
+}
 
-    if (explanation) {
-      explanation.style.display = 'block';
-    }
+function updateTimerDisplay() {
+  let m = Math.floor(window.timeRemaining / 60);
+  let s = window.timeRemaining % 60;
+  const readout = document.getElementById('liveCount');
+  readout.textContent = `⏱ Time Remaining: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  if(window.timeRemaining <= 60) {
+     readout.classList.add('urgent');
+  } else {
+     readout.classList.remove('urgent');
   }
+}
+
+function resetAllAnswers() {
+   document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
+   document.querySelectorAll('#omr-content input[type="text"]').forEach(r => r.value = '');
+   document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+   document.getElementById('resultPanel').classList.remove('show');
+}
+
+function gradeAll() {
+  if(window.testTimer) clearInterval(window.testTimer);
+  
+  let totalCorrect = 0;
+  let totalIncorrect = 0;
+  let totalUnanswered = 0;
+  
+  const gradeItem = (type, val, item, fb, rightAnsText) => {
+      let correct = false;
+      if(val === null || val === '') {
+          totalUnanswered++; 
+          fb.className='feedback incorrect'; 
+          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+      } else {
+          if(type==='fill') correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+          if(type==='mcq') correct = (val === item.answer);
+          if(type==='tf') correct = (val === item.answer);
+          
+          if(correct) {
+              totalCorrect++; 
+              fb.className='feedback correct'; 
+              fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${item.exp}</span>`;
+          } else {
+              totalIncorrect++; 
+              fb.className='feedback incorrect'; 
+              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+          }
+      }
+      fb.style.display='block';
+  };
+
+  const fillContainer = document.getElementById('fillbook-container');
+  fillContainer.fillData.forEach((item, i) => {
+     const val = document.getElementById(`${fillContainer.dataset.prefix}-${i}`).value.trim().toLowerCase();
+     const fb = document.getElementById(`${fillContainer.dataset.prefix}-fb-${i}`);
+     gradeItem('fill', val, item, fb, 'Correct Answer: ' + item.a[0]);
+  });
+  
+  const mcqContainer = document.getElementById('mcqbook-container');
+  mcqContainer.mcqData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${mcqContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${mcqContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+     gradeItem('mcq', sel ? parseInt(sel.value) : null, item, fb, rightAnsText);
+  });
+  
+  const tfContainer = document.getElementById('tfbook-container');
+  tfContainer.tfData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${tfContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${tfContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+     gradeItem('tf', sel ? (sel.value === 'true') : null, item, fb, rightAnsText);
+  });
+  
+  document.getElementById('scoreBig').textContent = totalCorrect + ' / ' + totalMax;
+  const pct = Math.round((totalCorrect/totalMax)*100);
+  let msg = `<strong>Score Breakdown:</strong><br><span style="color:var(--good); font-weight:bold;">✔ Correct: ${totalCorrect}</span> &nbsp;|&nbsp; <span style="color:var(--bad); font-weight:bold;">✘ Incorrect: ${totalIncorrect}</span> &nbsp;|&nbsp; <span>⊝ Unanswered: ${totalUnanswered}</span><br><br>`;
+  if(pct>=90) msg += "Outstanding! You crushed the time-bound test. 🏆";
+  else if(pct>=70) msg += "Great work! Just review the questions marked in red below. 🌟";
+  else if(pct>=50) msg += "Good effort — scroll down to study the explanations for the ones you missed. 📖";
+  else msg += "Time-bound tests can be tricky! Review the correct answers below and try again later. 💪";
+  
+  document.getElementById('scoreMsg').innerHTML = msg;
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('grade-bar').style.display = 'none';
+  
+  window.scrollTo({top: document.getElementById('resultPanel').offsetTop - 100, behavior: 'smooth'});
+}
+
+window.onload = function() {
+   setMode('practice');
+};
+
 </script>
-
-<!-- FIREBASE INJECTION START -->
-<script type="module">
-    import { db, doc, onSnapshot } from '../../firebase-config.js';
-    
-    // Listen for answer lock/unlock
-    const settingsDoc = doc(db, 'settings', 'global');
-    onSnapshot(settingsDoc, (docSnap) => {
-        const data = docSnap.data() || { showAnswers: true };
-        
-        // Find all buttons that might reveal answers
-        const buttons = Array.from(document.querySelectorAll('button')).filter(b => {
-            const text = b.textContent.toLowerCase();
-            return text.includes('reveal') || text.includes('answer') || text.includes('check');
-        });
-
-        if (data.showAnswers === false) {
-            // Lock them
-            buttons.forEach(b => {
-                b.style.display = 'none';
-            });
-            
-            // Add a locked message if not exists
-            if (!document.getElementById('lock-msg')) {
-                const msg = document.createElement('div');
-                msg.id = 'lock-msg';
-                msg.style.padding = '15px';
-                msg.style.margin = '20px 0';
-                msg.style.backgroundColor = '#f8d7da';
-                msg.style.color = '#721c24';
-                msg.style.border = '1px solid #f5c6cb';
-                msg.style.borderRadius = '5px';
-                msg.style.fontWeight = 'bold';
-                msg.textContent = '🔒 Answers are currently locked by the Parent Administrator.';
-                document.body.appendChild(msg);
-            } else {
-                document.getElementById('lock-msg').style.display = 'block';
-            }
-        } else {
-            // Unlock them
-            buttons.forEach(b => {
-                b.style.display = 'inline-block';
-            });
-            if (document.getElementById('lock-msg')) {
-                document.getElementById('lock-msg').style.display = 'none';
-            }
-        }
-    });
-</script>
-<!-- FIREBASE INJECTION END -->
-
 </body>
 </html>
+<script>
+
+const mcqBook = [{"q": "Which instrument is used to measure the intensity or magnitude of an earthquake?[cite: 3]", "options": ["Epicentre", "Seismic wave", "Richter scale", "Seismograph focus"], "answer": 2, "exp": "The Richter scale measures the magnitude/intensity of an earthquake[cite: 3]."}, {"q": "Which of the following is/are thrown out during a volcanic eruption?[cite: 3]", "options": ["Lava", "Ash", "Hot gases", "All of the above"], "answer": 3, "exp": "Volcanic eruptions discharge fiery hot lava, ash clouds, and toxic hot gases simultaneously[cite: 3]."}, {"q": "Which of the following landforms is formed in the lower course of a river?[cite: 3]", "options": ["Waterfalls", "Valleys", "Delta", "Stacks"], "answer": 2, "exp": "Deltas and floodplains are formed in the lower course when river currents slow down and deposit heavy silt[cite: 3]."}, {"q": "Which of the following are small hills of sand formed when wind carries and deposits sand in another location?[cite: 3]", "options": ["Mushroom rocks", "Moraines", "Sand dunes", "Loesses"], "answer": 2, "exp": "Sand dunes are small mounds/hills of sand deposited by wind action in deserts[cite: 3]."}, {"q": "Which statement correctly describes how glacial cirques are formed?[cite: 3]", "options": ["Formed when glaciers deposit rocks and sediments as they flow", "Formed when sea waves deposit rocks along the shoreline", "Formed when sea waves create hollow spaces in rocks", "Formed when glaciers create deep, hollow spaces in the shape of an armchair"], "answer": 3, "exp": "Cirques are carved out by glaciers on mountain slopes into armchair-shaped hollows[cite: 3]."}, {"q": "At what rate do tectonic plates move each year?[cite: 3]", "options": ["2 metres per year", "2 centimetres per year", "2 kilometres per year", "20 centimetres per year"], "answer": 1, "exp": "Tectonic plates move extremely slowly, at a rate of about 2 cm per year[cite: 3]."}, {"q": "What is the point on the Earth's surface directly above the earthquake focus called?[cite: 3]", "options": ["Vent", "Epicentre", "Seismograph", "Fault line"], "answer": 1, "exp": "The surface point directly above the interior origin (focus) is called the epicentre[cite: 3]."}, {"q": "What is the crescent-shaped lake formed when a river meander is cut off called?[cite: 3]", "options": ["Glacial lake", "Oxbow lake", "Cirque lake", "Lagoon"], "answer": 1, "exp": "Heavy sediment deposition cuts off a curved river meander to form an oxbow lake[cite: 3]."}, {"q": "Which of the following is an active volcano located in India?[cite: 3]", "options": ["Mt. Fuji", "Barren Island", "Mt. Kilimanjaro", "Mt. Popa"], "answer": 1, "exp": "Barren Island in the Andaman and Nicobar Islands is India's active volcano[cite: 3]."}, {"q": "What isolated stone pillar remains standing when the roof of a sea arch collapses?[cite: 3]", "options": ["Sea cave", "Sea cliff", "Stack", "Beach"], "answer": 2, "exp": "When continuous wave erosion collapses a sea arch roof, only vertical pillars called stacks remain[cite: 3]."}, {"q": "Deposits of fine silty soil blown by wind over vast distances are known as ________.[cite: 3]", "options": ["Moraines", "Loess", "Sand dunes", "Deltas"], "answer": 1, "exp": "Loess consists of fine, mineral-rich wind-carried silt deposits[cite: 3]."}, {"q": "What is the process of breaking down rocks on the Earth's surface into smaller pieces called?[cite: 3]", "options": ["Weathering", "Erosion", "Deposition", "Subduction"], "answer": 0, "exp": "Weathering is the breaking down of rocks. Carrying them away is Erosion, and dropping them is Deposition[cite: 3]."}];
+renderMCQ('mcqbook-container', mcqBook, 'mb');
+document.getElementById('mcq-count').textContent = `(${mcqBook.length})`;
+
+const fillBook = [{"q": "Tectonic plates move at an average speed of about 2 ________ per year.[cite: 3]", "a": ["Centimetres (cm)"], "exp": "Why confusion happens:Kilometres is dangerously wrong! Plates move as slowly as fingernail growth (~2 cm/year)[cite: 3]."}, {"q": "The placeinside the Earthwhere an earthquake originates is the ________.[cite: 3]", "a": ["Focus"], "exp": "Why confusion happens:Focus is *inside* underground. Epicentre is the point on the *surface* directly above it[cite: 3]."}, {"q": "Weathering is the process where rocks are ________.[cite: 3]", "a": ["Broken down into smaller pieces"], "exp": "Why confusion happens:Breaking down rocks is Weathering. Carrying them away is Erosion[cite: 3]!"}, {"q": "Waterfalls are formed in the ________ course of a river.[cite: 3]", "a": ["Upper course (Mountain)"], "exp": "Why confusion happens:Waterfalls form in the steep upper course. Deltas form in the flat lower course[cite: 3]."}, {"q": "Mt. Kilimanjaro in Tanzania is classified as a ________ volcano.[cite: 3]", "a": ["Dormant (Sleeping)"], "exp": "Why confusion happens:Mt. Fuji is Active. Mt. Kilimanjaro is Dormant (hasn't erupted recently but can in future)[cite: 3]."}];
+renderFill('fillbook-container', fillBook, 'fb');
+document.getElementById('fill-count').textContent = `(${fillBook.length})`;
+
+const tfBook = [{"s": "Most tectonic plates move at a rate of 2 km per year.[cite: 3]", "answer": false, "correction": "", "exp": "Reason:FALSE.Tectonic plates move at a rate of about 2 cm (centimetres) per year, not kilometres[cite: 3]!"}, {"s": "The focus is the place inside the earth where an earthquake originates.[cite: 3]", "answer": true, "correction": "", "exp": "Reason:TRUE.The focus is the underground point of seismic origin[cite: 3]."}, {"s": "Weathering happens when rocks are carried away.[cite: 3]", "answer": false, "correction": "", "exp": "Reason:FALSE.Weathering is the breaking down of rocks. Carrying them away is Erosion[cite: 3]."}, {"s": "Deposition leaves sediments at a particular place.[cite: 3]", "answer": true, "correction": "", "exp": "Reason:TRUE.Deposition is the settling of eroded sediments[cite: 3]."}, {"s": "Waterfalls are formed in the lower course when rivers erode rocks vertically.[cite: 3]", "answer": false, "correction": "", "exp": "Reason:FALSE.Waterfalls are formed in the *upper course* in steep mountains, not the lower course[cite: 3]."}];
+renderTF('tfbook-container', tfBook, 'tb');
+document.getElementById('tf-count').textContent = `(${tfBook.length})`;
+
+const shortBook = [{"q": "Exercise E: Complete Table Matrix - Action of Exogenic Forces[cite: 3]", "model": "Action of AgentRiversSea WavesWindGlaciersErosional LandformsWaterfalls, V-shaped Valleys[cite: 3]Sea Caves, Sea Arches, Stacks, Sea Cliffs[cite: 3]Mushroom Rocks[cite: 3]Cirques (armchair hollows)[cite: 3]Depositional LandformsMeanders, Oxbow Lakes, Floodplains, Deltas[cite: 3]Beaches[cite: 3]Sand Dunes, Loess[cite: 3]Glacial Lakes, Glacial Moraines[cite: 3]"}];
+renderSubjective('short-container', shortBook, 'sb');
+document.getElementById('short-count').textContent = `(${shortBook.length})`;
+
+const longBook = [{"q": "Exercise A: Fill in the blanks (All 6 Questions)[cite: 3]", "model": "1. The individual pieces of the lithosphere are known aslithosphericplates ortectonicplates[cite: 3].2. Anearthquakeis the sudden shaking of the earth, caused due to the movement of the tectonic plates[cite: 3].3. Mt Fuji is anactivevolcano that erupts frequently[cite: 3].4.Oxbow lakesare formed by a river in its middle course when the deposition of sediments cuts off a bend in the meander[cite: 3].5. The landform created due to the deposition of sand and other sediments along the shores by the sea waves is called abeach[cite: 3].6. Glaciers deposit rocks and sediments as they flow, forming glacialmoraines[cite: 3]."}, {"q": "Exercise B: Write True or False. Rewrite false statements correctly.[cite: 3]", "model": "1. Most tectonic plates move at a rate of 2 km per year.FALSE(Correction: Most tectonic plates move at a rate of about 2 cm per year.)[cite: 3]2. The focus is the place inside the earth where an earthquake originates.TRUE[cite: 3].3. Weathering happens when rocks are carried away.FALSE(Correction: Weathering is the process by which rocks are broken down into smaller pieces. Erosion is when rocks are carried away.)[cite: 3]4. Deposition leaves sediments at a particular place.TRUE[cite: 3].5. Waterfalls are formed in the lower course when rivers erode rocks vertically.FALSE(Correction: Waterfalls are formed in the upper course when rivers erode rocks vertically.)[cite: 3]"}, {"q": "Exercise C: Choose the correct answer (All 5 Questions)[cite: 3]", "model": "1. Which of the following is used to measure the intensity of an earthquake?(c) Richter scale[cite: 3].2. Which of the following is/are thrown out during a volcanic eruption?(d) All of the above[cite: 3].3. Which of the following landforms is formed in the lower course of a river?(c) Delta[cite: 3].4. Which of the following are small hills of sand formed when the wind carries and deposits grains of sand in another location?(c) Sand dunes[cite: 3].5. Which of the following statements correctly states how cirques are formed?(d) Formed when glaciers create deep, hollow spaces in the shape of an armchair[cite: 3]."}, {"q": "Exercise D: Answer the following questions in brief (All 5 Questions)[cite: 3]", "model": "1. Define endogenic forces.[cite: 3]Endogenic forces are internal forces that act below the surface of the earth, causing events such as volcanic eruptions, earthquakes, and plate movements[cite: 3].2. What are tectonic plates?[cite: 3]Tectonic plates (or lithospheric plates) are the large and small individual broken pieces of land that together make up the Earth's lithosphere[cite: 3].3. What are active volcanoes? Give an example.[cite: 3]Active volcanoes are volcanoes that erupt frequently or have erupted in recent times[cite: 3]. Example: Mt. Fuji in Japan or Barren Island in India[cite: 3].4. What are sea arches, sea caves, and stacks?[cite: 3]\u2022Sea caves:Hollow cavities formed into sea cliffs by continuous wave erosion[cite: 3].\u2022Sea arches:Tunnel-like structures formed when wave erosion hollows out a cave until only the roof remains[cite: 3].\u2022Stacks:Isolated vertical stone pillars left standing when the roof of a sea arch collapses[cite: 3].5. Describe the course of a river.[cite: 3]A river originates in mountains in itsupper course(fast-flowing, forms waterfalls and V-shaped valleys)[cite: 3]. In itsmiddle course, it slows down on plains (forming meanders and oxbow lakes)[cite: 3]. In itslower course, it deposits heavy sediments before entering the sea (forming floodplains and deltas)[cite: 3]."}, {"q": "Exercise F: Answer the following questions in detail (All 5 Questions)[cite: 3]", "model": "1. Explain the formation of mountains.[cite: 3]Mountains are formed due to convergent tectonic movements[cite: 3]. When two tectonic plates move towards each other, they collide with immense force. Sometimes one plate is pushed down while the other plate crumples and folds upward, raising the land to form fold mountains (e.g., the Himalayas formed by collision of the Indian and Eurasian plates)[cite: 3].2. Describe the origin of an earthquake.[cite: 3]An earthquake originates underground at a point called thefocus, where tectonic plates slip or collide[cite: 3]. The energy released travels outward in all directions asseismic waves[cite: 3]. The point on the Earth's surface directly above the focus is called theepicentre[cite: 3]. Seismic shock waves are strongest at the epicentre, causing maximum destruction to structures[cite: 3].3. Explain how a volcano is formed.[cite: 3]Deep inside the Earth's mantle, rocks melt due to extreme heat to form magma[cite: 3]. This magma collects in an underground magma chamber[cite: 3]. When pressure builds up, the molten magma is forced upward through a pipe-like opening called a vent in the Earth's crust[cite: 3]. Upon erupting onto the surface, it spreads as lava, ash, and gases, which cool down and pile up to form a cone-shaped volcanic mountain[cite: 3].4. Explain how sand dunes and mushroom rocks are formed by wind action.[cite: 3]\u2022Mushroom Rocks:In deserts, winds carry sand grains close to the ground, eroding the lower section of rock faces faster than the upper section. This creates rocks with narrow bases and broad tops shaped like mushrooms[cite: 3].\u2022Sand Dunes:When wind blowing sand slows down or hits an obstacle, it drops its sand load. The sand piles up to form small mounds or hills called sand dunes[cite: 3].5. Explain how glaciers create landforms.[cite: 3]Glaciers (slow-moving rivers of ice) carve out mountain slopes into deep, armchair-shaped hollows calledcirques[cite: 3]. When the ice inside cirques melts, it fills the hollows with water to formglacial lakes[cite: 3]. As glaciers move downstream, they carry rocks, sand, and silt, depositing these piles along valley floors asglacial moraines[cite: 3]."}, {"q": "Exercise G: HOTS - Mount Everest Analysis[cite: 3]", "model": "Scenario: Mount Everest is located in the Himalayas on the boundary of the Indian and Eurasian tectonic plates.[cite: 3](a) How was Mount Everest formed?[cite: 3]Mount Everest was formed when the Indian tectonic plate moved northward and collided with the Eurasian plate[cite: 3]. The intense compressive pressure forced the sea-floor sediments between them to buckle and fold upward, raising the Himalayan mountain range and Mount Everest[cite: 3].(b) Why is its height increasing every year?[cite: 3]Its height is increasing slightly every year because the Indian tectonic plate continues to push northward into the Eurasian plate at a rate of a few centimetres each year, constantly pushing Mount Everest higher[cite: 3]."}, {"q": "Exercise H: Competency-Based Scenarios[cite: 3]", "model": "1. Picture Analysis Question:[cite: 3](a) Identify the type of rock landform shown in the image.It is an armchair-shaped glacial hollow called aCirque[cite: 3].(b) Explain how this landform is formed.It is formed when slow-moving glacier ice scoops out steep hollows on mountain slopes[cite: 3]. When the ice melts, water fills the armchair hollow to form a cirque lake[cite: 3].2. Real-Life Scenario \u2014 Riya's Travel to Japan & Mountains:[cite: 3](a) Why is Japan on the 'Ring of Fire' and frequently experiences earthquakes and volcanoes?Japan lies directly on the boundary of major Pacific tectonic plates along the \"Ring of Fire\"[cite: 3]. Continuous plate collision and subduction cause 90% of global earthquakes and 75% of active volcanoes in this region[cite: 3].(b) What safety steps can Riya's family take to stay safe during an earthquake?\u2022Indoors:Drop, cover, and hold under a sturdy kitchen table or desk away from glass windows and tall furniture[cite: 3].\u2022Outdoors:Move to an open area away from tall buildings, trees, and power lines[cite: 3].(c) If traveling through mountain and river areas, what river landforms might Riya see?In mountain upper courses, she will seeV-shaped valleysandwaterfalls[cite: 3]. On lower plains, she will see windingmeanders,oxbow lakes, anddeltas[cite: 3]."}];
+renderSubjective('long-container', longBook, 'lb');
+document.getElementById('long-count').textContent = `(${longBook.length})`;
+
+const extraBook = [{"q": "Did you know? The highest waterfall!", "model": "The highest waterfall is Angel Falls of Venezuela in South America."}, {"q": "Did you know? Niagara Falls", "model": "Niagara falls is located on the border between Canada and USA in North America."}, {"q": "Did you know? Victoria Falls", "model": "Victoria Falls is on the borders of Zambia and Zimbabwe in Africa."}];
+renderSubjective('extra-container', extraBook, 'eb');
+document.getElementById('extra-count').textContent = `(${extraBook.length})`;
+
+</script>
+

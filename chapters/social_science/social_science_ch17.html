@@ -1,998 +1,578 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Chapter 17: Markets Around Us — Complete Master Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --bg-color: #E8EDF2;
-    --surface: #FFFFFF;
-    --primary: #4338CA;
-    --primary-light: #EEF2FF;
+    --bg-main: #FFFFFF;
+    --bg-card: #F8FAFC;
     --text-main: #1E293B;
     --text-muted: #64748B;
-    --border: #CBD5E1;
-    --ready: #10B981;
-    --danger: #F43F5E;
-    --border-radius: 0px; /* Brutalist/Blueprint look */
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --accent: #38BDF8;
+    --border: #E2E8F0;
+    --border-hover: #CBD5E1;
+    --good: #059669;
+    --good-bg: #D1FAE5;
+    --bad: #E11D48;
+    --bad-bg: #FFE4E6;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background-color: var(--surface);
-    color: var(--text-main);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    padding: 24px;
-    max-width: 1100px;
-    margin: 0 auto;
-    overflow-x: hidden; 
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-main: #0F172A;
+      --bg-card: #1E293B;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --primary: #6366F1;
+      --primary-hover: #818CF8;
+      --accent: #0EA5E9;
+      --border: #334155;
+      --border-hover: #475569;
+      --good: #34D399;
+      --good-bg: #064E3B;
+      --bad: #F87171;
+      --bad-bg: #7F1D1D;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    }
   }
 
-  header.hero {
-    text-align: left;
-    background: var(--primary-light);
-    color: var(--text-main);
-    padding: 32px 24px;
-    border: 2px solid var(--primary);
-    margin-bottom: 24px;
-    position: relative;
-  }
+  *{box-sizing:border-box;}
+  body{margin:0; background: var(--bg-main); color: var(--text-main); font-family:'Nunito',sans-serif; line-height:1.6;}
+  .wrap{max-width:1100px; margin:0 auto; padding:26px 16px 120px;}
   
-  header.hero::after {
-      content: '';
-      position: absolute;
-      top: 4px; left: 4px; right: -6px; bottom: -6px;
-      border: 2px solid var(--primary);
-      z-index: -1;
+  header.hero{text-align:center; padding:30px 14px 26px; border-bottom:1px solid var(--border); margin-bottom:0px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--primary); margin-bottom:8px; font-weight:600;}
+  h1{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:clamp(1.8rem,5vw,2.7rem); margin:0 0 8px; color:var(--text-main);}
+  .sub{font-size:1rem; color:var(--text-muted);}
+  
+  /* STICKY TABS */
+  .tabs-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(var(--bg-main), 0.95);
+    backdrop-filter: blur(10px);
+    padding: 12px 0;
+    box-shadow: 0 4px 10px -10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border);
   }
-
-  header h1 {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
-    letter-spacing: -0.02em;
-    font-weight: 800;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    color: var(--primary);
+  .tabs-container {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; max-width: 1000px; margin: 0 auto; overflow-x: auto; padding: 0 10px;
   }
-
-  .tagline { font-size: 0.95rem; color: var(--text-muted); font-family: 'Space Mono', monospace; }
-
-  .badge-bar {
-    margin-top: 16px;
-    display: flex;
-    justify-content: flex-start;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .badge {
-    background: var(--surface);
-    padding: 4px 12px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    border: 1px solid var(--border);
-    color: var(--text-main);
-    text-transform: uppercase;
-  }
-
-  .tab-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0px;
-    margin-bottom: 24px;
-    border-bottom: 2px solid var(--border);
-  }
-
   .tab-btn {
-    flex: 1 1 auto;
-    min-width: 120px;
-    text-align: center;
-    background: #F8FAFC;
+    padding: 8px 18px;
+    background: var(--bg-card);
     border: 1px solid var(--border);
-    border-bottom: none;
-    outline: none;
-    padding: 12px 16px;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
     color: var(--text-muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 100px;
     cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: all 0.15s ease;
+    transition: all 0.3s;
+    white-space: nowrap;
   }
-
-  .tab-btn:hover { background: #F1F5F9; color: var(--text-main); }
-  .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-  .tab-content { display: none; }
+  .tab-btn:hover { border-color: var(--border-hover); color: var(--text-main); }
+  .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: var(--shadow); }
+  
+  .tab-content { display: none; animation: fadeIn 0.4s ease; }
   .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  .card {
-    background: var(--surface);
-    padding: 24px;
-    border: 1px solid var(--border);
-    margin-bottom: 24px;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.03);
+  .instructions { background: var(--bg-card); border: 1px dashed var(--primary); border-radius: 12px; padding: 14px 20px; margin: 22px 0 30px; font-size: 0.95rem; color: var(--text-main); }
+  .instructions b { color: var(--primary); }
+
+  /* COLLAPSIBLE HEADERS */
+  .collapsible-header {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--text-main); margin: 0 0 16px; 
+    display: flex; align-items: center; gap: 10px; border-left: 4px solid var(--primary); padding-left: 12px;
+    cursor: pointer; user-select: none; transition: 0.2s;
   }
+  .collapsible-header:hover { opacity: 0.8; }
+  .count-badge { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--text-muted); font-weight: 500; }
+  .chevron { width: 32px; height: 32px; fill: var(--primary); background: rgba(79,70,229,0.08); border-radius: 50%; padding: 4px; transition: all 0.3s; margin-left: auto; }
+.collapsible-header:hover .chevron { background: rgba(79,70,229,0.15); }
+  .collapsible-header.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-content { overflow: hidden; transition: max-height 0.3s ease-out; }
+  .collapsible-content.collapsed { display: none; }
 
-  .card-title {
-    font-family: 'Outfit', sans-serif;
-    color: var(--text-main);
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 16px;
-    border-bottom: 2px solid var(--primary);
-    padding-bottom: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    gap: 6px;
-  }
+  /* MODE SWITCH */
+  .mode-switch { display: flex; justify-content: center; gap: 0; margin-bottom: 20px; border-radius: 100px; overflow: hidden; border: 1px solid var(--primary); max-width: 380px; margin: 0 auto 20px auto; background:var(--bg-card); }
+  .mode-btn { flex: 1; padding: 10px 15px; border: none; background: transparent; color: var(--text-muted); font-size:0.95rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; transition: 0.3s; }
+  .mode-btn.active { background: var(--primary); color: #fff; }
+  #test-intro { background: var(--bg-card); border: 2px dashed var(--border); border-radius: 12px; padding: 40px 20px; text-align: center; margin-bottom: 30px; box-shadow: var(--shadow); }
+  #test-intro h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-main); margin-top: 0; }
+  .btn-start { background: var(--primary); color: white; border: none; padding: 14px 34px; font-size: 1.1rem; font-weight: 700; font-family:'Nunito',sans-serif; border-radius: 100px; cursor: pointer; margin-top: 15px; box-shadow: var(--shadow); transition: 0.2s; }
+  .btn-start:hover { transform: translateY(-2px); background: var(--primary-hover); }
 
-  .topic-badge {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    background: var(--primary-light);
-    color: var(--primary);
-    border: 1px solid rgba(67,56,202,0.2);
-    padding: 4px 8px;
-  }
+  /* QUESTION STYLES */
+  .q { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; box-shadow: var(--shadow); }
+  .q-text { font-weight: 700; margin-bottom: 10px; font-size: 1rem; color: var(--text-main); }
+  .q-text .num { color: var(--primary); font-family: 'JetBrains Mono', monospace; margin-right: 8px; }
+  .opts label { display: block; padding: 8px 12px; border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.95rem; border: 1px solid transparent; transition: 0.2s; }
+  .opts label:hover { background: rgba(79, 70, 229, 0.05); }
+  .opts input { margin-right: 10px; }
+  .fillblank input[type=text] { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; width: 250px; background: var(--bg-main); color: var(--text-main); }
+  .tf-row { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+  .tf-row label { font-size: 0.95rem; cursor: pointer; }
+  
+  .feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.5; }
+  .feedback.correct { background: var(--good-bg); color: var(--good); display: block; border: 1px solid var(--good); }
+  .feedback.incorrect { background: var(--bad-bg); color: var(--bad); display: block; border: 1px solid var(--bad); }
+  .feedback .exp { display: block; margin-top: 6px; font-style: italic; opacity: 0.9; }
 
-  .concept-visual-grid {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 24px;
-    align-items: start;
-    margin-top: 16px;
-  }
+  details { margin-top: 14px; }
+  details summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--primary); font-weight: 700; }
+  details .model { margin-top: 12px; font-size: 0.95rem; background: rgba(79, 70, 229, 0.05); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: 0 8px 8px 0; line-height: 1.6; }
 
-  @media (max-width: 650px) {
-    .concept-visual-grid { grid-template-columns: 1fr; }
-  }
+  /* BOTTOM GRADE BAR */
+  .grade-bar{position:fixed; left:0; right:0; bottom:0; background:var(--bg-card); border-top: 1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:center; gap:16px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index:50; display:none;}
+  .grade-bar button{background:var(--primary); color:#fff; border:none; padding:12px 28px; border-radius:100px; font-weight:700; font-family:'Nunito',sans-serif; font-size:1rem; cursor:pointer;}
+  .grade-bar button:hover{background:var(--primary-hover);}
+  .score-readout{font-family:'JetBrains Mono',monospace; font-size:1.15rem; font-weight:700; color:var(--text-main);}
+  .score-readout.urgent{color:var(--bad); animation: pulse 1s infinite;}
+  @keyframes pulse { 0% { opacity:1;} 50% {opacity:0.5;} 100% {opacity:1;} }
 
-  .visual-card-svg {
-    background: #F8FAFC;
-    border: 1px solid var(--border);
-    padding: 16px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+  .result-panel{display:none; background:var(--bg-card); border:2px solid var(--border); border-radius:14px; padding:24px; text-align:center; margin-bottom:40px; box-shadow:var(--shadow);}
+  .result-panel.show{display:block;}
+  .result-panel .score-big{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:2.8rem; color:var(--primary);}
+  .result-panel .msg{font-size:1.1rem; margin-top:10px; line-height:1.6;}
 
-  .visual-card-svg svg { width: 120px; height: 120px; }
-
-  .visual-caption {
-    font-size: 0.75rem;
-    font-family: 'Space Mono', monospace;
-    color: var(--text-muted);
-    margin-top: 12px;
-    text-transform: uppercase;
-  }
-
-  .grid-3 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-  }
-
-  .sub-box { padding: 16px; border: 1px solid var(--border); font-size: 0.9rem; background: #F8FAFC; }
-  .sub-box.key { border-top: 4px solid var(--primary); }
-  .sub-box.facts { border-top: 4px solid var(--ready); }
-  .sub-box.fun { border-top: 4px solid var(--danger); }
-
-  .sub-box h4 { font-family: 'Outfit', sans-serif; font-size: 0.95rem; margin-bottom: 8px; text-transform: uppercase; }
-  .sub-box.key h4 { color: var(--primary); }
-  .sub-box.facts h4 { color: var(--ready); }
-  .sub-box.fun h4 { color: var(--danger); }
-  .sub-box ul { padding-left: 16px; margin-top: 8px; }
-  .sub-box li { margin-bottom: 6px; }
-
-  .mcq-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 20px;
-    margin-bottom: 16px;
-    border-left: 4px solid var(--border);
-  }
-
-  .mcq-q { font-weight: 600; font-size: 0.95rem; margin-bottom: 12px; color: var(--text-main); font-family: 'Inter', sans-serif; }
-
-  .mcq-opt {
-    display: block; width: 100%; text-align: left; background: #F8FAFC; border: 1px solid var(--border);
-    padding: 10px 16px; margin-bottom: 8px; cursor: pointer;
-    font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: all 0.15s;
-  }
-
-  .mcq-opt:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
-  .mcq-opt.correct { background: #ECFDF5 !important; border-color: var(--ready) !important; color: #065F46; font-weight: 600; }
-  .mcq-opt.wrong { background: #FFF1F2 !important; border-color: var(--danger) !important; color: #9F1239; }
-
-  .mcq-explain {
-    display: none; margin-top: 12px; padding: 12px 16px; background: #F1F5F9;
-    border-left: 3px solid var(--primary); font-size: 0.85rem; color: var(--text-main);
-  }
-
-  .qa-card {
-    background: var(--surface); border: 1px solid var(--border); padding: 16px;
-    margin-bottom: 16px;
-  }
-
-  .qa-q {
-    font-weight: 600; cursor: pointer; display: flex; justify-content: space-between;
-    align-items: center; color: var(--text-main); font-size: 0.95rem;
-  }
-
-  .qa-q::after {
-    content: '[ + ] REVEAL'; font-size: 0.75rem; font-family: 'Space Mono', monospace;
-    color: var(--primary); background: var(--primary-light); padding: 4px 8px; border: 1px solid rgba(67,56,202,0.2); white-space: nowrap;
-  }
-
-  .qa-card.open .qa-q::after { content: '[ - ] HIDE'; background: #FFF1F2; color: var(--danger); border-color: rgba(244,63,94,0.2); }
-
-  .qa-a {
-    display: none; margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border); font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;
-  }
-
-  .qa-card.open .qa-a { display: block; }
-
-  table.textbook-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.9rem; }
-  table.textbook-table th, table.textbook-table td { border: 1px solid var(--border); padding: 12px 16px; text-align: left; }
-  table.textbook-table th { background-color: #F8FAFC; color: var(--text-main); font-family: 'Outfit', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
-
-  .media-link-card {
-    display: flex; align-items: center; gap: 16px; background: #F8FAFC; padding: 16px;
-    margin-top: 12px; border: 1px solid var(--border); text-decoration: none;
-    color: var(--text-main); font-size: 0.9rem; font-weight: 500; transition: all 0.2s;
-  }
-
-  .media-link-card:hover { background: var(--surface); border-color: var(--primary); color: var(--primary); box-shadow: 4px 4px 0 rgba(67,56,202,0.1); }
-  .media-icon { font-size: 1.5rem; }
-
-  footer { text-align: center; margin-top: 32px; font-size: 0.75rem; color: var(--text-muted); font-family: 'Space Mono', monospace; text-transform: uppercase; }
+  /* VIDEO LINKS (TAB 1) */
+  .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .topic-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); position:relative; }
+  .topic-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
+  .video-btn { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(79, 70, 229, 0.05); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text-main); font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; transition: 0.2s; }
+  .video-btn:hover { background: rgba(79, 70, 229, 0.1); border-color: var(--border-hover); }
+  .thumb-wrapper { position: relative; width: 44px; height: 28px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+  .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+  .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(79, 70, 229, 0.9); border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+  .play-icon svg { width: 8px; height: 8px; fill: white; margin-left: 2px; }
 </style>
 </head>
 <body>
-
-  <header class="hero">
-    <h1>Markets Around Us</h1>
-    <div class="tagline">Pushti's Road to 20/20: Complete Unabridged Study Dashboard</div>
-    <div class="badge-bar">
-      <span class="badge">CBSE Class 7</span>
-      <span class="badge">Social Science</span>
-      <span class="badge">Chapter 17</span>
+<header class="hero">
+<div class="eyebrow">Biology · Chapter 3</div>
+<h1>Chapter 17: Markets Around Us — Complete Master Dashboard</h1>
+<div class="sub">Complete Chapter Guide &amp; Practice Module</div>
+</header>
+<div class="tabs-wrapper">
+<div class="tabs-container">
+<button class="tab-btn active" onclick="openTab(event, 'tab-video')">1. Videos &amp; Map</button>
+<button class="tab-btn" onclick="openTab(event, 'tab-omr')">2. OMR (1 Mark)</button>
+<button class="tab-btn" onclick="openTab(event, 'tab-short')">3. 2/3 Marks</button>
+<button class="tab-btn" onclick="openTab(event, 'tab-long')">4. 4+ Marks</button>
+<button class="tab-btn" onclick="openTab(event, 'tab-extra')">5. Extra Knowledge</button>
+</div>
+</div>
+<div class="wrap">
+<!-- TAB 1: VIDEOS & CONCEPT MAP -->
+<div class="tab-content active" id="tab-video">
+<div class="instructions">
+<b>How to use:</b> Watch the video explanations for each topic by clicking the thumbnails. Then review the Concept Map below to see how everything connects!
     </div>
-  </header>
-
-  <div class="tab-nav">
-    <button class="tab-btn active" onclick="openTab('types')">🏪 Types of Markets</button>
-    <button class="tab-btn" onclick="openTab('chain')">🔗 Chain of Markets</button>
-    <button class="tab-btn" onclick="openTab('coop')">🚜 Cooperatives & Mindful Buying</button>
-    <button class="tab-btn" onclick="openTab('mcq-4opt')">🎯 12 Master MCQs</button>
-    <button class="tab-btn" onclick="openTab('mcq-confusing')">⚡ 10 Confusing Blanks</button>
-    <button class="tab-btn" onclick="openTab('mcq-tf')">❓ 10 True / False</button>
-    <button class="tab-btn" onclick="openTab('textbook-all')">📖 All Textbook Solutions (A to J)</button>
-    <button class="tab-btn" onclick="openTab('media')">🎬 Enriched Videos</button>
-  </div>
-
-  <!-- TAB 1: TYPES OF MARKETS -->
-  <div id="types" class="tab-content active">
-    <div class="card" style="border-left: 5px solid var(--teal);">
-      <div class="card-title">17.1 Markets & Their Types <span class="topic-badge">Wholesale vs Retail</span></div>
-      <p>A <b>market</b> is a place where buyers and sellers meet to exchange goods and services[cite: 5]. Markets connect producers directly or indirectly with consumers[cite: 5].</p>
-      <div class="grid-3" style="margin-top:12px;">
-        <div class="sub-box key">
-          <h4>📦 Wholesale Markets</h4>
-          <ul>
-            <li>Markets where goods are bought and sold in <b>bulk quantities</b>[cite: 5].</li>
-            <li>Buyers are traders (retailers), not final consumers[cite: 5].</li>
-            <li>Prices are lower because goods are sold directly in large amounts[cite: 5].</li>
-            <li>Require massive storage spaces and warehouses[cite: 5].</li>
-          </ul>
-        </div>
-        <div class="sub-box facts">
-          <h4>🛒 Retail Markets</h4>
-          <ul>
-            <li>Markets where consumers buy goods in <b>smaller quantities</b> for personal or family use[cite: 5].</li>
-            <li>Prices are higher than wholesale because traders add overhead costs (rent, transport, electricity, wages, profit margins)[cite: 5].</li>
-          </ul>
-        </div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('video-grid', this)">
+<span>Chapter Topics &amp; Videos</span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed topics-grid" id="video-grid">
+<div class="topic-card">
+<div class="topic-title">1. Weekly Markets</div>
+<a class="video-btn" href="https://www.youtube.com/watch?v=jPgE74Vltdc" target="_blank"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/jPgE74Vltdc/hqdefault.jpg"/><div class="play-icon"><svg viewbox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><span>Local Bazaars</span></a>
+</div>
+<div class="topic-card">
+<div class="topic-title">2. Neighborhood Shops</div>
+<a class="video-btn" href="https://www.youtube.com/watch?v=8a7p1IvwP6w" target="_blank"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/8a7p1IvwP6w/hqdefault.jpg"/><div class="play-icon"><svg viewbox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><span>Daily Needs</span></a>
+</div>
+<div class="topic-card">
+<div class="topic-title">3. Shopping Complexes and Malls</div>
+<a class="video-btn" href="https://www.youtube.com/watch?v=mB2oT2i4698" target="_blank"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/mB2oT2i4698/hqdefault.jpg"/><div class="play-icon"><svg viewbox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><span>Urban Retail</span></a>
+</div>
+</div>
+</div>
+<!-- TAB 2: OMR -->
+<div class="tab-content" id="tab-omr">
+<div class="mode-switch">
+<button class="mode-btn active" id="btn-practice" onclick="setMode('practice')">Practice Mode</button>
+<button class="mode-btn" id="btn-test" onclick="setMode('test')">Test Mode</button>
+</div>
+<div id="test-intro" style="display:none;">
+<h3>Ready for the Test?</h3>
+<p style="font-size: 1.1rem;">You have <b id="t-count" style="color:var(--primary);"></b> objective questions.</p>
+<p style="font-size: 1.1rem;">Time Allowed: <b id="t-time" style="color:var(--primary);"></b> minutes.</p>
+<button class="btn-start" onclick="startTest()">Start Test Now</button>
+</div>
+<div class="result-panel" id="resultPanel">
+<div class="score-big" id="scoreBig">0 / 0</div>
+<div class="msg" id="scoreMsg"></div>
+</div>
+<div id="omr-content">
+<div class="instructions" id="omr-instructions">
+<b>Practice Mode Active:</b> Click any option or type an answer to get instant correct/incorrect feedback along with explanations!
       </div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('mcqbook-container', this)">
+<span>OMR Practice (MCQs)</span> <span class="count-badge" id="mcq-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="mcqbook-container"></div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('fillbook-container', this)">
+<span>Fill in the Blanks</span> <span class="count-badge" id="fill-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="fillbook-container"></div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('tfbook-container', this)">
+<span>True or False</span> <span class="count-badge" id="tf-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="tfbook-container"></div>
+</div>
+</div>
+<!-- TAB 3: SHORT -->
+<div class="tab-content" id="tab-short">
+<div class="instructions">
+<b>Mental Flashcards:</b> Try to recall the answer in your head, then click "Show Detailed Answer".
     </div>
-
-    <div class="card">
-      <div class="card-title">Detailed Spectrum of Retail Markets <span class="topic-badge">5 Market Structures</span></div>
-      <div class="grid-3">
-        <div class="sub-box key">
-          <h4>🎪 1. Weekly Markets (Haats)</h4>
-          <ul>
-            <li>Held on specific days of the week in a particular locality[cite: 5].</li>
-            <li>Sellers set up temporary roadside stalls and pack up at night[cite: 5].</li>
-            <li><b>Why prices are low:</b> No permanent shop rent, electricity bills, or hired staff costs[cite: 5].</li>
-            <li>Heavy competition among similar stalls allows buyers to bargain[cite: 5].</li>
-          </ul>
-        </div>
-        <div class="sub-box facts">
-          <h4>🏪 2. Neighbourhood Markets</h4>
-          <ul>
-            <li>Permanent shops and street stalls near residential homes[cite: 5].</li>
-            <li>Provide everyday necessities (groceries, milk, stationery, bread)[cite: 5].</li>
-            <li><b>Key Benefit:</b> Sellers know buyers personally, allowing goods to be bought on credit[cite: 5].</li>
-          </ul>
-        </div>
-        <div class="sub-box fun">
-          <h4>🏷️ 3. Branded Stores</h4>
-          <ul>
-            <li>Exclusive showrooms that sell goods from only <b>one brand</b>[cite: 5].</li>
-            <li>Prices are higher due to heavy advertising and shop maintenance overheads[cite: 5].</li>
-          </ul>
-        </div>
-      </div>
-      <div class="grid-3" style="margin-top:12px;">
-        <div class="sub-box key">
-          <h4>🏬 4. Shopping Malls</h4>
-          <ul>
-            <li>Large, multi-storeyed, air-conditioned complexes containing multiple shops, restaurants, cinemas, and gaming zones[cite: 5].</li>
-            <li>Sell both branded and non-branded goods at high prices due to huge rent and electricity costs[cite: 5].</li>
-          </ul>
-        </div>
-        <div class="sub-box facts">
-          <h4>💻 5. Online Retailers</h4>
-          <ul>
-            <li>Virtual platforms where consumers buy directly using websites or mobile apps[cite: 5].</li>
-            <li><b>Overhead advantage:</b> Do not maintain physical retail stores, reducing rent expenses and offering competitive discounts[cite: 5].</li>
-          </ul>
-        </div>
-      </div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('short-container', this)">
+<span>2 and 3 Marks Questions</span> <span class="count-badge" id="short-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="short-container"></div>
+</div>
+<!-- TAB 4: LONG -->
+<div class="tab-content" id="tab-long">
+<div class="instructions">
+<b>Mental Flashcards:</b> Formulate the answer, then study the complete textbook-level explanation.
     </div>
-  </div>
-
-  <!-- TAB 2: CHAIN OF MARKETS -->
-  <div id="chain" class="tab-content">
-    <div class="card">
-      <div class="card-title">17.2 The Chain of Markets <span class="topic-badge">From Producer to Consumer</span></div>
-      <p>Goods do not reach us directly from factories or farms. They pass through a series of markets known as the <b>chain of markets</b>[cite: 5].</p>
-      
-      <div class="grid-3" style="margin-top:12px;">
-        <div class="sub-box key">
-          <h4>🌾 1. Producers</h4>
-          <ul>
-            <li>Farmers who grow crops or factory owners who manufacture items[cite: 5].</li>
-            <li>Sell their produce in bulk at low prices to wholesale traders[cite: 5].</li>
-          </ul>
-        </div>
-        <div class="sub-box facts">
-          <h4>🚚 2. Wholesale Traders</h4>
-          <ul>
-            <li>Buy bulk goods from farmers/producers and store them in large warehouses[cite: 5].</li>
-            <li>Sell in smaller bulk lots to retail suppliers or regional traders[cite: 5].</li>
-          </ul>
-        </div>
-        <div class="sub-box fun">
-          <h4>🏪 3. Retail Traders</h4>
-          <ul>
-            <li>Shopkeepers, weekly market vendors, or online sellers who buy from wholesalers[cite: 5].</li>
-            <li>Sell small quantities directly to final consumers[cite: 5].</li>
-          </ul>
-        </div>
-      </div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('long-container', this)">
+<span>4+ Marks &amp; Case Based</span> <span class="count-badge" id="long-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="long-container"></div>
+</div>
+<!-- TAB 5: EXTRA KNOWLEDGE -->
+<div class="tab-content" id="tab-extra">
+<div class="instructions">
+<b>For the Bookworms:</b> Deep-dive questions and fascinating facts!
     </div>
-
-    <!-- Case Study Card -->
-    <div class="card">
-      <div class="card-title">Case Study: The Journey of a Mango <span class="topic-badge">Price Rise Analysis</span></div>
-      <div class="grid-3">
-        <div class="sub-box key">
-          <h4>👨‍🌾 Vinayak (Farmer)</h4>
-          <ul>
-            <li>Spends ₹3,000 on fertilizers & supplies for 500 kg mangoes[cite: 5].</li>
-            <li>Sells harvest for ₹10,000 to wholesaler Ahmed[cite: 5].</li>
-            <li><b>Profit: ₹7,000 (₹14/kg)</b>[cite: 5].</li>
-          </ul>
-        </div>
-        <div class="sub-box facts">
-          <h4>🚛 Ahmed (Wholesaler)</h4>
-          <ul>
-            <li>Spends ₹30,000 to buy 1500 kg mangoes[cite: 5].</li>
-            <li>Spends ₹10,000 on warehouse rent & transport[cite: 5].</li>
-            <li>Sells to retailers for ₹75,000[cite: 5].</li>
-            <li><b>Profit: ₹35,000 (₹24/kg)</b>[cite: 5].</li>
-          </ul>
-        </div>
-        <div class="sub-box fun">
-          <h4>🛒 Badrinath (Retailer)</h4>
-          <ul>
-            <li>Buys 20 kg mangoes from Ahmed for ₹1,000[cite: 5].</li>
-            <li>Spends ₹400 on shop rent & transport[cite: 5].</li>
-            <li>Sells to consumers at ₹100/kg (₹2,000 total)[cite: 5].</li>
-            <li><b>Profit: ₹600 (₹30/kg)</b>[cite: 5].</li>
-          </ul>
-        </div>
-      </div>
-      <p style="margin-top:12px; font-size:0.88rem; background:#FFF8E7; padding:10px; border-radius:6px;"><b>Conclusion:</b> As the mango moves from Vinayak (₹14/kg profit) $\rightarrow$ Ahmed (₹24/kg profit) $\rightarrow$ Badrinath (₹30/kg profit) $\rightarrow$ Consumer (pays ₹100/kg), the final price increases dramatically because every intermediary adds storage, transport, labor, and profit margins[cite: 5].</p>
-    </div>
-  </div>
-
-  <!-- TAB 3: COOPERATIVES & MINDFUL BUYING -->
-  <div id="coop" class="tab-content">
-    <div class="card">
-      <div class="card-title">17.3 & 17.4 Inequalities, Cooperatives & Mindful Buying <span class="topic-badge">Fair Trade</span></div>
-      
-      <div class="grid-3">
-        <div class="sub-box key">
-          <h4>⚖️ Market Inequalities</h4>
-          <ul>
-            <li><b>For Producers:</b> Farmers work hard but earn the lowest profits in the chain[cite: 5]. During poor harvests, they fall into debt[cite: 5].</li>
-            <li><b>For Consumers:</b> End up paying inflated final prices due to multiple middleman markups[cite: 5].</li>
-          </ul>
-        </div>
-        <div class="sub-box facts">
-          <h4>🚜 Advantages of Cooperatives</h4>
-          <ul>
-            <li>A <b>cooperative</b> is a voluntary organization formed by producers/farmers with shared goals[cite: 5].</li>
-            <li><b>Benefits:</b>
-              <ol>
-                <li>Easy to form under Cooperative Societies Act[cite: 5].</li>
-                <li>Eliminates reliance on middlemen[cite: 5].</li>
-                <li>Follows a democratic process (one person, one vote)[cite: 5].</li>
-                <li>Receives government loans & support at low interest rates[cite: 5].</li>
-              </ol>
-            </li>
-          </ul>
-        </div>
-        <div class="sub-box fun">
-          <h4>🛍️ Mindful Buying & Supply Theory</h4>
-          <ul>
-            <li><b>Mindful Buying:</b> Making conscious purchases based on actual needs, values, and environmental sustainability[cite: 5].</li>
-            <li><b>Demand vs Supply Theory:</b>
-              <ul>
-                <li><i>High Demand + Low Supply</i> = Prices increase[cite: 5].</li>
-                <li><i>Low Demand + High Supply</i> = Prices decrease[cite: 5].</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 4: MASTER MCQS -->
-  <div id="mcq-4opt" class="tab-content">
-    <div class="card">
-      <div class="card-title">12 Master Multiple Choice Questions</div>
-      
-      <div class="mcq-box">
-        <div class="mcq-q">1. Which of the following markets happens once a week?[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-1')">a) Weekly markets[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">b) Supermarkets[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">c) Neighbourhood markets[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">d) Wholesale markets[cite: 5]</button>
-        <div class="mcq-explain" id="mcq-1"><b>Explanation:</b> Weekly markets take place once a week on specific days[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">2. Which of the following markets sells goods from only one brand?[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">a) Supermarkets[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">b) Shopping malls[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-2')">c) Branded stores[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">d) Retail markets[cite: 5]</button>
-        <div class="mcq-explain" id="mcq-2"><b>Explanation:</b> Branded stores sell products from a single specific brand[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">3. Which of the following is an organisation formed by people with shared interests and goals?[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">a) Wholesale markets[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">b) Retail markets[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-3')">c) Cooperatives[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">d) Shopping malls[cite: 5]</button>
-        <div class="mcq-explain" id="mcq-3"><b>Explanation:</b> Cooperatives are formed by members with shared economic goals[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">4. Which of the following is NOT a role that markets play in our lives?[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">a) Making goods and services available[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">b) Linking producers and consumers[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">c) Building a strong economy[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-4')">d) Promoting mindful buying[cite: 5]</button>
-        <div class="mcq-explain" id="mcq-4"><b>Explanation:</b> Mindful buying is a practice adopted by consumers, not an intrinsic role played by markets[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">5. Why are goods sold at weekly markets usually cheaper?[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-5')">a) Sellers do not pay permanent shop rent or electricity bills[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">b) The goods sold are always defective[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">c) They are subsidized by the government[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">d) Only wholesale traders sell there[cite: 5]</button>
-        <div class="mcq-explain" id="mcq-5"><b>Explanation:</b> Temporary stalls avoid heavy overhead expenses like building rent, electricity bills, and staff wages[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">6. Who among the following buys goods directly from producers in large bulk?[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">a) Final consumer[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-6')">b) Wholesale trader[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">c) Weekly market stall vendor[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">d) Neighbourhood shopkeeper[cite: 5]</button>
-        <div class="mcq-explain" id="mcq-6"><b>Explanation:</b> Wholesale traders buy directly from producers in bulk quantities[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">7. What is the key advantage of shopping at neighbourhood markets?[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">a) They sell only imported luxury goods[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-7')">b) Shops are close to homes and sellers often offer credit[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">c) They operate without any overhead costs[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">d) They operate only once a week[cite: 5]</button>
-        <div class="mcq-explain" id="mcq-7"><b>Explanation:</b> Proximity to residential areas and personal acquaintance allowing credit purchase are key benefits[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">8. What happens to the price of an item when it moves down the chain of markets?[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">a) It decreases at every step[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-8')">b) It increases at every step[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">c) It remains exactly the same[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">d) It becomes zero[cite: 5]</button>
-        <div class="mcq-explain" id="mcq-8"><b>Explanation:</b> Each intermediary adds transport, rent, labor, and profit margins, raising the price[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">9. How do cooperative societies make decision-making fair for all members?[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">a) Only the richest member makes decisions[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-9')">b) They follow a democratic process where every member gets equal voting rights[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">c) The government dictates all decisions[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">d) Decisions are made by wholesale traders[cite: 5]</button>
-        <div class="mcq-explain" id="mcq-9"><b>Explanation:</b> Cooperatives follow democratic management with equal voting rights per member[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">10. What happens to the price of a product if its demand is very high but availability is low?[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-10')">a) Price increases[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">b) Price decreases[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">c) Price remains unchanged[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">d) Product becomes free[cite: 5]</button>
-        <div class="mcq-explain" id="mcq-10"><b>Explanation:</b> Scarcity combined with high buyer demand pushes product prices upward[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">11. Why do online retailers often offer products at lower prices than physical shopping malls?[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-11')">a) They do not pay expensive showroom rent or store electricity overheads[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">b) They sell damaged goods[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">c) They do not pay taxes to the government[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">d) They buy directly from consumers[cite: 5]</button>
-        <div class="mcq-explain" id="mcq-11"><b>Explanation:</b> Lower overhead costs allow online retailers to offer products at competitive discounts[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">12. What is the primary purpose of forming a farmers' cooperative?[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">a) To eliminate competition in retail markets[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-12')">b) To sell produce directly to consumers/agencies and reduce middleman exploitation[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">c) To control price tags in shopping malls[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">d) To stop wholesale markets completely[cite: 5]</button>
-        <div class="mcq-explain" id="mcq-12"><b>Explanation:</b> Cooperatives empower small farmers to earn fair prices by removing exploitative agents[cite: 5].</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 5: CONFUSING 2-CHOICE FILL IN BLANKS -->
-  <div id="mcq-confusing" class="tab-content">
-    <div class="card">
-      <div class="card-title">10 Confusing Two-Choice Drills</div>
-      
-      <div class="mcq-box">
-        <div class="mcq-q">1. Goods sold at weekly markets are usually cheaper because sellers have ________ overhead costs.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-1')">[A] Lower[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-1')">[B] Higher[cite: 5]</button>
-        <div class="mcq-explain" id="c-1"><b>Why confusion happens:</b> Weekly stall owners do not pay shop rent or staff wages, keeping overheads low[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">2. Online retailers operate with ________ overhead costs compared to physical shopping malls.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-2')">[A] Lower[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-2')">[B] Higher[cite: 5]</button>
-        <div class="mcq-explain" id="c-2"><b>Why confusion happens:</b> Online stores do not maintain physical showroom spaces, reducing rent expenses[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">3. In the chain of markets, wholesale traders buy goods directly from ________.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-3')">[A] Producers[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-3')">[B] Retailers[cite: 5]</button>
-        <div class="mcq-explain" id="c-3"><b>Why confusion happens:</b> Wholesalers buy from Producers; Retailers buy from Wholesalers[cite: 5]!</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">4. The person who grows crops or manufactures products is called the ________.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-4')">[A] Producer[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-4')">[B] Consumer[cite: 5]</button>
-        <div class="mcq-explain" id="c-4"><b>Why confusion happens:</b> Producer = Maker/Grower; Consumer = Final Buyer/User[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">5. In a cooperative society, members ________ their dependence on middlemen.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-5')">[A] Reduce[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-5')">[B] Increase[cite: 5]</button>
-        <div class="mcq-explain" id="c-5"><b>Why confusion happens:</b> Cooperatives eliminate middleman reliance by selling directly[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">6. If product demand is high and availability (supply) is low, the price will ________.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-6')">[A] Increase[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-6')">[B] Decrease[cite: 5]</button>
-        <div class="mcq-explain" id="c-6"><b>Why confusion happens:</b> Scarcity plus high demand pushes prices UP, not down[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">7. Branded stores sell goods from ________ brand(s).[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-7')">[A] Only one[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-7')">[B] Multiple different[cite: 5]</button>
-        <div class="mcq-explain" id="c-7"><b>Why confusion happens:</b> Malls sell multiple brands; Branded stores sell exclusively *one* brand[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">8. The profit earned by a retail shopkeeper per unit item is usually ________ than that earned by the farmer.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-8')">[A] Higher[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-8')">[B] Lower[cite: 5]</button>
-        <div class="mcq-explain" id="c-8"><b>Why confusion happens:</b> Retailers add high markups, earning higher per-unit profits than struggling farmers[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">9. Competition among market sellers leads to ________ prices for consumers.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-9')">[A] Lower[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-9')">[B] Higher[cite: 5]</button>
-        <div class="mcq-explain" id="c-9"><b>Why confusion happens:</b> Sellers compete to attract buyers, driving prices down and quality up[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">10. Mindful buying encourages consumers to make purchases based on ________.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-10')">[A] Actual needs and values[cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-10')">[B] Impulsive wants and advertisements[cite: 5]</button>
-        <div class="mcq-explain" id="c-10"><b>Why confusion happens:</b> Mindful buying is conscious purchasing based on genuine need[cite: 5].</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 6: TRUE / FALSE ARENA -->
-  <div id="mcq-tf" class="tab-content">
-    <div class="card">
-      <div class="card-title">10 Interactive True / False Arena (With Corrections)</div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">1. There are different wholesale markets for different types of goods as they require large spaces.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-1')">[TRUE][cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-1')">[FALSE][cite: 5]</button>
-        <div class="mcq-explain" id="tf-1"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Wholesale markets require large warehouses and specialize in specific bulk items[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">2. Online retailers have high overhead costs.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-2')">[TRUE][cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-2')">[FALSE][cite: 5]</button>
-        <div class="mcq-explain" id="tf-2"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Online retailers have *lower* overhead costs because they do not maintain physical showroom spaces[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">3. In the chain of markets, the price of a product increases at every step.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-3')">[TRUE][cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-3')">[FALSE][cite: 5]</button>
-        <div class="mcq-explain" id="tf-3"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Intermediaries add transport, rent, labor, and profit margins at each stage[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">4. Members of a cooperative society depend heavily on middlemen to sell their goods.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-4')">[TRUE][cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-4')">[FALSE][cite: 5]</button>
-        <div class="mcq-explain" id="tf-4"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Members sell directly to buyers/agencies, *reducing* middleman dependence[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">5. If there is a high demand for a product and its availability is low, the price will decrease.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-5')">[TRUE][cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-5')">[FALSE][cite: 5]</button>
-        <div class="mcq-explain" id="tf-5"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> When demand is high and supply is low, the price of the product *increases*[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">6. Neighbourhood shops often allow buyers to purchase goods on credit.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-6')">[TRUE][cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-6')">[FALSE][cite: 5]</button>
-        <div class="mcq-explain" id="tf-6"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Personal acquaintance between local shopkeepers and residents enables credit buying[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">7. Farmers earn the highest share of profit in the chain of markets.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-7')">[TRUE][cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-7')">[FALSE][cite: 5]</button>
-        <div class="mcq-explain" id="tf-7"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Farmers earn the *lowest* share of profit despite performing the hardest physical labor[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">8. Weekly markets operate in permanent brick-and-mortar buildings.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-8')">[TRUE][cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-8')">[FALSE][cite: 5]</button>
-        <div class="mcq-explain" id="tf-8"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Weekly markets consist of temporary roadside stalls that pack up at night[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">9. Mindful buying means purchasing every attractive item shown in advertisements.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-9')">[TRUE][cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-9')">[FALSE][cite: 5]</button>
-        <div class="mcq-explain" id="tf-9"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Mindful buying means evaluating actual needs before making conscious choices[cite: 5].</div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">10. The government provides low-interest loans to help cooperative societies.[cite: 5]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-10')">[TRUE][cite: 5]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-10')">[FALSE][cite: 5]</button>
-        <div class="mcq-explain" id="tf-10"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> The government supports cooperatives with low-interest loans and secure buying schemes (e.g. Midday Meal buying)[cite: 5].</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 7: 100% COMPLETE TEXTBOOK SOLUTIONS -->
-  <div id="textbook-all" class="tab-content">
-    <div class="card">
-      <div class="card-title">100% Complete Textbook Exercise Solutions (A to J)</div>
-
-      <!-- EXERCISE A -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise A: Fill in the blanks (All 5 Questions)[cite: 5]</div>
-        <div class="qa-a">
-          1. <b>Producers</b> produce goods and provide services for consumers to use[cite: 5].<br>
-          2. Markets that sell daily necessities and have a mix of street stalls and bigger shops are called <b>neighbourhood</b> markets[cite: 5].<br>
-          3. The system where goods move from the producer to the consumer through a series of markets is called a <b>chain of markets</b>[cite: 5].<br>
-          4. Cooperatives help farmers sell their produce directly to consumers, reducing their dependence on <b>middlemen</b>[cite: 5].<br>
-          5. <b>Competition</b> in the market leads to better prices and quality products for consumers[cite: 5].
-        </div>
-      </div>
-
-      <!-- EXERCISE B -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise B: Choose the correct answer (All 4 Questions)[cite: 5]</div>
-        <div class="qa-a">
-          1. Which of the following markets happens once a week? <b>(a) Weekly markets</b>[cite: 5].<br>
-          2. Which of the following markets sells goods from only one brand? <b>(c) Branded stores</b>[cite: 5].<br>
-          3. Which of the following is an organisation formed by people with shared interests and goals? <b>(c) Cooperatives</b>[cite: 5].<br>
-          4. Which of the following is NOT a role that markets play in our lives? <b>(d) Promoting mindful buying</b>[cite: 5].
-        </div>
-      </div>
-
-      <!-- EXERCISE C -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise C: Write True or False. Rewrite false statements.[cite: 5]</div>
-        <div class="qa-a">
-          1. There are different wholesale markets for different types of goods as they require large spaces. <span style="color:green; font-weight:700;">TRUE</span>[cite: 5].<br><br>
-          2. Online retailers have high overhead costs. <span style="color:red; font-weight:700;">FALSE</span><br>
-          <i>(Correction: Online retailers have lower overhead costs because they do not maintain physical shops.)[cite: 5]</i><br><br>
-          3. In the chain of markets, the price of a product increases at every step. <span style="color:green; font-weight:700;">TRUE</span>[cite: 5].<br><br>
-          4. Members of a cooperative society depend on middlemen to sell their goods. <span style="color:red; font-weight:700;">FALSE</span><br>
-          <i>(Correction: Members sell goods directly, reducing dependence on middlemen.)[cite: 5]</i><br><br>
-          5. If there is a high demand for a product and its availability is low, the price of the product will decrease. <span style="color:red; font-weight:700;">FALSE</span><br>
-          <i>(Correction: If demand is high and supply is low, the price will increase.)[cite: 5]</i>
-        </div>
-      </div>
-
-      <!-- EXERCISE D -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise D: Complete the table on retail markets[cite: 5]</div>
-        <div class="qa-a">
-          <table class="textbook-table">
-            <tr>
-              <th>Type of Market</th>
-              <th>Types of Shops</th>
-              <th>Types of Goods Sold</th>
-              <th>Prices (High/Low)</th>
-            </tr>
-            <tr>
-              <td><b>Weekly markets</b></td>
-              <td>Temporary stalls[cite: 5]</td>
-              <td>Daily necessities, vegetables[cite: 5]</td>
-              <td><b>Low prices</b>[cite: 5]</td>
-            </tr>
-            <tr>
-              <td><b>Neighbourhood markets</b></td>
-              <td>Street stalls & bigger shops[cite: 5]</td>
-              <td>Groceries, daily necessities[cite: 5]</td>
-              <td>Moderate prices[cite: 5]</td>
-            </tr>
-            <tr>
-              <td><b>Branded stores</b></td>
-              <td>Exclusive showrooms[cite: 5]</td>
-              <td>Single-brand clothes/shoes[cite: 5]</td>
-              <td>High prices[cite: 5]</td>
-            </tr>
-            <tr>
-              <td><b>Shopping malls</b></td>
-              <td>Multi-storeyed shops[cite: 5]</td>
-              <td>Branded & luxury items[cite: 5]</td>
-              <td><b>High prices</b>[cite: 5]</td>
-            </tr>
-            <tr>
-              <td><b>Online retailers</b></td>
-              <td><b>No physical stores</b>[cite: 5]</td>
-              <td>Wide variety of products[cite: 5]</td>
-              <td>Competitive / Low prices[cite: 5]</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-      <!-- EXERCISE E & F -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise E & F: Flowchart & Passage Completion[cite: 5]</div>
-        <div class="qa-a">
-          • <b>Exercise E (Flowchart):</b> Manufacturer $\rightarrow$ Wholesale Trader $\rightarrow$ Retail Traders (Suppliers) $\rightarrow$ Consumer[cite: 5].<br>
-          • <b>Exercise F (Passage Words):</b> access, convenient, competition, economy, jobs, lifestyle[cite: 5].
-        </div>
-      </div>
-
-      <!-- EXERCISE G -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise G: Answer the following questions in brief (All 5 Questions)[cite: 5]</div>
-        <div class="qa-a">
-          <b>1. Two main types of markets & differences:</b> Wholesale markets and Retail markets[cite: 5]. Wholesale buys/sells in bulk to traders[cite: 5]. Retail sells small quantities directly to consumers[cite: 5].<br><br>
-          <b>2. Producer vs Consumer:</b> Producer manufactures/grows goods[cite: 5]. Consumer buys/uses goods for personal use[cite: 5].<br><br>
-          <b>3. Market inequalities:</b> Farmers/producers earn small profits while large wholesalers and retailers take high profit margins[cite: 5].<br><br>
-          <b>4. Cooperatives:</b> Voluntary organizations formed by producers/farmers to sell directly and eliminate middlemen[cite: 5].<br><br>
-          <b>5. Impact on lives:</b> Provide goods, jobs, drive the economy, and influence lifestyle[cite: 5].
-        </div>
-      </div>
-
-      <!-- EXERCISE H -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise H: Answer the following questions in detail (All 5 Questions)[cite: 5]</div>
-        <div class="qa-a">
-          <b>1. Describe three types of people involved in buying & selling:</b> Producers (mango farmer Vinayak), Traders (wholesaler Ahmed), Consumers (family buyers)[cite: 5].<br><br>
-          <b>2. Why price increases in chain:</b> Intermediaries add transport, storage/warehouse rent, electricity, labor wages, and profit margins at every step[cite: 5].<br><br>
-          <b>3. Inequalities impact:</b> (a) Producers earn low prices and risk debt; (b) Consumers pay inflated prices due to middleman markups[cite: 5].<br><br>
-          <b>4. How cooperative reduces inequality:</b> Farmers pool produce to sell directly, eliminating middlemen and getting fair prices (e.g. dairy cooperatives)[cite: 5].<br><br>
-          <b>5. Mindful buying & impact:</b> Conscious purchasing based on actual needs, supporting local small businesses and reducing waste[cite: 5].
-        </div>
-      </div>
-
-      <!-- EXERCISE I & J -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise I & J: HOTS & Competency-based Math Scenarios[cite: 5]</div>
-        <div class="qa-a">
-          • <b>I1 (Wholesale Markets):</b> Consumers don't buy at wholesale markets because goods are sold only in massive bulk quantities[cite: 5].<br>
-          • <b>I2 (Demand vs Supply Theory):</b> High demand + low supply = high prices[cite: 5]. Knowing this helps consumers avoid panic buying during shortages[cite: 5].<br>
-          • <b>J1 (Product Trace):</b> Tracing a cotton shirt from farmer to brand, noting that farmers get the lowest profit share[cite: 5].<br>
-          • <b>J2 (Notebook Chain Calculations):</b><br>
-          - <i>Ravi (Producer):</i> Earns ₹20,000 profit (₹20/notebook)[cite: 5].<br>
-          - <i>Nina (Wholesaler):</i> Earns ₹50,000 profit (₹25/notebook)[cite: 5].<br>
-          - <i>Ramesh (Retailer):</i> Earns ₹3,500 profit (₹35/notebook)[cite: 5].
-        </div>
-      </div>
-
-      <!-- REFLECTIONS -->
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Reflections Section[cite: 5]</div>
-        <div class="qa-a">
-          • Realizing how many middlemen touch an item before it reaches our hands, and committing to practice mindful buying to support local producers[cite: 5].
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- TAB 8: ENRICHED TOPIC VIDEOS -->
-  <div id="media" class="tab-content">
-    <div class="card">
-      <div class="card-title">Enriched Topic-Wise Recommended Videos</div>
-      <p style="margin-bottom:14px; font-size:0.9rem;">Click these curated links for visual animations and documentaries specifically organized by chapter topics[cite: 5]:</p>
-
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
-        
-        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Types+of+markets+Wholesale+vs+Retail+animation" target="_blank">
-          <span class="media-icon">🏪</span>
-          <div><b>Topic 1: Types of Markets (Wholesale & Retail)</b><br><small>Visual animations explaining weekly haats, malls & wholesale markets[cite: 5].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Chain+of+markets+from+producer+to+consumer+CBSE" target="_blank">
-          <span class="media-icon">🔗</span>
-          <div><b>Topic 2: Chain of Markets & Price Rise</b><br><small>Short films tracing goods from farms/factories to consumers[cite: 5].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Farmer+cooperatives+in+India+Amul+story" target="_blank">
-          <span class="media-icon">🚜</span>
-          <div><b>Topic 3: How Cooperatives Work (Amul Case Study)</b><br><small>Documentaries on how farmer cooperatives eliminate middlemen[cite: 5].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Demand+and+Supply+theory+explained+for+students" target="_blank">
-          <span class="media-icon">⚖️</span>
-          <div><b>Topic 4: Demand vs Supply & Mindful Buying</b><br><small>Educational videos explaining market price mechanisms and conscious consumerism[cite: 5].</small></div>
-        </a>
-
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    Chapter 17 Master Study Hub · Prepared for Pushti · CBSE Class 7 Civics
-  </footer>
-
+<h2 class="collapsible-header collapsed" onclick="toggleSection('extra-container', this)">
+<span>Knowledge Topics &amp; Trivia</span> <span class="count-badge" id="extra-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="extra-container"></div>
+</div>
+</div> <!-- end wrap -->
+<div class="grade-bar" id="grade-bar">
+<span class="score-readout" id="liveCount">00:00</span>
+<button id="grade-btn" onclick="gradeAll()">Grade My Test</button>
+</div>
 <script>
-  function openTab(tabId) {
-    const contents = document.querySelectorAll('.tab-content');
-    const buttons = document.querySelectorAll('.tab-btn');
-    contents.forEach(content => content.classList.remove('active'));
-    buttons.forEach(btn => btn.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    event.currentTarget.classList.add('active');
+window.currentMode = 'practice'; 
+window.testTimer = null;
+window.timeRemaining = 0;
+
+function toggleSection(contentId, headerEl) {
+    const el = document.getElementById(contentId);
+    el.classList.toggle('collapsed');
+    headerEl.classList.toggle('collapsed');
+}
+
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+    tabcontent[i].classList.remove("active");
   }
-
-  function toggleQA(cardElement) { cardElement.classList.toggle('open'); }
-
-  function checkMCQ(btnElement, isCorrect, explainId) {
-    const parentBox = btnElement.parentElement;
-    const buttons = parentBox.querySelectorAll('.mcq-opt');
-    const explanation = document.getElementById(explainId);
-
-    buttons.forEach(btn => btn.disabled = true);
-
-    if (isCorrect) { btnElement.classList.add('correct'); } 
-    else { btnElement.classList.add('wrong'); }
-
-    if (explanation) { explanation.style.display = 'block'; }
+  tablinks = document.getElementsByClassName("tab-btn");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
+  document.getElementById(tabName).style.display = "block";
+  document.getElementById(tabName).classList.add("active");
+  evt.currentTarget.className += " active";
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+let totalMax = 0;
+
+function renderFill(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className = 'q fillblank';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <input type="text" id="${prefix}-${i}" placeholder="type your answer" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('fill', '${prefix}', ${i})">
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='fill'; c.dataset.prefix=prefix;
+  c.fillData = data;
+}
+
+function renderMCQ(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className='q';
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('mcq', '${prefix}', ${i})"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <div class="opts">${opts}</div>
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='mcq'; c.dataset.prefix=prefix;
+  c.mcqData = data;
+}
+
+function renderTF(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className='q';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.s}</div>
+      <div class="tf-row">
+        <label><input type="radio" name="${prefix}-${i}" value="true" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> True</label>
+        <label><input type="radio" name="${prefix}-${i}" value="false" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> False</label>
+      </div>
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='tf'; c.dataset.prefix=prefix;
+  c.tfData = data;
+}
+
+function renderSubjective(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    const div = document.createElement('div');
+    div.className='q subjective';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <details><summary>Show Detailed Answer</summary><div class="model">${item.model}</div></details>`;
+    c.appendChild(div);
+  });
+}
+
+function gradeSpecificQuestion(type, prefix, i) {
+   let item, val, correct, answerText, expText;
+   const fb = document.getElementById(`${prefix}-fb-${i}`);
+   if(type === 'fill') {
+      const container = document.getElementById('fillbook-container');
+      item = container.fillData[i];
+      val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
+      correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+      answerText = 'Correct Answer: ' + item.a[0];
+      expText = item.exp;
+      if(val === '') { fb.style.display = 'none'; return; }
+   } else if(type === 'mcq') {
+      const container = document.getElementById('mcqbook-container');
+      item = container.mcqData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = parseInt(sel.value);
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+      expText = item.exp;
+   } else if(type === 'tf') {
+      const container = document.getElementById('tfbook-container');
+      item = container.tfData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = (sel.value === 'true');
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+      expText = item.exp;
+   }
+   
+   if(correct) {
+      fb.className = 'feedback correct'; 
+      fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${expText}</span>`;
+   } else {
+      fb.className = 'feedback incorrect'; 
+      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText} <span class="exp">${expText}</span>`;
+   }
+   fb.style.display = 'block';
+}
+
+function setMode(mode) {
+  if(window.testTimer) clearInterval(window.testTimer);
+  window.currentMode = mode;
+  document.getElementById('btn-practice').classList.toggle('active', mode==='practice');
+  document.getElementById('btn-test').classList.toggle('active', mode==='test');
+  
+  resetAllAnswers();
+  
+  if(mode === 'test') {
+    document.getElementById('omr-content').style.display = 'none';
+    document.getElementById('test-intro').style.display = 'block';
+    document.getElementById('t-count').textContent = totalMax;
+    document.getElementById('t-time').textContent = totalMax; 
+    document.getElementById('grade-bar').style.display = 'none';
+  } else {
+    document.getElementById('omr-content').style.display = 'block';
+    document.getElementById('test-intro').style.display = 'none';
+    document.getElementById('grade-bar').style.display = 'none'; 
+    document.getElementById('omr-instructions').style.display = 'block';
+  }
+}
+
+function startTest() {
+  document.getElementById('test-intro').style.display = 'none';
+  document.getElementById('omr-content').style.display = 'block';
+  document.getElementById('omr-instructions').style.display = 'none'; 
+  document.getElementById('grade-bar').style.display = 'flex';
+  
+  // EXPAND ALL TABS FOR TEST
+  document.getElementById('mcqbook-container').classList.remove('collapsed');
+  document.getElementById('mcqbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('fillbook-container').classList.remove('collapsed');
+  document.getElementById('fillbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('tfbook-container').classList.remove('collapsed');
+  document.getElementById('tfbook-container').previousElementSibling.classList.remove('collapsed');
+
+  window.timeRemaining = totalMax * 60; // 1 min per Q
+  updateTimerDisplay();
+  window.testTimer = setInterval(() => {
+    window.timeRemaining--;
+    updateTimerDisplay();
+    if(window.timeRemaining <= 0) {
+       clearInterval(window.testTimer);
+       gradeAll();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  let m = Math.floor(window.timeRemaining / 60);
+  let s = window.timeRemaining % 60;
+  const readout = document.getElementById('liveCount');
+  readout.textContent = `⏱ Time Remaining: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  if(window.timeRemaining <= 60) {
+     readout.classList.add('urgent');
+  } else {
+     readout.classList.remove('urgent');
+  }
+}
+
+function resetAllAnswers() {
+   document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
+   document.querySelectorAll('#omr-content input[type="text"]').forEach(r => r.value = '');
+   document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+   document.getElementById('resultPanel').classList.remove('show');
+}
+
+function gradeAll() {
+  if(window.testTimer) clearInterval(window.testTimer);
+  
+  let totalCorrect = 0;
+  let totalIncorrect = 0;
+  let totalUnanswered = 0;
+  
+  const gradeItem = (type, val, item, fb, rightAnsText) => {
+      let correct = false;
+      if(val === null || val === '') {
+          totalUnanswered++; 
+          fb.className='feedback incorrect'; 
+          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+      } else {
+          if(type==='fill') correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+          if(type==='mcq') correct = (val === item.answer);
+          if(type==='tf') correct = (val === item.answer);
+          
+          if(correct) {
+              totalCorrect++; 
+              fb.className='feedback correct'; 
+              fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${item.exp}</span>`;
+          } else {
+              totalIncorrect++; 
+              fb.className='feedback incorrect'; 
+              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+          }
+      }
+      fb.style.display='block';
+  };
+
+  const fillContainer = document.getElementById('fillbook-container');
+  fillContainer.fillData.forEach((item, i) => {
+     const val = document.getElementById(`${fillContainer.dataset.prefix}-${i}`).value.trim().toLowerCase();
+     const fb = document.getElementById(`${fillContainer.dataset.prefix}-fb-${i}`);
+     gradeItem('fill', val, item, fb, 'Correct Answer: ' + item.a[0]);
+  });
+  
+  const mcqContainer = document.getElementById('mcqbook-container');
+  mcqContainer.mcqData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${mcqContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${mcqContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+     gradeItem('mcq', sel ? parseInt(sel.value) : null, item, fb, rightAnsText);
+  });
+  
+  const tfContainer = document.getElementById('tfbook-container');
+  tfContainer.tfData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${tfContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${tfContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+     gradeItem('tf', sel ? (sel.value === 'true') : null, item, fb, rightAnsText);
+  });
+  
+  document.getElementById('scoreBig').textContent = totalCorrect + ' / ' + totalMax;
+  const pct = Math.round((totalCorrect/totalMax)*100);
+  let msg = `<strong>Score Breakdown:</strong><br><span style="color:var(--good); font-weight:bold;">✔ Correct: ${totalCorrect}</span> &nbsp;|&nbsp; <span style="color:var(--bad); font-weight:bold;">✘ Incorrect: ${totalIncorrect}</span> &nbsp;|&nbsp; <span>⊝ Unanswered: ${totalUnanswered}</span><br><br>`;
+  if(pct>=90) msg += "Outstanding! You crushed the time-bound test. 🏆";
+  else if(pct>=70) msg += "Great work! Just review the questions marked in red below. 🌟";
+  else if(pct>=50) msg += "Good effort — scroll down to study the explanations for the ones you missed. 📖";
+  else msg += "Time-bound tests can be tricky! Review the correct answers below and try again later. 💪";
+  
+  document.getElementById('scoreMsg').innerHTML = msg;
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('grade-bar').style.display = 'none';
+  
+  window.scrollTo({top: document.getElementById('resultPanel').offsetTop - 100, behavior: 'smooth'});
+}
+
+window.onload = function() {
+   setMode('practice');
+};
+
 </script>
-
-<!-- FIREBASE INJECTION START -->
-<script type="module">
-    import { db, doc, onSnapshot } from '../../firebase-config.js';
-    
-    // Listen for answer lock/unlock
-    const settingsDoc = doc(db, 'settings', 'global');
-    onSnapshot(settingsDoc, (docSnap) => {
-        const data = docSnap.data() || { showAnswers: true };
-        
-        // Find all buttons that might reveal answers
-        const buttons = Array.from(document.querySelectorAll('button')).filter(b => {
-            const text = b.textContent.toLowerCase();
-            return text.includes('reveal') || text.includes('answer') || text.includes('check');
-        });
-
-        if (data.showAnswers === false) {
-            // Lock them
-            buttons.forEach(b => {
-                b.style.display = 'none';
-            });
-            
-            // Add a locked message if not exists
-            if (!document.getElementById('lock-msg')) {
-                const msg = document.createElement('div');
-                msg.id = 'lock-msg';
-                msg.style.padding = '15px';
-                msg.style.margin = '20px 0';
-                msg.style.backgroundColor = '#f8d7da';
-                msg.style.color = '#721c24';
-                msg.style.border = '1px solid #f5c6cb';
-                msg.style.borderRadius = '5px';
-                msg.style.fontWeight = 'bold';
-                msg.textContent = '🔒 Answers are currently locked by the Parent Administrator.';
-                document.body.appendChild(msg);
-            } else {
-                document.getElementById('lock-msg').style.display = 'block';
-            }
-        } else {
-            // Unlock them
-            buttons.forEach(b => {
-                b.style.display = 'inline-block';
-            });
-            if (document.getElementById('lock-msg')) {
-                document.getElementById('lock-msg').style.display = 'none';
-            }
-        }
-    });
-</script>
-<!-- FIREBASE INJECTION END -->
-
 </body>
 </html>
+<script>
+
+const mcqBook = [{"q": "Which of the following markets happens once a week?[cite: 5]", "options": ["Weekly markets[cite: 5]", "Supermarkets[cite: 5]", "Neighbourhood markets[cite: 5]", "Wholesale markets[cite: 5]"], "answer": 0, "exp": "Weekly markets take place once a week on specific days[cite: 5]."}, {"q": "Which of the following markets sells goods from only one brand?[cite: 5]", "options": ["Supermarkets[cite: 5]", "Shopping malls[cite: 5]", "Branded stores[cite: 5]", "Retail markets[cite: 5]"], "answer": 2, "exp": "Branded stores sell products from a single specific brand[cite: 5]."}, {"q": "Which of the following is an organisation formed by people with shared interests and goals?[cite: 5]", "options": ["Wholesale markets[cite: 5]", "Retail markets[cite: 5]", "Cooperatives[cite: 5]", "Shopping malls[cite: 5]"], "answer": 2, "exp": "Cooperatives are formed by members with shared economic goals[cite: 5]."}, {"q": "Which of the following is NOT a role that markets play in our lives?[cite: 5]", "options": ["Making goods and services available[cite: 5]", "Linking producers and consumers[cite: 5]", "Building a strong economy[cite: 5]", "Promoting mindful buying[cite: 5]"], "answer": 3, "exp": "Mindful buying is a practice adopted by consumers, not an intrinsic role played by markets[cite: 5]."}, {"q": "Why are goods sold at weekly markets usually cheaper?[cite: 5]", "options": ["Sellers do not pay permanent shop rent or electricity bills[cite: 5]", "The goods sold are always defective[cite: 5]", "They are subsidized by the government[cite: 5]", "Only wholesale traders sell there[cite: 5]"], "answer": 0, "exp": "Temporary stalls avoid heavy overhead expenses like building rent, electricity bills, and staff wages[cite: 5]."}, {"q": "Who among the following buys goods directly from producers in large bulk?[cite: 5]", "options": ["Final consumer[cite: 5]", "Wholesale trader[cite: 5]", "Weekly market stall vendor[cite: 5]", "Neighbourhood shopkeeper[cite: 5]"], "answer": 1, "exp": "Wholesale traders buy directly from producers in bulk quantities[cite: 5]."}, {"q": "What is the key advantage of shopping at neighbourhood markets?[cite: 5]", "options": ["They sell only imported luxury goods[cite: 5]", "Shops are close to homes and sellers often offer credit[cite: 5]", "They operate without any overhead costs[cite: 5]", "They operate only once a week[cite: 5]"], "answer": 1, "exp": "Proximity to residential areas and personal acquaintance allowing credit purchase are key benefits[cite: 5]."}, {"q": "What happens to the price of an item when it moves down the chain of markets?[cite: 5]", "options": ["It decreases at every step[cite: 5]", "It increases at every step[cite: 5]", "It remains exactly the same[cite: 5]", "It becomes zero[cite: 5]"], "answer": 1, "exp": "Each intermediary adds transport, rent, labor, and profit margins, raising the price[cite: 5]."}, {"q": "How do cooperative societies make decision-making fair for all members?[cite: 5]", "options": ["Only the richest member makes decisions[cite: 5]", "They follow a democratic process where every member gets equal voting rights[cite: 5]", "The government dictates all decisions[cite: 5]", "Decisions are made by wholesale traders[cite: 5]"], "answer": 1, "exp": "Cooperatives follow democratic management with equal voting rights per member[cite: 5]."}, {"q": "What happens to the price of a product if its demand is very high but availability is low?[cite: 5]", "options": ["Price increases[cite: 5]", "Price decreases[cite: 5]", "Price remains unchanged[cite: 5]", "Product becomes free[cite: 5]"], "answer": 0, "exp": "Scarcity combined with high buyer demand pushes product prices upward[cite: 5]."}, {"q": "Why do online retailers often offer products at lower prices than physical shopping malls?[cite: 5]", "options": ["They do not pay expensive showroom rent or store electricity overheads[cite: 5]", "They sell damaged goods[cite: 5]", "They do not pay taxes to the government[cite: 5]", "They buy directly from consumers[cite: 5]"], "answer": 0, "exp": "Lower overhead costs allow online retailers to offer products at competitive discounts[cite: 5]."}, {"q": "What is the primary purpose of forming a farmers' cooperative?[cite: 5]", "options": ["To eliminate competition in retail markets[cite: 5]", "To sell produce directly to consumers/agencies and reduce middleman exploitation[cite: 5]", "To control price tags in shopping malls[cite: 5]", "To stop wholesale markets completely[cite: 5]"], "answer": 1, "exp": "Cooperatives empower small farmers to earn fair prices by removing exploitative agents[cite: 5]."}];
+renderMCQ('mcqbook-container', mcqBook, 'mb');
+document.getElementById('mcq-count').textContent = `(${mcqBook.length})`;
+
+const fillBook = [{"q": "Goods sold at weekly markets are usually cheaper because sellers have ________ overhead costs.[cite: 5]", "a": ["Lower[cite: 5]"], "exp": "Why confusion happens:Weekly stall owners do not pay shop rent or staff wages, keeping overheads low[cite: 5]."}, {"q": "Online retailers operate with ________ overhead costs compared to physical shopping malls.[cite: 5]", "a": ["Lower[cite: 5]"], "exp": "Why confusion happens:Online stores do not maintain physical showroom spaces, reducing rent expenses[cite: 5]."}, {"q": "In the chain of markets, wholesale traders buy goods directly from ________.[cite: 5]", "a": ["Producers[cite: 5]"], "exp": "Why confusion happens:Wholesalers buy from Producers; Retailers buy from Wholesalers[cite: 5]!"}, {"q": "The person who grows crops or manufactures products is called the ________.[cite: 5]", "a": ["Producer[cite: 5]"], "exp": "Why confusion happens:Producer = Maker/Grower; Consumer = Final Buyer/User[cite: 5]."}, {"q": "In a cooperative society, members ________ their dependence on middlemen.[cite: 5]", "a": ["Reduce[cite: 5]"], "exp": "Why confusion happens:Cooperatives eliminate middleman reliance by selling directly[cite: 5]."}, {"q": "If product demand is high and availability (supply) is low, the price will ________.[cite: 5]", "a": ["Increase[cite: 5]"], "exp": "Why confusion happens:Scarcity plus high demand pushes prices UP, not down[cite: 5]."}, {"q": "Branded stores sell goods from ________ brand(s).[cite: 5]", "a": ["Only one[cite: 5]"], "exp": "Why confusion happens:Malls sell multiple brands; Branded stores sell exclusively *one* brand[cite: 5]."}, {"q": "The profit earned by a retail shopkeeper per unit item is usually ________ than that earned by the farmer.[cite: 5]", "a": ["Higher[cite: 5]"], "exp": "Why confusion happens:Retailers add high markups, earning higher per-unit profits than struggling farmers[cite: 5]."}, {"q": "Competition among market sellers leads to ________ prices for consumers.[cite: 5]", "a": ["Lower[cite: 5]"], "exp": "Why confusion happens:Sellers compete to attract buyers, driving prices down and quality up[cite: 5]."}, {"q": "Mindful buying encourages consumers to make purchases based on ________.[cite: 5]", "a": ["Actual needs and values[cite: 5]"], "exp": "Why confusion happens:Mindful buying is conscious purchasing based on genuine need[cite: 5]."}];
+renderFill('fillbook-container', fillBook, 'fb');
+document.getElementById('fill-count').textContent = `(${fillBook.length})`;
+
+const tfBook = [{"s": "There are different wholesale markets for different types of goods as they require large spaces.[cite: 5]", "answer": true, "correction": "", "exp": "Reason:TRUE.Wholesale markets require large warehouses and specialize in specific bulk items[cite: 5]."}, {"s": "Online retailers have high overhead costs.[cite: 5]", "answer": false, "correction": "", "exp": "Reason:FALSE.Online retailers have *lower* overhead costs because they do not maintain physical showroom spaces[cite: 5]."}, {"s": "In the chain of markets, the price of a product increases at every step.[cite: 5]", "answer": true, "correction": "", "exp": "Reason:TRUE.Intermediaries add transport, rent, labor, and profit margins at each stage[cite: 5]."}, {"s": "Members of a cooperative society depend heavily on middlemen to sell their goods.[cite: 5]", "answer": false, "correction": "", "exp": "Reason:FALSE.Members sell directly to buyers/agencies, *reducing* middleman dependence[cite: 5]."}, {"s": "If there is a high demand for a product and its availability is low, the price will decrease.[cite: 5]", "answer": false, "correction": "", "exp": "Reason:FALSE.When demand is high and supply is low, the price of the product *increases*[cite: 5]."}, {"s": "Neighbourhood shops often allow buyers to purchase goods on credit.[cite: 5]", "answer": true, "correction": "", "exp": "Reason:TRUE.Personal acquaintance between local shopkeepers and residents enables credit buying[cite: 5]."}, {"s": "Farmers earn the highest share of profit in the chain of markets.[cite: 5]", "answer": false, "correction": "", "exp": "Reason:FALSE.Farmers earn the *lowest* share of profit despite performing the hardest physical labor[cite: 5]."}, {"s": "Weekly markets operate in permanent brick-and-mortar buildings.[cite: 5]", "answer": false, "correction": "", "exp": "Reason:FALSE.Weekly markets consist of temporary roadside stalls that pack up at night[cite: 5]."}, {"s": "Mindful buying means purchasing every attractive item shown in advertisements.[cite: 5]", "answer": false, "correction": "", "exp": "Reason:FALSE.Mindful buying means evaluating actual needs before making conscious choices[cite: 5]."}, {"s": "The government provides low-interest loans to help cooperative societies.[cite: 5]", "answer": true, "correction": "", "exp": "Reason:TRUE.The government supports cooperatives with low-interest loans and secure buying schemes (e.g. Midday Meal buying)[cite: 5]."}];
+renderTF('tfbook-container', tfBook, 'tb');
+document.getElementById('tf-count').textContent = `(${tfBook.length})`;
+
+const shortBook = [{"q": "Exercise E & F: Flowchart & Passage Completion[cite: 5]", "model": "\u2022Exercise E (Flowchart):Manufacturer $\\rightarrow$ Wholesale Trader $\\rightarrow$ Retail Traders (Suppliers) $\\rightarrow$ Consumer[cite: 5].\u2022Exercise F (Passage Words):access, convenient, competition, economy, jobs, lifestyle[cite: 5]."}, {"q": "Reflections Section[cite: 5]", "model": "\u2022 Realizing how many middlemen touch an item before it reaches our hands, and committing to practice mindful buying to support local producers[cite: 5]."}];
+renderSubjective('short-container', shortBook, 'sb');
+document.getElementById('short-count').textContent = `(${shortBook.length})`;
+
+const longBook = [{"q": "Exercise A: Fill in the blanks (All 5 Questions)[cite: 5]", "model": "1.Producersproduce goods and provide services for consumers to use[cite: 5].2. Markets that sell daily necessities and have a mix of street stalls and bigger shops are calledneighbourhoodmarkets[cite: 5].3. The system where goods move from the producer to the consumer through a series of markets is called achain of markets[cite: 5].4. Cooperatives help farmers sell their produce directly to consumers, reducing their dependence onmiddlemen[cite: 5].5.Competitionin the market leads to better prices and quality products for consumers[cite: 5]."}, {"q": "Exercise B: Choose the correct answer (All 4 Questions)[cite: 5]", "model": "1. Which of the following markets happens once a week?(a) Weekly markets[cite: 5].2. Which of the following markets sells goods from only one brand?(c) Branded stores[cite: 5].3. Which of the following is an organisation formed by people with shared interests and goals?(c) Cooperatives[cite: 5].4. Which of the following is NOT a role that markets play in our lives?(d) Promoting mindful buying[cite: 5]."}, {"q": "Exercise C: Write True or False. Rewrite false statements.[cite: 5]", "model": "1. There are different wholesale markets for different types of goods as they require large spaces.TRUE[cite: 5].2. Online retailers have high overhead costs.FALSE(Correction: Online retailers have lower overhead costs because they do not maintain physical shops.)[cite: 5]3. In the chain of markets, the price of a product increases at every step.TRUE[cite: 5].4. Members of a cooperative society depend on middlemen to sell their goods.FALSE(Correction: Members sell goods directly, reducing dependence on middlemen.)[cite: 5]5. If there is a high demand for a product and its availability is low, the price of the product will decrease.FALSE(Correction: If demand is high and supply is low, the price will increase.)[cite: 5]"}, {"q": "Exercise D: Complete the table on retail markets[cite: 5]", "model": "Type of MarketTypes of ShopsTypes of Goods SoldPrices (High/Low)Weekly marketsTemporary stalls[cite: 5]Daily necessities, vegetables[cite: 5]Low prices[cite: 5]Neighbourhood marketsStreet stalls & bigger shops[cite: 5]Groceries, daily necessities[cite: 5]Moderate prices[cite: 5]Branded storesExclusive showrooms[cite: 5]Single-brand clothes/shoes[cite: 5]High prices[cite: 5]Shopping mallsMulti-storeyed shops[cite: 5]Branded & luxury items[cite: 5]High prices[cite: 5]Online retailersNo physical stores[cite: 5]Wide variety of products[cite: 5]Competitive / Low prices[cite: 5]"}, {"q": "Exercise G: Answer the following questions in brief (All 5 Questions)[cite: 5]", "model": "1. Two main types of markets & differences:Wholesale markets and Retail markets[cite: 5]. Wholesale buys/sells in bulk to traders[cite: 5]. Retail sells small quantities directly to consumers[cite: 5].2. Producer vs Consumer:Producer manufactures/grows goods[cite: 5]. Consumer buys/uses goods for personal use[cite: 5].3. Market inequalities:Farmers/producers earn small profits while large wholesalers and retailers take high profit margins[cite: 5].4. Cooperatives:Voluntary organizations formed by producers/farmers to sell directly and eliminate middlemen[cite: 5].5. Impact on lives:Provide goods, jobs, drive the economy, and influence lifestyle[cite: 5]."}, {"q": "Exercise H: Answer the following questions in detail (All 5 Questions)[cite: 5]", "model": "1. Describe three types of people involved in buying & selling:Producers (mango farmer Vinayak), Traders (wholesaler Ahmed), Consumers (family buyers)[cite: 5].2. Why price increases in chain:Intermediaries add transport, storage/warehouse rent, electricity, labor wages, and profit margins at every step[cite: 5].3. Inequalities impact:(a) Producers earn low prices and risk debt; (b) Consumers pay inflated prices due to middleman markups[cite: 5].4. How cooperative reduces inequality:Farmers pool produce to sell directly, eliminating middlemen and getting fair prices (e.g. dairy cooperatives)[cite: 5].5. Mindful buying & impact:Conscious purchasing based on actual needs, supporting local small businesses and reducing waste[cite: 5]."}, {"q": "Exercise I & J: HOTS & Competency-based Math Scenarios[cite: 5]", "model": "\u2022I1 (Wholesale Markets):Consumers don't buy at wholesale markets because goods are sold only in massive bulk quantities[cite: 5].\u2022I2 (Demand vs Supply Theory):High demand + low supply = high prices[cite: 5]. Knowing this helps consumers avoid panic buying during shortages[cite: 5].\u2022J1 (Product Trace):Tracing a cotton shirt from farmer to brand, noting that farmers get the lowest profit share[cite: 5].\u2022J2 (Notebook Chain Calculations):-Ravi (Producer):Earns \u20b920,000 profit (\u20b920/notebook)[cite: 5].-Nina (Wholesaler):Earns \u20b950,000 profit (\u20b925/notebook)[cite: 5].-Ramesh (Retailer):Earns \u20b93,500 profit (\u20b935/notebook)[cite: 5]."}];
+renderSubjective('long-container', longBook, 'lb');
+document.getElementById('long-count').textContent = `(${longBook.length})`;
+
+const extraBook = [{"q": "Did you know? Weekly Markets", "model": "A weekly market is so called because it is held on a specific day of the week, with traders setting up temporary stalls."}, {"q": "Did you know? Chain of Markets", "model": "Goods often pass through a long chain of markets\u2014from producer, to wholesale trader, to retailer, to the final consumer."}, {"q": "Did you know? Virtual Markets", "model": "Today, buying and selling can take place without physically going to a marketplace, thanks to the internet and e-commerce."}];
+renderSubjective('extra-container', extraBook, 'eb');
+document.getElementById('extra-count').textContent = `(${extraBook.length})`;
+
+</script>
+

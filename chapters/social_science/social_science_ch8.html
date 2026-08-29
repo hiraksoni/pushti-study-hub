@@ -1,1096 +1,578 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Chapter 8 Ultimate Master Visual Hub — Pushti's Notes</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --bg-color: #E8EDF2;
-    --surface: #FFFFFF;
-    --primary: #4338CA;
-    --primary-light: #EEF2FF;
+    --bg-main: #FFFFFF;
+    --bg-card: #F8FAFC;
     --text-main: #1E293B;
     --text-muted: #64748B;
-    --border: #CBD5E1;
-    --ready: #10B981;
-    --danger: #F43F5E;
-    --border-radius: 0px; /* Brutalist/Blueprint look */
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --accent: #38BDF8;
+    --border: #E2E8F0;
+    --border-hover: #CBD5E1;
+    --good: #059669;
+    --good-bg: #D1FAE5;
+    --bad: #E11D48;
+    --bad-bg: #FFE4E6;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background-color: var(--surface);
-    color: var(--text-main);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    padding: 24px;
-    max-width: 1100px;
-    margin: 0 auto;
-    overflow-x: hidden; 
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-main: #0F172A;
+      --bg-card: #1E293B;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --primary: #6366F1;
+      --primary-hover: #818CF8;
+      --accent: #0EA5E9;
+      --border: #334155;
+      --border-hover: #475569;
+      --good: #34D399;
+      --good-bg: #064E3B;
+      --bad: #F87171;
+      --bad-bg: #7F1D1D;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    }
   }
 
-  header.hero {
-    text-align: left;
-    background: var(--primary-light);
-    color: var(--text-main);
-    padding: 32px 24px;
-    border: 2px solid var(--primary);
-    margin-bottom: 24px;
-    position: relative;
-  }
+  *{box-sizing:border-box;}
+  body{margin:0; background: var(--bg-main); color: var(--text-main); font-family:'Nunito',sans-serif; line-height:1.6;}
+  .wrap{max-width:1100px; margin:0 auto; padding:26px 16px 120px;}
   
-  header.hero::after {
-      content: '';
-      position: absolute;
-      top: 4px; left: 4px; right: -6px; bottom: -6px;
-      border: 2px solid var(--primary);
-      z-index: -1;
+  header.hero{text-align:center; padding:30px 14px 26px; border-bottom:1px solid var(--border); margin-bottom:0px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--primary); margin-bottom:8px; font-weight:600;}
+  h1{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:clamp(1.8rem,5vw,2.7rem); margin:0 0 8px; color:var(--text-main);}
+  .sub{font-size:1rem; color:var(--text-muted);}
+  
+  /* STICKY TABS */
+  .tabs-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(var(--bg-main), 0.95);
+    backdrop-filter: blur(10px);
+    padding: 12px 0;
+    box-shadow: 0 4px 10px -10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border);
   }
-
-  header h1 {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
-    letter-spacing: -0.02em;
-    font-weight: 800;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    color: var(--primary);
+  .tabs-container {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; max-width: 1000px; margin: 0 auto; overflow-x: auto; padding: 0 10px;
   }
-
-  .tagline { font-size: 0.95rem; color: var(--text-muted); font-family: 'Space Mono', monospace; }
-
-  .badge-bar {
-    margin-top: 16px;
-    display: flex;
-    justify-content: flex-start;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .badge {
-    background: var(--surface);
-    padding: 4px 12px;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    border: 1px solid var(--border);
-    color: var(--text-main);
-    text-transform: uppercase;
-  }
-
-  .tab-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0px;
-    margin-bottom: 24px;
-    border-bottom: 2px solid var(--border);
-  }
-
   .tab-btn {
-    flex: 1 1 auto;
-    min-width: 120px;
-    text-align: center;
-    background: #F8FAFC;
+    padding: 8px 18px;
+    background: var(--bg-card);
     border: 1px solid var(--border);
-    border-bottom: none;
-    outline: none;
-    padding: 12px 16px;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
     color: var(--text-muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 100px;
     cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: all 0.15s ease;
+    transition: all 0.3s;
+    white-space: nowrap;
   }
-
-  .tab-btn:hover { background: #F1F5F9; color: var(--text-main); }
-  .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-  .tab-content { display: none; }
+  .tab-btn:hover { border-color: var(--border-hover); color: var(--text-main); }
+  .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: var(--shadow); }
+  
+  .tab-content { display: none; animation: fadeIn 0.4s ease; }
   .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-  .card {
-    background: var(--surface);
-    padding: 24px;
-    border: 1px solid var(--border);
-    margin-bottom: 24px;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.03);
+  .instructions { background: var(--bg-card); border: 1px dashed var(--primary); border-radius: 12px; padding: 14px 20px; margin: 22px 0 30px; font-size: 0.95rem; color: var(--text-main); }
+  .instructions b { color: var(--primary); }
+
+  /* COLLAPSIBLE HEADERS */
+  .collapsible-header {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--text-main); margin: 0 0 16px; 
+    display: flex; align-items: center; gap: 10px; border-left: 4px solid var(--primary); padding-left: 12px;
+    cursor: pointer; user-select: none; transition: 0.2s;
   }
+  .collapsible-header:hover { opacity: 0.8; }
+  .count-badge { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--text-muted); font-weight: 500; }
+  .chevron { width: 32px; height: 32px; fill: var(--primary); background: rgba(79,70,229,0.08); border-radius: 50%; padding: 4px; transition: all 0.3s; margin-left: auto; }
+.collapsible-header:hover .chevron { background: rgba(79,70,229,0.15); }
+  .collapsible-header.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-content { overflow: hidden; transition: max-height 0.3s ease-out; }
+  .collapsible-content.collapsed { display: none; }
 
-  .card-title {
-    font-family: 'Outfit', sans-serif;
-    color: var(--text-main);
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 16px;
-    border-bottom: 2px solid var(--primary);
-    padding-bottom: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    gap: 6px;
-  }
+  /* MODE SWITCH */
+  .mode-switch { display: flex; justify-content: center; gap: 0; margin-bottom: 20px; border-radius: 100px; overflow: hidden; border: 1px solid var(--primary); max-width: 380px; margin: 0 auto 20px auto; background:var(--bg-card); }
+  .mode-btn { flex: 1; padding: 10px 15px; border: none; background: transparent; color: var(--text-muted); font-size:0.95rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; transition: 0.3s; }
+  .mode-btn.active { background: var(--primary); color: #fff; }
+  #test-intro { background: var(--bg-card); border: 2px dashed var(--border); border-radius: 12px; padding: 40px 20px; text-align: center; margin-bottom: 30px; box-shadow: var(--shadow); }
+  #test-intro h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-main); margin-top: 0; }
+  .btn-start { background: var(--primary); color: white; border: none; padding: 14px 34px; font-size: 1.1rem; font-weight: 700; font-family:'Nunito',sans-serif; border-radius: 100px; cursor: pointer; margin-top: 15px; box-shadow: var(--shadow); transition: 0.2s; }
+  .btn-start:hover { transform: translateY(-2px); background: var(--primary-hover); }
 
-  .topic-badge {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    background: var(--primary-light);
-    color: var(--primary);
-    border: 1px solid rgba(67,56,202,0.2);
-    padding: 4px 8px;
-  }
+  /* QUESTION STYLES */
+  .q { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; box-shadow: var(--shadow); }
+  .q-text { font-weight: 700; margin-bottom: 10px; font-size: 1rem; color: var(--text-main); }
+  .q-text .num { color: var(--primary); font-family: 'JetBrains Mono', monospace; margin-right: 8px; }
+  .opts label { display: block; padding: 8px 12px; border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.95rem; border: 1px solid transparent; transition: 0.2s; }
+  .opts label:hover { background: rgba(79, 70, 229, 0.05); }
+  .opts input { margin-right: 10px; }
+  .fillblank input[type=text] { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; width: 250px; background: var(--bg-main); color: var(--text-main); }
+  .tf-row { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+  .tf-row label { font-size: 0.95rem; cursor: pointer; }
+  
+  .feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.5; }
+  .feedback.correct { background: var(--good-bg); color: var(--good); display: block; border: 1px solid var(--good); }
+  .feedback.incorrect { background: var(--bad-bg); color: var(--bad); display: block; border: 1px solid var(--bad); }
+  .feedback .exp { display: block; margin-top: 6px; font-style: italic; opacity: 0.9; }
 
-  .concept-visual-grid {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 24px;
-    align-items: start;
-    margin-top: 16px;
-  }
+  details { margin-top: 14px; }
+  details summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--primary); font-weight: 700; }
+  details .model { margin-top: 12px; font-size: 0.95rem; background: rgba(79, 70, 229, 0.05); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: 0 8px 8px 0; line-height: 1.6; }
 
-  @media (max-width: 650px) {
-    .concept-visual-grid { grid-template-columns: 1fr; }
-  }
+  /* BOTTOM GRADE BAR */
+  .grade-bar{position:fixed; left:0; right:0; bottom:0; background:var(--bg-card); border-top: 1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:center; gap:16px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index:50; display:none;}
+  .grade-bar button{background:var(--primary); color:#fff; border:none; padding:12px 28px; border-radius:100px; font-weight:700; font-family:'Nunito',sans-serif; font-size:1rem; cursor:pointer;}
+  .grade-bar button:hover{background:var(--primary-hover);}
+  .score-readout{font-family:'JetBrains Mono',monospace; font-size:1.15rem; font-weight:700; color:var(--text-main);}
+  .score-readout.urgent{color:var(--bad); animation: pulse 1s infinite;}
+  @keyframes pulse { 0% { opacity:1;} 50% {opacity:0.5;} 100% {opacity:1;} }
 
-  .visual-card-svg {
-    background: #F8FAFC;
-    border: 1px solid var(--border);
-    padding: 16px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+  .result-panel{display:none; background:var(--bg-card); border:2px solid var(--border); border-radius:14px; padding:24px; text-align:center; margin-bottom:40px; box-shadow:var(--shadow);}
+  .result-panel.show{display:block;}
+  .result-panel .score-big{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:2.8rem; color:var(--primary);}
+  .result-panel .msg{font-size:1.1rem; margin-top:10px; line-height:1.6;}
 
-  .visual-card-svg svg { width: 120px; height: 120px; }
-
-  .visual-caption {
-    font-size: 0.75rem;
-    font-family: 'Space Mono', monospace;
-    color: var(--text-muted);
-    margin-top: 12px;
-    text-transform: uppercase;
-  }
-
-  .grid-3 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-  }
-
-  .sub-box { padding: 16px; border: 1px solid var(--border); font-size: 0.9rem; background: #F8FAFC; }
-  .sub-box.key { border-top: 4px solid var(--primary); }
-  .sub-box.facts { border-top: 4px solid var(--ready); }
-  .sub-box.fun { border-top: 4px solid var(--danger); }
-
-  .sub-box h4 { font-family: 'Outfit', sans-serif; font-size: 0.95rem; margin-bottom: 8px; text-transform: uppercase; }
-  .sub-box.key h4 { color: var(--primary); }
-  .sub-box.facts h4 { color: var(--ready); }
-  .sub-box.fun h4 { color: var(--danger); }
-  .sub-box ul { padding-left: 16px; margin-top: 8px; }
-  .sub-box li { margin-bottom: 6px; }
-
-  .mcq-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 20px;
-    margin-bottom: 16px;
-    border-left: 4px solid var(--border);
-  }
-
-  .mcq-q { font-weight: 600; font-size: 0.95rem; margin-bottom: 12px; color: var(--text-main); font-family: 'Inter', sans-serif; }
-
-  .mcq-opt {
-    display: block; width: 100%; text-align: left; background: #F8FAFC; border: 1px solid var(--border);
-    padding: 10px 16px; margin-bottom: 8px; cursor: pointer;
-    font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: all 0.15s;
-  }
-
-  .mcq-opt:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
-  .mcq-opt.correct { background: #ECFDF5 !important; border-color: var(--ready) !important; color: #065F46; font-weight: 600; }
-  .mcq-opt.wrong { background: #FFF1F2 !important; border-color: var(--danger) !important; color: #9F1239; }
-
-  .mcq-explain {
-    display: none; margin-top: 12px; padding: 12px 16px; background: #F1F5F9;
-    border-left: 3px solid var(--primary); font-size: 0.85rem; color: var(--text-main);
-  }
-
-  .qa-card {
-    background: var(--surface); border: 1px solid var(--border); padding: 16px;
-    margin-bottom: 16px;
-  }
-
-  .qa-q {
-    font-weight: 600; cursor: pointer; display: flex; justify-content: space-between;
-    align-items: center; color: var(--text-main); font-size: 0.95rem;
-  }
-
-  .qa-q::after {
-    content: '[ + ] REVEAL'; font-size: 0.75rem; font-family: 'Space Mono', monospace;
-    color: var(--primary); background: var(--primary-light); padding: 4px 8px; border: 1px solid rgba(67,56,202,0.2); white-space: nowrap;
-  }
-
-  .qa-card.open .qa-q::after { content: '[ - ] HIDE'; background: #FFF1F2; color: var(--danger); border-color: rgba(244,63,94,0.2); }
-
-  .qa-a {
-    display: none; margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border); font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;
-  }
-
-  .qa-card.open .qa-a { display: block; }
-
-  table.textbook-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.9rem; }
-  table.textbook-table th, table.textbook-table td { border: 1px solid var(--border); padding: 12px 16px; text-align: left; }
-  table.textbook-table th { background-color: #F8FAFC; color: var(--text-main); font-family: 'Outfit', sans-serif; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
-
-  .media-link-card {
-    display: flex; align-items: center; gap: 16px; background: #F8FAFC; padding: 16px;
-    margin-top: 12px; border: 1px solid var(--border); text-decoration: none;
-    color: var(--text-main); font-size: 0.9rem; font-weight: 500; transition: all 0.2s;
-  }
-
-  .media-link-card:hover { background: var(--surface); border-color: var(--primary); color: var(--primary); box-shadow: 4px 4px 0 rgba(67,56,202,0.1); }
-  .media-icon { font-size: 1.5rem; }
-
-  footer { text-align: center; margin-top: 32px; font-size: 0.75rem; color: var(--text-muted); font-family: 'Space Mono', monospace; text-transform: uppercase; }
+  /* VIDEO LINKS (TAB 1) */
+  .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .topic-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); position:relative; }
+  .topic-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
+  .video-btn { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(79, 70, 229, 0.05); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text-main); font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; transition: 0.2s; }
+  .video-btn:hover { background: rgba(79, 70, 229, 0.1); border-color: var(--border-hover); }
+  .thumb-wrapper { position: relative; width: 44px; height: 28px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+  .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+  .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(79, 70, 229, 0.9); border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+  .play-icon svg { width: 8px; height: 8px; fill: white; margin-left: 2px; }
 </style>
 </head>
 <body>
-
-  <header class="hero">
-    <h1>India: 4th to 7th Century CE</h1>
-    <div class="tagline">Complete Chapter Visual Study Dashboard & Interactive Testing Hub</div>
-    <div class="badge-bar">
-      <span class="badge">Pushti · Class 7 CBSE</span>
-      <span class="badge">Tapestry of the Past</span>
-      <span class="badge">Chapter 8</span>
+<header class="hero">
+<div class="eyebrow">Biology · Chapter 3</div>
+<h1>Chapter 8 Ultimate Master Visual Hub — Pushti's Notes</h1>
+<div class="sub">Complete Chapter Guide &amp; Practice Module</div>
+</header>
+<div class="tabs-wrapper">
+<div class="tabs-container">
+<button class="tab-btn active" onclick="openTab(event, 'tab-video')">1. Videos &amp; Map</button>
+<button class="tab-btn" onclick="openTab(event, 'tab-omr')">2. OMR (1 Mark)</button>
+<button class="tab-btn" onclick="openTab(event, 'tab-short')">3. 2/3 Marks</button>
+<button class="tab-btn" onclick="openTab(event, 'tab-long')">4. 4+ Marks</button>
+<button class="tab-btn" onclick="openTab(event, 'tab-extra')">5. Extra Knowledge</button>
+</div>
+</div>
+<div class="wrap">
+<!-- TAB 1: VIDEOS & CONCEPT MAP -->
+<div class="tab-content active" id="tab-video">
+<div class="instructions">
+<b>How to use:</b> Watch the video explanations for each topic by clicking the thumbnails. Then review the Concept Map below to see how everything connects!
     </div>
-  </header>
-
-  <div class="tab-nav">
-    <button class="tab-btn active" onclick="openTab('guptas')">👑 Gupta Dynasty</button>
-    <button class="tab-btn" onclick="openTab('harsha')">🗡️ Harshavardhana</button>
-    <button class="tab-btn" onclick="openTab('chalukyas')">🏛️ Chalukya Dynasty</button>
-    <button class="tab-btn" onclick="openTab('pallavas')">🌊 Pallava Dynasty</button>
-    <button class="tab-btn" onclick="openTab('lifestyle')">📜 Admin & Life</button>
-    <button class="tab-btn" onclick="openTab('mcq-4opt')">🎯 12 Master MCQs</button>
-    <button class="tab-btn" onclick="openTab('mcq-confusing')">⚡ Confusing Fill-Blanks</button>
-    <button class="tab-btn" onclick="openTab('mcq-tf')">❓ True / False Arena</button>
-    <button class="tab-btn" onclick="openTab('textbook-all')">📖 All Written Answers</button>
-    <button class="tab-btn" onclick="openTab('media')">🖼️ Visual & Video Anchors</button>
-  </div>
-
-  <!-- TAB 1: THE GUPTA DYNASTY -->
-  <div id="guptas" class="tab-content active">
-    <div class="card" style="border-left: 5px solid var(--maroon);">
-      <div class="card-title">The Gupta Empire Overview <span class="ruler-badge">320 CE – 550 CE</span></div>
-      <p>Emerging almost 500 years after the fall of the Mauryan Empire, the Gupta Empire transformed a small kingdom in Magadha into one of ancient India's greatest powers[cite: 1, 2]. Capitals were <b>Pataliputra</b> and <b>Ujjain</b>[cite: 1, 2].</p>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('video-grid', this)">
+<span>Chapter Topics &amp; Videos</span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed topics-grid" id="video-grid">
+<div class="topic-card">
+<div class="topic-title">1. The Gupta Empire</div>
+<a class="video-btn" href="https://www.youtube.com/watch?v=eXiVGEEPQ6c" target="_blank"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/eXiVGEEPQ6c/hqdefault.jpg"/><div class="play-icon"><svg viewbox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><span>Golden Age of India</span></a>
+</div>
+<div class="topic-card">
+<div class="topic-title">2. Harshavardhana</div>
+<a class="video-btn" href="https://www.youtube.com/watch?v=EGK1KkLtx2Y" target="_blank"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/EGK1KkLtx2Y/hqdefault.jpg"/><div class="play-icon"><svg viewbox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><span>Harsha and Xuan Zang</span></a>
+</div>
+<div class="topic-card">
+<div class="topic-title">3. Pallavas &amp; Chalukyas</div>
+<a class="video-btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg"/><div class="play-icon"><svg viewbox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg></div></div><span>South Indian Kingdoms</span></a>
+</div>
+</div>
+</div>
+<!-- TAB 2: OMR -->
+<div class="tab-content" id="tab-omr">
+<div class="mode-switch">
+<button class="mode-btn active" id="btn-practice" onclick="setMode('practice')">Practice Mode</button>
+<button class="mode-btn" id="btn-test" onclick="setMode('test')">Test Mode</button>
+</div>
+<div id="test-intro" style="display:none;">
+<h3>Ready for the Test?</h3>
+<p style="font-size: 1.1rem;">You have <b id="t-count" style="color:var(--primary);"></b> objective questions.</p>
+<p style="font-size: 1.1rem;">Time Allowed: <b id="t-time" style="color:var(--primary);"></b> minutes.</p>
+<button class="btn-start" onclick="startTest()">Start Test Now</button>
+</div>
+<div class="result-panel" id="resultPanel">
+<div class="score-big" id="scoreBig">0 / 0</div>
+<div class="msg" id="scoreMsg"></div>
+</div>
+<div id="omr-content">
+<div class="instructions" id="omr-instructions">
+<b>Practice Mode Active:</b> Click any option or type an answer to get instant correct/incorrect feedback along with explanations!
+      </div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('mcqbook-container', this)">
+<span>OMR Practice (MCQs)</span> <span class="count-badge" id="mcq-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="mcqbook-container"></div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('fillbook-container', this)">
+<span>Fill in the Blanks</span> <span class="count-badge" id="fill-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="fillbook-container"></div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('tfbook-container', this)">
+<span>True or False</span> <span class="count-badge" id="tf-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="tfbook-container"></div>
+</div>
+</div>
+<!-- TAB 3: SHORT -->
+<div class="tab-content" id="tab-short">
+<div class="instructions">
+<b>Mental Flashcards:</b> Try to recall the answer in your head, then click "Show Detailed Answer".
     </div>
-
-    <!-- 1. Chandragupta I -->
-    <div class="card">
-      <div class="card-title">1. Chandragupta I <span class="ruler-badge">320 CE – 335 CE</span></div>
-      
-      <div class="ruler-visual-grid">
-        <div class="visual-card-svg">
-          <!-- Vector Coin: Marriage Alliance -->
-          <svg viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="45" fill="#C59B27" stroke="#7A2A2E" stroke-width="3"/>
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#FFF8E7" stroke-dasharray="2 2"/>
-            <path d="M 35 68 L 35 38 L 42 45 M 35 48 L 45 48" stroke="#5A1E22" stroke-width="3" stroke-linecap="round"/>
-            <path d="M 65 68 L 65 42 L 58 48 M 65 50 L 55 50" stroke="#5A1E22" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="35" cy="32" r="6" fill="#5A1E22"/>
-            <circle cx="65" cy="35" r="5" fill="#5A1E22"/>
-          </svg>
-          <div class="visual-caption">Gold Dinar: Marriage Alliance Coin</div>
-        </div>
-
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4>👑 Key Factors & Conquests</h4>
-            <ul>
-              <li>First major Gupta emperor and founder[cite: 1, 2].</li>
-              <li>Conquered neighboring kingdoms across Magadha (Bihar & UP)[cite: 1, 2].</li>
-              <li>Ruled from imperial capital at <b>Pataliputra</b>[cite: 1, 2].</li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>📌 Important Textbook Facts</h4>
-            <ul>
-              <li>Married Princess Kumaradevi of the <b>Lichchhavi kingdom</b> (Bihar/Nepal)[cite: 1, 2].</li>
-              <li>Secured army and political support via marriage[cite: 1, 2].</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>💡 Memory Anchor</h4>
-            <ul>
-              <li>Notice the coin design! The King and Queen are engraved side-by-side to honor their political union[cite: 1, 2].</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('short-container', this)">
+<span>2 and 3 Marks Questions</span> <span class="count-badge" id="short-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="short-container"></div>
+</div>
+<!-- TAB 4: LONG -->
+<div class="tab-content" id="tab-long">
+<div class="instructions">
+<b>Mental Flashcards:</b> Formulate the answer, then study the complete textbook-level explanation.
     </div>
-
-    <!-- 2. Samudragupta -->
-    <div class="card">
-      <div class="card-title">2. Samudragupta <span class="ruler-badge">335 CE – 380 CE</span></div>
-      
-      <div class="ruler-visual-grid">
-        <div class="visual-card-svg">
-          <!-- Vector Coin: Veena Player -->
-          <svg viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="45" fill="#C59B27" stroke="#7A2A2E" stroke-width="3"/>
-            <rect x="25" y="65" width="50" height="8" rx="2" fill="#5A1E22"/>
-            <path d="M 30 65 L 30 35 L 40 45" stroke="#5A1E22" stroke-width="3"/>
-            <circle cx="30" cy="28" r="6" fill="#5A1E22"/>
-            <!-- Veena Lute -->
-            <path d="M 40 42 L 68 58" stroke="#FFF8E7" stroke-width="3"/>
-            <circle cx="68" cy="58" r="7" fill="#5A1E22"/>
-            <circle cx="42" cy="43" r="5" fill="#5A1E22"/>
-          </svg>
-          <div class="visual-caption">Gold Dinar: Samudragupta Playing Veena</div>
-        </div>
-
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4>👑 Key Factors & Conquests</h4>
-            <ul>
-              <li>Expanded via 4 distinct policies:
-                <ol>
-                  <li>Directly annexed 9 Aryavarta kingdoms[cite: 2].</li>
-                  <li>Defeated 12 South Indian kings (annual tributes)[cite: 2].</li>
-                  <li>Extracted tributes from forest tribes & Assam/Nepal[cite: 2].</li>
-                  <li>Formed marriage alliances with frontier chiefs[cite: 2].</li>
-                </ol>
-              </li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>📌 Important Textbook Facts</h4>
-            <ul>
-              <li>Source: <b>Prayagraj Prashasti</b> by poet <b>Harisena</b>[cite: 1, 2].</li>
-              <li>Title: <b>Maharajadhiraja</b> ("King of Kings")[cite: 2].</li>
-              <li>Performed <b>Ashwamedha Yagna</b>[cite: 2].</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>💡 Memory Anchor</h4>
-            <ul>
-              <li>The coin shows him playing a <b>Veena</b> sitting on a couch[cite: 1, 2]—he was both a warrior and a musician!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+<h2 class="collapsible-header collapsed" onclick="toggleSection('long-container', this)">
+<span>4+ Marks &amp; Case Based</span> <span class="count-badge" id="long-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="long-container"></div>
+</div>
+<!-- TAB 5: EXTRA KNOWLEDGE -->
+<div class="tab-content" id="tab-extra">
+<div class="instructions">
+<b>For the Bookworms:</b> Deep-dive questions and fascinating facts!
     </div>
-
-    <!-- 3. Chandragupta II -->
-    <div class="card">
-      <div class="card-title">3. Chandragupta II <span class="ruler-badge">380 CE – 415 CE</span></div>
-      
-      <div class="ruler-visual-grid">
-        <div class="visual-card-svg">
-          <!-- Vector Coin: Vikramaditya Sun -->
-          <svg viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="45" fill="#C59B27" stroke="#7A2A2E" stroke-width="3"/>
-            <circle cx="50" cy="50" r="16" fill="#5A1E22"/>
-            <!-- Sun Rays -->
-            <path d="M 50 20 L 50 10 M 50 80 L 50 90 M 20 50 L 10 50 M 80 50 L 90 50 M 28 28 L 20 20 M 72 72 L 80 80 M 28 72 L 20 80 M 72 28 L 80 20" stroke="#5A1E22" stroke-width="3"/>
-          </svg>
-          <div class="visual-caption">Sun Motif: Vikramaditya Seal</div>
-        </div>
-
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4>👑 Key Factors & Conquests</h4>
-            <ul>
-              <li>Expanded westward into Gujarat/Maharashtra, taking wealthy sea ports[cite: 2].</li>
-              <li>Brought Gupta Empire to its maximum prosperity[cite: 2].</li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>📌 Important Textbook Facts</h4>
-            <ul>
-              <li>Title: <b>Vikramaditya</b> ("Mighty as the Sun")[cite: 1, 2].</li>
-              <li>His era is known as the <b>"Golden Age of India"</b>[cite: 1, 2].</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>💡 Memory Anchor</h4>
-            <ul>
-              <li>Patron of the 9 Court Jewels including poet <b>Kalidasa</b> and astronomer <b>Aryabhata</b>[cite: 1, 2]!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 2: HARSHAVARDHANA -->
-  <div id="harsha" class="tab-content">
-    <div class="card" style="border-left: 5px solid var(--gold);">
-      <div class="card-title">Harshavardhana <span class="ruler-badge">606 CE – 647 CE</span></div>
-      
-      <div class="ruler-visual-grid">
-        <div class="visual-card-svg">
-          <!-- Vector: Royal Lotus & Kanauj Seal -->
-          <svg viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="45" fill="#FFF8E7" stroke="#C59B27" stroke-width="3"/>
-            <path d="M 50 25 C 40 40, 30 50, 50 75 C 70 50, 60 40, 50 25 Z" fill="#7A2A2E"/>
-            <path d="M 50 38 C 30 50, 20 60, 40 75 C 50 65, 45 55, 50 38 Z" fill="#C59B27"/>
-            <path d="M 50 38 C 70 50, 80 60, 60 75 C 50 65, 55 55, 50 38 Z" fill="#C59B27"/>
-          </svg>
-          <div class="visual-caption">Royal Lotus Seal of Kanauj</div>
-        </div>
-
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4>👑 Key Factors & Conquests</h4>
-            <ul>
-              <li>Pushyabhuti family; crowned king at age <b>16</b> in 606 CE[cite: 1, 2].</li>
-              <li>Controlled UP, Bihar, Bengal, Odisha, and Punjab[cite: 1, 2].</li>
-              <li>Shifted capital from <b>Thaneshwar</b> to strategic <b>Kanauj</b>[cite: 1, 2].</li>
-              <li>Southward expansion halted at <b>Narmada River</b> by Pulakesin II[cite: 1, 2].</li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>📌 Important Textbook Facts</h4>
-            <ul>
-              <li>Remembered as <b>last powerful ancient ruler of Northern India</b>[cite: 1, 2].</li>
-              <li>Authored Sanskrit plays: <i>Ratnavali</i> & <i>Nagananda</i>[cite: 1, 2].</li>
-              <li>Court biographer <b>Banabhatta</b> wrote <i>Harshacharita</i> & <i>Kadambari</i>[cite: 2].</li>
-              <li>Patronized <b>Nalanda University</b>[cite: 1, 2].</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>💡 Memory Anchor</h4>
-            <ul>
-              <li>Every 5 years at Prayagraj, Harsha donated his accumulated royal riches to scholars and the poor[cite: 2]!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 3: THE CHALUKYAS -->
-  <div id="chalukyas" class="tab-content">
-    <div class="card" style="border-left: 5px solid var(--teal);">
-      <div class="card-title">The Chalukyas of Badami <span class="ruler-badge">543 CE – 753 CE</span></div>
-      
-      <div class="ruler-visual-grid">
-        <div class="visual-card-svg">
-          <!-- Vector: Badami Cave Temple Shikhara -->
-          <svg viewBox="0 0 100 100">
-            <rect x="15" y="15" width="70" height="70" rx="6" fill="#EBF4F3" stroke="#2F5D5A" stroke-width="3"/>
-            <polygon points="50,22 25,65 75,65" fill="#2F5D5A"/>
-            <rect x="35" y="65" width="30" height="15" fill="#204140"/>
-          </svg>
-          <div class="visual-caption">Rock-Cut Cave Temple Relief</div>
-        </div>
-
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4>👑 Pulakesin I (543–566 CE)</h4>
-            <ul>
-              <li>Founded the dynasty in 543 CE[cite: 1, 2].</li>
-              <li>Fortified <b>Badami</b> as capital and annexed Krishna-Tungabhadra rivers[cite: 1, 2].</li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>📌 Pulakesin II (610–642 CE)</h4>
-            <ul>
-              <li>Greatest Chalukya ruler; ruled Karnataka, Andhra, & Telangana[cite: 1, 2].</li>
-              <li>Defeated King Harsha at the Narmada River[cite: 1, 2].</li>
-              <li>Achievements recorded in <b>Aihole Prashasti</b> by poet <b>Ravikirti</b>[cite: 2].</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>💡 Memory Anchor</h4>
-            <ul>
-              <li>Chalukya kings carved whole multi-roomed temples out of solid red sandstone cliff faces[cite: 1, 2]!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 4: THE PALLAVAS -->
-  <div id="pallavas" class="tab-content">
-    <div class="card" style="border-left: 5px solid var(--purple);">
-      <div class="card-title">The Pallavas of Kanchipuram <span class="ruler-badge">575 CE – 668 CE+</span></div>
-      
-      <div class="ruler-visual-grid">
-        <div class="visual-card-svg">
-          <!-- Vector: Shore Temple Tower -->
-          <svg viewBox="0 0 100 100">
-            <rect x="15" y="15" width="70" height="70" rx="6" fill="#F0EEF8" stroke="#4C4478" stroke-width="3"/>
-            <polygon points="50,20 30,50 70,50" fill="#4C4478"/>
-            <polygon points="50,45 25,80 75,80" fill="#4C4478"/>
-          </svg>
-          <div class="visual-caption">Shore Temple Monolith</div>
-        </div>
-
-        <div class="grid-3">
-          <div class="sub-box key">
-            <h4> Simhavishnu & Mahendravarman I</h4>
-            <ul>
-              <li><b>Simhavishnu (575–600 CE):</b> Founded independent rule[cite: 1, 2].</li>
-              <li><b>Mahendravarman I (600–630 CE):</b> Initiated wars against Chalukyas[cite: 1, 2].</li>
-            </ul>
-          </div>
-          <div class="sub-box facts">
-            <h4>🏛️ Narasimhavarman I 'Mamalla'</h4>
-            <ul>
-              <li>Ruled 630–668 CE; defeated Chalukya king Pulakesin II[cite: 1, 2].</li>
-              <li>Constructed coastal <b>Mamallapuram</b> (Mahabalipuram)[cite: 1, 2].</li>
-            </ul>
-          </div>
-          <div class="sub-box fun">
-            <h4>💡 Memory Anchor</h4>
-            <ul>
-              <li>"Mamalla" means <b>"Great Wrestler"</b>—the grand coastal temples stand directly at the sea shore[cite: 1, 2]!</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 5: LIFESTYLE & ADMIN -->
-  <div id="lifestyle" class="tab-content">
-    <div class="card">
-      <div class="card-title">Administration, Society & Economy</div>
-      <div class="grid-3">
-        <div class="sub-box key">
-          <h4>🏛️ Gupta Hierarchy</h4>
-          <ul>
-            <li><b>Emperor:</b> Supreme head + Council of Mantris[cite: 1, 2].</li>
-            <li><b>Bhuktis (Provinces):</b> Ruled by Uparikas[cite: 1, 2].</li>
-            <li><b>Vishyas (Districts):</b> Ruled by Vishyapatis[cite: 1, 2].</li>
-            <li><b>Gramas (Villages):</b> Managed by Gramikas[cite: 1, 2].</li>
-            <li><b>Samantas:</b> Feudal military chiefs paid in land grants[cite: 2].</li>
-          </ul>
-        </div>
-        <div class="sub-box facts">
-          <h4>📜 Southern Features & Tax</h4>
-          <ul>
-            <li><b>Divine Descent:</b> Chalukya/Pallava kings claimed descent from Lord Brahma[cite: 1, 2].</li>
-            <li><b>Brahmadeya:</b> Tax-free villages granted to Brahmanas[cite: 1, 2].</li>
-            <li><b>Assemblies:</b> Sabha (Brahmana), Ur (non-Brahmana), Nagaram (Trade towns)[cite: 1, 2].</li>
-            <li><b>Taxes:</b> Primary source was land tax; also taxed trade and sales[cite: 1, 2].</li>
-          </ul>
-        </div>
-        <div class="sub-box fun">
-          <h4>🎨 Cultural Achievements</h4>
-          <ul>
-            <li><b>Aryabhata:</b> Astronomy & mathematics pioneer[cite: 1, 2].</li>
-            <li><b>Kalidasa:</b> Authored the play <i>Shakuntala</i>[cite: 1, 2].</li>
-            <li><b>Vishakhadatta:</b> Authored play <i>Devichandraguptam</i>[cite: 1, 2].</li>
-            <li><b>Nalanda:</b> Premier university attracting global scholars[cite: 1, 2].</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 6: 12 MASTER MCQS -->
-  <div id="mcq-4opt" class="tab-content">
-    <div class="card">
-      <div class="card-title">12 Master Multiple Choice Questions (Detailed Explanations)</div>
-      
-      <div class="mcq-box">
-        <div class="mcq-q">1. Who captured nine kingdoms in Aryavarta and brought them under direct rule?[cite: 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">a) Chandragupta I</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-1')">b) Samudragupta</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">c) Chandragupta II</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">d) Kumaragupta</button>
-        <div class="mcq-explain" id="mcq-1">
-          <b>Explanation:</b> Samudragupta directly annexed 9 kingdoms in Aryavarta[cite: 2]. Chandragupta I founded the empire[cite: 1, 2], while Chandragupta II conquered western Shaka territories[cite: 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">2. Which strategic trade city became Harshavardhana's new capital after Thaneshwar?[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">a) Mathura</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">b) Ujjain</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-2')">c) Kanauj</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">d) Pataliputra</button>
-        <div class="mcq-explain" id="mcq-2">
-          <b>Explanation:</b> Harsha shifted his capital to <b>Kanauj</b> to better control northern trade routes[cite: 1, 2]. Ujjain and Pataliputra were Gupta capitals[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">3. Which Chalukya ruler defeated Harshavardhana at the Narmada River?[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">a) Pulakesin I</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-3')">b) Pulakesin II</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">c) Simhavishnu</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">d) Mahendravarman I</button>
-        <div class="mcq-explain" id="mcq-3">
-          <b>Explanation:</b> Pulakesin II defeated Harsha on the banks of the Narmada, stopping his southward march[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">4. What were governors of provinces (Bhuktis) called in the Gupta Empire?[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-4')">a) Uparikas</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">b) Vishyapatis</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">c) Gramikas</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">d) Samantas</button>
-        <div class="mcq-explain" id="mcq-4">
-          <b>Explanation:</b> Provinces were called <i>Bhuktis</i> (ruled by <b>Uparikas</b>)[cite: 1, 2]. Districts were <i>Vishyas</i> (ruled by Vishyapatis)[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">5. Who authored the biography Harshacharita and the novel Kadambari?[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">a) Dandin</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">b) Kalidasa</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-5')">c) Banabhatta</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">d) Harisena</button>
-        <div class="mcq-explain" id="mcq-5">
-          <b>Explanation:</b> Court poet <b>Banabhatta</b> authored <i>Harshacharita</i> and <i>Kadambari</i>[cite: 1, 2]. Harisena wrote the Prayagraj Prashasti[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">6. Which Pallava ruler took the title 'Mamalla' and constructed Mamallapuram?[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">a) Simhavishnu</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">b) Mahendravarman I</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-6')">c) Narasimhavarman I</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">d) Pulakesin II</button>
-        <div class="mcq-explain" id="mcq-6">
-          <b>Explanation:</b> Narasimhavarman I was nicknamed Mamalla ("Great Wrestler") and founded Mamallapuram[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">7. What was the assembly in non-Brahmana villages under the Pallava kingdom?[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">a) Sabha</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-7')">b) Ur</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">c) Nagaram</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">d) Bhukti</button>
-        <div class="mcq-explain" id="mcq-7">
-          <b>Explanation:</b> <b>Ur</b> was for non-Brahmana villages[cite: 1, 2], <i>Sabha</i> was for Brahmana villages[cite: 1, 2], and <i>Nagaram</i> was for market towns[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">8. What was a 'Brahmadeya' land grant in the Pallava kingdom?[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">a) Land given to army generals</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-8')">b) Tax-free village grants given to Brahmanas</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">c) Land reserved for royal palaces</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">d) Market towns for trade guilds</button>
-        <div class="mcq-explain" id="mcq-8">
-          <b>Explanation:</b> <i>Brahmadeya</i> were special tax-free village grants given to Brahmanas who collected taxes from residents[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">9. Who were the 'Samantas' in the Gupta administration?[cite: 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">a) Foreign Chinese pilgrims</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">b) Village heads in districts</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-9')">c) High-ranking military chiefs paid in land grants</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">d) Court poets who wrote prashastis</button>
-        <div class="mcq-explain" id="mcq-9">
-          <b>Explanation:</b> Samantas were army chiefs who received land grants instead of cash salaries and commanded troops[cite: 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">10. Which Central Asian warrior tribe repeatedly attacked and ended the Gupta Empire?[cite: 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">a) Shakas</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-10')">b) Huns</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">c) Kushanas</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">d) Cholas</button>
-        <div class="mcq-explain" id="mcq-10">
-          <b>Explanation:</b> The <b>Huns</b> from Central Asia invaded repeatedly around 550 CE, destroying Gupta authority[cite: 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">11. Who composed the Aihole Prashasti describing the achievements of Pulakesin II?[cite: 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">a) Harisena</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">b) Banabhatta</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-11')">c) Ravikirti</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">d) Kalidasa</button>
-        <div class="mcq-explain" id="mcq-11">
-          <b>Explanation:</b> Court poet <b>Ravikirti</b> composed the Aihole Prashasti for Pulakesin II[cite: 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">12. What was the primary source of income for ancient empires in this period?[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-12')">a) Taxes collected on land</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">b) Taxes collected on sea trade</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">c) Fine money from courts</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">d) Gold mining in South India</button>
-        <div class="mcq-explain" id="mcq-12">
-          <b>Explanation:</b> Land tax (agricultural land, grazing land, wasteland) was the biggest source of royal income[cite: 1, 2].
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 7: CONFUSING 2-CHOICE FILL IN BLANKS -->
-  <div id="mcq-confusing" class="tab-content">
-    <div class="card">
-      <div class="card-title">Confusing Two-Choice Drills (Master the Tricks)</div>
-      <p style="margin-bottom:14px; font-size:0.88rem;">Each question contains ONE correct answer and ONE dangerously confusing wrong answer!</p>
-
-      <div class="mcq-box">
-        <div class="mcq-q">1. Chandragupta II assumed the famous title ________.[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-1')">[A] Vikramaditya</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-1')">[B] Maharajadhiraja</button>
-        <div class="mcq-explain" id="c-1">
-          <b>Why confusion happens:</b> Students confuse grandfather and grandson! <i>Chandragupta I</i> and <i>Samudragupta</i> took Maharajadhiraja[cite: 2], but <b>Chandragupta II</b> specifically took <b>Vikramaditya</b>[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">2. The Prayagraj Prashasti in praise of Samudragupta was composed by ________.[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-2')">[A] Harisena</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-2')">[B] Ravikirti</button>
-        <div class="mcq-explain" id="c-2">
-          <b>Why confusion happens:</b> Both were famous court poets who wrote prashastis! <b>Harisena</b> wrote for Samudragupta at Prayagraj[cite: 1, 2], whereas <i>Ravikirti</i> wrote the Aihole Prashasti for Pulakesin II[cite: 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">3. Chinese traveler Xuanzang visited India during the reign of ________.[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-3')">[A] Harshavardhana</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-3')">[B] Chandragupta II</button>
-        <div class="mcq-explain" id="c-3">
-          <b>Why confusion happens:</b> Two Chinese travelers visited during different eras! <b>Xuanzang</b> visited during <b>Harsha's</b> rule[cite: 1, 2], whereas <i>Fa Xian</i> visited during the Gupta rule[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">4. District-level administrative units in the Gupta Empire were called ________.[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-4')">[A] Vishyas</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-4')">[B] Bhuktis</button>
-        <div class="mcq-explain" id="c-4">
-          <b>Why confusion happens:</b> <i>Bhuktis</i> were larger <b>provinces</b>[cite: 1, 2], while <b>Vishyas</b> were the smaller <b>districts</b> inside those provinces[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">5. Samudragupta allowed defeated rulers in South India to continue ruling in exchange for ________.[cite: 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-5')">[A] Annual Tributes</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-5')">[B] Direct Annexation</button>
-        <div class="mcq-explain" id="c-5">
-          <b>Why confusion happens:</b> Samudragupta directly annexed northern Aryavarta kings[cite: 2], but used <b>indirect rule (annual tributes)</b> for distant southern kings[cite: 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">6. In the Pallava kingdom, the village assembly for Brahmana villages was called ________.[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-6')">[A] Sabha</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-6')">[B] Ur</button>
-        <div class="mcq-explain" id="c-6">
-          <b>Why confusion happens:</b> <b>Sabha</b> was for Brahmana landholders[cite: 1, 2], while <i>Ur</i> was for general non-Brahmana villages[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">7. King Harshavardhana shifted his capital from Thaneshwar to ________.[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-7')">[A] Kanauj</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-7')">[B] Pataliputra</button>
-        <div class="mcq-explain" id="c-7">
-          <b>Why confusion happens:</b> <i>Pataliputra</i> was the historic capital of the Guptas[cite: 1, 2]. Harsha shifted his capital to <b>Kanauj</b>[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">8. The Chalukya capital city Vatapi is known today as ________.[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-8')">[A] Badami</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-8')">[B] Kanchipuram</button>
-        <div class="mcq-explain" id="c-8">
-          <b>Why confusion happens:</b> <i>Kanchipuram</i> was the Pallava capital[cite: 1, 2], while <b>Badami</b> was the Chalukya capital[cite: 1, 2].
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 8: TRUE / FALSE ARENA -->
-  <div id="mcq-tf" class="tab-content">
-    <div class="card">
-      <div class="card-title">Interactive True / False Arena (With Historical Reasons)</div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">1. Samudragupta defeated 12 kingdoms in the Deccan and South India.[cite: 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-1')">[TRUE]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-1')">[FALSE]</button>
-        <div class="mcq-explain" id="tf-1">
-          <b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> He defeated 12 kings in the south (Dakshinapatha) but reinstated them as tributary rulers[cite: 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">2. Chandragupta II took the title of Maharajadhiraja.[cite: 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-2')">[TRUE]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-2')">[FALSE]</button>
-        <div class="mcq-explain" id="tf-2">
-          <b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Chandragupta II took the title <b>Vikramaditya</b>[cite: 1, 2]. Chandragupta I and Samudragupta were the ones who took Maharajadhiraja[cite: 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">3. The Narmada River was the southern boundary of Harsha's empire.[cite: 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-3')">[TRUE]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-3')">[FALSE]</button>
-        <div class="mcq-explain" id="tf-3">
-          <b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Pulakesin II defeated Harsha at the Narmada River, making it the permanent southern border of Harsha's state[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">4. The Gupta Empire's biggest source of income was trade tax.[cite: 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-4')">[TRUE]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-4')">[FALSE]</button>
-        <div class="mcq-explain" id="tf-4">
-          <b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> The largest source of revenue was taxes collected on <b>land</b> (farming, grazing, forests)[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">5. Pallava kings gave Brahmanas special tax-free land grants called Brahmadeya.[cite: 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-5')">[TRUE]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-5')">[FALSE]</button>
-        <div class="mcq-explain" id="tf-5">
-          <b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Pallava kings granted tax-exempt villages to Brahmanas, who collected revenue from local inhabitants[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="mcq-box">
-        <div class="mcq-q">6. Prashastis written by court poets give a completely balanced view of kings.[cite: 1, 2]</div>
-        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-6')">[TRUE]</button>
-        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-6')">[FALSE]</button>
-        <div class="mcq-explain" id="tf-6">
-          <b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Prashastis are biased eulogies praising only victories and virtues while omitting failures[cite: 1, 2].
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 9: ALL TEXTBOOK ANSWERS -->
-  <div id="textbook-all" class="tab-content">
-    <div class="card">
-      <div class="card-title">Complete Written Textbook Answers (Short, Long, HOTS)</div>
-
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise D: Arrange in chronological order[cite: 2]</div>
-        <div class="qa-a">
-          <b>Correct Sequence:</b><br>
-          1. <b>The Gupta Empire</b> (320 CE)[cite: 1, 2]<br>
-          2. <b>The Chalukya kingdom</b> (543 CE)[cite: 1, 2]<br>
-          3. <b>The Pallava kingdom</b> (575 CE)[cite: 1, 2]<br>
-          4. <b>Harsha's empire</b> (606 CE)[cite: 1, 2]
-        </div>
-      </div>
-
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise E: Short Answer Questions (E1 to E5)[cite: 2]</div>
-        <div class="qa-a">
-          <b>E1. Three types of archaeological sources & examples:</b>[cite: 2]<br>
-          • <i>Coins:</i> Gold coins issued by Gupta emperors[cite: 1, 2].<br>
-          • <i>Monuments:</i> Rock-cut temples at Aihole and Mandagapattu[cite: 1, 2].<br>
-          • <i>Inscriptions:</i> Prayagraj/Allahabad Pillar inscription by Harisena[cite: 1, 2].<br><br>
-
-          <b>E2. Who were Xuanzang and Fa Xian? Why are they important?</b>[cite: 2]<br>
-          They were Chinese Buddhist pilgrims who traveled across India[cite: 1, 2]. Their travelogues provide valuable firsthand knowledge of administration, religion, Nalanda, and social conditions[cite: 1, 2].<br><br>
-
-          <b>E3. Who was Narasimhavarman I, and why is he remembered?</b>[cite: 2]<br>
-          He was a Pallava king (nicknamed <i>Mamalla</i>)[cite: 1, 2]. He defeated Chalukya king Pulakesin II and built the port city of Mamallapuram[cite: 1, 2].<br><br>
-
-          <b>E4. Why did Chalukya and Pallava rulers claim descent from Lord Brahma?</b>[cite: 2]<br>
-          To assert divine sanction for their rule, reinforcing authority among subjects and rivals[cite: 1, 2].<br><br>
-
-          <b>E5. Architectural contributions of Chalukyas and Pallavas:</b>[cite: 2]<br>
-          • <i>Chalukyas:</i> Rock-cut cave temples at Badami, Pattadakal, and Aihole[cite: 1, 2].<br>
-          • <i>Pallavas:</i> Shore Temple and Pancha Pandava Rathas at Mamallapuram[cite: 1, 2].
-        </div>
-      </div>
-
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise F: Detailed Long Answer Questions (F1 to F5)[cite: 2]</div>
-        <div class="qa-a">
-          <b>F1. Importance and limitations of Prashastis:</b>[cite: 2]<br>
-          <i>Prashastis</i> are court poems written to praise rulers[cite: 2]. They help historians map conquests, borders, and genealogies[cite: 1, 2]. Limitation: They are biased sources because poets highlighted victories while ignoring military setbacks or royal flaws[cite: 1, 2].<br><br>
-
-          <b>F2. Achievements of Gupta Rulers:</b>[cite: 2]<br>
-          • <i>Chandragupta I:</i> Married Princess Kumaradevi of the Lichchhavis to secure political power and establish Pataliputra[cite: 1, 2].<br>
-          • <i>Samudragupta:</i> Directly annexed 9 northern kingdoms[cite: 2], extracted tribute from 12 southern kings[cite: 2], and secured frontier alliances[cite: 2].<br>
-          • <i>Chandragupta II:</i> Conquered Shaka territories in western India, capturing sea trade ports in Gujarat and Maharashtra[cite: 2].<br><br>
-
-          <b>F3. Conflict between Chalukyas and Pallavas:</b>[cite: 2]<br>
-          They fought over fertile land between the Krishna and Tungabhadra rivers and coastal trade dominance[cite: 2]. Continuous warfare weakened both dynasties, paving the way for the Cholas[cite: 2].<br><br>
-
-          <b>F4. Gupta Administration:</b>[cite: 2]<br>
-          Hierarchy: Emperor → <i>Bhuktis</i> (Provinces led by <i>Uparikas</i>) → <i>Vishyas</i> (Districts led by <i>Vishyapatis</i>) → Villages (led by <i>Gramikas</i>)[cite: 1, 2]. Feudal chiefs (<i>Samantas</i>) supplied military forces[cite: 2].<br><br>
-
-          <b>F5. Economic Life (4th to 7th Century CE):</b>[cite: 2]<br>
-          Agriculture was the primary occupation, and land tax was the main revenue source[cite: 1, 2]. Guilds regulated crafts, and trade flourished with Rome, Southeast Asia, and Africa[cite: 2].
-        </div>
-      </div>
-
-      <div class="qa-card" onclick="toggleQA(this)">
-        <div class="qa-q">Exercise G & H: HOTS & Competency Questions[cite: 2]</div>
-        <div class="qa-a">
-          <b>G1. Non-war strategies of Chandragupta I:</b> Used matrimonial diplomacy by marrying Princess Kumaradevi of the Lichchhavis, securing power without warfare[cite: 1, 2].<br><br>
-          <b>G2. Samudragupta vs Harsha in South India:</b> Samudragupta used indirect rule (tributes)[cite: 2], whereas Harsha attempted direct conquest across the Narmada River and was defeated by Pulakesin II[cite: 1, 2].
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 10: VISUAL & VIDEO ANCHORS -->
-  <div id="media" class="tab-content">
-    <div class="card">
-      <div class="card-title">Visual Anchors & Recommended Creator Videos</div>
-      <p style="margin-bottom:14px; font-size:0.9rem;">Click these curated links to view authentic photos of monuments and explore animated history storytelling and visual documentaries:</p>
-
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
-        
-        <a class="media-link-card" href="https://commons.wikimedia.org/wiki/Category:Allahabad_Pillar" target="_blank">
-          <span class="media-icon">📜</span>
-          <div><b>Prayagraj Pillar Inscription Photos</b><br><small>View detailed photos of Harisena's prashasti carved into stone[cite: 1, 2].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://commons.wikimedia.org/wiki/Category:Gupta_coins" target="_blank">
-          <span class="media-icon">🪙</span>
-          <div><b>Gupta Empire Gold Coin Gallery</b><br><small>See Samudragupta playing the veena on gold coins[cite: 1, 2].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://commons.wikimedia.org/wiki/Category:Shore_Temple" target="_blank">
-          <span class="media-icon">🛕</span>
-          <div><b>Shore Temple at Mamallapuram</b><br><small>Explore high-resolution photos of Pallava sea architecture[cite: 1, 2].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://commons.wikimedia.org/wiki/Category:Badami_Cave_Temples" target="_blank">
-          <span class="media-icon">⛰️</span>
-          <div><b>Badami Cave Temples</b><br><small>View Chalukya rock-cut cave temples carved into sandstone cliffs[cite: 1, 2].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Gupta+Empire+Golden+Age+animated+history" target="_blank">
-          <span class="media-icon">🎬</span>
-          <div><b>Animated History: The Gupta Golden Age</b><br><small>Search engaging animated storytelling videos about the Guptas[cite: 1, 2].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Harshavardhana+and+Pulakesin+II+battle+Narmada" target="_blank">
-          <span class="media-icon">⚔️</span>
-          <div><b>Battle of Narmada River: Harsha vs Pulakesin II</b><br><small>Watch animated breakdowns of the famous clash at the Narmada[cite: 1, 2].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Pallavas+and+Chalukyas+architecture+documentary" target="_blank">
-          <span class="media-icon">🏛️</span>
-          <div><b>Visual Documentary: Pallava & Chalukya Architecture</b><br><small>Explore cinematic video tours of Mamallapuram & Pattadakal temples[cite: 1, 2].</small></div>
-        </a>
-
-        <a class="media-link-card" href="https://www.youtube.com/results?search_query=NCERT+Class+7+History+Chapter+8+India+4th+to+7th+Century" target="_blank">
-          <span class="media-icon">▶️</span>
-          <div><b>NCERT Class 7 History Video Modules</b><br><small>Search animated NCERT visual lessons on Chapter 8[cite: 1, 2].</small></div>
-        </a>
-
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    Chapter 8 Study Hub · Prepared for Pushti · CBSE Class 7 History
-  </footer>
-
+<h2 class="collapsible-header collapsed" onclick="toggleSection('extra-container', this)">
+<span>Knowledge Topics &amp; Trivia</span> <span class="count-badge" id="extra-count"></span>
+<svg class="chevron" viewbox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+</h2>
+<div class="collapsible-content collapsed" id="extra-container"></div>
+</div>
+</div> <!-- end wrap -->
+<div class="grade-bar" id="grade-bar">
+<span class="score-readout" id="liveCount">00:00</span>
+<button id="grade-btn" onclick="gradeAll()">Grade My Test</button>
+</div>
 <script>
-  function openTab(tabId) {
-    const contents = document.querySelectorAll('.tab-content');
-    const buttons = document.querySelectorAll('.tab-btn');
-    contents.forEach(content => content.classList.remove('active'));
-    buttons.forEach(btn => btn.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    event.currentTarget.classList.add('active');
+window.currentMode = 'practice'; 
+window.testTimer = null;
+window.timeRemaining = 0;
+
+function toggleSection(contentId, headerEl) {
+    const el = document.getElementById(contentId);
+    el.classList.toggle('collapsed');
+    headerEl.classList.toggle('collapsed');
+}
+
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+    tabcontent[i].classList.remove("active");
   }
-
-  function toggleQA(cardElement) {
-    cardElement.classList.toggle('open');
+  tablinks = document.getElementsByClassName("tab-btn");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
+  document.getElementById(tabName).style.display = "block";
+  document.getElementById(tabName).classList.add("active");
+  evt.currentTarget.className += " active";
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
 
-  function checkMCQ(btnElement, isCorrect, explainId) {
-    const parentBox = btnElement.parentElement;
-    const buttons = parentBox.querySelectorAll('.mcq-opt');
-    const explanation = document.getElementById(explainId);
+let totalMax = 0;
 
-    buttons.forEach(btn => btn.disabled = true);
+function renderFill(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className = 'q fillblank';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <input type="text" id="${prefix}-${i}" placeholder="type your answer" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('fill', '${prefix}', ${i})">
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='fill'; c.dataset.prefix=prefix;
+  c.fillData = data;
+}
 
-    if (isCorrect) {
-      btnElement.classList.add('correct');
-    } else {
-      btnElement.classList.add('wrong');
+function renderMCQ(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className='q';
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('mcq', '${prefix}', ${i})"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <div class="opts">${opts}</div>
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='mcq'; c.dataset.prefix=prefix;
+  c.mcqData = data;
+}
+
+function renderTF(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className='q';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.s}</div>
+      <div class="tf-row">
+        <label><input type="radio" name="${prefix}-${i}" value="true" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> True</label>
+        <label><input type="radio" name="${prefix}-${i}" value="false" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> False</label>
+      </div>
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='tf'; c.dataset.prefix=prefix;
+  c.tfData = data;
+}
+
+function renderSubjective(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    const div = document.createElement('div');
+    div.className='q subjective';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <details><summary>Show Detailed Answer</summary><div class="model">${item.model}</div></details>`;
+    c.appendChild(div);
+  });
+}
+
+function gradeSpecificQuestion(type, prefix, i) {
+   let item, val, correct, answerText, expText;
+   const fb = document.getElementById(`${prefix}-fb-${i}`);
+   if(type === 'fill') {
+      const container = document.getElementById('fillbook-container');
+      item = container.fillData[i];
+      val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
+      correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+      answerText = 'Correct Answer: ' + item.a[0];
+      expText = item.exp;
+      if(val === '') { fb.style.display = 'none'; return; }
+   } else if(type === 'mcq') {
+      const container = document.getElementById('mcqbook-container');
+      item = container.mcqData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = parseInt(sel.value);
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+      expText = item.exp;
+   } else if(type === 'tf') {
+      const container = document.getElementById('tfbook-container');
+      item = container.tfData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = (sel.value === 'true');
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+      expText = item.exp;
+   }
+   
+   if(correct) {
+      fb.className = 'feedback correct'; 
+      fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${expText}</span>`;
+   } else {
+      fb.className = 'feedback incorrect'; 
+      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText} <span class="exp">${expText}</span>`;
+   }
+   fb.style.display = 'block';
+}
+
+function setMode(mode) {
+  if(window.testTimer) clearInterval(window.testTimer);
+  window.currentMode = mode;
+  document.getElementById('btn-practice').classList.toggle('active', mode==='practice');
+  document.getElementById('btn-test').classList.toggle('active', mode==='test');
+  
+  resetAllAnswers();
+  
+  if(mode === 'test') {
+    document.getElementById('omr-content').style.display = 'none';
+    document.getElementById('test-intro').style.display = 'block';
+    document.getElementById('t-count').textContent = totalMax;
+    document.getElementById('t-time').textContent = totalMax; 
+    document.getElementById('grade-bar').style.display = 'none';
+  } else {
+    document.getElementById('omr-content').style.display = 'block';
+    document.getElementById('test-intro').style.display = 'none';
+    document.getElementById('grade-bar').style.display = 'none'; 
+    document.getElementById('omr-instructions').style.display = 'block';
+  }
+}
+
+function startTest() {
+  document.getElementById('test-intro').style.display = 'none';
+  document.getElementById('omr-content').style.display = 'block';
+  document.getElementById('omr-instructions').style.display = 'none'; 
+  document.getElementById('grade-bar').style.display = 'flex';
+  
+  // EXPAND ALL TABS FOR TEST
+  document.getElementById('mcqbook-container').classList.remove('collapsed');
+  document.getElementById('mcqbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('fillbook-container').classList.remove('collapsed');
+  document.getElementById('fillbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('tfbook-container').classList.remove('collapsed');
+  document.getElementById('tfbook-container').previousElementSibling.classList.remove('collapsed');
+
+  window.timeRemaining = totalMax * 60; // 1 min per Q
+  updateTimerDisplay();
+  window.testTimer = setInterval(() => {
+    window.timeRemaining--;
+    updateTimerDisplay();
+    if(window.timeRemaining <= 0) {
+       clearInterval(window.testTimer);
+       gradeAll();
     }
+  }, 1000);
+}
 
-    if (explanation) {
-      explanation.style.display = 'block';
-    }
+function updateTimerDisplay() {
+  let m = Math.floor(window.timeRemaining / 60);
+  let s = window.timeRemaining % 60;
+  const readout = document.getElementById('liveCount');
+  readout.textContent = `⏱ Time Remaining: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  if(window.timeRemaining <= 60) {
+     readout.classList.add('urgent');
+  } else {
+     readout.classList.remove('urgent');
   }
+}
+
+function resetAllAnswers() {
+   document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
+   document.querySelectorAll('#omr-content input[type="text"]').forEach(r => r.value = '');
+   document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+   document.getElementById('resultPanel').classList.remove('show');
+}
+
+function gradeAll() {
+  if(window.testTimer) clearInterval(window.testTimer);
+  
+  let totalCorrect = 0;
+  let totalIncorrect = 0;
+  let totalUnanswered = 0;
+  
+  const gradeItem = (type, val, item, fb, rightAnsText) => {
+      let correct = false;
+      if(val === null || val === '') {
+          totalUnanswered++; 
+          fb.className='feedback incorrect'; 
+          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+      } else {
+          if(type==='fill') correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+          if(type==='mcq') correct = (val === item.answer);
+          if(type==='tf') correct = (val === item.answer);
+          
+          if(correct) {
+              totalCorrect++; 
+              fb.className='feedback correct'; 
+              fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${item.exp}</span>`;
+          } else {
+              totalIncorrect++; 
+              fb.className='feedback incorrect'; 
+              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+          }
+      }
+      fb.style.display='block';
+  };
+
+  const fillContainer = document.getElementById('fillbook-container');
+  fillContainer.fillData.forEach((item, i) => {
+     const val = document.getElementById(`${fillContainer.dataset.prefix}-${i}`).value.trim().toLowerCase();
+     const fb = document.getElementById(`${fillContainer.dataset.prefix}-fb-${i}`);
+     gradeItem('fill', val, item, fb, 'Correct Answer: ' + item.a[0]);
+  });
+  
+  const mcqContainer = document.getElementById('mcqbook-container');
+  mcqContainer.mcqData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${mcqContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${mcqContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+     gradeItem('mcq', sel ? parseInt(sel.value) : null, item, fb, rightAnsText);
+  });
+  
+  const tfContainer = document.getElementById('tfbook-container');
+  tfContainer.tfData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${tfContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${tfContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+     gradeItem('tf', sel ? (sel.value === 'true') : null, item, fb, rightAnsText);
+  });
+  
+  document.getElementById('scoreBig').textContent = totalCorrect + ' / ' + totalMax;
+  const pct = Math.round((totalCorrect/totalMax)*100);
+  let msg = `<strong>Score Breakdown:</strong><br><span style="color:var(--good); font-weight:bold;">✔ Correct: ${totalCorrect}</span> &nbsp;|&nbsp; <span style="color:var(--bad); font-weight:bold;">✘ Incorrect: ${totalIncorrect}</span> &nbsp;|&nbsp; <span>⊝ Unanswered: ${totalUnanswered}</span><br><br>`;
+  if(pct>=90) msg += "Outstanding! You crushed the time-bound test. 🏆";
+  else if(pct>=70) msg += "Great work! Just review the questions marked in red below. 🌟";
+  else if(pct>=50) msg += "Good effort — scroll down to study the explanations for the ones you missed. 📖";
+  else msg += "Time-bound tests can be tricky! Review the correct answers below and try again later. 💪";
+  
+  document.getElementById('scoreMsg').innerHTML = msg;
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('grade-bar').style.display = 'none';
+  
+  window.scrollTo({top: document.getElementById('resultPanel').offsetTop - 100, behavior: 'smooth'});
+}
+
+window.onload = function() {
+   setMode('practice');
+};
+
 </script>
-
-<!-- FIREBASE INJECTION START -->
-<script type="module">
-    import { db, doc, onSnapshot } from '../../firebase-config.js';
-    
-    // Listen for answer lock/unlock
-    const settingsDoc = doc(db, 'settings', 'global');
-    onSnapshot(settingsDoc, (docSnap) => {
-        const data = docSnap.data() || { showAnswers: true };
-        
-        // Find all buttons that might reveal answers
-        const buttons = Array.from(document.querySelectorAll('button')).filter(b => {
-            const text = b.textContent.toLowerCase();
-            return text.includes('reveal') || text.includes('answer') || text.includes('check');
-        });
-
-        if (data.showAnswers === false) {
-            // Lock them
-            buttons.forEach(b => {
-                b.style.display = 'none';
-            });
-            
-            // Add a locked message if not exists
-            if (!document.getElementById('lock-msg')) {
-                const msg = document.createElement('div');
-                msg.id = 'lock-msg';
-                msg.style.padding = '15px';
-                msg.style.margin = '20px 0';
-                msg.style.backgroundColor = '#f8d7da';
-                msg.style.color = '#721c24';
-                msg.style.border = '1px solid #f5c6cb';
-                msg.style.borderRadius = '5px';
-                msg.style.fontWeight = 'bold';
-                msg.textContent = '🔒 Answers are currently locked by the Parent Administrator.';
-                document.body.appendChild(msg);
-            } else {
-                document.getElementById('lock-msg').style.display = 'block';
-            }
-        } else {
-            // Unlock them
-            buttons.forEach(b => {
-                b.style.display = 'inline-block';
-            });
-            if (document.getElementById('lock-msg')) {
-                document.getElementById('lock-msg').style.display = 'none';
-            }
-        }
-    });
-</script>
-<!-- FIREBASE INJECTION END -->
-
 </body>
 </html>
+<script>
+
+const mcqBook = [{"q": "Who captured nine kingdoms in Aryavarta and brought them under direct rule?[cite: 2]", "options": ["Chandragupta I", "Samudragupta", "Chandragupta II", "Kumaragupta"], "answer": 1, "exp": "Samudragupta directly annexed 9 kingdoms in Aryavarta[cite: 2]. Chandragupta I founded the empire[cite: 1, 2], while Chandragupta II conquered western Shaka territories[cite: 2]."}, {"q": "Which strategic trade city became Harshavardhana's new capital after Thaneshwar?[cite: 1, 2]", "options": ["Mathura", "Ujjain", "Kanauj", "Pataliputra"], "answer": 2, "exp": "Harsha shifted his capital toKanaujto better control northern trade routes[cite: 1, 2]. Ujjain and Pataliputra were Gupta capitals[cite: 1, 2]."}, {"q": "Which Chalukya ruler defeated Harshavardhana at the Narmada River?[cite: 1, 2]", "options": ["Pulakesin I", "Pulakesin II", "Simhavishnu", "Mahendravarman I"], "answer": 1, "exp": "Pulakesin II defeated Harsha on the banks of the Narmada, stopping his southward march[cite: 1, 2]."}, {"q": "What were governors of provinces (Bhuktis) called in the Gupta Empire?[cite: 1, 2]", "options": ["Uparikas", "Vishyapatis", "Gramikas", "Samantas"], "answer": 0, "exp": "Provinces were calledBhuktis(ruled byUparikas)[cite: 1, 2]. Districts wereVishyas(ruled by Vishyapatis)[cite: 1, 2]."}, {"q": "Who authored the biography Harshacharita and the novel Kadambari?[cite: 1, 2]", "options": ["Dandin", "Kalidasa", "Banabhatta", "Harisena"], "answer": 2, "exp": "Court poetBanabhattaauthoredHarshacharitaandKadambari[cite: 1, 2]. Harisena wrote the Prayagraj Prashasti[cite: 1, 2]."}, {"q": "Which Pallava ruler took the title 'Mamalla' and constructed Mamallapuram?[cite: 1, 2]", "options": ["Simhavishnu", "Mahendravarman I", "Narasimhavarman I", "Pulakesin II"], "answer": 2, "exp": "Narasimhavarman I was nicknamed Mamalla (\"Great Wrestler\") and founded Mamallapuram[cite: 1, 2]."}, {"q": "What was the assembly in non-Brahmana villages under the Pallava kingdom?[cite: 1, 2]", "options": ["Sabha", "Ur", "Nagaram", "Bhukti"], "answer": 1, "exp": "Urwas for non-Brahmana villages[cite: 1, 2],Sabhawas for Brahmana villages[cite: 1, 2], andNagaramwas for market towns[cite: 1, 2]."}, {"q": "What was a 'Brahmadeya' land grant in the Pallava kingdom?[cite: 1, 2]", "options": ["Land given to army generals", "Tax-free village grants given to Brahmanas", "Land reserved for royal palaces", "Market towns for trade guilds"], "answer": 1, "exp": "Brahmadeyawere special tax-free village grants given to Brahmanas who collected taxes from residents[cite: 1, 2]."}, {"q": "Who were the 'Samantas' in the Gupta administration?[cite: 2]", "options": ["Foreign Chinese pilgrims", "Village heads in districts", "High-ranking military chiefs paid in land grants", "Court poets who wrote prashastis"], "answer": 2, "exp": "Samantas were army chiefs who received land grants instead of cash salaries and commanded troops[cite: 2]."}, {"q": "Which Central Asian warrior tribe repeatedly attacked and ended the Gupta Empire?[cite: 2]", "options": ["Shakas", "Huns", "Kushanas", "Cholas"], "answer": 1, "exp": "TheHunsfrom Central Asia invaded repeatedly around 550 CE, destroying Gupta authority[cite: 2]."}, {"q": "Who composed the Aihole Prashasti describing the achievements of Pulakesin II?[cite: 2]", "options": ["Harisena", "Banabhatta", "Ravikirti", "Kalidasa"], "answer": 2, "exp": "Court poetRavikirticomposed the Aihole Prashasti for Pulakesin II[cite: 2]."}, {"q": "What was the primary source of income for ancient empires in this period?[cite: 1, 2]", "options": ["Taxes collected on land", "Taxes collected on sea trade", "Fine money from courts", "Gold mining in South India"], "answer": 0, "exp": "Land tax (agricultural land, grazing land, wasteland) was the biggest source of royal income[cite: 1, 2]."}];
+renderMCQ('mcqbook-container', mcqBook, 'mb');
+document.getElementById('mcq-count').textContent = `(${mcqBook.length})`;
+
+const fillBook = [{"q": "Chandragupta II assumed the famous title ________.[cite: 1, 2]", "a": ["Vikramaditya"], "exp": "Why confusion happens:Students confuse grandfather and grandson!Chandragupta IandSamudraguptatook Maharajadhiraja[cite: 2], butChandragupta IIspecifically tookVikramaditya[cite: 1, 2]."}, {"q": "The Prayagraj Prashasti in praise of Samudragupta was composed by ________.[cite: 1, 2]", "a": ["Harisena"], "exp": "Why confusion happens:Both were famous court poets who wrote prashastis!Harisenawrote for Samudragupta at Prayagraj[cite: 1, 2], whereasRavikirtiwrote the Aihole Prashasti for Pulakesin II[cite: 2]."}, {"q": "Chinese traveler Xuanzang visited India during the reign of ________.[cite: 1, 2]", "a": ["Harshavardhana"], "exp": "Why confusion happens:Two Chinese travelers visited during different eras!Xuanzangvisited duringHarsha'srule[cite: 1, 2], whereasFa Xianvisited during the Gupta rule[cite: 1, 2]."}, {"q": "District-level administrative units in the Gupta Empire were called ________.[cite: 1, 2]", "a": ["Vishyas"], "exp": "Why confusion happens:Bhuktiswere largerprovinces[cite: 1, 2], whileVishyaswere the smallerdistrictsinside those provinces[cite: 1, 2]."}, {"q": "Samudragupta allowed defeated rulers in South India to continue ruling in exchange for ________.[cite: 2]", "a": ["Annual Tributes"], "exp": "Why confusion happens:Samudragupta directly annexed northern Aryavarta kings[cite: 2], but usedindirect rule (annual tributes)for distant southern kings[cite: 2]."}, {"q": "In the Pallava kingdom, the village assembly for Brahmana villages was called ________.[cite: 1, 2]", "a": ["Sabha"], "exp": "Why confusion happens:Sabhawas for Brahmana landholders[cite: 1, 2], whileUrwas for general non-Brahmana villages[cite: 1, 2]."}, {"q": "King Harshavardhana shifted his capital from Thaneshwar to ________.[cite: 1, 2]", "a": ["Kanauj"], "exp": "Why confusion happens:Pataliputrawas the historic capital of the Guptas[cite: 1, 2]. Harsha shifted his capital toKanauj[cite: 1, 2]."}, {"q": "The Chalukya capital city Vatapi is known today as ________.[cite: 1, 2]", "a": ["Badami"], "exp": "Why confusion happens:Kanchipuramwas the Pallava capital[cite: 1, 2], whileBadamiwas the Chalukya capital[cite: 1, 2]."}];
+renderFill('fillbook-container', fillBook, 'fb');
+document.getElementById('fill-count').textContent = `(${fillBook.length})`;
+
+const tfBook = [{"s": "Samudragupta defeated 12 kingdoms in the Deccan and South India.[cite: 2]", "answer": true, "correction": "", "exp": "Reason:TRUE.He defeated 12 kings in the south (Dakshinapatha) but reinstated them as tributary rulers[cite: 2]."}, {"s": "Chandragupta II took the title of Maharajadhiraja.[cite: 2]", "answer": false, "correction": "", "exp": "Reason:FALSE.Chandragupta II took the titleVikramaditya[cite: 1, 2]. Chandragupta I and Samudragupta were the ones who took Maharajadhiraja[cite: 2]."}, {"s": "The Narmada River was the southern boundary of Harsha's empire.[cite: 2]", "answer": true, "correction": "", "exp": "Reason:TRUE.Pulakesin II defeated Harsha at the Narmada River, making it the permanent southern border of Harsha's state[cite: 1, 2]."}, {"s": "The Gupta Empire's biggest source of income was trade tax.[cite: 2]", "answer": false, "correction": "", "exp": "Reason:FALSE.The largest source of revenue was taxes collected onland(farming, grazing, forests)[cite: 1, 2]."}, {"s": "Pallava kings gave Brahmanas special tax-free land grants called Brahmadeya.[cite: 2]", "answer": true, "correction": "", "exp": "Reason:TRUE.Pallava kings granted tax-exempt villages to Brahmanas, who collected revenue from local inhabitants[cite: 1, 2]."}, {"s": "Prashastis written by court poets give a completely balanced view of kings.[cite: 1, 2]", "answer": false, "correction": "", "exp": "Reason:FALSE.Prashastis are biased eulogies praising only victories and virtues while omitting failures[cite: 1, 2]."}];
+renderTF('tfbook-container', tfBook, 'tb');
+document.getElementById('tf-count').textContent = `(${tfBook.length})`;
+
+const shortBook = [{"q": "Exercise D: Arrange in chronological order[cite: 2]", "model": "Correct Sequence:1.The Gupta Empire(320 CE)[cite: 1, 2]2.The Chalukya kingdom(543 CE)[cite: 1, 2]3.The Pallava kingdom(575 CE)[cite: 1, 2]4.Harsha's empire(606 CE)[cite: 1, 2]"}];
+renderSubjective('short-container', shortBook, 'sb');
+document.getElementById('short-count').textContent = `(${shortBook.length})`;
+
+const longBook = [{"q": "Exercise E: Short Answer Questions (E1 to E5)[cite: 2]", "model": "E1. Three types of archaeological sources & examples:[cite: 2]\u2022Coins:Gold coins issued by Gupta emperors[cite: 1, 2].\u2022Monuments:Rock-cut temples at Aihole and Mandagapattu[cite: 1, 2].\u2022Inscriptions:Prayagraj/Allahabad Pillar inscription by Harisena[cite: 1, 2].E2. Who were Xuanzang and Fa Xian? Why are they important?[cite: 2]They were Chinese Buddhist pilgrims who traveled across India[cite: 1, 2]. Their travelogues provide valuable firsthand knowledge of administration, religion, Nalanda, and social conditions[cite: 1, 2].E3. Who was Narasimhavarman I, and why is he remembered?[cite: 2]He was a Pallava king (nicknamedMamalla)[cite: 1, 2]. He defeated Chalukya king Pulakesin II and built the port city of Mamallapuram[cite: 1, 2].E4. Why did Chalukya and Pallava rulers claim descent from Lord Brahma?[cite: 2]To assert divine sanction for their rule, reinforcing authority among subjects and rivals[cite: 1, 2].E5. Architectural contributions of Chalukyas and Pallavas:[cite: 2]\u2022Chalukyas:Rock-cut cave temples at Badami, Pattadakal, and Aihole[cite: 1, 2].\u2022Pallavas:Shore Temple and Pancha Pandava Rathas at Mamallapuram[cite: 1, 2]."}, {"q": "Exercise F: Detailed Long Answer Questions (F1 to F5)[cite: 2]", "model": "F1. Importance and limitations of Prashastis:[cite: 2]Prashastisare court poems written to praise rulers[cite: 2]. They help historians map conquests, borders, and genealogies[cite: 1, 2]. Limitation: They are biased sources because poets highlighted victories while ignoring military setbacks or royal flaws[cite: 1, 2].F2. Achievements of Gupta Rulers:[cite: 2]\u2022Chandragupta I:Married Princess Kumaradevi of the Lichchhavis to secure political power and establish Pataliputra[cite: 1, 2].\u2022Samudragupta:Directly annexed 9 northern kingdoms[cite: 2], extracted tribute from 12 southern kings[cite: 2], and secured frontier alliances[cite: 2].\u2022Chandragupta II:Conquered Shaka territories in western India, capturing sea trade ports in Gujarat and Maharashtra[cite: 2].F3. Conflict between Chalukyas and Pallavas:[cite: 2]They fought over fertile land between the Krishna and Tungabhadra rivers and coastal trade dominance[cite: 2]. Continuous warfare weakened both dynasties, paving the way for the Cholas[cite: 2].F4. Gupta Administration:[cite: 2]Hierarchy: Emperor \u2192Bhuktis(Provinces led byUparikas) \u2192Vishyas(Districts led byVishyapatis) \u2192 Villages (led byGramikas)[cite: 1, 2]. Feudal chiefs (Samantas) supplied military forces[cite: 2].F5. Economic Life (4th to 7th Century CE):[cite: 2]Agriculture was the primary occupation, and land tax was the main revenue source[cite: 1, 2]. Guilds regulated crafts, and trade flourished with Rome, Southeast Asia, and Africa[cite: 2]."}, {"q": "Exercise G & H: HOTS & Competency Questions[cite: 2]", "model": "G1. Non-war strategies of Chandragupta I:Used matrimonial diplomacy by marrying Princess Kumaradevi of the Lichchhavis, securing power without warfare[cite: 1, 2].G2. Samudragupta vs Harsha in South India:Samudragupta used indirect rule (tributes)[cite: 2], whereas Harsha attempted direct conquest across the Narmada River and was defeated by Pulakesin II[cite: 1, 2]."}];
+renderSubjective('long-container', longBook, 'lb');
+document.getElementById('long-count').textContent = `(${longBook.length})`;
+
+const extraBook = [{"q": "Did you know? The Iron Pillar", "model": "The iron pillar at Mehrauli, Delhi, is a remarkable example of metallurgical skill; it has not rusted for over 1500 years."}, {"q": "Did you know? Aryabhata", "model": "Aryabhata, a mathematician and astronomer, wrote a book in Sanskrit known as the Aryabhatiyam, explaining eclipses and the earth's rotation."}, {"q": "Did you know? Kalidasa", "model": "Kalidasa is known for his renowned plays, the most famous being Abhijnana Shakuntalam, the story of King Dushyanta and Shakuntala."}];
+renderSubjective('extra-container', extraBook, 'eb');
+document.getElementById('extra-count').textContent = `(${extraBook.length})`;
+
+</script>
+
