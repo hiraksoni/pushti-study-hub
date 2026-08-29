@@ -1,1088 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pushti's Study Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
-<style>
-    :root {
-        --bg-color: #E8EDF2;
-        --surface: #FFFFFF;
-        --primary: #4338CA;
-        --primary-light: #EEF2FF;
-        --text-main: #1E293B;
-        --text-muted: #64748B;
-        --border: #CBD5E1;
-        --ready: #10B981;
-        --pending: #94A3B8;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pushti Study Hub - Your personal study companion for CBSE Class 7. Explore chapters, watch videos, and ace your exams!">
     
-    body {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        height: 100vh;
-        font-family: 'Inter', sans-serif;
-        background-color: var(--bg-color);
-        color: var(--text-main);
-    }
+    <title>Pushti Study Hub ??</title>
     
-    /* Sidebar */
-    #sidebar {
-        width: 320px;
-        background-color: var(--surface);
-        border-right: 1px solid var(--border);
-        display: flex;
-        flex-direction: column;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 10;
-        box-shadow: 4px 0 15px rgba(0,0,0,0.03);
-    }
-    #sidebar.collapsed {
-        width: 0;
-        border-right: none;
-    }
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>??</text></svg>">
     
-    #sidebar-toggle {
-        position: absolute;
-        top: 16px;
-        left: 16px;
-        z-index: 1000;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        width: 44px;
-        height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary);
-        cursor: pointer;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        transition: all 0.2s;
-        font-size: 1.5rem;
-    }
-    #sidebar-toggle:hover {
-        background: var(--primary-light);
-        transform: translateY(-1px);
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     
-    .sidebar-header {
-        padding: 24px;
-        border-bottom: 1px solid var(--border);
-    }
-    .app-title {
-        font-family: 'Outfit', sans-serif;
-        font-size: 1.4rem;
-        font-weight: 800;
-        color: var(--primary);
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        margin: 0 0 16px 0;
-    }
-    .user-profile {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .user-tag {
-        font-family: 'Space Mono', monospace;
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        background: var(--bg-color);
-        padding: 4px 8px;
-        border-radius: 4px;
-    }
-    .logout-btn {
-        font-family: 'Space Mono', monospace;
-        font-size: 0.75rem;
-        color: var(--primary);
-        background: none;
-        border: 1px solid var(--primary);
-        padding: 4px 12px;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    .logout-btn:hover {
-        background: var(--primary-light);
-    }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
-    /* Navigation */
-    .nav-container {
-        flex-grow: 1;
-        overflow-y: auto;
-        padding: 12px 0;
-    }
-    .nav-container::-webkit-scrollbar { width: 6px; }
-    .nav-container::-webkit-scrollbar-thumb { background-color: var(--border); border-radius: 4px; }
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0" defer></script>
     
-    .subject-section { margin-bottom: 8px; }
-    .subject-title {
-        padding: 12px 24px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 0.95rem;
-        color: var(--text-main);
-        transition: background-color 0.2s;
-    }
-    .subject-title:hover { background-color: var(--bg-color); }
-    .subject-title span { display: flex; align-items: center; gap: 8px; }
-    
-    .chapter-list {
-        display: none;
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        background-color: #FAFAFA;
-        border-y: 1px solid var(--border);
-    }
-    .subject-section.open .chapter-list { display: block; }
-    
-    .chapter-item {
-        padding: 12px 24px 12px 36px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        border-bottom: 1px solid #F1F5F9;
-        transition: all 0.2s;
-    }
-    .chapter-item:hover { background-color: #F1F5F9; }
-    .chapter-item.active {
-        background-color: var(--primary-light);
-        border-left: 3px solid var(--primary);
-        padding-left: 33px;
-    }
-    .chap-num {
-        font-family: 'Space Mono', monospace;
-        font-size: 0.75rem;
-        color: var(--primary);
-        margin-right: 12px;
-        font-weight: 700;
-        min-width: 24px;
-    }
-    .chap-title {
-        font-size: 0.9rem;
-        color: var(--text-main);
-        flex-grow: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    
-    /* Structural indicator instead of dot */
-    .status-indicator { 
-        width: 6px; height: 6px; 
-        margin-left: 12px; flex-shrink: 0; 
-    }
-    .ind-ready { background-color: var(--ready); }
-    .ind-pending { background-color: transparent; border: 1px solid var(--pending); }
-
-    /* Content Area */
-    #content-area { flex-grow: 1; background-color: var(--bg-color); position: relative; }
-    iframe { width: 100%; height: 100%; border: none; display: block; background: white; }
-    
-    .welcome-screen {
-        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        text-align: center; z-index: 5; padding: 40px;
-    }
-    .welcome-screen h2 { 
-        font-family: 'Outfit', sans-serif; color: var(--text-main); 
-        font-size: 2.5rem; margin-bottom: 16px; font-weight: 800; letter-spacing: -0.02em;
-    }
-    .welcome-screen p { 
-        font-size: 1.1rem; color: var(--text-muted); max-width: 500px; line-height: 1.6;
-    }
-    
-    .action-btn {
-        padding: 10px 24px; font-family: 'Outfit', sans-serif; font-weight: 700;
-        background: var(--text-main); border: none; color: white; cursor: pointer; 
-        font-size: 0.9rem; margin-top: 24px; text-transform: uppercase; letter-spacing: 0.05em;
-    }
-    .action-btn:hover { background: var(--primary); }
-
-    /* Auth Overlay */
-    #auth-overlay {
-        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(30, 41, 59, 0.9); z-index: 9999;
-        display: flex; align-items: center; justify-content: center;
-        backdrop-filter: blur(8px);
-    }
-    .auth-box {
-        background: var(--surface); padding: 40px; border-radius: 12px;
-        width: 100%; max-width: 360px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-    }
-    .auth-box h2 { font-family: 'Outfit', sans-serif; color: var(--primary); margin: 0 0 24px 0; text-align: center; }
-    .auth-input {
-        width: 100%; padding: 12px; margin-bottom: 16px; border: 1px solid var(--border);
-        border-radius: 6px; font-family: 'Inter', sans-serif; box-sizing: border-box;
-    }
-    .auth-btn {
-        width: 100%; padding: 12px; background: var(--primary); color: white;
-        border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 1rem;
-    }
-</style>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+    <script>
+        const savedTheme = localStorage.getItem('pushti-theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+    </script>
 
-    <div id="auth-overlay">
-        <div class="auth-box">
-            <h2>PUSHTI HUB</h2>
-            <input type="email" id="email" class="auth-input" placeholder="Student Email" value="pushti@test.com">
-            <input type="password" id="password" class="auth-input" placeholder="Password" value="password123">
-            <button id="login-btn" class="auth-btn">Enter Hub</button>
-            <p id="auth-error" style="color: red; font-size: 0.85rem; margin-top: 12px; display: none;"></p>
-        </div>
-    </div>
-
-    <div id="sidebar">
-        <div class="sidebar-header">
-            <h1 class="app-title">Pushti Hub</h1>
-            <div class="user-profile">
-                <span class="user-tag">USR_STUDENT</span>
-                <button class="logout-btn" id="logout-btn">EXIT</button>
+    <header class="site-header glass">
+        <div class="header-left">
+            <div class="logo">
+                <span class="logo-icon">??</span>
+                <span class="logo-text">Pushti Study Hub</span>
             </div>
         </div>
-        
-        <div class="nav-container">
-
-            <div class="subject-section">
-                <div class="subject-title"><span>💻 ICT</span></div>
-                <ul class="chapter-list">
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[01]</span>
-                                <span class="chap-title">Number System</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[02]</span>
-                                <span class="chap-title">Advanced Features of Excel</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[03]</span>
-                                <span class="chap-title">Artificial Intelligence</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[04]</span>
-                                <span class="chap-title">Working with HTML Tags and CSS</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[05]</span>
-                                <span class="chap-title">Lists and Images in HTML</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                </ul>
+        <div class="header-right">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input class="search-input" type="text" placeholder="Search topics, chapters..." aria-label="Search">
+                <div class="search-results" aria-live="polite"></div>
             </div>
-
-            <div class="subject-section">
-                <div class="subject-title"><span>📐 Maths</span></div>
-                <ul class="chapter-list">
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[--]</span>
-                                <span class="chap-title">Large Numbers Around Us</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[--]</span>
-                                <span class="chap-title">Arithmetic Expressions</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[--]</span>
-                                <span class="chap-title">A Peek Beyond the Point</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[--]</span>
-                                <span class="chap-title">Expressions using Letter-Numbers</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[--]</span>
-                                <span class="chap-title">Parallel and Intersecting Lines</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[--]</span>
-                                <span class="chap-title">Number Play</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[--]</span>
-                                <span class="chap-title">A Tale of Three Intersecting Lines</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[--]</span>
-                                <span class="chap-title">Working with Fractions</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                </ul>
-            </div>
-
-            <div class="subject-section">
-                <div class="subject-title"><span>🔬 Science</span></div>
-                <ul class="chapter-list">
-
-                    <li class="chapter-item" onclick="loadChapter(event, 'chapters/science/science_bio_ch2.html', 'Science', 'Adolescence', this)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[B2]</span>
-                                <span class="chap-title">Adolescence</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 23 Aug 2026 20:57
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-ready"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="loadChapter(event, 'chapters/science/science_bio_ch3.html', 'Science', 'Life processes in Animals', this)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[B3]</span>
-                                <span class="chap-title">Life processes in Animals</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 23 Aug 2026 21:58
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-ready"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="loadChapter(event, 'chapters/science/science_chem_ch1.html', 'Science', 'Acids, Bases and neutral', this)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[C1]</span>
-                                <span class="chap-title">Acids, Bases and neutral</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 23 Aug 2026 22:57
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-ready"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="loadChapter(event, 'chapters/science/science_chem_ch2.html', 'Science', 'The world of metals and non-metals', this)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[C2]</span>
-                                <span class="chap-title">The world of metals and non-metals</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 23 Aug 2026 23:24
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-ready"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[P1]</span>
-                                <span class="chap-title">Electricity</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[P2]</span>
-                                <span class="chap-title">Heat transfer</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[P3]</span>
-                                <span class="chap-title">Measurement of time and motion</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                </ul>
-            </div>
-
-            <div class="subject-section">
-                <div class="subject-title"><span>🌎 Social Science</span></div>
-                <ul class="chapter-list">
-
-                    <li class="chapter-item" onclick="loadChapter(event, 'chapters/social_science/social_science_ch1.html', 'Social Science', 'Interior of the Earth', this)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[01]</span>
-                                <span class="chap-title">Interior of the Earth</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 27 Aug 2026 15:05
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-ready"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="loadChapter(event, 'chapters/social_science/social_science_ch2.html', 'Social Science', 'Our Changing Earth', this)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[02]</span>
-                                <span class="chap-title">Our Changing Earth</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 22 Aug 2026 17:22
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-ready"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="loadChapter(event, 'chapters/social_science/social_science_ch6.html', 'Social Science', 'The first Indian Empires', this)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[06]</span>
-                                <span class="chap-title">The first Indian Empires</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 22 Aug 2026 17:22
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-ready"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="loadChapter(event, 'chapters/social_science/social_science_ch7.html', 'Social Science', 'India in the Iron Age', this)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[07]</span>
-                                <span class="chap-title">India in the Iron Age</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 22 Aug 2026 17:22
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-ready"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="loadChapter(event, 'chapters/social_science/social_science_ch8.html', 'Social Science', 'India from the 4th -7th Century CE', this)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[08]</span>
-                                <span class="chap-title">India from the 4th -7th Century CE</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 22 Aug 2026 17:22
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-ready"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="loadChapter(event, 'chapters/social_science/social_science_ch13.html', 'Social Science', 'Understanding Gender', this)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[13]</span>
-                                <span class="chap-title">Understanding Gender</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 22 Aug 2026 17:22
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-ready"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="loadChapter(event, 'chapters/social_science/social_science_ch14.html', 'Social Science', 'How does Democracy Work', this)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[14]</span>
-                                <span class="chap-title">How does Democracy Work</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 22 Aug 2026 17:22
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-ready"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="loadChapter(event, 'chapters/social_science/social_science_ch17.html', 'Social Science', 'Market around us', this)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[17]</span>
-                                <span class="chap-title">Market around us</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Updated: 22 Aug 2026 17:22
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-ready"></div>
-                    </li>
-
-                </ul>
-            </div>
-
-            <div class="subject-section">
-                <div class="subject-title"><span>📖 English</span></div>
-                <ul class="chapter-list">
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[U1]</span>
-                                <span class="chap-title">Where Learning Begins</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[U2]</span>
-                                <span class="chap-title">Wanderlust</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[U3]</span>
-                                <span class="chap-title">Real-Life Heroes</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[WR]</span>
-                                <span class="chap-title">Writing Skills</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[RD]</span>
-                                <span class="chap-title">Unseen Passages</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[GR]</span>
-                                <span class="chap-title">Grammar L-1 to 10 & 17</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[VC]</span>
-                                <span class="chap-title">Vocabulary</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                </ul>
-            </div>
-
-            <div class="subject-section">
-                <div class="subject-title"><span>📝 Hindi</span></div>
-                <ul class="chapter-list">
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[LT]</span>
-                                <span class="chap-title">Literature</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[GR]</span>
-                                <span class="chap-title">Grammar</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[WR]</span>
-                                <span class="chap-title">Writing</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[RD]</span>
-                                <span class="chap-title">Reading</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                </ul>
-            </div>
-
-            <div class="subject-section">
-                <div class="subject-title"><span>🕉️ Sanskrit</span></div>
-                <ul class="chapter-list">
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[01]</span>
-                                <span class="chap-title">??????????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[02]</span>
-                                <span class="chap-title">??????????? ????????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[03]</span>
-                                <span class="chap-title">????????????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[04]</span>
-                                <span class="chap-title">??????? ??????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[05]</span>
-                                <span class="chap-title">???????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[06]</span>
-                                <span class="chap-title">???????? ???????????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[07]</span>
-                                <span class="chap-title">????????? ?????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[08]</span>
-                                <span class="chap-title">????? ????????? ?????????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[09]</span>
-                                <span class="chap-title">???????????????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[10]</span>
-                                <span class="chap-title">?????? ?? ???????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[11]</span>
-                                <span class="chap-title">??????????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[12]</span>
-                                <span class="chap-title">????? ?????????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                    <li class="chapter-item" onclick="showPending(event)">
-                        <div style="flex-grow: 1;">
-                            <div style="display:flex; align-items:center;">
-                                <span class="chap-num">[13]</span>
-                                <span class="chap-title">?????????? ????????</span>
-                            </div>
-                            <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; padding-left: 36px; font-family:'Space Mono', monospace;">
-                                Pending Generation
-                            </div>
-                        </div>
-                        <div class="status-indicator ind-pending"></div>
-                    </li>
-
-                </ul>
-            </div>
-
-        </div>
-    </div>
-
-    <div id="content-area">
-        <button id="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">☰</button>
-        <div class="welcome-screen" id="welcome">
-            <h2>WORKSPACE ACTIVE</h2>
-            <p>Syllabus modules have been loaded. Select a module from the index with a solid green indicator to begin session.</p>
-        </div>
-        <div class="welcome-screen" id="pending-screen" style="display: none;">
-            <h2>MODULE PENDING</h2>
-            <p>This content block has not yet been compiled into the system. Await further updates.</p>
-            <button class="action-btn" onclick="document.getElementById('pending-screen').style.display='none'; document.getElementById('welcome').style.display='flex';">
-                Return to Index
+            <button class="theme-toggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
             </button>
         </div>
-        <iframe id="chapter-frame" src="about:blank" title="Chapter Content"></iframe>
-    </div>
+    </header>
 
-<script type="module">
-    import { auth, db, signInWithEmailAndPassword, signOut, onAuthStateChanged, collection, addDoc, serverTimestamp, doc, getDoc } from './firebase-config.js';
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome, <span class="gradient-text">Pushti!</span> ??</h1>
+                <p class="hero-subtitle">Your personal study companion for CBSE Class 7. Explore chapters, watch videos, and ace your exams! ??</p>
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <span class="stat-number" id="subject-count">2</span>
+                        <span class="stat-label">Subjects</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="chapter-count">8</span>
+                        <span class="stat-label">Chapters</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="topic-count">30+</span>
+                        <span class="stat-label">Topics</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-decoration" aria-hidden="true">
+                <div class="float-shape shape-1">??</div>
+                <div class="float-shape shape-2">??</div>
+                <div class="float-shape shape-3">??</div>
+                <div class="float-shape shape-4">??</div>
+                <div class="float-shape shape-5">??</div>
+            </div>
+        </section>
 
-    let currentUser = null;
+        <section class="subjects-grid" aria-label="Subjects">
+            <a href="dashboard.html" class="subject-card" data-subject="science">
+                <div class="subject-icon">??</div>
+                <h2>Science</h2>
+                <p class="subject-desc">Biology, Chemistry & Physics</p>
+                <p class="chapter-count">4 Chapters</p>
+                <div class="topic-tags">
+                    <span class="tag">Acids & Bases</span>
+                    <span class="tag">Metals</span>
+                    <span class="tag">Adolescence</span>
+                </div>
+            </a>
 
-    document.getElementById('login-btn').addEventListener('click', async () => {
-        const e = document.getElementById('email').value;
-        const p = document.getElementById('password').value;
-        const err = document.getElementById('auth-error');
-        err.style.display = 'none';
-        
-        try {
-            await signInWithEmailAndPassword(auth, e, p);
-        } catch (error) {
-            err.textContent = "Error: " + error.message;
-            err.style.display = 'block';
-        }
-    });
+            <a href="dashboard.html" class="subject-card" data-subject="social-science">
+                <div class="subject-icon">??</div>
+                <h2>Social Science</h2>
+                <p class="subject-desc">History, Geography, Civics & Economics</p>
+                <p class="chapter-count">4 Chapters</p>
+                <div class="topic-tags">
+                    <span class="tag">The Mauryas</span>
+                    <span class="tag">Earth's Interior</span>
+                    <span class="tag">Gender</span>
+                    <span class="tag">Markets</span>
+                </div>
+            </a>
 
-    document.getElementById('logout-btn').addEventListener('click', async () => {
-        await signOut(auth);
-    });
+            <div class="subject-card coming-soon" data-subject="maths">
+                <div class="subject-icon">??</div>
+                <h2>Mathematics</h2>
+                <p class="subject-desc">Coming Soon!</p>
+                <span class="badge badge-accent">Coming Soon</span>
+            </div>
 
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            currentUser = user;
-            document.getElementById('auth-overlay').style.display = 'none';
-            logActivity("login", "User logged in to Dashboard");
-        } else {
-            currentUser = null;
-            document.getElementById('auth-overlay').style.display = 'flex';
-        }
-    });
+            <div class="subject-card coming-soon" data-subject="english">
+                <div class="subject-icon">??</div>
+                <h2>English</h2>
+                <p class="subject-desc">Coming Soon!</p>
+                <span class="badge badge-accent">Coming Soon</span>
+            </div>
 
-    async function logActivity(action, details) {
-        if (!currentUser) return;
-        try {
-            await addDoc(collection(db, "activity_logs"), {
-                uid: currentUser.uid,
-                email: currentUser.email,
-                action: action,
-                details: details,
-                timestamp: serverTimestamp()
-            });
-        } catch(e) {
-            console.log("Analytics error: ", e);
-        }
-    }
-    window.logActivity = logActivity;
-</script>
+            <div class="subject-card coming-soon" data-subject="hindi">
+                <div class="subject-icon">???</div>
+                <h2>Hindi</h2>
+                <p class="subject-desc">Coming Soon!</p>
+                <span class="badge badge-accent">Coming Soon</span>
+            </div>
+        </section>
+    </main>
 
-<script>
-    // Accordion Logic
-    const headers = document.querySelectorAll('.subject-title');
-    headers.forEach(h => {
-        h.addEventListener('click', () => {
-            const parent = h.parentElement;
-            const wasOpen = parent.classList.contains('open');
-            document.querySelectorAll('.subject-section').forEach(s => s.classList.remove('open'));
-            if (!wasOpen) parent.classList.add('open');
-        });
-    });
-    // Open Science by default
-    document.querySelectorAll('.subject-section')[2].classList.add('open');
+    <footer class="site-footer">
+        <p>Made with ?? for Pushti | CBSE Class 7 | 2026-27</p>
+    </footer>
 
-    function loadChapter(event, path, subject, title, element) {
-        document.querySelectorAll('.chapter-item').forEach(el => el.classList.remove('active'));
-        element.classList.add('active');
-        
-        document.getElementById('welcome').style.display = 'none';
-        document.getElementById('pending-screen').style.display = 'none';
-        
-        const frame = document.getElementById('chapter-frame');
-        frame.src = path;
-        
-        if (window.logActivity) {
-            window.logActivity("open_chapter", `Opened ${subject}: ${title}`);
-        }
-    }
+    <button class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-    function showPending(event) {
-        document.querySelectorAll('.chapter-item').forEach(el => el.classList.remove('active'));
-        if (event.currentTarget) {
-            event.currentTarget.classList.add('active');
-        }
-        document.getElementById('welcome').style.display = 'none';
-        document.getElementById('chapter-frame').src = 'about:blank';
-        document.getElementById('pending-screen').style.display = 'flex';
-    }
-</script>
+    <script src="js/app.js"></script>
 </body>
 </html>
