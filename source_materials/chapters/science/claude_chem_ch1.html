@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧪 Acids, Bases & Neutral | Pushti's Chemistry Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --chem-teal: #00b4d8;
+  --chem-green: #06d6a0;
+  --chem-red: #ef476f;
+  --chem-yellow: #ffd166;
+  --chem-purple: #7b2d8b;
+  --chem-orange: #f4a261;
+  --navy: #0d1b2a;
+  --mid: #1b2d42;
+  --card-bg: #ffffff;
+  --text: #1a1a2e;
+  --muted: #556678;
+  --acid-color: #ef476f;
+  --base-color: #06d6a0;
+  --neutral-color: #ffd166;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: #f0f4f8;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a0533 40%, #c44d00 100%);
+  padding: 28px 20px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(0,180,216,0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 50%, rgba(239,71,111,0.15) 0%, transparent 50%);
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  color: #ffd166;
+  font-family: 'Fredoka One', cursive;
+  font-size: 13px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.hero h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(24px, 6vw, 42px);
+  color: white;
+  line-height: 1.1;
+  position: relative;
+}
+.hero h1 span { color: #ffd166; }
+.hero p {
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
+  margin-top: 8px;
+  font-weight: 600;
+}
+.chapter-tag {
+  display: inline-block;
+  background: #ffd166;
+  color: #0d1b2a;
+  font-family: 'Fredoka One', cursive;
+  font-size: 12px;
+  padding: 3px 12px;
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+/* SCORE BAR */
+.score-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+  border-bottom: 3px solid var(--chem-teal);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+.score-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 13px;
+  color: var(--navy);
+}
+.score-pill {
+  font-family: 'Fredoka One', cursive;
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  color: white;
+}
+.pill-got { background: #06d6a0; }
+.pill-partial { background: #f4a261; }
+.pill-missed { background: #ef476f; }
+.pill-total { background: #0d1b2a; }
+.progress-track {
+  flex: 1;
+  min-width: 120px;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+}
+.progress-green { background: #06d6a0; transition: width 0.4s; }
+.progress-amber { background: #f4a261; transition: width 0.4s; }
+.progress-red { background: #ef476f; transition: width 0.4s; }
+
+/* TABS */
+.tabs {
+  display: flex;
+  overflow-x: auto;
+  background: white;
+  border-bottom: 2px solid #e2e8f0;
+  padding: 0 12px;
+  gap: 2px;
+  -webkit-overflow-scrolling: touch;
+}
+.tab {
+  font-family: 'Fredoka One', cursive;
+  font-size: 13px;
+  padding: 12px 16px;
+  white-space: nowrap;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  color: #888;
+  transition: all 0.2s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+.tab.active {
+  color: var(--chem-purple);
+  border-bottom-color: var(--chem-purple);
+}
+.tab:hover { color: var(--chem-purple); }
+
+/* SECTIONS */
+.section { display: none; padding: 16px; }
+.section.active { display: block; }
+
+/* CARDS */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border-left: 5px solid var(--chem-teal);
+}
+.card.acid { border-left-color: var(--acid-color); }
+.card.base { border-left-color: var(--base-color); }
+.card.neutral { border-left-color: var(--neutral-color); }
+.card.purple { border-left-color: var(--chem-purple); }
+.card.orange { border-left-color: var(--chem-orange); }
+
+.card-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 18px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* CONCEPT BOXES */
+.concept-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin: 16px 0;
+}
+@media(max-width:480px) { .concept-box { grid-template-columns: 1fr; } }
+.concept-item {
+  border-radius: 14px;
+  padding: 16px 12px;
+  text-align: center;
+}
+.concept-item.acid { background: #fff0f3; border: 2px solid #ef476f; }
+.concept-item.base { background: #f0fff8; border: 2px solid #06d6a0; }
+.concept-item.neutral { background: #fffbf0; border: 2px solid #ffd166; }
+.concept-icon { font-size: 28px; margin-bottom: 6px; }
+.concept-name {
+  font-family: 'Fredoka One', cursive;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.concept-desc { font-size: 12px; color: var(--muted); font-weight: 600; }
+
+/* FORMULA CHIP */
+.formula {
+  display: inline-block;
+  background: #f0e6ff;
+  color: var(--chem-purple);
+  font-family: 'Fredoka One', cursive;
+  font-size: 14px;
+  padding: 3px 12px;
+  border-radius: 20px;
+  margin: 3px 2px;
+}
+.formula.acid { background: #ffe6ec; color: #c0002a; }
+.formula.base { background: #e6fff5; color: #006847; }
+.formula.neutral-f { background: #fff8e6; color: #7a4f00; }
+
+/* INFO BOXES */
+.tip-box {
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.tip-box.tip { background: #e8f4fd; border-left: 4px solid #00b4d8; }
+.tip-box.remember { background: #fff0f8; border-left: 4px solid #ff6eb4; }
+.tip-box.warning { background: #fff7e6; border-left: 4px solid #f4a261; }
+.tip-box.fun { background: #f0fff8; border-left: 4px solid #06d6a0; }
+.tip-icon { font-size: 20px; flex-shrink: 0; }
+.tip-text { font-size: 13px; font-weight: 600; line-height: 1.5; }
+
+/* TABLE */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 10px 0;
+}
+.styled-table th {
+  background: var(--navy);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 13px;
+}
+.styled-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid #e2e8f0;
+  font-weight: 600;
+}
+.styled-table tr:nth-child(even) td { background: #f8fafc; }
+.styled-table tr:hover td { background: #eef2ff; }
+.acid-row td:first-child { color: #ef476f; }
+.base-row td:first-child { color: #06d6a0; }
+
+/* INDICATOR TABLE */
+.ind-table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+.ind-table th { background: #1b2d42; color: white; padding: 8px; font-family: 'Fredoka One', cursive; text-align: center; }
+.ind-table td { padding: 8px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700; }
+.col-red { color: #ef476f; }
+.col-blue { color: #0077cc; }
+.col-green { color: #06a872; }
+.col-yellow { color: #b8860b; }
+.col-pink { color: #e75480; }
+.col-orange { color: #c44d00; }
+.col-nc { color: #999; }
+
+/* MEMORY AIDS */
+.memory-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 16px;
+  padding: 18px;
+  margin: 12px 0;
+  text-align: center;
+}
+.memory-card h3 { font-family: 'Fredoka One', cursive; font-size: 18px; margin-bottom: 8px; }
+.memory-card .mnemonic { font-size: 22px; font-family: 'Fredoka One', cursive; color: #ffd166; letter-spacing: 2px; }
+.memory-card p { font-size: 13px; margin-top: 6px; opacity: 0.85; }
+
+/* ELEMENT SYMBOL CARDS */
+.symbol-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; margin: 12px 0; }
+.sym-card {
+  background: white;
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.2s;
+}
+.sym-card:hover { transform: translateY(-2px); border-color: var(--chem-teal); }
+.sym-card.acid-sym { border-top: 4px solid #ef476f; }
+.sym-card.base-sym { border-top: 4px solid #06d6a0; }
+.sym-card.neutral-sym { border-top: 4px solid #ffd166; }
+.sym-big { font-family: 'Fredoka One', cursive; font-size: 28px; color: var(--chem-purple); }
+.sym-name { font-size: 10px; font-weight: 700; color: #555; margin-top: 2px; }
+.sym-formula { font-size: 11px; color: var(--chem-orange); font-weight: 700; }
+
+/* QUIZ */
+.quiz-q {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border: 2px solid #e2e8f0;
+}
+.quiz-q.answered { border-color: #06d6a0; }
+.q-text {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.q-marks {
+  display: inline-block;
+  background: #1b2d42;
+  color: #ffd166;
+  font-family: 'Fredoka One', cursive;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+.options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.option {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #fafafa;
+}
+.option:hover { border-color: var(--chem-teal); background: #f0fbff; }
+.option.selected-correct { border-color: #06d6a0; background: #e8fff5; color: #005a3d; }
+.option.selected-wrong { border-color: #ef476f; background: #fff0f3; color: #9b002a; }
+.option.show-correct { border-color: #06d6a0; background: #e8fff5; color: #005a3d; }
+
+/* LOCK-REVEAL */
+.lock-q {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border: 2px solid #e2e8f0;
+}
+.lock-q.done { border-color: #06d6a0; opacity: 0.85; }
+.reveal-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: transform 0.2s;
+}
+.reveal-btn:hover { transform: scale(1.03); }
+.answer-box {
+  display: none;
+  background: linear-gradient(135deg, #e8fff5, #f0fff8);
+  border: 2px solid #06d6a0;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.7;
+  color: #004d3a;
+}
+.answer-box.visible { display: block; }
+.answer-box .final-ans {
+  background: #06d6a0;
+  color: white;
+  border-radius: 8px;
+  padding: 6px 12px;
+  margin-top: 8px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 14px;
+}
+.self-btns {
+  display: none;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.self-btns.visible { display: flex; }
+.self-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 9px 8px;
+  border-radius: 10px;
+  border: none;
+  font-family: 'Fredoka One', cursive;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.self-btn:hover { transform: scale(1.04); }
+.btn-got { background: #06d6a0; color: white; }
+.btn-partial { background: #f4a261; color: white; }
+.btn-missed { background: #ef476f; color: white; }
+
+/* CLAUDE'S CORNER */
+.claude-corner {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a0533 100%);
+  border-radius: 18px;
+  padding: 20px;
+  margin: 20px 0;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+.claude-corner::before {
+  content: '📡';
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  font-size: 32px;
+  opacity: 0.3;
+}
+.claude-corner h3 {
+  font-family: 'Fredoka One', cursive;
+  color: #ffd166;
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+.corner-fact {
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px;
+  margin: 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.6;
+  border-left: 3px solid #00b4d8;
+}
+.corner-fact span { color: #ffd166; }
+.bonus-tag {
+  display: inline-block;
+  background: #ef476f;
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 11px;
+  padding: 2px 10px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+/* NEUTRALISATION SECTION */
+.reaction-box {
+  background: #f8f0ff;
+  border-radius: 12px;
+  padding: 14px;
+  margin: 10px 0;
+  text-align: center;
+  border: 2px dashed var(--chem-purple);
+}
+.reaction-formula {
+  font-family: 'Fredoka One', cursive;
+  font-size: 16px;
+  color: var(--chem-purple);
+  letter-spacing: 1px;
+}
+.rxn-arrow { color: #f4a261; margin: 0 6px; }
+
+/* pH SCALE */
+.ph-scale {
+  display: flex;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 40px;
+  margin: 12px 0;
+}
+.ph-seg {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 12px;
+  color: white;
+}
+.ph-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+/* EVERYDAY LIFE */
+.life-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+@media(max-width:400px) { .life-grid { grid-template-columns: 1fr; } }
+.life-card {
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.life-card h4 { font-family: 'Fredoka One', cursive; font-size: 14px; margin-bottom: 6px; }
+.life-acid { background: #fff0f3; border: 2px solid #ef476f; }
+.life-acid h4 { color: #c0002a; }
+.life-base { background: #f0fff8; border: 2px solid #06d6a0; }
+.life-base h4 { color: #005a3d; }
+
+/* SECTION HEADING */
+.sec-heading {
+  font-family: 'Fredoka One', cursive;
+  font-size: 20px;
+  color: var(--navy);
+  margin: 8px 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sec-heading::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(to right, var(--chem-teal), transparent);
+  border-radius: 2px;
+}
+
+/* QUIZ SECTION TITLE */
+.quiz-section-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 16px;
+  color: white;
+  background: var(--chem-purple);
+  padding: 8px 14px;
+  border-radius: 10px;
+  margin: 18px 0 10px;
+  display: inline-block;
+}
+
+/* SALT BOX */
+.salt-box {
+  background: white;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.salt-head {
+  background: linear-gradient(to right, #1b2d42, #0d1b2a);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  padding: 10px 14px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.salt-body { padding: 12px 14px; font-size: 13px; font-weight: 600; }
+</style>
+</head>
+<body>
+
+            <div style="padding: 10px 20px; background: #1E293B; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
+                <a href="javascript:history.back()" style="color: #6366F1; text-decoration: none; font-weight: 700; font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 6px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to Hub
+                </a>
+                <span style="color:#A855F7; font-family: 'Nunito', sans-serif; font-weight: bold;">Claude Notes Mode</span>
+            </div>
+            
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🧪 CLASS 7 · CHEMISTRY</div>
+  <h1>Acids, Bases <span>&</span> Neutral</h1>
+  <p>Pushti's Chemistry Lab 🔬</p>
+  <div class="chapter-tag">📖 Chapter 1 · Exploring Substances</div>
+</div>
+
+<!-- SCORE BAR -->
+<div class="score-bar">
+  <span class="score-label">🏆 Score:</span>
+  <span class="score-pill pill-got" id="scorePill">0 pts</span>
+  <span class="score-pill pill-got" id="gotPill">✅ 0</span>
+  <span class="score-pill pill-partial" id="partialPill">🤔 0</span>
+  <span class="score-pill pill-missed" id="missedPill">❌ 0</span>
+  <span class="score-pill pill-total" id="totalPill">Total: 0</span>
+  <div class="progress-track">
+    <div class="progress-green" id="pgGreen" style="width:0%"></div>
+    <div class="progress-amber" id="pgAmber" style="width:0%"></div>
+    <div class="progress-red" id="pgRed" style="width:0%"></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="showSection('learn')">📚 Learn</button>
+  <button class="tab" onclick="showSection('symbols')">⚗️ Symbols</button>
+  <button class="tab" onclick="showSection('indicators')">🎨 Indicators</button>
+  <button class="tab" onclick="showSection('neutralisation')">⚖️ Neutralisation</button>
+  <button class="tab" onclick="showSection('salts')">🧂 Salts & pH</button>
+  <button class="tab" onclick="showSection('everyday')">🌍 Everyday Life</button>
+  <button class="tab" onclick="showSection('quiz')">🎯 Quiz</button>
+  <button class="tab" onclick="showSection('practice')">✍️ Practice</button>
+  <button class="tab" onclick="showSection('claude')">📡 Claude's Corner</button>
+</div>
+
+<!-- ===== LEARN SECTION ===== -->
+<div class="section active" id="learn">
+  <div class="sec-heading">🌈 What Are Acids, Bases & Neutral?</div>
+
+  <div class="tip-box tip">
+    <div class="tip-icon">💡</div>
+    <div class="tip-text">Everything around us — food, medicines, soil, our own stomach — is either <b>acidic</b>, <b>basic</b>, or <b>neutral</b>. Chemistry is the study of what things are made of and how they behave!</div>
+  </div>
+
+  <div class="concept-box">
+    <div class="concept-item acid">
+      <div class="concept-icon">🍋</div>
+      <div class="concept-name" style="color:#c0002a">ACID</div>
+      <div class="concept-desc">Tastes SOUR<br>Like lemon, vinegar</div>
+    </div>
+    <div class="concept-item base">
+      <div class="concept-icon">🧼</div>
+      <div class="concept-name" style="color:#005a3d">BASE</div>
+      <div class="concept-desc">Tastes BITTER<br>Slippery to touch</div>
+    </div>
+    <div class="concept-item neutral">
+      <div class="concept-icon">💧</div>
+      <div class="concept-name" style="color:#7a4f00">NEUTRAL</div>
+      <div class="concept-desc">Neither sour<br>nor bitter</div>
+    </div>
+  </div>
+
+  <!-- ACIDS -->
+  <div class="card acid">
+    <div class="card-title" style="color:#c0002a">🍋 ACIDS — The Sour Ones!</div>
+    <p style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:10px">The word "acid" comes from the Latin word <b>ACERE</b> meaning SOUR 🍬</p>
+
+    <div class="tip-box remember">
+      <div class="tip-icon">🌸</div>
+      <div class="tip-text"><b>What makes something an acid?</b> All acids contain <b>HYDROGEN</b> (H). When dissolved in water, they release <b>H⁺ ions</b> (hydrogen ions). A substance that positively charges on hydrogen ions when dissolved is an acid!</div>
+    </div>
+
+    <b style="font-family:'Fredoka One',cursive;font-size:14px;">Properties of Acids:</b>
+    <ul style="margin:8px 0 0 16px;font-size:13px;font-weight:600;line-height:2;">
+      <li>Taste <b style="color:#c0002a">SOUR</b> (like lemon, tamarind)</li>
+      <li>Turn <b>blue litmus paper RED</b> 🔴</li>
+      <li>React with metals to produce <b>hydrogen gas</b> 💨</li>
+      <li>React with metal carbonates to form <b>carbon dioxide</b> (CO₂)</li>
+      <li>Acids are <b>corrosive</b> in nature — they can destroy metals!</li>
+      <li>Dissolve in water and produce a lot of heat</li>
+      <li>Are generally soluble in water but <b>NOT</b> in oil</li>
+    </ul>
+
+    <div style="margin-top:12px">
+      <b style="font-family:'Fredoka One',cursive;">Types of Acids:</b>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+        <div style="background:#fff0f3;border-radius:10px;padding:10px;font-size:12px;font-weight:700">
+          <div style="color:#c0002a;font-family:'Fredoka One',cursive;margin-bottom:4px">🌿 Organic Acids</div>
+          Found in nature / living things<br>
+          <span style="color:#555">Examples: Citric, Lactic, Oxalic, Tartaric, Acetic</span>
+        </div>
+        <div style="background:#fff0f3;border-radius:10px;padding:10px;font-size:12px;font-weight:700">
+          <div style="color:#c0002a;font-family:'Fredoka One',cursive;margin-bottom:4px">⚗️ Inorganic Acids</div>
+          Made in lab / industry<br>
+          <span style="color:#555">Examples: HCl, H₂SO₄, HNO₃</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px">
+      <b style="font-family:'Fredoka One',cursive;">Strong vs Weak Acids:</b>
+      <div style="margin-top:8px;font-size:13px;font-weight:600">
+        <span style="background:#ffdddd;padding:3px 10px;border-radius:8px;margin-right:6px;color:#800">⚡ Strong Acid = completely dissociates (HCl, H₂SO₄, HNO₃)</span><br><br>
+        <span style="background:#ffe8e8;padding:3px 10px;border-radius:8px;color:#800">🌿 Weak Acid = partially dissociates (Acetic acid, Citric acid)</span>
+      </div>
+    </div>
+
+    <div style="margin-top:12px">
+      <b style="font-family:'Fredoka One',cursive;">Natural Sources of Acids:</b>
+      <table class="styled-table" style="margin-top:8px">
+        <tr><th>Source</th><th>Acid Present</th></tr>
+        <tr class="acid-row"><td>Lemon / Orange</td><td>Citric acid</td></tr>
+        <tr class="acid-row"><td>Vinegar</td><td>Acetic acid (Ethanoic acid)</td></tr>
+        <tr class="acid-row"><td>Tamarind</td><td>Tartaric acid</td></tr>
+        <tr class="acid-row"><td>Apple</td><td>Malic acid</td></tr>
+        <tr class="acid-row"><td>Curd</td><td>Lactic acid</td></tr>
+        <tr class="acid-row"><td>Spinach / Tomato</td><td>Oxalic acid</td></tr>
+        <tr class="acid-row"><td>Ant sting / Nettle sting</td><td>Methanoic acid (Formic acid)</td></tr>
+      </table>
+    </div>
+
+    <div class="tip-box fun" style="margin-top:10px">
+      <div class="tip-icon">🐜</div>
+      <div class="tip-text">When an ant bites you, it injects <b>Methanoic acid (HCOOH)</b> which causes burning pain! That's why it's called <b>Formic acid</b> — "formica" means ant in Latin! 🐜</div>
+    </div>
+
+    <div style="margin-top:10px">
+      <b style="font-family:'Fredoka One',cursive;">Uses of Acids:</b>
+      <ul style="margin:6px 0 0 16px;font-size:12px;font-weight:600;line-height:1.8;color:var(--muted)">
+        <li>HCl (Hydrochloric acid) — used in labs, cleaning rust, making medicines</li>
+        <li>H₂SO₄ (Sulphuric acid) — "King of Chemicals"! Used in batteries, fertilizers, explosives</li>
+        <li>HNO₃ (Nitric acid) — used in making fertilizers, explosives</li>
+        <li>H₃PO₄ (Phosphoric acid) — used in fertilizers</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BASES -->
+  <div class="card base">
+    <div class="card-title" style="color:#005a3d">🧼 BASES — The Bitter, Slippery Ones!</div>
+
+    <div class="tip-box remember">
+      <div class="tip-icon">🌸</div>
+      <div class="tip-text"><b>What is a base?</b> A base is a substance which dissolves in water to produce <b>OH⁻ ions</b> (hydroxide ions). Bases always have <b>OH (hydroxyl group)</b> in them!</div>
+    </div>
+
+    <b style="font-family:'Fredoka One',cursive;font-size:14px;">Properties of Bases:</b>
+    <ul style="margin:8px 0 0 16px;font-size:13px;font-weight:600;line-height:2;">
+      <li>Taste <b style="color:#005a3d">BITTER</b></li>
+      <li><b>Slippery / Soapy</b> to touch</li>
+      <li>Turn <b>red litmus paper BLUE</b> 🔵</li>
+      <li>React with acids to form <b>salt + water</b> (Neutralisation!)</li>
+      <li>Solution of bases in water is called an <b>alkali</b></li>
+      <li><b>All alkalis are bases</b>, but NOT all bases are alkalis (bases soluble in water = alkalis)</li>
+      <li>Bases are <b>corrosive</b> in nature too!</li>
+    </ul>
+
+    <div style="margin-top:12px">
+      <b style="font-family:'Fredoka One',cursive;">Common Bases & Their Formulas:</b>
+      <table class="styled-table" style="margin-top:8px">
+        <tr><th>Common Name</th><th>Chemical Name</th><th>Formula</th></tr>
+        <tr class="base-row"><td>Caustic soda</td><td>Sodium hydroxide</td><td><span class="formula base">NaOH</span></td></tr>
+        <tr class="base-row"><td>Lime water</td><td>Calcium hydroxide</td><td><span class="formula base">Ca(OH)₂</span></td></tr>
+        <tr class="base-row"><td>Milk of magnesia</td><td>Magnesium hydroxide</td><td><span class="formula base">Mg(OH)₂</span></td></tr>
+        <tr class="base-row"><td>Caustic potash</td><td>Potassium hydroxide</td><td><span class="formula base">KOH</span></td></tr>
+      </table>
+    </div>
+
+    <div style="margin-top:12px">
+      <b style="font-family:'Fredoka One',cursive;">Strong vs Weak Bases:</b>
+      <div style="margin-top:8px;font-size:13px;font-weight:600">
+        <span style="background:#ddffef;padding:3px 10px;border-radius:8px;margin-right:6px;color:#003d26">⚡ Strong Base = NaOH, KOH (completely ionises — called caustic soda/potash)</span><br><br>
+        <span style="background:#e8fff5;padding:3px 10px;border-radius:8px;color:#003d26">🌿 Weak Base = Mg(OH)₂, Ca(OH)₂, NH₄OH (partially ionises)</span>
+      </div>
+    </div>
+
+    <div style="margin-top:12px">
+      <b style="font-family:'Fredoka One',cursive;">Uses of Bases:</b>
+      <ul style="margin:6px 0 0 16px;font-size:12px;font-weight:600;line-height:1.8;color:var(--muted)">
+        <li>NaOH — used to make soap, paper, detergents</li>
+        <li>Ca(OH)₂ (lime water) — used in construction (whitewash), purifying water</li>
+        <li>Mg(OH)₂ (milk of magnesia) — antacid medicine for acidity/indigestion</li>
+        <li>Calcium hydroxide is used for manufacturing paper, plastics, dyes etc.</li>
+        <li>Sodium bicarbonate — used as antacid, baking (baking soda)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- NEUTRAL -->
+  <div class="card neutral">
+    <div class="card-title" style="color:#7a4f00">💧 NEUTRAL Substances</div>
+    <p style="font-size:13px;font-weight:600;">Neutral substances are <b>neither acidic nor basic</b>. They do NOT change the colour of litmus paper. pH = 7</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+      <span class="formula neutral-f">Pure Water (H₂O)</span>
+      <span class="formula neutral-f">Common Salt (NaCl)</span>
+      <span class="formula neutral-f">Sugar solution</span>
+      <span class="formula neutral-f">Cooking oil</span>
+      <span class="formula neutral-f">Milk (almost neutral)</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== SYMBOLS SECTION ===== -->
+<div class="section" id="symbols">
+  <div class="sec-heading">⚗️ Element Symbols — Master These!</div>
+
+  <div class="tip-box warning">
+    <div class="tip-icon">⚠️</div>
+    <div class="tip-text">These chemical symbols are SUPER important! Every acid, base and salt formula uses them. Learn them by heart — Pushti, you've got this! 💪</div>
+  </div>
+
+  <div class="memory-card">
+    <h3>🧠 Memory Trick for Hydrogen!</h3>
+    <div class="mnemonic">H = Hydrogen</div>
+    <p>H is in ALL acids! If you see H at the front of a formula, it's probably an acid! Like HCl, H₂SO₄, HNO₃</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔤 Key Elements in This Chapter</div>
+    <div class="symbol-grid">
+      <div class="sym-card acid-sym">
+        <div class="sym-big">H</div>
+        <div class="sym-name">Hydrogen</div>
+        <div class="sym-formula">H⁺ ion</div>
+      </div>
+      <div class="sym-card">
+        <div class="sym-big">O</div>
+        <div class="sym-name">Oxygen</div>
+        <div class="sym-formula">O atom</div>
+      </div>
+      <div class="sym-card base-sym">
+        <div class="sym-big">Na</div>
+        <div class="sym-name">Sodium</div>
+        <div class="sym-formula">Na⁺</div>
+      </div>
+      <div class="sym-card base-sym">
+        <div class="sym-big">Ca</div>
+        <div class="sym-name">Calcium</div>
+        <div class="sym-formula">Ca²⁺</div>
+      </div>
+      <div class="sym-card base-sym">
+        <div class="sym-big">Mg</div>
+        <div class="sym-name">Magnesium</div>
+        <div class="sym-formula">Mg²⁺</div>
+      </div>
+      <div class="sym-card base-sym">
+        <div class="sym-big">K</div>
+        <div class="sym-name">Potassium</div>
+        <div class="sym-formula">K⁺</div>
+      </div>
+      <div class="sym-card">
+        <div class="sym-big">Cl</div>
+        <div class="sym-name">Chlorine</div>
+        <div class="sym-formula">Cl⁻</div>
+      </div>
+      <div class="sym-card">
+        <div class="sym-big">S</div>
+        <div class="sym-name">Sulphur</div>
+        <div class="sym-formula">SO₄²⁻</div>
+      </div>
+      <div class="sym-card">
+        <div class="sym-big">N</div>
+        <div class="sym-name">Nitrogen</div>
+        <div class="sym-formula">NO₃⁻</div>
+      </div>
+      <div class="sym-card">
+        <div class="sym-big">C</div>
+        <div class="sym-name">Carbon</div>
+        <div class="sym-formula">CO₃²⁻</div>
+      </div>
+      <div class="sym-card">
+        <div class="sym-big">Cu</div>
+        <div class="sym-name">Copper</div>
+        <div class="sym-formula">Cu²⁺</div>
+      </div>
+      <div class="sym-card">
+        <div class="sym-big">Fe</div>
+        <div class="sym-name">Iron</div>
+        <div class="sym-formula">Fe²⁺/Fe³⁺</div>
+      </div>
+      <div class="sym-card">
+        <div class="sym-big">Al</div>
+        <div class="sym-name">Aluminium</div>
+        <div class="sym-formula">Al³⁺</div>
+      </div>
+      <div class="sym-card">
+        <div class="sym-big">Zn</div>
+        <div class="sym-name">Zinc</div>
+        <div class="sym-formula">Zn²⁺</div>
+      </div>
+      <div class="sym-card">
+        <div class="sym-big">P</div>
+        <div class="sym-name">Phosphorus</div>
+        <div class="sym-formula">PO₄³⁻</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card acid">
+    <div class="card-title" style="color:#c0002a">🔴 Important Acid Formulas</div>
+    <table class="styled-table">
+      <tr><th>Name</th><th>Formula</th><th>Remember As</th></tr>
+      <tr><td><b>Hydrochloric acid</b></td><td><span class="formula acid">HCl</span></td><td>H + Cl = 1H, 1Cl</td></tr>
+      <tr><td><b>Sulphuric acid</b></td><td><span class="formula acid">H₂SO₄</span></td><td>2H, 1S, 4O</td></tr>
+      <tr><td><b>Nitric acid</b></td><td><span class="formula acid">HNO₃</span></td><td>1H, 1N, 3O</td></tr>
+      <tr><td><b>Phosphoric acid</b></td><td><span class="formula acid">H₃PO₄</span></td><td>3H, 1P, 4O</td></tr>
+      <tr><td><b>Carbonic acid</b></td><td><span class="formula acid">H₂CO₃</span></td><td>2H, 1C, 3O</td></tr>
+      <tr><td><b>Acetic acid</b></td><td><span class="formula acid">CH₃COOH</span></td><td>Vinegar acid!</td></tr>
+      <tr><td><b>Methanoic / Formic acid</b></td><td><span class="formula acid">HCOOH</span></td><td>Ant bite acid!</td></tr>
+    </table>
+
+    <div class="memory-card" style="margin-top:12px">
+      <h3>🧠 Remember H₂SO₄</h3>
+      <div class="mnemonic">SO₄ = Sulphate</div>
+      <p>"2 Hydrogens + Sulphate = Sulphuric acid" — It's the KING of acids & most used in industry!</p>
+    </div>
+  </div>
+
+  <div class="card base">
+    <div class="card-title" style="color:#005a3d">🟢 Important Base Formulas</div>
+    <table class="styled-table">
+      <tr><th>Name</th><th>Formula</th><th>Common Name</th></tr>
+      <tr><td><b>Sodium hydroxide</b></td><td><span class="formula base">NaOH</span></td><td>Caustic soda</td></tr>
+      <tr><td><b>Potassium hydroxide</b></td><td><span class="formula base">KOH</span></td><td>Caustic potash</td></tr>
+      <tr><td><b>Calcium hydroxide</b></td><td><span class="formula base">Ca(OH)₂</span></td><td>Slaked lime / Lime water</td></tr>
+      <tr><td><b>Magnesium hydroxide</b></td><td><span class="formula base">Mg(OH)₂</span></td><td>Milk of magnesia</td></tr>
+      <tr><td><b>Ammonium hydroxide</b></td><td><span class="formula base">NH₄OH</span></td><td>Ammonia solution</td></tr>
+      <tr><td><b>Aluminium hydroxide</b></td><td><span class="formula base">Al(OH)₃</span></td><td>Antacid</td></tr>
+      <tr><td><b>Sodium bicarbonate</b></td><td><span class="formula base">NaHCO₃</span></td><td>Baking soda</td></tr>
+      <tr><td><b>Sodium carbonate</b></td><td><span class="formula base">Na₂CO₃</span></td><td>Washing soda</td></tr>
+    </table>
+
+    <div class="tip-box tip" style="margin-top:10px">
+      <div class="tip-icon">💡</div>
+      <div class="tip-text"><b>Pattern to remember:</b> All bases have <b>OH</b> (hydroxide) in them! NaOH, KOH, Ca(OH)₂, Mg(OH)₂ — spot the OH! That's the base's "signature" 🔏</div>
+    </div>
+  </div>
+
+  <div class="card neutral">
+    <div class="card-title" style="color:#7a4f00">🟡 Important Salt Formulas</div>
+    <table class="styled-table">
+      <tr><th>Name</th><th>Formula</th><th>How Formed</th></tr>
+      <tr><td><b>Common salt (table salt)</b></td><td><span class="formula neutral-f">NaCl</span></td><td>NaOH + HCl</td></tr>
+      <tr><td><b>Calcium sulphate</b></td><td><span class="formula neutral-f">CaSO₄</span></td><td>Ca(OH)₂ + H₂SO₄</td></tr>
+      <tr><td><b>Ammonium sulphate</b></td><td><span class="formula neutral-f">(NH₄)₂SO₄</span></td><td>Fertilizer</td></tr>
+      <tr><td><b>Copper sulphate</b></td><td><span class="formula neutral-f">CuSO₄</span></td><td>Blue vitriol</td></tr>
+      <tr><td><b>Sodium sulphate</b></td><td><span class="formula neutral-f">Na₂SO₄</span></td><td>NaOH + H₂SO₄</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ===== INDICATORS SECTION ===== -->
+<div class="section" id="indicators">
+  <div class="sec-heading">🎨 Indicators — Nature's pH Detectors!</div>
+
+  <div class="tip-box tip">
+    <div class="tip-icon">💡</div>
+    <div class="tip-text">An <b>indicator</b> is a substance that changes colour when added to an acid or base. It tells us whether a substance is acidic, basic, or neutral. Think of it like a colour-coded magic detector! 🔮</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🌿 Natural Indicators</div>
+    <table class="ind-table">
+      <tr>
+        <th>Indicator</th>
+        <th>In Acid</th>
+        <th>In Base</th>
+        <th>Neutral</th>
+      </tr>
+      <tr>
+        <td><b>Blue Litmus</b></td>
+        <td class="col-red">Turns RED 🔴</td>
+        <td class="col-blue">Stays BLUE 🔵</td>
+        <td class="col-blue">Blue</td>
+      </tr>
+      <tr>
+        <td><b>Red Litmus</b></td>
+        <td class="col-red">Stays RED 🔴</td>
+        <td class="col-blue">Turns BLUE 🔵</td>
+        <td class="col-red">Red</td>
+      </tr>
+      <tr>
+        <td><b>Turmeric paper</b></td>
+        <td class="col-nc">No change</td>
+        <td class="col-red">Turns RED 🔴</td>
+        <td class="col-yellow">Yellow</td>
+      </tr>
+      <tr>
+        <td><b>China rose</b></td>
+        <td class="col-pink">Dark pink/Magenta</td>
+        <td class="col-green">Green 🟢</td>
+        <td class="col-nc">No change</td>
+      </tr>
+      <tr>
+        <td><b>Red cabbage</b></td>
+        <td class="col-red">Red/Pink</td>
+        <td class="col-green">Green/Yellow</td>
+        <td class="col-nc">Purple</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card purple">
+    <div class="card-title" style="color:var(--chem-purple)">🧪 Synthetic Indicators</div>
+    <p style="font-size:13px;font-weight:600;margin-bottom:10px">These are made in the laboratory — not from plants!</p>
+    <table class="ind-table">
+      <tr>
+        <th>Indicator</th>
+        <th>Original Color</th>
+        <th>In Acid</th>
+        <th>In Base</th>
+      </tr>
+      <tr>
+        <td><b>Phenolphthalein</b></td>
+        <td class="col-nc">Colourless</td>
+        <td class="col-nc">Colourless</td>
+        <td class="col-pink">Pink/Magenta 🌸</td>
+      </tr>
+      <tr>
+        <td><b>Methyl orange</b></td>
+        <td class="col-orange">Orange</td>
+        <td class="col-red">Red 🔴</td>
+        <td class="col-yellow">Yellow 🟡</td>
+      </tr>
+    </table>
+
+    <div class="tip-box remember" style="margin-top:10px">
+      <div class="tip-icon">🌸</div>
+      <div class="tip-text"><b>Easy trick!</b> Phenolphthalein → <b>P</b>ink in <b>B</b>ase (P for Pink, B for Base!). It's colourless in acids — like it's hiding! 🫣</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧅 Olfactory Indicators</div>
+    <p style="font-size:13px;font-weight:600;margin-bottom:8px">These change their <b>SMELL</b> (not colour!) in acid/base solutions!</p>
+    <table class="styled-table">
+      <tr><th>Indicator</th><th>Smell in Acid</th><th>Smell in Base</th></tr>
+      <tr><td>Onion extract</td><td>Characteristic smell</td><td>No smell</td></tr>
+      <tr><td>Vanilla essence</td><td>Sweet smell</td><td>No smell</td></tr>
+    </table>
+    <div class="tip-box fun" style="margin-top:8px">
+      <div class="tip-icon">👃</div>
+      <div class="tip-text">If you add onion juice to a base (like NaOH), it loses its characteristic smell! That's because the acid-base reaction changes the chemical structure of the smell compound. Science is magic! 🪄</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🌿 Litmus — The Most Famous Indicator!</div>
+    <p style="font-size:13px;font-weight:600;margin-bottom:8px">Litmus is a <b>natural dye</b> extracted from <b>lichens</b> (a combination of fungus + algae that grow on rocks in regions with heavy rainfall).</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
+      <div style="background:#ffe0e6;border-radius:10px;padding:12px;font-size:13px;font-weight:700;text-align:center">
+        <div style="font-size:24px">🔴</div>
+        <b>Red Litmus Paper</b><br>
+        <span style="color:var(--muted)">Turns <b>Blue</b> in Base</span>
+      </div>
+      <div style="background:#e0e8ff;border-radius:10px;padding:12px;font-size:13px;font-weight:700;text-align:center">
+        <div style="font-size:24px">🔵</div>
+        <b>Blue Litmus Paper</b><br>
+        <span style="color:var(--muted)">Turns <b>Red</b> in Acid</span>
+      </div>
+    </div>
+    <div class="tip-box remember" style="margin-top:10px">
+      <div class="tip-icon">🌸</div>
+      <div class="tip-text"><b>Memory trick:</b> "Acid = Red" (both start with vowels... A-R). Acids make things RED. Bases make things BLUE. <br>Also: <b>A</b>cid → <b>R</b>ed, <b>B</b>ase → <b>B</b>lue (B for Both Base and Blue!)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NEUTRALISATION SECTION ===== -->
+<div class="section" id="neutralisation">
+  <div class="sec-heading">⚖️ Neutralisation — Acid Meets Base!</div>
+
+  <div class="tip-box tip">
+    <div class="tip-icon">💡</div>
+    <div class="tip-text">When an acid and a base are mixed together, they <b>neutralise</b> each other — like two enemies cancelling each other out! The result is <b>salt + water</b>, and heat is released!</div>
+  </div>
+
+  <div class="card purple">
+    <div class="card-title" style="color:var(--chem-purple)">⚖️ The Golden Neutralisation Equation</div>
+    <div class="reaction-box">
+      <div class="reaction-formula">
+        Acid <span class="rxn-arrow">+</span> Base <span class="rxn-arrow">→</span> Salt <span class="rxn-arrow">+</span> Water <span class="rxn-arrow">+</span> Heat
+      </div>
+      <div style="margin-top:10px;font-size:13px;color:var(--muted);font-weight:700">
+        Example: HCl + NaOH → NaCl + H₂O + Heat
+      </div>
+    </div>
+
+    <div class="tip-box remember">
+      <div class="tip-icon">🌸</div>
+      <div class="tip-text">The reaction between an acid and a base is called a <b>neutralisation reaction</b>. The solution formed may be acidic, basic, or neutral depending on the amounts of acid and base!</div>
+    </div>
+
+    <div style="margin-top:10px">
+      <b style="font-family:'Fredoka One',cursive;">More Examples:</b>
+      <div class="reaction-box" style="margin-top:8px">
+        <div class="reaction-formula" style="font-size:14px">NaOH + HCl → NaCl + H₂O</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">Sodium hydroxide + Hydrochloric acid → Common Salt + Water</div>
+      </div>
+      <div class="reaction-box" style="margin-top:8px">
+        <div class="reaction-formula" style="font-size:14px">2NaOH + H₂SO₄ → Na₂SO₄ + 2H₂O</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">Sodium hydroxide + Sulphuric acid → Sodium sulphate + Water</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧪 Phenolphthalein Activity (From Textbook!)</div>
+    <p style="font-size:13px;font-weight:600;margin-bottom:8px">When you add sodium hydroxide to dilute hydrochloric acid with phenolphthalein:</p>
+    <ul style="margin:0 0 0 16px;font-size:13px;font-weight:600;line-height:2">
+      <li>Initially the solution is <b>colourless</b> (acid is in excess)</li>
+      <li>As we add base, the solution turns <b>pink</b></li>
+      <li>At the neutral point, the colour <b>disappears</b> (neutralisation!)</li>
+      <li>If we add too much base, it stays <b>pink</b></li>
+    </ul>
+    <div class="tip-box fun" style="margin-top:8px">
+      <div class="tip-icon">🌸</div>
+      <div class="tip-text">The pink colour disappearing is like a <b>magic trick</b>! It means the acid and base have perfectly neutralised each other. Scientists use this to find the exact amount of acid/base needed — called <b>titration</b>! 🔬</div>
+    </div>
+  </div>
+
+  <div class="card orange">
+    <div class="card-title" style="color:#c44d00">🌍 Neutralisation in Everyday Life</div>
+
+    <div class="life-grid">
+      <div class="life-card life-acid">
+        <h4>🦷 Tooth Decay</h4>
+        Bacteria in mouth make acid from sugar. This acid destroys enamel → cavities!<br><br>
+        <b>Fix:</b> Toothpaste is basic → it neutralises the acid! 🪥
+      </div>
+      <div class="life-card life-base">
+        <h4>🤢 Acidity / Indigestion</h4>
+        Stomach makes excess HCl → acidity, heartburn!<br><br>
+        <b>Fix:</b> Milk of magnesia Mg(OH)₂ or antacids (bases) neutralise it! 💊
+      </div>
+      <div class="life-card life-acid">
+        <h4>🐜 Ant Bite / Bee Sting</h4>
+        Ant injects formic acid (HCOOH) → burning pain!<br><br>
+        <b>Fix:</b> Apply baking soda (NaHCO₃) — it's basic! 🧂
+      </div>
+      <div class="life-card life-base">
+        <h4>🌱 Acidic Soil</h4>
+        If soil is too acidic, plants don't grow well!<br><br>
+        <b>Fix:</b> Add lime (CaO) or quick lime → neutralises the acid! 🌾
+      </div>
+      <div class="life-card life-acid">
+        <h4>🏭 Factory Waste</h4>
+        Factory waste contains acids → pollutes rivers!<br><br>
+        <b>Fix:</b> Neutralise with bases before disposing! 🌊
+      </div>
+      <div class="life-card life-base">
+        <h4>🧹 Wasp Sting</h4>
+        Wasp sting contains alkali (base)!<br><br>
+        <b>Fix:</b> Apply vinegar (acetic acid) to neutralise! 🍶
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SALTS & pH SECTION ===== -->
+<div class="section" id="salts">
+  <div class="sec-heading">🧂 Salts & pH Scale</div>
+
+  <div class="card">
+    <div class="card-title">🧂 What Are Salts?</div>
+    <p style="font-size:13px;font-weight:600;line-height:1.7;">Salts are formed when an <b>acid reacts with a base</b>. The name of a salt comes from two parts: (1) name of the base + (2) name of the acid. For example, <b>Sodium Chloride</b> = Sodium (from NaOH) + Chloride (from HCl)!</p>
+
+    <div style="margin-top:12px">
+      <b style="font-family:'Fredoka One',cursive;">Types of Salts:</b>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+        <div class="salt-box">
+          <div class="salt-head" style="background:linear-gradient(to right,#0077cc,#0044aa)">🔵 Acidic Salts</div>
+          <div class="salt-body">Formed by strong acid + weak base. e.g., NH₄Cl, NH₄NO₃<br><span style="color:var(--muted)">Solution is acidic in nature</span></div>
+        </div>
+        <div class="salt-box">
+          <div class="salt-head" style="background:linear-gradient(to right,#06a872,#004d38)">🟢 Basic Salts</div>
+          <div class="salt-body">Formed by weak acid + strong base. e.g., Na₂CO₃, NaHCO₃<br><span style="color:var(--muted)">Solution is basic in nature</span></div>
+        </div>
+        <div class="salt-box">
+          <div class="salt-head">🟡 Neutral Salts</div>
+          <div class="salt-body">Formed by strong acid + strong base. e.g., NaCl, Na₂SO₄<br><span style="color:var(--muted)">Solution is neutral — e.g. sodium chloride (table salt) and NaOH + HCl</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box fun" style="margin-top:10px">
+      <div class="tip-icon">💎</div>
+      <div class="tip-text"><b>Water of crystallisation</b> — Some salts have water molecules trapped inside their crystals! E.g., CaSO₄·2H₂O (gypsum), FeSO₄·7H₂O (green vitriol), CuSO₄·5H₂O (blue vitriol). When you heat them, the water escapes and the crystal changes colour!</div>
+    </div>
+  </div>
+
+  <div class="card purple">
+    <div class="card-title" style="color:var(--chem-purple)">🌈 pH Scale — The Acidity Meter!</div>
+
+    <div class="tip-box tip">
+      <div class="tip-icon">💡</div>
+      <div class="tip-text"><b>pH</b> stands for "power of Hydrogen" (potential of hydrogen). It measures how acidic or basic a solution is, on a scale of 0 to 14!</div>
+    </div>
+
+    <div class="ph-label">
+      <span style="color:#c0002a">← MORE ACIDIC</span>
+      <span style="color:#005a3d">MORE BASIC →</span>
+    </div>
+    <div class="ph-scale">
+      <div class="ph-seg" style="background:#d00000">0</div>
+      <div class="ph-seg" style="background:#e63946">1</div>
+      <div class="ph-seg" style="background:#f4433c">2</div>
+      <div class="ph-seg" style="background:#ff6b35">3</div>
+      <div class="ph-seg" style="background:#ff9500">4</div>
+      <div class="ph-seg" style="background:#ffbf00">5</div>
+      <div class="ph-seg" style="background:#e6c800">6</div>
+      <div class="ph-seg" style="background:#1a9c3e;font-size:14px">7</div>
+      <div class="ph-seg" style="background:#0a7c3a">8</div>
+      <div class="ph-seg" style="background:#0d6e8c">9</div>
+      <div class="ph-seg" style="background:#1565c0">10</div>
+      <div class="ph-seg" style="background:#283593">11</div>
+      <div class="ph-seg" style="background:#4527a0">12</div>
+      <div class="ph-seg" style="background:#6a1b9a">13</div>
+      <div class="ph-seg" style="background:#880e4f">14</div>
+    </div>
+
+    <table class="styled-table" style="margin-top:10px">
+      <tr><th>pH Value</th><th>Nature</th><th>Example</th></tr>
+      <tr><td>0–2</td><td style="color:#c0002a">Very Strong Acid</td><td>Battery acid (pH 0), Stomach acid (1.5-2)</td></tr>
+      <tr><td>3–6</td><td style="color:#f4a261">Weak Acid</td><td>Lemon juice (2-3), Vinegar (3), Cola (2.5)</td></tr>
+      <tr><td>7</td><td style="color:#06a872"><b>Neutral</b></td><td>Pure water (7), Blood (7.4)</td></tr>
+      <tr><td>8–10</td><td style="color:#0077cc">Weak Base</td><td>Baking soda (8), Sea water (8), Antacid</td></tr>
+      <tr><td>11–14</td><td style="color:#6a1b9a">Strong Base</td><td>NaOH (14), Bleach (12-13), Ammonia (11)</td></tr>
+    </table>
+
+    <div class="tip-box remember" style="margin-top:10px">
+      <div class="tip-icon">🌸</div>
+      <div class="tip-text">Normal human blood is slightly basic — pH 7.35–7.45! If it drops below 7.35, a person can get seriously ill. Our body works very hard to maintain this tiny range! 🩸</div>
+    </div>
+
+    <div class="tip-box tip" style="margin-top:6px">
+      <div class="tip-icon">💡</div>
+      <div class="tip-text">Acid rain has pH below 5.6! Normal rain water is slightly acidic (pH 5.6) because CO₂ in air dissolves in it. Acid rain (pH 4-5) causes damage to crops, soil, buildings, and aquatic life!</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧂 Properties & Reactions of Salts</div>
+    <div class="reaction-box" style="margin-bottom:8px">
+      <div class="reaction-formula" style="font-size:14px">NaCl + H₂SO₄ → NaHSO₄ + HCl (gas)</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">Salt reaction with acid → another salt + acid</div>
+    </div>
+    <div class="reaction-box" style="margin-bottom:8px">
+      <div class="reaction-formula" style="font-size:14px">Na₂SO₄ + BaCl₂ → NaCl + BaSO₄↓</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">Salt + salt → new salt (precipitation!)</div>
+    </div>
+    <div class="reaction-box">
+      <div class="reaction-formula" style="font-size:14px">CaSO₄ + 2HCl → CaCl₂ + H₂SO₄</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">Calcium sulphate + hydrochloric acid</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EVERYDAY LIFE SECTION ===== -->
+<div class="section" id="everyday">
+  <div class="sec-heading">🌍 Acids & Bases Around Us!</div>
+
+  <div class="tip-box fun">
+    <div class="tip-icon">🌟</div>
+    <div class="tip-text">Chemistry is not just in the lab — it's happening right NOW in your kitchen, your body, the garden, and everywhere! Let's explore!</div>
+  </div>
+
+  <div class="card acid">
+    <div class="card-title" style="color:#c0002a">🍕 Acids in Your Kitchen!</div>
+    <table class="styled-table">
+      <tr><th>Food Item</th><th>Acid</th><th>Why It's Sour</th></tr>
+      <tr><td>🍋 Lemon</td><td>Citric acid</td><td>H ions make taste buds feel sour!</td></tr>
+      <tr><td>🥛 Curd / Yogurt</td><td>Lactic acid</td><td>Bacteria convert milk sugar → lactic acid</td></tr>
+      <tr><td>🍎 Apple</td><td>Malic acid</td><td>The "apple bite" sourness!</td></tr>
+      <tr><td>🍷 Vinegar</td><td>Acetic acid</td><td>Used in pickles, salads</td></tr>
+      <tr><td>🫙 Tamarind</td><td>Tartaric acid</td><td>Used in chutneys, cleaning</td></tr>
+    </table>
+  </div>
+
+  <div class="card base">
+    <div class="card-title" style="color:#005a3d">🏠 Bases Around Your Home!</div>
+    <table class="styled-table">
+      <tr><th>Item</th><th>Base</th><th>Use</th></tr>
+      <tr><td>🧼 Soap</td><td>NaOH/KOH based</td><td>Cleaning — base breaks down oil</td></tr>
+      <tr><td>💊 Antacid tablet</td><td>Mg(OH)₂ / Al(OH)₃</td><td>Relieves acidity</td></tr>
+      <tr><td>🏗️ Whitewash</td><td>Ca(OH)₂</td><td>Painting walls, disinfecting</td></tr>
+      <tr><td>🪣 Cleaning agents</td><td>NaOH</td><td>Drains, oven cleaners</td></tr>
+      <tr><td>🌿 Baking soda</td><td>NaHCO₃</td><td>Cooking, cleaning, fire extinguisher</td></tr>
+    </table>
+  </div>
+
+  <div class="card orange">
+    <div class="card-title" style="color:#c44d00">🧬 Acids & Bases IN Your Body!</div>
+    <ul style="margin:0 0 0 16px;font-size:13px;font-weight:600;line-height:2.2">
+      <li>Your <b>stomach</b> produces <b>HCl</b> (hydrochloric acid) to digest food!</li>
+      <li>Your <b>blood</b> is slightly basic (pH 7.4) — maintained by your lungs and kidneys</li>
+      <li>Proteins in your body contain <b>amino acids</b></li>
+      <li>Your <b>DNA</b> is an acid — Deoxyribonucleic acid!</li>
+      <li>Planet Venus has clouds of <b>sulphuric acid</b> — our atmosphere is much friendlier! 😅</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== QUIZ SECTION ===== -->
+<div class="section" id="quiz">
+  <div class="sec-heading">🎯 Quick Quiz — MCQs!</div>
+  <p style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:12px">Click the correct answer. Learn from each one! 💪</p>
+
+  <div id="quizContainer"></div>
+  <div id="quizScore" style="display:none;background:linear-gradient(135deg,#0d1b2a,#1a0533);color:white;border-radius:16px;padding:20px;text-align:center;margin-top:10px">
+    <div style="font-family:'Fredoka One',cursive;font-size:24px;color:#ffd166" id="qsFinal"></div>
+    <div style="font-size:14px;margin-top:8px" id="qsMsg"></div>
+  </div>
+</div>
+
+<!-- ===== PRACTICE SECTION ===== -->
+<div class="section" id="practice">
+  <div class="sec-heading">✍️ Written Practice Questions</div>
+  <p style="font-size:13px;font-weight:600;color:var(--muted);margin-bottom:4px">Read the question → think → click 🔒 to reveal answer → mark yourself!</p>
+
+  <div class="tip-box tip" style="margin-bottom:12px">
+    <div class="tip-icon">💡</div>
+    <div class="tip-text">Try to answer in your head first before revealing. This is how you truly learn! 🧠</div>
+  </div>
+
+  <div id="practiceContainer"></div>
+</div>
+
+<!-- ===== CLAUDE'S CORNER ===== -->
+<div class="section" id="claude">
+  <div class="sec-heading">📡 Claude's Corner — Bonus Fun Facts!</div>
+
+  <div class="claude-corner">
+    <span class="bonus-tag">⭐ BONUS — Not for Exam!</span>
+    <h3>📡 Claude's Corner</h3>
+    <p style="font-size:13px;margin-bottom:12px;opacity:0.85">These are real-world connections that make chemistry come alive! Not in your exam, but will help you understand the WHY behind everything! 🚀</p>
+
+    <div class="corner-fact">
+      <span>🐜 The Ant Secret:</span> Formic acid (the acid in ant stings) was first discovered in the 17th century by a scientist who distilled actual ants! The word "formic" comes from "formica" meaning ant in Latin. Next time an ant bites you, remember — you're experiencing 17th century chemistry! 🐜
+    </div>
+
+    <div class="corner-fact">
+      <span>🍶 Why Vinegar Preserves Food:</span> Vinegar (acetic acid) is acidic. Bacteria and fungi cannot survive in acidic conditions — they need neutral/slightly basic environments. That's why pickles stored in vinegar last for months! Chemistry saves your pickle! 🥒
+    </div>
+
+    <div class="corner-fact">
+      <span>🌋 Acid Rain & Taj Mahal:</span> The Taj Mahal in Agra is made of white marble (CaCO₃). Acid rain (which contains sulphuric acid and nitric acid) reacts with the marble and dissolves it! This is called "marble cancer." The government has set up a pollution-free zone around the Taj to protect it. 🕌
+    </div>
+
+    <div class="corner-fact">
+      <span>🩸 Blood pH — Your Body's Superpower:</span> Your blood must stay between pH 7.35–7.45. If it drops to 7.1, you can fall into a coma. If it rises to 7.8, you can have seizures. Yet your body maintains this perfect range automatically through your lungs (controlling CO₂) and kidneys (controlling bicarbonate)! 🦾
+    </div>
+
+    <div class="corner-fact">
+      <span>🧪 Why Baking Soda = Fire Extinguisher:</span> NaHCO₃ + Heat → Na₂CO₃ + H₂O + CO₂. When baking soda is heated, it releases CO₂ gas. CO₂ doesn't support burning! So baking soda fire extinguishers work by releasing CO₂ to smother the fire! 🔥
+    </div>
+
+    <div class="corner-fact">
+      <span>🌊 Ocean Acidification:</span> As humans burn fossil fuels, more CO₂ enters the atmosphere. The ocean absorbs this CO₂ and forms carbonic acid (H₂CO₃), making oceans more acidic. This is dissolving coral reefs and harming marine life. Chemistry connects to climate change! 🐠
+    </div>
+
+    <div class="corner-fact">
+      <span>🧴 Why Soap Works:</span> Soap molecules have two parts — one part that loves water (hydrophilic), one part that loves oil (hydrophobic). When you wash hands, the oil part grabs the dirt/bacteria, and the water part rinses it away. Soap is made from NaOH + fat (saponification reaction)! 🧼
+    </div>
+
+    <div class="corner-fact">
+      <span>🪴 How Plants "Drink" Acid:</span> Some plants like blueberries, rhododendrons, and azaleas LOVE acidic soil (pH 4-5)! If you try to grow them in basic soil, they'll look sick and yellow. Gardeners add sulfur to make soil more acidic for these plants. Plants are picky about chemistry! 🌺
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== SCORE SYSTEM =====
+let totalMarks = 0, gotMarks = 0, partialMarks = 0, missedMarks = 0;
+let totalQuestions = 0, answeredQuestions = 0;
+
+function updateScoreBar() {
+  const score = gotMarks + (partialMarks * 0.5);
+  document.getElementById('scorePill').textContent = score + ' pts';
+  document.getElementById('gotPill').textContent = '✅ ' + gotMarks;
+  document.getElementById('partialPill').textContent = '🤔 ' + partialMarks;
+  document.getElementById('missedPill').textContent = '❌ ' + missedMarks;
+  document.getElementById('totalPill').textContent = 'Total: ' + totalMarks;
+  
+  const total = gotMarks + partialMarks + missedMarks;
+  if (total > 0) {
+    document.getElementById('pgGreen').style.width = (gotMarks/total*100) + '%';
+    document.getElementById('pgAmber').style.width = (partialMarks/total*100) + '%';
+    document.getElementById('pgRed').style.width = (missedMarks/total*100) + '%';
+  }
+}
+
+// ===== TABS =====
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===== QUIZ DATA =====
+const quizData = [
+  { q: "Which acid is present in lemon juice?", opts: ["Lactic acid", "Citric acid", "Acetic acid", "Tartaric acid"], ans: 1, marks: 1 },
+  { q: "Blue litmus paper turns _____ in an acid.", opts: ["Blue", "Green", "Red", "Yellow"], ans: 2, marks: 1 },
+  { q: "What is the chemical formula of Sodium Hydroxide (Caustic Soda)?", opts: ["NaCl", "NaOH", "Na₂SO₄", "NaHCO₃"], ans: 1, marks: 1 },
+  { q: "Which indicator turns pink in a basic solution?", opts: ["Litmus", "Turmeric", "Phenolphthalein", "Methyl orange"], ans: 2, marks: 1 },
+  { q: "What is the pH of pure water?", opts: ["0", "14", "7", "5.6"], ans: 2, marks: 1 },
+  { q: "The reaction between an acid and a base produces:", opts: ["Acid + Water", "Salt + Water", "Base + Acid", "Only Salt"], ans: 1, marks: 1 },
+  { q: "Which of these is an inorganic acid?", opts: ["Citric acid", "Lactic acid", "HCl (Hydrochloric acid)", "Acetic acid"], ans: 2, marks: 1 },
+  { q: "What chemical is present in an ant's sting?", opts: ["Citric acid", "Acetic acid", "Methanoic (Formic) acid", "Oxalic acid"], ans: 2, marks: 1 },
+  { q: "Milk of Magnesia [Mg(OH)₂] is used to treat:", opts: ["Fever", "Acidity/Indigestion", "Cough", "Headache"], ans: 1, marks: 1 },
+  { q: "H₂SO₄ is called the 'King of Chemicals'. What is its name?", opts: ["Hydrochloric acid", "Nitric acid", "Sulphuric acid", "Phosphoric acid"], ans: 2, marks: 1 },
+  { q: "Which substance turns turmeric paper RED?", opts: ["Acid", "Base", "Neutral substance", "Salt"], ans: 1, marks: 1 },
+  { q: "Acid rain damages buildings because it reacts with:", opts: ["Iron", "Marble (CaCO₃)", "Glass", "Wood"], ans: 1, marks: 1 },
+  { q: "What is the common name of Ca(OH)₂?", opts: ["Washing soda", "Baking soda", "Caustic soda", "Slaked lime / Lime water"], ans: 3, marks: 1 },
+  { q: "China rose indicator turns _____ in a basic solution.", opts: ["Dark pink/Magenta", "Red", "Green", "Yellow"], ans: 2, marks: 1 },
+  { q: "NaHCO₃ is the formula of:", opts: ["Washing soda", "Common salt", "Baking soda", "Caustic soda"], ans: 2, marks: 1 },
+  { q: "The process by which an acid and a base neutralise each other is called:", opts: ["Oxidation", "Neutralisation", "Crystallisation", "Distillation"], ans: 1, marks: 1 },
+  { q: "Which acid does our stomach produce for digestion?", opts: ["Acetic acid", "Sulphuric acid", "Hydrochloric acid (HCl)", "Nitric acid"], ans: 2, marks: 1 },
+  { q: "Wasp sting is _____ in nature. To treat it, we apply _____.", opts: ["Acidic, base", "Basic, acid like vinegar", "Neutral, water", "Acidic, acid"], ans: 1, marks: 1 },
+  { q: "All alkalis are bases, but all bases are NOT alkalis. This is because:", opts: ["Bases are stronger", "Alkalis are only bases that dissolve in water", "Acids are stronger than bases", "Alkalis don't have OH group"], ans: 1, marks: 1 },
+  { q: "What colour does methyl orange turn in an acidic solution?", opts: ["Pink", "Yellow", "Red", "Colourless"], ans: 2, marks: 1 },
+];
+
+// ===== PRACTICE DATA =====
+const practiceData = [
+  {
+    q: "What is neutralisation? Write the general equation for neutralisation reaction. Give one example with formula. [3 marks]",
+    marks: 3,
+    steps: [
+      "✅ Definition: Neutralisation is the reaction between an acid and a base in which they neutralise each other's properties to form salt and water along with heat.",
+      "✅ General equation: Acid + Base → Salt + Water + Heat",
+      "✅ Example: HCl + NaOH → NaCl + H₂O + Heat"
+    ],
+    final: "Neutralisation = Acid + Base → Salt + Water + Heat. Example: HCl + NaOH → NaCl + H₂O + Heat"
+  },
+  {
+    q: "Distinguish between strong acids and weak acids. Give two examples of each. [2 marks]",
+    marks: 2,
+    steps: [
+      "✅ Strong acids: Completely dissociate (break apart) in water to release a large number of H⁺ ions. E.g., HCl (hydrochloric acid), H₂SO₄ (sulphuric acid)",
+      "✅ Weak acids: Partially dissociate in water — only some molecules release H⁺ ions. E.g., CH₃COOH (acetic acid), H₂CO₃ (carbonic acid)"
+    ],
+    final: "Strong = completely dissociate (HCl, H₂SO₄). Weak = partially dissociate (Acetic acid, Carbonic acid)"
+  },
+  {
+    q: "What are indicators? Name three natural indicators and explain what colour change each shows in acids and bases. [3 marks]",
+    marks: 3,
+    steps: [
+      "✅ Indicator: A substance that changes colour in the presence of acids or bases to indicate whether a substance is acidic, basic or neutral.",
+      "✅ Litmus: Blue litmus → Red in acid; Red litmus → Blue in base",
+      "✅ Turmeric: No change in acid; Turns red/brown in base",
+      "✅ China rose: Turns dark pink/magenta in acid; Turns green in base"
+    ],
+    final: "Indicators detect acids/bases by colour change. Litmus (red/blue), Turmeric (yellow→red in base), China rose (magenta in acid, green in base)"
+  },
+  {
+    q: "Why is quick lime (CaO) added to acidic soil? What is the chemical reaction that takes place? [2 marks]",
+    marks: 2,
+    steps: [
+      "✅ Reason: Acidic soil is not suitable for growing crops. Adding quick lime (CaO) or slaked lime Ca(OH)₂ neutralises the excess acid in the soil and makes it suitable for plant growth.",
+      "✅ Reaction: CaO + H₂O → Ca(OH)₂ (quick lime + water → slaked lime), then Ca(OH)₂ neutralises the acid in soil."
+    ],
+    final: "Quick lime is added to neutralise acidic soil. CaO + H₂O → Ca(OH)₂, which then neutralises the acids."
+  },
+  {
+    q: "What is phenolphthalein? How does it help in identifying acids and bases? [2 marks]",
+    marks: 2,
+    steps: [
+      "✅ Phenolphthalein is a synthetic indicator used in laboratories to detect acids and bases.",
+      "✅ Behaviour: It is colourless in acidic and neutral solutions. It turns pink/magenta in basic (alkaline) solutions."
+    ],
+    final: "Phenolphthalein = colourless in acid/neutral, turns PINK in base. It's a synthetic indicator."
+  },
+  {
+    q: "A farmer notices his crop is not growing well. The soil test shows the soil is too acidic. What should he do? Give the name and formula of the substance to be used. [2 marks]",
+    marks: 2,
+    steps: [
+      "✅ The farmer should add lime (calcium oxide CaO) or slaked lime Ca(OH)₂ or quick lime to the soil.",
+      "✅ This neutralises the excess acid in the soil: Ca(OH)₂ + Acid → Salt + Water. The process is called 'liming of soil'."
+    ],
+    final: "Add quick lime (CaO) or slaked lime Ca(OH)₂ to neutralise acidic soil. This is called 'liming of soil'."
+  },
+  {
+    q: "List any four properties of acids. [2 marks]",
+    marks: 2,
+    steps: [
+      "✅ (1) Acids taste sour",
+      "✅ (2) Acids turn blue litmus paper red",
+      "✅ (3) Acids react with metals to produce hydrogen gas",
+      "✅ (4) Acids are corrosive in nature and contain hydrogen (H) which dissociates to give H⁺ ions in water"
+    ],
+    final: "Acids: (1) Sour taste (2) Turn blue litmus red (3) React with metals → H₂ gas (4) Corrosive, contain H⁺ ions"
+  },
+  {
+    q: "What are olfactory indicators? Give two examples and explain how they work. [2 marks]",
+    marks: 2,
+    steps: [
+      "✅ Olfactory indicators: Indicators that change their smell (odour) rather than colour when placed in acidic or basic solutions. Named from 'olfaction' meaning sense of smell.",
+      "✅ Examples: (1) Onion extract — loses characteristic smell in basic solution. (2) Vanilla essence — loses sweet smell in basic solution."
+    ],
+    final: "Olfactory indicators change SMELL not colour. Examples: Onion extract (no smell in base), Vanilla essence (no sweet smell in base)."
+  },
+  {
+    q: "Why does our stomach produce hydrochloric acid (HCl)? Why is too much HCl a problem, and how is it treated? [3 marks]",
+    marks: 3,
+    steps: [
+      "✅ Purpose: HCl helps in digestion of food by breaking down proteins. It also kills harmful bacteria that enter with food.",
+      "✅ Problem: Excess HCl causes acidity/hyperacidity — burning sensation (heartburn), pain, discomfort in stomach.",
+      "✅ Treatment: Antacids like milk of magnesia [Mg(OH)₂] or aluminium hydroxide [Al(OH)₃] neutralise the excess acid."
+    ],
+    final: "HCl digests food + kills bacteria. Excess HCl = acidity. Treatment: Antacids [Mg(OH)₂ or Al(OH)₃] neutralise the acid."
+  },
+  {
+    q: "Define pH. What is the pH of (a) a neutral solution (b) a strong acid (c) a strong base? What happens to the pH of blood in acidosis? [3 marks]",
+    marks: 3,
+    steps: [
+      "✅ pH = Power of Hydrogen. It measures the concentration of H⁺ ions in a solution, on a scale of 0-14.",
+      "✅ (a) Neutral solution = pH 7, (b) Strong acid = pH 0-2, (c) Strong base = pH 12-14",
+      "✅ Acidosis: Blood pH drops below 7.35 (normal range 7.35-7.45). This is dangerous and can affect organ function."
+    ],
+    final: "pH measures H⁺ concentration. Neutral=7, Strong acid=0-2, Strong base=12-14. Blood acidosis = pH drops below 7.35."
+  },
+];
+
+// ===== BUILD QUIZ =====
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  let html = '';
+  quizData.forEach((q, qi) => {
+    html += `<div class="quiz-q" id="qq${qi}">
+      <div class="q-text">Q${qi+1}. ${q.q} <span class="q-marks">[${q.marks} mark]</span></div>
+      <div class="options">`;
+    q.opts.forEach((opt, oi) => {
+      html += `<div class="option" onclick="selectOpt(${qi},${oi})">${String.fromCharCode(65+oi)}. ${opt}</div>`;
+    });
+    html += `</div>
+      <div class="answer-box" id="qa${qi}" style="display:none"></div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+let quizAnswered = {};
+function selectOpt(qi, oi) {
+  if (quizAnswered[qi]) return;
+  quizAnswered[qi] = true;
+  const q = quizData[qi];
+  const opts = document.querySelectorAll(`#qq${qi} .option`);
+  opts.forEach((o, i) => {
+    if (i === q.ans) o.classList.add('selected-correct');
+    else if (i === oi && oi !== q.ans) o.classList.add('selected-wrong');
+    o.onclick = null;
+  });
+  
+  const ansBox = document.getElementById(`qa${qi}`);
+  if (oi === q.ans) {
+    ansBox.style.display = 'block';
+    ansBox.className = 'answer-box';
+    ansBox.innerHTML = `<div class="final-ans">✅ Correct! Well done Pushti! 🎉</div>`;
+    document.getElementById(`qq${qi}`).classList.add('answered');
+    gotMarks += q.marks;
+    totalMarks += q.marks;
+  } else {
+    ansBox.style.display = 'block';
+    ansBox.className = 'answer-box';
+    ansBox.innerHTML = `<div class="final-ans" style="background:#ef476f">❌ The correct answer is: ${String.fromCharCode(65+q.ans)}. ${q.opts[q.ans]}</div><div style="margin-top:6px;font-size:12px">Don't worry! Now you know for next time! 💪</div>`;
+    missedMarks += q.marks;
+    totalMarks += q.marks;
+  }
+  updateScoreBar();
+  
+  // Check if all done
+  if (Object.keys(quizAnswered).length === quizData.length) {
+    const scoreDiv = document.getElementById('quizScore');
+    scoreDiv.style.display = 'block';
+    const score = gotMarks;
+    const total = quizData.length;
+    document.getElementById('qsFinal').textContent = `Quiz Score: ${score}/${total}`;
+    let msg = score >= 16 ? "🌟 Outstanding! You're a Chemistry Star, Pushti!" :
+              score >= 12 ? "🎉 Great job! Keep it up!" :
+              score >= 8 ? "👍 Good effort! Review the topics you missed!" :
+              "📚 Keep studying — you'll get there! Try the practice section!";
+    document.getElementById('qsMsg').textContent = msg;
+  }
+}
+
+// ===== BUILD PRACTICE =====
+function buildPractice() {
+  const container = document.getElementById('practiceContainer');
+  let html = '';
+  practiceData.forEach((q, qi) => {
+    html += `<div class="lock-q" id="pq${qi}">
+      <div class="q-text">Q${qi+1}. ${q.q}</div>
+      <button class="reveal-btn" onclick="revealAns(${qi})">🔒 Reveal Answer</button>
+      <div class="answer-box" id="pa${qi}">
+        <div style="font-family:'Fredoka One',cursive;font-size:14px;color:#005a3d;margin-bottom:8px">📝 Step-by-step Answer:</div>`;
+    q.steps.forEach(step => {
+      html += `<div style="margin:4px 0;font-size:13px">${step}</div>`;
+    });
+    html += `<div class="final-ans">${q.final}</div>
+      </div>
+      <div class="self-btns" id="sb${qi}">
+        <button class="self-btn btn-got" onclick="markSelf(${qi},'got',${q.marks})">✅ Got it! (${q.marks} marks)</button>
+        <button class="self-btn btn-partial" onclick="markSelf(${qi},'partial',${q.marks})">🤔 Partial (${Math.ceil(q.marks/2)} marks)</button>
+        <button class="self-btn btn-missed" onclick="markSelf(${qi},'missed',${q.marks})">❌ Missed (0)</button>
+      </div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+function revealAns(qi) {
+  const ab = document.getElementById(`pa${qi}`);
+  const sb = document.getElementById(`sb${qi}`);
+  ab.classList.add('visible');
+  ab.style.display = 'block';
+  sb.classList.add('visible');
+  // Hide the reveal button
+  document.querySelector(`#pq${qi} .reveal-btn`).style.display = 'none';
+}
+
+let practiceAnswered = {};
+function markSelf(qi, type, marks) {
+  if (practiceAnswered[qi]) return;
+  practiceAnswered[qi] = type;
+  
+  if (type === 'got') { gotMarks += marks; totalMarks += marks; }
+  else if (type === 'partial') { partialMarks += 1; totalMarks += marks; }
+  else { missedMarks += 1; totalMarks += marks; }
+  
+  document.getElementById(`pq${qi}`).classList.add('done');
+  const btns = document.querySelectorAll(`#sb${qi} .self-btn`);
+  btns.forEach(b => { b.disabled = true; b.style.opacity = '0.5'; });
+  
+  updateScoreBar();
+}
+
+// ===== INIT =====
+buildQuiz();
+buildPractice();
+updateScoreBar();
+</script>
+</body>
+</html>

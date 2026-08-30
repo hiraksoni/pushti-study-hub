@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HCF & LCM Bible – Pushti's Study Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800&display=swap');
+
+  :root {
+    --bg: #0f0e17;
+    --card: #1a1930;
+    --card2: #221f3b;
+    --accent1: #ff6b6b;
+    --accent2: #ffd166;
+    --accent3: #06d6a0;
+    --accent4: #118ab2;
+    --accent5: #c77dff;
+    --text: #fffffe;
+    --muted: #a7a5c0;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: linear-gradient(135deg, #1a0533 0%, #0a1628 50%, #001a12 100%);
+    padding: 32px 20px 24px;
+    text-align: center;
+    border-bottom: 2px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(199,125,255,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(6,214,160,0.10) 0%, transparent 60%);
+  }
+  .hero-emoji { font-size: 48px; display: block; margin-bottom: 8px; position: relative; }
+  .hero h1 {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 28px; font-weight: 800;
+    background: linear-gradient(90deg, #ff6b6b, #ffd166, #06d6a0);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.2; position: relative;
+  }
+  .hero p { color: var(--muted); font-size: 13px; margin-top: 6px; position: relative; }
+
+  /* ─── NAV ─── */
+  .nav-strip {
+    display: flex; gap: 8px; padding: 14px 16px;
+    overflow-x: auto; background: var(--card);
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: none; position: sticky; top: 0; z-index: 100;
+  }
+  .nav-strip::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    flex-shrink: 0; padding: 8px 14px; border-radius: 20px;
+    border: none; cursor: pointer; font-family: 'Nunito', sans-serif;
+    font-size: 12px; font-weight: 700; transition: all 0.2s;
+    background: var(--card2); color: var(--muted);
+  }
+  .nav-btn.active, .nav-btn:hover {
+    color: #fff;
+  }
+  .nav-btn[data-sec="basics"].active { background: var(--accent5); }
+  .nav-btn[data-sec="divisibility"].active { background: var(--accent2); color: #000; }
+  .nav-btn[data-sec="hcf"].active { background: var(--accent1); }
+  .nav-btn[data-sec="lcm"].active { background: var(--accent3); color: #000; }
+  .nav-btn[data-sec="reallife"].active { background: var(--accent4); }
+  .nav-btn[data-sec="wordprob"].active { background: #ff9f43; }
+  .nav-btn[data-sec="practice"].active { background: #ee5a24; }
+
+  /* ─── SECTIONS ─── */
+  .section { display: none; padding: 16px; }
+  .section.active { display: block; }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--card); border-radius: 16px;
+    padding: 18px; margin-bottom: 14px;
+    border: 1px solid var(--border);
+  }
+  .card-title {
+    font-family: 'Baloo 2', sans-serif; font-size: 17px; font-weight: 700;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+  .tag {
+    display: inline-block; padding: 2px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 800; letter-spacing: 0.5px;
+  }
+  .tag-purple { background: rgba(199,125,255,0.2); color: var(--accent5); }
+  .tag-yellow { background: rgba(255,209,102,0.2); color: var(--accent2); }
+  .tag-red { background: rgba(255,107,107,0.2); color: var(--accent1); }
+  .tag-green { background: rgba(6,214,160,0.2); color: var(--accent3); }
+  .tag-blue { background: rgba(17,138,178,0.2); color: #4ecdc4; }
+  .tag-orange { background: rgba(255,159,67,0.2); color: #ff9f43; }
+
+  p { line-height: 1.7; color: #d0cee8; font-size: 14px; }
+  ul, ol { padding-left: 18px; }
+  li { margin-bottom: 5px; line-height: 1.6; font-size: 14px; color: #d0cee8; }
+  strong { color: var(--text); }
+
+  /* ─── DEFINITION BOX ─── */
+  .def-box {
+    border-radius: 12px; padding: 14px 16px; margin: 10px 0;
+    border-left: 4px solid;
+  }
+  .def-purple { background: rgba(199,125,255,0.08); border-color: var(--accent5); }
+  .def-yellow { background: rgba(255,209,102,0.08); border-color: var(--accent2); }
+  .def-red { background: rgba(255,107,107,0.08); border-color: var(--accent1); }
+  .def-green { background: rgba(6,214,160,0.08); border-color: var(--accent3); }
+  .def-blue { background: rgba(17,138,178,0.12); border-color: var(--accent4); }
+  .def-orange { background: rgba(255,159,67,0.08); border-color: #ff9f43; }
+  .def-box .def-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 6px; opacity: 0.7;
+  }
+  .def-box p { font-size: 14px; }
+
+  /* ─── COMPARISON TABLE ─── */
+  .compare-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+  .compare-table th {
+    padding: 10px 12px; font-size: 13px; font-weight: 800; text-align: left;
+  }
+  .compare-table td {
+    padding: 9px 12px; font-size: 13px; border-top: 1px solid var(--border);
+    color: #d0cee8; vertical-align: top;
+  }
+  .compare-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  .th-hcf { color: var(--accent1); }
+  .th-lcm { color: var(--accent3); }
+
+  /* ─── DIVISIBILITY RULE CARDS ─── */
+  .div-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .div-card {
+    background: var(--card2); border-radius: 12px; padding: 12px;
+    border: 1px solid var(--border);
+  }
+  .div-num {
+    font-family: 'Baloo 2', sans-serif; font-size: 28px; font-weight: 800;
+    line-height: 1;
+  }
+  .div-rule { font-size: 12px; color: #d0cee8; margin: 6px 0 4px; line-height: 1.5; }
+  .div-eg { font-size: 11px; color: var(--muted); font-style: italic; }
+  .div-trick { font-size: 11px; margin-top: 5px; padding: 5px 8px; border-radius: 6px; }
+
+  /* ─── METHOD STEPS ─── */
+  .steps { counter-reset: step; }
+  .step {
+    display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start;
+  }
+  .step-num {
+    width: 26px; height: 26px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 13px;
+    font-weight: 800; flex-shrink: 0; margin-top: 1px;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { display: block; font-size: 13px; margin-bottom: 2px; }
+  .step-content p { font-size: 13px; }
+
+  /* ─── WORKED EXAMPLE ─── */
+  .worked {
+    background: var(--card2); border-radius: 12px; padding: 14px;
+    margin: 10px 0; border: 1px solid var(--border);
+  }
+  .worked-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .worked-q { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  .worked-steps { font-size: 13px; color: #d0cee8; line-height: 1.8; }
+  .calc-line {
+    font-family: 'Courier New', monospace; font-size: 13px;
+    background: rgba(255,255,255,0.04); border-radius: 6px;
+    padding: 8px 10px; margin: 6px 0; white-space: pre-wrap;
+    overflow-x: auto;
+  }
+  .answer-box {
+    background: rgba(6,214,160,0.12); border: 1px solid var(--accent3);
+    border-radius: 8px; padding: 8px 12px; margin-top: 8px;
+    font-size: 14px; font-weight: 700; color: var(--accent3);
+  }
+
+  /* ─── PRACTICE Q ─── */
+  .pq {
+    background: var(--card2); border-radius: 12px; padding: 14px;
+    margin-bottom: 10px; border: 1px solid var(--border);
+  }
+  .pq-q { font-size: 14px; font-weight: 700; margin-bottom: 10px; line-height: 1.5; }
+  .reveal-btn {
+    background: none; border: 1.5px solid var(--muted);
+    color: var(--muted); border-radius: 8px; padding: 6px 14px;
+    font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif;
+    transition: all 0.2s;
+  }
+  .reveal-btn:hover { border-color: var(--accent3); color: var(--accent3); }
+  .pq-ans {
+    display: none; margin-top: 10px;
+    background: rgba(6,214,160,0.07); border-radius: 8px;
+    padding: 10px 12px; font-size: 13px; color: #d0cee8; line-height: 1.7;
+  }
+  .pq-ans.visible { display: block; }
+  .pq-ans .ans-final { color: var(--accent3); font-weight: 700; }
+
+  /* ─── KEYWORD TABLE ─── */
+  .kw-table { width: 100%; border-collapse: collapse; }
+  .kw-table th { font-size: 12px; font-weight: 800; padding: 8px 10px; text-align: left; }
+  .kw-table td { font-size: 13px; padding: 8px 10px; border-top: 1px solid var(--border); color: #d0cee8; }
+  .kw-hcf { color: var(--accent1); font-weight: 700; }
+  .kw-lcm { color: var(--accent3); font-weight: 700; }
+
+  /* ─── WORD PROBLEM CARD ─── */
+  .wp-card {
+    background: var(--card2); border-radius: 14px; padding: 16px;
+    margin-bottom: 14px; border: 1px solid var(--border);
+  }
+  .wp-type { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .wp-q { font-size: 14px; font-weight: 700; line-height: 1.6; margin-bottom: 12px; }
+  .wp-clue {
+    background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.25);
+    border-radius: 8px; padding: 10px 12px; margin-bottom: 10px;
+  }
+  .wp-clue-title { font-size: 11px; font-weight: 800; color: var(--accent2); margin-bottom: 6px; letter-spacing: 0.5px; }
+  .wp-clue p { font-size: 13px; }
+  .wp-sol { display: none; margin-top: 10px; }
+  .wp-sol.visible { display: block; }
+  .wp-sol-step { font-size: 13px; color: #d0cee8; margin-bottom: 6px; line-height: 1.6; }
+
+  /* ─── TIPS BOX ─── */
+  .tips-box {
+    background: rgba(255,209,102,0.06); border: 1px solid rgba(255,209,102,0.2);
+    border-radius: 12px; padding: 14px; margin: 10px 0;
+  }
+  .tips-box .tips-title { font-size: 13px; font-weight: 800; color: var(--accent2); margin-bottom: 8px; }
+
+  /* ─── FACT CHIPS ─── */
+  .fact-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .chip {
+    padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
+    border: 1px solid;
+  }
+
+  /* ─── MEMORY AID ─── */
+  .memory-card {
+    border-radius: 12px; padding: 14px; text-align: center; margin: 10px 0;
+  }
+  .memory-emoji { font-size: 36px; display: block; margin-bottom: 8px; }
+  .memory-text { font-size: 13px; font-weight: 600; color: #d0cee8; }
+
+  /* ─── SHORTCUT BOX ─── */
+  .shortcut {
+    background: rgba(17,138,178,0.10); border: 1px solid rgba(17,138,178,0.25);
+    border-radius: 10px; padding: 12px 14px; margin: 8px 0;
+  }
+  .shortcut .sc-title { font-size: 12px; font-weight: 800; color: #4ecdc4; margin-bottom: 5px; }
+
+  /* ─── SECTION HEADER ─── */
+  .sec-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sec-header h2 {
+    font-family: 'Baloo 2', sans-serif; font-size: 20px; font-weight: 800;
+  }
+  .sec-icon { font-size: 28px; }
+
+  /* ─── ACCORDION ─── */
+  .accordion-item { margin-bottom: 8px; }
+  .accordion-btn {
+    width: 100%; background: var(--card2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 14px; text-align: left;
+    color: var(--text); font-family: 'Nunito', sans-serif; font-size: 14px;
+    font-weight: 700; cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center;
+  }
+  .accordion-btn .arr { font-size: 18px; transition: transform 0.3s; color: var(--muted); }
+  .accordion-btn.open .arr { transform: rotate(180deg); }
+  .accordion-content { display: none; padding: 12px 14px 0; }
+  .accordion-content.open { display: block; }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+            <div style="padding: 10px 20px; background: #1E293B; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
+                <a href="javascript:history.back()" style="color: #6366F1; text-decoration: none; font-weight: 700; font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 6px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to Hub
+                </a>
+                <span style="color:#A855F7; font-family: 'Nunito', sans-serif; font-weight: bold;">Claude Notes Mode</span>
+            </div>
+            
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-emoji">📖✨</span>
+  <h1>Pushti's HCF & LCM Bible</h1>
+  <p>Class 6 · Complete Study Guide · Tap to explore!</p>
+</div>
+
+<!-- NAV -->
+<div class="nav-strip">
+  <button class="nav-btn active" data-sec="basics">🧱 Basics</button>
+  <button class="nav-btn" data-sec="divisibility">🔢 Divisibility</button>
+  <button class="nav-btn" data-sec="hcf">🔴 HCF</button>
+  <button class="nav-btn" data-sec="lcm">🟢 LCM</button>
+  <button class="nav-btn" data-sec="reallife">🌍 Real Life</button>
+  <button class="nav-btn" data-sec="wordprob">📝 Word Problems</button>
+  <button class="nav-btn" data-sec="practice">🎯 Practice</button>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 1: BASICS
+════════════════════════════════════════════ -->
+<div class="section active" id="sec-basics">
+
+  <div class="sec-header">
+    <span class="sec-icon">🧱</span>
+    <h2>The Foundation</h2>
+  </div>
+
+  <!-- Factors -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-purple">FACTOR</span> What is a Factor?</div>
+    <div class="def-box def-purple">
+      <div class="def-label">Definition</div>
+      <p>A <strong>factor</strong> of a number divides it <strong>exactly</strong> (no remainder). If A × B = N, then both A and B are factors of N.</p>
+    </div>
+    <p style="margin-top:10px;">Example: Factors of 12 are <strong>1, 2, 3, 4, 6, 12</strong> because 12÷1=12 ✓, 12÷2=6 ✓, 12÷3=4 ✓, 12÷4=3 ✓, 12÷6=2 ✓, 12÷12=1 ✓</p>
+
+    <div class="tips-box" style="margin-top:12px;">
+      <div class="tips-title">⚡ Key Facts about Factors</div>
+      <ul>
+        <li><strong>1</strong> is a factor of every number.</li>
+        <li>Every number is a factor of itself.</li>
+        <li>A factor is always ≤ the number (never bigger).</li>
+        <li>Every number has a <strong>finite</strong> (limited) number of factors.</li>
+        <li>The factors of a number are always less than or equal to the number.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Multiples -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-green">MULTIPLE</span> What is a Multiple?</div>
+    <div class="def-box def-green">
+      <div class="def-label">Definition</div>
+      <p>A <strong>multiple</strong> of a number is what you get when you multiply it by 1, 2, 3, 4, … It is always divisible by the number.</p>
+    </div>
+    <p style="margin-top:10px;">Example: Multiples of 6 → 6, 12, 18, 24, 30, 36… (never ending!)</p>
+
+    <div class="tips-box" style="margin-top:12px;">
+      <div class="tips-title">⚡ Key Facts about Multiples</div>
+      <ul>
+        <li>Every number is a multiple of itself.</li>
+        <li>A multiple is always ≥ the number (never smaller).</li>
+        <li>Every number has <strong>infinite</strong> (unlimited) multiples.</li>
+        <li>Every multiple of a number is divisible by that number.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Factor vs Multiple comparison -->
+  <div class="card">
+    <div class="card-title">⚖️ Factor vs Multiple — The Big Difference</div>
+    <table class="compare-table">
+      <tr>
+        <th style="color:var(--accent5);">Property</th>
+        <th style="color:var(--accent1);">Factor</th>
+        <th style="color:var(--accent3);">Multiple</th>
+      </tr>
+      <tr><td>Size</td><td>≤ the number</td><td>≥ the number</td></tr>
+      <tr><td>Count</td><td>Finite (limited)</td><td>Infinite (endless)</td></tr>
+      <tr><td>How to get</td><td>Divide exactly</td><td>Multiply by 1,2,3…</td></tr>
+      <tr><td>Example for 6</td><td>1, 2, 3, 6</td><td>6, 12, 18, 24…</td></tr>
+      <tr><td>Relationship</td><td>6 divides into the number</td><td>number divides into it</td></tr>
+    </table>
+    <div class="def-box def-yellow" style="margin-top:10px;">
+      <div class="def-label">🧠 Memory Trick</div>
+      <p><strong>Factor = Smaller (goes into)</strong> · <strong>Multiple = Bigger (comes out of)</strong><br>
+      Think: "Factories make parts (factors) that are smaller than the whole product."</p>
+    </div>
+  </div>
+
+  <!-- Prime & Composite -->
+  <div class="card">
+    <div class="card-title">🔢 Prime & Composite Numbers</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+      <div class="def-box def-red" style="margin:0;">
+        <div class="def-label" style="color:var(--accent1);">PRIME</div>
+        <p><strong>Exactly 2 factors:</strong> 1 and itself.<br>Examples: 2, 3, 5, 7, 11, 13, 17, 19…</p>
+      </div>
+      <div class="def-box def-blue" style="margin:0;">
+        <div class="def-label" style="color:#4ecdc4;">COMPOSITE</div>
+        <p><strong>More than 2 factors.</strong><br>Examples: 4, 6, 8, 9, 10, 12, 15…</p>
+      </div>
+    </div>
+    <div class="tips-box" style="margin-top:10px;">
+      <div class="tips-title">⭐ Must-Know Special Facts</div>
+      <ul>
+        <li><strong>1</strong> is NEITHER prime nor composite.</li>
+        <li><strong>2</strong> is the ONLY even prime number.</li>
+        <li>All prime numbers except 2 are odd.</li>
+        <li><strong>Twin primes</strong>: pairs differing by 2 → (3,5), (5,7), (11,13), (17,19)…</li>
+        <li><strong>Co-primes</strong>: two numbers whose HCF is 1. E.g. (8,9), (4,15).</li>
+        <li><strong>Perfect number</strong>: sum of all factors = 2× the number. E.g. 6 (1+2+3+6=12=2×6), 28.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Primes up to 100 -->
+  <div class="card">
+    <div class="card-title">📋 All Prime Numbers from 1 to 100</div>
+    <p style="margin-bottom:10px;font-size:13px;">There are <strong>25 primes</strong> up to 100. Learn them! 🎯</p>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span class="chip" style="background:rgba(255,107,107,0.15);border-color:rgba(255,107,107,0.4);color:var(--accent1);">2</span>
+      <span class="chip" style="background:rgba(255,107,107,0.15);border-color:rgba(255,107,107,0.4);color:var(--accent1);">3</span>
+      <span class="chip" style="background:rgba(255,107,107,0.15);border-color:rgba(255,107,107,0.4);color:var(--accent1);">5</span>
+      <span class="chip" style="background:rgba(255,107,107,0.15);border-color:rgba(255,107,107,0.4);color:var(--accent1);">7</span>
+      <span class="chip" style="background:rgba(255,209,102,0.15);border-color:rgba(255,209,102,0.4);color:var(--accent2);">11</span>
+      <span class="chip" style="background:rgba(255,209,102,0.15);border-color:rgba(255,209,102,0.4);color:var(--accent2);">13</span>
+      <span class="chip" style="background:rgba(255,209,102,0.15);border-color:rgba(255,209,102,0.4);color:var(--accent2);">17</span>
+      <span class="chip" style="background:rgba(255,209,102,0.15);border-color:rgba(255,209,102,0.4);color:var(--accent2);">19</span>
+      <span class="chip" style="background:rgba(6,214,160,0.15);border-color:rgba(6,214,160,0.4);color:var(--accent3);">23</span>
+      <span class="chip" style="background:rgba(6,214,160,0.15);border-color:rgba(6,214,160,0.4);color:var(--accent3);">29</span>
+      <span class="chip" style="background:rgba(6,214,160,0.15);border-color:rgba(6,214,160,0.4);color:var(--accent3);">31</span>
+      <span class="chip" style="background:rgba(6,214,160,0.15);border-color:rgba(6,214,160,0.4);color:var(--accent3);">37</span>
+      <span class="chip" style="background:rgba(199,125,255,0.15);border-color:rgba(199,125,255,0.4);color:var(--accent5);">41</span>
+      <span class="chip" style="background:rgba(199,125,255,0.15);border-color:rgba(199,125,255,0.4);color:var(--accent5);">43</span>
+      <span class="chip" style="background:rgba(199,125,255,0.15);border-color:rgba(199,125,255,0.4);color:var(--accent5);">47</span>
+      <span class="chip" style="background:rgba(255,107,107,0.15);border-color:rgba(255,107,107,0.4);color:var(--accent1);">53</span>
+      <span class="chip" style="background:rgba(255,107,107,0.15);border-color:rgba(255,107,107,0.4);color:var(--accent1);">59</span>
+      <span class="chip" style="background:rgba(255,209,102,0.15);border-color:rgba(255,209,102,0.4);color:var(--accent2);">61</span>
+      <span class="chip" style="background:rgba(255,209,102,0.15);border-color:rgba(255,209,102,0.4);color:var(--accent2);">67</span>
+      <span class="chip" style="background:rgba(6,214,160,0.15);border-color:rgba(6,214,160,0.4);color:var(--accent3);">71</span>
+      <span class="chip" style="background:rgba(6,214,160,0.15);border-color:rgba(6,214,160,0.4);color:var(--accent3);">73</span>
+      <span class="chip" style="background:rgba(6,214,160,0.15);border-color:rgba(6,214,160,0.4);color:var(--accent3);">79</span>
+      <span class="chip" style="background:rgba(199,125,255,0.15);border-color:rgba(199,125,255,0.4);color:var(--accent5);">83</span>
+      <span class="chip" style="background:rgba(199,125,255,0.15);border-color:rgba(199,125,255,0.4);color:var(--accent5);">89</span>
+      <span class="chip" style="background:rgba(199,125,255,0.15);border-color:rgba(199,125,255,0.4);color:var(--accent5);">97</span>
+    </div>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">🎵 Trick to remember: Group by 10s — 2 primes under 10, 4 in 11-20, 4 in 21-30, 4 in 31-40, 3 in 41-50, 2 in 51-60, 2 in 61-70, 2 in 71-80, 2 in 81-90, 1 in 91-100.</p>
+  </div>
+
+  <!-- Prime Factorisation -->
+  <div class="card">
+    <div class="card-title">🌳 Prime Factorisation</div>
+    <div class="def-box def-purple">
+      <div class="def-label">Definition</div>
+      <p>Writing a number as a product of <strong>only prime numbers</strong>. Every composite number can be factorised in <strong>exactly one unique way</strong> (Fundamental Theorem of Arithmetic).</p>
+    </div>
+    <p style="margin-top:10px;font-weight:700;">Two methods:</p>
+
+    <div class="accordion-item" style="margin-top:8px;">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        Method 1: Division (Ladder) Method <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <div class="steps" style="margin-top:10px;">
+          <div class="step">
+            <div class="step-num" style="background:rgba(255,107,107,0.2);color:var(--accent1);">1</div>
+            <div class="step-content"><strong>Divide by smallest prime that goes in</strong><p>Start with 2, then 3, then 5, etc.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:rgba(255,107,107,0.2);color:var(--accent1);">2</div>
+            <div class="step-content"><strong>Keep dividing the quotient</strong><p>Until quotient = 1</p></div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:rgba(255,107,107,0.2);color:var(--accent1);">3</div>
+            <div class="step-content"><strong>Multiply all divisors</strong><p>That gives the prime factorisation!</p></div>
+          </div>
+        </div>
+        <div class="worked">
+          <div class="worked-label" style="color:var(--accent2);">📌 Example: 360</div>
+          <div class="calc-line">2 | 360
+2 | 180
+2 |  90
+3 |  45
+3 |  15
+5 |   5
+    1
+
+360 = 2 × 2 × 2 × 3 × 3 × 5 = 2³ × 3² × 5</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item" style="margin-top:4px;">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        Method 2: Factor Tree Method <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:10px;">Split the number into any two factors, then keep splitting until all branches are prime.</p>
+        <div class="worked">
+          <div class="worked-label" style="color:var(--accent2);">📌 Example: 60</div>
+          <div class="calc-line">      60
+     /    \
+    6      10
+   / \    /  \
+  2   3  2    5
+
+60 = 2 × 3 × 2 × 5 = 2² × 3 × 5</div>
+        </div>
+        <p style="margin-top:8px;font-size:13px;color:var(--muted);">No matter how you split, the final prime factors are always the same! ✨</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 2: DIVISIBILITY
+════════════════════════════════════════════ -->
+<div class="section" id="sec-divisibility">
+
+  <div class="sec-header">
+    <span class="sec-icon">🔢</span>
+    <h2>Divisibility Rules & Tricks</h2>
+  </div>
+
+  <div class="card">
+    <p style="margin-bottom:12px;">These rules let you check divisibility <strong>without actually dividing!</strong> Learn them and save lots of time. 🚀</p>
+  </div>
+
+  <div class="div-grid">
+
+    <div class="div-card">
+      <div class="div-num" style="color:var(--accent1);">÷2</div>
+      <div class="div-rule">Last digit is <strong>even</strong>: 0, 2, 4, 6, or 8</div>
+      <div class="div-trick" style="background:rgba(255,107,107,0.1);color:var(--accent1);">
+        💡 Just check the units digit!
+      </div>
+      <div class="div-eg">✅ 348 (8 is even)<br>❌ 573 (3 is odd)</div>
+    </div>
+
+    <div class="div-card">
+      <div class="div-num" style="color:var(--accent2);">÷3</div>
+      <div class="div-rule"><strong>Sum of all digits</strong> is divisible by 3</div>
+      <div class="div-trick" style="background:rgba(255,209,102,0.1);color:var(--accent2);">
+        💡 Add digits, apply rule again!
+      </div>
+      <div class="div-eg">✅ 681: 6+8+1=15, 15÷3=5 ✓<br>❌ 257: 2+5+7=14 ✗</div>
+    </div>
+
+    <div class="div-card">
+      <div class="div-num" style="color:var(--accent3);">÷4</div>
+      <div class="div-rule">Last <strong>two digits</strong> form a number divisible by 4</div>
+      <div class="div-trick" style="background:rgba(6,214,160,0.1);color:var(--accent3);">
+        💡 Cover all but last 2 digits!
+      </div>
+      <div class="div-eg">✅ 1812 (12÷4=3 ✓)<br>❌ 4013 (13÷4 rem 1 ✗)</div>
+    </div>
+
+    <div class="div-card">
+      <div class="div-num" style="color:#4ecdc4;">÷5</div>
+      <div class="div-rule">Last digit is <strong>0 or 5</strong></div>
+      <div class="div-trick" style="background:rgba(17,138,178,0.1);color:#4ecdc4;">
+        💡 Easiest rule ever! 😄
+      </div>
+      <div class="div-eg">✅ 485 (ends 5 ✓)<br>❌ 492 (ends 2 ✗)</div>
+    </div>
+
+    <div class="div-card">
+      <div class="div-num" style="color:var(--accent5);">÷6</div>
+      <div class="div-rule">Divisible by <strong>both 2 AND 3</strong></div>
+      <div class="div-trick" style="background:rgba(199,125,255,0.1);color:var(--accent5);">
+        💡 Check ÷2 first, then ÷3!
+      </div>
+      <div class="div-eg">✅ 114: even + 1+1+4=6 ✓<br>❌ 308: even but 3+0+8=11 ✗</div>
+    </div>
+
+    <div class="div-card">
+      <div class="div-num" style="color:#ff9f43;">÷7</div>
+      <div class="div-rule">Double the last digit, subtract from rest. Result divisible by 7</div>
+      <div class="div-trick" style="background:rgba(255,159,67,0.1);color:#ff9f43;">
+        💡 Repeat if needed!
+      </div>
+      <div class="div-eg">602: 60-(2×2)=56=7×8 ✓<br>505: 50-10=40 ✗</div>
+    </div>
+
+    <div class="div-card">
+      <div class="div-num" style="color:var(--accent1);">÷8</div>
+      <div class="div-rule">Last <strong>three digits</strong> form a number divisible by 8</div>
+      <div class="div-trick" style="background:rgba(255,107,107,0.1);color:var(--accent1);">
+        💡 Only look at last 3 digits!
+      </div>
+      <div class="div-eg">✅ 5816 (816÷8=102 ✓)<br>❌ 12302 (302÷8 ✗)</div>
+    </div>
+
+    <div class="div-card">
+      <div class="div-num" style="color:var(--accent2);">÷9</div>
+      <div class="div-rule"><strong>Sum of all digits</strong> is divisible by 9</div>
+      <div class="div-trick" style="background:rgba(255,209,102,0.1);color:var(--accent2);">
+        💡 Like ÷3 but stricter!
+      </div>
+      <div class="div-eg">✅ 1269: 1+2+6+9=18 ✓<br>❌ 2013: 2+0+1+3=6 ✗</div>
+    </div>
+
+    <div class="div-card">
+      <div class="div-num" style="color:var(--accent3);">÷10</div>
+      <div class="div-rule">Last digit is <strong>0</strong></div>
+      <div class="div-trick" style="background:rgba(6,214,160,0.1);color:var(--accent3);">
+        💡 Ends in zero = done!
+      </div>
+      <div class="div-eg">✅ 420 ✓<br>❌ 231 ✗</div>
+    </div>
+
+    <div class="div-card">
+      <div class="div-num" style="color:#4ecdc4;">÷11</div>
+      <div class="div-rule">Difference of (sum of odd-place digits) – (sum of even-place digits) = 0 or 11</div>
+      <div class="div-trick" style="background:rgba(17,138,178,0.1);color:#4ecdc4;">
+        💡 Alternating sum trick!
+      </div>
+      <div class="div-eg">✅ 1364: (1+6)-(3+4)=0 ✓<br>❌ 3729: (3+2)-(7+9)= -11 ✓</div>
+    </div>
+
+  </div>
+
+  <!-- Properties of divisibility -->
+  <div class="card" style="margin-top:14px;">
+    <div class="card-title">📐 Important Properties of Divisibility</div>
+    <div class="def-box def-blue">
+      <div class="def-label">Rule 1</div>
+      <p>If a number divides two numbers, it divides their <strong>sum and difference</strong> too.<br>
+      E.g. 4 divides 16 and 20 → 4 divides 16+20=36 and 20-16=4 ✓</p>
+    </div>
+    <div class="def-box def-blue" style="margin-top:8px;">
+      <div class="def-label">Rule 2</div>
+      <p>If a number is divisible by <strong>two co-prime numbers</strong>, it's divisible by their product too.<br>
+      E.g. 80 is divisible by 4 and 5 (co-primes), so 80 is divisible by 20 ✓</p>
+    </div>
+    <div class="def-box def-blue" style="margin-top:8px;">
+      <div class="def-label">Rule 3</div>
+      <p>If A divides B, then A also divides every <strong>multiple of B</strong>.<br>
+      E.g. 6 divides 12, so 6 divides 24, 36, 48… ✓</p>
+    </div>
+  </div>
+
+  <!-- Tricks for mental maths -->
+  <div class="card">
+    <div class="card-title">⚡ Mental Maths Tricks</div>
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        Is 7,452 divisible by 4? <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;">Look at last 2 digits: <strong>52</strong>. Is 52 ÷ 4 exact? 52 = 4 × 13. ✅ Yes! So 7452 ÷ 4 is exact.</p>
+      </div>
+    </div>
+    <div class="accordion-item" style="margin-top:6px;">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        Is 93,428,910 divisible by 6? <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;"><strong>Step 1 – ÷2:</strong> Last digit is 0 (even) ✅<br>
+        <strong>Step 2 – ÷3:</strong> 9+3+4+2+8+9+1+0 = 36, and 36÷3=12 ✅<br>
+        Both pass → <strong>divisible by 6!</strong></p>
+      </div>
+    </div>
+    <div class="accordion-item" style="margin-top:6px;">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        Quick trick: Is a number divisible by 12? <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;">Since 12 = 4 × 3 (co-primes), check:<br>
+        ✅ Last 2 digits divisible by 4?<br>
+        ✅ Sum of digits divisible by 3?<br>
+        Both yes → divisible by 12!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 3: HCF
+════════════════════════════════════════════ -->
+<div class="section" id="sec-hcf">
+
+  <div class="sec-header">
+    <span class="sec-icon">🔴</span>
+    <h2 style="color:var(--accent1);">HCF — Highest Common Factor</h2>
+  </div>
+
+  <div class="card">
+    <div class="def-box def-red">
+      <div class="def-label">What is HCF?</div>
+      <p>The <strong>Highest Common Factor (HCF)</strong> of two or more numbers is the <strong>largest number that divides ALL of them exactly</strong>. Also called GCD (Greatest Common Divisor).</p>
+    </div>
+    <div class="memory-card" style="background:rgba(255,107,107,0.08);margin-top:10px;">
+      <span class="memory-emoji">🎯</span>
+      <div class="memory-text"><strong>H</strong>CF → Think <strong>H</strong>ighest = <strong>Biggest</strong> factor common to all numbers<br>
+      "How small can I cut things equally?" → HCF!</div>
+    </div>
+  </div>
+
+  <!-- Method 1: Listing -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-red">METHOD 1</span> Listing All Factors</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,107,107,0.2);color:var(--accent1);">1</div>
+        <div class="step-content"><strong>Write all factors of each number</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,107,107,0.2);color:var(--accent1);">2</div>
+        <div class="step-content"><strong>Find common factors</strong> (appear in all lists)</div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,107,107,0.2);color:var(--accent1);">3</div>
+        <div class="step-content"><strong>Pick the largest</strong> → That's your HCF!</div>
+      </div>
+    </div>
+    <div class="worked">
+      <div class="worked-label" style="color:var(--accent1);">📌 Find HCF of 24 and 36</div>
+      <div class="worked-steps">
+        Factors of 24: 1, 2, 3, 4, 6, 8, 12, 24<br>
+        Factors of 36: 1, 2, 3, 4, 6, 9, 12, 18, 36<br>
+        Common factors: 1, 2, 3, 4, 6, <strong style="color:var(--accent3);">12</strong>
+      </div>
+      <div class="answer-box">HCF = 12 ✓</div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px;">⚠️ Use this method only for small numbers. For big numbers, use prime factorisation.</p>
+  </div>
+
+  <!-- Method 2: Prime Factorisation -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-red">METHOD 2</span> Prime Factorisation Method</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,107,107,0.2);color:var(--accent1);">1</div>
+        <div class="step-content"><strong>Write prime factorisation of each number</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,107,107,0.2);color:var(--accent1);">2</div>
+        <div class="step-content"><strong>Find common prime factors</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,107,107,0.2);color:var(--accent1);">3</div>
+        <div class="step-content"><strong>Multiply them</strong> (take the MINIMUM power of each) → HCF</div>
+      </div>
+    </div>
+    <div class="worked">
+      <div class="worked-label" style="color:var(--accent1);">📌 Find HCF of 42, 84, and 24</div>
+      <div class="calc-line">2 | 42    2 | 84    2 | 24
+3 | 21    2 | 42    2 | 12
+7 |  7    3 | 21    2 |  6
+    1     7 |  7    3 |  3
+          1         1
+
+42 = 2 × 3 × 7
+84 = 2 × 2 × 3 × 7
+24 = 2 × 2 × 2 × 3
+
+Common primes: 2 (min power: 2¹) and 3 (min power: 3¹)</div>
+      <div class="answer-box">HCF = 2 × 3 = 6 ✓</div>
+    </div>
+    <div class="shortcut">
+      <div class="sc-title">🔑 Key Rule</div>
+      <p style="font-size:13px;">For HCF → take common primes with their <strong>LOWEST power</strong>. Think: "What do they ALL share?"</p>
+    </div>
+  </div>
+
+  <!-- Method 3: Division (Euclid's) -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-red">METHOD 3</span> Division Method (Euclid's Algorithm)</div>
+    <p style="margin-bottom:10px;font-size:13px;">Best for large numbers where prime factorisation is hard.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,107,107,0.2);color:var(--accent1);">1</div>
+        <div class="step-content"><strong>Divide the bigger number by the smaller</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,107,107,0.2);color:var(--accent1);">2</div>
+        <div class="step-content"><strong>Take remainder</strong> → divide the previous divisor by this remainder</div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,107,107,0.2);color:var(--accent1);">3</div>
+        <div class="step-content"><strong>Repeat</strong> until remainder = 0. Last divisor is HCF!</div>
+      </div>
+    </div>
+    <div class="worked">
+      <div class="worked-label" style="color:var(--accent1);">📌 HCF of 18 and 30</div>
+      <div class="calc-line">30 ÷ 18 = 1, remainder 12
+18 ÷ 12 = 1, remainder 6
+12 ÷  6 = 2, remainder 0  ← STOP!</div>
+      <div class="answer-box">HCF = 6 ✓ (last divisor when remainder = 0)</div>
+    </div>
+    <div class="worked">
+      <div class="worked-label" style="color:var(--accent1);">📌 HCF of 58 and 70</div>
+      <div class="calc-line">70 ÷ 58 = 1, remainder 12
+58 ÷ 12 = 4, remainder 10
+12 ÷ 10 = 1, remainder  2
+10 ÷  2 = 5, remainder  0  ← STOP!</div>
+      <div class="answer-box">HCF = 2 ✓</div>
+    </div>
+  </div>
+
+  <!-- HCF Key Properties -->
+  <div class="card">
+    <div class="card-title">⭐ Key Facts About HCF</div>
+    <div class="fact-chips">
+      <div class="chip" style="border-color:rgba(255,107,107,0.4);color:var(--accent1);">HCF ≤ smallest number</div>
+      <div class="chip" style="border-color:rgba(255,107,107,0.4);color:var(--accent1);">HCF of co-primes = 1</div>
+      <div class="chip" style="border-color:rgba(255,107,107,0.4);color:var(--accent1);">HCF of prime numbers = 1</div>
+      <div class="chip" style="border-color:rgba(255,107,107,0.4);color:var(--accent1);">HCF is a factor of LCM</div>
+      <div class="chip" style="border-color:rgba(255,107,107,0.4);color:var(--accent1);">HCF of consecutive numbers = 1</div>
+    </div>
+    <div class="def-box def-red" style="margin-top:10px;">
+      <div class="def-label">🔗 Golden Relationship</div>
+      <p style="font-size:15px;"><strong>HCF × LCM = First Number × Second Number</strong><br>
+      <span style="font-size:13px;opacity:0.8;">So if you know HCF, you can find LCM, and vice versa!</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 4: LCM
+════════════════════════════════════════════ -->
+<div class="section" id="sec-lcm">
+
+  <div class="sec-header">
+    <span class="sec-icon">🟢</span>
+    <h2 style="color:var(--accent3);">LCM — Least Common Multiple</h2>
+  </div>
+
+  <div class="card">
+    <div class="def-box def-green">
+      <div class="def-label">What is LCM?</div>
+      <p>The <strong>Least Common Multiple (LCM)</strong> of two or more numbers is the <strong>smallest number that is exactly divisible by ALL of them</strong>.</p>
+    </div>
+    <div class="memory-card" style="background:rgba(6,214,160,0.08);margin-top:10px;">
+      <span class="memory-emoji">🎯</span>
+      <div class="memory-text"><strong>L</strong>CM → Think <strong>L</strong>east = <strong>Smallest</strong> multiple common to all numbers<br>
+      "When do they all meet again?" → LCM!</div>
+    </div>
+  </div>
+
+  <!-- Method 1: Listing multiples -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-green">METHOD 1</span> Listing Multiples</div>
+    <p style="margin-bottom:10px;font-size:13px;">Good for small numbers only.</p>
+    <div class="worked">
+      <div class="worked-label" style="color:var(--accent3);">📌 LCM of 4 and 6</div>
+      <div class="worked-steps">
+        Multiples of 4: 4, 8, 12, 16, 20, 24…<br>
+        Multiples of 6: 6, 12, 18, 24…<br>
+        Common: <strong style="color:var(--accent3);">12</strong>, 24…
+      </div>
+      <div class="answer-box">LCM = 12 (smallest common) ✓</div>
+    </div>
+  </div>
+
+  <!-- Method 2: Prime Factorisation -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-green">METHOD 2</span> Prime Factorisation Method</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:rgba(6,214,160,0.2);color:var(--accent3);">1</div>
+        <div class="step-content"><strong>Write prime factorisation of each number</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(6,214,160,0.2);color:var(--accent3);">2</div>
+        <div class="step-content"><strong>List ALL prime factors</strong> that appear in any number</div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(6,214,160,0.2);color:var(--accent3);">3</div>
+        <div class="step-content"><strong>Take HIGHEST power</strong> of each prime → Multiply = LCM</div>
+      </div>
+    </div>
+    <div class="worked">
+      <div class="worked-label" style="color:var(--accent3);">📌 LCM of 12, 18, and 24</div>
+      <div class="calc-line">12 = 2 × 2 × 3     = 2² × 3¹
+18 = 2 × 3 × 3     = 2¹ × 3²
+24 = 2 × 2 × 2 × 3 = 2³ × 3¹
+
+Highest power of 2: 2³ = 8
+Highest power of 3: 3² = 9</div>
+      <div class="answer-box">LCM = 8 × 9 = 72 ✓</div>
+    </div>
+    <div class="shortcut">
+      <div class="sc-title">🔑 Key Rule</div>
+      <p style="font-size:13px;">For LCM → take ALL primes with their <strong>HIGHEST power</strong>. Think: "What's needed to cover everyone?"</p>
+    </div>
+  </div>
+
+  <!-- Method 3: Division method -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-green">METHOD 3</span> Common Division Method</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:rgba(6,214,160,0.2);color:var(--accent3);">1</div>
+        <div class="step-content"><strong>Write numbers in a row</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(6,214,160,0.2);color:var(--accent3);">2</div>
+        <div class="step-content"><strong>Divide by smallest prime</strong> that divides AT LEAST ONE number. Carry forward numbers not divisible.</div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(6,214,160,0.2);color:var(--accent3);">3</div>
+        <div class="step-content"><strong>Repeat</strong> until all numbers become 1</div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(6,214,160,0.2);color:var(--accent3);">4</div>
+        <div class="step-content"><strong>Multiply all divisors</strong> → LCM</div>
+      </div>
+    </div>
+    <div class="worked">
+      <div class="worked-label" style="color:var(--accent3);">📌 LCM of 36, 45, and 60</div>
+      <div class="calc-line">2 | 36, 45, 60
+2 | 18, 45, 30
+3 |  9, 45, 15
+3 |  3, 15,  5
+5 |  1,  5,  5
+   1,  1,  1</div>
+      <div class="answer-box">LCM = 2 × 2 × 3 × 3 × 5 = 180 ✓</div>
+    </div>
+  </div>
+
+  <!-- HCF vs LCM comparison -->
+  <div class="card">
+    <div class="card-title">⚖️ HCF vs LCM — Side by Side</div>
+    <table class="compare-table">
+      <tr>
+        <th style="color:var(--muted);">Property</th>
+        <th class="th-hcf">HCF 🔴</th>
+        <th class="th-lcm">LCM 🟢</th>
+      </tr>
+      <tr><td>Full name</td><td>Highest Common Factor</td><td>Least Common Multiple</td></tr>
+      <tr><td>Also called</td><td>GCD</td><td>LCM</td></tr>
+      <tr><td>Result is</td><td>≤ smallest number</td><td>≥ largest number</td></tr>
+      <tr><td>Prime factors</td><td>Common, LOWEST power</td><td>All primes, HIGHEST power</td></tr>
+      <tr><td>For co-primes</td><td>= 1</td><td>= their product</td></tr>
+      <tr><td>Relationship</td><td colspan="2">HCF × LCM = a × b</td></tr>
+    </table>
+  </div>
+
+  <!-- LCM Key Properties -->
+  <div class="card">
+    <div class="card-title">⭐ Key Facts About LCM</div>
+    <div class="fact-chips">
+      <div class="chip" style="border-color:rgba(6,214,160,0.4);color:var(--accent3);">LCM ≥ largest number</div>
+      <div class="chip" style="border-color:rgba(6,214,160,0.4);color:var(--accent3);">LCM of co-primes = their product</div>
+      <div class="chip" style="border-color:rgba(6,214,160,0.4);color:var(--accent3);">LCM of prime numbers = their product</div>
+      <div class="chip" style="border-color:rgba(6,214,160,0.4);color:var(--accent3);">HCF divides LCM always</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 5: REAL LIFE
+════════════════════════════════════════════ -->
+<div class="section" id="sec-reallife">
+
+  <div class="sec-header">
+    <span class="sec-icon">🌍</span>
+    <h2>Real Life — When to Use What?</h2>
+  </div>
+
+  <!-- Decision guide -->
+  <div class="card">
+    <div class="card-title">🤔 HCF or LCM? The Decision Guide</div>
+    <div class="def-box def-red">
+      <div class="def-label" style="color:var(--accent1);">USE HCF WHEN...</div>
+      <p>You want to <strong>SPLIT, DIVIDE or CUT</strong> things equally into the <strong>largest possible equal groups/pieces</strong>.</p>
+    </div>
+    <div class="def-box def-green" style="margin-top:8px;">
+      <div class="def-label" style="color:var(--accent3);">USE LCM WHEN...</div>
+      <p>You want to find when things happen <strong>TOGETHER AGAIN</strong>, or find the <strong>smallest number</strong> that fits all conditions.</p>
+    </div>
+  </div>
+
+  <!-- HCF situations -->
+  <div class="card">
+    <div class="card-title" style="color:var(--accent1);">🔴 HCF Real-Life Situations</div>
+
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAcc(this)" style="border-left:3px solid var(--accent1);">
+        Cutting rope/string/tape into equal pieces <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;">Three ropes of 120 cm, 136 cm, 160 cm. Cut all into equal pieces — no waste. Longest piece? → <strong>HCF(120,136,160)</strong></p>
+      </div>
+    </div>
+
+    <div class="accordion-item" style="margin-top:6px;">
+      <button class="accordion-btn" onclick="toggleAcc(this)" style="border-left:3px solid var(--accent1);">
+        Maximum size of tiles/square plots <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;">A room 825cm × 675cm. Largest square tile that fits without cutting? → <strong>HCF(825,675)</strong></p>
+      </div>
+    </div>
+
+    <div class="accordion-item" style="margin-top:6px;">
+      <button class="accordion-btn" onclick="toggleAcc(this)" style="border-left:3px solid var(--accent1);">
+        Packing items into equal groups <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;">136 apples, 170 mangoes, 255 oranges → arrange in equal heaps. Max items per heap → <strong>HCF(136,170,255)</strong></p>
+      </div>
+    </div>
+
+    <div class="accordion-item" style="margin-top:6px;">
+      <button class="accordion-btn" onclick="toggleAcc(this)" style="border-left:3px solid var(--accent1);">
+        Maximum capacity of a container <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;">Tanks with 403L, 434L, 465L of diesel. Largest container that measures all exactly? → <strong>HCF(403,434,465)</strong></p>
+      </div>
+    </div>
+
+    <div class="accordion-item" style="margin-top:6px;">
+      <button class="accordion-btn" onclick="toggleAcc(this)" style="border-left:3px solid var(--accent1);">
+        Minimum rooms needed for equal groups <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;">42, 63, 105 students in 3 subjects seated equally. Max per room? → <strong>HCF(42,63,105)</strong>. Number of rooms = Total ÷ HCF</p>
+      </div>
+    </div>
+
+    <div class="tips-box" style="margin-top:10px;">
+      <div class="tips-title">🔑 HCF Keywords to watch for</div>
+      <p style="font-size:13px;"><em>"maximum", "largest", "greatest", "longest", "equal pieces", "exactly measure", "no waste", "divided equally", "split into groups"</em></p>
+    </div>
+  </div>
+
+  <!-- LCM situations -->
+  <div class="card">
+    <div class="card-title" style="color:var(--accent3);">🟢 LCM Real-Life Situations</div>
+
+    <div class="accordion-item">
+      <button class="accordion-btn" onclick="toggleAcc(this)" style="border-left:3px solid var(--accent3);">
+        Bells/events ringing together again <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;">Three bells ring every 30, 36, 45 min. Ring together at 8am. Next time together? → <strong>LCM(30,36,45)</strong> minutes after 8am</p>
+      </div>
+    </div>
+
+    <div class="accordion-item" style="margin-top:6px;">
+      <button class="accordion-btn" onclick="toggleAcc(this)" style="border-left:3px solid var(--accent3);">
+        Three people meeting at a starting point <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;">Three joggers complete a lap in 36, 24, 12 minutes. When do all meet at start together? → <strong>LCM(36,24,12)</strong> minutes</p>
+      </div>
+    </div>
+
+    <div class="accordion-item" style="margin-top:6px;">
+      <button class="accordion-btn" onclick="toggleAcc(this)" style="border-left:3px solid var(--accent3);">
+        Minimum number of items needed <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;">Apples come in boxes of 12, 15, 18. Minimum apples to fill all boxes exactly? → <strong>LCM(12,15,18)</strong></p>
+      </div>
+    </div>
+
+    <div class="accordion-item" style="margin-top:6px;">
+      <button class="accordion-btn" onclick="toggleAcc(this)" style="border-left:3px solid var(--accent3);">
+        Minimum length for equal cutting <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;">Steps of 80cm, 70cm, 75cm. Minimum distance they all cover in complete steps? → <strong>LCM(80,70,75)</strong> cm</p>
+      </div>
+    </div>
+
+    <div class="accordion-item" style="margin-top:6px;">
+      <button class="accordion-btn" onclick="toggleAcc(this)" style="border-left:3px solid var(--accent3);">
+        Smallest/largest number with given divisibility <span class="arr">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="margin-top:8px;">Smallest 4-digit number divisible by 8, 10, 12 → First find <strong>LCM(8,10,12)</strong>, then find smallest 4-digit multiple of that LCM.</p>
+      </div>
+    </div>
+
+    <div class="tips-box" style="margin-top:10px;">
+      <div class="tips-title">🔑 LCM Keywords to watch for</div>
+      <p style="font-size:13px;"><em>"minimum", "smallest", "least", "together again", "at the same time", "simultaneously", "next time", "after how many days/minutes", "common meeting"</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 6: WORD PROBLEMS GUIDE
+════════════════════════════════════════════ -->
+<div class="section" id="sec-wordprob">
+
+  <div class="sec-header">
+    <span class="sec-icon">📝</span>
+    <h2>Word Problems — Step by Step</h2>
+  </div>
+
+  <!-- How to decode word problems -->
+  <div class="card">
+    <div class="card-title">🧩 How to Decode Any Word Problem</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,209,102,0.2);color:var(--accent2);">1</div>
+        <div class="step-content"><strong>READ carefully — find the numbers</strong><p>Underline or circle all numbers in the problem.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,209,102,0.2);color:var(--accent2);">2</div>
+        <div class="step-content"><strong>Find the KEYWORDS</strong><p>Keywords tell you HCF or LCM.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,209,102,0.2);color:var(--accent2);">3</div>
+        <div class="step-content"><strong>Set up the equation</strong><p>Write what you need to find and which operation to use.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,209,102,0.2);color:var(--accent2);">4</div>
+        <div class="step-content"><strong>Solve</strong><p>Calculate HCF or LCM, then answer the actual question.</p></div>
+      </div>
+      <div class="step">
+        <div class="step-num" style="background:rgba(255,209,102,0.2);color:var(--accent2);">5</div>
+        <div class="step-content"><strong>Check & Write answer with units</strong><p>Always re-read to make sure your answer makes sense!</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keyword table -->
+  <div class="card">
+    <div class="card-title">🔑 Master Keyword Table</div>
+    <table class="kw-table">
+      <tr>
+        <th class="kw-hcf">🔴 HCF Words</th>
+        <th class="kw-lcm">🟢 LCM Words</th>
+      </tr>
+      <tr><td>Maximum / Greatest / Largest</td><td>Minimum / Least / Smallest</td></tr>
+      <tr><td>Divided / Split equally</td><td>Together again / Simultaneously</td></tr>
+      <tr><td>Biggest piece / tile / container</td><td>After how many days/minutes</td></tr>
+      <tr><td>Longest / Tallest / Heaviest common</td><td>Next time / First time together</td></tr>
+      <tr><td>Pack equally / arrange in rows</td><td>Circular track / starting point</td></tr>
+      <tr><td>Exactly measure / no remainder</td><td>Smallest number divisible by…</td></tr>
+      <tr><td>Common size / denomination</td><td>Common multiple / event cycle</td></tr>
+    </table>
+  </div>
+
+  <!-- SOLVED word problems with full explanation -->
+  <div class="card">
+    <div class="card-title">📌 Fully Solved Word Problems</div>
+
+    <div class="wp-card">
+      <div class="wp-type" style="color:var(--accent1);">🔴 HCF Problem — Type: Cutting into equal pieces</div>
+      <div class="wp-q">Three strings have lengths 120 cm, 136 cm and 160 cm. They are to be cut into equal pieces of maximum length. Find that length. How many pieces in total?</div>
+      <div class="wp-clue">
+        <div class="wp-clue-title">🔍 DECODE THIS PROBLEM</div>
+        <p><strong>Numbers:</strong> 120, 136, 160<br>
+        <strong>Keywords:</strong> "cut into equal pieces" + "maximum length" → <strong>HCF!</strong><br>
+        <strong>Goal:</strong> Find HCF(120, 136, 160), then find total pieces.</p>
+      </div>
+      <button class="reveal-btn" onclick="toggleWP(this)">👁 Show Solution</button>
+      <div class="wp-sol">
+        <div class="calc-line">2 | 120, 136, 160
+2 |  60,  68,  80
+2 |  30,  34,  40
+    15,  17,  20
+
+HCF = 2 × 2 × 2 = 8</div>
+        <div class="wp-sol-step">✅ Maximum length of each piece = <strong>8 cm</strong></div>
+        <div class="wp-sol-step">Pieces from 120 cm = 120 ÷ 8 = <strong>15</strong><br>
+        Pieces from 136 cm = 136 ÷ 8 = <strong>17</strong><br>
+        Pieces from 160 cm = 160 ÷ 8 = <strong>20</strong></div>
+        <div class="answer-box">Max length = 8 cm | Total pieces = 15+17+20 = 52</div>
+      </div>
+    </div>
+
+    <div class="wp-card">
+      <div class="wp-type" style="color:var(--accent1);">🔴 HCF Problem — Type: Maximum container</div>
+      <div class="wp-q">Three tankers contain 403 litres, 434 litres and 465 litres of diesel. Find the maximum capacity of a container that can measure the diesel of all three tankers an exact number of times.</div>
+      <div class="wp-clue">
+        <div class="wp-clue-title">🔍 DECODE THIS PROBLEM</div>
+        <p><strong>Numbers:</strong> 403, 434, 465<br>
+        <strong>Keywords:</strong> "maximum capacity" + "measure exactly" → <strong>HCF!</strong><br>
+        <strong>Why HCF?</strong> We need one container size that divides all three amounts perfectly.</p>
+      </div>
+      <button class="reveal-btn" onclick="toggleWP(this)">👁 Show Solution</button>
+      <div class="wp-sol">
+        <div class="calc-line">HCF of 403 and 434:
+403) 434 (1
+    -403
+    31) 403 (13
+       -403
+         0
+HCF(403,434) = 31
+
+HCF of 31 and 465:
+31) 465 (15
+   -465
+     0
+HCF = 31</div>
+        <div class="answer-box">Maximum container capacity = 31 litres</div>
+      </div>
+    </div>
+
+    <div class="wp-card">
+      <div class="wp-type" style="color:var(--accent3);">🟢 LCM Problem — Type: Bells ringing together</div>
+      <div class="wp-q">Three bells ring at intervals of 30, 36 and 45 minutes respectively. At what time will they ring together again, if they first ring simultaneously at 8 a.m.?</div>
+      <div class="wp-clue">
+        <div class="wp-clue-title">🔍 DECODE THIS PROBLEM</div>
+        <p><strong>Numbers:</strong> 30, 36, 45<br>
+        <strong>Keywords:</strong> "ring together again" + "simultaneously" → <strong>LCM!</strong><br>
+        <strong>Why LCM?</strong> We want the smallest time when ALL three bells coincide.</p>
+      </div>
+      <button class="reveal-btn" onclick="toggleWP(this)">👁 Show Solution</button>
+      <div class="wp-sol">
+        <div class="calc-line">2 | 30, 36, 45
+2 | 15, 18, 45
+3 |  15,  9, 45
+3 |   5,  3, 15
+5 |   5,  1,  5
+     1,  1,  1
+
+LCM = 2 × 2 × 3 × 3 × 5 = 180 minutes</div>
+        <div class="wp-sol-step">180 minutes = 3 hours</div>
+        <div class="answer-box">Bells ring together again at 8 + 3 = 11 a.m.</div>
+      </div>
+    </div>
+
+    <div class="wp-card">
+      <div class="wp-type" style="color:var(--accent3);">🟢 LCM Problem — Type: Smallest/largest number</div>
+      <div class="wp-q">Find the smallest 4-digit number which is exactly divisible by 8, 10 and 12.</div>
+      <div class="wp-clue">
+        <div class="wp-clue-title">🔍 DECODE THIS PROBLEM</div>
+        <p><strong>Numbers:</strong> 8, 10, 12<br>
+        <strong>Keywords:</strong> "smallest" + "exactly divisible by all" → Find <strong>LCM first!</strong><br>
+        <strong>Then:</strong> Find the smallest 4-digit multiple of that LCM.</p>
+      </div>
+      <button class="reveal-btn" onclick="toggleWP(this)">👁 Show Solution</button>
+      <div class="wp-sol">
+        <div class="calc-line">2 | 8, 10, 12
+2 | 4,  5,  6
+2 | 2,  5,  3
+   1,  5,  3
+LCM = 2×2×2×3×5 = 120
+
+Smallest 4-digit number = 1000
+1000 ÷ 120 = 8 remainder 40
+So 8 × 120 = 960 (3-digit)
+Next: 9 × 120 = 1080</div>
+        <div class="answer-box">Smallest 4-digit number = 1080</div>
+      </div>
+    </div>
+
+    <div class="wp-card">
+      <div class="wp-type" style="color:var(--accent2);">⚡ TRICKY Problem — Remainder type</div>
+      <div class="wp-q">Find the least number which when divided by 6, 15 and 18 leaves remainder 5 in each case.</div>
+      <div class="wp-clue">
+        <div class="wp-clue-title">🔍 DECODE THIS PROBLEM</div>
+        <p><strong>Numbers:</strong> 6, 15, 18 with remainder 5<br>
+        <strong>Trick:</strong> The number we want = LCM + remainder<br>
+        <strong>Why?</strong> If remainder = 5, the number is exactly 5 MORE than a multiple of LCM.</p>
+      </div>
+      <button class="reveal-btn" onclick="toggleWP(this)">👁 Show Solution</button>
+      <div class="wp-sol">
+        <div class="calc-line">LCM of 6, 15, 18:
+2 | 6, 15, 18
+3 | 3, 15,  9
+3 | 1,  5,  3
+5 | 1,  5,  1
+   1,  1,  1
+LCM = 2 × 3 × 3 × 5 = 90</div>
+        <div class="wp-sol-step">Required number = LCM + remainder = 90 + 5 = <strong>95</strong></div>
+        <div class="wp-sol-step">Check: 95÷6=15 rem 5 ✓, 95÷15=6 rem 5 ✓, 95÷18=5 rem 5 ✓</div>
+        <div class="answer-box">Answer = 90 + 5 = 95</div>
+      </div>
+    </div>
+
+    <div class="wp-card">
+      <div class="wp-type" style="color:var(--accent2);">⚡ TRICKY Problem — "Greatest number that divides leaving remainder"</div>
+      <div class="wp-q">What is the greatest number that divides 615 and 963, leaving remainder 6 in each case?</div>
+      <div class="wp-clue">
+        <div class="wp-clue-title">🔍 DECODE THIS PROBLEM</div>
+        <p><strong>Trick:</strong> Subtract the remainder first → then find HCF!<br>
+        <strong>Why?</strong> If remainder is 6, then (number − 6) is exactly divisible. So find HCF of (615−6) and (963−6).</p>
+      </div>
+      <button class="reveal-btn" onclick="toggleWP(this)">👁 Show Solution</button>
+      <div class="wp-sol">
+        <div class="wp-sol-step">Subtract remainder: 615 − 6 = 609 and 963 − 6 = 957</div>
+        <div class="calc-line">609) 957 (1
+    -609
+    348) 609 (1
+        -348
+        261) 348 (1
+            -261
+             87) 261 (3
+                -261
+                  0</div>
+        <div class="answer-box">Greatest number = HCF(609, 957) = 87</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Summary of tricks -->
+  <div class="card">
+    <div class="card-title">🚀 Quick Formula Summary for Word Problems</div>
+    <div class="def-box def-yellow">
+      <div class="def-label">REMAINDER TYPE — LCM</div>
+      <p><strong>"Least number leaving remainder r when divided by a, b, c"</strong><br>
+      → Answer = LCM(a,b,c) + r</p>
+    </div>
+    <div class="def-box def-red" style="margin-top:8px;">
+      <div class="def-label">REMAINDER TYPE — HCF</div>
+      <p><strong>"Greatest number dividing a, b, c leaving remainder r"</strong><br>
+      → Subtract r from each → Answer = HCF(a−r, b−r, c−r)</p>
+    </div>
+    <div class="def-box def-red" style="margin-top:8px;">
+      <div class="def-label">DIFFERENT REMAINDERS — HCF</div>
+      <p><strong>"Greatest number dividing a leaving r₁, b leaving r₂"</strong><br>
+      → Answer = HCF(a−r₁, b−r₂)</p>
+    </div>
+    <div class="def-box def-green" style="margin-top:8px;">
+      <div class="def-label">FIND OTHER NUMBER</div>
+      <p><strong>HCF × LCM = First Number × Second Number</strong><br>
+      → Other number = (HCF × LCM) ÷ given number</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 7: PRACTICE
+════════════════════════════════════════════ -->
+<div class="section" id="sec-practice">
+
+  <div class="sec-header">
+    <span class="sec-icon">🎯</span>
+    <h2>Practice Time!</h2>
+  </div>
+
+  <div class="card">
+    <p style="margin-bottom:4px;">Tap <strong>"Show Answer"</strong> only after you've tried the problem yourself! 💪</p>
+  </div>
+
+  <!-- Divisibility Practice -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-yellow">DIVISIBILITY</span> Quick Tests</div>
+
+    <div class="pq">
+      <div class="pq-q">Q1. Which of these are divisible by 3?<br>(a) 9628 &nbsp; (b) 5412 &nbsp; (c) 832 &nbsp; (d) 75300</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        (a) 9628: 9+6+2+8=25, not div by 3 ❌<br>
+        (b) 5412: 5+4+1+2=12, 12÷3=4 ✅<br>
+        (c) 832: 8+3+2=13, not div by 3 ❌<br>
+        (d) 75300: 7+5+3+0+0=15, 15÷3=5 ✅<br>
+        <span class="ans-final">Answers: (b) and (d)</span>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q2. Is 93,428,910 divisible by 6?</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        ÷2: Last digit = 0 (even) ✅<br>
+        ÷3: 9+3+4+2+8+9+1+0 = 36, 36÷3=12 ✅<br>
+        <span class="ans-final">Yes! Divisible by 6 ✓</span>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q3. Replace ★ so that 936★52 is divisible by 9.</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        Sum of known digits: 9+3+6+5+2 = 25<br>
+        For ÷9: total must be multiple of 9 → 27 or 36<br>
+        25 + ★ = 27 → ★ = <strong>2</strong><br>
+        <span class="ans-final">★ = 2 (making sum = 27)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HCF Practice -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-red">HCF</span> Find the HCF</div>
+
+    <div class="pq">
+      <div class="pq-q">Q4. Find HCF of 18 and 48 using prime factorisation.</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        18 = 2 × 3 × 3 = 2¹ × 3²<br>
+        48 = 2 × 2 × 2 × 2 × 3 = 2⁴ × 3¹<br>
+        Common: 2¹ × 3¹<br>
+        <span class="ans-final">HCF = 2 × 3 = 6</span>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q5. Find HCF of 70, 105, and 175 by prime factorisation.</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        70 = 2 × 5 × 7<br>
+        105 = 3 × 5 × 7<br>
+        175 = 5 × 5 × 7<br>
+        Common to all: 5¹ × 7¹<br>
+        <span class="ans-final">HCF = 5 × 7 = 35</span>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q6. Find HCF of 96, 240 and 336 using division method.</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        HCF(96, 240): 240÷96=2 rem 48; 96÷48=2 rem 0 → HCF=48<br>
+        HCF(48, 336): 336÷48=7 rem 0 → HCF=48<br>
+        <span class="ans-final">HCF of 96, 240, 336 = 48</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LCM Practice -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-green">LCM</span> Find the LCM</div>
+
+    <div class="pq">
+      <div class="pq-q">Q7. Find LCM of 27 and 81 by prime factorisation.</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        27 = 3 × 3 × 3 = 3³<br>
+        81 = 3 × 3 × 3 × 3 = 3⁴<br>
+        Highest power: 3⁴<br>
+        <span class="ans-final">LCM = 81</span>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q8. Find LCM of 12, 15, and 20 using division method.</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        <pre style="font-size:12px;color:#d0cee8;">2 | 12, 15, 20
+2 |  6, 15, 10
+3 |  3, 15,  5
+5 |  1,  5,  5
+   1,  1,  1</pre>
+        <span class="ans-final">LCM = 2×2×3×5 = 60</span>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q9. The HCF of two numbers is 12 and their product is 2160. Find their LCM.</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        HCF × LCM = Product of numbers<br>
+        12 × LCM = 2160<br>
+        LCM = 2160 ÷ 12<br>
+        <span class="ans-final">LCM = 180</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mixed Word Problems Practice -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-orange">WORD PROBLEMS</span> Identify & Solve</div>
+
+    <div class="pq">
+      <div class="pq-q">Q10. 136 apples, 170 mangoes, 255 oranges are arranged in heaps — equal numbers in each, same fruit. What is the greatest number of fruits in each heap?</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        <strong>Keywords:</strong> "greatest" + "equal heaps" → <strong>HCF!</strong><br>
+        HCF(136, 170, 255):<br>
+        136 = 2³ × 17; 170 = 2 × 5 × 17; 255 = 3 × 5 × 17<br>
+        Common: 17<br>
+        <span class="ans-final">Max fruits per heap = 17. Heaps = (136+170+255)÷17 = 33</span>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q11. Bus A returns every 30 min, Bus B every 20 min, Bus C every 45 min. All leave at 9:00 AM. Next time all leave together?</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        <strong>Keywords:</strong> "next time all leave together" → <strong>LCM!</strong><br>
+        <pre style="font-size:12px;color:#d0cee8;">2 | 30, 20, 45
+2 | 15, 10, 45
+3 | 15,  5, 45
+3 |  5,  5, 15
+5 |  5,  5,  5
+   1,  1,  1</pre>
+        LCM = 2×2×3×3×5 = 180 minutes = 3 hours<br>
+        <span class="ans-final">All buses leave together at 9:00 + 3:00 = 12:00 noon</span>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q12. Find the greatest number that divides 628, 885 and 1160 leaving remainder 3, 4 and 5 respectively.</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        <strong>Type:</strong> Different remainders → subtract each<br>
+        628−3=625; 885−4=881; 1160−5=1155<br>
+        Now find HCF(625, 881, 1155):<br>
+        625=5⁴; 881=881 (prime check... 881=23×.. let's use division)<br>
+        HCF(625,881): 881÷625=1 r256; 625÷256=2 r113; 256÷113=2 r30; 113÷30=3 r23; 30÷23=1 r7; 23÷7=3 r2; 7÷2=3 r1; 2÷1=2 r0 → HCF=1... hmm.<br>
+        <em>Correcting: HCF(625,881)=1, HCF(881,1155):</em> 1155÷881=1 r274; 881÷274=3 r59; 274÷59=4 r38; 59÷38=1 r21; 38÷21=1 r17; 21÷17=1 r4; 17÷4=4 r1 → HCF=1<br>
+        <span class="ans-final">HCF = 1 (no common divisor larger than 1 exists for these differences)</span>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q13. Three joggers take 80 cm, 70 cm and 75 cm steps. What is the minimum distance after which all can cover the same distance in complete steps?</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        <strong>Keywords:</strong> "minimum distance" + "complete steps" → <strong>LCM!</strong><br>
+        <pre style="font-size:12px;color:#d0cee8;">2 | 80, 70, 75
+5 | 40, 35, 75
+  |  8,  7, 15</pre>
+        LCM = 2 × 5 × 8 × 7 × 15 = 2×5×840 = 8400 cm<br>
+        <span class="ans-final">Minimum distance = 8400 cm = 84 m</span>
+      </div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q14. (Relationship) The LCM of two co-prime numbers is 221. If one number is 17, find the other.</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans">
+        Co-prime numbers → HCF = 1<br>
+        HCF × LCM = a × b<br>
+        1 × 221 = 17 × b<br>
+        b = 221 ÷ 17<br>
+        <span class="ans-final">Other number = 13</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick MCQ -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-purple">MCQ BLITZ</span> Quick Fire!</div>
+
+    <div class="pq">
+      <div class="pq-q">Q15. The HCF of two consecutive numbers is always:<br>(a) 2 &nbsp;&nbsp; (b) 1 &nbsp;&nbsp; (c) The larger number &nbsp;&nbsp; (d) 0</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans"><span class="ans-final">Answer: (b) 1</span><br>Consecutive numbers are always co-prime!</div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q16. LCM of two prime numbers is always their:<br>(a) HCF &nbsp;&nbsp; (b) Sum &nbsp;&nbsp; (c) Product &nbsp;&nbsp; (d) Difference</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans"><span class="ans-final">Answer: (c) Product</span><br>Two different primes share no common factors, so LCM = product.</div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q17. If HCF of two numbers is 1, then their LCM is:<br>(a) 1 &nbsp;&nbsp; (b) Sum &nbsp;&nbsp; (c) Product &nbsp;&nbsp; (d) Difference</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans"><span class="ans-final">Answer: (c) Product</span><br>HCF×LCM = a×b → 1×LCM = a×b → LCM = a×b</div>
+    </div>
+
+    <div class="pq">
+      <div class="pq-q">Q18. Can two numbers have 16 as HCF and 294 as LCM?<br>(a) Yes &nbsp;&nbsp; (b) No</div>
+      <button class="reveal-btn" onclick="toggleAns(this)">👁 Show Answer</button>
+      <div class="pq-ans"><span class="ans-final">Answer: (b) No!</span><br>HCF must be a factor of LCM. 294 ÷ 16 is not exact → Impossible!</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Navigation
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('sec-' + btn.dataset.sec).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// Accordion
+function toggleAcc(btn) {
+  btn.classList.toggle('open');
+  const content = btn.nextElementSibling;
+  content.classList.toggle('open');
+}
+
+// Reveal answer
+function toggleAns(btn) {
+  const ans = btn.nextElementSibling;
+  if (ans.classList.contains('visible')) {
+    ans.classList.remove('visible');
+    btn.textContent = '👁 Show Answer';
+  } else {
+    ans.classList.add('visible');
+    btn.textContent = '🙈 Hide Answer';
+  }
+}
+
+// Word problem reveal
+function toggleWP(btn) {
+  const sol = btn.nextElementSibling;
+  if (sol.classList.contains('visible')) {
+    sol.classList.remove('visible');
+    btn.textContent = '👁 Show Solution';
+  } else {
+    sol.classList.add('visible');
+    btn.textContent = '🙈 Hide Solution';
+  }
+}
+</script>
+</body>
+</html>

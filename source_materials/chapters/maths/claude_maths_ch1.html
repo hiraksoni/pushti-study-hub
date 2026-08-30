@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔢 Large Numbers Around Us | Class 7 Maths</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a237e;
+  --accent: #e65100;
+  --purple: #6a1b9a;
+  --teal: #00695c;
+  --gold: #f57f17;
+  --pink: #c2185b;
+  --bg: #f8f5ff;
+  --card: #ffffff;
+  --correct: #2e7d32;
+  --partial: #e65100;
+  --wrong: #c62828;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: var(--bg);
+  color: #222;
+  font-size: 15px;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #1a237e 0%, #4a148c 40%, #e65100 100%);
+  color: white;
+  padding: 22px 16px 18px;
+  text-align: center;
+}
+.hero h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.9em;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+}
+.hero p { font-size: 0.9em; margin-top: 4px; opacity: 0.9; }
+.chapter-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 20px;
+  padding: 3px 14px;
+  font-size: 0.8em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* STICKY BAR */
+.sticky-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+  border-bottom: 3px solid #e0e0e0;
+  padding: 8px 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.score-pill {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.85em;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.pill-green { background: #e8f5e9; color: #2e7d32; }
+.pill-orange { background: #fff3e0; color: #e65100; }
+.pill-red { background: #ffebee; color: #c62828; }
+.pill-blue { background: #e3f2fd; color: #1565c0; }
+.progress-wrap { flex: 1; min-width: 120px; }
+.progress-bar-outer { height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
+.progress-bar-inner { height: 100%; border-radius: 4px; transition: width 0.4s; background: linear-gradient(90deg, #2e7d32, #66bb6a); }
+
+/* TABS */
+.tab-row {
+  display: flex;
+  overflow-x: auto;
+  background: white;
+  border-bottom: 2px solid #e0e0e0;
+  padding: 0 8px;
+  gap: 2px;
+}
+.tab-row::-webkit-scrollbar { height: 3px; }
+.tab-btn {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.82em;
+  padding: 10px 14px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #666;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--accent); }
+.tab-btn:hover { background: #f5f5f5; }
+
+/* SECTION */
+.section { display: none; padding: 14px 12px; }
+.section.active { display: block; }
+
+/* CARDS */
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  border-left: 5px solid var(--primary);
+}
+.card.accent { border-left-color: var(--accent); }
+.card.teal { border-left-color: var(--teal); }
+.card.purple { border-left-color: var(--purple); }
+.card.gold { border-left-color: var(--gold); }
+.card.pink { border-left-color: var(--pink); }
+
+.card-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1em;
+  color: var(--primary);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card.accent .card-title { color: var(--accent); }
+.card.teal .card-title { color: var(--teal); }
+.card.purple .card-title { color: var(--purple); }
+.card.gold .card-title { color: var(--gold); }
+.card.pink .card-title { color: var(--pink); }
+
+/* INFO BOXES */
+.tip-box {
+  background: #fff8e1;
+  border: 2px solid #ffd54f;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 8px 0;
+  font-size: 0.9em;
+}
+.remember-box {
+  background: #e8f5e9;
+  border: 2px solid #a5d6a7;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 8px 0;
+  font-size: 0.9em;
+}
+.warning-box {
+  background: #ffebee;
+  border: 2px solid #ef9a9a;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 8px 0;
+  font-size: 0.9em;
+}
+.formula-box {
+  background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+  border: 2px solid #90caf9;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 8px 0;
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.95em;
+  text-align: center;
+  color: var(--primary);
+}
+
+/* COMPARISON TABLE */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82em;
+  margin: 8px 0;
+}
+.compare-table th {
+  background: linear-gradient(135deg, #1a237e, #4a148c);
+  color: white;
+  padding: 8px 6px;
+  font-family: 'Fredoka One', cursive;
+  text-align: center;
+}
+.compare-table td {
+  padding: 7px 6px;
+  border: 1px solid #e0e0e0;
+  text-align: center;
+}
+.compare-table tr:nth-child(even) td { background: #f8f5ff; }
+.compare-table tr:hover td { background: #e8eaf6; }
+
+/* PLACE VALUE TABLE */
+.pv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78em;
+  overflow-x: auto;
+  display: block;
+  margin: 8px 0;
+}
+.pv-table th {
+  background: #1a237e;
+  color: white;
+  padding: 6px 4px;
+  text-align: center;
+  font-family: 'Fredoka One', cursive;
+  white-space: nowrap;
+}
+.pv-table td {
+  border: 1px solid #ccc;
+  padding: 6px 4px;
+  text-align: center;
+  font-weight: 700;
+}
+.pv-indian { background: #e8f5e9; }
+.pv-intl { background: #e3f2fd; }
+.pv-digit { background: #fff8e1; font-size: 1.1em; color: #e65100; }
+
+/* QUESTIONS */
+.q-block {
+  background: white;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  border: 1px solid #e0e0e0;
+}
+.q-num {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.8em;
+  color: white;
+  background: var(--primary);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+.q-text {
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+.q-marks {
+  font-size: 0.75em;
+  color: #888;
+  font-weight: 600;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* MCQ OPTIONS */
+.mcq-options { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
+.mcq-opt {
+  padding: 9px 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9em;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mcq-opt:hover { border-color: var(--primary); background: #f0f4ff; }
+.mcq-opt.correct { background: #e8f5e9; border-color: #2e7d32; color: #2e7d32; }
+.mcq-opt.wrong { background: #ffebee; border-color: #c62828; color: #c62828; }
+.opt-letter {
+  font-family: 'Fredoka One', cursive;
+  width: 24px;
+  height: 24px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85em;
+  flex-shrink: 0;
+}
+.mcq-opt.correct .opt-letter { background: #2e7d32; }
+.mcq-opt.wrong .opt-letter { background: #c62828; }
+
+/* LOCK/REVEAL */
+.answer-locked {
+  background: #f5f5f5;
+  border: 2px dashed #bbb;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  color: #666;
+  font-weight: 700;
+  margin: 8px 0;
+  transition: all 0.2s;
+}
+.answer-locked:hover { background: #ede7f6; border-color: var(--purple); color: var(--purple); }
+.answer-revealed {
+  background: #f0fff4;
+  border: 2px solid #2e7d32;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 8px 0;
+}
+.answer-revealed .final-ans {
+  background: #2e7d32;
+  color: white;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: 700;
+  font-size: 0.95em;
+  margin-top: 8px;
+  display: inline-block;
+}
+.answer-revealed .step {
+  font-size: 0.88em;
+  margin: 4px 0;
+  padding: 4px 0;
+  border-bottom: 1px dashed #c8e6c9;
+  color: #1b5e20;
+}
+
+/* SELF-ASSESS BUTTONS */
+.assess-btns { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.assess-btn {
+  border: none;
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 0.85em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-got { background: #e8f5e9; color: #2e7d32; border: 2px solid #2e7d32; }
+.btn-got:hover { background: #2e7d32; color: white; }
+.btn-partial { background: #fff3e0; color: #e65100; border: 2px solid #e65100; }
+.btn-partial:hover { background: #e65100; color: white; }
+.btn-missed { background: #ffebee; color: #c62828; border: 2px solid #c62828; }
+.btn-missed:hover { background: #c62828; color: white; }
+.btn-done { opacity: 0.6; cursor: not-allowed; }
+
+/* AI ASSISTANT */
+.ai-section {
+  margin-top: 10px;
+  border-top: 1px dashed #e0e0e0;
+  padding-top: 10px;
+}
+.ai-btn {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.8em;
+  padding: 6px 12px;
+  border: 2px solid #7c4dff;
+  background: #f3e5f5;
+  color: #7c4dff;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  transition: all 0.2s;
+}
+.ai-btn:hover { background: #7c4dff; color: white; }
+.ai-response {
+  background: linear-gradient(135deg, #f3e5f5, #e8eaf6);
+  border: 2px solid #ce93d8;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 8px;
+  font-size: 0.88em;
+  line-height: 1.6;
+  display: none;
+}
+.ai-response.visible { display: block; }
+.ai-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #7c4dff;
+  font-weight: 700;
+}
+.ai-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.8em;
+  background: #7c4dff;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+/* CLAUDE'S CORNER */
+.claude-corner {
+  background: linear-gradient(135deg, #0d47a1, #1a237e);
+  color: white;
+  border-radius: 16px;
+  padding: 18px;
+  margin: 16px 0;
+}
+.claude-corner h3 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15em;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bonus-tag {
+  font-size: 0.65em;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+.claude-corner p { font-size: 0.88em; line-height: 1.6; margin-bottom: 8px; opacity: 0.95; }
+.fun-fact {
+  background: rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 6px 0;
+  font-size: 0.85em;
+}
+.fun-fact b { color: #ffd54f; }
+
+/* PATTERN DISPLAY */
+.pattern-row {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.9em;
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin: 3px 0;
+  color: var(--primary);
+  background: #f0f4ff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pattern-row .result { color: var(--accent); font-size: 1em; }
+
+/* FILL BLANK */
+.fill-input {
+  border: 2px solid #bbb;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.95em;
+  font-weight: 700;
+  width: 140px;
+  text-align: center;
+}
+.fill-input:focus { outline: none; border-color: var(--primary); }
+.fill-input.correct-fill { border-color: #2e7d32; background: #e8f5e9; color: #2e7d32; }
+.fill-input.wrong-fill { border-color: #c62828; background: #ffebee; color: #c62828; }
+.check-btn {
+  font-family: 'Fredoka One', cursive;
+  padding: 7px 16px;
+  border: none;
+  background: var(--primary);
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85em;
+  margin-left: 8px;
+  transition: background 0.2s;
+}
+.check-btn:hover { background: var(--accent); }
+
+/* DIVIDERS */
+.section-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2em;
+  color: var(--primary);
+  margin: 18px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 3px solid #e8eaf6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* NUMBER HIGHLIGHT */
+.num-big {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1em;
+  color: var(--accent);
+}
+code {
+  background: #e8eaf6;
+  color: var(--primary);
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 0.95em;
+}
+
+/* STEP SOLUTION */
+.step-solution {
+  background: #f8f5ff;
+  border-radius: 10px;
+  padding: 12px;
+}
+.step-item {
+  display: flex;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px dashed #e0e0e0;
+  font-size: 0.88em;
+}
+.step-item:last-child { border-bottom: none; }
+.step-n {
+  font-family: 'Fredoka One', cursive;
+  background: var(--primary);
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* GENERATE QUIZ BUTTON */
+.gen-btn {
+  font-family: 'Fredoka One', cursive;
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #4a148c, #1a237e);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  font-size: 1em;
+  margin: 14px 0;
+  transition: opacity 0.2s;
+  letter-spacing: 0.5px;
+}
+.gen-btn:hover { opacity: 0.9; }
+.gen-btn:active { opacity: 0.8; }
+
+/* GENERATED QUIZ */
+#gen-quiz-area .q-block { animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: white;
+  border-radius: 18px;
+  padding: 20px;
+  max-width: 420px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.modal-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2em;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+.close-modal {
+  float: right;
+  border: none;
+  background: #eee;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 1em;
+}
+</style>
+</head>
+<body>
+
+            <div style="padding: 10px 20px; background: #1E293B; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
+                <a href="javascript:history.back()" style="color: #6366F1; text-decoration: none; font-weight: 700; font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 6px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to Hub
+                </a>
+                <span style="color:#A855F7; font-family: 'Nunito', sans-serif; font-weight: bold;">Claude Notes Mode</span>
+            </div>
+            
+
+<!-- HERO -->
+<div class="hero">
+  <div class="chapter-badge">📐 Class 7 · Mathematics</div>
+  <h1>🔢 Large Numbers Around Us</h1>
+  <p>Chapter 1 · Learn · Practice · Explore with AI</p>
+</div>
+
+<!-- STICKY SCORE BAR -->
+<div class="sticky-bar">
+  <span class="score-pill pill-green" id="pill-got">✅ 0</span>
+  <span class="score-pill pill-orange" id="pill-partial">🤔 0</span>
+  <span class="score-pill pill-red" id="pill-missed">❌ 0</span>
+  <span class="score-pill pill-blue" id="pill-total">📊 0/0</span>
+  <div class="progress-wrap">
+    <div class="progress-bar-outer"><div class="progress-bar-inner" id="prog-bar" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tab-row">
+  <button class="tab-btn active" onclick="showTab('learn')">📖 Learn</button>
+  <button class="tab-btn" onclick="showTab('practice-basic')">✏️ Basic Practice</button>
+  <button class="tab-btn" onclick="showTab('practice-mcq')">🎯 MCQs</button>
+  <button class="tab-btn" onclick="showTab('practice-adv')">🚀 Challenge</button>
+  <button class="tab-btn" onclick="showTab('ai-practice')">🤖 AI Quiz</button>
+  <button class="tab-btn" onclick="showTab('claude-corner')">📡 Claude's Corner</button>
+</div>
+
+<!-- ══════════ TAB: LEARN ══════════ -->
+<div class="section active" id="tab-learn">
+
+  <div class="card">
+    <div class="card-title">🏗️ Building Numbers — The Pattern</div>
+    <p style="font-size:0.9em; margin-bottom:10px;">Each time we reach the largest number of a group, adding 1 takes us to the next level!</p>
+    <div class="pattern-row"><span>Largest 1-digit: 9 + 1</span><span class="result">= 10 (Ten)</span></div>
+    <div class="pattern-row"><span>Largest 2-digit: 99 + 1</span><span class="result">= 100 (Hundred)</span></div>
+    <div class="pattern-row"><span>Largest 3-digit: 999 + 1</span><span class="result">= 1,000 (Thousand)</span></div>
+    <div class="pattern-row"><span>Largest 4-digit: 9,999 + 1</span><span class="result">= 10,000 (Ten Thousand)</span></div>
+    <div class="pattern-row"><span>Largest 5-digit: 99,999 + 1</span><span class="result">= 1,00,000 (Lakh)</span></div>
+    <div class="pattern-row"><span>Largest 6-digit: 9,99,999 + 1</span><span class="result">= 10,00,000 (Ten Lakh)</span></div>
+    <div class="pattern-row"><span>Largest 7-digit: 99,99,999 + 1</span><span class="result">= 1,00,00,000 (Crore)</span></div>
+    <div class="pattern-row"><span>Largest 8-digit: 9,99,99,999 + 1</span><span class="result">= 10,00,00,000 (Ten Crore)</span></div>
+    <div class="tip-box">💡 <b>Tip:</b> Each group of 3 zeros = one new place name. 3 zeros → Thousand, 5 zeros → Lakh, 7 zeros → Crore!</div>
+  </div>
+
+  <div class="card accent">
+    <div class="card-title">🇮🇳 Indian vs 🌍 International System</div>
+    <p style="font-size:0.85em; margin-bottom:10px;">India reads numbers differently from most other countries. Both are correct — just different ways of grouping!</p>
+    <table class="compare-table">
+      <thead><tr><th>Value</th><th>Indian Name</th><th>International Name</th></tr></thead>
+      <tbody>
+        <tr><td>1,00,000</td><td>1 Lakh</td><td>100 Thousand</td></tr>
+        <tr><td>10,00,000</td><td>10 Lakh</td><td>1 Million</td></tr>
+        <tr><td>1,00,00,000</td><td>1 Crore</td><td>10 Million</td></tr>
+        <tr><td>10,00,00,000</td><td>10 Crore</td><td>100 Million</td></tr>
+        <tr><td>1,00,00,00,000</td><td>1 Arab</td><td>1 Billion</td></tr>
+      </tbody>
+    </table>
+    <div class="remember-box">🌸 <b>Remember:</b> 1 Lakh = 100 Thousand &nbsp;|&nbsp; 1 Crore = 10 Million &nbsp;|&nbsp; 1 Arab = 1 Billion</div>
+  </div>
+
+  <div class="card teal">
+    <div class="card-title">📍 Place Value Table — Indian System</div>
+    <p style="font-size:0.85em; margin-bottom:8px;">Let's place <b>1,54,36,59,801</b> in the Indian table:</p>
+    <table class="pv-table">
+      <thead>
+        <tr>
+          <th class="pv-indian">Ten Arabs</th><th class="pv-indian">Arabs</th>
+          <th class="pv-indian">Ten Crores</th><th class="pv-indian">Crores</th>
+          <th class="pv-indian">Ten Lakhs</th><th class="pv-indian">Lakhs</th>
+          <th class="pv-indian">Ten Th.</th><th class="pv-indian">Th.</th>
+          <th class="pv-indian">H</th><th class="pv-indian">T</th><th class="pv-indian">O</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="pv-digit">-</td><td class="pv-digit">1</td>
+          <td class="pv-digit">5</td><td class="pv-digit">4</td>
+          <td class="pv-digit">3</td><td class="pv-digit">6</td>
+          <td class="pv-digit">5</td><td class="pv-digit">9</td>
+          <td class="pv-digit">8</td><td class="pv-digit">0</td><td class="pv-digit">1</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tip-box" style="margin-top:8px;">💡 <b>Indian comma rule:</b> First comma after 3 digits from right (hundreds), then every 2 digits going left.<br>
+    Example: 1543659801 → <b>1,54,36,59,801</b></div>
+  </div>
+
+  <div class="card purple">
+    <div class="card-title">📐 Expanded Form of Numbers</div>
+    <p style="font-size:0.88em; margin-bottom:8px;">Expanded form breaks a number into parts showing the value of each digit.</p>
+    <div class="step-solution">
+      <div class="step-item"><span class="step-n">1</span><span>Number: <b>9,86,342</b></span></div>
+      <div class="step-item"><span class="step-n">2</span><span>9 × 1,00,000 = 9,00,000</span></div>
+      <div class="step-item"><span class="step-n">3</span><span>8 × 10,000 = 80,000</span></div>
+      <div class="step-item"><span class="step-n">4</span><span>6 × 1,000 = 6,000</span></div>
+      <div class="step-item"><span class="step-n">5</span><span>3 × 100 = 300</span></div>
+      <div class="step-item"><span class="step-n">6</span><span>4 × 10 = 40</span></div>
+      <div class="step-item"><span class="step-n">7</span><span>2 × 1 = 2</span></div>
+    </div>
+    <div class="formula-box">9,86,342 = 9×1,00,000 + 8×10,000 + 6×1,000 + 3×100 + 4×10 + 2×1</div>
+  </div>
+
+  <div class="card gold">
+    <div class="card-title">🔭 Nearest Neighbours (Rounding)</div>
+    <p style="font-size:0.88em; margin-bottom:8px;"><b>Rules for Rounding:</b></p>
+    <div class="remember-box">🌸 If the digit to the right is <b>5, 6, 7, 8, or 9</b> → Round <b>UP</b><br>If the digit to the right is <b>0, 1, 2, 3, or 4</b> → Round <b>DOWN</b></div>
+    <p style="font-size:0.88em; margin: 8px 0;"><b>Example:</b> Round 6,38,794,216 to nearest thousand, ten thousand, lakh, ten lakh, crore:</p>
+    <table class="compare-table">
+      <thead><tr><th>Round to</th><th>Rounded Value</th></tr></thead>
+      <tbody>
+        <tr><td>Nearest Thousand</td><td>6,38,794,000</td></tr>
+        <tr><td>Nearest Ten Thousand</td><td>6,38,790,000</td></tr>
+        <tr><td>Nearest Lakh</td><td>6,38,800,000</td></tr>
+        <tr><td>Nearest Ten Lakh</td><td>6,39,000,000</td></tr>
+        <tr><td>Nearest Crore</td><td>6,00,000,000</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card pink">
+    <div class="card-title">✨ Comparing & Ordering Numbers</div>
+    <div class="step-solution">
+      <div class="step-item"><span class="step-n">1</span><span>Count digits. <b>More digits = bigger number.</b></span></div>
+      <div class="step-item"><span class="step-n">2</span><span>Same number of digits? Compare leftmost digit first.</span></div>
+      <div class="step-item"><span class="step-n">3</span><span>Leftmost digits same? Move one place right and compare again.</span></div>
+      <div class="step-item"><span class="step-n">4</span><span>Keep moving right until you find two different digits.</span></div>
+    </div>
+    <div class="tip-box">💡 <b>Ascending</b> = smallest to largest (like climbing stairs 🪜)<br><b>Descending</b> = largest to smallest (like going down a slide 🛝)</div>
+  </div>
+
+  <div class="card accent">
+    <div class="card-title">🎨 Patterns in Products</div>
+    <p style="font-size:0.88em; margin-bottom:8px;"><b>Multiplying by 10, 100, 1000...</b> — Just add zeros at the end!</p>
+    <div class="pattern-row"><span>78 × 5</span><span class="result">= 78 × 10 ÷ 2 = 390</span></div>
+    <div class="pattern-row"><span>125 × 96</span><span class="result">= 125 × 1000 ÷ 8 × ... = 12000</span></div>
+    <div class="tip-box">💡 <b>Shortcut:</b> To multiply by 5 → multiply by 10 and divide by 2<br>To multiply by 25 → multiply by 100 and divide by 4<br>To multiply by 50 → multiply by 100 and divide by 2</div>
+    <p style="font-size:0.88em; margin-top:8px;"><b>The 1s Pattern:</b></p>
+    <div class="pattern-row"><span>1 × 1</span><span class="result">= 1</span></div>
+    <div class="pattern-row"><span>11 × 11</span><span class="result">= 121</span></div>
+    <div class="pattern-row"><span>111 × 111</span><span class="result">= 12321</span></div>
+    <div class="pattern-row"><span>1111 × 1111</span><span class="result">= 1234321</span></div>
+    <div class="pattern-row"><span>11111 × 11111</span><span class="result">= 123454321</span></div>
+    <p style="font-size:0.88em; margin-top:8px;"><b>Triangle Pattern (×9):</b></p>
+    <div class="pattern-row"><span>1 × 9 + 2</span><span class="result">= 11</span></div>
+    <div class="pattern-row"><span>12 × 9 + 3</span><span class="result">= 111</span></div>
+    <div class="pattern-row"><span>123 × 9 + 4</span><span class="result">= 1111</span></div>
+    <div class="remember-box">🌸 <b>Product of m-digit × n-digit number</b> always has either (m+n−1) or (m+n) digits!</div>
+  </div>
+</div>
+
+<!-- ══════════ TAB: BASIC PRACTICE ══════════ -->
+<div class="section" id="tab-practice-basic">
+
+  <div class="section-title">📝 Fill in the Blanks</div>
+
+  <!-- Q1 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">1</span> The smallest 6-digit number is _____ <span class="q-marks">[1M]</span></div>
+    <div><input class="fill-input" id="f1" placeholder="?"> <button class="check-btn" onclick="checkFill('f1','1,00,000','r1')">Check</button></div>
+    <div id="r1" style="margin-top:6px; font-weight:700; font-size:0.9em;"></div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('f1-explain', 'Explain in a simple, friendly way why the smallest 6-digit number is 1,00,000. Give an analogy a 12-year-old would understand.')">🤖 Explain to me</button>
+      <div class="ai-response" id="f1-explain"></div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">2</span> The largest 7-digit number is _____ <span class="q-marks">[1M]</span></div>
+    <div><input class="fill-input" id="f2" placeholder="?"> <button class="check-btn" onclick="checkFill('f2','99,99,999','r2')">Check</button></div>
+    <div id="r2" style="margin-top:6px; font-weight:700; font-size:0.9em;"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">3</span> 1 Crore = _____ Ten Lakhs <span class="q-marks">[1M]</span></div>
+    <div><input class="fill-input" id="f3" placeholder="?"> <button class="check-btn" onclick="checkFill('f3','10','r3')">Check</button></div>
+    <div id="r3" style="margin-top:6px; font-weight:700; font-size:0.9em;"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">4</span> 1 Million = _____ Lakhs <span class="q-marks">[1M]</span></div>
+    <div><input class="fill-input" id="f4" placeholder="?"> <button class="check-btn" onclick="checkFill('f4','10','r4')">Check</button></div>
+    <div id="r4" style="margin-top:6px; font-weight:700; font-size:0.9em;"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">5</span> 80 Crores = _____ Millions <span class="q-marks">[1M]</span></div>
+    <div><input class="fill-input" id="f5" placeholder="?"> <button class="check-btn" onclick="checkFill('f5','800','r5')">Check</button></div>
+    <div id="r5" style="margin-top:6px; font-weight:700; font-size:0.9em;"></div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('f5-explain','Explain step by step how to convert 80 crores to millions, with a clear formula. Keep it simple for a Class 7 student.')">🤖 Show steps</button>
+      <div class="ai-response" id="f5-explain"></div>
+    </div>
+  </div>
+
+  <div class="section-title">📝 Write in Expanded Form</div>
+
+  <!-- Q6 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">6</span> Write the expanded form of <b>60,01,009</b> <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="ql6" onclick="revealAnswer('ql6','qa6')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="qa6" style="display:none;">
+      <div class="step">60,01,009 = 6 × 10,00,000 + 0 × 1,00,000 + 0 × 10,000 + 1 × 1,000 + 0 × 100 + 0 × 10 + 9 × 1</div>
+      <div class="final-ans">✅ = 6×10,00,000 + 1×1,000 + 9×1</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'q6')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'q6')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'q6')">❌ Missed (0M)</button>
+      </div>
+    </div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('q6-alt','Give an alternate method or a trick to quickly find the expanded form of any number. Make it fun for a 12-year-old.')">🤖 Any shortcut?</button>
+      <div class="ai-response" id="q6-alt"></div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">7</span> Write the expanded form of <b>8,56,43,210</b> <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="ql7" onclick="revealAnswer('ql7','qa7')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="qa7" style="display:none;">
+      <div class="step">8 × 1,00,00,000 = 8,00,00,000</div>
+      <div class="step">5 × 10,00,000 = 50,00,000</div>
+      <div class="step">6 × 1,00,000 = 6,00,000</div>
+      <div class="step">4 × 10,000 = 40,000</div>
+      <div class="step">3 × 1,000 = 3,000</div>
+      <div class="step">2 × 100 = 200</div>
+      <div class="step">1 × 10 = 10</div>
+      <div class="step">0 × 1 = 0</div>
+      <div class="final-ans">✅ 8×1,00,00,000 + 5×10,00,000 + 6×1,00,000 + 4×10,000 + 3×1,000 + 2×100 + 1×10</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'q7')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'q7')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'q7')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">🔢 Arrange in Order</div>
+
+  <!-- Q8 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">8</span> Arrange in <b>ascending order</b>: 7324891, 6123489, 7452103, 5891324 <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="ql8" onclick="revealAnswer('ql8','qa8')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="qa8" style="display:none;">
+      <div class="step">All have 7 digits → compare first digit</div>
+      <div class="step">5891324 starts with 5 (smallest)</div>
+      <div class="step">6123489 starts with 6</div>
+      <div class="step">7324891 and 7452103 both start with 7 → compare 2nd digit: 3 &lt; 4</div>
+      <div class="final-ans">✅ 5891324 &lt; 6123489 &lt; 7324891 &lt; 7452103</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'q8')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'q8')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'q8')">❌ Missed (0M)</button>
+      </div>
+    </div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('q8-method','Give a step-by-step method for comparing and arranging large numbers in order. Use this example: 7324891, 6123489, 7452103, 5891324. Make it very clear for a 12-year-old.')">🤖 Explain method</button>
+      <div class="ai-response" id="q8-method"></div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">9</span> Find the nearest neighbours of <b>48,73,26,45</b>: fill nearest thousand <span class="q-marks">[1M]</span></div>
+    <div><input class="fill-input" id="f9" placeholder="?"> <button class="check-btn" onclick="checkFill('f9','48,73,26,000','r9')">Check</button></div>
+    <div id="r9" style="margin-top:6px; font-weight:700; font-size:0.9em;"></div>
+  </div>
+
+</div>
+
+<!-- ══════════ TAB: MCQs ══════════ -->
+<div class="section" id="tab-practice-mcq">
+  <div class="section-title">🎯 Multiple Choice Questions — Level 1</div>
+
+  <!-- MCQ 1 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">1</span> The sum of the largest 6-digit number and smallest 6-digit number is: <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq1','The largest 6-digit is 9,99,999 and smallest is 1,00,000. Their sum is 10,99,999.')"><span class="opt-letter">A</span>19,99,999</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq1','The largest 6-digit is 9,99,999 and smallest is 1,00,000. Their sum is 10,99,999.')"><span class="opt-letter">B</span>9,99,999</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','mcq1','✅ Correct! 9,99,999 + 1,00,000 = 10,99,999. The largest 6-digit number is 9,99,999 and the smallest is 1,00,000.')"><span class="opt-letter">C</span>10,99,999</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq1','The largest 6-digit is 9,99,999 and smallest is 1,00,000. Their sum is 10,99,999.')"><span class="opt-letter">D</span>-10,99,999</div>
+    </div>
+    <div id="mcq1-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <!-- MCQ 2 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">2</span> The expanded form of 40,02,382 is: <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq2','Watch the place values carefully!')"><span class="opt-letter">A</span>4×10,00,000 + 2×1,00,000 + 1×1,000 + 3×100 + 8×10 + 2×1</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','mcq2','✅ Correct! 4×10,00,000 + 0×1,00,000 + 0×10,000 + 2×1,000 + 3×100 + 8×10 + 2×1')"><span class="opt-letter">B</span>4×10,00,000 + 2×1,000 + 3×100 + 8×10 + 2×1</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq2','The digit 4 is at ten-lakhs place, not crores.')"><span class="opt-letter">C</span>4×1,00,00,000 + 2×10,000 + 3×1,000 + 8×10 + 2×1</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq2','None of these is wrong - option B is correct.')"><span class="opt-letter">D</span>None of these</div>
+    </div>
+    <div id="mcq2-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <!-- MCQ 3 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">3</span> Which of the following is written in International System of Numeration? <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq3','15,26,430 uses Indian commas (2-digit grouping after the first 3). International uses 3-digit groups.')"><span class="opt-letter">A</span>15,26,430</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','mcq3','✅ Correct! 1,526,430 — groups of 3 from right: 430, 526, 1. That is International System!')"><span class="opt-letter">B</span>1,526,430</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq3','1,52,64,30 is not a valid grouping in either system.')"><span class="opt-letter">C</span>1,52,64,30</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq3','152,64,30 is not correctly formatted in either system.')"><span class="opt-letter">D</span>152,64,30</div>
+    </div>
+    <div id="mcq3-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <!-- MCQ 4 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">4</span> The number 6242530 in words (Indian system) is: <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq4','6242530 = 62,42,530. That is sixty-two lakh forty-two thousand five hundred thirty.')"><span class="opt-letter">A</span>Six million two hundred forty two thousand five hundred thirty</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','mcq4','✅ Correct! 62,42,530 = Sixty two lakh forty two thousand five hundred thirty.')"><span class="opt-letter">B</span>Sixty two lakh forty two thousand five hundred thirty</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq4','Sixty lakh would be 60,00,000. This number is 62,42,530.')"><span class="opt-letter">C</span>Sixty lakh forty thousand five hundred thirty</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq4','The correct answer is B — sixty two lakh forty two thousand five hundred thirty.')"><span class="opt-letter">D</span>Sixty two lakh forty thousand five hundred thirty</div>
+    </div>
+    <div id="mcq4-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <!-- MCQ 5 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">5</span> What is the value of 1 crore in the American system? <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','mcq5','✅ Correct! 1 Crore = 1,00,00,000 = 10,000,000 = 10 Million in International system.')"><span class="opt-letter">A</span>10 Million</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq5','1 Million = 10 Lakh. 1 Crore is bigger — it equals 10 Million.')"><span class="opt-letter">B</span>1 Million</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq5','100 Million = 10 Crore. 1 Crore = 10 Million only.')"><span class="opt-letter">C</span>100 Million</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq5','1 Billion = 100 Crore. 1 Crore = 10 Million.')"><span class="opt-letter">D</span>1 Billion</div>
+    </div>
+    <div id="mcq5-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <div class="section-title">🎯 MCQs — Level 2 (Textbook Exercise)</div>
+
+  <!-- MCQ 6 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">6</span> 57824123 rounded to nearest crore is: <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','mcq6','✅ Correct! 57824123 → look at the ten-lakh digit: 7 ≥ 5, so round crore up from 5 to 6. Answer: 6,00,00,000.')"><span class="opt-letter">A</span>6,00,00,000</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq6','60000000 would be 6 crore. But we are rounding 57824123, which rounds to 6 crore (60000000).')"><span class="opt-letter">B</span>57000000</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq6','50000000 = 5 crore. But 57824123 has 7 in ten-lakhs place ≥ 5, so we round UP to 6 crore.')"><span class="opt-letter">C</span>5,00,00,000</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq6','58000000 would be rounded to nearest ten-lakh, not crore.')"><span class="opt-letter">D</span>58000000</div>
+    </div>
+    <div id="mcq6-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <!-- MCQ 7 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">7</span> The successor of 1 million is: <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq7','2 millions would be 20,00,000. Successor means just 1 more than the number.')"><span class="opt-letter">A</span>2 millions</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','mcq7','✅ Correct! 1 Million = 10,00,000. Successor = 10,00,000 + 1 = 10,00,001 = 1000001.')"><span class="opt-letter">B</span>1000001</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq7','100001 is the successor of 100000 (1 lakh), not 1 million.')"><span class="opt-letter">C</span>100001</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq7','10001 is much smaller. Successor of 1 million (10,00,000) is 10,00,001.')"><span class="opt-letter">D</span>10001</div>
+    </div>
+    <div id="mcq7-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <!-- MCQ 8 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">8</span> Place value of a digit in a number is: <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq8','That describes face value × place value of the preceding digit — not quite right.')"><span class="opt-letter">A</span>Face value × value of the place it occupies in place value chart</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','mcq8','✅ Correct! Place value = Face value × value of the place it occupies in the place value chart. E.g., 8 at thousands place: 8 × 1000 = 8000.')"><span class="opt-letter">B</span>Face value × value of the place it occupies in the place value chart</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq8','Face value alone is just the digit itself (e.g., 8 is always 8). Place value includes the position.')"><span class="opt-letter">C</span>Face value</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','mcq8','That is not a standard definition. The correct answer is B.')"><span class="opt-letter">D</span>None of these</div>
+    </div>
+    <div id="mcq8-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('mcq8-diff','Explain the difference between face value and place value in a super fun way with examples. Target a 12-year-old student in India.')">🤖 Face vs Place value?</button>
+      <div class="ai-response" id="mcq8-diff"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ TAB: CHALLENGE ══════════ -->
+<div class="section" id="tab-practice-adv">
+  <div class="section-title">🚀 Challenge Questions (HOTS + Textbook)</div>
+
+  <!-- Adv Q1 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">1</span> The population of Karnataka, Delhi and Gujarat are 54,37,211; 7,64,46,300 and 12,43,998 respectively. Find the total population in International System. <span class="q-marks">[3M]</span></div>
+    <div class="answer-locked" id="aqla1" onclick="revealAnswer('aqla1','aqaa1')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="aqaa1" style="display:none;">
+      <div class="step">Karnataka = 54,37,211</div>
+      <div class="step">Delhi = 7,64,46,300</div>
+      <div class="step">Gujarat = + 12,43,998</div>
+      <div class="step">Total = 54,37,211 + 7,64,46,300 + 12,43,998 = 8,31,27,509</div>
+      <div class="step">In International System: 83,127,509</div>
+      <div class="final-ans">✅ 83,127,509 = Eighty-three million one hundred twenty-seven thousand five hundred nine</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,3,3,'aq1')">✅ Got it (3M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,2,3,'aq1')">🤔 Partial (2M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,3,'aq1')">❌ Missed (0M)</button>
+      </div>
+    </div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('aq1-explain','Walk me through how to convert a number from Indian System to International System step by step. Use 83127509 as example. Explain commas placement too.')">🤖 How to convert systems?</button>
+      <div class="ai-response" id="aq1-explain"></div>
+    </div>
+  </div>
+
+  <!-- Adv Q2 -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">2</span> A parking lot holds 200 cars. How many cars can 500 such parking lots hold? Can they hold 1 lakh cars? <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="aqla2" onclick="revealAnswer('aqla2','aqaa2')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="aqaa2" style="display:none;">
+      <div class="step">Cars in 500 lots = 200 × 500</div>
+      <div class="step">= 200 × 500 = 1,00,000</div>
+      <div class="step">1,00,000 = 1 Lakh</div>
+      <div class="final-ans">✅ Yes! 500 parking lots can hold exactly 1,00,000 = 1 lakh cars.</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'aq2')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'aq2')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'aq2')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adv Q3 — Pattern -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">3</span> Complete the pattern and find the next two terms:<br>1 × 9 + 2 = 11<br>12 × 9 + 3 = 111<br>123 × 9 + 4 = 1111<br>1234 × 9 + 5 = ? <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="aqla3" onclick="revealAnswer('aqla3','aqaa3')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="aqaa3" style="display:none;">
+      <div class="step">Pattern: n-digit ascending number × 9 + (n+1) = string of (n+1) ones</div>
+      <div class="step">1234 × 9 + 5 = 11106 + 5 = 11111 ✓</div>
+      <div class="step">12345 × 9 + 6 = 111105 + 6 = 111111</div>
+      <div class="final-ans">✅ 11111 and 111111</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'aq3')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'aq3')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'aq3')">❌ Missed (0M)</button>
+      </div>
+    </div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('aq3-explain','Explain the triangle pattern (multiplying ascending numbers by 9 and adding) in a very visual and fun way. Show why the pattern works. Target a curious 12-year-old.')">🤖 Why does this pattern work?</button>
+      <div class="ai-response" id="aq3-explain"></div>
+    </div>
+  </div>
+
+  <!-- Adv Q4 — Mirror -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">4</span> Using the mirror product pattern, find: 1010101 × 1010101 = ? <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="aqla4" onclick="revealAnswer('aqla4','aqaa4')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="aqaa4" style="display:none;">
+      <div class="step">Pattern: 101 × 101 = 10201</div>
+      <div class="step">1001 × 1001 = 1002001</div>
+      <div class="step">10101 × 10101 = 102030201</div>
+      <div class="step">1010101 × 1010101 = ?</div>
+      <div class="step">The pattern adds one more middle digit (30) each step</div>
+      <div class="final-ans">✅ 1020304030201</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'aq4')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'aq4')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'aq4')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adv Q5 — Earth walk -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">5</span> The Earth's circumference is about 40,000 km. If a person walks 20 km daily, can they walk around the Earth in less than 6 years? <span class="q-marks">[3M]</span></div>
+    <div class="answer-locked" id="aqla5" onclick="revealAnswer('aqla5','aqaa5')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="aqaa5" style="display:none;">
+      <div class="step">Distance = 40,000 km</div>
+      <div class="step">Daily walking = 20 km</div>
+      <div class="step">Days needed = 40,000 ÷ 20 = 2,000 days</div>
+      <div class="step">Years = 2,000 ÷ 365 ≈ 5.48 years</div>
+      <div class="final-ans">✅ Yes! About 5.5 years &lt; 6 years ✓</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,3,3,'aq5')">✅ Got it (3M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,2,3,'aq5')">🤔 Partial (2M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,3,'aq5')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adv Q6 — Estimation -->
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">6</span> Estimate the sum and difference of 21947853 and 67438291 to the nearest crore. <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="aqla6" onclick="revealAnswer('aqla6','aqaa6')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="aqaa6" style="display:none;">
+      <div class="step">21947853 → ten-lakh digit is 9 ≥ 5 → Round UP → 2,20,00,000 (22 crore)</div>
+      <div class="step">67438291 → ten-lakh digit is 4 &lt; 5 → Round DOWN → 6,70,00,000 (67 crore)</div>
+      <div class="step">Estimated Sum = 22,00,00,000 + 67,00,00,000 = 89,00,00,000</div>
+      <div class="step">Estimated Difference = 67,00,00,000 − 22,00,00,000 = 45,00,00,000</div>
+      <div class="final-ans">✅ Sum ≈ 89,00,00,000 | Difference ≈ 45,00,00,000</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'aq6')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'aq6')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'aq6')">❌ Missed (0M)</button>
+      </div>
+    </div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('aq6-explain','Explain the concept of estimating sums and differences by rounding to nearest crore. Why do we estimate at all? Give a real-life reason. Keep it simple for a Class 7 student.')">🤖 Why do we estimate?</button>
+      <div class="ai-response" id="aq6-explain"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TAB: AI QUIZ ══════════ -->
+<div class="section" id="tab-ai-practice">
+  <div class="card purple">
+    <div class="card-title">🤖 AI-Generated Practice Quiz</div>
+    <p style="font-size:0.9em; margin-bottom:12px;">Claude will create a fresh set of practice questions on Large Numbers just for you! Every time you click, you get new questions. 🎲</p>
+    <div style="margin-bottom:10px;">
+      <label style="font-weight:700; font-size:0.9em;">Choose difficulty:</label>
+      <select id="ai-difficulty" style="margin-left:8px; padding:6px 10px; border-radius:8px; border:2px solid var(--primary); font-family:Quicksand,sans-serif; font-weight:700; font-size:0.9em;">
+        <option value="easy">🌱 Easy (Class 6 level)</option>
+        <option value="medium" selected>⭐ Medium (Class 7 level)</option>
+        <option value="hard">🔥 Hard (HOTS Level)</option>
+      </select>
+    </div>
+    <div style="margin-bottom:10px;">
+      <label style="font-weight:700; font-size:0.9em;">Topic focus:</label>
+      <select id="ai-topic" style="margin-left:8px; padding:6px 10px; border-radius:8px; border:2px solid var(--primary); font-family:Quicksand,sans-serif; font-weight:700; font-size:0.9em;">
+        <option value="mixed">🎲 Mixed all topics</option>
+        <option value="place_value">📍 Place Value</option>
+        <option value="indian_intl">🌍 Indian vs International</option>
+        <option value="rounding">🔭 Rounding / Estimation</option>
+        <option value="patterns">✨ Patterns in Products</option>
+        <option value="comparing">🔢 Comparing & Ordering</option>
+      </select>
+    </div>
+    <button class="gen-btn" onclick="generateAIQuiz()">✨ Generate My Practice Quiz!</button>
+  </div>
+  <div id="gen-quiz-area"></div>
+</div>
+
+<!-- ══════════ TAB: CLAUDE'S CORNER ══════════ -->
+<div class="section" id="tab-claude-corner">
+  <div class="claude-corner">
+    <h3>📡 Claude's Corner <span class="bonus-tag">Bonus · Not for Exam</span></h3>
+    <p>Welcome to the coolest section! Here we go beyond the textbook and explore how large numbers show up in the real world. 🌍</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🌌 How BIG is a Crore?</div>
+    <div class="fun-fact"><b>🏃 Walking:</b> If you walked 1 step per second, it would take you 115 days without stopping to count to 1 crore. That's nearly 4 months!</div>
+    <div class="fun-fact"><b>💰 Money:</b> If you spent ₹1 every second, you'd need 115 days to spend 1 crore rupees. Now you know why "crore" sounds big — it really is!</div>
+    <div class="fun-fact"><b>📚 Books:</b> India's National Library has about 2.2 million books. That's 22 lakh books — still only about 1/5th of a crore!</div>
+  </div>
+
+  <div class="card accent">
+    <div class="card-title">🌍 Why Two Number Systems?</div>
+    <p style="font-size:0.88em; line-height:1.6;">India developed its own system of counting thousands of years ago — the Vedic system. Our ancestors used lakh and crore long before the rest of the world standardized on millions and billions!</p>
+    <p style="font-size:0.88em; line-height:1.6; margin-top:8px;">The International System (also called Hindu-Arabic numerals) spreads in groups of 3 because it was designed for easy use in trade and science across many languages.</p>
+    <div class="fun-fact"><b>🤔 Cool fact:</b> The word "lakh" comes from Sanskrit "laksha" (लक्ष) meaning 100,000. It has been used in India for over 2,000 years!</div>
+  </div>
+
+  <div class="card teal">
+    <div class="card-title">🌠 Astronomy Numbers</div>
+    <div class="fun-fact"><b>☀️ Distance to Sun:</b> About 14,96,00,000 km (14.96 crore km = 149.6 million km)</div>
+    <div class="fun-fact"><b>⭐ Stars in Milky Way:</b> About 1,00,000 crore stars (100 billion)</div>
+    <div class="fun-fact"><b>🌍 Population of Earth:</b> About 800 crore people (8 billion)</div>
+    <div class="fun-fact"><b>🇮🇳 Population of India:</b> About 140 crore people (1.4 billion)</div>
+    <div class="tip-box" style="margin-top:10px;">💡 Now you can read any number in the news! When they say "India has 140 crore people" or "NASA's budget is $25 billion", you know exactly how big those numbers are!</div>
+  </div>
+
+  <div class="card gold">
+    <div class="card-title">💻 Computers & Large Numbers</div>
+    <p style="font-size:0.88em; line-height:1.6;">Your phone's processor makes <b>billions of calculations every second</b>. A typical modern phone does about 10,000 crore (100 billion) operations per second!</p>
+    <div class="fun-fact"><b>💾 Storage:</b> 1 GB = 1,073,741,824 bytes ≈ 100 crore bytes</div>
+    <div class="fun-fact"><b>🌐 Internet:</b> Every day, about 2.5 quintillion bytes of data are created worldwide. That's 2.5 followed by 18 zeros!</div>
+  </div>
+
+  <div class="card pink">
+    <div class="card-title">🧠 A Number Trick to Impress Friends!</div>
+    <p style="font-size:0.88em; margin-bottom:8px;"><b>The 1089 Magic Trick:</b></p>
+    <div class="step-solution">
+      <div class="step-item"><span class="step-n">1</span><span>Pick any 3-digit number where first and last digits differ by more than 1 (e.g., 731)</span></div>
+      <div class="step-item"><span class="step-n">2</span><span>Reverse it: 137</span></div>
+      <div class="step-item"><span class="step-n">3</span><span>Subtract smaller from larger: 731 − 137 = 594</span></div>
+      <div class="step-item"><span class="step-n">4</span><span>Reverse the result: 495</span></div>
+      <div class="step-item"><span class="step-n">5</span><span>Add: 594 + 495 = <b>1089</b> 🎉</span></div>
+    </div>
+    <div class="remember-box">🌸 <b>ALWAYS 1089!</b> Try any number — it always gives 1089. This is a real mathematical property discovered centuries ago!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔢 How Mathematicians Think About Huge Numbers</div>
+    <div class="fun-fact"><b>Googol:</b> 1 followed by 100 zeros! Written as 10<sup>100</sup>. The search engine "Google" is named after this number.</div>
+    <div class="fun-fact"><b>Googolplex:</b> 1 followed by a googol of zeros. This number is so big that even if you wrote one zero per atom in the universe, you couldn't write it all out!</div>
+    <div class="fun-fact"><b>Graham's Number:</b> So astronomically huge that mathematicians had to invent new notation just to write it down. It makes a googol look like zero in comparison.</div>
+    <div class="tip-box" style="margin-top:8px;">💡 <b>For Exam:</b> The largest named number you need for Class 7 is Arab (100 crore = 1 billion). But now you know the universe goes much, much bigger! 😊</div>
+  </div>
+</div>
+
+<!-- AI EXPLANATION MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <button class="close-modal" onclick="closeModal()">✕</button>
+    <div class="modal-title" id="modal-title">🤖 Claude Explains</div>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+// ─── TAB NAVIGATION ───
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ─── SCORE STATE ───
+let scores = {};
+let totalGot = 0, totalPartial = 0, totalMissed = 0, totalMarks = 0, earnedMarks = 0;
+
+function assess(btn, earned, max, qid) {
+  if (scores[qid] !== undefined) return;
+  scores[qid] = {earned, max};
+  totalGot += (earned === max ? 1 : 0);
+  totalPartial += (earned > 0 && earned < max ? 1 : 0);
+  totalMissed += (earned === 0 ? 1 : 0);
+  earnedMarks += earned;
+  totalMarks += max;
+  updateScoreBar();
+  btn.parentElement.querySelectorAll('.assess-btn').forEach(b => {
+    b.classList.add('btn-done');
+    b.disabled = true;
+  });
+  btn.style.opacity = '1';
+  btn.style.fontWeight = '800';
+}
+
+function updateScoreBar() {
+  document.getElementById('pill-got').textContent = '✅ ' + totalGot;
+  document.getElementById('pill-partial').textContent = '🤔 ' + totalPartial;
+  document.getElementById('pill-missed').textContent = '❌ ' + totalMissed;
+  document.getElementById('pill-total').textContent = '📊 ' + earnedMarks + '/' + totalMarks;
+  const pct = totalMarks > 0 ? (earnedMarks / totalMarks * 100) : 0;
+  document.getElementById('prog-bar').style.width = pct + '%';
+}
+
+// ─── LOCK/REVEAL ───
+function revealAnswer(lockId, ansId) {
+  document.getElementById(lockId).style.display = 'none';
+  document.getElementById(ansId).style.display = 'block';
+}
+
+// ─── MCQ CHECK ───
+let mcqDone = {};
+function checkMCQ(el, result, qid, explanation) {
+  if (mcqDone[qid]) return;
+  mcqDone[qid] = true;
+  el.classList.add(result);
+  const fb = document.getElementById(qid + '-feedback');
+  if (fb) {
+    fb.style.display = 'block';
+    if (result === 'correct') {
+      fb.style.color = '#2e7d32';
+      fb.innerHTML = '✅ ' + explanation;
+      totalGot++;
+    } else {
+      fb.style.color = '#c62828';
+      fb.innerHTML = '❌ Not quite! ' + explanation;
+      totalMissed++;
+    }
+  }
+  earnedMarks += (result === 'correct' ? 1 : 0);
+  totalMarks++;
+  updateScoreBar();
+  el.parentElement.querySelectorAll('.mcq-opt').forEach(opt => {
+    if (!opt.classList.contains('correct') && !opt.classList.contains('wrong')) {
+      opt.style.opacity = '0.5';
+      opt.style.pointerEvents = 'none';
+    }
+    opt.style.cursor = 'default';
+  });
+}
+
+// ─── FILL BLANKS ───
+function checkFill(inputId, correct, resultId) {
+  const input = document.getElementById(inputId);
+  const result = document.getElementById(resultId);
+  const val = input.value.trim().replace(/,/g, '');
+  const correctClean = correct.replace(/,/g, '');
+  if (val === correctClean || val === correct) {
+    input.classList.add('correct-fill');
+    result.innerHTML = '✅ Correct! Answer: ' + correct;
+    result.style.color = '#2e7d32';
+  } else {
+    input.classList.add('wrong-fill');
+    result.innerHTML = '❌ Not quite. The correct answer is: ' + correct;
+    result.style.color = '#c62828';
+  }
+  input.disabled = true;
+}
+
+// ─── AI EXPLAIN ───
+async function askAI(responseId, prompt) {
+  const respDiv = document.getElementById(responseId);
+  if (!respDiv) return;
+  if (respDiv.classList.contains('visible') && respDiv.dataset.loaded) return;
+  respDiv.classList.add('visible');
+  respDiv.innerHTML = '<div class="ai-loading">⏳ Claude is thinking...</div>';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: 'You are a warm, encouraging math tutor for a 12-year-old Class 7 CBSE student named Pushti in India. Explain things in a fun, simple, and clear way. Use emojis occasionally. Keep explanations under 200 words. Use Indian number system (lakh, crore) examples when relevant.',
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.find(c => c.type === 'text')?.text || 'Sorry, could not get explanation.';
+    respDiv.innerHTML = '<div class="ai-label">🤖 Claude says</div>' + text.replace(/\n/g, '<br>');
+    respDiv.dataset.loaded = '1';
+  } catch(e) {
+    respDiv.innerHTML = '<div class="ai-label">🤖 Claude says</div>Oops! Could not connect. Try again later.';
+  }
+}
+
+// ─── AI QUIZ GENERATOR ───
+async function generateAIQuiz() {
+  const difficulty = document.getElementById('ai-difficulty').value;
+  const topic = document.getElementById('ai-topic').value;
+  const area = document.getElementById('gen-quiz-area');
+  area.innerHTML = '<div class="q-block"><div class="ai-loading" style="justify-content:center; padding:20px;">⏳ Claude is creating your quiz...</div></div>';
+  
+  const diffMap = { easy: 'Class 6 level, very straightforward', medium: 'Class 7 CBSE level, moderate', hard: 'HOTS (Higher Order Thinking), challenging' };
+  const topicMap = {
+    mixed: 'a mix of: place value, Indian vs international numeration, rounding to nearest neighbors, expanding numbers, comparing/ordering, and patterns in products',
+    place_value: 'place value and face value of digits in large numbers',
+    indian_intl: 'converting between Indian and International system of numeration',
+    rounding: 'rounding numbers to nearest thousand, lakh, ten lakh, and crore',
+    patterns: 'multiplication patterns with repeated digits and shortcuts',
+    comparing: 'comparing and arranging numbers in ascending and descending order'
+  };
+  
+  const prompt = `Create exactly 5 practice questions on "${topicMap[topic]}" for a Class 7 CBSE student. Difficulty: ${diffMap[difficulty]}.
+
+Format your response as JSON only (no other text):
+{
+  "questions": [
+    {
+      "question": "question text here",
+      "type": "mcq" or "short",
+      "options": ["A) opt1","B) opt2","C) opt3","D) opt4"] (only for mcq type),
+      "correct": "full correct answer",
+      "hint": "a helpful hint",
+      "explanation": "step-by-step explanation in 3-4 lines, friendly and clear for a 12-year-old"
+    }
+  ]
+}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: 'You are creating CBSE Class 7 math practice questions about Large Numbers. Return ONLY valid JSON, no markdown backticks, no other text.',
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    let text = data.content?.find(c => c.type === 'text')?.text || '{}';
+    text = text.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(text);
+    renderGeneratedQuiz(parsed.questions || []);
+  } catch(e) {
+    area.innerHTML = '<div class="q-block" style="text-align:center; color:#c62828; padding:20px;">⚠️ Could not generate quiz. Please try again!</div>';
+  }
+}
+
+function renderGeneratedQuiz(questions) {
+  const area = document.getElementById('gen-quiz-area');
+  if (!questions.length) { area.innerHTML = ''; return; }
+  let html = '<div class="section-title">🎲 Your AI-Generated Quiz</div>';
+  questions.forEach((q, i) => {
+    html += `<div class="q-block">
+      <div class="q-text"><span class="q-num">${i+1}</span> ${q.question} <span class="q-marks">[1M]</span></div>`;
+    if (q.type === 'mcq' && q.options) {
+      html += '<div class="mcq-options">';
+      q.options.forEach(opt => {
+        const letter = opt[0];
+        const text = opt.slice(3);
+        const isCorrect = q.correct && (opt.includes(q.correct) || q.correct.startsWith(letter));
+        html += `<div class="mcq-opt" onclick="checkGenMCQ(this, ${isCorrect}, 'gq${i}', ${JSON.stringify(q.explanation)})">
+          <span class="opt-letter">${letter}</span>${text}</div>`;
+      });
+      html += '</div>';
+    }
+    html += `<div class="answer-locked" id="gql${i}" onclick="revealGenAnswer(${i}, ${JSON.stringify(q)})">🔒 Show Answer & Explanation</div>
+      <div class="answer-revealed" id="gqa${i}" style="display:none;">
+        <div class="final-ans">✅ ${q.correct}</div>
+        <div class="step" style="margin-top:6px;">${(q.explanation||'').replace(/\n/g,'<br>')}</div>
+      </div></div>`;
+  });
+  area.innerHTML = html;
+}
+
+let genMCQDone = {};
+function checkGenMCQ(el, isCorrect, qid, explanation) {
+  if (genMCQDone[qid]) return;
+  genMCQDone[qid] = true;
+  el.classList.add(isCorrect ? 'correct' : 'wrong');
+  el.parentElement.querySelectorAll('.mcq-opt').forEach(o => {
+    o.style.cursor = 'default';
+    o.style.pointerEvents = 'none';
+    if (!o.classList.contains('correct') && !o.classList.contains('wrong')) o.style.opacity = '0.5';
+  });
+  if (!isCorrect && explanation) {
+    const next = el.parentElement.nextElementSibling;
+    if (next) next.click(); // reveal explanation
+  }
+}
+
+function revealGenAnswer(i, q) {
+  document.getElementById('gql'+i).style.display = 'none';
+  document.getElementById('gqa'+i).style.display = 'block';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+</script>
+</body>
+</html>

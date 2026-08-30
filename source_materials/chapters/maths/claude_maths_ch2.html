@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>➕ Arithmetic Expressions | Class 7 Maths</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1b5e20;
+  --accent: #e65100;
+  --purple: #6a1b9a;
+  --teal: #00695c;
+  --blue: #1565c0;
+  --pink: #c2185b;
+  --gold: #f57f17;
+  --bg: #f1f8f1;
+  --card: #ffffff;
+  --correct: #2e7d32;
+  --wrong: #c62828;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Quicksand', sans-serif; background: var(--bg); color: #222; font-size: 15px; }
+
+.hero {
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 35%, #e65100 100%);
+  color: white; padding: 22px 16px 18px; text-align: center;
+}
+.hero h1 { font-family: 'Fredoka One', cursive; font-size: 1.9em; letter-spacing: 1px; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); }
+.hero p { font-size: 0.9em; margin-top: 4px; opacity: 0.9; }
+.chapter-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.5); border-radius: 20px; padding: 3px 14px; font-size: 0.8em; font-weight: 700; margin-bottom: 8px; }
+
+.sticky-bar { position: sticky; top: 0; z-index: 100; background: white; border-bottom: 3px solid #c8e6c9; padding: 8px 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.score-pill { font-family: 'Fredoka One', cursive; font-size: 0.85em; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+.pill-green { background: #e8f5e9; color: #2e7d32; }
+.pill-orange { background: #fff3e0; color: #e65100; }
+.pill-red { background: #ffebee; color: #c62828; }
+.pill-blue { background: #e3f2fd; color: #1565c0; }
+.progress-wrap { flex: 1; min-width: 120px; }
+.progress-bar-outer { height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
+.progress-bar-inner { height: 100%; border-radius: 4px; transition: width 0.4s; background: linear-gradient(90deg, #2e7d32, #66bb6a); }
+
+.tab-row { display: flex; overflow-x: auto; background: white; border-bottom: 2px solid #e0e0e0; padding: 0 8px; gap: 2px; }
+.tab-row::-webkit-scrollbar { height: 3px; }
+.tab-btn { font-family: 'Fredoka One', cursive; font-size: 0.82em; padding: 10px 14px; border: none; background: transparent; cursor: pointer; color: #666; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.2s; }
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--accent); }
+.tab-btn:hover { background: #f5f5f5; }
+
+.section { display: none; padding: 14px 12px; }
+.section.active { display: block; }
+
+.card { background: white; border-radius: 14px; padding: 16px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); border-left: 5px solid var(--primary); }
+.card.accent { border-left-color: var(--accent); }
+.card.teal { border-left-color: var(--teal); }
+.card.purple { border-left-color: var(--purple); }
+.card.gold { border-left-color: var(--gold); }
+.card.pink { border-left-color: var(--pink); }
+.card.blue { border-left-color: var(--blue); }
+
+.card-title { font-family: 'Fredoka One', cursive; font-size: 1.1em; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.card.accent .card-title { color: var(--accent); }
+.card.teal .card-title { color: var(--teal); }
+.card.purple .card-title { color: var(--purple); }
+.card.gold .card-title { color: var(--gold); }
+.card.pink .card-title { color: var(--pink); }
+.card.blue .card-title { color: var(--blue); }
+
+.tip-box { background: #fff8e1; border: 2px solid #ffd54f; border-radius: 10px; padding: 10px 12px; margin: 8px 0; font-size: 0.9em; }
+.remember-box { background: #e8f5e9; border: 2px solid #a5d6a7; border-radius: 10px; padding: 10px 12px; margin: 8px 0; font-size: 0.9em; }
+.warning-box { background: #ffebee; border: 2px solid #ef9a9a; border-radius: 10px; padding: 10px 12px; margin: 8px 0; font-size: 0.9em; }
+.formula-box { background: linear-gradient(135deg, #e8f5e9, #f3e5f5); border: 2px solid #a5d6a7; border-radius: 10px; padding: 12px; margin: 8px 0; font-family: 'Fredoka One', cursive; font-size: 0.95em; text-align: center; color: var(--primary); }
+
+.bodmas-row { display: flex; gap: 6px; margin: 10px 0; flex-wrap: wrap; }
+.bodmas-box { flex: 1; min-width: 70px; background: linear-gradient(135deg, #1b5e20, #2e7d32); color: white; border-radius: 10px; padding: 10px 6px; text-align: center; }
+.bodmas-box .letter { font-family: 'Fredoka One', cursive; font-size: 1.6em; }
+.bodmas-box .word { font-size: 0.65em; font-weight: 700; margin-top: 2px; opacity: 0.9; }
+
+.example-block { background: #f8fff8; border: 1px solid #c8e6c9; border-radius: 10px; padding: 12px; margin: 8px 0; }
+.example-block .q { font-weight: 700; font-size: 0.92em; color: var(--primary); margin-bottom: 6px; }
+.step-solution { background: #f8f5ff; border-radius: 10px; padding: 12px; }
+.step-item { display: flex; gap: 10px; padding: 6px 0; border-bottom: 1px dashed #e0e0e0; font-size: 0.88em; }
+.step-item:last-child { border-bottom: none; }
+.step-n { font-family: 'Fredoka One', cursive; background: var(--primary); color: white; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8em; flex-shrink: 0; margin-top: 1px; }
+
+.bracket-rule { display: flex; gap: 8px; padding: 8px; border-radius: 8px; margin: 4px 0; font-size: 0.88em; align-items: flex-start; }
+.bracket-plus { background: #e8f5e9; border-left: 4px solid #2e7d32; }
+.bracket-minus { background: #ffebee; border-left: 4px solid #c62828; }
+.bracket-mult { background: #fff3e0; border-left: 4px solid #e65100; }
+
+.q-block { background: white; border-radius: 12px; padding: 14px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border: 1px solid #e0e0e0; }
+.q-num { font-family: 'Fredoka One', cursive; font-size: 0.8em; color: white; background: var(--primary); border-radius: 50%; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px; flex-shrink: 0; }
+.q-text { font-weight: 600; font-size: 0.95em; line-height: 1.5; display: flex; align-items: flex-start; gap: 4px; margin-bottom: 10px; flex-wrap: wrap; }
+.q-marks { font-size: 0.75em; color: #888; font-weight: 600; margin-left: auto; white-space: nowrap; }
+
+.mcq-options { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
+.mcq-opt { padding: 9px 14px; border: 2px solid #e0e0e0; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.9em; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
+.mcq-opt:hover { border-color: var(--primary); background: #f0fff4; }
+.mcq-opt.correct { background: #e8f5e9; border-color: #2e7d32; color: #2e7d32; }
+.mcq-opt.wrong { background: #ffebee; border-color: #c62828; color: #c62828; }
+.opt-letter { font-family: 'Fredoka One', cursive; width: 24px; height: 24px; background: var(--primary); color: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85em; flex-shrink: 0; }
+.mcq-opt.correct .opt-letter { background: #2e7d32; }
+.mcq-opt.wrong .opt-letter { background: #c62828; }
+
+.answer-locked { background: #f5f5f5; border: 2px dashed #bbb; border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; color: #666; font-weight: 700; margin: 8px 0; transition: all 0.2s; }
+.answer-locked:hover { background: #ede7f6; border-color: var(--purple); color: var(--purple); }
+.answer-revealed { background: #f0fff4; border: 2px solid #2e7d32; border-radius: 10px; padding: 12px; margin: 8px 0; }
+.answer-revealed .final-ans { background: #2e7d32; color: white; border-radius: 8px; padding: 6px 12px; font-weight: 700; font-size: 0.95em; margin-top: 8px; display: inline-block; }
+.answer-revealed .step { font-size: 0.88em; margin: 4px 0; padding: 4px 0; border-bottom: 1px dashed #c8e6c9; color: #1b5e20; }
+
+.assess-btns { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.assess-btn { border: none; border-radius: 20px; padding: 7px 16px; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.85em; cursor: pointer; transition: all 0.2s; }
+.btn-got { background: #e8f5e9; color: #2e7d32; border: 2px solid #2e7d32; }
+.btn-got:hover { background: #2e7d32; color: white; }
+.btn-partial { background: #fff3e0; color: #e65100; border: 2px solid #e65100; }
+.btn-partial:hover { background: #e65100; color: white; }
+.btn-missed { background: #ffebee; color: #c62828; border: 2px solid #c62828; }
+.btn-missed:hover { background: #c62828; color: white; }
+.btn-done { opacity: 0.6; cursor: not-allowed; }
+
+.ai-section { margin-top: 10px; border-top: 1px dashed #e0e0e0; padding-top: 10px; }
+.ai-btn { font-family: 'Fredoka One', cursive; font-size: 0.8em; padding: 6px 12px; border: 2px solid #7c4dff; background: #f3e5f5; color: #7c4dff; border-radius: 20px; cursor: pointer; margin-right: 6px; margin-bottom: 6px; transition: all 0.2s; }
+.ai-btn:hover { background: #7c4dff; color: white; }
+.ai-response { background: linear-gradient(135deg, #f3e5f5, #e8f5e9); border: 2px solid #ce93d8; border-radius: 12px; padding: 12px; margin-top: 8px; font-size: 0.88em; line-height: 1.6; display: none; }
+.ai-response.visible { display: block; }
+.ai-label { font-family: 'Fredoka One', cursive; font-size: 0.8em; background: #7c4dff; color: white; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 6px; }
+
+.claude-corner { background: linear-gradient(135deg, #1b5e20, #2e7d32); color: white; border-radius: 16px; padding: 18px; margin: 16px 0; }
+.claude-corner h3 { font-family: 'Fredoka One', cursive; font-size: 1.15em; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.bonus-tag { font-size: 0.65em; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 10px; padding: 2px 8px; }
+.claude-corner p { font-size: 0.88em; line-height: 1.6; margin-bottom: 8px; opacity: 0.95; }
+.fun-fact { background: rgba(255,255,255,0.12); border-radius: 10px; padding: 10px; margin: 6px 0; font-size: 0.85em; }
+.fun-fact b { color: #a5d6a7; }
+
+.section-title { font-family: 'Fredoka One', cursive; font-size: 1.2em; color: var(--primary); margin: 18px 0 10px; padding-bottom: 6px; border-bottom: 3px solid #c8e6c9; display: flex; align-items: center; gap: 8px; }
+
+.fill-input { border: 2px solid #bbb; border-radius: 8px; padding: 6px 10px; font-family: 'Quicksand', sans-serif; font-size: 0.95em; font-weight: 700; width: 100px; text-align: center; }
+.fill-input:focus { outline: none; border-color: var(--primary); }
+.fill-input.correct-fill { border-color: #2e7d32; background: #e8f5e9; color: #2e7d32; }
+.fill-input.wrong-fill { border-color: #c62828; background: #ffebee; color: #c62828; }
+.check-btn { font-family: 'Fredoka One', cursive; padding: 7px 16px; border: none; background: var(--primary); color: white; border-radius: 20px; cursor: pointer; font-size: 0.85em; margin-left: 8px; transition: background 0.2s; }
+.check-btn:hover { background: var(--accent); }
+
+.gen-btn { font-family: 'Fredoka One', cursive; display: block; width: 100%; padding: 14px; background: linear-gradient(135deg, #1b5e20, #2e7d32); color: white; border: none; border-radius: 14px; cursor: pointer; font-size: 1em; margin: 14px 0; transition: opacity 0.2s; }
+.gen-btn:hover { opacity: 0.9; }
+
+.property-card { border-radius: 12px; padding: 12px; margin: 6px 0; font-size: 0.88em; }
+.prop-commutative { background: #e3f2fd; border-left: 4px solid #1565c0; }
+.prop-associative { background: #f3e5f5; border-left: 4px solid #7b1fa2; }
+.prop-distributive { background: #fff8e1; border-left: 4px solid #f9a825; }
+
+code { background: #e8f5e9; color: var(--primary); padding: 2px 6px; border-radius: 5px; font-family: monospace; font-size: 0.95em; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+#gen-quiz-area .q-block { animation: fadeIn 0.4s ease; }
+</style>
+</head>
+<body>
+
+            <div style="padding: 10px 20px; background: #1E293B; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
+                <a href="javascript:history.back()" style="color: #6366F1; text-decoration: none; font-weight: 700; font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 6px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to Hub
+                </a>
+                <span style="color:#A855F7; font-family: 'Nunito', sans-serif; font-weight: bold;">Claude Notes Mode</span>
+            </div>
+            
+
+<div class="hero">
+  <div class="chapter-badge">📐 Class 7 · Mathematics</div>
+  <h1>➕ Arithmetic Expressions</h1>
+  <p>Chapter 2 · BODMAS · Properties · Brackets · Real Life</p>
+</div>
+
+<div class="sticky-bar">
+  <span class="score-pill pill-green" id="pill-got">✅ 0</span>
+  <span class="score-pill pill-orange" id="pill-partial">🤔 0</span>
+  <span class="score-pill pill-red" id="pill-missed">❌ 0</span>
+  <span class="score-pill pill-blue" id="pill-total">📊 0/0</span>
+  <div class="progress-wrap"><div class="progress-bar-outer"><div class="progress-bar-inner" id="prog-bar" style="width:0%"></div></div></div>
+</div>
+
+<div class="tab-row">
+  <button class="tab-btn active" onclick="showTab('learn')">📖 Learn</button>
+  <button class="tab-btn" onclick="showTab('basic')">✏️ Basic Practice</button>
+  <button class="tab-btn" onclick="showTab('mcq')">🎯 MCQs</button>
+  <button class="tab-btn" onclick="showTab('adv')">🚀 Challenge</button>
+  <button class="tab-btn" onclick="showTab('ai')">🤖 AI Quiz</button>
+  <button class="tab-btn" onclick="showTab('corner')">📡 Claude's Corner</button>
+</div>
+
+<!-- ══════════ LEARN ══════════ -->
+<div class="section active" id="tab-learn">
+
+  <div class="card">
+    <div class="card-title">📘 What is an Arithmetic Expression?</div>
+    <p style="font-size:0.9em; line-height:1.7;">An arithmetic expression is a mathematical phrase made of <b>numbers and operators</b> (+, −, ×, ÷) and sometimes <b>brackets</b>, arranged to show a calculation.</p>
+    <div class="tip-box">💡 <b>Simple Expression:</b> Only ONE operation, no brackets. E.g.: 5 + 4, 6 × 3, 12 − 5<br>
+    <b>Complex Expression:</b> Multiple operations or has brackets. E.g.: 8 × 5 + 2, (8 + 4) − 6 × 3 + 100</div>
+    <div class="remember-box">🌸 Different expressions can have the same value! <b>8 + 2 = 12 − 2 = 5 × 2 = 20 ÷ 2 = 10</b> — all equal 10 in four different ways!</div>
+  </div>
+
+  <div class="card accent">
+    <div class="card-title">🏗️ BODMAS — The Order of Operations</div>
+    <p style="font-size:0.88em; margin-bottom:10px;">When an expression has multiple operations, BODMAS tells us which to do first:</p>
+    <div class="bodmas-row">
+      <div class="bodmas-box"><div class="letter">B</div><div class="word">Brackets</div></div>
+      <div class="bodmas-box"><div class="letter">O</div><div class="word">Of (Powers)</div></div>
+      <div class="bodmas-box"><div class="letter">D</div><div class="word">Division</div></div>
+      <div class="bodmas-box"><div class="letter">M</div><div class="word">Multiplication</div></div>
+      <div class="bodmas-box"><div class="letter">A</div><div class="word">Addition</div></div>
+      <div class="bodmas-box"><div class="letter">S</div><div class="word">Subtraction</div></div>
+    </div>
+    <div class="example-block">
+      <div class="q">Solve: 8 × 5 + 2</div>
+      <div class="step-solution">
+        <div class="step-item"><span class="step-n">1</span><span>No brackets → do Multiplication first: 8 × 5 = 40</span></div>
+        <div class="step-item"><span class="step-n">2</span><span>Then Addition: 40 + 2 = <b>42</b></span></div>
+      </div>
+    </div>
+    <div class="example-block">
+      <div class="q">Solve: 3 × 50 + 100 − 20</div>
+      <div class="step-solution">
+        <div class="step-item"><span class="step-n">1</span><span>Multiplication first: 3 × 50 = 150</span></div>
+        <div class="step-item"><span class="step-n">2</span><span>Left to right — Addition: 150 + 100 = 250</span></div>
+        <div class="step-item"><span class="step-n">3</span><span>Then Subtraction: 250 − 20 = <b>230</b></span></div>
+      </div>
+    </div>
+    <div class="warning-box">⚠️ <b>Common Mistake:</b> Always do Multiplication and Division BEFORE Addition and Subtraction. 8 × 5 + 2 ≠ 8 × 7! First multiply, THEN add.</div>
+  </div>
+
+  <div class="card teal">
+    <div class="card-title">🔗 Additive Inverse of a Number</div>
+    <p style="font-size:0.88em; line-height:1.7;">The additive inverse of a number is what you add to it to get <b>zero</b>. It's just the number with its sign flipped!</p>
+    <div class="formula-box">a + (−a) = 0 &nbsp;|&nbsp; Additive inverse of a is −a</div>
+    <div class="tip-box">💡 <b>Examples:</b><br>
+    Additive inverse of 12 is −12 (since 12 + (−12) = 0)<br>
+    Additive inverse of −7 is 7 (since −7 + 7 = 0)<br>
+    Additive inverse of −25 is 25</div>
+    <div class="remember-box">🌸 <b>Key Rule:</b> All subtractions can be rewritten as adding the inverse! 90 − 30 = 90 + (−30)</div>
+  </div>
+
+  <div class="card purple">
+    <div class="card-title">🔤 Terms in an Expression</div>
+    <p style="font-size:0.88em; line-height:1.7;">Terms are the individual parts of an expression separated by the <b>+ (plus) sign</b>.</p>
+    <div class="example-block">
+      <div class="q">How many terms in: 25 + 8?</div>
+      <p style="font-size:0.88em;">Two terms: <b>25</b> and <b>8</b></p>
+    </div>
+    <div class="example-block">
+      <div class="q">How many terms in: 13 − 2 + 6?</div>
+      <p style="font-size:0.88em;">= 13 + (−2) + 6 → Three terms: <b>13</b>, <b>−2</b>, and <b>6</b></p>
+    </div>
+    <div class="warning-box">⚠️ <b>Important:</b> Expressions like 6 × 5 or 12 ÷ 6 are <b>single terms</b> because there's no '+' or '−' sign separating parts. Multiplication/division alone does NOT break an expression into multiple terms.</div>
+  </div>
+
+  <div class="card gold">
+    <div class="card-title">🔄 Swapping and Grouping Properties</div>
+    <div class="property-card prop-commutative">
+      <b>🔄 Commutative Property (Swapping)</b><br>
+      Changing the order of terms does NOT affect the sum.<br>
+      <code>a + b = b + a</code><br>
+      Example: 12 + (−3) = (−3) + 12 = 9<br>
+      <span style="color:#c62828;">⚠️ Does NOT work for subtraction: 9 − 4 ≠ 4 − 9</span>
+    </div>
+    <div class="property-card prop-associative">
+      <b>🗂️ Associative Property (Grouping)</b><br>
+      Grouping terms differently does NOT affect the sum.<br>
+      <code>(a + b) + c = a + (b + c)</code><br>
+      Example: (3 + 6) + 4 = 3 + (6 + 4) = 13<br>
+      <span style="color:#c62828;">⚠️ Does NOT work for subtraction: (5−3)−1 ≠ 5−(3−1)</span>
+    </div>
+    <div class="property-card prop-distributive">
+      <b>📤 Distributive Property</b><br>
+      Multiplying a number by a sum = sum of the products.<br>
+      <code>a × (b + c) = a×b + a×c</code><br>
+      Example: 3 × (4 + 2) = 3×4 + 3×2 = 12 + 6 = 18
+    </div>
+  </div>
+
+  <div class="card pink">
+    <div class="card-title">🔓 Removing Brackets</div>
+    <div class="bracket-rule bracket-plus">
+      <div>➕ <b>Plus sign before bracket:</b> Signs inside stay the SAME<br>
+      Example: 8 + (3 + 2) = 8 + 3 + 2</div>
+    </div>
+    <div class="bracket-rule bracket-minus">
+      <div>➖ <b>Minus sign before bracket:</b> Signs inside FLIP (+ becomes −, − becomes +)<br>
+      Example: 8 − (3 + 2) = 8 − 3 − 2<br>
+      Example: 8 − (3 − 2) = 8 − 3 + 2</div>
+    </div>
+    <div class="bracket-rule bracket-mult">
+      <div>✖️ <b>Multiplication before bracket:</b> Multiply each term inside<br>
+      Example: 3 × (4 + 2) = 3×4 + 3×2 = 12 + 6 = 18<br>
+      Example: 3 × (4 − 2) = 3×4 − 3×2 = 12 − 6 = 6</div>
+    </div>
+    <div class="example-block">
+      <div class="q">Remove brackets: 55 − (4 + 3) × 6</div>
+      <div class="step-solution">
+        <div class="step-item"><span class="step-n">1</span><span>Brackets first: (4 + 3) = 7</span></div>
+        <div class="step-item"><span class="step-n">2</span><span>Multiply: 7 × 6 = 42</span></div>
+        <div class="step-item"><span class="step-n">3</span><span>Subtract: 55 − 42 = <b>13</b></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-title">✂️ Tinker the Terms</div>
+    <p style="font-size:0.88em; line-height:1.6;">When we know a×b = c, we can find nearby products without recalculating from scratch!</p>
+    <div class="example-block">
+      <div class="q">If 45 × 12 = 540, find 55 × 12</div>
+      <div class="step-solution">
+        <div class="step-item"><span class="step-n">1</span><span>55 = 45 + 10</span></div>
+        <div class="step-item"><span class="step-n">2</span><span>55 × 12 = (45 + 10) × 12 = 45×12 + 10×12</span></div>
+        <div class="step-item"><span class="step-n">3</span><span>= 540 + 120 = <b>660</b></span></div>
+      </div>
+    </div>
+    <div class="example-block">
+      <div class="q">If 525 × 16 = 8400, find 515 × 16</div>
+      <div class="step-solution">
+        <div class="step-item"><span class="step-n">1</span><span>515 = 525 − 10</span></div>
+        <div class="step-item"><span class="step-n">2</span><span>515 × 16 = (525 − 10) × 16 = 525×16 − 10×16</span></div>
+        <div class="step-item"><span class="step-n">3</span><span>= 8400 − 160 = <b>8240</b></span></div>
+      </div>
+    </div>
+    <div class="tip-box">💡 <b>Comparing Expressions without calculating:</b><br>
+    Is 245+289 &gt; or &lt; 246+285?<br>
+    245 is 1 less than 246, but 289 is 4 more than 285. Net gain = +3. So 245+289 &gt; 246+285!</div>
+  </div>
+</div>
+
+<!-- ══════════ BASIC PRACTICE ══════════ -->
+<div class="section" id="tab-basic">
+
+  <div class="section-title">🧮 Solve the Expressions (BODMAS)</div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">1</span> Solve: 25 + (5 × 6) <span class="q-marks">[1M]</span></div>
+    <div><input class="fill-input" id="f1" placeholder="?"> <button class="check-btn" onclick="checkFill('f1','55','r1')">Check</button></div>
+    <div id="r1" style="margin-top:6px; font-weight:700; font-size:0.9em;"></div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('f1e','Explain how to solve 25 + (5×6) using BODMAS. Show each step clearly for a 12-year-old.')">🤖 Show me steps</button>
+      <div class="ai-response" id="f1e"></div>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">2</span> Solve: 55 − (4 + 3) × 6 <span class="q-marks">[1M]</span></div>
+    <div><input class="fill-input" id="f2" placeholder="?"> <button class="check-btn" onclick="checkFill('f2','13','r2')">Check</button></div>
+    <div id="r2" style="margin-top:6px; font-weight:700; font-size:0.9em;"></div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">3</span> Solve: 12 × 3 − (6 + 2) <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="ql3" onclick="revealAnswer('ql3','qa3')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="qa3" style="display:none;">
+      <div class="step">Step 1: Brackets first → (6 + 2) = 8</div>
+      <div class="step">Step 2: Multiplication → 12 × 3 = 36</div>
+      <div class="step">Step 3: Subtraction → 36 − 8 = 28</div>
+      <div class="final-ans">✅ Answer = 28</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'q3')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'q3')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'q3')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">4</span> Solve: (10 + 2) × 5 <span class="q-marks">[1M]</span></div>
+    <div><input class="fill-input" id="f4" placeholder="?"> <button class="check-btn" onclick="checkFill('f4','60','r4')">Check</button></div>
+    <div id="r4" style="margin-top:6px; font-weight:700; font-size:0.9em;"></div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">5</span> Solve: 15 − 3 − (6 × 2) <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="ql5" onclick="revealAnswer('ql5','qa5')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="qa5" style="display:none;">
+      <div class="step">Brackets: 6 × 2 = 12</div>
+      <div class="step">Left to right: 15 − 3 = 12</div>
+      <div class="step">Then: 12 − 12 = 0</div>
+      <div class="final-ans">✅ Answer = 0</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'q5')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'q5')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'q5')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">🔓 Remove Brackets</div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">6</span> Remove brackets and simplify: 14 + (12 + 10) <span class="q-marks">[1M]</span></div>
+    <div><input class="fill-input" id="f6" placeholder="?"> <button class="check-btn" onclick="checkFill('f6','36','r6')">Check</button></div>
+    <div id="r6" style="margin-top:6px; font-weight:700; font-size:0.9em;"></div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('f6e','Explain the rule for removing brackets when a plus sign is before them. Use 14+(12+10) as example. Make it super clear.')">🤖 + before bracket rule?</button>
+      <div class="ai-response" id="f6e"></div>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">7</span> Remove brackets and simplify: 14 − (12 − 10) <span class="q-marks">[1M]</span></div>
+    <div><input class="fill-input" id="f7" placeholder="?"> <button class="check-btn" onclick="checkFill('f7','12','r7')">Check</button></div>
+    <div id="r7" style="margin-top:6px; font-weight:700; font-size:0.9em;"></div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('f7e','Explain carefully the rule for removing brackets when a MINUS sign appears before them. Use 14-(12-10). Why does minus flip signs inside? Give a real-life analogy.')">🤖 − before bracket rule?</button>
+      <div class="ai-response" id="f7e"></div>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">8</span> Remove brackets: 100 − (40 + 30 − 10) <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="ql8" onclick="revealAnswer('ql8','qa8')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="qa8" style="display:none;">
+      <div class="step">Minus before bracket → flip all signs inside</div>
+      <div class="step">= 100 − 40 − 30 + 10</div>
+      <div class="step">= 60 − 30 + 10 = 30 + 10 = 40</div>
+      <div class="final-ans">✅ Answer = 40</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'q8')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'q8')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'q8')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">✍️ Write Expressions for Real-Life Situations</div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">9</span> A cinema has 20 rows, each row has 15 seats. Write an expression for total seats and find its value. <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="ql9" onclick="revealAnswer('ql9','qa9')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="qa9" style="display:none;">
+      <div class="step">Expression: 20 × 15</div>
+      <div class="step">Value: 20 × 15 = 300</div>
+      <div class="final-ans">✅ Expression: 20 × 15 = 300 seats</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'q9')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'q9')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'q9')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">10</span> Rohan buys 3 ride tickets at ₹50 each and 1 snack combo at ₹100. He gets ₹20 discount. Write an expression and find total money spent. <span class="q-marks">[3M]</span></div>
+    <div class="answer-locked" id="ql10" onclick="revealAnswer('ql10','qa10')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="qa10" style="display:none;">
+      <div class="step">Expression: 3 × 50 + 100 − 20</div>
+      <div class="step">Multiplication first: 3 × 50 = 150</div>
+      <div class="step">Addition: 150 + 100 = 250</div>
+      <div class="step">Subtraction: 250 − 20 = 230</div>
+      <div class="final-ans">✅ Expression: 3×50 + 100 − 20 = ₹230</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,3,3,'q10')">✅ Got it (3M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,2,3,'q10')">🤔 Partial (2M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,3,'q10')">❌ Missed (0M)</button>
+      </div>
+    </div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('q10e','Explain how to convert a real-life money problem into an arithmetic expression. Use this problem: 3 ride tickets at Rs50 each + 1 snack at Rs100 − Rs20 discount. Show how BODMAS applies here.')">🤖 Real-life to expression?</button>
+      <div class="ai-response" id="q10e"></div>
+    </div>
+  </div>
+
+  <div class="section-title">🔍 Additive Inverse & Terms</div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">11</span> Find the additive inverse of: (i) 36 &nbsp; (ii) −25 &nbsp; (iii) −(10×5) <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="ql11" onclick="revealAnswer('ql11','qa11')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="qa11" style="display:none;">
+      <div class="step">(i) Additive inverse of 36 = −36 (since 36 + (−36) = 0)</div>
+      <div class="step">(ii) Additive inverse of −25 = 25 (since −25 + 25 = 0)</div>
+      <div class="step">(iii) −(10×5) = −50 → additive inverse = 50</div>
+      <div class="final-ans">✅ (i) −36 &nbsp; (ii) 25 &nbsp; (iii) 50</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'q11')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'q11')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'q11')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">12</span> Find the number of terms in: (i) 4 + 7 × 8 &nbsp; (ii) 15 + 6 + 3 − 2 <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="ql12" onclick="revealAnswer('ql12','qa12')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="qa12" style="display:none;">
+      <div class="step">(i) 4 + 7×8: the 7×8 is ONE term (no + or − inside) → Two terms: 4 and (7×8)</div>
+      <div class="step">(ii) 15 + 6 + 3 − 2 = 15 + 6 + 3 + (−2) → Four terms: 15, 6, 3, −2</div>
+      <div class="final-ans">✅ (i) 2 terms &nbsp; (ii) 4 terms</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'q12')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'q12')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'q12')">❌ Missed (0M)</button>
+      </div>
+    </div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('q12e','Explain the concept of terms in arithmetic expressions. Why is 7×8 one term and not two? Give several examples. Make it very clear for a Class 7 student.')">🤖 What are terms?</button>
+      <div class="ai-response" id="q12e"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MCQs ══════════ -->
+<div class="section" id="tab-mcq">
+  <div class="section-title">🎯 Multiple Choice — Level 1</div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">1</span> A class has 57 students and 19 desks. The number of students on each desk is: <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m1','57−19 would mean students minus desks, not students per desk.')"><span class="opt-letter">A</span>57 − 19</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','m1','✅ Correct! To find how many per desk, we divide total students by number of desks: 57 ÷ 19 = 3.')"><span class="opt-letter">B</span>57 ÷ 19</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m1','57 × 19 would give total if 19 desks each had 57 students — that is the wrong operation.')"><span class="opt-letter">C</span>57 × 19</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m1','57 + 19 = 76, which doesn\'t tell us students per desk.')"><span class="opt-letter">D</span>57 + 19</div>
+    </div>
+    <div id="m1-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">2</span> Which operation is performed FIRST to find the value of 15 − 3 × 4 + 2? <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m2','Subtraction is not first according to BODMAS. Multiplication comes before addition and subtraction.')"><span class="opt-letter">A</span>Subtraction</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','m2','✅ Correct! BODMAS says Multiplication before Addition/Subtraction. So 3 × 4 = 12 first, then 15 − 12 + 2 = 5.')"><span class="opt-letter">B</span>Multiplication</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m2','Addition comes AFTER multiplication and division in BODMAS.')"><span class="opt-letter">C</span>Addition</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m2','There are no brackets here. Multiplication comes first.')"><span class="opt-letter">D</span>Any of these</div>
+    </div>
+    <div id="m2-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">3</span> The expression 85 − 28 − 12 equals: <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m3','80 − 23 = 57, that is not the same expression.')"><span class="opt-letter">A</span>80 − 23</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','m3','✅ Correct! 85 − 28 − 12 = 85 − (28+12) = 85 − 40 = 45. Also: 85 − 28 = 57, then 57 − 12 = 45.')"><span class="opt-letter">B</span>85 − (28 + 12)</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m3','85 − (28 − 12) = 85 − 16 = 69 ≠ 45. Subtracting a difference is different from subtracting a sum.')"><span class="opt-letter">C</span>85 − (28 − 12)</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m3','84 − 29 − 12 would give a different value. The original is 85 − 28 − 12.')"><span class="opt-letter">D</span>84 − 29 − 12</div>
+    </div>
+    <div id="m3-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">4</span> Which property is used in: (3 + 4) + 5 = 3 + (4 + 5)? <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','m4','✅ Correct! The grouping (brackets) changed but the result stayed the same. That is the Associative Property of Addition.')"><span class="opt-letter">A</span>Commutative property</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m4','Commutative property is about swapping ORDER: a+b = b+a. Here the order is the same, only the brackets moved.')"><span class="opt-letter">B</span>Associative property</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m4','Distributive property involves multiplication over addition/subtraction. This has only addition.')"><span class="opt-letter">C</span>Distributive property</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m4','Addition property is too vague. The specific property here is Associative (grouping).')"><span class="opt-letter">D</span>Addition property</div>
+    </div>
+    <div id="m4-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('m4e','Explain the difference between Commutative and Associative properties of addition using fun, clear examples. Why do we care about these properties? Target a 12-year-old.')">🤖 Commutative vs Associative?</button>
+      <div class="ai-response" id="m4e"></div>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">5</span> Swapping the terms in 15 + (−6) represents the: <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','m5','✅ Correct! Swapping order: 15 + (−6) = (−6) + 15. This is the Commutative Property (swapping/changing order).')"><span class="opt-letter">A</span>Commutative property</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m5','Associative is about changing GROUPING with brackets, not swapping order of terms.')"><span class="opt-letter">B</span>Associative property</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m5','Distributive property involves multiplication. This is just addition with a swap.')"><span class="opt-letter">C</span>Distributive property</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m5','There is no "addition order property" — the correct term is Commutative property.')"><span class="opt-letter">D</span>Addition order property</div>
+    </div>
+    <div id="m5-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <div class="section-title">🎯 MCQs — Level 2</div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">6</span> Riya scored 15 marks in each of 4 tests and got a bonus of 10 marks. Which expression shows total marks? <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m6','60 + 10 is correct VALUE but not a complete expression showing the situation.')"><span class="opt-letter">A</span>60 + 10</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m6','4 + 10 misses the 15 marks per test. It should be 4 × 15, not just 4.')"><span class="opt-letter">B</span>4 + 10</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','m6','✅ Correct! 4 tests × 15 marks each + 10 bonus = 15 × 4 + 10 = 60 + 10 = 70 marks.')"><span class="opt-letter">C</span>15 × 4 + 10</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m6','15 + 15 + 15 + 10 only adds three 15s. There are 4 tests.')"><span class="opt-letter">D</span>15 + 15 + 15 + 10</div>
+    </div>
+    <div id="m6-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">7</span> Value of 45 − (20 + 5) = ? <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m7','−20 is wrong. 45 − 25 = 20, not −20.')"><span class="opt-letter">A</span>−20</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m7','35 is wrong. (20+5)=25, so 45−25=20, not 35.')"><span class="opt-letter">B</span>35</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','m7','✅ Correct! (20+5)=25, then 45−25=20.')"><span class="opt-letter">C</span>20</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m7','5 is wrong. 45−(20+5) = 45−25 = 20.')"><span class="opt-letter">D</span>5</div>
+    </div>
+    <div id="m7-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">8</span> Which of the following shows the use of the distributive property? <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m8','5+(3+2)=5+3+2 just removes brackets after a +. It uses the associative idea, not distributive.')"><span class="opt-letter">A</span>5 + (3 + 2) = 5 + 3 + 2</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','m8','✅ Correct! 5×(3+2) = 5×3 + 5×2. This is the distributive property: multiply the number OUTSIDE the bracket by EACH term inside.')"><span class="opt-letter">B</span>5 × (3 + 2) = 5 × 3 + 5 × 2</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m8','5×(3+2) = 5×3×5×2 is WRONG — distributive does not multiply, it distributes addition.')"><span class="opt-letter">C</span>5 × (3 + 2) = 5 × 3 × 5 × 2</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m8','5+3−2 = 5+3+2 is wrong mathematically. Subtracting 2 ≠ adding 2.')"><span class="opt-letter">D</span>5 + 3 − 2 = 5 + 3 + 2</div>
+    </div>
+    <div id="m8-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">9</span> 7 + 3 × 2 − 5 has how many terms? <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m9','4 would count each number, but 3×2 is a single term.')"><span class="opt-letter">A</span>4</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','m9','✅ Correct! 7 + (3×2) − 5 = 7 + (3×2) + (−5). Three terms: 7, (3×2), and −5. Multiplication binds 3 and 2 into one term.')"><span class="opt-letter">B</span>3</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m9','2 terms is too few. Count: 7, (3×2), and −5 = three terms.')"><span class="opt-letter">C</span>2</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m9','1 term would mean the whole thing is multiplied together. It\'s not.')"><span class="opt-letter">D</span>1</div>
+    </div>
+    <div id="m9-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">10</span> If ☆☆ = 2 and ✿ = 3 then ☆☆ × 3 − 2 + ☆☆ represents: <span class="q-marks">[1M]</span></div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="checkMCQ(this,'correct','m10','✅ Correct! ☆☆=2, ✿=3. The expression ☆☆ × 3 − 2 + ☆☆ = 2 × 3 − 2 + 2 = 6 − 2 + 2 = 6. So 2×3−2+2.')"><span class="opt-letter">A</span>2 × 3 − 2 + 2</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m10','2×3−2+3 replaces the last ☆☆ with 3 (which is ✿), not 2.')"><span class="opt-letter">B</span>2 × 3 − 2 + 3</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m10','2×3+2+2 has a plus where there should be a minus sign.')"><span class="opt-letter">C</span>2 × 3 + 2 + 2</div>
+      <div class="mcq-opt" onclick="checkMCQ(this,'wrong','m10','3×2−3+2 swaps the values of the symbols, which is incorrect.')"><span class="opt-letter">D</span>3 × 2 − 3 + 2</div>
+    </div>
+    <div id="m10-feedback" style="margin-top:8px; font-size:0.88em; font-weight:700; display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════════ CHALLENGE ══════════ -->
+<div class="section" id="tab-adv">
+  <div class="section-title">🚀 Challenge & HOTS Questions</div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">1</span> Seema has ₹750. She spent ₹125 on groceries. Find the expression describing her situation and its value. <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="ca1l" onclick="revealAnswer('ca1l','ca1a')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="ca1a" style="display:none;">
+      <div class="step">Expression: 750 − 125, which has two terms: 750 and −125</div>
+      <div class="step">Value: 750 − 125 = 625</div>
+      <div class="final-ans">✅ Expression: 750 − 125 = ₹625 left with Seema</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'ca1')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'ca1')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'ca1')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">2</span> Aman saves ₹50 per week for 8 weeks. He gave ₹150 to his sister. How much money does he have left? Write expression with and without brackets. <span class="q-marks">[3M]</span></div>
+    <div class="answer-locked" id="ca2l" onclick="revealAnswer('ca2l','ca2a')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="ca2a" style="display:none;">
+      <div class="step">With brackets: (50 × 8) − 150</div>
+      <div class="step">Without brackets: 50 × 8 − 150 (same, because multiplication is done first anyway)</div>
+      <div class="step">Value: 50 × 8 = 400; 400 − 150 = 250</div>
+      <div class="final-ans">✅ Expression: 50×8 − 150 = ₹250</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,3,3,'ca2')">✅ Got it (3M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,2,3,'ca2')">🤔 Partial (2M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,3,'ca2')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">3</span> Given that 312 + 8 = 308 + ___. Fill the blank using logical reasoning without calculating. <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="ca3l" onclick="revealAnswer('ca3l','ca3a')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="ca3a" style="display:none;">
+      <div class="step">For expressions to be equal, both sides must have the same value.</div>
+      <div class="step">312 is 4 MORE than 308 on the RHS.</div>
+      <div class="step">So the second number on RHS must be 4 MORE than 8 to compensate.</div>
+      <div class="step">8 + 4 = 12</div>
+      <div class="final-ans">✅ Blank = 12 &nbsp;(because 312+8 = 308+12 = 320)</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'ca3')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'ca3')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'ca3')">❌ Missed (0M)</button>
+      </div>
+    </div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('ca3e','Explain the technique of filling blanks in equal expressions using logical reasoning (without calculating). Use 312+8 = 308+? as an example. Teach this as a skill.')">🤖 Logical reasoning trick?</button>
+      <div class="ai-response" id="ca3e"></div>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">4</span> Sam has ₹500. He buys 3 books at ₹120 each and 3 bookmarks at ₹25 each. Write an expression with and without brackets and find money left. <span class="q-marks">[3M]</span></div>
+    <div class="answer-locked" id="ca4l" onclick="revealAnswer('ca4l','ca4a')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="ca4a" style="display:none;">
+      <div class="step">Amount spent on books = 3 × 120 = ₹360</div>
+      <div class="step">Amount spent on bookmarks = 3 × 25 = ₹75</div>
+      <div class="step">Total spent = 3 × 120 + 3 × 25</div>
+      <div class="step">Using distributive property: = 3 × (120 + 25) = 3 × 145 = ₹435</div>
+      <div class="step">Money left = 500 − 435 = ₹65</div>
+      <div class="final-ans">✅ Expression: 500 − 3×120 − 3×25 = 500 − 3×(120+25) = ₹65 left</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,3,3,'ca4')">✅ Got it (3M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,2,3,'ca4')">🤔 Partial (2M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,3,'ca4')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">5</span> If 116 × 15 = 1740 and 116 × 5 = 580, use these to find 116 × 20. ("Tinker the Term" method) <span class="q-marks">[2M]</span></div>
+    <div class="answer-locked" id="ca5l" onclick="revealAnswer('ca5l','ca5a')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="ca5a" style="display:none;">
+      <div class="step">116 × 20 = 116 × (15 + 5)</div>
+      <div class="step">= 116 × 15 + 116 × 5</div>
+      <div class="step">= 1740 + 580</div>
+      <div class="final-ans">✅ 116 × 20 = 2320</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,2,2,'ca5')">✅ Got it (2M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,1,2,'ca5')">🤔 Partial (1M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,2,'ca5')">❌ Missed (0M)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text"><span class="q-num">6</span> A factory produces 62 toys/day. Next month it increases to 65/day. Using "Tinker the Terms", find production in next 30 days. <span class="q-marks">[3M]</span></div>
+    <div class="answer-locked" id="ca6l" onclick="revealAnswer('ca6l','ca6a')">🔒 Click to reveal answer</div>
+    <div class="answer-revealed" id="ca6a" style="display:none;">
+      <div class="step">We know: 62 × 30 = 1860</div>
+      <div class="step">65 = 62 + 3</div>
+      <div class="step">65 × 30 = (62 + 3) × 30 = 62×30 + 3×30</div>
+      <div class="step">= 1860 + 90 = 1950</div>
+      <div class="final-ans">✅ 65 × 30 = 1950 toys in next 30 days</div>
+      <div class="assess-btns">
+        <button class="assess-btn btn-got" onclick="assess(this,3,3,'ca6')">✅ Got it (3M)</button>
+        <button class="assess-btn btn-partial" onclick="assess(this,2,3,'ca6')">🤔 Partial (2M)</button>
+        <button class="assess-btn btn-missed" onclick="assess(this,0,3,'ca6')">❌ Missed (0M)</button>
+      </div>
+    </div>
+    <div class="ai-section">
+      <button class="ai-btn" onclick="askAI('ca6e','Explain the Tinker the Terms method for multiplication in a fun and clear way. Show why it works (using distributive property). Give 2 more examples. Target Class 7 student.')">🤖 Tinker the Terms explained!</button>
+      <div class="ai-response" id="ca6e"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ AI QUIZ ══════════ -->
+<div class="section" id="tab-ai">
+  <div class="card purple">
+    <div class="card-title">🤖 AI-Generated Practice Quiz</div>
+    <p style="font-size:0.9em; margin-bottom:12px;">Click below and Claude will create a fresh quiz on Arithmetic Expressions just for you! Different questions every time. 🎲</p>
+    <div style="margin-bottom:10px;">
+      <label style="font-weight:700; font-size:0.9em;">Difficulty:</label>
+      <select id="ai-diff" style="margin-left:8px; padding:6px 10px; border-radius:8px; border:2px solid var(--primary); font-family:Quicksand,sans-serif; font-weight:700; font-size:0.9em;">
+        <option value="easy">🌱 Easy</option>
+        <option value="medium" selected>⭐ Medium (Class 7)</option>
+        <option value="hard">🔥 Hard (HOTS)</option>
+      </select>
+    </div>
+    <div style="margin-bottom:10px;">
+      <label style="font-weight:700; font-size:0.9em;">Topic:</label>
+      <select id="ai-top" style="margin-left:8px; padding:6px 10px; border-radius:8px; border:2px solid var(--primary); font-family:Quicksand,sans-serif; font-weight:700; font-size:0.9em;">
+        <option value="mixed">🎲 Mixed all topics</option>
+        <option value="bodmas">📐 BODMAS / Order of Operations</option>
+        <option value="brackets">🔓 Removing Brackets</option>
+        <option value="properties">🔄 Properties (Commutative/Associative/Distributive)</option>
+        <option value="reallife">🏪 Real-Life Expression Writing</option>
+        <option value="tinker">✂️ Tinker the Terms</option>
+      </select>
+    </div>
+    <button class="gen-btn" onclick="generateAIQuiz()">✨ Generate My Practice Quiz!</button>
+  </div>
+  <div id="gen-quiz-area"></div>
+</div>
+
+<!-- ══════════ CLAUDE'S CORNER ══════════ -->
+<div class="section" id="tab-corner">
+
+  <div class="claude-corner">
+    <h3>📡 Claude's Corner <span class="bonus-tag">Bonus · Not for Exam</span></h3>
+    <p>Arithmetic expressions are everywhere — in your phone bill, grocery shopping, game scores, and even space missions! Let's explore the cool side of expressions. 🚀</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🛒 How Expressions Run Your Life</div>
+    <div class="fun-fact"><b>📱 Mobile Bill:</b> Your monthly bill = (calls × rate per min) + (data × rate per GB) + fixed charge. That's a real arithmetic expression!</div>
+    <div class="fun-fact"><b>🏏 Cricket Score:</b> Team total = Σ(runs per over). When a batsman hits 4 boundaries and 2 sixes: 4×4 + 2×6 = 16 + 12 = 28 runs. Pure arithmetic expression!</div>
+    <div class="fun-fact"><b>🛍️ GST Calculation:</b> Final price = original price × (1 + GST rate/100). If an item costs ₹500 with 18% GST: 500 × 118/100 = 500 + 90 = ₹590</div>
+  </div>
+
+  <div class="card accent">
+    <div class="card-title">💻 How Computers Use BODMAS</div>
+    <p style="font-size:0.88em; line-height:1.6;">Every programming language — Python, Java, C++ — follows the exact same BODMAS rules you're learning! When you type <code>3 + 4 * 2</code> in Python, it gives 11, not 14, because multiplication comes first.</p>
+    <div class="fun-fact"><b>🐛 Famous Bug:</b> NASA's Mars Climate Orbiter (1999) crashed because one team used metric units and another used imperial units in their expressions. A ₹4,500 crore spacecraft was lost due to a unit error in an arithmetic expression!</div>
+    <p style="font-size:0.88em; line-height:1.6; margin-top:8px;">This is why getting expressions RIGHT matters — even in real engineering!</p>
+  </div>
+
+  <div class="card teal">
+    <div class="card-title">🤔 The BODMAS Mystery — Why This Order?</div>
+    <p style="font-size:0.88em; line-height:1.6;">Why does multiplication come before addition? Because multiplication is <b>repeated addition</b>!</p>
+    <p style="font-size:0.88em; line-height:1.6; margin-top:6px;">When you write <code>2 + 3 × 4</code>, the "3 × 4" means "add 3, four times" = 12. So you're really saying "2 plus (3 added 4 times)" = 2 + 12 = 14. It would be weird to do the 2+3 first because the 4 only belongs to the 3!</p>
+    <div class="fun-fact"><b>🧩 Real-life reason:</b> "I have 2 apples and bought 3 bags of 4 apples each." Total = 2 + 3×4 = 14. You'd never add 2+3 = 5 first — that changes the meaning completely!</div>
+  </div>
+
+  <div class="card gold">
+    <div class="card-title">🎮 Expression Games — Can You Beat the Calculator?</div>
+    <p style="font-size:0.88em; margin-bottom:8px;"><b>Use 4 fours to make any number from 1–10:</b></p>
+    <div class="step-solution">
+      <div class="step-item"><span class="step-n">1</span><span>44 ÷ 44 = 1</span></div>
+      <div class="step-item"><span class="step-n">2</span><span>4 ÷ 4 + 4 ÷ 4 = 2</span></div>
+      <div class="step-item"><span class="step-n">3</span><span>(4 + 4 + 4) ÷ 4 = 3</span></div>
+      <div class="step-item"><span class="step-n">4</span><span>4 × (4 − 4) + 4 = 4</span></div>
+      <div class="step-item"><span class="step-n">5</span><span>(4 × 4 + 4) ÷ 4 = 5</span></div>
+    </div>
+    <div class="tip-box">💡 Try to make 6, 7, 8, 9, and 10 using exactly four 4s! This is called the "Four Fours Problem" — a famous math puzzle enjoyed by professional mathematicians.</div>
+  </div>
+
+  <div class="card pink">
+    <div class="card-title">🎯 The Power of Distributive Property in Mental Maths</div>
+    <p style="font-size:0.88em; margin-bottom:8px;">The distributive property isn't just for textbooks — it makes mental maths <b>super fast</b>!</p>
+    <div class="step-solution">
+      <div class="step-item"><span class="step-n">💡</span><span>99 × 7 = (100 − 1) × 7 = 700 − 7 = <b>693</b></span></div>
+      <div class="step-item"><span class="step-n">💡</span><span>25 × 12 = 25 × (10 + 2) = 250 + 50 = <b>300</b></span></div>
+      <div class="step-item"><span class="step-n">💡</span><span>18 × 6 = (20 − 2) × 6 = 120 − 12 = <b>108</b></span></div>
+    </div>
+    <div class="remember-box">🌸 <b>Pro Tip:</b> Whenever you need to multiply a number, break it into easy parts (round number ± small number) and use distributive property. This is what shopkeepers and traders have done for centuries!</div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+let scores = {}, totalGot=0, totalPartial=0, totalMissed=0, totalMarks=0, earnedMarks=0;
+
+function assess(btn, earned, max, qid) {
+  if (scores[qid] !== undefined) return;
+  scores[qid] = {earned, max};
+  totalGot += (earned === max ? 1 : 0);
+  totalPartial += (earned > 0 && earned < max ? 1 : 0);
+  totalMissed += (earned === 0 ? 1 : 0);
+  earnedMarks += earned; totalMarks += max;
+  updateScoreBar();
+  btn.parentElement.querySelectorAll('.assess-btn').forEach(b => { b.classList.add('btn-done'); b.disabled = true; });
+  btn.style.opacity = '1'; btn.style.fontWeight = '800';
+}
+
+function updateScoreBar() {
+  document.getElementById('pill-got').textContent = '✅ ' + totalGot;
+  document.getElementById('pill-partial').textContent = '🤔 ' + totalPartial;
+  document.getElementById('pill-missed').textContent = '❌ ' + totalMissed;
+  document.getElementById('pill-total').textContent = '📊 ' + earnedMarks + '/' + totalMarks;
+  const pct = totalMarks > 0 ? (earnedMarks / totalMarks * 100) : 0;
+  document.getElementById('prog-bar').style.width = pct + '%';
+}
+
+function revealAnswer(lockId, ansId) {
+  document.getElementById(lockId).style.display = 'none';
+  document.getElementById(ansId).style.display = 'block';
+}
+
+let mcqDone = {};
+function checkMCQ(el, result, qid, explanation) {
+  if (mcqDone[qid]) return;
+  mcqDone[qid] = true;
+  el.classList.add(result);
+  const fb = document.getElementById(qid+'-feedback');
+  if (fb) {
+    fb.style.display = 'block';
+    fb.style.color = result === 'correct' ? '#2e7d32' : '#c62828';
+    fb.innerHTML = (result === 'correct' ? '✅ ' : '❌ Not quite! ') + explanation;
+    totalGot += (result === 'correct' ? 1 : 0);
+    totalMissed += (result === 'correct' ? 0 : 1);
+  }
+  earnedMarks += (result === 'correct' ? 1 : 0); totalMarks++;
+  updateScoreBar();
+  el.parentElement.querySelectorAll('.mcq-opt').forEach(opt => {
+    if (!opt.classList.contains('correct') && !opt.classList.contains('wrong')) opt.style.opacity = '0.5';
+    opt.style.cursor = 'default'; opt.style.pointerEvents = 'none';
+  });
+}
+
+function checkFill(inputId, correct, resultId) {
+  const input = document.getElementById(inputId);
+  const result = document.getElementById(resultId);
+  const val = input.value.trim();
+  if (val === correct || val === correct.replace(/,/g,'')) {
+    input.classList.add('correct-fill');
+    result.innerHTML = '✅ Correct! Answer: ' + correct;
+    result.style.color = '#2e7d32';
+  } else {
+    input.classList.add('wrong-fill');
+    result.innerHTML = '❌ Not quite. Correct answer: ' + correct;
+    result.style.color = '#c62828';
+  }
+  input.disabled = true;
+}
+
+async function askAI(responseId, prompt) {
+  const respDiv = document.getElementById(responseId);
+  if (!respDiv) return;
+  if (respDiv.classList.contains('visible') && respDiv.dataset.loaded) return;
+  respDiv.classList.add('visible');
+  respDiv.innerHTML = '<div style="color:#7c4dff;font-weight:700;">⏳ Claude is thinking...</div>';
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: 'You are a warm, encouraging math tutor for a 12-year-old Class 7 CBSE student named Pushti in India. Explain arithmetic expressions concepts (BODMAS, brackets, properties, terms) in a fun, simple, clear way. Use emojis occasionally. Keep explanations under 200 words. Use Indian rupee examples when relevant.',
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.find(c => c.type === 'text')?.text || 'Sorry, could not get explanation.';
+    respDiv.innerHTML = '<div class="ai-label">🤖 Claude says</div>' + text.replace(/\n/g, '<br>');
+    respDiv.dataset.loaded = '1';
+  } catch(e) {
+    respDiv.innerHTML = '<div class="ai-label">🤖 Claude says</div>Oops! Could not connect. Try again later.';
+  }
+}
+
+async function generateAIQuiz() {
+  const diff = document.getElementById('ai-diff').value;
+  const topic = document.getElementById('ai-top').value;
+  const area = document.getElementById('gen-quiz-area');
+  area.innerHTML = '<div class="q-block"><div style="text-align:center; color:#7c4dff; font-weight:700; padding:20px;">⏳ Claude is creating your quiz...</div></div>';
+  const diffMap = { easy: 'Class 6 level, very simple', medium: 'Class 7 CBSE level, moderate', hard: 'HOTS challenging level' };
+  const topMap = {
+    mixed: 'a mix of BODMAS, bracket removal, commutative/associative/distributive properties, terms, additive inverse, and writing real-life expressions',
+    bodmas: 'BODMAS order of operations with complex expressions',
+    brackets: 'removing brackets with plus, minus, and multiplication signs before them',
+    properties: 'commutative, associative, and distributive properties of addition',
+    reallife: 'writing arithmetic expressions from real-life word problems (Indian rupee context)',
+    tinker: 'Tinker the Terms — using known products to find nearby products'
+  };
+  const prompt = `Create exactly 5 practice questions on "${topMap[topic]}" for a Class 7 CBSE student. Difficulty: ${diffMap[diff]}.
+Return ONLY valid JSON (no markdown):
+{"questions":[{"question":"text","type":"mcq or short","options":["A) ...","B) ...","C) ...","D) ..."],"correct":"correct answer","hint":"helpful hint","explanation":"3-4 line step-by-step explanation friendly for a 12-year-old"}]}`;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, system:'Return ONLY valid JSON, no markdown, no backticks.', messages:[{role:'user',content:prompt}] })
+    });
+    const data = await res.json();
+    let text = data.content?.find(c=>c.type==='text')?.text || '{}';
+    text = text.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(text);
+    renderAIQuiz(parsed.questions||[]);
+  } catch(e) {
+    area.innerHTML = '<div class="q-block" style="text-align:center;color:#c62828;padding:20px;">⚠️ Could not generate. Please try again!</div>';
+  }
+}
+
+function renderAIQuiz(questions) {
+  const area = document.getElementById('gen-quiz-area');
+  if (!questions.length) { area.innerHTML=''; return; }
+  let html = '<div class="section-title">🎲 Your AI-Generated Quiz</div>';
+  questions.forEach((q,i) => {
+    html += `<div class="q-block"><div class="q-text"><span class="q-num">${i+1}</span> ${q.question} <span class="q-marks">[1M]</span></div>`;
+    if (q.type==='mcq' && q.options) {
+      html += '<div class="mcq-options">';
+      q.options.forEach(opt => {
+        const letter = opt[0];
+        const isCorrect = q.correct && (opt.includes(q.correct) || q.correct.startsWith(letter));
+        html += `<div class="mcq-opt" onclick="checkGenMCQ(this,${isCorrect},'gq${i}',${JSON.stringify(q.explanation)})"><span class="opt-letter">${letter}</span>${opt.slice(3)}</div>`;
+      });
+      html += '</div>';
+    }
+    html += `<div class="answer-locked" id="gql${i}" onclick="revealGenAns(${i},${JSON.stringify(q)})">🔒 Show Answer & Explanation</div>
+    <div class="answer-revealed" id="gqa${i}" style="display:none;">
+      <div class="final-ans">✅ ${q.correct}</div>
+      <div class="step" style="margin-top:6px;">${(q.explanation||'').replace(/\n/g,'<br>')}</div>
+    </div></div>`;
+  });
+  area.innerHTML = html;
+}
+
+let genDone = {};
+function checkGenMCQ(el, isCorrect, qid, explanation) {
+  if (genDone[qid]) return;
+  genDone[qid] = true;
+  el.classList.add(isCorrect ? 'correct' : 'wrong');
+  el.parentElement.querySelectorAll('.mcq-opt').forEach(o => { o.style.cursor='default'; o.style.pointerEvents='none'; if(!o.classList.contains('correct')&&!o.classList.contains('wrong')) o.style.opacity='0.5'; });
+}
+function revealGenAns(i, q) {
+  document.getElementById('gql'+i).style.display='none';
+  document.getElementById('gqa'+i).style.display='block';
+}
+</script>
+</body>
+</html>
