@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chapter 2 - Heat Transfer</title>
+<title>Chapter 1 - Acids, Bases and Salts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
@@ -48,17 +48,118 @@
   .wrap{max-width:1100px; margin:0 auto; padding:26px 16px 120px;}
   
   header.hero{text-align:center; padding:30px 14px 26px; border-bottom:1px solid var(--border); margin-bottom:0px;}
-  .hero-label{font-family:'JetBrains Mono',monospace; font-size:0.9rem; font-weight:700; color:var(--primary); letter-spacing:1px; text-transform:uppercase; margin-bottom:12px;}
-  h1.title{font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:700; margin:0 0 16px; color:var(--text-main); line-height:1.2;}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--primary); margin-bottom:8px; font-weight:600;}
+  h1{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:clamp(1.8rem,5vw,2.7rem); margin:0 0 8px; color:var(--text-main);}
+  .sub{font-size:1rem; color:var(--text-muted);}
   
-  .coming-soon {
-      background: var(--bg-card); border: 2px dashed var(--border); padding: 40px; text-align: center; border-radius: 16px; margin-top: 40px;
+  /* STICKY TABS */
+  .tabs-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(var(--bg-main), 0.95);
+    backdrop-filter: blur(10px);
+    padding: 12px 0;
+    box-shadow: 0 4px 10px -10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border);
   }
-  .coming-soon h2 { color: var(--primary); font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 10px; }
-  .coming-soon p { color: var(--text-muted); font-size: 1.1rem; }
+  .tabs-container {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; max-width: 1000px; margin: 0 auto; overflow-x: auto; padding: 0 10px;
+  }
+  .tab-btn {
+    padding: 8px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { border-color: var(--border-hover); color: var(--text-main); }
+  .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: var(--shadow); }
+  
+  .tab-content { display: none; animation: fadeIn 0.4s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .instructions { background: var(--bg-card); border: 1px dashed var(--primary); border-radius: 12px; padding: 14px 20px; margin: 22px 0 30px; font-size: 0.95rem; color: var(--text-main); }
+  .instructions b { color: var(--primary); }
+
+  /* COLLAPSIBLE HEADERS */
+  .collapsible-header {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--text-main); margin: 0 0 16px; 
+    display: flex; align-items: center; gap: 10px; border-left: 4px solid var(--primary); padding-left: 12px;
+    cursor: pointer; user-select: none; transition: 0.2s;
+  }
+  .collapsible-header:hover { opacity: 0.8; }
+  .count-badge { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--text-muted); font-weight: 500; }
+  .chevron { width: 32px; height: 32px; fill: var(--primary); background: rgba(79,70,229,0.08); border-radius: 50%; padding: 4px; transition: all 0.3s; margin-left: auto; }
+.collapsible-header:hover .chevron { background: rgba(79,70,229,0.15); }
+  .collapsible-header.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-content { overflow: hidden; transition: max-height 0.3s ease-out; }
+  .collapsible-content.collapsed { display: none; }
+
+  /* MODE SWITCH */
+  .mode-switch { display: flex; justify-content: center; gap: 0; margin-bottom: 20px; border-radius: 100px; overflow: hidden; border: 1px solid var(--primary); max-width: 380px; margin: 0 auto 20px auto; background:var(--bg-card); }
+  .mode-btn { flex: 1; padding: 10px 15px; border: none; background: transparent; color: var(--text-muted); font-size:0.95rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; transition: 0.3s; }
+  .mode-btn.active { background: var(--primary); color: #fff; }
+  #test-intro { background: var(--bg-card); border: 2px dashed var(--border); border-radius: 12px; padding: 40px 20px; text-align: center; margin-bottom: 30px; box-shadow: var(--shadow); }
+  #test-intro h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-main); margin-top: 0; }
+  .btn-start { background: var(--primary); color: white; border: none; padding: 14px 34px; font-size: 1.1rem; font-weight: 700; font-family:'Nunito',sans-serif; border-radius: 100px; cursor: pointer; margin-top: 15px; box-shadow: var(--shadow); transition: 0.2s; }
+  .btn-start:hover { transform: translateY(-2px); background: var(--primary-hover); }
+
+  /* QUESTION STYLES */
+  .q { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; box-shadow: var(--shadow); }
+  .q-text { font-weight: 700; margin-bottom: 10px; font-size: 1rem; color: var(--text-main); }
+  .q-text .num { color: var(--primary); font-family: 'JetBrains Mono', monospace; margin-right: 8px; }
+  .opts label { display: block; padding: 8px 12px; border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.95rem; border: 1px solid transparent; transition: 0.2s; }
+  .opts label:hover { background: rgba(79, 70, 229, 0.05); }
+  .opts input { margin-right: 10px; }
+  .fillblank input[type=text] { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; width: 250px; background: var(--bg-main); color: var(--text-main); }
+  .tf-row { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+  .tf-row label { font-size: 0.95rem; cursor: pointer; }
+  
+  .feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.5; }
+  .feedback.correct { background: var(--good-bg); color: var(--good); display: block; border: 1px solid var(--good); }
+  .feedback.incorrect { background: var(--bad-bg); color: var(--bad); display: block; border: 1px solid var(--bad); }
+  .feedback .exp { display: block; margin-top: 6px; font-style: italic; opacity: 0.9; }
+
+  details { margin-top: 14px; }
+  details summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--primary); font-weight: 700; }
+  details .model { margin-top: 12px; font-size: 0.95rem; background: rgba(79, 70, 229, 0.05); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: 0 8px 8px 0; line-height: 1.6; }
+
+  /* BOTTOM GRADE BAR */
+  .grade-bar{position:fixed; left:0; right:0; bottom:0; background:var(--bg-card); border-top: 1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:center; gap:16px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index:50; display:none;}
+  .grade-bar button{background:var(--primary); color:#fff; border:none; padding:12px 28px; border-radius:100px; font-weight:700; font-family:'Nunito',sans-serif; font-size:1rem; cursor:pointer;}
+  .grade-bar button:hover{background:var(--primary-hover);}
+  .score-readout{font-family:'JetBrains Mono',monospace; font-size:1.15rem; font-weight:700; color:var(--text-main);}
+  .score-readout.urgent{color:var(--bad); animation: pulse 1s infinite;}
+  @keyframes pulse { 0% { opacity:1;} 50% {opacity:0.5;} 100% {opacity:1;} }
+
+  .result-panel{display:none; background:var(--bg-card); border:2px solid var(--border); border-radius:14px; padding:24px; text-align:center; margin-bottom:40px; box-shadow:var(--shadow);}
+  .result-panel.show{display:block;}
+  .result-panel .score-big{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:2.8rem; color:var(--primary);}
+  .result-panel .msg{font-size:1.1rem; margin-top:10px; line-height:1.6;}
+
+  /* VIDEO LINKS (TAB 1) */
+  .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .topic-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); position:relative; }
+  .topic-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
+  .video-btn { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(79, 70, 229, 0.05); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text-main); font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; transition: 0.2s; }
+  .video-btn:hover { background: rgba(79, 70, 229, 0.1); border-color: var(--border-hover); }
+  .thumb-wrapper { position: relative; width: 44px; height: 28px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+  .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+  .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(79, 70, 229, 0.9); border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+  .play-icon svg { width: 8px; height: 8px; fill: white; margin-left: 2px; }
 </style>
 </head>
 <body>
+
 <div style="padding: 10px 20px; background: var(--bg-card); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between;">
     <a href="javascript:history.back()" style="color: var(--primary); text-decoration: none; font-weight: 700; font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 6px;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -66,16 +167,442 @@
     </a>
     <a href="../../index.html" style="color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.9rem; font-family: 'Nunito', sans-serif;">Home</a>
 </div>
-<div class="wrap">
-    <header class="hero">
-      <div class="hero-label">Physics • Chapter 2</div>
-      <h1 class="title">Heat Transfer</h1>
-    </header>
-    
-    <div class="coming-soon">
-        <h2>🛠️ Construction in Progress</h2>
-        <p>The PDF for Heat Transfer (150+ questions) has been successfully scanned and is being transcribed into the interactive OMR format! Check back soon to practice!</p>
-    </div>
+
+
+  <header class="hero">
+    <div class="eyebrow">Biology · Chapter 3</div>
+    <h1>Acids, Bases and Salts</h1>
+    <div class="sub">Complete Chapter Guide & Practice Module</div>
+  </header>
+
+<div class="tabs-wrapper">
+  <div class="tabs-container">
+    <button class="tab-btn active" onclick="openTab(event, 'tab-video')">1. Videos & Map</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-omr')">2. OMR (1 Mark)</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-short')">3. 2/3 Marks</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-long')">4. 4+ Marks</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-extra')">5. Extra Knowledge</button>
+  </div>
 </div>
+
+<div class="wrap">
+  <!-- TAB 1: VIDEOS & CONCEPT MAP -->
+  <div id="tab-video" class="tab-content active">
+    <div class="instructions">
+      <b>How to use:</b> Watch the video explanations for each topic by clicking the thumbnails. Then review the Concept Map below to see how everything connects!
+    </div>
+
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('video-grid', this)">
+      <span>Chapter Topics & Videos</span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="video-grid" class="collapsible-content collapsed topics-grid">
+      <div class="topic-card">
+        <div class="topic-title">1. Animal Nutrition Basics</div>
+        <a href="https://www.youtube.com/watch?v=v7WxwS5xGvk" target="_blank" class="video-btn"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/v7WxwS5xGvk/hqdefault.jpg"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><span>Introduction to Acids and Bases</span></a>
+      </div>
+      <div class="topic-card">
+        <div class="topic-title">2. The Digestive System</div>
+        <a href="https://www.youtube.com/watch?v=A5_PDB1e3xU" target="_blank" class="video-btn"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/A5_PDB1e3xU/hqdefault.jpg"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><span>Neutralization Reactions</span></a>
+      </div>
+      <div class="topic-card">
+        <div class="topic-title">3. Digestion Process in Humans</div>
+        <a href="https://www.youtube.com/watch?v=3N11WlY9OZY" target="_blank" class="video-btn"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/3N11WlY9OZY/hqdefault.jpg"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><span>Natural & Synthetic Indicators</span></a>
+      </div>
+      <div class="topic-card">
+        <div class="topic-title">4. Villi & Absorption</div>
+        <a href="https://www.youtube.com/watch?v=1PDjNONOEK4" target="_blank" class="video-btn"><div class="thumb-wrapper"><img src="https://img.youtube.com/vi/1PDjNONOEK4/hqdefault.jpg"><div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div><span>Acid Rain and its Effects</span></a>
+      </div>
+    </div>
+  </div>
+  <!-- TAB 2: OMR -->
+  <div id="tab-omr" class="tab-content">
+    <div class="mode-switch">
+      <button id="btn-practice" class="mode-btn active" onclick="setMode('practice')">Practice Mode</button>
+      <button id="btn-test" class="mode-btn" onclick="setMode('test')">Test Mode</button>
+    </div>
+
+    <div id="test-intro" style="display:none;">
+      <h3>Ready for the Test?</h3>
+      <p style="font-size: 1.1rem;">You have <b id="t-count" style="color:var(--primary);"></b> objective questions.</p>
+      <p style="font-size: 1.1rem;">Time Allowed: <b id="t-time" style="color:var(--primary);"></b> minutes.</p>
+      <button class="btn-start" onclick="startTest()">Start Test Now</button>
+    </div>
+
+    <div id="resultPanel" class="result-panel">
+      <div class="score-big" id="scoreBig">0 / 0</div>
+      <div class="msg" id="scoreMsg"></div>
+    </div>
+
+    <div id="omr-content">
+      <div class="instructions" id="omr-instructions">
+        <b>Practice Mode Active:</b> Click any option or type an answer to get instant correct/incorrect feedback along with explanations!
+      </div>
+      
+      <h2 class="collapsible-header collapsed" onclick="toggleSection('mcqbook-container', this)">
+        <span>OMR Practice (MCQs)</span> <span class="count-badge" id="mcq-count"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </h2>
+      <div id="mcqbook-container" class="collapsible-content collapsed"></div>
+      
+      <h2 class="collapsible-header collapsed" onclick="toggleSection('fillbook-container', this)">
+        <span>Fill in the Blanks</span> <span class="count-badge" id="fill-count"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </h2>
+      <div id="fillbook-container" class="collapsible-content collapsed"></div>
+      
+      <h2 class="collapsible-header collapsed" onclick="toggleSection('tfbook-container', this)">
+        <span>True or False</span> <span class="count-badge" id="tf-count"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </h2>
+      <div id="tfbook-container" class="collapsible-content collapsed"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: SHORT -->
+  <div id="tab-short" class="tab-content">
+    <div class="instructions">
+      <b>Mental Flashcards:</b> Try to recall the answer in your head, then click "Show Detailed Answer".
+    </div>
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('short-container', this)">
+      <span>2 and 3 Marks Questions</span> <span class="count-badge" id="short-count"></span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="short-container" class="collapsible-content collapsed"></div>
+  </div>
+
+  <!-- TAB 4: LONG -->
+  <div id="tab-long" class="tab-content">
+    <div class="instructions">
+      <b>Mental Flashcards:</b> Formulate the answer, then study the complete textbook-level explanation.
+    </div>
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('long-container', this)">
+      <span>4+ Marks & Case Based</span> <span class="count-badge" id="long-count"></span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="long-container" class="collapsible-content collapsed"></div>
+  </div>
+
+  <!-- TAB 5: EXTRA KNOWLEDGE -->
+  <div id="tab-extra" class="tab-content">
+    <div class="instructions">
+      <b>For the Bookworms:</b> Deep-dive questions and fascinating facts!
+    </div>
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('extra-container', this)">
+      <span>Knowledge Topics & Trivia</span> <span class="count-badge" id="extra-count"></span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="extra-container" class="collapsible-content collapsed"></div>
+  </div>
+
+</div> <!-- end wrap -->
+
+<div class="grade-bar" id="grade-bar">
+  <span class="score-readout" id="liveCount">00:00</span>
+  <button id="grade-btn" onclick="gradeAll()">Grade My Test</button>
+</div>
+
+<script>
+window.currentMode = 'practice'; 
+window.testTimer = null;
+window.timeRemaining = 0;
+
+function toggleSection(contentId, headerEl) {
+    const el = document.getElementById(contentId);
+    el.classList.toggle('collapsed');
+    headerEl.classList.toggle('collapsed');
+}
+
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+    tabcontent[i].classList.remove("active");
+  }
+  tablinks = document.getElementsByClassName("tab-btn");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  document.getElementById(tabName).classList.add("active");
+  evt.currentTarget.className += " active";
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+let totalMax = 0;
+
+function renderFill(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className = 'q fillblank';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <input type="text" id="${prefix}-${i}" placeholder="type your answer" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('fill', '${prefix}', ${i})">
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='fill'; c.dataset.prefix=prefix;
+  c.fillData = data;
+}
+
+function renderMCQ(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className='q';
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('mcq', '${prefix}', ${i})"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <div class="opts">${opts}</div>
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='mcq'; c.dataset.prefix=prefix;
+  c.mcqData = data;
+}
+
+function renderTF(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    totalMax += 1;
+    const div = document.createElement('div');
+    div.className='q';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.s}</div>
+      <div class="tf-row">
+        <label><input type="radio" name="${prefix}-${i}" value="true" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> True</label>
+        <label><input type="radio" name="${prefix}-${i}" value="false" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> False</label>
+      </div>
+      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    c.appendChild(div);
+  });
+  c.dataset.type='tf'; c.dataset.prefix=prefix;
+  c.tfData = data;
+}
+
+function renderSubjective(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  data.forEach((item,i)=>{
+    const div = document.createElement('div');
+    div.className='q subjective';
+    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+      <details><summary>Show Detailed Answer</summary><div class="model">${item.model}</div></details>`;
+    c.appendChild(div);
+  });
+}
+
+function gradeSpecificQuestion(type, prefix, i) {
+   let item, val, correct, answerText, expText;
+   const fb = document.getElementById(`${prefix}-fb-${i}`);
+   if(type === 'fill') {
+      const container = document.getElementById('fillbook-container');
+      item = container.fillData[i];
+      val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
+      correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+      answerText = 'Correct Answer: ' + item.a[0];
+      expText = item.exp;
+      if(val === '') { fb.style.display = 'none'; return; }
+   } else if(type === 'mcq') {
+      const container = document.getElementById('mcqbook-container');
+      item = container.mcqData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = parseInt(sel.value);
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+      expText = item.exp;
+   } else if(type === 'tf') {
+      const container = document.getElementById('tfbook-container');
+      item = container.tfData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = (sel.value === 'true');
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+      expText = item.exp;
+   }
+   
+   if(correct) {
+      fb.className = 'feedback correct'; 
+      fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${expText}</span>`;
+   } else {
+      fb.className = 'feedback incorrect'; 
+      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText} <span class="exp">${expText}</span>`;
+   }
+   fb.style.display = 'block';
+}
+
+function setMode(mode) {
+  if(window.testTimer) clearInterval(window.testTimer);
+  window.currentMode = mode;
+  document.getElementById('btn-practice').classList.toggle('active', mode==='practice');
+  document.getElementById('btn-test').classList.toggle('active', mode==='test');
+  
+  resetAllAnswers();
+  
+  if(mode === 'test') {
+    document.getElementById('omr-content').style.display = 'none';
+    document.getElementById('test-intro').style.display = 'block';
+    document.getElementById('t-count').textContent = totalMax;
+    document.getElementById('t-time').textContent = totalMax; 
+    document.getElementById('grade-bar').style.display = 'none';
+  } else {
+    document.getElementById('omr-content').style.display = 'block';
+    document.getElementById('test-intro').style.display = 'none';
+    document.getElementById('grade-bar').style.display = 'none'; 
+    document.getElementById('omr-instructions').style.display = 'block';
+  }
+}
+
+function startTest() {
+  document.getElementById('test-intro').style.display = 'none';
+  document.getElementById('omr-content').style.display = 'block';
+  document.getElementById('omr-instructions').style.display = 'none'; 
+  document.getElementById('grade-bar').style.display = 'flex';
+  
+  // EXPAND ALL TABS FOR TEST
+  document.getElementById('mcqbook-container').classList.remove('collapsed');
+  document.getElementById('mcqbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('fillbook-container').classList.remove('collapsed');
+  document.getElementById('fillbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('tfbook-container').classList.remove('collapsed');
+  document.getElementById('tfbook-container').previousElementSibling.classList.remove('collapsed');
+
+  window.timeRemaining = totalMax * 60; // 1 min per Q
+  updateTimerDisplay();
+  window.testTimer = setInterval(() => {
+    window.timeRemaining--;
+    updateTimerDisplay();
+    if(window.timeRemaining <= 0) {
+       clearInterval(window.testTimer);
+       gradeAll();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  let m = Math.floor(window.timeRemaining / 60);
+  let s = window.timeRemaining % 60;
+  const readout = document.getElementById('liveCount');
+  readout.textContent = `⏱ Time Remaining: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  if(window.timeRemaining <= 60) {
+     readout.classList.add('urgent');
+  } else {
+     readout.classList.remove('urgent');
+  }
+}
+
+function resetAllAnswers() {
+   document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
+   document.querySelectorAll('#omr-content input[type="text"]').forEach(r => r.value = '');
+   document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+   document.getElementById('resultPanel').classList.remove('show');
+}
+
+function gradeAll() {
+  if(window.testTimer) clearInterval(window.testTimer);
+  
+  let totalCorrect = 0;
+  let totalIncorrect = 0;
+  let totalUnanswered = 0;
+  
+  const gradeItem = (type, val, item, fb, rightAnsText) => {
+      let correct = false;
+      if(val === null || val === '') {
+          totalUnanswered++; 
+          fb.className='feedback incorrect'; 
+          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+      } else {
+          if(type==='fill') correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+          if(type==='mcq') correct = (val === item.answer);
+          if(type==='tf') correct = (val === item.answer);
+          
+          if(correct) {
+              totalCorrect++; 
+              fb.className='feedback correct'; 
+              fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${item.exp}</span>`;
+          } else {
+              totalIncorrect++; 
+              fb.className='feedback incorrect'; 
+              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+          }
+      }
+      fb.style.display='block';
+  };
+
+  const fillContainer = document.getElementById('fillbook-container');
+  fillContainer.fillData.forEach((item, i) => {
+     const val = document.getElementById(`${fillContainer.dataset.prefix}-${i}`).value.trim().toLowerCase();
+     const fb = document.getElementById(`${fillContainer.dataset.prefix}-fb-${i}`);
+     gradeItem('fill', val, item, fb, 'Correct Answer: ' + item.a[0]);
+  });
+  
+  const mcqContainer = document.getElementById('mcqbook-container');
+  mcqContainer.mcqData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${mcqContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${mcqContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+     gradeItem('mcq', sel ? parseInt(sel.value) : null, item, fb, rightAnsText);
+  });
+  
+  const tfContainer = document.getElementById('tfbook-container');
+  tfContainer.tfData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${tfContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${tfContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+     gradeItem('tf', sel ? (sel.value === 'true') : null, item, fb, rightAnsText);
+  });
+  
+  document.getElementById('scoreBig').textContent = totalCorrect + ' / ' + totalMax;
+  const pct = Math.round((totalCorrect/totalMax)*100);
+  let msg = `<strong>Score Breakdown:</strong><br><span style="color:var(--good); font-weight:bold;">✔ Correct: ${totalCorrect}</span> &nbsp;|&nbsp; <span style="color:var(--bad); font-weight:bold;">✘ Incorrect: ${totalIncorrect}</span> &nbsp;|&nbsp; <span>⊝ Unanswered: ${totalUnanswered}</span><br><br>`;
+  if(pct>=90) msg += "Outstanding! You crushed the time-bound test. 🏆";
+  else if(pct>=70) msg += "Great work! Just review the questions marked in red below. 🌟";
+  else if(pct>=50) msg += "Good effort — scroll down to study the explanations for the ones you missed. 📖";
+  else msg += "Time-bound tests can be tricky! Review the correct answers below and try again later. 💪";
+  
+  document.getElementById('scoreMsg').innerHTML = msg;
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('grade-bar').style.display = 'none';
+  
+  window.scrollTo({top: document.getElementById('resultPanel').offsetTop - 100, behavior: 'smooth'});
+}
+
+window.onload = function() {
+   setMode('practice');
+};
+
+</script>
+</body>
+</html>
+
+<script>
+
+const mcqBook = [{"q": "Your father bought a saucepan made of two different materials, A and B. A is the pan body and B is the handle. Which of the following properties is correct?", "options": ["Both A and B are good conductors of heat.", "Both A and B are poor conductors of heat.", "A is a good conductor and B is a poor conductor of heat.", "A is a poor conductor and B is a good conductor of heat."], "answer": 2}, {"q": "Pins are stuck to a metal strip with wax. A burning candle is kept in the middle of the rod between pin II and III. The order of pins from left to right is IV, III, II, I. Which of the following will happen?", "options": ["All the pins will fall almost at the same time.", "Pins I and II will fall earlier than pins III and IV.", "Pins I and II will fall later than pins III and IV.", "Pins II and III will fall almost at the same time."], "answer": 3}, {"q": "A smoke detector is a device that detects smoke and sounds an alarm. Suppose you are fitting a smoke detector in your room. The most suitable place for this device will be:", "options": ["Near the floor", "In the middle of a wall", "On the ceiling", "Anywhere in the room"], "answer": 2}, {"q": "A thermometer works on the principle of", "options": ["linear expansion of solid", "cubical expansion of solid", "uniform expansion of volume of liquid or gas with temperature", "Both (b) and (c)"], "answer": 2}, {"q": "Name the thermometer which ranges from -10\u00b0C to 110\u00b0C.", "options": ["Clinical thermometer", "Digital thermometer", "Laboratory thermometer", "All of these"], "answer": 2}, {"q": "Which one of the following scale has lower fixed point at 0\u00b0C?", "options": ["Kelvin scale", "Fahrenheit scale", "Celsius scale", "All of these"], "answer": 2}, {"q": "Paheli and Boojho measured their body temperature. Paheli found her's to be 98.6 \u00b0F and Boojho recorded 37\u00b0C. Which of the following statement is true?", "options": ["Paheli has a higher body temperature than Boojho.", "Paheli has a lower body temperature than Boojho.", "Both have normal body temperature.", "Both are suffering from fever."], "answer": 2}, {"q": "Why a digital thermometer is widely used for the measurement of the temperature?", "options": ["Analog display", "Mercury", "High accuracy", "Low accuracy"], "answer": 2}, {"q": "When we heat one end of an iron rod, its other end also gets heated. Can you say, which one of the following is behind this?", "options": ["Convection of heat", "Radiation of heat", "Insulation of heat", "Conduction of heat"], "answer": 3}, {"q": "When you heat the water in a pot, it boils. What do you infer from the observation?", "options": ["Heat is a form of energy.", "Water can boil itself.", "Water develops heat on its own.", "None of these."], "answer": 0}, {"q": "In which of the given option chemical energy is converted into heat energy?", "options": ["Heater", "Refrigerator", "Candle", "Motor"], "answer": 2}, {"q": "Iron, hydrogen peroxide and carbon dioxide. When same amount of heat is supplied to these three substances, which expands most?", "options": ["Hydrogen peroxide", "Carbon dioxide", "Iron", "All of these."], "answer": 1}, {"q": "A liquid changes into a gas at a constant temperature known as its", "options": ["absolute zero", "boiling point", "evaporation point", "dew point"], "answer": 1}, {"q": "Petrol storage tanks are not painted black because", "options": ["black is good conductor of heat", "black is bad conductor of heat", "black is good reflector of radiation", "black is good absorber of radiation"], "answer": 3}, {"q": "In solid substances, heat is transferred by", "options": ["Conduction", "Convection", "Radiation", "(a) and (c)"], "answer": 0}, {"q": "The handles of cooking vessels are covered with plastic or wood because", "options": ["they are beautiful", "it is customary", "they are good conductors of heat", "they are bad conductors of heat"], "answer": 3}, {"q": "In conduction, heat flows from", "options": ["hotter to hotter region", "colder to hotter region", "hotter to colder region", "colder to colder region"], "answer": 2}, {"q": "Figure (a-d) shows the readings on four different thermometers. Indicate which of the reading shows the normal human body temperature?", "options": ["37\u00b0C", "38\u00b0C", "39\u00b0C", "36\u00b0C"], "answer": 0}, {"q": "The measure of degree of hotness or coldness of a body is called", "options": ["heat energy", "celsius", "kelvin", "temperature"], "answer": 3}, {"q": "Which of the following is not a scale of temperature?", "options": ["Kelvin scale", "Celsius scale", "Fahrenheit scale", "Richter scale"], "answer": 3}, {"q": "The difference between lower fixed point and upper fixed point is divided into _______ parts on a Celsius scale.", "options": ["100", "273", "180", "50"], "answer": 0}, {"q": "When two objects are in physical contact, the heat is transferred by", "options": ["conduction", "convection", "radiation", "none of these"], "answer": 0}, {"q": "Figure (a-d) shows a student reading a doctor's thermometer. Which of the figure indicates the correct method of reading temperature?", "options": ["Line of sight horizontally aligned with the liquid level", "Line of sight from above", "Line of sight from below", "Holding the thermometer by the bulb"], "answer": 0}, {"q": "A polished, silvery surface is a", "options": ["good absorber and good reflector of heat", "good absorber and bad radiator of heat", "poor absorber and good reflector of heat", "poor reflector and good radiator of heat"], "answer": 2}, {"q": "Substances which allow heat to pass through them are called", "options": ["conductors", "insulators", "moderators", "none of these"], "answer": 0}, {"q": "A coin is dipped in the molten wax in a glass tube. If we heat the upper part of the glass tube, the wax around the coin will not melt because", "options": ["wax has a very high melting point", "wax is a good conductor of heat", "glass is a good conductor of heat", "air and glass are bad conductors"], "answer": 3}, {"q": "When you pour hot tea suddenly into a glass tumbler, it cracks. Because", "options": ["glass cannot resist heat.", "glass expands unevenly around the place of contact with the tea.", "tea has chemicals which react with glass tumblers.", "the reason is yet to be discovered by the scientists."], "answer": 1}, {"q": "Warm air is", "options": ["lighter than cold air", "heavier than cold air", "both have equal weights", "cannot be said."], "answer": 0}, {"q": "Convection of heat takes place in", "options": ["metals only", "liquids only", "gases only", "liquids and gases."], "answer": 3}, {"q": "When you heat a bowl of water, you can observe that water starts circulating. This demonstrates", "options": ["conduction", "convection", "radiation", "none of these."], "answer": 1}, {"q": "Birds glide effortlessly in the air with the help of", "options": ["conduction of heat in the air", "radiation of light through the atmosphere", "convection currents of air", "none of these."], "answer": 2}, {"q": "The phenomenon involved in sea breeze and land breeze is", "options": ["convection", "conduction", "radiation", "none of these."], "answer": 0}, {"q": "Process of change of state from gaseous state to liquid state is called", "options": ["freezing", "sublimation", "boiling", "condensation."], "answer": 3}, {"q": "When clouds get too heavy to hold water in the water cycle, what happens?", "options": ["The water falls to the Earth.", "The water evaporates.", "Another cloud forms.", "The clouds get very large."], "answer": 0}, {"q": "Studying the water cycle, where is the purest water on Earth?", "options": ["Glaciers and ice caps", "Rivers and streams", "Sulfur springs", "Lakes and ponds"], "answer": 0}, {"q": "What turns water on the Earth into vapor in the water cycle?", "options": ["The Sun", "The Moon", "Global warming", "Water treatment centers"], "answer": 0}, {"q": "What is tapped into when digging a well looking for water in the water cycle?", "options": ["An underground aquifer", "An underground river", "A sulfur spring", "An irrigation ditch"], "answer": 0}, {"q": "Select the option containing only renewable resources.", "options": ["Fossil fuels, metals", "Groundwater, fossil fuels", "Forests, petroleum", "Groundwater, sunlight"], "answer": 3}, {"q": "Water can be obtained from aquifer by", "options": ["digging a tubewell", "hand pump", "infiltration", "either (a) or (b)."], "answer": 3}, {"q": "Which of the following is not a consequence of water scarcity?", "options": ["Decreased crop production", "Occurrence of water-borne diseases", "Drought", "Greenhouse effect"], "answer": 3}];
+renderMCQ('mcqbook-container', mcqBook, 'mb');
+document.getElementById('mcq-count').textContent = `(${mcqBook.length})`;
+
+const fillBook = [];
+renderFill('fillbook-container', fillBook, 'fb');
+document.getElementById('fill-count').textContent = `(${fillBook.length})`;
+
+const tfBook = [{"q": "Heat transfer takes place in solids through convection.", "a": false}, {"q": "Heat transfer through convection takes place by the actual movement of particles.", "a": true}, {"q": "Areas with clay materials allow more seepage of water than those with sandy materials.", "a": false}, {"q": "The movement of cooler air from land to sea is called land breeze.", "a": true}];
+renderTF('tfbook-container', tfBook, 'tb');
+document.getElementById('tf-count').textContent = `(${tfBook.length})`;
+
+const shortBook = [{"q": "(a) What is an indicator? (b) How will you prepare China rose indicator?", "model": "(a) An indicator is a special type of substance used to test whether a substance is acidic or basic. It changes color in acidic and basic solutions.\n(b) China rose indicator is prepared by keeping some warm water in a beaker and adding some China rose petals. Keep the mixture for some time till water becomes colored. This colored water is used as an indicator."}, {"q": "Give an important use of neutralisation reaction in daily life.", "model": "An important use is treating indigestion using antacids (like milk of magnesia) which are mild bases that neutralize excess stomach acid."}, {"q": "(a) Why do doctors advice to make up for salt loss to the people who sweat more? (b) Give the colours of phenolphthalein and methyl orange indicators in acidic and basic media.", "model": "(a) Sweating causes loss of water and essential salts (electrolytes) from the body. Doctors advise making up for it to prevent dehydration and maintain electrolyte balance.\n(b) Phenolphthalein: colourless in acidic, pink in basic. Methyl orange: red in acidic, yellow in basic."}, {"q": "A substance 'X' gives pink colour with phenolphthalein. When another substance 'Y' is added to it, the pink colour disappears after some time. What are substances 'X' and 'Y'?", "model": "Substance 'X' is a base (since it turns phenolphthalein pink). Substance 'Y' is an acid (which neutralizes the base, making the solution colourless again)."}, {"q": "(a) Which acids are used to make the following salts? (i) Sulphates (ii) Acetates (iii) Nitrates (b) Why should curd and other sour substances not be kept in aluminium or copper containers?", "model": "(a) (i) Sulphuric acid (ii) Acetic acid (iii) Nitric acid.\n(b) Sour substances contain acids which can react with metals like aluminium and copper to form toxic compounds, causing food poisoning."}, {"q": "What are strong and weak bases? Give two examples of each.", "model": "Strong bases completely dissociate into hydroxide ions in water (e.g., Sodium hydroxide, Potassium hydroxide). Weak bases partially dissociate in water (e.g., Ammonium hydroxide, Calcium hydroxide)."}, {"q": "Write important uses of hydrochloric and sulphuric acids.", "model": "Hydrochloric acid is used for cleaning metal surfaces before galvanization and for cleaning toilets. Sulphuric acid is used in car batteries and manufacturing fertilizers like superphosphate."}, {"q": "Are all acids corrosive in nature? Name few acids which are non-corrosive and may be part of our food.", "model": "No, not all acids are corrosive. Organic acids are generally weak and non-corrosive. Examples include citric acid (lemons), lactic acid (curd), and acetic acid (vinegar)."}, {"q": "(a) Why do antacid tablets relieve the uneasiness due to indigestion? (b) What is used to neutralise an excessive basic soil?", "model": "(a) Antacids are mild bases that neutralize the excess acid produced in the stomach during indigestion, providing relief.\n(b) Organic matter (compost or manure) is added to excessively basic soil, as it releases acids which neutralise the basic nature."}, {"q": "(a) Why is sulphuric acid called \"King of Chemicals\"? (b) Which bases are called alkalies? Give an example of alkali.", "model": "(a) It is called the king of chemicals because it has a vast number of industrial applications and is highly reactive. (b) Bases that are soluble in water are called alkalies. Example: Sodium hydroxide (NaOH)."}];
+renderSubjective('short-container', shortBook, 'sb');
+document.getElementById('short-count').textContent = `(${shortBook.length})`;
+
+const longBook = [{"q": "Four solutions A, B, C and D are taken in four test tubes. They were tested with four indicators - methyl orange, phenolphthalein, China rose and blue litmus. The observations are recorded below. Identify A, B, C and D as acids, bases or neutral salts.\nSoln. A: Methyl orange (Orange), Phenolphthalein (Colourless), China rose (Pink), Blue litmus (Blue).\nSoln. B: Methyl orange (Yellow), Phenolphthalein (Pink), China rose (Green), Blue litmus (Blue).\nSoln. C: Methyl orange (Red), Phenolphthalein (Colourless), China rose (Magenta), Blue litmus (Red).\nSoln. D: Methyl orange (Yellow), Phenolphthalein (Pink), China rose (Green), Blue litmus (Blue).", "model": "A is a neutral salt solution. B is a base. C is an acid. D is a base."}, {"q": "What is meant by acid rain? How is acid rain caused? What damage is caused by acid rain?", "model": "Acid rain is rain containing elevated levels of hydrogen ions (low pH) due to the presence of dissolved acids. It is caused by emissions of sulfur dioxide and nitrogen oxides reacting with water molecules in the atmosphere to produce acids. It damages monuments, buildings, kills aquatic life, and harms vegetation."}, {"q": "Give few important applications of neutralisation reactions.", "model": "1. Treating indigestion with antacids. 2. Treating ant stings (formic acid) with baking soda. 3. Treating acidic soil with quicklime or slaked lime. 4. Treating basic soil with organic matter. 5. Treating factory wastes containing acids before discharging them into water bodies."}, {"q": "(a) How will you prepare turmeric indicator? Using this indicator give tests for lime water, salt solution and soap solution. (b) Can turmeric paper be used to differentiate between an acid and a neutral solution? Explain your answer.", "model": "(a) Mix turmeric powder with a little water to make a paste. Apply on blotting paper and dry to get turmeric strips. Lime water and soap solution will turn it red (basic). Salt solution will show no change (yellow). (b) No, turmeric indicator remains yellow in both acidic and neutral solutions."}, {"q": "(a) Complete the following table : Indicator | Colour in acidic medium | Colour in basic medium | Colour in neutral medium (Blue litmus, Red litmus, China rose, Turmeric, Methyl orange, Phenolphthalein). (b) Why do we feel a burning sensation in the stomach when we overeat? What is the medicine used? Given one example.", "model": "(a) Blue litmus: Red (acid), Blue (base), Blue (neutral). Red litmus: Red (acid), Blue (base), Red (neutral). China rose: Magenta (acid), Green (base), No change (neutral). Turmeric: Yellow (acid), Red (base), Yellow (neutral). Methyl orange: Red (acid), Yellow (base), Orange (neutral). Phenolphthalein: Colourless (acid), Pink (base), Colourless (neutral). (b) Overeating causes excessive production of hydrochloric acid in the stomach, leading to a burning sensation. Antacids are used as medicine, e.g., Milk of Magnesia."}, {"q": "(a) Give one word answer for the following:\n(i) A base which is soluble in water.\n(ii) A compound which changes colour with acid and base.\n(iii) An indicator extracted from lichens.\n(iv) A substance formed when an acid and a base react.\n(v) A substance which is sour in taste and gives hydrogen ions in the solution.\n(b) If we touch the test tube immediately after carrying out the neutralization reaction of an acid and base in it, it is found to be hot. Explain.", "model": "(a) (i) Alkali (ii) Indicator (iii) Litmus (iv) Salt (v) Acid.\n(b) Neutralization reactions are exothermic, meaning they release heat, causing the test tube to become hot."}, {"q": "You are given five samples A, B, C, D and E. Out of these, two are acidic, two are basic and one is neutral. (D) is a stronger acid than (C). (B) is neutral while (E) is a weaker base than (A). Match these samples with the given pH values: 7.0, 12.8, 2.1, 9.4 and 5.5? What is the significance of pH scale?", "model": "B is neutral -> 7.0. D is stronger acid than C -> D=2.1, C=5.5. A is stronger base than E -> A=12.8, E=9.4. The pH scale indicates the strength of acidic or basic solutions."}, {"q": "Tooth enamel is one of the hardest substance in our body. How does it damage due to eating chocolates and sweets? What should we do to prevent it?", "model": "Bacteria in the mouth break down sugars from sweets into acids. These acids lower the pH in the mouth and slowly dissolve the calcium phosphate of tooth enamel, causing decay. To prevent it, we should brush our teeth with basic toothpaste to neutralize the acids."}, {"q": "What will be the action of the following substances on litmus paper? Dry HCl gas, moistened NH3 gas, lemon juice, carbonated soft drink, curd, soap solution.", "model": "Dry HCl gas: No action (needs moisture to release H+ ions). Moistened NH3 gas: Turns red litmus blue. Lemon juice: Turns blue litmus red. Carbonated soft drink: Turns blue litmus red. Curd: Turns blue litmus red. Soap solution: Turns red litmus blue."}, {"q": "(a) A yellow curry stain on a white shirt turns red when it is washed with soap. Give reason. (b) Dorji has a few bottles of soft drink in his restaurant. But unfortunately, these are not labelled. He has to serve the drinks on the demand of customers. One customer wants acidic drink, another wants basic and third one wants neutral drink. How will Dorji decide which drink is to be served to whom?", "model": "(a) Curry contains turmeric, a natural indicator which is yellow in neutral/acidic medium and red in basic medium. Soap is basic, so it turns the stain red.\n(b) Dorji can use litmus paper. The drink turning blue litmus red is acidic. The drink turning red litmus blue is basic. The one having no effect on either is neutral."}];
+renderSubjective('long-container', longBook, 'lb');
+document.getElementById('long-count').textContent = `(${longBook.length})`;
+
+const extraBook = [{"q": "Did you know? Why doesn't the stomach digest itself?", "model": "The stomach secretes a thick layer of alkaline mucus that physically coats the stomach wall, neutralizing the acid before it can burn the tissue. If this mucus layer is damaged, the acid can cause a painful sore called an ulcer!"}, {"q": "Can you swallow upside down?", "model": "Yes! Because the oesophagus uses powerful, wave-like muscular contractions called peristalsis to push food into the stomach, you can drink or eat even while standing on your head. Gravity is not required for swallowing!"}, {"q": "How long is your entire digestive tract?", "model": "If stretched out, the human adult alimentary canal is about 9 meters (30 feet) long! The small intestine alone makes up about 7.5 meters of that length."}];
+renderSubjective('extra-container', extraBook, 'eb');
+document.getElementById('extra-count').textContent = `(${extraBook.length})`;
+
+</script>
 </body>
 </html>
