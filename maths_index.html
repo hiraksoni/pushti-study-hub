@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathematics - Pushti Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    :root {
+        --bg-color: #0F0F1A;
+        --surface: #16213E;
+        --primary: #818cf8;
+        --text-main: #E8E8E8;
+        --text-muted: #B0B0C0;
+        --border: #2A2A40;
+    }
+    body {
+        margin: 0; padding: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+    }
+    .header {
+        display: flex;
+        align-items: center;
+        padding: 20px 40px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+    }
+    .back-btn {
+        color: var(--text-main);
+        text-decoration: none;
+        font-weight: 600;
+        margin-right: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 8px;
+        transition: 0.2s;
+    }
+    .back-btn:hover { background: rgba(255,255,255,0.1); }
+    .page-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        font-family: 'Outfit', sans-serif;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+    /* Tabs/Boxes for Sub-categories */
+    .tabs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+    .tab-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 24px;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        position: relative;
+        overflow: hidden;
+    }
+    .tab-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .tab-card.active {
+        border-color: var(--primary);
+    }
+    .tab-card::before {
+        content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+        background: var(--tab-color, var(--primary));
+    }
+    .tab-title {
+        font-size: 1.25rem; font-weight: 700; margin: 0 0 8px 0; font-family: 'Outfit', sans-serif;
+    }
+    .tab-stats {
+        font-size: 0.85rem; color: var(--text-muted); font-family: 'Space Mono', monospace;
+    }
+    
+    /* Chapter Cards */
+    .category-section {
+        display: none;
+    }
+    .category-section.active {
+        display: block;
+        animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    
+    .chapter-card {
+        display: flex;
+        align-items: center;
+        background: var(--surface);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 16px;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-decoration: none;
+        color: inherit;
+        border: 1px solid var(--border);
+    }
+    .chapter-card:hover { background: rgba(255,255,255,0.03); }
+    .chapter-card.pending {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+    
+    .ch-num {
+        font-size: 2.5rem;
+        font-weight: 800;
+        font-family: 'Outfit', sans-serif;
+        color: rgba(255,255,255,0.1);
+        width: 80px;
+        flex-shrink: 0;
+    }
+    .ch-content {
+        flex-grow: 1;
+    }
+    .ch-title {
+        font-size: 1.2rem; font-weight: 600; margin: 0 0 6px 0;
+    }
+    .ch-desc {
+        font-size: 0.9rem; color: var(--text-muted); margin: 0 0 12px 0;
+    }
+    .ch-tags {
+        display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .tag {
+        background: rgba(255,255,255,0.05);
+        color: var(--primary);
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    .ch-arrow {
+        color: var(--text-muted);
+        font-size: 1.5rem;
+        margin-left: 20px;
+    }
+</style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Hub</a>
+        <h1 class="page-title">📐 Mathematics</h1>
+    </header>
+
+    <div class="container">
+        <!-- Tabs -->
+        <div class="tabs-grid">
+            
+            <div id="tab-math1" class="tab-card active" style="--tab-color: #F43F5E;" onclick="showCategory('math1')">
+                <h2 class="tab-title">Term 1 Chapters</h2>
+                <div class="tab-stats">0/8 Chapters Ready</div>
+            </div>
+        </div>
+        
+        <!-- Sections -->
+        
+            <div id="sec-math1" class="category-section active">
+                
+                <div class="chapter-card pending" onclick="alert('This chapter is pending generation.')">
+                    <div class="ch-num">01</div>
+                    <div class="ch-content">
+                        <h3 class="ch-title">Large Numbers Around Us <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                        <p class="ch-desc">Understanding place value and large quantities.</p>
+                        <div class="ch-tags"></div>
+                    </div>
+                </div>
+                <div class="chapter-card pending" onclick="alert('This chapter is pending generation.')">
+                    <div class="ch-num">02</div>
+                    <div class="ch-content">
+                        <h3 class="ch-title">Arithmetic Expressions <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                        <p class="ch-desc">Solving complex mathematical expressions.</p>
+                        <div class="ch-tags"></div>
+                    </div>
+                </div>
+                <div class="chapter-card pending" onclick="alert('This chapter is pending generation.')">
+                    <div class="ch-num">03</div>
+                    <div class="ch-content">
+                        <h3 class="ch-title">A Peek Beyond the Point <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                        <p class="ch-desc">Decimals and their applications.</p>
+                        <div class="ch-tags"></div>
+                    </div>
+                </div>
+                <div class="chapter-card pending" onclick="alert('This chapter is pending generation.')">
+                    <div class="ch-num">04</div>
+                    <div class="ch-content">
+                        <h3 class="ch-title">Expressions using Letter-Numbers <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                        <p class="ch-desc">Introduction to algebra.</p>
+                        <div class="ch-tags"></div>
+                    </div>
+                </div>
+                <div class="chapter-card pending" onclick="alert('This chapter is pending generation.')">
+                    <div class="ch-num">05</div>
+                    <div class="ch-content">
+                        <h3 class="ch-title">Parallel and Intersecting Lines <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                        <p class="ch-desc">Geometry of lines and angles.</p>
+                        <div class="ch-tags"></div>
+                    </div>
+                </div>
+                <div class="chapter-card pending" onclick="alert('This chapter is pending generation.')">
+                    <div class="ch-num">06</div>
+                    <div class="ch-content">
+                        <h3 class="ch-title">Number Play <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                        <p class="ch-desc">Factors, multiples, and divisibility.</p>
+                        <div class="ch-tags"></div>
+                    </div>
+                </div>
+                <div class="chapter-card pending" onclick="alert('This chapter is pending generation.')">
+                    <div class="ch-num">07</div>
+                    <div class="ch-content">
+                        <h3 class="ch-title">A Tale of Three Intersecting Lines <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                        <p class="ch-desc">Triangles and properties.</p>
+                        <div class="ch-tags"></div>
+                    </div>
+                </div>
+                <div class="chapter-card pending" onclick="alert('This chapter is pending generation.')">
+                    <div class="ch-num">08</div>
+                    <div class="ch-content">
+                        <h3 class="ch-title">Working with Fractions <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                        <p class="ch-desc">Adding, subtracting, multiplying fractions.</p>
+                        <div class="ch-tags"></div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <script>
+        function showCategory(catId) {
+            document.querySelectorAll('.tab-card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.category-section').forEach(s => s.classList.remove('active'));
+            
+            document.getElementById('tab-' + catId).classList.add('active');
+            document.getElementById('sec-' + catId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
