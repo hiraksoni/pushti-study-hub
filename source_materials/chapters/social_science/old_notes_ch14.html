@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 14: How Does Democracy Work? — Master Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sandstone: #F9F5EC;
+    --card-bg: #FFFFFF;
+    --ink: #2B2620;
+    --maroon: #7A2A2E;
+    --gold: #C59B27;
+    --gold-light: #FFF8E7;
+    --teal: #2F5D5A;
+    --teal-light: #EBF4F3;
+    --purple: #4C4478;
+    --purple-light: #F0EEF8;
+    --shadow: 0 4px 15px rgba(0,0,0,0.06);
+    --border-radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--sandstone);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    padding: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: hidden; 
+  }
+
+  header.hero {
+    text-align: center;
+    background: linear-gradient(135deg, var(--maroon), #4A1A1D);
+    color: white;
+    padding: 24px 16px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    border-bottom: 4px solid var(--gold);
+  }
+
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    color: #FFF;
+  }
+
+  .tagline { font-size: 0.95rem; opacity: 0.95; font-weight: 600; color: #FFF8E7; }
+
+  .badge-bar {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .tab-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #E2D9C5;
+    padding-bottom: 8px;
+  }
+
+  .tab-btn {
+    flex: 1 1 auto;
+    min-width: 120px;
+    text-align: center;
+    background: #EAE3D2;
+    border: none;
+    outline: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .tab-btn:hover { background: #DFCFAF; }
+  .tab-btn.active { background: var(--maroon); color: white; }
+
+  .tab-content { display: none; animation: fadeIn 0.25s ease-in-out; }
+  .tab-content.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid #EAE3D2;
+    margin-bottom: 18px;
+  }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    color: var(--maroon);
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    border-bottom: 2px solid var(--gold-light);
+    padding-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .topic-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    background: var(--gold-light);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .sub-box { padding: 12px 14px; border-radius: 8px; font-size: 0.9rem; }
+  .sub-box.key { background: #FFFBF2; border-left: 4px solid var(--gold); }
+  .sub-box.facts { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .sub-box.fun { background: var(--purple-light); border-left: 4px solid var(--purple); }
+
+  .sub-box h4 { font-family: 'Cinzel', serif; font-size: 0.92rem; margin-bottom: 4px; }
+  .sub-box.key h4 { color: #8A6D1C; }
+  .sub-box.facts h4 { color: var(--teal); }
+  .sub-box.fun h4 { color: var(--purple); }
+  .sub-box ul { padding-left: 16px; margin-top: 4px; }
+  .sub-box li { margin-bottom: 4px; }
+
+  .mcq-box {
+    background: #FFFBF2;
+    border: 1px solid #EAE3D2;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .mcq-q { font-weight: 700; font-size: 0.95rem; margin-bottom: 10px; color: var(--ink); }
+
+  .mcq-opt {
+    display: block; width: 100%; text-align: left; background: #FFF; border: 1px solid #CCC;
+    padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; cursor: pointer;
+    font-family: inherit; font-size: 0.88rem; transition: all 0.15s;
+  }
+
+  .mcq-opt:hover { background: #F0F0F0; }
+  .mcq-opt.correct { background: #D4EDDA !important; border-color: #28A745 !important; color: #155724; font-weight: 700; }
+  .mcq-opt.wrong { background: #F8D7DA !important; border-color: #DC3545 !important; color: #721C24; }
+
+  .mcq-explain {
+    display: none; margin-top: 8px; padding: 8px 12px; background: #EBF4F3;
+    border-left: 3px solid var(--teal); border-radius: 4px; font-size: 0.85rem; color: #222;
+  }
+
+  .qa-card {
+    background: var(--card-bg); border-left: 4px solid var(--maroon); padding: 14px 16px;
+    border-radius: 8px; margin-bottom: 12px; box-shadow: var(--shadow);
+  }
+
+  .qa-q {
+    font-weight: 700; cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; color: var(--ink); font-size: 0.95rem;
+  }
+
+  .qa-q::after {
+    content: '+ Show Answer'; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+    color: var(--maroon); background: #FADBD8; padding: 2px 8px; border-radius: 4px; white-space: nowrap;
+  }
+
+  .qa-card.open .qa-q::after { content: '- Hide Answer'; background: var(--teal-light); color: var(--teal); }
+
+  .qa-a {
+    display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #DDD; font-size: 0.92rem; color: #333;
+  }
+
+  .qa-card.open .qa-a { display: block; }
+
+  .media-link-card {
+    display: flex; align-items: center; gap: 12px; background: #F4F0E6; padding: 12px 14px;
+    border-radius: 8px; margin-top: 8px; border: 1px solid #DFD7C0; text-decoration: none;
+    color: var(--ink); font-size: 0.88rem; transition: all 0.2s;
+  }
+
+  .media-link-card:hover { background: #EAE2CF; border-color: var(--gold); transform: translateY(-2px); }
+  .media-icon { font-size: 1.5rem; }
+
+  footer { text-align: center; margin-top: 24px; font-size: 0.78rem; color: #777; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+        <div style="padding: 10px 20px; background: #1E293B; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
+            <a href="javascript:history.back()" style="color: #6366F1; text-decoration: none; font-weight: 700; font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 6px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back
+            </a>
+            <span style="color:#94A3B8; font-family: 'Nunito', sans-serif;">Old Notes Mode</span>
+        </div>
+        
+
+  <header class="hero">
+    <h1>How Does Democracy Work?</h1>
+    <div class="tagline">Pushti's Road to 20/20: Interactive Master Visual Dashboard</div>
+    <div class="badge-bar">
+      <span class="badge">CBSE Class 7</span>
+      <span class="badge">Civics / Governance</span>
+      <span class="badge">Chapter 14</span>
+    </div>
+  </header>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="openTab('voting')">🗳️ Voting & ECI</button>
+    <button class="tab-btn" onclick="openTab('process')">📜 Election Steps & EVMs</button>
+    <button class="tab-btn" onclick="openTab('parties')">🏛️ Parties & Opposition</button>
+    <button class="tab-btn" onclick="openTab('mcq-4opt')">🎯 Master MCQs</button>
+    <button class="tab-btn" onclick="openTab('mcq-confusing')">⚡ Confusing Blanks</button>
+    <button class="tab-btn" onclick="openTab('mcq-tf')">❓ True / False</button>
+    <button class="tab-btn" onclick="openTab('textbook-all')">📖 All Textbook Solutions (A to H)</button>
+    <button class="tab-btn" onclick="openTab('media')">🎬 Enriched Topic Videos</button>
+  </div>
+
+  <!-- TAB 1: VOTING & ECI -->
+  <div id="voting" class="tab-content active">
+    <div class="card" style="border-left: 5px solid var(--maroon);">
+      <div class="card-title">14.1 & 14.2 Voting & Universal Adult Franchise <span class="topic-badge">Core Rights</span></div>
+      <p><b>Democracy</b> is a government formed "of the people, by the people, and for the people."[cite: 4] <br>
+      • <b>Universal Adult Franchise:</b> Every Indian citizen aged 18 years or older has the right to vote, regardless of caste, creed, gender, or wealth[cite: 4].<br>
+      • <b>One Person, One Vote, One Value:</b> Every voter holds exactly one vote, and all votes carry equal weight in choosing representatives[cite: 4].</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">The Election Commission of India (ECI) <span class="topic-badge">Autonomous Body</span></div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>🏛️ Independent Authority</h4>
+          <ul>
+            <li>Constitutional body set up to ensure free, fair, and impartial elections[cite: 4].</li>
+            <li>Headed by the **Chief Election Commissioner (CEC)**[cite: 4].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>📌 ECI Responsibilities</h4>
+          <ul>
+            <li>Divides the nation/state into **constituencies**[cite: 4].</li>
+            <li>Prepares and updates the **Voters' List** (Electoral Roll)[cite: 4].</li>
+            <li>Issues Electoral Photo Identity Cards (**EPIC**)[cite: 4].</li>
+            <li>Allocates party symbols and enforces the **Model Code of Conduct**[cite: 4].</li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>💡 Real-World 2026 Context</h4>
+          <ul>
+            <li>The ECI uses advanced digital voter verification and VVPAT machines to maintain complete transparency[cite: 4]!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: ELECTION STEPS & EVMS -->
+  <div id="process" class="tab-content">
+    <div class="card">
+      <div class="card-title">14.3 Step-by-Step Election Process <span class="topic-badge">8 Key Steps</span></div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>📋 Steps 1 to 4</h4>
+          <ul>
+            <li><b>1. Division of Constituencies:</b> Country/state split into geographical voting units[cite: 4].</li>
+            <li><b>2. Preparation of Voters' List:</b> Official list of eligible voters updated[cite: 4].</li>
+            <li><b>3. Filing Nominations:</b> Candidates file paperwork to contest[cite: 4].</li>
+            <li><b>4. Campaigning:</b> Speeches, rallies, and manifestos before voting[cite: 4].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>🗳️ Steps 5 to 8</h4>
+          <ul>
+            <li><b>5. Voting:</b> Secret ballot using EVMs[cite: 4].</li>
+            <li><b>6. Counting Votes:</b> Secure official counting[cite: 4].</li>
+            <li><b>7. Declaration of Results:</b> Winner declared per constituency[cite: 4].</li>
+            <li><b>8. Formation of Government:</b> Majority party forms ministry[cite: 4].</li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>⚙️ EVM vs VVPAT</h4>
+          <ul>
+            <li><b>EVM:</b> Electronic Voting Machine where voters press a button[cite: 4].</li>
+            <li><b>VVPAT:</b> Voter Verifiable Paper Audit Trail prints a paper slip confirming who you voted for[cite: 4]!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: PARTIES & OPPOSITION -->
+  <div id="parties" class="tab-content">
+    <div class="card">
+      <div class="card-title">14.4 Political Parties & Governance <span class="topic-badge">Party Systems</span></div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>🌐 Types of Party Systems</h4>
+          <ul>
+            <li><b>Single-Party:</b> One party rules (e.g., China, North Korea, Cuba)[cite: 4].</li>
+            <li><b>Bi-Party:</b> Two major parties alternate (e.g., USA, UK)[cite: 4].</li>
+            <li><b>Multi-Party:</b> Multiple parties compete; common in India, France, Sweden[cite: 4].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>👑 Ruling, Coalition & Opposition</h4>
+          <ul>
+            <li><b>Ruling Party:</b> Wins majority of seats (272+ out of 543 in Lok Sabha) and forms government[cite: 4].</li>
+            <li><b>Coalition:</b> Formed when no single party gets absolute majority, so parties unite[cite: 4].</li>
+            <li><b>Opposition Party:</b> Non-ruling parties that question government policies and keep power in check[cite: 4].</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: MASTER MCQS -->
+  <div id="mcq-4opt" class="tab-content">
+    <div class="card">
+      <div class="card-title">Master Multiple Choice Questions</div>
+      
+      <div class="mcq-box">
+        <div class="mcq-q">1. Which of the following is NOT a type of election in India?[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">a) General elections[cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-1')">b) Annual elections[cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">c) Midterm elections[cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">d) By-elections[cite: 4]</button>
+        <div class="mcq-explain" id="mcq-1"><b>Explanation:</b> Elections in India are held every 5 years (General), not annually[cite: 4].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. Which of the following is NOT a role performed by the Election Commission of India?[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">a) Conducting free and fair elections[cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">b) Preparing a voters list[cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">c) Issuing voter's identity card[cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-2')">d) Campaigning[cite: 4]</button>
+        <div class="mcq-explain" id="mcq-2"><b>Explanation:</b> Campaigning is done by candidates and political parties, NOT the ECI[cite: 4].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">3. Which political system exists in countries like North Korea, Cuba, and China?[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">a) Multi-party system[cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">b) Bi-party system[cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-3')">c) Single-party system[cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">d) Coalition party system[cite: 4]</button>
+        <div class="mcq-explain" id="mcq-3"><b>Explanation:</b> China, Cuba, and North Korea operate under a single-party political system[cite: 4].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: CONFUSING 2-CHOICE FILL IN BLANKS -->
+  <div id="mcq-confusing" class="tab-content">
+    <div class="card">
+      <div class="card-title">Confusing Two-Choice Drills</div>
+      
+      <div class="mcq-box">
+        <div class="mcq-q">1. In India, the country is divided into smaller geographical voting units called ________.[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-1')">[A] Constituencies[cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-1')">[B] Panchayats[cite: 4]</button>
+        <div class="mcq-explain" id="c-1"><b>Why confusion happens:</b> Electoral voting divisions for Lok Sabha/Assembly are called constituencies[cite: 4].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. The party that wins the highest number of ________ forms the government.[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-2')">[A] Seats (Constituencies)[cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-2')">[B] Total individual votes[cite: 4]</button>
+        <div class="mcq-explain" id="c-2"><b>Why confusion happens:</b> Government formation depends on winning majority *seats*, not just total raw vote count[cite: 4].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6: TRUE / FALSE ARENA -->
+  <div id="mcq-tf" class="tab-content">
+    <div class="card">
+      <div class="card-title">Interactive True / False Arena</div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">1. General elections in India are held once every seven years.[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-1')">[TRUE][cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-1')">[FALSE][cite: 4]</button>
+        <div class="mcq-explain" id="tf-1"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> General elections in India are held once every 5 years[cite: 4].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. State parties are also known as regional parties.[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-2')">[TRUE][cite: 4]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-2')">[FALSE][cite: 4]</button>
+        <div class="mcq-explain" id="tf-2"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> State political parties operate regionally in specific states[cite: 4].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 7: 100% COMPLETE TEXTBOOK SOLUTIONS -->
+  <div id="textbook-all" class="tab-content">
+    <div class="card">
+      <div class="card-title">100% Complete Textbook Exercise Solutions (A to H)</div>
+
+      <!-- EXERCISE A -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise A: Fill in the blanks (All 5 Questions)[cite: 4]</div>
+        <div class="qa-a">
+          1. The <b>Election Commission</b> of India is an autonomous body responsible for conducting free and fair elections[cite: 4].<br>
+          2. For elections, the country is divided into smaller units called <b>constituencies</b>[cite: 4].<br>
+          3. Candidates start <b>campaigning</b> before elections to convince voters they are right for the job[cite: 4].<br>
+          4. Political parties are a group of people who believe in a common <b>ideology</b>[cite: 4].<br>
+          5. India follows a <b>multi-party</b> system[cite: 4].
+        </div>
+      </div>
+
+      <!-- EXERCISE B -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise B: Choose the correct answer (All 5 Questions)[cite: 4]</div>
+        <div class="qa-a">
+          1. Which of the following is NOT a type of election in India? <b>(b) Annual elections</b>[cite: 4].<br>
+          2. Which of the following is NOT a role performed by the Election Commission of India? <b>(d) Campaigning</b>[cite: 4].<br>
+          3. Which of the following is NOT a type of political party present in India? <b>(c) International party</b>[cite: 4].<br>
+          4. Which party makes sure that the government is not autocratic and that its power remains in check? <b>(b) Opposition party</b>[cite: 4].<br>
+          5. Which political system exists in countries like North Korea, Cuba, and China? <b>(c) Single-party system</b>[cite: 4].
+        </div>
+      </div>
+
+      <!-- EXERCISE C -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise C: Write True or False. Rewrite false statements.[cite: 4]</div>
+        <div class="qa-a">
+          1. General elections are held once every seven years. <span style="color:red; font-weight:700;">FALSE</span><br>
+          <i>(Correction: General elections are held once every 5 years.)[cite: 4]</i><br><br>
+          2. Registered but unrecognised political parties can select any symbol from the list provided by the ECI. <span style="color:green; font-weight:700;">TRUE</span>[cite: 4].<br><br>
+          3. The party that wins the highest number of votes forms the government. <span style="color:red; font-weight:700;">FALSE</span><br>
+          <i>(Correction: The party that wins the highest number of seats forms the government.)[cite: 4]</i><br><br>
+          4. State parties are also known as regional parties. <span style="color:green; font-weight:700;">TRUE</span>[cite: 4].<br><br>
+          5. The Opposition party forms the government. <span style="color:red; font-weight:700;">FALSE</span><br>
+          <i>(Correction: The Ruling party forms the government.)[cite: 4]</i>
+        </div>
+      </div>
+
+      <!-- EXERCISE D -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise D: Image Analysis / Election Results Table[cite: 4]</div>
+        <div class="qa-a">
+          • Analyzes candidate vote tallies from constituency ballot diagrams to identify majority seat winners[cite: 4].
+        </div>
+      </div>
+
+      <!-- EXERCISE E -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise E: Answer the following questions in brief (All 5 Questions)[cite: 4]</div>
+        <div class="qa-a">
+          <b>1. What is an election? State its importance in not more than 40 words.</b>[cite: 4]<br>
+          An election is a formal democratic process by which citizens vote to choose representatives who form the government[cite: 4]. It empowers citizens to hold leaders accountable and participate in decision-making[cite: 4].<br><br>
+
+          <b>2. What is Universal Adult Franchise?</b>[cite: 4]<br>
+          It guarantees that every citizen aged 18 years or older has the right to vote without discrimination based on caste, gender, religion, or wealth[cite: 4].<br><br>
+
+          <b>3. What is the role of the Election Commission of India?</b>[cite: 4]<br>
+          The ECI is an autonomous body that conducts free and fair elections, prepares voters' lists, allocates symbols, and enforces the Model Code of Conduct[cite: 4].<br><br>
+
+          <b>4. What is a political party?</b>[cite: 4]<br>
+          A political party is an organized group of citizens sharing common political beliefs and goals who contest elections to gain power and run the government[cite: 4].<br><br>
+
+          <b>5. Describe the three types of party systems with an example.</b>[cite: 4]<br>
+          • <i>Single-party:</i> Only one party exists (e.g., China)[cite: 4].<br>
+          • <i>Bi-party:</i> Two major parties alternate power (e.g., USA)[cite: 4].<br>
+          • <i>Multi-party:</i> Multiple parties compete for seats (e.g., India)[cite: 4].
+        </div>
+      </div>
+
+      <!-- EXERCISE F -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise F: Answer the following questions in detail (All 5 Questions)[cite: 4]</div>
+        <div class="qa-a">
+          <b>1. Explain the process of elections in India in not more than 80 words.</b>[cite: 4]<br>
+          Elections involve 8 steps: ECI divides constituencies, updates voters' lists, candidates file nominations, campaign before voters, citizens vote via EVMs on election day, votes are counted, results declared, and majority party forms government[cite: 4].<br><br>
+
+          <b>2. Explain the role of political parties in a democracy.</b>[cite: 4]<br>
+          Parties structure political choices, nominate candidates, present election manifestos, form the ruling government or serve as constructive opposition[cite: 4].<br><br>
+
+          <b>3. Why is the role of the Opposition party important?</b>[cite: 4]<br>
+          The Opposition questions government policies, prevents autocratic decision-making, highlights public grievances, and offers alternative governance solutions[cite: 4].<br><br>
+
+          <b>4. How do free and fair elections ensure power is shared?</b>[cite: 4]<br>
+          Periodic secret ballot voting ensures no single party holds permanent power[cite: 4]. If a ruling party fails citizens, voters elect opposition parties in the next term[cite: 4].<br><br>
+
+          <b>5. "Elections strengthen democracy." Explain.</b>[cite: 4]<br>
+          Elections make government accountable to citizens[cite: 4]. By giving every citizen an equal vote, public participation shapes national laws and social development[cite: 4].
+        </div>
+      </div>
+
+      <!-- EXERCISE G & H -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise G & H: HOTS, Competency Scenarios & Reflections[cite: 4]</div>
+        <div class="qa-a">
+          <b>G1 (HOTS - Show of Power):</b> Campaigning allows parties to showcase public support, but elections must focus on public welfare rather than money/muscle power[cite: 4].<br><br>
+
+          <b>H1 (Neighborhood Pre-Election Scenario):</b><br>
+          • Pre-election activity is called **Campaigning**[cite: 4].<br>
+          • Candidates campaign to inform voters about their promises[cite: 4].<br>
+          • Campaigning must stop 48 hours before voting begins as per ECI rules[cite: 4].<br><br>
+
+          <b>H2 (News Article Scenario - Vellore Election Cancellation):</b><br>
+          • Elections were cancelled due to illegal distribution of cash to influence voters[cite: 4].<br>
+          • Cancellation ensured that corrupted, un-free elections were halted to protect democratic integrity[cite: 4].<br><br>
+
+          <b>Reflections:</b> Learning how elections ensure peaceful transfer of power and individual voting value[cite: 4].
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TAB 8: ENRICHED TOPIC VIDEOS -->
+  <div id="media" class="tab-content">
+    <div class="card">
+      <div class="card-title">Enriched Topic-Wise Recommended Videos</div>
+      <p style="margin-bottom:14px; font-size:0.9rem;">Click these curated links for visual animations and documentaries specifically organized by chapter topics[cite: 4]:</p>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+        
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=How+Elections+Work+in+India+Election+Commission+animation" target="_blank">
+          <span class="media-icon">🗳️</span>
+          <div><b>Topic 1: How Elections Work & Role of ECI</b><br><small>Visual animations detailing voting, constituencies & ECI rules[cite: 4].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=How+EVM+and+VVPAT+machines+work+India" target="_blank">
+          <span class="media-icon">⚙️</span>
+          <div><b>Topic 2: Electronic Voting Machines (EVM & VVPAT)</b><br><small>3D breakdowns of secret ballot voting technology[cite: 4].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Political+parties+Ruling+vs+Opposition+party+Civics" target="_blank">
+          <span class="media-icon">🏛️</span>
+          <div><b>Topic 3: Ruling Party, Opposition & Coalition</b><br><small>Documentaries on how political parties form governments[cite: 4].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Single+party+vs+Multi+party+system+democracy" target="_blank">
+          <span class="media-icon">🌐</span>
+          <div><b>Topic 4: Types of Party Systems Globally</b><br><small>Comparative videos on Single, Bi, and Multi-party democracies[cite: 4].</small></div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Chapter 14 Master Study Hub · Prepared for Pushti · CBSE Class 7 Civics
+  </footer>
+
+<script>
+  function openTab(tabId) {
+    const contents = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-btn');
+    contents.forEach(content => content.classList.remove('active'));
+    buttons.forEach(btn => btn.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function toggleQA(cardElement) { cardElement.classList.toggle('open'); }
+
+  function checkMCQ(btnElement, isCorrect, explainId) {
+    const parentBox = btnElement.parentElement;
+    const buttons = parentBox.querySelectorAll('.mcq-opt');
+    const explanation = document.getElementById(explainId);
+
+    buttons.forEach(btn => btn.disabled = true);
+
+    if (isCorrect) { btnElement.classList.add('correct'); } 
+    else { btnElement.classList.add('wrong'); }
+
+    if (explanation) { explanation.style.display = 'block'; }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 7: India in the Iron Age — Master Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sandstone: #F9F5EC;
+    --card-bg: #FFFFFF;
+    --ink: #2B2620;
+    --maroon: #7A2A2E;
+    --gold: #C59B27;
+    --gold-light: #FFF8E7;
+    --teal: #2F5D5A;
+    --teal-light: #EBF4F3;
+    --purple: #4C4478;
+    --purple-light: #F0EEF8;
+    --shadow: 0 4px 15px rgba(0,0,0,0.06);
+    --border-radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--sandstone);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    padding: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: hidden; 
+  }
+
+  header.hero {
+    text-align: center;
+    background: linear-gradient(135deg, var(--purple), #2D264E);
+    color: white;
+    padding: 24px 16px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    border-bottom: 4px solid var(--gold);
+  }
+
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    color: #FFF;
+  }
+
+  .tagline { font-size: 0.95rem; opacity: 0.95; font-weight: 600; color: #FFF8E7; }
+
+  .badge-bar {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .tab-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #E2D9C5;
+    padding-bottom: 8px;
+  }
+
+  .tab-btn {
+    flex: 1 1 auto;
+    min-width: 120px;
+    text-align: center;
+    background: #EAE3D2;
+    border: none;
+    outline: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .tab-btn:hover { background: #DFCFAF; }
+  .tab-btn.active { background: var(--purple); color: white; }
+
+  .tab-content { display: none; animation: fadeIn 0.25s ease-in-out; }
+  .tab-content.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid #EAE3D2;
+    margin-bottom: 18px;
+  }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    color: var(--purple);
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    border-bottom: 2px solid var(--gold-light);
+    padding-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .topic-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    background: var(--purple-light);
+    color: var(--purple);
+    border: 1px solid var(--purple);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .concept-visual-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 16px;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 650px) {
+    .concept-visual-grid { grid-template-columns: 1fr; }
+  }
+
+  .visual-card-svg {
+    background: #FFFDF8;
+    border: 1.5px solid var(--purple);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .visual-card-svg svg { width: 120px; height: 120px; }
+
+  .visual-caption {
+    font-size: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--purple);
+    margin-top: 8px;
+    font-weight: 700;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .sub-box { padding: 12px 14px; border-radius: 8px; font-size: 0.9rem; }
+  .sub-box.key { background: #FFFBF2; border-left: 4px solid var(--gold); }
+  .sub-box.facts { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .sub-box.fun { background: var(--purple-light); border-left: 4px solid var(--purple); }
+
+  .sub-box h4 { font-family: 'Cinzel', serif; font-size: 0.92rem; margin-bottom: 4px; }
+  .sub-box.key h4 { color: #8A6D1C; }
+  .sub-box.facts h4 { color: var(--teal); }
+  .sub-box.fun h4 { color: var(--purple); }
+  .sub-box ul { padding-left: 16px; margin-top: 4px; }
+  .sub-box li { margin-bottom: 4px; }
+
+  .mcq-box {
+    background: #FFFBF2;
+    border: 1px solid #EAE3D2;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .mcq-q { font-weight: 700; font-size: 0.95rem; margin-bottom: 10px; color: var(--ink); }
+
+  .mcq-opt {
+    display: block; width: 100%; text-align: left; background: #FFF; border: 1px solid #CCC;
+    padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; cursor: pointer;
+    font-family: inherit; font-size: 0.88rem; transition: all 0.15s;
+  }
+
+  .mcq-opt:hover { background: #F0F0F0; }
+  .mcq-opt.correct { background: #D4EDDA !important; border-color: #28A745 !important; color: #155724; font-weight: 700; }
+  .mcq-opt.wrong { background: #F8D7DA !important; border-color: #DC3545 !important; color: #721C24; }
+
+  .mcq-explain {
+    display: none; margin-top: 8px; padding: 8px 12px; background: #EBF4F3;
+    border-left: 3px solid var(--teal); border-radius: 4px; font-size: 0.85rem; color: #222;
+  }
+
+  .qa-card {
+    background: var(--card-bg); border-left: 4px solid var(--purple); padding: 14px 16px;
+    border-radius: 8px; margin-bottom: 12px; box-shadow: var(--shadow);
+  }
+
+  .qa-q {
+    font-weight: 700; cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; color: var(--ink); font-size: 0.95rem;
+  }
+
+  .qa-q::after {
+    content: '+ Show Answer'; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+    color: var(--purple); background: var(--purple-light); padding: 2px 8px; border-radius: 4px; white-space: nowrap;
+  }
+
+  .qa-card.open .qa-q::after { content: '- Hide Answer'; background: #FADBD8; color: var(--maroon); }
+
+  .qa-a {
+    display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #DDD; font-size: 0.92rem; color: #333;
+  }
+
+  .qa-card.open .qa-a { display: block; }
+
+  .media-link-card {
+    display: flex; align-items: center; gap: 12px; background: #F4F0E6; padding: 12px 14px;
+    border-radius: 8px; margin-top: 8px; border: 1px solid #DFD7C0; text-decoration: none;
+    color: var(--ink); font-size: 0.88rem; transition: all 0.2s;
+  }
+
+  .media-link-card:hover { background: #EAE2CF; border-color: var(--gold); transform: translateY(-2px); }
+  .media-icon { font-size: 1.5rem; }
+
+  footer { text-align: center; margin-top: 24px; font-size: 0.78rem; color: #777; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+        <div style="padding: 10px 20px; background: #1E293B; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
+            <a href="javascript:history.back()" style="color: #6366F1; text-decoration: none; font-weight: 700; font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 6px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back
+            </a>
+            <span style="color:#94A3B8; font-family: 'Nunito', sans-serif;">Old Notes Mode</span>
+        </div>
+        
+
+  <header class="hero">
+    <h1>India in the Iron Age</h1>
+    <div class="tagline">Pushti's Road to 20/20: Interactive Master Visual Dashboard</div>
+    <div class="badge-bar">
+      <span class="badge">CBSE Class 7</span>
+      <span class="badge">Tapestry of the Past</span>
+      <span class="badge">Chapter 7</span>
+    </div>
+  </header>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="openTab('kingdoms')">👑 Post-Mauryan Kingdoms</button>
+    <button class="tab-btn" onclick="openTab('trade')">🛣️ Silk Route & Tech</button>
+    <button class="tab-btn" onclick="openTab('society')">🏙️ Cities & Social Life</button>
+    <button class="tab-btn" onclick="openTab('mcq-4opt')">🎯 Master MCQs</button>
+    <button class="tab-btn" onclick="openTab('mcq-confusing')">⚡ Confusing Blanks</button>
+    <button class="tab-btn" onclick="openTab('mcq-tf')">❓ True / False</button>
+    <button class="tab-btn" onclick="openTab('textbook-all')">📖 All Textbook Solutions (A to H)</button>
+    <button class="tab-btn" onclick="openTab('media')">🖼️ Visual Anchors</button>
+  </div>
+
+  <!-- TAB 1: POST-MAURYAN KINGDOMS -->
+  <div id="kingdoms" class="tab-content active">
+    <div class="card" style="border-left: 5px solid var(--purple);">
+      <div class="card-title">7.1 New Kingdoms & Empires <span class="topic-badge">Post-Mauryan Period</span></div>
+      <p>After the fall of the Mauryan Empire around 200 BCE, no single ruler controlled all of India[cite: 4]. Instead, several regional kingdoms emerged across North, Central, and South India during the Iron Age[cite: 4].</p>
+    </div>
+
+    <!-- Kushanas & Satavahanas -->
+    <div class="card">
+      <div class="card-title">1. The Kushanas & Satavahanas <span class="topic-badge">North & Deccan Rulers</span></div>
+      <div class="concept-visual-grid">
+        <div class="visual-card-svg">
+          <!-- Vector: Gold Coin Motif -->
+          <svg viewBox="0 0 120 100">
+            <circle cx="60" cy="50" r="42" fill="#C59B27" stroke="#7A2A2E" stroke-width="3"/>
+            <circle cx="60" cy="50" r="35" fill="none" stroke="#FFF8E7" stroke-dasharray="3 2"/>
+            <path d="M 45 40 L 75 40 M 60 40 L 60 70 M 50 70 L 70 70" stroke="#7A2A2E" stroke-width="4"/>
+          </svg>
+          <div class="visual-caption">Kushana Gold Coin</div>
+        </div>
+
+        <div class="grid-3">
+          <div class="sub-box key">
+            <h4>👑 The Kushanas (50–300 CE)</h4>
+            <ul>
+              <li>Ruled Northwest India, Pakistan & Afghanistan[cite: 4].</li>
+              <li>Famous King: <b>Kanishka</b> (follower of Mahayana Buddhism)[cite: 4].</li>
+              <li>Controlled the lucrative <b>Silk Route</b>[cite: 4].</li>
+            </ul>
+          </div>
+          <div class="sub-box facts">
+            <h4>📌 The Satavahanas (100 BCE–200 CE)</h4>
+            <ul>
+              <li>Ruled the Deccan region (Maharashtra & Andhra Pradesh)[cite: 4].</li>
+              <li>Famous Ruler: <b>Gautamiputra Satakarni</b>[cite: 4].</li>
+              <li>Known as "Lords of Dakshinapatha" (route to the south)[cite: 4].</li>
+            </ul>
+          </div>
+          <div class="sub-box fun">
+            <h4>💡 Memory Anchor</h4>
+            <ul>
+              <li>Gold coins issued by Kanishka featured images of Buddha and Greek gods, showing cultural blend[cite: 4]!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Muvendar: Cholas, Cheras, Pandyas -->
+    <div class="card">
+      <div class="card-title">2. The Muvendar (Cholas, Cheras, Pandyas) <span class="topic-badge">400 BCE – 300 CE</span></div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>🌴 The Three Crowned Kings</h4>
+          <ul>
+            <li>Ruled Tamilakam (Tamil Nadu & Kerala)[cite: 4].</li>
+            <li>Known together as the <b>Muvendar</b> (Three Great Chiefs)[cite: 4].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>📜 Sangam Literature</h4>
+          <ul>
+            <li>Great Tamil poets gathered at assemblies in <b>Madurai</b>[cite: 4].</li>
+            <li>Their poems are compiled as <b>Sangam Literature</b>[cite: 4].</li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>💡 Roman Trade</h4>
+          <ul>
+            <li>Traded heavily with the Roman Empire (spices like pepper were called "black gold")[cite: 4]!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: SILK ROUTE & TECH -->
+  <div id="trade" class="tab-content">
+    <div class="card">
+      <div class="card-title">7.2 Technology, Trade & The Silk Route <span class="topic-badge">Economic Growth</span></div>
+      <div class="concept-visual-grid">
+        <div class="visual-card-svg">
+          <!-- Vector: Silk Route Map Concept -->
+          <svg viewBox="0 0 120 100">
+            <rect x="10" y="20" width="100" height="60" rx="8" fill="#FFF8E7" stroke="#4C4478" stroke-width="2"/>
+            <path d="M 20 70 Q 50 30 100 40" stroke="#D35400" stroke-width="3" fill="none" stroke-dasharray="4 2"/>
+            <circle cx="20" cy="70" r="5" fill="#2F5D5A"/>
+            <circle cx="100" cy="40" r="5" fill="#7A2A2E"/>
+          </svg>
+          <div class="visual-caption">Silk Route Network</div>
+        </div>
+
+        <div class="grid-3">
+          <div class="sub-box key">
+            <h4>🌾 Agricultural Tech</h4>
+            <ul>
+              <li>Iron ploughshares turned heavy clay soil easily[cite: 4].</li>
+              <li>Paddy transplantation increased crop yields massively[cite: 4].</li>
+              <li>Canals and wells constructed for irrigation[cite: 4].</li>
+            </ul>
+          </div>
+          <div class="sub-box facts">
+            <h4>🛣️ The Silk Route</h4>
+            <ul>
+              <li>Network of trade routes connecting China to Europe via India[cite: 4].</li>
+              <li>Indian rulers collected taxes from traders in exchange for protection[cite: 4].</li>
+            </ul>
+          </div>
+          <div class="sub-box fun">
+            <h4>🪙 Punch-Marked Coins</h4>
+            <ul>
+              <li>Earliest coins made of silver/copper stamped with symbols (trees, animals, sun)[cite: 4]!</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: CITIES & SOCIAL LIFE -->
+  <div id="society" class="tab-content">
+    <div class="card">
+      <div class="card-title">7.3 Cities & Social Hierarchy <span class="topic-badge">Urbanisation & Guilds</span></div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>🏙️ Types of Cities</h4>
+          <ul>
+            <li><b>Administrative:</b> Capital cities (Pataliputra)[cite: 4].</li>
+            <li><b>Trade / Market:</b> Ujjain, Taxila[cite: 4].</li>
+            <li><b>Port Cities:</b> Arikamedu, Bharuch, Kaveripattinam[cite: 4].</li>
+            <li><b>Multi-Function:</b> Mathura (religious, trade, capital)[cite: 4].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>👥 Village Hierarchy (North)</h4>
+          <ul>
+            <li><b>Gramabhojaka:</b> Powerful village headman & landholder[cite: 4].</li>
+            <li><b>Grihapatis:</b> Independent small farmers[cite: 4].</li>
+            <li><b>Dasa Karmakaras:</b> Landless agricultural workers[cite: 4].</li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>🌴 Village Hierarchy (South)</h4>
+          <ul>
+            <li><b>Vellalar:</b> Rich, influential landowners[cite: 4].</li>
+            <li><b>Uzhavar:</b> Ordinary farmers[cite: 4].</li>
+            <li><b>Kadaasiyar / Adimai:</b> Landless laborers & slaves[cite: 4].</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: MASTER MCQS -->
+  <div id="mcq-4opt" class="tab-content">
+    <div class="card">
+      <div class="card-title">Master Multiple Choice Questions</div>
+      
+      <div class="mcq-box">
+        <div class="mcq-q">1. Which kingdom's rulers were known as the 'Lords of Dakshinapatha'?[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">a) The Cheras</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-1')">b) The Satavahanas</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">c) The Kushanas</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">d) The Pandyas</button>
+        <div class="mcq-explain" id="mcq-1"><b>Explanation:</b> The Satavahanas ruled the Deccan and controlled Dakshinapatha (the southern route)[cite: 4].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. Which technology radically changed farming during the Iron Age?[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-2')">a) Iron ploughshare</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">b) Iron spanners</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">c) Iron anchors</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">d) Iron spades</button>
+        <div class="mcq-explain" id="mcq-2"><b>Explanation:</b> Iron ploughshares allowed deep tilling of heavy clay soil, expanding agriculture[cite: 4].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">3. Which kind of pottery developed during the Iron Age in India?[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-3')">a) Northern Black Polished Ware</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">b) Blue Glazed Pottery</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">c) Red Clay Ware</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">d) Southern Stoneware</button>
+        <div class="mcq-explain" id="mcq-3"><b>Explanation:</b> Northern Black Polished Ware (NBPW) was fine glossy pottery characteristic of this era[cite: 4].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">4. Which dynasty ruled northwestern India through which the Silk Route passed?[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">a) The Satavahanas</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">b) The Cholas</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-4')">c) The Kushanas</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">d) The Pandyas</button>
+        <div class="mcq-explain" id="mcq-4"><b>Explanation:</b> The Kushanas controlled northwestern trade routes connecting China and Rome[cite: 4].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">5. Which city is an example of a location that served multiple functions (religious, capital, trade)?[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">a) Ujjain</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">b) Kaveripattinam</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-5')">c) Mathura</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">d) Taxila</button>
+        <div class="mcq-explain" id="mcq-5"><b>Explanation:</b> Mathura served as a trade center, religious hub, and secondary Kushana capital[cite: 4].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: CONFUSING 2-CHOICE FILL IN BLANKS -->
+  <div id="mcq-confusing" class="tab-content">
+    <div class="card">
+      <div class="card-title">Confusing Two-Choice Drills</div>
+      
+      <div class="mcq-box">
+        <div class="mcq-q">1. The Satavahana kings were known as the Lords of ________.[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-1')">[A] Dakshinapatha</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-1')">[B] Uttarapatha</button>
+        <div class="mcq-explain" id="c-1"><b>Why confusion happens:</b> Dakshinapatha was the southern route. Uttarapatha was the northern route[cite: 4]!</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. Craftspeople in cities organized themselves into associations called ________.[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-2')">[A] Shrenis</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-2')">[B] Sangams</button>
+        <div class="mcq-explain" id="c-2"><b>Why confusion happens:</b> Sangam was the poet assembly. Shrenis were trade/craft guilds[cite: 4].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">3. In South Indian villages, wealthy influential landowners were called ________.[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-3')">[A] Vellalar</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-3')">[B] Uzhavar</button>
+        <div class="mcq-explain" id="c-3"><b>Why confusion happens:</b> Vellalar were rich landholders; Uzhavar were ordinary ploughmen[cite: 4].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6: TRUE / FALSE ARENA -->
+  <div id="mcq-tf" class="tab-content">
+    <div class="card">
+      <div class="card-title">Interactive True / False Arena</div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">1. The Kushana king Kanishka was a follower of Mahayana Buddhism.[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-1')">[TRUE]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-1')">[FALSE]</button>
+        <div class="mcq-explain" id="tf-1"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Kanishka patronized Mahayana Buddhism and held the 4th Buddhist Council[cite: 4].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. Roman traders bought pepper from South India and called it 'black gold'.[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-2')">[TRUE]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-2')">[FALSE]</button>
+        <div class="mcq-explain" id="tf-2"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Pepper was so highly valued in Rome that it was dubbed black gold[cite: 4].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">3. Punch-marked coins were invented during the British period.[cite: 4]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-3')">[TRUE]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-3')">[FALSE]</button>
+        <div class="mcq-explain" id="tf-3"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Punch-marked coins were the earliest coins used in ancient India during the Iron Age[cite: 4].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 7: 100% COMPLETE TEXTBOOK SOLUTIONS -->
+  <div id="textbook-all" class="tab-content">
+    <div class="card">
+      <div class="card-title">100% Verified Page 105 Textbook Solutions (A to H)</div>
+
+      <!-- EXERCISE A -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise A: Fill in the blanks (All 5 Questions)</div>
+        <div class="qa-a">
+          1. The <b>Sangam</b> Age saw Tamil poets hold three meetings in Madurai[cite: 4].<br>
+          2. <b>Xuanzang</b> (or <b>Fa Xian</b>) was a Chinese pilgrim who wrote about life in the post-Mauryan period[cite: 4].<br>
+          3. Together, the dynasties of the Cholas, the Cheras, and the Pandyas were called the <b>Muvendar</b>[cite: 4].<br>
+          4. The network of routes that the traders used to transport silk came to be known as the <b>Silk Route</b>[cite: 4].<br>
+          5. The rise of cities during the Iron Age is called the <b>second urbanisation</b> in India[cite: 4].
+        </div>
+      </div>
+
+      <!-- EXERCISE B -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise B: Choose the correct answer (All 5 Questions)</div>
+        <div class="qa-a">
+          1. Which kingdom's rulers were known as the 'Lords of Dakshinapatha'? <b>(b) The Satavahanas</b>[cite: 4].<br>
+          2. Which technology made it easier to turn the soil in the Iron Age? <b>(a) Iron ploughs</b>[cite: 4].<br>
+          3. Which kind of pottery developed during the Iron Age in India? <b>(a) Northern Black Polished Ware</b>[cite: 4].<br>
+          4. Which dynasty ruled the empire in northwestern India through which the Silk Route passed? <b>(d) The Kushanas</b>[cite: 4].<br>
+          5. Which of the following is an example of a city that had multiple functions? <b>(c) Mathura</b>[cite: 4].
+        </div>
+      </div>
+
+      <!-- EXERCISE C -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise C: Identify Kingdom(s) & Timeline</div>
+        <div class="qa-a">
+          1. (a) Famous ruler named Kanishka: <b>The Kushana Empire</b>[cite: 4].<br>
+          (b) Lords of Dakshinapatha: <b>The Satavahanas</b>[cite: 4].<br>
+          (c) Three kingdoms of the south in Sangam Age: <b>The Cholas, the Cheras, and the Pandyas</b>[cite: 4].<br><br>
+          2. <b>Timeline Sequence:</b> Sangam Age (400 BCE–300 CE) $\rightarrow$ Satavahanas (100 BCE–200 CE) $\rightarrow$ Kushanas (50–300 CE) $\rightarrow$ Iron Age[cite: 4].
+        </div>
+      </div>
+
+      <!-- EXERCISE D -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise D: Answer the following questions in brief (All 5 Questions)</div>
+        <div class="qa-a">
+          1. <b>Sources:</b> Travelogues of Chinese pilgrims (Fa Xian, Xuanzang), Sangam literature, coins, and Buddhist stupas/monuments[cite: 4].<br>
+          2. <b>Kushanas:</b> A Central Asian tribe that entered India through the northwest and established an empire in NW India, Pakistan, and Afghanistan[cite: 4].<br>
+          3. <b>Agri-Tech:</b> Use of iron ploughshares and paddy transplantation[cite: 4].<br>
+          4. <b>Silk Route:</b> Ancient trade route network connecting China to Europe via India[cite: 4].<br>
+          5. <b>Two types of cities:</b> Port cities (Kaveripattinam, Arikamedu) and Market towns (Ujjain, Taxila)[cite: 4].
+        </div>
+      </div>
+
+      <!-- EXERCISE E -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise E: Answer the following questions in detail (All 5 Questions)</div>
+        <div class="qa-a">
+          1. <b>Post-Mauryan Kingdom (The Kushanas):</b> Central Asian tribe ruling NW India[cite: 4]. King Kanishka controlled the Silk Route, issued gold coins, and actively promoted Mahayana Buddhism[cite: 4].<br><br>
+
+          2. <b>Other Tech Advancements:</b> Metallurgy (iron weapons/tools), Northern Black Polished Ware (NBPW) pottery, and silver/copper punch-marked coins[cite: 4].<br><br>
+
+          3. <b>Jobs & Emergence:</b> Farmers, weavers, potters, metalworkers, carpenters, and merchants in *shrenis* (guilds)[cite: 4]. Jobs emerged because agricultural surplus allowed specialization[cite: 4].<br><br>
+
+          4. <b>Village Power Equality:</b> Disagree[cite: 4]. Power was unequal: *Gramabhojaka* held maximum power, *Grihapatis* were small farmers, and *Dasa Karmakaras* owned no land[cite: 4].<br><br>
+
+          5. <b>Silk Route & Religion:</b> Traders, monks, and pilgrims traveled together, spreading Buddhism to Central Asia and China[cite: 4].
+        </div>
+      </div>
+
+      <!-- EXERCISE F -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise F: HOTS — Think and answer</div>
+        <div class="qa-a">
+          1. <b>Trade Prosperity:</b> Connected Indian craftsmen to international markets like Rome, bringing in Roman gold coins, building cities, and supporting craft guilds (*shrenis*)[cite: 4].<br><br>
+
+          2. <b>Time Machine Description:</b> Seeing iron ploughshares, paddy fields, large walled cities, punch-marked coins, and international markets along the Silk Route[cite: 4].
+        </div>
+      </div>
+
+      <!-- EXERCISE G -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise G: Competency-Based Questions</div>
+        <div class="qa-a">
+          1. <b>City Types:</b> (a) Market Town, (b) Port City, (c) Religious / Multi-function City[cite: 4].<br><br>
+
+          2. <b>Silk Route Trader Scenario:</b><br>
+          • <i>(a) Goods:</i> Selling spices (pepper), silk, pearls, and buying Roman coins/glassware[cite: 4].<br>
+          • <i>(b) Ideas:</i> Exchanging Buddhist teachings, medical knowledge, and artistic styles[cite: 4].<br>
+          • <i>(c) Paragraph:</i> Describing a day carrying silk and spices along mountain passes, trading with foreign merchants, and visiting Buddhist monasteries[cite: 4].
+        </div>
+      </div>
+
+      <!-- REFLECTIONS -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Reflections Section</div>
+        <div class="qa-a">
+          1. <b>Interesting Thing:</b> Learning about ancient trade networks like the Silk Route and Roman trade for 'black gold' (pepper)[cite: 4]!<br>
+          2. <b>Tracking Historical Changes:</b> Through archaeological artifacts (coins, pottery), inscriptions, written travelogues, and historical records[cite: 4].
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TAB 8: VISUAL & VIDEO ANCHORS -->
+  <div id="media" class="tab-content">
+    <div class="card">
+      <div class="card-title">Visual Anchors & Recommended Creator Videos</div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+        <a class="media-link-card" href="https://commons.wikimedia.org/wiki/Category:Silk_Road" target="_blank">
+          <span class="media-icon">🛣️</span>
+          <div><b>Silk Route Maps & Artifacts</b><br><small>View ancient trade route maps and artifacts[cite: 4].</small></div>
+        </a>
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Kushanas+and+Silk+Route+history+animation" target="_blank">
+          <span class="media-icon">🎬</span>
+          <div><b>Animated History: Kushanas & The Silk Route</b><br><small>Watch animated documentaries on Kanishka and trade[cite: 4].</small></div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Chapter 7 Verified Study Hub · Prepared for Pushti · CBSE Class 7 History
+  </footer>
+
+<script>
+  function openTab(tabId) {
+    const contents = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-btn');
+    contents.forEach(content => content.classList.remove('active'));
+    buttons.forEach(btn => btn.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function toggleQA(cardElement) { cardElement.classList.toggle('open'); }
+
+  function checkMCQ(btnElement, isCorrect, explainId) {
+    const parentBox = btnElement.parentElement;
+    const buttons = parentBox.querySelectorAll('.mcq-opt');
+    const explanation = document.getElementById(explainId);
+
+    buttons.forEach(btn => btn.disabled = true);
+
+    if (isCorrect) { btnElement.classList.add('correct'); } 
+    else { btnElement.classList.add('wrong'); }
+
+    if (explanation) { explanation.style.display = 'block'; }
+  }
+</script>
+</body>
+</html>

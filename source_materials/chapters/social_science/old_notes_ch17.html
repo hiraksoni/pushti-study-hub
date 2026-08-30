@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 17: Markets Around Us — Complete Master Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sandstone: #F9F5EC;
+    --card-bg: #FFFFFF;
+    --ink: #2B2620;
+    --maroon: #7A2A2E;
+    --gold: #C59B27;
+    --gold-light: #FFF8E7;
+    --teal: #2F5D5A;
+    --teal-light: #EBF4F3;
+    --purple: #4C4478;
+    --purple-light: #F0EEF8;
+    --shadow: 0 4px 15px rgba(0,0,0,0.06);
+    --border-radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--sandstone);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    padding: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: hidden; 
+  }
+
+  header.hero {
+    text-align: center;
+    background: linear-gradient(135deg, var(--teal), #1A3634);
+    color: white;
+    padding: 24px 16px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    border-bottom: 4px solid var(--gold);
+  }
+
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    color: #FFF;
+  }
+
+  .tagline { font-size: 0.95rem; opacity: 0.95; font-weight: 600; color: #FFF8E7; }
+
+  .badge-bar {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .tab-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #E2D9C5;
+    padding-bottom: 8px;
+  }
+
+  .tab-btn {
+    flex: 1 1 auto;
+    min-width: 120px;
+    text-align: center;
+    background: #EAE3D2;
+    border: none;
+    outline: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .tab-btn:hover { background: #DFCFAF; }
+  .tab-btn.active { background: var(--teal); color: white; }
+
+  .tab-content { display: none; animation: fadeIn 0.25s ease-in-out; }
+  .tab-content.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid #EAE3D2;
+    margin-bottom: 18px;
+  }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    color: var(--teal);
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    border-bottom: 2px solid var(--gold-light);
+    padding-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .topic-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    background: var(--teal-light);
+    color: var(--teal);
+    border: 1px solid var(--teal);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+
+  .sub-box { padding: 12px 14px; border-radius: 8px; font-size: 0.9rem; }
+  .sub-box.key { background: #FFFBF2; border-left: 4px solid var(--gold); }
+  .sub-box.facts { background: var(--teal-light); border-left: 4px solid var(--teal); }
+  .sub-box.fun { background: var(--purple-light); border-left: 4px solid var(--purple); }
+
+  .sub-box h4 { font-family: 'Cinzel', serif; font-size: 0.92rem; margin-bottom: 4px; }
+  .sub-box.key h4 { color: #8A6D1C; }
+  .sub-box.facts h4 { color: var(--teal); }
+  .sub-box.fun h4 { color: var(--purple); }
+  .sub-box ul { padding-left: 16px; margin-top: 4px; }
+  .sub-box li { margin-bottom: 4px; }
+
+  .mcq-box {
+    background: #FFFBF2;
+    border: 1px solid #EAE3D2;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 14px;
+  }
+
+  .mcq-q { font-weight: 700; font-size: 0.95rem; margin-bottom: 10px; color: var(--ink); }
+
+  .mcq-opt {
+    display: block; width: 100%; text-align: left; background: #FFF; border: 1px solid #CCC;
+    padding: 8px 12px; margin-bottom: 6px; border-radius: 6px; cursor: pointer;
+    font-family: inherit; font-size: 0.88rem; transition: all 0.15s;
+  }
+
+  .mcq-opt:hover { background: #F0F0F0; }
+  .mcq-opt.correct { background: #D4EDDA !important; border-color: #28A745 !important; color: #155724; font-weight: 700; }
+  .mcq-opt.wrong { background: #F8D7DA !important; border-color: #DC3545 !important; color: #721C24; }
+
+  .mcq-explain {
+    display: none; margin-top: 8px; padding: 8px 12px; background: #EBF4F3;
+    border-left: 3px solid var(--teal); border-radius: 4px; font-size: 0.85rem; color: #222;
+  }
+
+  .qa-card {
+    background: var(--card-bg); border-left: 4px solid var(--teal); padding: 14px 16px;
+    border-radius: 8px; margin-bottom: 12px; box-shadow: var(--shadow);
+  }
+
+  .qa-q {
+    font-weight: 700; cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; color: var(--ink); font-size: 0.95rem;
+  }
+
+  .qa-q::after {
+    content: '+ Show Answer'; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+    color: var(--teal); background: var(--teal-light); padding: 2px 8px; border-radius: 4px; white-space: nowrap;
+  }
+
+  .qa-card.open .qa-q::after { content: '- Hide Answer'; background: #FADBD8; color: var(--maroon); }
+
+  .qa-a {
+    display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #DDD; font-size: 0.92rem; color: #333;
+  }
+
+  .qa-card.open .qa-a { display: block; }
+
+  table.textbook-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.88rem; }
+  table.textbook-table th, table.textbook-table td { border: 1px solid #CCC; padding: 8px 10px; text-align: left; }
+  table.textbook-table th { background-color: var(--teal); color: white; font-family: 'Cinzel', serif; }
+
+  .media-link-card {
+    display: flex; align-items: center; gap: 12px; background: #F4F0E6; padding: 12px 14px;
+    border-radius: 8px; margin-top: 8px; border: 1px solid #DFD7C0; text-decoration: none;
+    color: var(--ink); font-size: 0.88rem; transition: all 0.2s;
+  }
+
+  .media-link-card:hover { background: #EAE2CF; border-color: var(--gold); transform: translateY(-2px); }
+  .media-icon { font-size: 1.5rem; }
+
+  footer { text-align: center; margin-top: 24px; font-size: 0.78rem; color: #777; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+
+        <div style="padding: 10px 20px; background: #1E293B; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
+            <a href="javascript:history.back()" style="color: #6366F1; text-decoration: none; font-weight: 700; font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 6px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back
+            </a>
+            <span style="color:#94A3B8; font-family: 'Nunito', sans-serif;">Old Notes Mode</span>
+        </div>
+        
+
+  <header class="hero">
+    <h1>Markets Around Us</h1>
+    <div class="tagline">Pushti's Road to 20/20: Complete Unabridged Study Dashboard</div>
+    <div class="badge-bar">
+      <span class="badge">CBSE Class 7</span>
+      <span class="badge">Social Science</span>
+      <span class="badge">Chapter 17</span>
+    </div>
+  </header>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="openTab('types')">🏪 Types of Markets</button>
+    <button class="tab-btn" onclick="openTab('chain')">🔗 Chain of Markets</button>
+    <button class="tab-btn" onclick="openTab('coop')">🚜 Cooperatives & Mindful Buying</button>
+    <button class="tab-btn" onclick="openTab('mcq-4opt')">🎯 12 Master MCQs</button>
+    <button class="tab-btn" onclick="openTab('mcq-confusing')">⚡ 10 Confusing Blanks</button>
+    <button class="tab-btn" onclick="openTab('mcq-tf')">❓ 10 True / False</button>
+    <button class="tab-btn" onclick="openTab('textbook-all')">📖 All Textbook Solutions (A to J)</button>
+    <button class="tab-btn" onclick="openTab('media')">🎬 Enriched Videos</button>
+  </div>
+
+  <!-- TAB 1: TYPES OF MARKETS -->
+  <div id="types" class="tab-content active">
+    <div class="card" style="border-left: 5px solid var(--teal);">
+      <div class="card-title">17.1 Markets & Their Types <span class="topic-badge">Wholesale vs Retail</span></div>
+      <p>A <b>market</b> is a place where buyers and sellers meet to exchange goods and services[cite: 5]. Markets connect producers directly or indirectly with consumers[cite: 5].</p>
+      <div class="grid-3" style="margin-top:12px;">
+        <div class="sub-box key">
+          <h4>📦 Wholesale Markets</h4>
+          <ul>
+            <li>Markets where goods are bought and sold in <b>bulk quantities</b>[cite: 5].</li>
+            <li>Buyers are traders (retailers), not final consumers[cite: 5].</li>
+            <li>Prices are lower because goods are sold directly in large amounts[cite: 5].</li>
+            <li>Require massive storage spaces and warehouses[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>🛒 Retail Markets</h4>
+          <ul>
+            <li>Markets where consumers buy goods in <b>smaller quantities</b> for personal or family use[cite: 5].</li>
+            <li>Prices are higher than wholesale because traders add overhead costs (rent, transport, electricity, wages, profit margins)[cite: 5].</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Detailed Spectrum of Retail Markets <span class="topic-badge">5 Market Structures</span></div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>🎪 1. Weekly Markets (Haats)</h4>
+          <ul>
+            <li>Held on specific days of the week in a particular locality[cite: 5].</li>
+            <li>Sellers set up temporary roadside stalls and pack up at night[cite: 5].</li>
+            <li><b>Why prices are low:</b> No permanent shop rent, electricity bills, or hired staff costs[cite: 5].</li>
+            <li>Heavy competition among similar stalls allows buyers to bargain[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>🏪 2. Neighbourhood Markets</h4>
+          <ul>
+            <li>Permanent shops and street stalls near residential homes[cite: 5].</li>
+            <li>Provide everyday necessities (groceries, milk, stationery, bread)[cite: 5].</li>
+            <li><b>Key Benefit:</b> Sellers know buyers personally, allowing goods to be bought on credit[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>🏷️ 3. Branded Stores</h4>
+          <ul>
+            <li>Exclusive showrooms that sell goods from only <b>one brand</b>[cite: 5].</li>
+            <li>Prices are higher due to heavy advertising and shop maintenance overheads[cite: 5].</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid-3" style="margin-top:12px;">
+        <div class="sub-box key">
+          <h4>🏬 4. Shopping Malls</h4>
+          <ul>
+            <li>Large, multi-storeyed, air-conditioned complexes containing multiple shops, restaurants, cinemas, and gaming zones[cite: 5].</li>
+            <li>Sell both branded and non-branded goods at high prices due to huge rent and electricity costs[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>💻 5. Online Retailers</h4>
+          <ul>
+            <li>Virtual platforms where consumers buy directly using websites or mobile apps[cite: 5].</li>
+            <li><b>Overhead advantage:</b> Do not maintain physical retail stores, reducing rent expenses and offering competitive discounts[cite: 5].</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: CHAIN OF MARKETS -->
+  <div id="chain" class="tab-content">
+    <div class="card">
+      <div class="card-title">17.2 The Chain of Markets <span class="topic-badge">From Producer to Consumer</span></div>
+      <p>Goods do not reach us directly from factories or farms. They pass through a series of markets known as the <b>chain of markets</b>[cite: 5].</p>
+      
+      <div class="grid-3" style="margin-top:12px;">
+        <div class="sub-box key">
+          <h4>🌾 1. Producers</h4>
+          <ul>
+            <li>Farmers who grow crops or factory owners who manufacture items[cite: 5].</li>
+            <li>Sell their produce in bulk at low prices to wholesale traders[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>🚚 2. Wholesale Traders</h4>
+          <ul>
+            <li>Buy bulk goods from farmers/producers and store them in large warehouses[cite: 5].</li>
+            <li>Sell in smaller bulk lots to retail suppliers or regional traders[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>🏪 3. Retail Traders</h4>
+          <ul>
+            <li>Shopkeepers, weekly market vendors, or online sellers who buy from wholesalers[cite: 5].</li>
+            <li>Sell small quantities directly to final consumers[cite: 5].</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case Study Card -->
+    <div class="card">
+      <div class="card-title">Case Study: The Journey of a Mango <span class="topic-badge">Price Rise Analysis</span></div>
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>👨‍🌾 Vinayak (Farmer)</h4>
+          <ul>
+            <li>Spends ₹3,000 on fertilizers & supplies for 500 kg mangoes[cite: 5].</li>
+            <li>Sells harvest for ₹10,000 to wholesaler Ahmed[cite: 5].</li>
+            <li><b>Profit: ₹7,000 (₹14/kg)</b>[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>🚛 Ahmed (Wholesaler)</h4>
+          <ul>
+            <li>Spends ₹30,000 to buy 1500 kg mangoes[cite: 5].</li>
+            <li>Spends ₹10,000 on warehouse rent & transport[cite: 5].</li>
+            <li>Sells to retailers for ₹75,000[cite: 5].</li>
+            <li><b>Profit: ₹35,000 (₹24/kg)</b>[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>🛒 Badrinath (Retailer)</h4>
+          <ul>
+            <li>Buys 20 kg mangoes from Ahmed for ₹1,000[cite: 5].</li>
+            <li>Spends ₹400 on shop rent & transport[cite: 5].</li>
+            <li>Sells to consumers at ₹100/kg (₹2,000 total)[cite: 5].</li>
+            <li><b>Profit: ₹600 (₹30/kg)</b>[cite: 5].</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:12px; font-size:0.88rem; background:#FFF8E7; padding:10px; border-radius:6px;"><b>Conclusion:</b> As the mango moves from Vinayak (₹14/kg profit) $\rightarrow$ Ahmed (₹24/kg profit) $\rightarrow$ Badrinath (₹30/kg profit) $\rightarrow$ Consumer (pays ₹100/kg), the final price increases dramatically because every intermediary adds storage, transport, labor, and profit margins[cite: 5].</p>
+    </div>
+  </div>
+
+  <!-- TAB 3: COOPERATIVES & MINDFUL BUYING -->
+  <div id="coop" class="tab-content">
+    <div class="card">
+      <div class="card-title">17.3 & 17.4 Inequalities, Cooperatives & Mindful Buying <span class="topic-badge">Fair Trade</span></div>
+      
+      <div class="grid-3">
+        <div class="sub-box key">
+          <h4>⚖️ Market Inequalities</h4>
+          <ul>
+            <li><b>For Producers:</b> Farmers work hard but earn the lowest profits in the chain[cite: 5]. During poor harvests, they fall into debt[cite: 5].</li>
+            <li><b>For Consumers:</b> End up paying inflated final prices due to multiple middleman markups[cite: 5].</li>
+          </ul>
+        </div>
+        <div class="sub-box facts">
+          <h4>🚜 Advantages of Cooperatives</h4>
+          <ul>
+            <li>A <b>cooperative</b> is a voluntary organization formed by producers/farmers with shared goals[cite: 5].</li>
+            <li><b>Benefits:</b>
+              <ol>
+                <li>Easy to form under Cooperative Societies Act[cite: 5].</li>
+                <li>Eliminates reliance on middlemen[cite: 5].</li>
+                <li>Follows a democratic process (one person, one vote)[cite: 5].</li>
+                <li>Receives government loans & support at low interest rates[cite: 5].</li>
+              </ol>
+            </li>
+          </ul>
+        </div>
+        <div class="sub-box fun">
+          <h4>🛍️ Mindful Buying & Supply Theory</h4>
+          <ul>
+            <li><b>Mindful Buying:</b> Making conscious purchases based on actual needs, values, and environmental sustainability[cite: 5].</li>
+            <li><b>Demand vs Supply Theory:</b>
+              <ul>
+                <li><i>High Demand + Low Supply</i> = Prices increase[cite: 5].</li>
+                <li><i>Low Demand + High Supply</i> = Prices decrease[cite: 5].</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: MASTER MCQS -->
+  <div id="mcq-4opt" class="tab-content">
+    <div class="card">
+      <div class="card-title">12 Master Multiple Choice Questions</div>
+      
+      <div class="mcq-box">
+        <div class="mcq-q">1. Which of the following markets happens once a week?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-1')">a) Weekly markets[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">b) Supermarkets[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">c) Neighbourhood markets[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-1')">d) Wholesale markets[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-1"><b>Explanation:</b> Weekly markets take place once a week on specific days[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. Which of the following markets sells goods from only one brand?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">a) Supermarkets[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">b) Shopping malls[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-2')">c) Branded stores[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-2')">d) Retail markets[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-2"><b>Explanation:</b> Branded stores sell products from a single specific brand[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">3. Which of the following is an organisation formed by people with shared interests and goals?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">a) Wholesale markets[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">b) Retail markets[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-3')">c) Cooperatives[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-3')">d) Shopping malls[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-3"><b>Explanation:</b> Cooperatives are formed by members with shared economic goals[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">4. Which of the following is NOT a role that markets play in our lives?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">a) Making goods and services available[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">b) Linking producers and consumers[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-4')">c) Building a strong economy[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-4')">d) Promoting mindful buying[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-4"><b>Explanation:</b> Mindful buying is a practice adopted by consumers, not an intrinsic role played by markets[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">5. Why are goods sold at weekly markets usually cheaper?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-5')">a) Sellers do not pay permanent shop rent or electricity bills[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">b) The goods sold are always defective[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">c) They are subsidized by the government[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-5')">d) Only wholesale traders sell there[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-5"><b>Explanation:</b> Temporary stalls avoid heavy overhead expenses like building rent, electricity bills, and staff wages[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">6. Who among the following buys goods directly from producers in large bulk?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">a) Final consumer[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-6')">b) Wholesale trader[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">c) Weekly market stall vendor[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-6')">d) Neighbourhood shopkeeper[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-6"><b>Explanation:</b> Wholesale traders buy directly from producers in bulk quantities[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">7. What is the key advantage of shopping at neighbourhood markets?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">a) They sell only imported luxury goods[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-7')">b) Shops are close to homes and sellers often offer credit[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">c) They operate without any overhead costs[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-7')">d) They operate only once a week[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-7"><b>Explanation:</b> Proximity to residential areas and personal acquaintance allowing credit purchase are key benefits[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">8. What happens to the price of an item when it moves down the chain of markets?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">a) It decreases at every step[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-8')">b) It increases at every step[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">c) It remains exactly the same[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-8')">d) It becomes zero[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-8"><b>Explanation:</b> Each intermediary adds transport, rent, labor, and profit margins, raising the price[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">9. How do cooperative societies make decision-making fair for all members?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">a) Only the richest member makes decisions[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-9')">b) They follow a democratic process where every member gets equal voting rights[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">c) The government dictates all decisions[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-9')">d) Decisions are made by wholesale traders[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-9"><b>Explanation:</b> Cooperatives follow democratic management with equal voting rights per member[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">10. What happens to the price of a product if its demand is very high but availability is low?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-10')">a) Price increases[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">b) Price decreases[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">c) Price remains unchanged[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-10')">d) Product becomes free[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-10"><b>Explanation:</b> Scarcity combined with high buyer demand pushes product prices upward[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">11. Why do online retailers often offer products at lower prices than physical shopping malls?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-11')">a) They do not pay expensive showroom rent or store electricity overheads[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">b) They sell damaged goods[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">c) They do not pay taxes to the government[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-11')">d) They buy directly from consumers[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-11"><b>Explanation:</b> Lower overhead costs allow online retailers to offer products at competitive discounts[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">12. What is the primary purpose of forming a farmers' cooperative?[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">a) To eliminate competition in retail markets[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'mcq-12')">b) To sell produce directly to consumers/agencies and reduce middleman exploitation[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">c) To control price tags in shopping malls[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'mcq-12')">d) To stop wholesale markets completely[cite: 5]</button>
+        <div class="mcq-explain" id="mcq-12"><b>Explanation:</b> Cooperatives empower small farmers to earn fair prices by removing exploitative agents[cite: 5].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: CONFUSING 2-CHOICE FILL IN BLANKS -->
+  <div id="mcq-confusing" class="tab-content">
+    <div class="card">
+      <div class="card-title">10 Confusing Two-Choice Drills</div>
+      
+      <div class="mcq-box">
+        <div class="mcq-q">1. Goods sold at weekly markets are usually cheaper because sellers have ________ overhead costs.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-1')">[A] Lower[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-1')">[B] Higher[cite: 5]</button>
+        <div class="mcq-explain" id="c-1"><b>Why confusion happens:</b> Weekly stall owners do not pay shop rent or staff wages, keeping overheads low[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. Online retailers operate with ________ overhead costs compared to physical shopping malls.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-2')">[A] Lower[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-2')">[B] Higher[cite: 5]</button>
+        <div class="mcq-explain" id="c-2"><b>Why confusion happens:</b> Online stores do not maintain physical showroom spaces, reducing rent expenses[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">3. In the chain of markets, wholesale traders buy goods directly from ________.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-3')">[A] Producers[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-3')">[B] Retailers[cite: 5]</button>
+        <div class="mcq-explain" id="c-3"><b>Why confusion happens:</b> Wholesalers buy from Producers; Retailers buy from Wholesalers[cite: 5]!</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">4. The person who grows crops or manufactures products is called the ________.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-4')">[A] Producer[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-4')">[B] Consumer[cite: 5]</button>
+        <div class="mcq-explain" id="c-4"><b>Why confusion happens:</b> Producer = Maker/Grower; Consumer = Final Buyer/User[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">5. In a cooperative society, members ________ their dependence on middlemen.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-5')">[A] Reduce[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-5')">[B] Increase[cite: 5]</button>
+        <div class="mcq-explain" id="c-5"><b>Why confusion happens:</b> Cooperatives eliminate middleman reliance by selling directly[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">6. If product demand is high and availability (supply) is low, the price will ________.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-6')">[A] Increase[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-6')">[B] Decrease[cite: 5]</button>
+        <div class="mcq-explain" id="c-6"><b>Why confusion happens:</b> Scarcity plus high demand pushes prices UP, not down[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">7. Branded stores sell goods from ________ brand(s).[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-7')">[A] Only one[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-7')">[B] Multiple different[cite: 5]</button>
+        <div class="mcq-explain" id="c-7"><b>Why confusion happens:</b> Malls sell multiple brands; Branded stores sell exclusively *one* brand[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">8. The profit earned by a retail shopkeeper per unit item is usually ________ than that earned by the farmer.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-8')">[A] Higher[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-8')">[B] Lower[cite: 5]</button>
+        <div class="mcq-explain" id="c-8"><b>Why confusion happens:</b> Retailers add high markups, earning higher per-unit profits than struggling farmers[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">9. Competition among market sellers leads to ________ prices for consumers.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-9')">[A] Lower[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-9')">[B] Higher[cite: 5]</button>
+        <div class="mcq-explain" id="c-9"><b>Why confusion happens:</b> Sellers compete to attract buyers, driving prices down and quality up[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">10. Mindful buying encourages consumers to make purchases based on ________.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'c-10')">[A] Actual needs and values[cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'c-10')">[B] Impulsive wants and advertisements[cite: 5]</button>
+        <div class="mcq-explain" id="c-10"><b>Why confusion happens:</b> Mindful buying is conscious purchasing based on genuine need[cite: 5].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6: TRUE / FALSE ARENA -->
+  <div id="mcq-tf" class="tab-content">
+    <div class="card">
+      <div class="card-title">10 Interactive True / False Arena (With Corrections)</div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">1. There are different wholesale markets for different types of goods as they require large spaces.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-1')">[TRUE][cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-1')">[FALSE][cite: 5]</button>
+        <div class="mcq-explain" id="tf-1"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Wholesale markets require large warehouses and specialize in specific bulk items[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">2. Online retailers have high overhead costs.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-2')">[TRUE][cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-2')">[FALSE][cite: 5]</button>
+        <div class="mcq-explain" id="tf-2"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Online retailers have *lower* overhead costs because they do not maintain physical showroom spaces[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">3. In the chain of markets, the price of a product increases at every step.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-3')">[TRUE][cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-3')">[FALSE][cite: 5]</button>
+        <div class="mcq-explain" id="tf-3"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Intermediaries add transport, rent, labor, and profit margins at each stage[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">4. Members of a cooperative society depend heavily on middlemen to sell their goods.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-4')">[TRUE][cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-4')">[FALSE][cite: 5]</button>
+        <div class="mcq-explain" id="tf-4"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Members sell directly to buyers/agencies, *reducing* middleman dependence[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">5. If there is a high demand for a product and its availability is low, the price will decrease.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-5')">[TRUE][cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-5')">[FALSE][cite: 5]</button>
+        <div class="mcq-explain" id="tf-5"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> When demand is high and supply is low, the price of the product *increases*[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">6. Neighbourhood shops often allow buyers to purchase goods on credit.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-6')">[TRUE][cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-6')">[FALSE][cite: 5]</button>
+        <div class="mcq-explain" id="tf-6"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> Personal acquaintance between local shopkeepers and residents enables credit buying[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">7. Farmers earn the highest share of profit in the chain of markets.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-7')">[TRUE][cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-7')">[FALSE][cite: 5]</button>
+        <div class="mcq-explain" id="tf-7"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Farmers earn the *lowest* share of profit despite performing the hardest physical labor[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">8. Weekly markets operate in permanent brick-and-mortar buildings.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-8')">[TRUE][cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-8')">[FALSE][cite: 5]</button>
+        <div class="mcq-explain" id="tf-8"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Weekly markets consist of temporary roadside stalls that pack up at night[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">9. Mindful buying means purchasing every attractive item shown in advertisements.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-9')">[TRUE][cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-9')">[FALSE][cite: 5]</button>
+        <div class="mcq-explain" id="tf-9"><b>Reason:</b> <span style="color:red; font-weight:700;">FALSE.</span> Mindful buying means evaluating actual needs before making conscious choices[cite: 5].</div>
+      </div>
+
+      <div class="mcq-box">
+        <div class="mcq-q">10. The government provides low-interest loans to help cooperative societies.[cite: 5]</div>
+        <button class="mcq-opt" onclick="checkMCQ(this, true, 'tf-10')">[TRUE][cite: 5]</button>
+        <button class="mcq-opt" onclick="checkMCQ(this, false, 'tf-10')">[FALSE][cite: 5]</button>
+        <div class="mcq-explain" id="tf-10"><b>Reason:</b> <span style="color:green; font-weight:700;">TRUE.</span> The government supports cooperatives with low-interest loans and secure buying schemes (e.g. Midday Meal buying)[cite: 5].</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 7: 100% COMPLETE TEXTBOOK SOLUTIONS -->
+  <div id="textbook-all" class="tab-content">
+    <div class="card">
+      <div class="card-title">100% Complete Textbook Exercise Solutions (A to J)</div>
+
+      <!-- EXERCISE A -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise A: Fill in the blanks (All 5 Questions)[cite: 5]</div>
+        <div class="qa-a">
+          1. <b>Producers</b> produce goods and provide services for consumers to use[cite: 5].<br>
+          2. Markets that sell daily necessities and have a mix of street stalls and bigger shops are called <b>neighbourhood</b> markets[cite: 5].<br>
+          3. The system where goods move from the producer to the consumer through a series of markets is called a <b>chain of markets</b>[cite: 5].<br>
+          4. Cooperatives help farmers sell their produce directly to consumers, reducing their dependence on <b>middlemen</b>[cite: 5].<br>
+          5. <b>Competition</b> in the market leads to better prices and quality products for consumers[cite: 5].
+        </div>
+      </div>
+
+      <!-- EXERCISE B -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise B: Choose the correct answer (All 4 Questions)[cite: 5]</div>
+        <div class="qa-a">
+          1. Which of the following markets happens once a week? <b>(a) Weekly markets</b>[cite: 5].<br>
+          2. Which of the following markets sells goods from only one brand? <b>(c) Branded stores</b>[cite: 5].<br>
+          3. Which of the following is an organisation formed by people with shared interests and goals? <b>(c) Cooperatives</b>[cite: 5].<br>
+          4. Which of the following is NOT a role that markets play in our lives? <b>(d) Promoting mindful buying</b>[cite: 5].
+        </div>
+      </div>
+
+      <!-- EXERCISE C -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise C: Write True or False. Rewrite false statements.[cite: 5]</div>
+        <div class="qa-a">
+          1. There are different wholesale markets for different types of goods as they require large spaces. <span style="color:green; font-weight:700;">TRUE</span>[cite: 5].<br><br>
+          2. Online retailers have high overhead costs. <span style="color:red; font-weight:700;">FALSE</span><br>
+          <i>(Correction: Online retailers have lower overhead costs because they do not maintain physical shops.)[cite: 5]</i><br><br>
+          3. In the chain of markets, the price of a product increases at every step. <span style="color:green; font-weight:700;">TRUE</span>[cite: 5].<br><br>
+          4. Members of a cooperative society depend on middlemen to sell their goods. <span style="color:red; font-weight:700;">FALSE</span><br>
+          <i>(Correction: Members sell goods directly, reducing dependence on middlemen.)[cite: 5]</i><br><br>
+          5. If there is a high demand for a product and its availability is low, the price of the product will decrease. <span style="color:red; font-weight:700;">FALSE</span><br>
+          <i>(Correction: If demand is high and supply is low, the price will increase.)[cite: 5]</i>
+        </div>
+      </div>
+
+      <!-- EXERCISE D -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise D: Complete the table on retail markets[cite: 5]</div>
+        <div class="qa-a">
+          <table class="textbook-table">
+            <tr>
+              <th>Type of Market</th>
+              <th>Types of Shops</th>
+              <th>Types of Goods Sold</th>
+              <th>Prices (High/Low)</th>
+            </tr>
+            <tr>
+              <td><b>Weekly markets</b></td>
+              <td>Temporary stalls[cite: 5]</td>
+              <td>Daily necessities, vegetables[cite: 5]</td>
+              <td><b>Low prices</b>[cite: 5]</td>
+            </tr>
+            <tr>
+              <td><b>Neighbourhood markets</b></td>
+              <td>Street stalls & bigger shops[cite: 5]</td>
+              <td>Groceries, daily necessities[cite: 5]</td>
+              <td>Moderate prices[cite: 5]</td>
+            </tr>
+            <tr>
+              <td><b>Branded stores</b></td>
+              <td>Exclusive showrooms[cite: 5]</td>
+              <td>Single-brand clothes/shoes[cite: 5]</td>
+              <td>High prices[cite: 5]</td>
+            </tr>
+            <tr>
+              <td><b>Shopping malls</b></td>
+              <td>Multi-storeyed shops[cite: 5]</td>
+              <td>Branded & luxury items[cite: 5]</td>
+              <td><b>High prices</b>[cite: 5]</td>
+            </tr>
+            <tr>
+              <td><b>Online retailers</b></td>
+              <td><b>No physical stores</b>[cite: 5]</td>
+              <td>Wide variety of products[cite: 5]</td>
+              <td>Competitive / Low prices[cite: 5]</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- EXERCISE E & F -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise E & F: Flowchart & Passage Completion[cite: 5]</div>
+        <div class="qa-a">
+          • <b>Exercise E (Flowchart):</b> Manufacturer $\rightarrow$ Wholesale Trader $\rightarrow$ Retail Traders (Suppliers) $\rightarrow$ Consumer[cite: 5].<br>
+          • <b>Exercise F (Passage Words):</b> access, convenient, competition, economy, jobs, lifestyle[cite: 5].
+        </div>
+      </div>
+
+      <!-- EXERCISE G -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise G: Answer the following questions in brief (All 5 Questions)[cite: 5]</div>
+        <div class="qa-a">
+          <b>1. Two main types of markets & differences:</b> Wholesale markets and Retail markets[cite: 5]. Wholesale buys/sells in bulk to traders[cite: 5]. Retail sells small quantities directly to consumers[cite: 5].<br><br>
+          <b>2. Producer vs Consumer:</b> Producer manufactures/grows goods[cite: 5]. Consumer buys/uses goods for personal use[cite: 5].<br><br>
+          <b>3. Market inequalities:</b> Farmers/producers earn small profits while large wholesalers and retailers take high profit margins[cite: 5].<br><br>
+          <b>4. Cooperatives:</b> Voluntary organizations formed by producers/farmers to sell directly and eliminate middlemen[cite: 5].<br><br>
+          <b>5. Impact on lives:</b> Provide goods, jobs, drive the economy, and influence lifestyle[cite: 5].
+        </div>
+      </div>
+
+      <!-- EXERCISE H -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise H: Answer the following questions in detail (All 5 Questions)[cite: 5]</div>
+        <div class="qa-a">
+          <b>1. Describe three types of people involved in buying & selling:</b> Producers (mango farmer Vinayak), Traders (wholesaler Ahmed), Consumers (family buyers)[cite: 5].<br><br>
+          <b>2. Why price increases in chain:</b> Intermediaries add transport, storage/warehouse rent, electricity, labor wages, and profit margins at every step[cite: 5].<br><br>
+          <b>3. Inequalities impact:</b> (a) Producers earn low prices and risk debt; (b) Consumers pay inflated prices due to middleman markups[cite: 5].<br><br>
+          <b>4. How cooperative reduces inequality:</b> Farmers pool produce to sell directly, eliminating middlemen and getting fair prices (e.g. dairy cooperatives)[cite: 5].<br><br>
+          <b>5. Mindful buying & impact:</b> Conscious purchasing based on actual needs, supporting local small businesses and reducing waste[cite: 5].
+        </div>
+      </div>
+
+      <!-- EXERCISE I & J -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Exercise I & J: HOTS & Competency-based Math Scenarios[cite: 5]</div>
+        <div class="qa-a">
+          • <b>I1 (Wholesale Markets):</b> Consumers don't buy at wholesale markets because goods are sold only in massive bulk quantities[cite: 5].<br>
+          • <b>I2 (Demand vs Supply Theory):</b> High demand + low supply = high prices[cite: 5]. Knowing this helps consumers avoid panic buying during shortages[cite: 5].<br>
+          • <b>J1 (Product Trace):</b> Tracing a cotton shirt from farmer to brand, noting that farmers get the lowest profit share[cite: 5].<br>
+          • <b>J2 (Notebook Chain Calculations):</b><br>
+          - <i>Ravi (Producer):</i> Earns ₹20,000 profit (₹20/notebook)[cite: 5].<br>
+          - <i>Nina (Wholesaler):</i> Earns ₹50,000 profit (₹25/notebook)[cite: 5].<br>
+          - <i>Ramesh (Retailer):</i> Earns ₹3,500 profit (₹35/notebook)[cite: 5].
+        </div>
+      </div>
+
+      <!-- REFLECTIONS -->
+      <div class="qa-card" onclick="toggleQA(this)">
+        <div class="qa-q">Reflections Section[cite: 5]</div>
+        <div class="qa-a">
+          • Realizing how many middlemen touch an item before it reaches our hands, and committing to practice mindful buying to support local producers[cite: 5].
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TAB 8: ENRICHED TOPIC VIDEOS -->
+  <div id="media" class="tab-content">
+    <div class="card">
+      <div class="card-title">Enriched Topic-Wise Recommended Videos</div>
+      <p style="margin-bottom:14px; font-size:0.9rem;">Click these curated links for visual animations and documentaries specifically organized by chapter topics[cite: 5]:</p>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+        
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Types+of+markets+Wholesale+vs+Retail+animation" target="_blank">
+          <span class="media-icon">🏪</span>
+          <div><b>Topic 1: Types of Markets (Wholesale & Retail)</b><br><small>Visual animations explaining weekly haats, malls & wholesale markets[cite: 5].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Chain+of+markets+from+producer+to+consumer+CBSE" target="_blank">
+          <span class="media-icon">🔗</span>
+          <div><b>Topic 2: Chain of Markets & Price Rise</b><br><small>Short films tracing goods from farms/factories to consumers[cite: 5].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Farmer+cooperatives+in+India+Amul+story" target="_blank">
+          <span class="media-icon">🚜</span>
+          <div><b>Topic 3: How Cooperatives Work (Amul Case Study)</b><br><small>Documentaries on how farmer cooperatives eliminate middlemen[cite: 5].</small></div>
+        </a>
+
+        <a class="media-link-card" href="https://www.youtube.com/results?search_query=Demand+and+Supply+theory+explained+for+students" target="_blank">
+          <span class="media-icon">⚖️</span>
+          <div><b>Topic 4: Demand vs Supply & Mindful Buying</b><br><small>Educational videos explaining market price mechanisms and conscious consumerism[cite: 5].</small></div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Chapter 17 Master Study Hub · Prepared for Pushti · CBSE Class 7 Civics
+  </footer>
+
+<script>
+  function openTab(tabId) {
+    const contents = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-btn');
+    contents.forEach(content => content.classList.remove('active'));
+    buttons.forEach(btn => btn.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  function toggleQA(cardElement) { cardElement.classList.toggle('open'); }
+
+  function checkMCQ(btnElement, isCorrect, explainId) {
+    const parentBox = btnElement.parentElement;
+    const buttons = parentBox.querySelectorAll('.mcq-opt');
+    const explanation = document.getElementById(explainId);
+
+    buttons.forEach(btn => btn.disabled = true);
+
+    if (isCorrect) { btnElement.classList.add('correct'); } 
+    else { btnElement.classList.add('wrong'); }
+
+    if (explanation) { explanation.style.display = 'block'; }
+  }
+</script>
+</body>
+</html>
