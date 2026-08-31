@@ -164,7 +164,42 @@
         </table>
     </div>
 
-    <div class="card">
+    
+      <div class="card" style="grid-column: 1 / -1;">
+          <h2>User Management</h2>
+          <p>Manage access credentials and roles for the platform.</p>
+          
+          <table style="margin-bottom:20px;">
+              <thead>
+                  <tr>
+                      <th>User ID</th>
+                      <th>Name</th>
+                      <th>Role</th>
+                      <th>Password</th>
+                  </tr>
+              </thead>
+              <tbody id="user-management-body">
+                  <!-- Populated by JS -->
+              </tbody>
+          </table>
+
+          <div style="background:var(--bg-color); padding:16px; border:1px dashed var(--border);">
+              <h3 style="font-family:'Outfit',sans-serif; font-size:0.9rem; margin-top:0;">Add / Edit User</h3>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+                  <input type="text" id="new-userid" placeholder="User ID (e.g. hirak)" style="padding:8px; background:var(--surface); border:1px solid var(--border); color:var(--text-main);">
+                  <input type="text" id="new-name" placeholder="Display Name" style="padding:8px; background:var(--surface); border:1px solid var(--border); color:var(--text-main);">
+                  <input type="text" id="new-pass" placeholder="Password" style="padding:8px; background:var(--surface); border:1px solid var(--border); color:var(--text-main);">
+                  <select id="new-role" style="padding:8px; background:var(--surface); border:1px solid var(--border); color:var(--text-main);">
+                      <option value="student">Student</option>
+                      <option value="parent">Parent</option>
+                      <option value="admin">Admin</option>
+                  </select>
+              </div>
+              <button onclick="saveUser()" style="width:100%; padding:10px; background:var(--primary); color:white; border:none; font-weight:bold; cursor:pointer;">Save User</button>
+          </div>
+      </div>
+
+      <div class="card">
         <h2>System Telemetry</h2>
         <table>
             <thead>
@@ -183,7 +218,7 @@
 </div>
 
 <script type="module">
-    import { db, doc, onSnapshot, setDoc, collection, query, orderBy, limit } from './firebase-config.js';
+    import { db, doc, onSnapshot, setDoc, getDoc, collection, query, orderBy, limit } from './firebase-config.js';
 
     // Time Analytics Fetcher
     const statsRef = doc(db, "user_stats", "pushti_uid"); // We don't have the exact UID hardcoded, so let's query all or listen to the first document in user_stats.

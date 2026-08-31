@@ -92,9 +92,13 @@
                         <span class="stat-label">Topics</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-number" id="time-count">0h 0m</span>
-                        <span class="stat-label">Total Study Time</span>
-                    </div>
+                          <span class="stat-number" id="time-pushti">0h 0m</span>
+                          <span class="stat-label">Pushti's Study Time</span>
+                      </div>
+                      <div class="stat-card">
+                          <span class="stat-number" id="time-hirak">0h 0m</span>
+                          <span class="stat-label">Hirak's Verify Time</span>
+                      </div>
                 </div>
             </div>
             <div class="hero-decoration" aria-hidden="true">
@@ -197,25 +201,31 @@
 <script type="module">
     import { auth, db, onAuthStateChanged, doc, getDoc } from './firebase-config.js';
     
-    onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            try {
-                const statsRef = doc(db, "user_stats", user.uid);
-                const docSnap = await getDoc(statsRef);
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    const totalSec = data.total_time || 0;
-                    const hours = Math.floor(totalSec / 3600);
-                    const minutes = Math.floor((totalSec % 3600) / 60);
-                    document.getElementById('time-count').textContent = hours + "h " + minutes + "m";
-                }
-            } catch(e) {
-                console.error("Error fetching stats:", e);
-            }
-        }
-    });
+    
+      import { onSnapshot } from './firebase-config.js';
 
-    // Parent Toggle Logic
+      function updateTimeDisplay(seconds, elementId) {
+          if (!seconds) seconds = 0;
+          const hours = Math.floor(seconds / 3600);
+          const minutes = Math.floor((seconds % 3600) / 60);
+          document.getElementById(elementId).textContent = hours + "h " + minutes + "m";
+      }
+
+      // Listen to Pushti's time
+      onSnapshot(doc(db, "user_stats", "pushti"), (docSnap) => {
+          if (docSnap.exists()) {
+              updateTimeDisplay(docSnap.data().total_time, 'time-pushti');
+          }
+      });
+
+      // Listen to Hirak's time
+      onSnapshot(doc(db, "user_stats", "hirak"), (docSnap) => {
+          if (docSnap.exists()) {
+              updateTimeDisplay(docSnap.data().total_time, 'time-hirak');
+          }
+      });
+
+      // Parent Toggle Logic
     const roleToggle = document.getElementById('role-checkbox');
     if(roleToggle) {
         roleToggle.addEventListener('change', (e) => {
@@ -260,12 +270,45 @@
     </div>
 
     <script>
-        const AUTH_USERS = {
+        let AUTH_USERS = {
             'pushti': { name: 'Pushti', pass: 'pushti123', role: 'student', bg: '8B5CF6' },
             'hirak':  { name: 'Hirak', pass: 'hirak123', role: 'student', bg: '10B981' },
             'parent': { name: 'Parent', pass: 'parent123', role: 'parent', bg: 'F59E0B' },
             'admin':  { name: 'Admin', pass: 'admin123', role: 'admin', bg: 'EF4444' }
         };
+
+        // Fetch users dynamically from Firebase
+        import { getDoc, setDoc } from './firebase-config.js';
+        
+        async function loadUsers() {
+            try {
+                const docSnap = await getDoc(doc(db, "settings", "users"));
+                if (docSnap.exists()) {
+                    AUTH_USERS = docSnap.data();
+                    
+                    // Rebuild the select dropdown
+                    const select = document.getElementById('login-user-select');
+                    if (select) {
+                        select.innerHTML = '';
+                        for (const key in AUTH_USERS) {
+                            const opt = document.createElement('option');
+                            opt.value = key;
+                            opt.textContent = AUTH_USERS[key].name;
+                            select.appendChild(opt);
+                        }
+                    }
+                } else {
+                    // Seed the default users to Firebase if they don't exist
+                    await setDoc(doc(db, "settings", "users"), AUTH_USERS);
+                }
+            } catch (err) {
+                console.error("Could not fetch users from Firebase, falling back to local.", err);
+            }
+        }
+        
+        // Call it on load
+        loadUsers();
+
 
         function openLoginModal() {
             document.getElementById('login-password').value = '';

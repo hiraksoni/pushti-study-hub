@@ -626,6 +626,24 @@ window.onload = function() {
 };
 
 </script>
+
+<!-- FIREBASE TIMER INJECTION START -->
+<script type="module">
+    import { db, doc, setDoc, increment } from '../../firebase-config.js';
+    
+    // Time Tracker
+    setInterval(() => {
+        const activeUser = localStorage.getItem('pushti-active-user');
+        if (activeUser === 'pushti' || activeUser === 'hirak') {
+            const statsRef = doc(db, 'user_stats', activeUser);
+            // Increment total_time by 60 seconds
+            setDoc(statsRef, { total_time: increment(60) }, { merge: true })
+                .catch(err => console.error("Error logging time:", err));
+        }
+    }, 60000); // 60 seconds
+</script>
+<!-- FIREBASE TIMER INJECTION END -->
+
 </body>
 </html>
 
@@ -775,5 +793,23 @@ totalMax = mcqBook.length + fillBook.length + tfBook.length;
     if(longBook && longBook.length) { renderSubjective('long-container', longBook, 'lb'); document.getElementById('long-count').textContent = `(${longBook.filter(i=>!i.isHeader).length})`; }
     if(extraBook && extraBook.length) { renderSubjective('extra-container', extraBook, 'eb'); document.getElementById('extra-count').textContent = `(${extraBook.filter(i=>!i.isHeader).length})`; }
     </script>
+
+<!-- FIREBASE TIMER INJECTION START -->
+<script type="module">
+    import { db, doc, setDoc, increment } from '../../firebase-config.js';
+    
+    // Time Tracker
+    setInterval(() => {
+        const activeUser = localStorage.getItem('pushti-active-user');
+        if (activeUser === 'pushti' || activeUser === 'hirak') {
+            const statsRef = doc(db, 'user_stats', activeUser);
+            // Increment total_time by 60 seconds
+            setDoc(statsRef, { total_time: increment(60) }, { merge: true })
+                .catch(err => console.error("Error logging time:", err));
+        }
+    }, 60000); // 60 seconds
+</script>
+<!-- FIREBASE TIMER INJECTION END -->
+
 </body>
 </html>
