@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASL Speech Prep — Pushti Study Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg-main: #FFFFFF;
+    --bg-card: #F8FAFC;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --accent: #38BDF8;
+    --border: #E2E8F0;
+    --border-hover: #CBD5E1;
+    --good: #059669;
+    --good-bg: #D1FAE5;
+    --bad: #E11D48;
+    --bad-bg: #FFE4E6;
+    --warn: #D97706;
+    --warn-bg: #FEF3C7;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-main: #0F172A;
+      --bg-card: #1E293B;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --primary: #6366F1;
+      --primary-hover: #818CF8;
+      --accent: #0EA5E9;
+      --border: #334155;
+      --border-hover: #475569;
+      --good: #34D399;
+      --good-bg: #064E3B;
+      --bad: #F87171;
+      --bad-bg: #7F1D1D;
+      --warn: #FBBF24;
+      --warn-bg: #78350F;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{margin:0; background: var(--bg-main); color: var(--text-main); font-family:'Nunito',sans-serif; line-height:1.7;}
+  .wrap{max-width:900px; margin:0 auto; padding:20px 16px 120px;}
+  
+  /* BACK BUTTON */
+  .back-bar { padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--bg-card); }
+  .back-btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--primary); font-weight: 700; font-size: 0.9rem; }
+  .back-btn:hover { opacity: 0.8; }
+
+  /* HERO */
+  header.hero{text-align:center; padding:30px 14px 20px; margin-bottom:0;}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--primary); margin-bottom:8px; font-weight:600;}
+  h1{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:clamp(1.7rem,5vw,2.5rem); margin:0 0 8px; color:var(--text-main);}
+  .sub{font-size:1rem; color:var(--text-muted); max-width: 600px; margin: 0 auto;}
+
+  /* DEADLINE BANNER */
+  .deadline-banner {
+    background: linear-gradient(135deg, var(--bad-bg), var(--warn-bg));
+    border: 2px solid var(--bad);
+    border-radius: 14px;
+    padding: 18px 24px;
+    margin: 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .deadline-icon { font-size: 2rem; }
+  .deadline-text { flex: 1; }
+  .deadline-text strong { color: var(--bad); font-size: 1.1rem; display: block; margin-bottom: 2px; }
+  .deadline-text span { font-size: 0.9rem; color: var(--text-muted); }
+
+  /* INFO BOX */
+  .info-box {
+    background: var(--bg-card);
+    border: 1px dashed var(--primary);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 20px 0 30px;
+    font-size: 0.95rem;
+  }
+  .info-box b { color: var(--primary); }
+  .info-box ul { margin: 8px 0 0; padding-left: 20px; }
+  .info-box li { margin-bottom: 6px; }
+
+  /* SECTION HEADERS */
+  .section-header {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: var(--text-main);
+    margin: 40px 0 20px;
+    border-left: 4px solid var(--primary);
+    padding-left: 14px;
+  }
+
+  /* TOPIC CARDS */
+  .topic-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: border-color 0.3s;
+  }
+  .topic-card:hover { border-color: var(--border-hover); }
+  
+  .topic-header {
+    padding: 18px 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    user-select: none;
+    transition: 0.2s;
+  }
+  .topic-header:hover { background: rgba(79,70,229,0.04); }
+  
+  .topic-num {
+    width: 42px; height: 42px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .topic-title {
+    font-weight: 700;
+    font-size: 1.15rem;
+    flex: 1;
+    color: var(--text-main);
+  }
+  .topic-type {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .type-debate { background: #EDE9FE; color: #7C3AED; }
+  .type-narrative { background: #DBEAFE; color: #2563EB; }
+  .type-opinion { background: #FEF3C7; color: #D97706; }
+  .type-persuasive { background: #D1FAE5; color: #059669; }
+  @media (prefers-color-scheme: dark) {
+    .type-debate { background: #2E1065; color: #C4B5FD; }
+    .type-narrative { background: #1E3A5F; color: #93C5FD; }
+    .type-opinion { background: #78350F; color: #FDE68A; }
+    .type-persuasive { background: #064E3B; color: #6EE7B7; }
+  }
+  
+  .topic-chevron {
+    font-size: 1.2rem;
+    color: var(--primary);
+    transition: transform 0.3s;
+  }
+  .topic-card.open .topic-chevron { transform: rotate(180deg); }
+
+  .topic-body {
+    display: none;
+    padding: 0 22px 22px;
+    animation: fadeIn 0.3s ease;
+  }
+  .topic-card.open .topic-body { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* CONTENT BLOCKS */
+  .block-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--primary);
+    font-weight: 600;
+    margin: 18px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .block-label:first-child { margin-top: 0; }
+  
+  .points-list { margin: 0; padding-left: 20px; }
+  .points-list li { margin-bottom: 8px; font-size: 0.95rem; }
+  .points-list li strong { color: var(--primary); }
+  
+  .example-box {
+    background: rgba(79,70,229,0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 0.92rem;
+    font-style: italic;
+    color: var(--text-main);
+  }
+  
+  .hook-box {
+    background: rgba(52,211,153,0.08);
+    border-left: 3px solid var(--good);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 0.92rem;
+  }
+  .hook-box strong { color: var(--good); }
+
+  .closer-box {
+    background: rgba(251,191,36,0.08);
+    border-left: 3px solid var(--warn);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 0.92rem;
+  }
+  .closer-box strong { color: var(--warn); }
+
+  .counter-box {
+    background: var(--bad-bg);
+    border-left: 3px solid var(--bad);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 0.92rem;
+  }
+  .counter-box strong { color: var(--bad); }
+
+  /* SPEECH STRUCTURE TEMPLATE */
+  .speech-template {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .speech-template h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    margin: 0 0 14px;
+    color: var(--primary);
+  }
+  .template-step {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .step-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #fff;
+    background: var(--primary);
+    padding: 3px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+  .step-content { font-size: 0.92rem; }
+  .step-content strong { color: var(--text-main); }
+
+  /* TIPS SECTION */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 14px;
+    margin: 20px 0;
+  }
+  .tip-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .tip-icon { font-size: 1.4rem; margin-bottom: 6px; }
+  .tip-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+  .tip-desc { font-size: 0.88rem; color: var(--text-muted); }
+
+  /* PRACTICE CHECKLIST */
+  .checklist { list-style: none; padding: 0; margin: 16px 0; }
+  .checklist li {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: 0.2s;
+    user-select: none;
+  }
+  .checklist li:hover { border-color: var(--primary); }
+  .checklist li.checked { background: var(--good-bg); border-color: var(--good); text-decoration: line-through; opacity: 0.7; }
+  .check-circle {
+    width: 24px; height: 24px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    color: transparent;
+    transition: 0.2s;
+  }
+  .checklist li.checked .check-circle { background: var(--good); border-color: var(--good); color: #fff; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .deadline-banner { flex-direction: column; text-align: center; gap: 8px; }
+    .topic-header { flex-wrap: wrap; gap: 10px; }
+    .topic-type { order: 3; }
+  }
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a href="../../english_index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to English</a>
+</div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">English — Assessment of Speaking & Listening</div>
+  <h1>🎤 ASL Speech Preparation</h1>
+  <p class="sub">1–2 minute speech • Without paper • All 8 topics covered — pick your favourite!</p>
+</header>
+
+<!-- DEADLINE -->
+<div class="deadline-banner">
+  <div class="deadline-icon">🗓️</div>
+  <div class="deadline-text">
+    <strong>Speaking Skill Test: 11th September (Friday)</strong>
+    <span>Listening Skill: 10th September (Thursday) &bull; Marks count towards Mid-Term &bull; NO re-test!</span>
+  </div>
+</div>
+
+<!-- ASSESSMENT INFO -->
+<div class="info-box">
+  <b>📋 What You Need to Know:</b>
+  <ul>
+    <li>Prepare a <b>1–2 minute speech</b> on <b>any ONE</b> of the 8 topics below</li>
+    <li>You <b>must speak without reading</b> from paper — memorise your flow, not word-for-word</li>
+    <li>Marks are added to your <b>Mid-Term Examination</b></li>
+    <li>Both Speaking (11 Sep) and Listening (10 Sep) assessments matter</li>
+  </ul>
+</div>
+
+<!-- ===== SPEECH STRUCTURE ===== -->
+<h2 class="section-header">🏗️ How to Structure Any Speech</h2>
+
+<div class="speech-template">
+  <h4>The 4-Part Framework (works for every topic)</h4>
+  <div class="template-step">
+    <span class="step-time">15 sec</span>
+    <div class="step-content"><strong>🎣 Hook —</strong> Start with something that grabs attention. A surprising fact, a question to the audience, a bold statement, or a quick personal anecdote.</div>
+  </div>
+  <div class="template-step">
+    <span class="step-time">20 sec</span>
+    <div class="step-content"><strong>📌 Stand —</strong> State your position clearly. "I believe that…" or "Today, I want to argue that…" — make it crystal clear where you stand.</div>
+  </div>
+  <div class="template-step">
+    <span class="step-time">50 sec</span>
+    <div class="step-content"><strong>💡 Support —</strong> Give 2–3 strong reasons with examples, facts, or real-life references. Each point = one sentence explaining + one sentence example/proof. Acknowledge the other side briefly to show maturity.</div>
+  </div>
+  <div class="template-step">
+    <span class="step-time">15 sec</span>
+    <div class="step-content"><strong>🎯 Close —</strong> End with a punch. Summarise your stand in one powerful line. End with a question, a call-to-action, or a memorable quote. Leave the audience thinking.</div>
+  </div>
+</div>
+
+<!-- ===== ALL 8 TOPICS ===== -->
+<h2 class="section-header">📚 All 8 Topics — Detailed Prep</h2>
+<p style="color:var(--text-muted); font-size: 0.92rem; margin-bottom: 24px;">Click any topic to expand. Read through all of them, then pick the ONE that resonates with you the most. 💡</p>
+
+<!-- TOPIC 1 -->
+<div class="topic-card" onclick="toggleTopic(this)">
+  <div class="topic-header">
+    <div class="topic-num">1</div>
+    <div class="topic-title">Homework — Helpful or Harmful?</div>
+    <span class="topic-type type-debate">Debate</span>
+    <i class="fas fa-chevron-down topic-chevron"></i>
+  </div>
+  <div class="topic-body">
+
+    <div class="block-label"><i class="fas fa-lightbulb"></i> Core Idea</div>
+    <p>This is a <b>balanced debate topic</b>. The smartest approach is to acknowledge both sides, then take a nuanced stand — homework is helpful <em>when done right</em>, but harmful when overdone.</p>
+
+    <div class="block-label"><i class="fas fa-thumbs-up"></i> Arguments FOR Homework</div>
+    <ul class="points-list">
+      <li><strong>Reinforcement:</strong> Practising at home solidifies what was taught in class — you can't learn to ride a bicycle by just watching someone</li>
+      <li><strong>Self-discipline:</strong> It builds time-management skills, responsibility, and the ability to work independently — skills you'll need your whole life</li>
+      <li><strong>Revision gaps:</strong> Without homework, most students wouldn't touch their books until exam week — homework forces regular engagement</li>
+      <li><strong>Parent insight:</strong> It gives parents a window into what their child is learning and how they're doing</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-thumbs-down"></i> Arguments AGAINST Homework</div>
+    <ul class="points-list">
+      <li><strong>Burnout:</strong> After 7–8 hours of school, piling on homework steals time for play, hobbies, family, and sleep — all of which are crucial for a developing brain</li>
+      <li><strong>Quality vs. quantity:</strong> Most homework is repetitive busywork — copying definitions or doing 50 identical sums doesn't teach, it just exhausts</li>
+      <li><strong>Inequality:</strong> Not every student has a quiet desk, helpful parents, or internet — homework can widen the gap between privileged and underprivileged kids</li>
+      <li><strong>Research says:</strong> Studies (like those by Stanford researcher Denise Pope) show excessive homework leads to stress, sleep deprivation, and less interest in learning</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-balance-scale"></i> Suggested Stand</div>
+    <div class="hook-box">
+      <strong>Balanced take:</strong> "Homework isn't the villain — <em>meaningless</em> homework is. When it's purposeful, creative, and limited, it's genuinely helpful. But when it becomes a pile of repetitive pages that eat into our evenings, it becomes harmful."
+    </div>
+
+    <div class="block-label"><i class="fas fa-play-circle"></i> Sample Hook</div>
+    <div class="example-box">
+      "Imagine getting home at 4 PM after a full school day, and finding three hours of homework waiting for you. No cricket, no drawing, no family time. Just… more school. That's the reality for millions of students. So the question is — is this really helping us learn, or is it just making us hate learning?"
+    </div>
+
+    <div class="block-label"><i class="fas fa-flag-checkered"></i> Sample Closer</div>
+    <div class="closer-box">
+      <strong>Try this:</strong> "Let's not abolish homework — let's <em>reimagine</em> it. Give us projects that make us curious, problems that make us think, and time that lets us also be kids. Because the best homework is one that makes you want to do more — not less."
+    </div>
+  </div>
+</div>
+
+<!-- TOPIC 2 -->
+<div class="topic-card" onclick="toggleTopic(this)">
+  <div class="topic-header">
+    <div class="topic-num">2</div>
+    <div class="topic-title">Should Exams Be the Only Way to Test Knowledge?</div>
+    <span class="topic-type type-persuasive">Persuasive</span>
+    <i class="fas fa-chevron-down topic-chevron"></i>
+  </div>
+  <div class="topic-body">
+
+    <div class="block-label"><i class="fas fa-lightbulb"></i> Core Idea</div>
+    <p>The strong position here is: <b>No, exams should NOT be the only way.</b> But be smart — don't trash exams entirely. Argue for a <em>blended system</em> that values different kinds of intelligence.</p>
+
+    <div class="block-label"><i class="fas fa-gavel"></i> Why Exams Alone Are Insufficient</div>
+    <ul class="points-list">
+      <li><strong>Memory ≠ understanding:</strong> Exams mostly test what you can memorise and reproduce in 3 hours — not what you truly understand. Einstein reportedly said, "Education is not the learning of facts, but the training of the mind to think."</li>
+      <li><strong>One-dimensional:</strong> Howard Gardner's theory of Multiple Intelligences tells us people are smart in different ways — musical, spatial, interpersonal. A written exam only measures one type</li>
+      <li><strong>Anxiety and unfairness:</strong> Some brilliant students choke under exam pressure. A single bad day can ruin months of effort. That's not assessment — that's a lottery</li>
+      <li><strong>Real life doesn't work this way:</strong> No job says "Sit down, no talking, write everything you know in 3 hours." Real competence is shown through projects, teamwork, problem-solving, and communication</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-plus-circle"></i> Better Alternatives (To Mention)</div>
+    <ul class="points-list">
+      <li><strong>Project-based assessments</strong> — like what you're doing right now with this speech!</li>
+      <li><strong>Portfolios</strong> — a collection of your best work over the term</li>
+      <li><strong>Presentations & viva</strong> — test how well you actually understand, not memorise</li>
+      <li><strong>Open-book exams</strong> — test application, not rote recall</li>
+      <li><strong>Continuous assessment</strong> — class participation, quizzes, assignments throughout the year</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-shield-alt"></i> Acknowledge the Other Side</div>
+    <div class="counter-box">
+      <strong>Fair point:</strong> "I'm not saying exams should be abolished. They do teach discipline, time management, and the ability to perform under pressure. But they should be one piece of the puzzle — not the entire puzzle."
+    </div>
+
+    <div class="block-label"><i class="fas fa-play-circle"></i> Sample Hook</div>
+    <div class="example-box">
+      "Albert Einstein, one of the greatest minds in history, once failed an entrance exam. Does that mean he lacked knowledge? Or does it mean the exam failed to measure what he knew?"
+    </div>
+
+    <div class="block-label"><i class="fas fa-flag-checkered"></i> Sample Closer</div>
+    <div class="closer-box">
+      <strong>Try this:</strong> "If we truly want to prepare students for the real world, let's assess them the way the real world does — through creativity, critical thinking, and collaboration. Let exams be one chapter of the assessment story — not the whole book."
+    </div>
+  </div>
+</div>
+
+<!-- TOPIC 3 -->
+<div class="topic-card" onclick="toggleTopic(this)">
+  <div class="topic-header">
+    <div class="topic-num">3</div>
+    <div class="topic-title">How to Make School More Fun and Productive</div>
+    <span class="topic-type type-persuasive">Persuasive</span>
+    <i class="fas fa-chevron-down topic-chevron"></i>
+  </div>
+  <div class="topic-body">
+
+    <div class="block-label"><i class="fas fa-lightbulb"></i> Core Idea</div>
+    <p>This topic lets you be <b>constructive and creative</b>. Don't just complain about school — propose real, workable solutions. Show that "fun" and "productive" aren't opposites.</p>
+
+    <div class="block-label"><i class="fas fa-rocket"></i> Key Ideas to Cover</div>
+    <ul class="points-list">
+      <li><strong>Learning by doing:</strong> More lab work, field trips, hands-on projects. You remember 90% of what you <em>do</em> vs. only 10% of what you <em>read</em> (Edgar Dale's Cone of Experience)</li>
+      <li><strong>Student voice:</strong> Let students have a say in how they learn. Choice boards, elective subjects, passion projects — when students have ownership, engagement skyrockets</li>
+      <li><strong>Technology integration:</strong> Use apps, simulations, and interactive tools — not as entertainment but as genuine learning aids. Imagine learning geography through Google Earth or history through virtual museum tours</li>
+      <li><strong>Shorter lectures, more discussion:</strong> The average attention span for a teenager is about 10–15 minutes. Long lectures don't work. Break it up with discussions, debates, and group activities</li>
+      <li><strong>Creativity matters:</strong> Art, music, drama, creative writing shouldn't be "extras." They develop critical thinking, emotional intelligence, and innovation</li>
+      <li><strong>Mental health awareness:</strong> Counsellors, mindfulness breaks, anti-bullying programmes. A stressed student can't learn no matter how great the teaching is</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-film"></i> Pop Culture Connection</div>
+    <div class="example-box">
+      Think of the movie "Dead Poets Society" — Mr. Keating made his students stand on desks to see the world differently. That's what great education feels like. Or think of how in "The Wizard of Oz", Dorothy learns more on her journey than she ever could in a classroom.
+    </div>
+
+    <div class="block-label"><i class="fas fa-play-circle"></i> Sample Hook</div>
+    <div class="example-box">
+      "How many of you have ever looked at the clock during a class, counting minutes until the bell rings? I know I have. But here's the thing — we also have classes where time flies. What's the difference? It's not the subject. It's the method."
+    </div>
+
+    <div class="block-label"><i class="fas fa-flag-checkered"></i> Sample Closer</div>
+    <div class="closer-box">
+      <strong>Try this:</strong> "School shouldn't be a place where we go to survive — it should be a place where we go to thrive. All it takes is a willingness to try something new. Because when learning is fun, productivity follows naturally."
+    </div>
+  </div>
+</div>
+
+<!-- TOPIC 4 -->
+<div class="topic-card" onclick="toggleTopic(this)">
+  <div class="topic-header">
+    <div class="topic-num">4</div>
+    <div class="topic-title">Internet — A Boon or a Bane?</div>
+    <span class="topic-type type-debate">Debate</span>
+    <i class="fas fa-chevron-down topic-chevron"></i>
+  </div>
+  <div class="topic-body">
+
+    <div class="block-label"><i class="fas fa-lightbulb"></i> Core Idea</div>
+    <p>Classic debate topic. The mature take: <b>The internet is a tool — it's a boon or bane depending on how we use it.</b> Like fire, it can cook your food or burn your house.</p>
+
+    <div class="block-label"><i class="fas fa-thumbs-up"></i> Internet as a BOON</div>
+    <ul class="points-list">
+      <li><strong>Democratisation of knowledge:</strong> A kid in a village in India can access the same Khan Academy or YouTube tutorial as a student at Harvard. Education has never been more equal</li>
+      <li><strong>Connection:</strong> Video calls with grandparents in another city, collaboration with classmates on a project in real time, friendships across borders — the internet erases distance</li>
+      <li><strong>Empowerment:</strong> Young people are starting businesses, publishing books, creating content, learning coding — all through the internet. A 13-year-old today has resources that a CEO didn't have 30 years ago</li>
+      <li><strong>Information speed:</strong> During COVID, the internet was literally a lifeline — for education, work, medical consultations, and staying connected</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-thumbs-down"></i> Internet as a BANE</div>
+    <ul class="points-list">
+      <li><strong>Addiction & screen time:</strong> The average teenager spends 7+ hours on screens daily. Social media apps are literally designed to be addictive (dopamine loops)</li>
+      <li><strong>Misinformation:</strong> Fake news spreads 6x faster than true news (MIT study). People believe anything with a professional-looking thumbnail</li>
+      <li><strong>Cyberbullying & safety:</strong> Behind a screen, people say things they'd never say face-to-face. Cyberbullying has real, devastating effects on mental health</li>
+      <li><strong>Privacy:</strong> Every click, search, and like is tracked. We're giving away personal data without even realising it</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-balance-scale"></i> Suggested Stand</div>
+    <div class="hook-box">
+      <strong>The smart take:</strong> "Blaming the internet for misinformation is like blaming a library for having bad books. The tool is neutral — it amplifies whatever we bring to it. Bring curiosity, it's a boon. Bring carelessness, it's a bane."
+    </div>
+
+    <div class="block-label"><i class="fas fa-play-circle"></i> Sample Hook</div>
+    <div class="example-box">
+      "The internet helped a student in rural Rajasthan crack the IIT entrance exam using free YouTube lectures. The same internet was used to spread fake health advice that led to people drinking bleach during COVID. Same tool — very different outcomes. So is the internet a boon or a bane? The answer, I believe, is: it depends on us."
+    </div>
+
+    <div class="block-label"><i class="fas fa-flag-checkered"></i> Sample Closer</div>
+    <div class="closer-box">
+      <strong>Try this:</strong> "The internet doesn't need a warning label — we need better digital literacy. Teach us to question, to verify, to use it wisely. Because the internet is the most powerful tool humanity has ever built. Let's not waste it scrolling through cat videos… well, maybe some cat videos."
+    </div>
+  </div>
+</div>
+
+<!-- TOPIC 5 -->
+<div class="topic-card" onclick="toggleTopic(this)">
+  <div class="topic-header">
+    <div class="topic-num">5</div>
+    <div class="topic-title">A Day Without Technology</div>
+    <span class="topic-type type-narrative">Narrative</span>
+    <i class="fas fa-chevron-down topic-chevron"></i>
+  </div>
+  <div class="topic-body">
+
+    <div class="block-label"><i class="fas fa-lightbulb"></i> Core Idea</div>
+    <p>This is a <b>narrative + reflective</b> topic. You can either narrate an imagined/real day without technology, or take a philosophical angle on what it reveals about our dependency. The best approach: <b>mix both</b>.</p>
+
+    <div class="block-label"><i class="fas fa-sun"></i> What Would Happen?</div>
+    <ul class="points-list">
+      <li><strong>Morning panic:</strong> No alarm clock app, no checking messages, no morning playlist — you'd wake up to actual silence and have to figure out the time from the sun</li>
+      <li><strong>Rediscovering the basics:</strong> Reading a physical book, playing a board game, cooking from a handwritten recipe, writing a letter with a pen — things our parents and grandparents did daily</li>
+      <li><strong>Boredom becomes creativity:</strong> Without Netflix queues and Instagram feeds, your brain would actually have to entertain itself — and that's where creativity is born. JK Rowling imagined Harry Potter on a delayed train with nothing to do</li>
+      <li><strong>Human connection:</strong> Without screens as barriers, you'd actually look at people, talk to your neighbours, play outside with friends. Real laughter, not emojis</li>
+      <li><strong>Anxiety and withdrawal:</strong> Let's be honest — most of us would feel lost, anxious, disconnected. That itself is a revelation about how dependent we've become</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-brain"></i> Deeper Reflection Points</div>
+    <ul class="points-list">
+      <li>Technology was supposed to <strong>serve us</strong> — but have we become servants of our devices?</li>
+      <li>The ability to be <strong>comfortable with silence and solitude</strong> is a skill we're losing</li>
+      <li>A "digital detox day" might be <strong>as important as exercise</strong> for our mental health</li>
+      <li>We don't need to abandon technology — we need to ensure it <strong>adds to our life rather than replacing it</strong></li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-play-circle"></i> Sample Hook</div>
+    <div class="example-box">
+      "What's the first thing you do every morning? If you're being honest, it's probably reaching for your phone. Now imagine waking up tomorrow and it's just… gone. No phone, no laptop, no WiFi. Just you, the sunlight, and 24 hours of undiluted reality. Terrifying? Or liberating? Let me tell you what I think would happen."
+    </div>
+
+    <div class="block-label"><i class="fas fa-flag-checkered"></i> Sample Closer</div>
+    <div class="closer-box">
+      <strong>Try this:</strong> "A day without technology wouldn't be the end of the world. It might actually be the beginning of remembering what the world really looks like. Maybe we all need one unplugged day — not to reject technology, but to remind ourselves that we existed before it, and we can exist without it."
+    </div>
+  </div>
+</div>
+
+<!-- TOPIC 6 -->
+<div class="topic-card" onclick="toggleTopic(this)">
+  <div class="topic-header">
+    <div class="topic-num">6</div>
+    <div class="topic-title">Should E-Sports Be Treated as Real Sports?</div>
+    <span class="topic-type type-debate">Debate</span>
+    <i class="fas fa-chevron-down topic-chevron"></i>
+  </div>
+  <div class="topic-body">
+
+    <div class="block-label"><i class="fas fa-lightbulb"></i> Core Idea</div>
+    <p>This is a modern, edgy topic — perfect if you want to stand out. The strong position: <b>Yes, e-sports deserve recognition as real sports</b>, while acknowledging they're different from traditional sports.</p>
+
+    <div class="block-label"><i class="fas fa-gamepad"></i> Arguments FOR E-Sports = Real Sports</div>
+    <ul class="points-list">
+      <li><strong>Skill & training:</strong> Pro gamers train 8–12 hours a day, have coaches, nutritionists, and psychologists — just like athletes. The hand-eye coordination of a pro gamer has been measured to be comparable to a fighter pilot's</li>
+      <li><strong>Massive audience:</strong> The League of Legends World Championship had 73 million viewers — more than the NBA Finals. If viewership defines a sport, e-sports qualify</li>
+      <li><strong>Strategy & teamwork:</strong> Games like Valorant, Dota 2, and CS require real-time strategy, communication, split-second decisions, and team coordination — exactly like football or basketball</li>
+      <li><strong>Olympic recognition:</strong> The International Olympic Committee is actively considering including e-sports. The 2023 Olympic Esports Week was hosted in Singapore. The Asian Games 2022 included e-sports as a medal event</li>
+      <li><strong>Career & economics:</strong> E-sports is a billion-dollar industry with scholarships, sponsorships, and full-time careers — it's not just "playing video games"</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-running"></i> Arguments AGAINST</div>
+    <ul class="points-list">
+      <li><strong>Physical exertion:</strong> Traditional sports demand cardiovascular fitness, endurance, and physical strength — sitting in a chair doesn't compare</li>
+      <li><strong>Health concerns:</strong> Extended gaming can lead to obesity, posture problems, eye strain, and social isolation</li>
+      <li><strong>Definition of "sport":</strong> Oxford dictionary: "an activity involving physical exertion and skill." E-sports nail the skill part but miss the physical exertion</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-balance-scale"></i> Suggested Stand</div>
+    <div class="hook-box">
+      <strong>Smart angle:</strong> "Maybe the debate isn't whether e-sports are 'real' sports — maybe our definition of sport needs to evolve. Chess is a sport. Archery is a sport. The common thread isn't sweat — it's competition, skill, and dedication."
+    </div>
+
+    <div class="block-label"><i class="fas fa-play-circle"></i> Sample Hook</div>
+    <div class="example-box">
+      "In 2022, an 18-year-old from India earned more prize money playing video games than most cricketers earn in a season. He trains for 10 hours a day, has a coach, a dietician, and a psychologist. Is he an athlete? Or is he just… a gamer? Today, I want to challenge what we mean by the word 'sport.'"
+    </div>
+
+    <div class="block-label"><i class="fas fa-flag-checkered"></i> Sample Closer</div>
+    <div class="closer-box">
+      <strong>Try this:</strong> "We don't dismiss chess because there's no running. We don't dismiss archery because there's no tackling. So why dismiss e-sports because there's no field? Sport is about human excellence — and e-sports are exactly that."
+    </div>
+  </div>
+</div>
+
+<!-- TOPIC 7 -->
+<div class="topic-card" onclick="toggleTopic(this)">
+  <div class="topic-header">
+    <div class="topic-num">7</div>
+    <div class="topic-title">Is Winning More Important Than Participating?</div>
+    <span class="topic-type type-opinion">Opinion</span>
+    <i class="fas fa-chevron-down topic-chevron"></i>
+  </div>
+  <div class="topic-body">
+
+    <div class="block-label"><i class="fas fa-lightbulb"></i> Core Idea</div>
+    <p>The expected answer is "Participating is more important." But a sharp speech will <b>complicate this</b>. Don't just parrot the cliché — add nuance. The best take: <b>Participation builds character, but striving to win builds excellence. Both matter.</b></p>
+
+    <div class="block-label"><i class="fas fa-trophy"></i> The Case for Winning</div>
+    <ul class="points-list">
+      <li><strong>Drive and ambition:</strong> The desire to win pushes us to prepare harder, practice longer, and push past our limits. Without the goal of winning, many people wouldn't even try</li>
+      <li><strong>Real world rewards:</strong> In life, there are winners and there are those who don't make the cut — college admissions, job interviews, competitions. Pretending everyone wins doesn't prepare you for reality</li>
+      <li><strong>Winners inspire:</strong> Neeraj Chopra didn't inspire a generation by "just participating" at the Olympics — he inspired us by winning gold. Sachin Tendulkar isn't remembered for showing up — he's remembered for his centuries</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-hands-helping"></i> The Case for Participating</div>
+    <ul class="points-list">
+      <li><strong>Growth comes from trying:</strong> You learn more from running a race and finishing last than from sitting in the stands watching. The lessons of perseverance, handling failure, and pushing through — these come from participation</li>
+      <li><strong>Not everyone starts equal:</strong> Some have better coaches, more practice time, natural advantages. If only winning mattered, most of us would never bother starting</li>
+      <li><strong>The journey matters:</strong> Mary Kom lost many fights before becoming a champion. Every loss was participation — and every loss made her better</li>
+      <li><strong>Mental health:</strong> A "win-or-nothing" mindset leads to toxic pressure, burnout, and fear of failure. Participation teaches you to enjoy the process</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-balance-scale"></i> The Nuanced Stand</div>
+    <div class="hook-box">
+      <strong>Best approach:</strong> "Participating gives you the right to learn. Striving to win gives you the fuel to grow. The real answer isn't one or the other — it's participate with the <em>intention</em> to win, but the <em>wisdom</em> to accept when you don't."
+    </div>
+
+    <div class="block-label"><i class="fas fa-play-circle"></i> Sample Hook</div>
+    <div class="example-box">
+      "In the 1968 Olympics, Tanzanian marathon runner John Stephen Akhwari finished last — injured, bleeding, an hour after the winner. When asked why he kept going, he said, 'My country did not send me to start the race. They sent me to finish it.' Was he a winner? Not on the scoreboard. But in every other way that matters — absolutely."
+    </div>
+
+    <div class="block-label"><i class="fas fa-flag-checkered"></i> Sample Closer</div>
+    <div class="closer-box">
+      <strong>Try this:</strong> "So the next time someone tells you 'it's not about winning, it's about participating,' add one word: 'It's about participating <em>wholeheartedly</em>.' Because when you give something everything you've got, whether you win or lose, you've already become better than you were yesterday. And isn't that the ultimate victory?"
+    </div>
+  </div>
+</div>
+
+<!-- TOPIC 8 -->
+<div class="topic-card" onclick="toggleTopic(this)">
+  <div class="topic-header">
+    <div class="topic-num">8</div>
+    <div class="topic-title">Team Sports vs Individual Sports — Which Builds Better Character?</div>
+    <span class="topic-type type-debate">Debate</span>
+    <i class="fas fa-chevron-down topic-chevron"></i>
+  </div>
+  <div class="topic-body">
+
+    <div class="block-label"><i class="fas fa-lightbulb"></i> Core Idea</div>
+    <p>Another balanced debate. Pick one side to argue primarily, but acknowledge the other. Both build character — they just build <b>different aspects</b> of it. The smartest stand: <b>Team sports edge ahead because the real world is a team sport.</b></p>
+
+    <div class="block-label"><i class="fas fa-users"></i> Team Sports Build Character Because…</div>
+    <ul class="points-list">
+      <li><strong>Collaboration:</strong> You learn to work with people who are different from you — different strengths, different personalities. This is the #1 skill employers look for</li>
+      <li><strong>Ego management:</strong> In a team, you can't always be the star. Sometimes you assist, sometimes you sacrifice for the team. That's maturity</li>
+      <li><strong>Leadership & followership:</strong> You learn when to lead and when to trust someone else's lead — both are equally important life skills</li>
+      <li><strong>Shared joy & shared failure:</strong> Celebrating together and losing together builds empathy, resilience, and camaraderie. The bonds formed in team sports last a lifetime</li>
+      <li><strong>Communication:</strong> On a football field, you have seconds to communicate strategy. This builds quick thinking and clear communication under pressure</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-user"></i> Individual Sports Build Character Because…</div>
+    <ul class="points-list">
+      <li><strong>Self-reliance:</strong> There's no one to pass the ball to. Every victory is yours, every defeat is yours. This builds immense personal responsibility</li>
+      <li><strong>Mental toughness:</strong> A tennis player down two sets, a gymnast standing alone before a vault — individual sports build an unbreakable mental fortitude</li>
+      <li><strong>Self-discipline:</strong> No teammates to motivate you at 5 AM practice. The drive has to come entirely from within</li>
+      <li><strong>Knowing yourself:</strong> Individual sports force deep self-awareness — your limits, your strengths, your mental patterns. You become your own coach</li>
+    </ul>
+
+    <div class="block-label"><i class="fas fa-balance-scale"></i> Suggested Stand</div>
+    <div class="hook-box">
+      <strong>Smart take:</strong> "Individual sports teach you to trust yourself. Team sports teach you to trust others. Both are essential — but if I had to choose, I'd say team sports build a more complete character, because life itself is the ultimate team sport. No one succeeds alone."
+    </div>
+
+    <div class="block-label"><i class="fas fa-play-circle"></i> Sample Hook</div>
+    <div class="example-box">
+      "Here's a thought experiment. You have two athletes: one is a brilliant solo swimmer who never learned to work with anyone else. The other is an average footballer who knows how to lead, listen, sacrifice, and celebrate with a team. Who would you rather hire? Who would you rather be friends with? The answer tells you a lot about which sport builds better character."
+    </div>
+
+    <div class="block-label"><i class="fas fa-flag-checkered"></i> Sample Closer</div>
+    <div class="closer-box">
+      <strong>Try this:</strong> "Character isn't just about being strong — it's about being strong <em>for others</em>. And that's the lesson team sports teach you every single day. Whether it's on the field or in life, the best version of you isn't the one who wins alone — it's the one who helps everyone win together."
+    </div>
+  </div>
+</div>
+
+<!-- ===== DELIVERY TIPS ===== -->
+<h2 class="section-header">🎭 Delivery Tips — How to Nail the Speech</h2>
+
+<div class="tips-grid">
+  <div class="tip-card">
+    <div class="tip-icon">🧠</div>
+    <div class="tip-title">Memorise the Flow, Not Words</div>
+    <div class="tip-desc">Remember your 4 stages: Hook → Stand → Support (2-3 points) → Close. If you know the structure, words will flow naturally even if you forget exact lines.</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-icon">👀</div>
+    <div class="tip-title">Eye Contact</div>
+    <div class="tip-desc">Look at your audience (or the back wall if nervous). Don't stare at your shoes or the ceiling. Move your gaze across the room — left, centre, right.</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-icon">🎵</div>
+    <div class="tip-title">Vary Your Tone</div>
+    <div class="tip-desc">Monotone = boring. Go louder for key points, softer for emotional moments, and pause before important statements. The pause is your most powerful tool.</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-icon">✋</div>
+    <div class="tip-title">Use Hand Gestures</div>
+    <div class="tip-desc">Don't stand like a statue. Use natural hand movements to emphasise points. But don't overdo it — you're giving a speech, not directing traffic.</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-icon">⏱️</div>
+    <div class="tip-title">Time Yourself</div>
+    <div class="tip-desc">Practice with a timer. Aim for 1 min 30 sec — gives you buffer. Too short looks unprepared, too long gets cut off. Sweet spot: 80-100 seconds.</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-icon">😌</div>
+    <div class="tip-title">Manage Nervousness</div>
+    <div class="tip-desc">Take 3 deep breaths before starting. Start slow. Remember: everyone is nervous — the audience is rooting for you, not against you. Channel the butterflies into energy.</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-icon">🚫</div>
+    <div class="tip-title">Avoid These Traps</div>
+    <div class="tip-desc">Don't say "umm" or "like" repeatedly. Don't rush. Don't memorise word-for-word (you'll freeze if you forget one word). Don't apologise for being nervous.</div>
+  </div>
+  <div class="tip-card">
+    <div class="tip-icon">💪</div>
+    <div class="tip-title">Power Posture</div>
+    <div class="tip-desc">Stand straight, shoulders back, feet slightly apart. Before you speak, take a moment — own the stage. Confidence is 50% posture, 50% preparation.</div>
+  </div>
+</div>
+
+<!-- ===== PRACTICE CHECKLIST ===== -->
+<h2 class="section-header">✅ Practice Checklist</h2>
+<p style="color:var(--text-muted); font-size: 0.92rem;">Click to check off each step as you complete it:</p>
+
+<ul class="checklist" id="practiceChecklist">
+  <li onclick="toggleCheck(this)"><span class="check-circle">✓</span> Read through all 8 topics and pick your favourite</li>
+  <li onclick="toggleCheck(this)"><span class="check-circle">✓</span> Write down your key points on paper (just bullet points, not full sentences)</li>
+  <li onclick="toggleCheck(this)"><span class="check-circle">✓</span> Practice speaking from your bullet points 3 times</li>
+  <li onclick="toggleCheck(this)"><span class="check-circle">✓</span> Now put the paper away and speak from memory</li>
+  <li onclick="toggleCheck(this)"><span class="check-circle">✓</span> Time yourself — aim for 1 min 20 sec to 1 min 40 sec</li>
+  <li onclick="toggleCheck(this)"><span class="check-circle">✓</span> Practice in front of a mirror (watch your body language)</li>
+  <li onclick="toggleCheck(this)"><span class="check-circle">✓</span> Practice in front of Papa / family member and get feedback</li>
+  <li onclick="toggleCheck(this)"><span class="check-circle">✓</span> Record yourself on phone and watch it back</li>
+  <li onclick="toggleCheck(this)"><span class="check-circle">✓</span> Do one final run-through the night before the test</li>
+  <li onclick="toggleCheck(this)"><span class="check-circle">✓</span> Sleep well the night before — a rested brain speaks better!</li>
+</ul>
+
+<!-- ===== LISTENING SKILL PREP ===== -->
+<h2 class="section-header">👂 Listening Skill — Quick Prep (10th Sep)</h2>
+
+<div class="info-box">
+  <b>What to expect:</b> The teacher will read a passage / play an audio, and you'll answer questions about it.
+  <ul>
+    <li><strong>Focus on key details:</strong> names, dates, numbers, sequences, main idea</li>
+    <li><strong>Listen for tone:</strong> is the speaker persuading, informing, narrating, or arguing?</li>
+    <li><strong>Take mental notes:</strong> who, what, when, where, why, how</li>
+    <li><strong>Practice at home:</strong> Listen to a 2-minute podcast/news clip without looking at the screen, then write down the main points. Do this 2–3 times before the test</li>
+    <li><strong>Don't overthink:</strong> Write what you heard, not what you think they should have said</li>
+  </ul>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+function toggleTopic(card) {
+  // Don't toggle if clicking inside the body
+  if (event.target.closest('.topic-body')) return;
+  card.classList.toggle('open');
+}
+
+function toggleCheck(li) {
+  li.classList.toggle('checked');
+  // Save state
+  const items = document.querySelectorAll('#practiceChecklist li');
+  const states = Array.from(items).map(i => i.classList.contains('checked'));
+  localStorage.setItem('asl-checklist', JSON.stringify(states));
+}
+
+// Restore checklist state
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('asl-checklist');
+  if (saved) {
+    const states = JSON.parse(saved);
+    const items = document.querySelectorAll('#practiceChecklist li');
+    states.forEach((checked, i) => {
+      if (checked && items[i]) items[i].classList.add('checked');
+    });
+  }
+});
+</script>
+
+<!-- FIREBASE TIMER INJECTION START -->
+<script type="module">
+    import { db, doc, setDoc, increment } from '../../firebase-config.js';
+    
+    setInterval(() => {
+        const activeUser = localStorage.getItem('pushti-active-user');
+        if (activeUser === 'pushti' || activeUser === 'hirak') {
+            const statsRef = doc(db, 'user_stats', activeUser);
+            setDoc(statsRef, { total_time: increment(60) }, { merge: true })
+                .catch(err => console.error("Error logging time:", err));
+        }
+    }, 60000);
+</script>
+<!-- FIREBASE TIMER INJECTION END -->
+
+</body>
+</html>
