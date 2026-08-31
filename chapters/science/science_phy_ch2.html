@@ -334,63 +334,108 @@ let totalMax = 0;
 
 function renderFill(containerId, data, prefix){
   const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  let qNum = 1;
   data.forEach((item,i)=>{
-    totalMax += 1;
+    if(item.isHeader) {
+      const div = document.createElement('div');
+      div.style = 'grid-column: 1 / -1; font-weight: bold; font-size: 1.15rem; color: #38bdf8; padding: 1.5rem 0 0.5rem 0; border-bottom: 1px solid #334155; margin-bottom: 1rem; margin-top: 1rem;';
+      div.innerHTML = item.text;
+      c.appendChild(div);
+      return;
+    }
     const div = document.createElement('div');
-    div.className = 'q fillblank';
-    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
-      <input type="text" id="${prefix}-${i}" placeholder="type your answer" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('fill', '${prefix}', ${i})">
-      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    div.className='q';
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
+      <input type="text" id="${prefix}-ans-${i}" class="text-input" placeholder="type your answer">
+      <div id="${prefix}-fb-${i}" class="feedback"></div>`;
+    
+    div.querySelector('input').addEventListener('blur', (e) => gradeSpecificQuestion('fill', prefix, i));
     c.appendChild(div);
+    qNum++;
   });
-  c.dataset.type='fill'; c.dataset.prefix=prefix;
-  c.fillData = data;
 }
+
 
 function renderMCQ(containerId, data, prefix){
   const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  let qNum = 1;
   data.forEach((item,i)=>{
-    totalMax += 1;
+    if(item.isHeader) {
+      const div = document.createElement('div');
+      div.style = 'grid-column: 1 / -1; font-weight: bold; font-size: 1.15rem; color: #38bdf8; padding: 1.5rem 0 0.5rem 0; border-bottom: 1px solid #334155; margin-bottom: 1rem; margin-top: 1rem;';
+      div.innerHTML = item.text;
+      c.appendChild(div);
+      return;
+    }
     const div = document.createElement('div');
     div.className='q';
-    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('mcq', '${prefix}', ${i})"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
-    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
-      <div class="opts">${opts}</div>
-      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-q${i}" value="${j}"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
+      <div class="options">${opts}</div>
+      <div id="${prefix}-fb-${i}" class="feedback"></div>`;
+    
+    div.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('change', (e) => gradeSpecificQuestion('mcq', prefix, i));
+    });
     c.appendChild(div);
+    qNum++;
   });
-  c.dataset.type='mcq'; c.dataset.prefix=prefix;
-  c.mcqData = data;
 }
+
 
 function renderTF(containerId, data, prefix){
   const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  let qNum = 1;
   data.forEach((item,i)=>{
-    totalMax += 1;
+    if(item.isHeader) {
+      const div = document.createElement('div');
+      div.style = 'grid-column: 1 / -1; font-weight: bold; font-size: 1.15rem; color: #38bdf8; padding: 1.5rem 0 0.5rem 0; border-bottom: 1px solid #334155; margin-bottom: 1rem; margin-top: 1rem;';
+      div.innerHTML = item.text;
+      c.appendChild(div);
+      return;
+    }
     const div = document.createElement('div');
     div.className='q';
-    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.s}</div>
-      <div class="tf-row">
-        <label><input type="radio" name="${prefix}-${i}" value="true" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> True</label>
-        <label><input type="radio" name="${prefix}-${i}" value="false" onchange="if(window.currentMode==='practice') gradeSpecificQuestion('tf', '${prefix}', ${i})"> False</label>
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.s}</div>
+      <div class="tf-toggle">
+        <button class="tf-btn" data-val="true" onclick="selectTF(this, '${prefix}', ${i})">True</button>
+        <button class="tf-btn false-btn" data-val="false" onclick="selectTF(this, '${prefix}', ${i})">False</button>
       </div>
-      <div class="feedback" id="${prefix}-fb-${i}"></div>`;
+      <div id="${prefix}-fb-${i}" class="feedback"></div>`;
     c.appendChild(div);
+    qNum++;
   });
-  c.dataset.type='tf'; c.dataset.prefix=prefix;
-  c.tfData = data;
 }
+
 
 function renderSubjective(containerId, data, prefix){
   const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  let qNum = 1;
   data.forEach((item,i)=>{
+    if(item.isHeader) {
+      const div = document.createElement('div');
+      div.style = 'grid-column: 1 / -1; font-weight: bold; font-size: 1.15rem; color: #38bdf8; padding: 1.5rem 0 0.5rem 0; border-bottom: 1px solid #334155; margin-bottom: 1rem; margin-top: 1rem;';
+      div.innerHTML = item.text;
+      c.appendChild(div);
+      return;
+    }
     const div = document.createElement('div');
     div.className='q subjective';
-    div.innerHTML = `<div class="q-text"><span class="num">${i+1}.</span>${item.q}</div>
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
       <details><summary>Show Detailed Answer</summary><div class="model">${item.model}</div></details>`;
     c.appendChild(div);
+    qNum++;
   });
 }
+
 
 function gradeSpecificQuestion(type, prefix, i) {
    let item, val, correct, answerText, expText;
@@ -579,30 +624,1960 @@ window.onload = function() {
 
 <script>
 
-const mcqBook = [{"q": "Your father bought a saucepan made of two different materials, A and B. A is the pan body and B is the handle. Which of the following properties is correct?", "options": ["Both A and B are good conductors of heat.", "Both A and B are poor conductors of heat.", "A is a good conductor and B is a poor conductor of heat.", "A is a poor conductor and B is a good conductor of heat."], "answer": 2}, {"q": "Pins are stuck to a metal strip with wax. A burning candle is kept in the middle of the rod between pin II and III. The order of pins from left to right is IV, III, II, I. Which of the following will happen?", "options": ["All the pins will fall almost at the same time.", "Pins I and II will fall earlier than pins III and IV.", "Pins I and II will fall later than pins III and IV.", "Pins II and III will fall almost at the same time."], "answer": 3}, {"q": "A smoke detector is a device that detects smoke and sounds an alarm. Suppose you are fitting a smoke detector in your room. The most suitable place for this device will be:", "options": ["Near the floor", "In the middle of a wall", "On the ceiling", "Anywhere in the room"], "answer": 2}, {"q": "A thermometer works on the principle of", "options": ["linear expansion of solid", "cubical expansion of solid", "uniform expansion of volume of liquid or gas with temperature", "Both (b) and (c)"], "answer": 2}, {"q": "Name the thermometer which ranges from -10\u00b0C to 110\u00b0C.", "options": ["Clinical thermometer", "Digital thermometer", "Laboratory thermometer", "All of these"], "answer": 2}, {"q": "Which one of the following scale has lower fixed point at 0\u00b0C?", "options": ["Kelvin scale", "Fahrenheit scale", "Celsius scale", "All of these"], "answer": 2}, {"q": "Paheli and Boojho measured their body temperature. Paheli found her's to be 98.6 \u00b0F and Boojho recorded 37\u00b0C. Which of the following statement is true?", "options": ["Paheli has a higher body temperature than Boojho.", "Paheli has a lower body temperature than Boojho.", "Both have normal body temperature.", "Both are suffering from fever."], "answer": 2}, {"q": "Why a digital thermometer is widely used for the measurement of the temperature?", "options": ["Analog display", "Mercury", "High accuracy", "Low accuracy"], "answer": 2}, {"q": "When we heat one end of an iron rod, its other end also gets heated. Can you say, which one of the following is behind this?", "options": ["Convection of heat", "Radiation of heat", "Insulation of heat", "Conduction of heat"], "answer": 3}, {"q": "When you heat the water in a pot, it boils. What do you infer from the observation?", "options": ["Heat is a form of energy.", "Water can boil itself.", "Water develops heat on its own.", "None of these."], "answer": 0}, {"q": "In which of the given option chemical energy is converted into heat energy?", "options": ["Heater", "Refrigerator", "Candle", "Motor"], "answer": 2}, {"q": "Iron, hydrogen peroxide and carbon dioxide. When same amount of heat is supplied to these three substances, which expands most?", "options": ["Hydrogen peroxide", "Carbon dioxide", "Iron", "All of these."], "answer": 1}, {"q": "A liquid changes into a gas at a constant temperature known as its", "options": ["absolute zero", "boiling point", "evaporation point", "dew point"], "answer": 1}, {"q": "Petrol storage tanks are not painted black because", "options": ["black is good conductor of heat", "black is bad conductor of heat", "black is good reflector of radiation", "black is good absorber of radiation"], "answer": 3}, {"q": "In solid substances, heat is transferred by", "options": ["Conduction", "Convection", "Radiation", "(a) and (c)"], "answer": 0}, {"q": "The handles of cooking vessels are covered with plastic or wood because", "options": ["they are beautiful", "it is customary", "they are good conductors of heat", "they are bad conductors of heat"], "answer": 3}, {"q": "In conduction, heat flows from", "options": ["hotter to hotter region", "colder to hotter region", "hotter to colder region", "colder to colder region"], "answer": 2}, {"q": "Figure (a-d) shows the readings on four different thermometers. Indicate which of the reading shows the normal human body temperature?", "options": ["37\u00b0C", "38\u00b0C", "39\u00b0C", "36\u00b0C"], "answer": 0}, {"q": "The measure of degree of hotness or coldness of a body is called", "options": ["heat energy", "celsius", "kelvin", "temperature"], "answer": 3}, {"q": "Which of the following is not a scale of temperature?", "options": ["Kelvin scale", "Celsius scale", "Fahrenheit scale", "Richter scale"], "answer": 3}, {"q": "The difference between lower fixed point and upper fixed point is divided into _______ parts on a Celsius scale.", "options": ["100", "273", "180", "50"], "answer": 0}, {"q": "When two objects are in physical contact, the heat is transferred by", "options": ["conduction", "convection", "radiation", "none of these"], "answer": 0}, {"q": "Figure (a-d) shows a student reading a doctor's thermometer. Which of the figure indicates the correct method of reading temperature?", "options": ["Line of sight horizontally aligned with the liquid level", "Line of sight from above", "Line of sight from below", "Holding the thermometer by the bulb"], "answer": 0}, {"q": "A polished, silvery surface is a", "options": ["good absorber and good reflector of heat", "good absorber and bad radiator of heat", "poor absorber and good reflector of heat", "poor reflector and good radiator of heat"], "answer": 2}, {"q": "Substances which allow heat to pass through them are called", "options": ["conductors", "insulators", "moderators", "none of these"], "answer": 0}, {"q": "A coin is dipped in the molten wax in a glass tube. If we heat the upper part of the glass tube, the wax around the coin will not melt because", "options": ["wax has a very high melting point", "wax is a good conductor of heat", "glass is a good conductor of heat", "air and glass are bad conductors"], "answer": 3}, {"q": "When you pour hot tea suddenly into a glass tumbler, it cracks. Because", "options": ["glass cannot resist heat.", "glass expands unevenly around the place of contact with the tea.", "tea has chemicals which react with glass tumblers.", "the reason is yet to be discovered by the scientists."], "answer": 1}, {"q": "Warm air is", "options": ["lighter than cold air", "heavier than cold air", "both have equal weights", "cannot be said."], "answer": 0}, {"q": "Convection of heat takes place in", "options": ["metals only", "liquids only", "gases only", "liquids and gases."], "answer": 3}, {"q": "When you heat a bowl of water, you can observe that water starts circulating. This demonstrates", "options": ["conduction", "convection", "radiation", "none of these."], "answer": 1}, {"q": "Birds glide effortlessly in the air with the help of", "options": ["conduction of heat in the air", "radiation of light through the atmosphere", "convection currents of air", "none of these."], "answer": 2}, {"q": "The phenomenon involved in sea breeze and land breeze is", "options": ["convection", "conduction", "radiation", "none of these."], "answer": 0}, {"q": "Process of change of state from gaseous state to liquid state is called", "options": ["freezing", "sublimation", "boiling", "condensation."], "answer": 3}, {"q": "When clouds get too heavy to hold water in the water cycle, what happens?", "options": ["The water falls to the Earth.", "The water evaporates.", "Another cloud forms.", "The clouds get very large."], "answer": 0}, {"q": "Studying the water cycle, where is the purest water on Earth?", "options": ["Glaciers and ice caps", "Rivers and streams", "Sulfur springs", "Lakes and ponds"], "answer": 0}, {"q": "What turns water on the Earth into vapor in the water cycle?", "options": ["The Sun", "The Moon", "Global warming", "Water treatment centers"], "answer": 0}, {"q": "What is tapped into when digging a well looking for water in the water cycle?", "options": ["An underground aquifer", "An underground river", "A sulfur spring", "An irrigation ditch"], "answer": 0}, {"q": "Select the option containing only renewable resources.", "options": ["Fossil fuels, metals", "Groundwater, fossil fuels", "Forests, petroleum", "Groundwater, sunlight"], "answer": 3}, {"q": "Water can be obtained from aquifer by", "options": ["digging a tubewell", "hand pump", "infiltration", "either (a) or (b)."], "answer": 3}, {"q": "Which of the following is not a consequence of water scarcity?", "options": ["Decreased crop production", "Occurrence of water-borne diseases", "Drought", "Greenhouse effect"], "answer": 3}];
-renderMCQ('mcqbook-container', mcqBook, 'mb');
-document.getElementById('mcq-count').textContent = `(${mcqBook.length})`;
+const mcqBook = [
+  {
+    "q": "5 J of work is done in moving a positive charge of 0.5 C between two points. The potential difference between these two points is",
+    "options": [
+      "(a) 25 V",
+      "(b) 2.5 V",
+      "(c) 10 V",
+      "(d) zero"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "The SI unit of electric potential is",
+    "options": [
+      "(a) ampere",
+      "(b) volt",
+      "(c) joule",
+      "(d) coulomb."
+    ],
+    "answer": ""
+  },
+  {
+    "q": "A charge of 2 coulomb moves between two points maintained at a potential difference of 1 volt. The energy acquired by the charge is",
+    "options": [
+      "(a) 0.1 J",
+      "(b) 0.2 J",
+      "(c) 1 J",
+      "(d) 2 J"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "How much is the electric potential of a charge at infinity?",
+    "options": [
+      "(a) Zero",
+      "(b) Infinite",
+      "(c) One",
+      "(d) Can't determine"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "(i) Raghav has a temperature of 40\u00b0C. What would you suggest him to do?\n(ii) Can you say which of these is the temperature on the surface of the Sun?",
+    "options": [
+      "(a) 50\u00b0C",
+      "(b) 500\u00b0C",
+      "(c) 3000\u00b0C",
+      "(d) 5500\u00b0C"
+    ],
+    "answer": "Ans.: (i) Raghav has fever as his body temperature is more than the normal value (37\u00b0C) and he should see a doctor without any delay.\n(ii) (d) : 5500\u00b0C"
+  },
+  {
+    "isHeader": true,
+    "text": "Choose the correct option in each case."
+  },
+  {
+    "q": "(i) Your father bought a saucepan made of two different materials, A and B, as shown in figure. The materials A and B have the following properties-",
+    "options": [
+      "Both A and B are good conductors of heat.",
+      "Both A and B are poor conductors of heat.",
+      "A is a good conductor and B is a poor conductor of heat.",
+      "A is a poor conductor and B is a good conductor of heat."
+    ],
+    "answer": 2
+  },
+  {
+    "q": "(ii) Pins are stuck to a metal strip with wax and a burning candle is kept below the rod, as shown in figure. Which of the following will happen?",
+    "options": [
+      "All the pins will fall almost at the same time.",
+      "Pins I and II will fall earlier than pins III and IV.",
+      "Pins I and II will fall later than pins III and IV.",
+      "Pins II and III will fall almost at the same time."
+    ],
+    "answer": 1
+  },
+  {
+    "q": "(iii) A smoke detector is a device that detects smoke and sounds an alarm. Suppose you are fitting a smoke detector in your room. The most suitable place for this device will be:",
+    "options": [
+      "Near the floor",
+      "In the middle of a wall",
+      "On the ceiling",
+      "Anywhere in the room"
+    ],
+    "answer": 2
+  },
+  {
+    "q": "A thermometer works on the principle of",
+    "options": [
+      "linear expansion of solid",
+      "cubical expansion of solid",
+      "uniform expansion of volume of liquid or gas with temperature",
+      "Both (b) and (c)."
+    ],
+    "answer": 2
+  },
+  {
+    "q": "Name the thermometer which ranges from -10\u00b0C to 110\u00b0C.",
+    "options": [
+      "Clinical thermometer",
+      "Digital thermometer",
+      "Laboratory thermometer",
+      "All of these"
+    ],
+    "answer": 2
+  },
+  {
+    "q": "Which one of the following scale has lower fixed point at 0\u00b0C ?",
+    "options": [
+      "Kelvin scale",
+      "Celsius scale",
+      "Fahrenheit scale",
+      "All of these"
+    ],
+    "answer": 1
+  },
+  {
+    "q": "Paheli and Boojho measured their body temperature. Paheli found her's to be 98.6 \u00b0F and Boojho recorded 37\u00b0C. Which of the following statement is true?",
+    "options": [
+      "Paheli has a higher body temperature than Boojho.",
+      "Paheli has a lower body temperature than Boojho.",
+      "Both have normal body temperature.",
+      "Both are suffering from fever."
+    ],
+    "answer": 2
+  },
+  {
+    "q": "Why a digital thermometer is widely used for the measurement of the temperature?",
+    "options": [
+      "Analog display",
+      "High accuracy",
+      "Mercury",
+      "Low accuracy"
+    ],
+    "answer": 1
+  },
+  {
+    "q": "When we heat one end of an iron rod, its other end also gets heated. Can you say, which one of the following is behind this?",
+    "options": [
+      "Convection of heat",
+      "Radiation of heat",
+      "Insulation of heat",
+      "Conduction of heat"
+    ],
+    "answer": 3
+  },
+  {
+    "q": "When you heat the water in a pot, it boils. What do you infer from the observation?",
+    "options": [
+      "Heat is a form of energy.",
+      "Water can boil itself.",
+      "Water develops heat on its own.",
+      "None of these."
+    ],
+    "answer": 0
+  },
+  {
+    "q": "In which of the given option chemical energy is converted into heat energy?",
+    "options": [
+      "Heater",
+      "Candle",
+      "Refrigerator",
+      "Motor"
+    ],
+    "answer": 1
+  },
+  {
+    "q": "Iron, hydrogen peroxide and carbon dioxide. When same amount of heat is supplied to these three substances, which expands most?",
+    "options": [
+      "Hydrogen peroxide",
+      "Carbon dioxide",
+      "Iron",
+      "All of these."
+    ],
+    "answer": 1
+  },
+  {
+    "q": "A liquid changes into a gas at a constant temperature known as its",
+    "options": [
+      "absolute zero",
+      "evaporation point",
+      "boiling point",
+      "dew point."
+    ],
+    "answer": 2
+  },
+  {
+    "q": "Black is good conductor of heat\nblack is bad conductor of heat\nblack is good reflector of radiation\nblack is good absorber of radiation.",
+    "options": [
+      "black is good conductor of heat",
+      "black is bad conductor of heat",
+      "black is good reflector of radiation",
+      "black is good absorber of radiation."
+    ],
+    "answer": 3
+  },
+  {
+    "q": "In solid substances, heat is transferred by",
+    "options": [
+      "Conduction",
+      "Radiation",
+      "Convection",
+      "(a) and (c)"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "The handles of cooking vessels are covered with plastic or wood because",
+    "options": [
+      "they are beautiful",
+      "it is customary",
+      "they are good conductors of heat",
+      "they are bad conductors of heat."
+    ],
+    "answer": 3
+  },
+  {
+    "q": "In conduction, heat flows from",
+    "options": [
+      "hotter to hotter region",
+      "colder to hotter region",
+      "hotter to colder region",
+      "colder to colder region."
+    ],
+    "answer": 2
+  },
+  {
+    "q": "Figure (a-d) shows the readings on four different thermometers. Indicate which of the reading shows the normal human body temperature?",
+    "options": [
+      "(a)",
+      "(b)",
+      "(c)",
+      "(d)"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "The measure of degree of hotness or coldness of a body is called",
+    "options": [
+      "heat energy",
+      "celsius",
+      "kelvin",
+      "temperature."
+    ],
+    "answer": 3
+  },
+  {
+    "q": "Which of the following is not a scale of temperature?",
+    "options": [
+      "Kelvin scale",
+      "Celsius scale",
+      "Fahrenheit scale",
+      "Richter scale"
+    ],
+    "answer": 3
+  },
+  {
+    "q": "The difference between lower fixed point and upper fixed point is divided into ______ parts on a Celsius scale.",
+    "options": [
+      "100",
+      "180",
+      "273",
+      "50"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "When two objects are in physical contact, the heat is transferred by",
+    "options": [
+      "conduction",
+      "convection",
+      "radiation",
+      "none of these."
+    ],
+    "answer": 0
+  },
+  {
+    "q": "Figure (a-d) shows a student reading a doctor's thermometer. Which of the figure indicates the correct method of reading temperature?",
+    "options": [
+      "(a)",
+      "(b)",
+      "(c)",
+      "(d)"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "A polished, silvery surface is a",
+    "options": [
+      "good absorber and good reflector of heat",
+      "good absorber and bad radiator of heat",
+      "poor absorber and good reflector of heat",
+      "poor reflector and good radiator of heat."
+    ],
+    "answer": 2
+  },
+  {
+    "q": "Substances which allow heat to pass through them are called",
+    "options": [
+      "conductors",
+      "moderators",
+      "insulators",
+      "none of these."
+    ],
+    "answer": 0
+  },
+  {
+    "q": "A coin is dipped in the molten wax in a glass tube. If we heat the upper part of the glass tube, the wax around the coin will not melt because",
+    "options": [
+      "wax has a very high melting point",
+      "wax is a good conductor of heat",
+      "glass is a good conductor of heat",
+      "air and glass are bad conductors."
+    ],
+    "answer": 3
+  },
+  {
+    "q": "When you pour hot tea suddenly into a glass tumbler, it cracks. Because",
+    "options": [
+      "glass cannot resist heat.",
+      "glass expands unevenly around the place of contact with the tea.",
+      "tea has chemicals which react with glass tumblers.",
+      "the reason is yet to be discovered by the scientists."
+    ],
+    "answer": 1
+  },
+  {
+    "q": "Warm air is",
+    "options": [
+      "lighter than cold air",
+      "heavier than cold air",
+      "both have equal weights",
+      "cannot be said."
+    ],
+    "answer": 0
+  },
+  {
+    "q": "Convection of heat takes place in",
+    "options": [
+      "metals only",
+      "liquids only",
+      "gases only",
+      "liquids and gases."
+    ],
+    "answer": 3
+  },
+  {
+    "q": "When you heat a bowl of water, you can observe that water starts circulating. This demonstrates",
+    "options": [
+      "conduction",
+      "radiation",
+      "convection",
+      "none of these."
+    ],
+    "answer": 2
+  },
+  {
+    "q": "Birds glide effortlessly in the air with the help of",
+    "options": [
+      "conduction of heat in the air",
+      "radiation of light through the atmosphere",
+      "convection currents of air",
+      "none of these."
+    ],
+    "answer": 2
+  },
+  {
+    "q": "The phenomenon involved in sea breeze and land breeze is",
+    "options": [
+      "convection",
+      "radiation",
+      "conduction",
+      "none of these."
+    ],
+    "answer": 0
+  },
+  {
+    "q": "Process of change of state from gaseous state to liquid state is called",
+    "options": [
+      "freezing",
+      "sublimation",
+      "boiling",
+      "condensation."
+    ],
+    "answer": 3
+  },
+  {
+    "q": "When clouds get too heavy to hold water in the water cycle, what happens?",
+    "options": [
+      "The water falls to the Earth.",
+      "The water evaporates.",
+      "Another cloud forms.",
+      "The clouds get very large."
+    ],
+    "answer": 0
+  },
+  {
+    "q": "Studying the water cycle, where is the purest water on Earth?",
+    "options": [
+      "Glaciers and ice caps",
+      "Rivers and streams",
+      "Sulfur springs",
+      "Lakes and ponds"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "What turns water on the Earth into vapor in the water cycle?",
+    "options": [
+      "The Sun",
+      "The Moon",
+      "Global warming",
+      "Water treatment centers"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "What is tapped into when digging a well looking for water in the water cycle?",
+    "options": [
+      "An underground aquifer",
+      "An underground river",
+      "A sulfur spring",
+      "An irrigation ditch"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "Select the option containing only renewable resources.",
+    "options": [
+      "Fossil fuels, metals",
+      "Groundwater, fossil fuels",
+      "Forests, petroleum",
+      "Groundwater, sunlight"
+    ],
+    "answer": 3
+  },
+  {
+    "q": "Water can be obtained from aquifer by",
+    "options": [
+      "digging a tubewell",
+      "hand pump",
+      "infiltration",
+      "either (a) or (b)."
+    ],
+    "answer": 3
+  },
+  {
+    "q": "Which of the following is not a consequence of water scarcity?",
+    "options": [
+      "Decreased crop production",
+      "Occurrence of water-borne diseases",
+      "Drought",
+      "Greenhouse effect"
+    ],
+    "answer": 3
+  },
+  {
+    "q": "Which of the following is the way to conserve water?",
+    "options": [
+      "Mending the leaking taps.",
+      "Planting more and more trees.",
+      "Watering the plants in morning and evening hours.",
+      "All of these."
+    ],
+    "answer": 3
+  },
+  {
+    "q": "Four bowls of water kept in different places A : In sunlight B : Under a fan C : In a closed cupboard D : Outside at night. After two days, bowl A has the least water left. What does this show?",
+    "options": [
+      "The sun helps water evaporate faster.",
+      "Water changes into ice in sunlight.",
+      "Air stops evaporation.",
+      "the fan makes water condenses."
+    ],
+    "answer": 0
+  },
+  {
+    "q": "Aluminium is a better conductor of heat than wood. It is so because",
+    "options": [
+      "aluminium has a higher density than wood.",
+      "aluminium has a higher specific heat capacity than wood.",
+      "aluminium has more free electrons than wood.",
+      "aluminium has a higher mass than wood."
+    ],
+    "answer": 2
+  },
+  {
+    "isHeader": true,
+    "text": "Which of the following statements about radiation is/are true?"
+  },
+  {
+    "q": "1. Radiation can pass through solids. 2. Radiation can pass through liquids. 3. Radiation can pass through gases.",
+    "options": [
+      "3 only",
+      "1 and 3 only",
+      "2 and 3 only",
+      "1, 2 and 3"
+    ],
+    "answer": 3
+  },
+  {
+    "q": "A dog pants with its tongue sticking out on a hot day. The reason is",
+    "options": [
+      "it is its habit",
+      "producing more saliva cools down the body temperature",
+      "saliva vapourizes, cooling the tongue",
+      "it is a genetic disease found in few animals like dogs."
+    ],
+    "answer": 2
+  },
+  {
+    "q": "Boojho has three thermometers as shown in figure. He wants to measure the temperature of his body and that of boiling water. Which thermometer(s) should he choose?",
+    "options": [
+      "Thermometer (i) or (iii) for measuring body temperature and (ii) for measuring the temperature of boiling water.",
+      "Thermometer (i) for measuring temperature of both.",
+      "Thermometer (ii) for measuring temperature of both.",
+      "Thermometer (iii) for measuring temperature of both."
+    ],
+    "answer": 0
+  },
+  {
+    "isHeader": true,
+    "text": "Container A and container B are filled with equal amount of boiling water and the temperature of the water in the containers is measured with a thermometer some time later. It is observed that container A has a much lower temperature than container B. What are the possible reason(s)?"
+  },
+  {
+    "q": "1. Container A is black and container B is silver. 2. Container A has a lid and container B is not covered. 3. Container A is made of steel and container B is made of clay.",
+    "options": [
+      "1 and 2 only",
+      "2 and 3 only",
+      "1 and 3 only",
+      "1, 2 and 3"
+    ],
+    "answer": 2
+  },
+  {
+    "q": "Which of the given statements is true?",
+    "options": [
+      "Sea breeze happens during night time when the sea is cooler than the land.",
+      "Sea breeze happens during day time when the land is cooler than the sea.",
+      "Land breeze happens during night time when the land is cooler than the sea.",
+      "Land breeze happens during day time when the sea is cooler than the land."
+    ],
+    "answer": 2
+  },
+  {
+    "q": "When a solid melts, the temperature remains constant even though heat is being supplied because",
+    "options": [
+      "the heat is being used to break up the intermolecular bonds.",
+      "the solid is not absorbing any heat.",
+      "the molecules are moving faster.",
+      "the molecules are far apart."
+    ],
+    "answer": 0
+  },
+  {
+    "q": "On a cold day, it is hard to open the lid of a tight container. But when you gently heat the neck you can easily open the lid. Why?",
+    "options": [
+      "On heating glass expands and lid contracts.",
+      "On heating lid expands more than the neck and thus slides easily.",
+      "Neck becomes slippery on heating.",
+      "Lid of the bottle cannot bear the heat."
+    ],
+    "answer": 1
+  },
+  {
+    "q": "Which point on the given graph shows that the substance is beginning to boil?",
+    "options": [
+      "B",
+      "D",
+      "C",
+      "E"
+    ],
+    "answer": 2
+  },
+  {
+    "q": "When some liquid evaporates, the average speed of the remaining molecules will",
+    "options": [
+      "increase because the more energetic molecules have left",
+      "decrease because the more energetic molecules have left",
+      "remain unchanged because all molecules have about the same speed",
+      "increase because there are fewer molecules."
+    ],
+    "answer": 1
+  },
+  {
+    "q": "Cooling always accompanies evaporation because",
+    "options": [
+      "the air molecules cool the liquid surface.",
+      "the more energetic molecules leave the liquid.",
+      "there are fewer liquid molecules left in the liquid.",
+      "the escaped molecules return to the liquid."
+    ],
+    "answer": 1
+  },
+  {
+    "q": "A pot full of water is put to boil on the stove. Which one of the graphs shows the correct change in temperature over time?",
+    "options": [
+      "(a)",
+      "(b)",
+      "(c)",
+      "(d)"
+    ],
+    "answer": 2
+  },
+  {
+    "q": "Amit found that a glass P was stuck inside another glass Q. What could he do to separate the two glasses?",
+    "options": [
+      "Pour hot water into glass P and put glass Q in hot water.",
+      "Pour hot water into glass P and put glass Q in cold water.",
+      "Pour cold water into glass P and put glass Q in cold water.",
+      "Pour cold water into glass P and put glass Q in hot water."
+    ],
+    "answer": 3
+  },
+  {
+    "q": "Two blocks of ice when pressed together join to form one block. This happens because",
+    "options": [
+      "Melting point rises with pressure",
+      "Melting point falls with pressure",
+      "Heat is absorbed from outside",
+      "Heat is rejected to outside."
+    ],
+    "answer": 1
+  },
+  {
+    "q": "There is a hole in the middle of a copper plate. When heating the plate, diameter of hole would",
+    "options": [
+      "always increase",
+      "remains the same",
+      "always decrease",
+      "none of these"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "In which of the following process convection does not take place primarily?",
+    "options": [
+      "Sea and land breeze",
+      "Trade wind",
+      "Boiling of water",
+      "Warming of glass of bulb due to filament"
+    ],
+    "answer": 3
+  },
+  {
+    "q": "Four arrangements to measure temperature of ice in beaker with laboratory thermometer are shown in figure (a, b, c and d). Which one of them shows the correct arrangement for accurate measurement of temperature?",
+    "options": [
+      "(a)",
+      "(b)",
+      "(c)",
+      "(d)"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "On heating a substance which of the following physical quantity changes?",
+    "options": [
+      "(a) Density",
+      "(b) Mass",
+      "(c) Volume",
+      "(d) Both (a) and (c)"
+    ],
+    "answer": 3
+  },
+  {
+    "q": "Cooling of a motor car is done by",
+    "options": [
+      "(a) Conduction",
+      "(b) Convection",
+      "(c) radiation",
+      "(d) All of the given"
+    ],
+    "answer": 1
+  },
+  {
+    "q": "Water is an inexhaustible, renewable resource, still there is shortage of water at many places of the world. It is because",
+    "options": [
+      "(a) much water available to us is not in the usable form",
+      "(b) 97.4% of all available water is frozen in glaciers and polar ice caps",
+      "(c) we cannot make use of water that is present in rivers and lakes",
+      "(d) we cannot make use of rainwater."
+    ],
+    "answer": 0
+  },
+  {
+    "q": "X of the total available water is present in seas and oceans, about Y water is frozen in glaciers and in the polar icecaps, and the remaining Z is available as freshwater in the liquid form. Select the correct option for X, Y and Z.",
+    "options": [
+      "(a) 60%, 38%, 2%",
+      "(b) 97.4%, 0.6%, 2%",
+      "(c) 97.4%, 2%, 0.6%",
+      "(d) 70.5%, 20%, 9.5%"
+    ],
+    "answer": 2
+  },
+  {
+    "q": "Which stage is NOT part of the water cycle?",
+    "options": [
+      "(a) Emancipation",
+      "(b) Collection",
+      "(c) Evaporation",
+      "(d) Precipitation"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "Studying the water cycle, why is the ocean salty?",
+    "options": [
+      "(a) Groundwater picks up salt and minerals as it makes its way to the ocean.",
+      "(b) It is rinsed from the scales and skin of ocean animals.",
+      "(c) Salt is carried down in rainwater.",
+      "(d) Human pollution made it that way."
+    ],
+    "answer": 0
+  },
+  {
+    "q": "Considering the water cycle how old could the water be in glaciers and ice caps?",
+    "options": [
+      "(a) Millions of years",
+      "(b) Billions of years",
+      "(c) Thousands of years",
+      "(d) Hundreds of years"
+    ],
+    "answer": 1
+  },
+  {
+    "q": "Water that soaks into the ground is called what in the water cycle?",
+    "options": [
+      "(a) Groundwater",
+      "(b) Water table",
+      "(c) Rainwater",
+      "(d) Collected"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "In the water cycle what is it called when water goes up through a plant and is turned into a vapour?",
+    "options": [
+      "(a) Evaporation",
+      "(b) Precipitation",
+      "(c) Transpiration",
+      "(d) Condensation"
+    ],
+    "answer": 2
+  },
+  {
+    "q": "Condensation is when warm vapor rises, gets cold and does what in the water cycle?",
+    "options": [
+      "(a) Gathers in clouds.",
+      "(b) Falls out of the sky.",
+      "(c) Warms up again.",
+      "(d) Keeps rising until it turns to ice."
+    ],
+    "answer": 0
+  },
+  {
+    "q": "Aparna heated a bi-metallic strip made of two different types of metals for some time. After heating it, she observed that the metallic strip curved as shown in the figure. Which of the following would best explain the conclusion derived by Aparna about the experiment she had done?",
+    "options": [
+      "(a) Metal X is a better conductor of heat than metal Y.",
+      "(b) Metal X is a poorer conductor of heat than metal Y.",
+      "(c) Metal X is of better quality than metal Y.",
+      "(d) Metal X is more flexible than metal Y."
+    ],
+    "answer": 0
+  },
+  {
+    "q": "Rohan set up an experiment as shown here. He placed the lighted candle below the metal rod at position M. He used the same amount of wax to hold all the thumbtacks at positions W, X, Y and Z on the rod. Arrange the thumbtacks according to the time they take to drop from the rod, from the first to the last.",
+    "options": [
+      "(a) Y, X, W, Z",
+      "(b) Y, X, Z, W",
+      "(c) X, Y, W, Z",
+      "(d) W, Z, Y, X"
+    ],
+    "answer": 1
+  },
+  {
+    "q": "Three glass beakers of similar sizes are filled with different amounts of water heated to different temperatures. Arrange the beakers in order, starting with the one with the maximum heat.",
+    "options": [
+      "(a) I, III, II",
+      "(b) II, I, III",
+      "(c) III, I, II",
+      "(d) III, II, I"
+    ],
+    "answer": 0
+  },
+  {
+    "isHeader": true,
+    "text": "The melting and boiling points of four different substances are shown in the table. The room temperature is 30C. Which of the following statements are incorrect about the data given in the table?"
+  },
+  {
+    "q": "(i) Substance P is in solid state at room temperature. (ii) Substance Q is in liquid state at room temperature. (iii) Substance R is gas at -150C and solid at -220C. (iv) Substance S is in solid state at room temperature.",
+    "options": [
+      "(a) (i) and (ii) only",
+      "(b) (i), (ii) and (iii) only",
+      "(c) (iii) and (iv) only",
+      "(d) (i), (ii), (iii) and (iv)"
+    ],
+    "answer": 1
+  },
+  {
+    "q": "In the arrangements I and II shown in figure, four pins W, X, Y and Z are fixed to a metal loop and metal rod with the help of wax. Loop and rod are made of same material and equal thickness. Which set of pins will fall simultaneously? (r is the radius of the loop.)",
+    "options": [
+      "(a) Y and Z only",
+      "(b) W, X and Y only",
+      "(c) W and X only",
+      "(d) W, X, Y and Z"
+    ],
+    "answer": 3
+  },
+  {
+    "isHeader": true,
+    "text": "Ms. Rakhi, a science teacher listed some keywords on the blackboard as:"
+  },
+  {
+    "q": "(i) Freezing (ii) Evaporation (iii) Melting (iv) Sublimation (v) Condensation (vi) Vaporisation. She asked students to match the keywords with the common changes which are listed as: P : When we put a lid on a vessel containing hot milk, the inside of the lid gets wet. Q : When we breathe onto a cold mirror it turns foggy. R : When we spread hard butter on a warm toast, it becomes soft. S : Solid piece of an air freshener kept on the bathroom shelf disappears in a few days. T : When we put ice cubes in water, they disappear after some time. U : Milk left in the freezer becomes ice cream. The correct match is",
+    "options": [
+      "(a) P - (ii); Q - (vi); R, S - (iii); T, U - (i)",
+      "(b) P, Q - (ii); R - (iii); S - (iv); T, U - (i)",
+      "(c) P, Q - (v); R, T - (iii); S - (iv); U - (i)",
+      "(d) P - (i); Q, R - (v); S, T - (iii); U - (iv)"
+    ],
+    "answer": 2
+  },
+  {
+    "q": "The diagram shows a man standing under a shelter on a sunny day. Given that the man feels hot, which of the following shows the processes of how thermal energy from the Sun reaches the man?",
+    "options": [
+      "(a) Radiation -> Conduction -> Radiation",
+      "(b) Radiation -> Conduction -> Convection",
+      "(c) Radiation -> Convection -> Radiation",
+      "(d) Radiation -> Convection -> Convection"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "Three liquids with their respective boiling and freezing points are shown in the given table. A thermometer that can measure both -50C and 38C should be filled with",
+    "options": [
+      "(a) Mercury only",
+      "(b) Alcohol only",
+      "(c) Pentane only",
+      "(d) Either alcohol or pentane"
+    ],
+    "answer": 1
+  },
+  {
+    "isHeader": true,
+    "text": "Some steamboat restaurants use paper pots for their customers to heat the food themselves. What is the reason for the paper not to catch fire when in contact with the flame?"
+  },
+  {
+    "q": "(i) The paper is thin and therefore heat is conducted quickly to the water in the paper pot. (ii) Water has a boiling point lower than the burning temperature of the paper. (iii) The paper is thick enough to withstand the high temperature of the flame.",
+    "options": [
+      "(a) (i) and (ii) only",
+      "(b) (i) and (iii) only",
+      "(c) (ii) and (iii) only",
+      "(d) (i), (ii) and (iii)"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "The length of mercury thread in a mercury thermometer is 2 mm at the ice point and 26 mm at the boiling point of water. What will be the length of mercury thread in this thermometer if it is used to measure a temperature of 75C?",
+    "options": [
+      "(a) 18 mm",
+      "(b) 20 mm",
+      "(c) 22 mm",
+      "(d) 24 mm"
+    ],
+    "answer": 1
+  },
+  {
+    "q": "A clinical thermometer reads temperature from",
+    "options": [
+      "(a) 35C to 42C",
+      "(b) -10C to 110C",
+      "(c) 35C to 45C",
+      "(d) 0C to 100C"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "The water in the beaker is _______ and is converted into _______. The process is known as _______. If you hold a metal plate near the steam, the steam _______ into water and water droplets can be seen on the plate. This is an example of _______ change.",
+    "options": [
+      "(a) Boiling, Steam, Vaporisation, Condenses, Irreversible",
+      "(b) Boiling, Vapours, Boiling, Converts, Irreversible",
+      "(c) Heating, Gas, Condensation, Changes, Reversible",
+      "(d) Boiling, Steam, Vaporisation, Condenses, Reversible"
+    ],
+    "answer": 3
+  },
+  {
+    "q": "The process of transmission of heat in which no medium is required is/are known as",
+    "options": [
+      "(a) Conduction",
+      "(b) Convection",
+      "(c) Radiation",
+      "(d) All of these"
+    ],
+    "answer": 2
+  },
+  {
+    "q": "In the following experimental setup as shown in figure, equal volumes of boiling water were poured into the containers and the temperatures of both containers and contents were the same. After an hour the temperature of container P was found to be lower than that of container Q. This shows that P is a better _______.",
+    "options": [
+      "(a) Conductor and radiator",
+      "(b) Radiator only",
+      "(c) Absorber only",
+      "(d) Conductor only"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "1 litre water is poured into a small vessel and 10 litre water is poured into a big vessel. Heat is supplied to both vessels so that the water starts boiling. Then",
+    "options": [
+      "(a) Temperature of water in both vessels is same and the heat supplied is also same.",
+      "(b) Temperature of water in both vessels is same but heat supplied is not same.",
+      "(c) Temperature of water in both vessels is not same but heat supplied is same.",
+      "(d) Temperature of water in both vessels is not same and heat supplied is also not same."
+    ],
+    "answer": 1
+  },
+  {
+    "q": "Cooking utensils are supposed to transfer the heat from the source to the food being cooked. Which of the following is not a good choice for making cooking utensils?",
+    "options": [
+      "(a) Steel",
+      "(b) Copper",
+      "(c) Brass",
+      "(d) Plastic"
+    ],
+    "answer": 3
+  },
+  {
+    "q": "Karan performed an experiment in which he took four beakers containing different amount of water at different temperatures. He added equal amount of salt into each beaker. Identify the beaker in which salt takes longer time to dissolve.",
+    "options": [
+      "(a) Beaker 1",
+      "(b) Beaker 2",
+      "(c) Beaker 3",
+      "(d) Beaker 4"
+    ],
+    "answer": 0
+  },
+  {
+    "q": "An iron disc at 50C is put into a vessel full of water at 50C. The heat will",
+    "options": [
+      "(a) flow from iron disc to water",
+      "(b) flow from water to iron disc",
+      "(c) not flow from iron disc to water or vice versa",
+      "(d) None of these"
+    ],
+    "answer": 2
+  },
+  {
+    "q": "At room temperature the internal and external radii of a metal ring are r1 and r2 as shown in the figure. When the ring is heated at 100C, then",
+    "options": [
+      "(a) r1 decreases and r2 decreases",
+      "(b) r1 decreases and r2 increases",
+      "(c) r1 increases and r2 decreases",
+      "(d) r1 increases and r2 increases"
+    ],
+    "answer": 3
+  },
+  {
+    "isHeader": true,
+    "text": "Which of the following statements is/are true?"
+  },
+  {
+    "q": "I. Dark coloured cloths are preferred during night. II. Sea breeze blows during day time. III. There is a kink in a digital thermometer and kink contains mercury. IV. The hotness of an object is determined by its temperature.",
+    "options": [
+      "(a) I and II only",
+      "(b) II and III only",
+      "(c) I, II and IV only",
+      "(d) I, II, III and IV"
+    ],
+    "answer": 2
+  },
+  {
+    "q": "0\u00b0C is the same temperature as",
+    "options": [
+      "(a) 0 \u00b0F",
+      "(b) 222 \u00b0F",
+      "(c) 32 \u00b0F",
+      "(d) 100 \u00b0F"
+    ],
+    "answer": 2
+  },
+  {
+    "q": "At what temperature are the readings on the celsius and the fahrenheit scales the same?",
+    "options": [
+      "(a) - 40 \u00b0C",
+      "(b) - 40 \u00b0F",
+      "(c) 40 \u00b0F",
+      "(d) Both (a) and (b)"
+    ],
+    "answer": 3
+  },
+  {
+    "q": "Q : When we breathe onto a cold mirror it turns foggy.\nR : When we spread hard butter on a warm toast, it becomes soft.\nS : Solid piece of an air freshener kept on the bathroom shelf disappears in a few days.\nT : When we put ice cubes in water, they disappear after some time.\nU : Milk left in the freezer becomes ice cream.\nThe correct match is",
+    "options": [
+      "(a) P - (ii); Q - (vi); R, S - (iii); T, U - (i)",
+      "(b) P, Q - (ii); R - (iii); S - (iv); T, U - (i)",
+      "(c) P, Q - (v); R, T - (iii); S - (iv); U - (i)",
+      "(d) P - (i); Q, R - (v); S, T - (iii); U - (iv)"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "The diagram shows a man standing under a shelter on a sunny day. Given that the man feels hot, which of the following shows the processes of how thermal energy from the Sun reaches the man?",
+    "options": [
+      "(a) Radiation -> Conduction -> Radiation",
+      "(b) Radiation -> Conduction -> Convection",
+      "(c) Radiation -> Convection -> Radiation",
+      "(d) Radiation -> Convection -> Convection"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Three liquids with their respective boiling and freezing points are shown in the given table.\n| Liquids | Freezing point | Boiling point |\n| Mercury | -39\u00b0C | 357\u00b0C |\n| Alcohol | -112\u00b0C | 78\u00b0C |\n| Pentane | -180\u00b0C | 36\u00b0C |\nA thermometer that can measure both -50\u00b0C and 38\u00b0C should be filled with _________.",
+    "options": [
+      "(a) Mercury only",
+      "(b) Alcohol only",
+      "(c) Pentane only",
+      "(d) Either alcohol or pentane"
+    ],
+    "answer": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Some steamboat restaurants use paper pots for their customers to heat the food themselves. What is the reason for the paper not to catch fire when in contact with the flame?"
+  },
+  {
+    "q": "(i) The paper is thin and therefore heat is conducted quickly to the water in the paper pot.\n(ii) Water has a boiling point lower than the burning temperature of the paper.\n(iii) The paper is thick enough to withstand the high temperature of the flame.",
+    "options": [
+      "(a) (i) and (ii) only",
+      "(b) (i) and (iii) only",
+      "(c) (ii) and (iii) only",
+      "(d) (i), (ii) and (iii)"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "The length of mercury thread in a mercury thermometer is 2 mm at the ice point and 26 mm at the boiling point of water. What will be the length of mercury thread in this thermometer if it is used to measure a temperature of 75\u00b0C?",
+    "options": [
+      "(a) 18 mm",
+      "(b) 20 mm",
+      "(c) 22 mm",
+      "(d) 24 mm"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "A clinical thermometer reads temperature from",
+    "options": [
+      "(a) 35\u00b0C to 42\u00b0C",
+      "(b) -10\u00b0C to 110\u00b0C",
+      "(c) 35\u00b0C to 45\u00b0C",
+      "(d) 0\u00b0C to 100\u00b0C"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "The water in the beaker is _________ and is converted into _________. The process is known as _________. If you hold a metal plate near the steam, the steam _________ into water and water droplets can be seen on the plate. This is an example of _________ change.\nSelect the correct sequence of words to fill the blanks.",
+    "options": [
+      "(a) Boiling, Steam, Vaporisation, Condenses, Irreversible",
+      "(b) Boiling, Vapours, Boiling, Converts, Irreversible",
+      "(c) Heating, Gas, Condensation, Changes, Reversible",
+      "(d) Boiling, Steam, Vaporisation, Condenses, Reversible"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "The process of transmission of heat in which no medium is required is/are known as",
+    "options": [
+      "(a) Conduction",
+      "(b) Convection",
+      "(c) Radiation",
+      "(d) All of these"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "In the following experimental setup as shown in figure, equal volumes of boiling water were poured into the containers and the temperatures of both containers and contents were the same. After an hour the temperature of container P was found to be lower than that of container Q. This shows that P is a better _________.",
+    "options": [
+      "(a) Conductor and radiator",
+      "(b) Radiator only",
+      "(c) Absorber only",
+      "(d) Conductor only"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "1 litre water is poured into a small vessel and 10 litre water is poured into a big vessel. Heat is supplied to both vessels so that the water starts boiling. Then",
+    "options": [
+      "(a) Temperature of water in both vessels is same and the heat supplied is also same.",
+      "(b) Temperature of water in both vessels is same but heat supplied is not same.",
+      "(c) Temperature of water in both vessels is not same but heat supplied is same.",
+      "(d) Temperature of water in both vessels is not same and heat supplied is also not same."
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Cooking utensils are supposed to transfer the heat from the source to the food being cooked. Which of the following is not a good choice for making cooking utensils?",
+    "options": [
+      "(a) Steel",
+      "(b) Copper",
+      "(c) Brass",
+      "(d) Plastic"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Karan performed an experiment in which he took four beakers containing different amount of water at different temperatures. He added equal amount of salt into each beaker.\nIdentify the beaker in which salt takes longer time to dissolve.",
+    "options": [
+      "(a) Beaker 1",
+      "(b) Beaker 2",
+      "(c) Beaker 3",
+      "(d) Beaker 4"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "An iron disc at 50\u00b0C is put into a vessel full of water at 50\u00b0C. The heat will",
+    "options": [
+      "(a) flow from iron disc to water",
+      "(b) flow from water to iron disc",
+      "(c) not flow from iron disc to water or vice versa",
+      "(d) None of these"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "At room temperature the internal and external radii of a metal ring are r1 and r2 as shown in the figure. When the ring is heated at 100\u00b0C, then",
+    "options": [
+      "(a) r1 decreases and r2 decreases",
+      "(b) r1 decreases and r2 increases",
+      "(c) r1 increases and r2 decreases",
+      "(d) r1 increases and r2 increases."
+    ],
+    "answer": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Which of the following statements is/are true?"
+  },
+  {
+    "q": "I. Dark coloured cloths are preferred during night.\nII. Sea breeze blows during day time.\nIII. There is a kink in a digital thermometer and kink contains mercury.\nIV. The hotness of an object is determined by its temperature.",
+    "options": [
+      "(a) I and II only",
+      "(b) II and III only",
+      "(c) I, II and IV only",
+      "(d) I, II, III and IV"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "(NCERT Exemplar) [Question text is cut off/missing from the page, only showing diagram options]",
+    "options": [
+      "(a) [Image of experimental setup]",
+      "(b) [Image of experimental setup]",
+      "(c) [Image of experimental setup]",
+      "(d) [Image of experimental setup]"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "On heating a substance which of the following physical quantity changes?",
+    "options": [
+      "(a) Density",
+      "(b) Mass",
+      "(c) Volume",
+      "(d) Both (a) and (c)"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Cooling of a motor car is done by",
+    "options": [
+      "(a) Conduction",
+      "(b) Convection",
+      "(c) radiation",
+      "(d) All of the given"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Water is an inexhaustible, renewable resource, still there is shortage of water at many places of the world. It is because",
+    "options": [
+      "(a) much water available to us is not in the usable form",
+      "(b) 97.4% of all available water is frozen in glaciers and polar ice caps",
+      "(c) we cannot make use of water that is present in rivers and lakes",
+      "(d) we cannot make use of rainwater."
+    ],
+    "answer": ""
+  },
+  {
+    "q": "_X_ of the total available water is present in seas and oceans, about _Y_ water is frozen in glaciers and in the polar icecaps, and the remaining _Z_ is available as freshwater in the liquid form.\nSelect the correct option for X, Y and Z.",
+    "options": [
+      "(a) X: 60%, Y: 38%, Z: 2%",
+      "(b) X: 97.4%, Y: 0.6%, Z: 2%",
+      "(c) X: 97.4%, Y: 2%, Z: 0.6%",
+      "(d) X: 70.5%, Y: 20%, Z: 9.5%"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Which stage is NOT part of the water cycle?",
+    "options": [
+      "(a) Emancipation",
+      "(b) Collection",
+      "(c) Evaporation",
+      "(d) Precipitation"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Studying the water cycle, why is the ocean salty?",
+    "options": [
+      "(a) Groundwater picks up salt and minerals as it makes its way to the ocean.",
+      "(b) It is rinsed from the scales and skin of ocean animals.",
+      "(c) Salt is carried down in rainwater.",
+      "(d) Human pollution made it that way."
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Considering the water cycle how old could the water be in glaciers and ice caps?",
+    "options": [
+      "(a) Millions of years",
+      "(b) Billions of years",
+      "(c) Thousands of years",
+      "(d) Hundreds of years"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Water that soaks into the ground is called what in the water cycle?",
+    "options": [
+      "(a) Groundwater",
+      "(b) Water table",
+      "(c) Rainwater",
+      "(d) Collected"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "In the water cycle what is it called when water goes up through a plant and is turned into a vapour?",
+    "options": [
+      "(a) Evaporation",
+      "(b) Precipitation",
+      "(c) Transpiration",
+      "(d) Condensation"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Condensation is when warm vapor rises, gets cold and does what in the water cycle?",
+    "options": [
+      "(a) Gathers in clouds.",
+      "(b) Falls out of the sky.",
+      "(c) Warms up again.",
+      "(d) Keeps rising until it turns to ice."
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Aparna heated a bi-metallic strip made of two different types of metals for some time.\n[Image of clamps, metallic strip, after heating curves]\nAfter heating it, she observed that the metallic strip curved as shown in the figure. Which of the following would best explain the conclusion derived by Aparna about the experiment she had done?",
+    "options": [
+      "(a) Metal X is a better conductor of heat than metal Y.",
+      "(b) Metal X is a poorer conductor of heat than metal Y.",
+      "(c) Metal X is of better quality than metal Y.",
+      "(d) Metal X is more flexible than metal Y."
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Rohan set up an experiment as shown here.\n[Image of wax, thumbtacks W, X, Y, Z on metal rod, with candle below M]\nHe placed the lighted candle below the metal rod at position M. He used the same amount of wax to hold all the thumbtacks at positions W, X, Y and Z on the rod. Arrange the thumbtacks according to the time they take to drop from the rod, from the first to the last.",
+    "options": [
+      "(a) Y, X, W, Z",
+      "(b) Y, X, Z, W",
+      "(c) X, Y, W, Z",
+      "(d) W, Z, Y, X"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Three glass beakers of similar sizes are filled with different amounts of water heated to different temperatures.\n[Image of Beaker I 40\u00b0C, Beaker II 40\u00b0C, Beaker III 50\u00b0C over Bunsen burners]\nArrange the beakers in order, starting with the one with the maximum heat.",
+    "options": [
+      "(a) I, III, II",
+      "(b) II, I, III",
+      "(c) III, I, II",
+      "(d) III, II, I"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "The melting and boiling points of four different substances are shown in the table. The room temperature is 30\u00b0C.\nSubstance | Melting point (\u00b0C) | Boiling point (\u00b0C)\nP | -114 | 80\nQ | -210 | -196\nR | -40 | 360\nS | 330 | 1750\nWhich of the following statements are incorrect about the data given in the table?\n(i) Substance P is in solid state at room temperature.\n(ii) Substance Q is in liquid state at room temperature.\n(iii) Substance R is gas at -150\u00b0C and solid at -220\u00b0C.\n(iv) Substance S is in solid state at room temperature.",
+    "options": [
+      "(a) (i) and (ii) only",
+      "(b) (i), (ii) and (iii) only",
+      "(c) (iii) and (iv) only",
+      "(d) (i), (ii), (iii) and (iv)"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "In the arrangements I and II shown in figure, four pins W, X, Y and Z are fixed to a metal loop and metal rod with the help of wax. Loop and rod are made of same material and equal thickness. Which set of pins will fall simultaneously? (r is the radius of the loop.)\n[Image of Arrangement I and II]",
+    "options": [
+      "(a) Y and Z only",
+      "(b) W, X and Y only",
+      "(c) W and X only",
+      "(d) W, X, Y and Z"
+    ],
+    "answer": ""
+  }
+];
+const fillBook = [
+  {
+    "q": "The water in the black can becomes _____ than that in white can after exposing to the Sun.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "In solids, generally, heat is transferred by _____.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "The boiling point of water on the Fahrenheit scale is _____.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "In liquids and gases, heat is transferred by the process of _____.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "In vacuum, heat energy can travel by the process of _____.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "Black colour is a _____ absorber of heat.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "The handles of cooking utensils are made of _____.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "Liquids are _____ of heat and gases are _____ of heat.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "A room heater heats all the air in a room by setting up _____ in the air.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "Digital thermometers do not use _____.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "Most of the water that evaporates on the Earth comes from _____.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "When water is heated, it changes from a liquid into a gas called _____.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "As water goes around and around the water cycle, the amount of water on earth _____.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "Water that comes from plants and is then released into the air as water vapour through the process of _____.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "As water moves through the water cycle it changes _____.",
+    "a": [
+      ""
+    ]
+  }
+];
+const tfBook = [];
+const shortBook = [
+  {
+    "q": "Convert 95 \u00b0F to degree celcius.",
+    "model": "T(\u00b0C) = 5/9 x (T(\u00b0F) - 32)\n= 5/9 x (95 - 32) = 5/9 x 63 = 35 \u00b0C"
+  },
+  {
+    "q": "What is the minimum possible temperature? Is there also a maximum possible temperature?",
+    "model": "The minimum possible temperature is 0 K. There is no limit to maximum temperature."
+  },
+  {
+    "q": "Why an ice box is constructed with a double wall?",
+    "model": "An ice-box is made of double wall and the space between the walls is filled with some non-conducting material to provide heat insulation, so that the loss of heat is minimized."
+  },
+  {
+    "q": "Dhruv got a slab of chocolate from his friend on his birthday. He kept it in his bag. On reaching home, he opened his bag and found a brown sticky liquid oozing out of the wrapper. It had spread over some of his books. What do you think happened?",
+    "model": "Ans.: The chocolate melted due to the heat. It changed from a solid matter to a thick liquid that leaked out, and had spread over Dhruv's books."
+  },
+  {
+    "q": "Arrange these in decreasing order based on their expansion on heating: steel, milk, air.",
+    "model": "Ans.: Air, milk, steel."
+  },
+  {
+    "q": "In winters, when the Sun suddenly goes behind the clouds we feel cold. Can you say why?",
+    "model": "Ans.: The clouds cut off the radiant heat from the Sun."
+  },
+  {
+    "q": "Why do fire fighters wear special shiny suits when they enter a burning building?",
+    "model": "Ans.: The shiny suits reflect heat. This protects them from fire when they enter a burning building."
+  },
+  {
+    "q": "Convert 25 \u00b0C to \u00b0F.",
+    "model": "Ans.: T(\u00b0F) = (9/5 \u00d7 T(\u00b0C)) + 32\nT(\u00b0F) = (9/5 \u00d7 25) + 32 = (9 \u00d7 5) + 32 = 45 + 32 = 77 \u00b0F"
+  },
+  {
+    "q": "Convert 20 K into \u00b0C.",
+    "model": "Ans.: T(K) = 273 + T(\u00b0C)\n20 = 273 + T(\u00b0C)\nT(\u00b0C) = 20 - 273 = - 253\u00b0C"
+  },
+  {
+    "q": "While constructing a house in a coastal area, in which direction should the windows preferably face and why? (NCERT Exemplar)",
+    "model": "Ans.: The windows of houses in coastal areas should preferably face towards the sea as sea breeze will keep it cool during day time."
+  },
+  {
+    "isHeader": true,
+    "text": "State with reason(s) whether the following statements are True [T] or False [F]."
+  },
+  {
+    "q": "(i) Heat transfer takes place in solids through convection.\n(ii) Heat transfer through convection takes place by the actual movement of particles.\n(iii) Areas with clay materials allow more seepage of water than those with sandy materials.\n(iv) The movement of cooler air from land to sea is called land breeze.",
+    "model": "(i) F (Conduction)\n(ii) T\n(iii) F (Sandy materials allow more seepage)\n(iv) T"
+  },
+  {
+    "q": "Some ice cubes placed in a dish melt into water after sometime. Where do the ice cubes get heat for this transformation?",
+    "model": "The ice cubes absorb heat from the surroundings (air and the dish) to melt into water."
+  },
+  {
+    "q": "A burning incense stick is fixed, pointing downwards. In which direction would the smoke from the incense stick move? Show the movement of smoke with a diagram.",
+    "model": "The smoke will move upwards because hot air is lighter and rises up, carrying the smoke with it."
+  },
+  {
+    "q": "Why are hollow bricks used to construct the outer walls of houses in hot regions?",
+    "model": "Hollow bricks trap air inside them. Air is a poor conductor of heat, so it prevents outside heat from entering the house, keeping it cool."
+  },
+  {
+    "q": "Refer to the given diagram showing a natural cyclic process.",
+    "model": "The diagram illustrates land and sea breezes processes. Details like options were cut off in the image snippet provided."
+  },
+  {
+    "q": "How does transpiration contribute to the water cycle?",
+    "model": ""
+  },
+  {
+    "q": "How does the Sun's energy drive the water cycle?",
+    "model": ""
+  },
+  {
+    "q": "Explain the role of clouds in the water cycle.",
+    "model": ""
+  },
+  {
+    "q": "What is the significance of groundwater in the water cycle?",
+    "model": ""
+  },
+  {
+    "q": "How does the water cycle regulate the Earth's temperature?",
+    "model": ""
+  },
+  {
+    "q": "Define the lower fixed point and upper fixed point on temperature scales. Give these points on different temperature scales.",
+    "model": ""
+  },
+  {
+    "q": "Write the differences between conduction, convection and radiation.",
+    "model": ""
+  },
+  {
+    "q": "What precautions should we take while using a clinical thermometer?",
+    "model": ""
+  },
+  {
+    "q": "Explain an activity to show how to measure temperature of water with laboratory thermometer.",
+    "model": ""
+  },
+  {
+    "q": "Why boiling water is not used to sterilize a clinical thermometer?",
+    "model": ""
+  },
+  {
+    "q": "What do you mean by conduction mode of transfer of heat energy?",
+    "model": ""
+  },
+  {
+    "q": "If difference of temperature between A and B is 5 \u00b0C, what is the difference in Kelvin's scale?",
+    "model": ""
+  },
+  {
+    "q": "The temperature of a copper bar is 50\u00b0C. Find its temperature in Fahrenheit (\u00b0F) and Kelvin (K).",
+    "model": ""
+  },
+  {
+    "q": "What are the factors affecting the heat lost or gained by a body?",
+    "model": ""
+  },
+  {
+    "q": "Sonia took four identical iron balls of temperature 6\u00b0C, 10\u00b0C, 20\u00b0C and 32\u00b0C. She kept them in physical (thermal) contact with one another. After some time, she measures the equilibrium temperature attained by those four balls. What is the value of equilibrium temperature?",
+    "model": ""
+  },
+  {
+    "q": "Why is the infiltration of water low in the region of non-porous soil?",
+    "model": ""
+  },
+  {
+    "q": "Snowfall is common in the polar region and mountainous regions. Explain.",
+    "model": ""
+  },
+  {
+    "q": "Distinguish between evaporation and transpiration.",
+    "model": ""
+  },
+  {
+    "q": "How is groundwater recharged? Why is it important?",
+    "model": ""
+  },
+  {
+    "q": "Why is the handle of a kettle is covered with plastic?",
+    "model": ""
+  },
+  {
+    "q": "Explain with the help of an activity that silver is the best conductor of heat.",
+    "model": ""
+  },
+  {
+    "q": "Draw labelled diagram of a clinical thermometer and explain its construction.",
+    "model": ""
+  },
+  {
+    "q": "Explain conduction of heat in solids.",
+    "model": ""
+  },
+  {
+    "q": "What are the differences between heat and temperature?",
+    "model": ""
+  },
+  {
+    "q": "Neha is a student of science. She has participated in science exhibition organised by her school. In this science fair she demonstrated that of water and steam can exist in a same closed container at 100\u00b0C and water along with ice can exist in same container at 0\u00b0C. Explain how is it possible to have two different states of matter at same temperature.",
+    "model": ""
+  },
+  {
+    "q": "Explain the water cycle with a diagram.",
+    "model": ""
+  },
+  {
+    "q": "What is the aim of conservation of water? How can we conserve water?",
+    "model": ""
+  },
+  {
+    "q": "The reading of Centigrade thermometer, coincides with that of Fahrenheit thermometer in a liquid. The temperature of the liquid is -(5 x n)\u00b0C. What is the value of n?",
+    "model": 8
+  },
+  {
+    "q": "On a hilly region, water boils at (15 x n)\u00b0C. The temperature expressed in Fahrenheit is 194\u00b0F. What is the value of n?",
+    "model": 6
+  },
+  {
+    "q": "A faulty thermometer has its fixed points marked as 5\u00b0C and 95\u00b0C. Temperature of a body as measured by the faulty thermometer is 59\u00b0C. The correct temperature of the body on Celsius scale is 120/n \u00b0C. What is the value of n?",
+    "model": 2
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "Which one of the following is not a good conductor of heat?",
+    "model": ""
+  },
+  {
+    "q": "Why aluminium metal is used for making utensils for food preparation?",
+    "model": ""
+  },
+  {
+    "q": "Thermometers are used to measure the temperature. Thermometer senses the temperature by which one of the following liquids?",
+    "model": ""
+  },
+  {
+    "q": "What is the range of laboratory thermometers which are in the market?",
+    "model": ""
+  },
+  {
+    "q": "How much is fresh water available on the Earth?",
+    "model": ""
+  },
+  {
+    "q": "Most of the freshwater contained in which of the following sources of water?",
+    "model": ""
+  },
+  {
+    "q": "How much fresh water is available on the Earth in the underground?",
+    "model": ""
+  },
+  {
+    "q": "Give the name of instrument, which is used for measurement of heat.",
+    "model": ""
+  },
+  {
+    "q": "At which temperature does a liquid start to convert into gas?",
+    "model": ""
+  },
+  {
+    "q": "Name the method of heating of the earth by the sun.",
+    "model": ""
+  },
+  {
+    "q": "Convert 77\u00b0F to \u00b0C.",
+    "model": ""
+  },
+  {
+    "q": "Give one condition for heat to flow between two bodies.",
+    "model": ""
+  },
+  {
+    "q": "Write one advantages of use of mercury in thermometer.",
+    "model": ""
+  },
+  {
+    "q": "What are insulators?",
+    "model": ""
+  },
+  {
+    "q": "Write the relation between Celsius and Kelvin scales.",
+    "model": ""
+  },
+  {
+    "q": "Name the thermometer which is used to measure the temperature of human body.",
+    "model": ""
+  },
+  {
+    "q": "What is boiling point of water?",
+    "model": ""
+  },
+  {
+    "q": "What are the various modes of transfer of heat?",
+    "model": ""
+  },
+  {
+    "q": "Which thermometer is used to measure the temperature of a furnace?",
+    "model": ""
+  },
+  {
+    "q": "What is the water cycle?",
+    "model": ""
+  },
+  {
+    "q": "What are the main stages of the water cycle?",
+    "model": ""
+  },
+  {
+    "q": "How does evaporation occur in the water cycle?",
+    "model": ""
+  },
+  {
+    "q": "What is condensation in the water cycle?",
+    "model": ""
+  },
+  {
+    "q": "How does precipitation happen in the water cycle?",
+    "model": ""
+  },
+  {
+    "q": "What factors influence the type of precipitation (rain, snow, sleet, hail) in the water cycle?",
+    "model": ""
+  },
+  {
+    "q": "Explain the process of runoff in the water cycle.",
+    "model": ""
+  },
+  {
+    "q": "What is infiltration in the water cycle?",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Which of the following holds true regarding it?"
+  },
+  {
+    "q": "(a) Deforestation will decelerate process V.\n(b) Process I occurs at a high rate in a rainforest and is absent in deserts whereas process III is involved in dew formation.\n(c) The physical state of water at X is liquid and that at Y is gaseous.\n(d) Both processes II and IV involve conversion of one physical state of water into another.",
+    "model": ""
+  },
+  {
+    "q": "A group of social workers has transformed a dry area in the Rajasthan's Alwar district into a green place. They have revived dried-up rivers by constructing water-harvesting structures.\nWhat are the names of those rivers?\n(a) Arveri and Ruparel\n(b) Sarsa and Bhagani\n(c) Arveri and Jahazwali\n(d) All of these",
+    "model": ""
+  },
+  {
+    "q": "Refer to the given flow chart and identify (i), (ii), (iii) and (iv).\n[Flow chart: Natural resources -> Renewable (Inexhaustible -> (i), Exhaustible -> (ii)) / Non-renewable (Can be recycled -> (iii), Cannot be recycled -> (iv))]\n(a) (i) Ground-water, (ii) Forest, (iii) Metal, (iv) Fossil fuel\n(b) (i) Water, (ii) Forest, (iii) Metal, (iv) Fossil fuel\n(c) (i) Water, (ii) Fossil fuel, (iii) Plastic, (iv) Forest\n(d) (i) Ground-water, (ii) Fossil fuel, (iii) Metal, (iv) Forest",
+    "model": ""
+  },
+  {
+    "q": "Refer to the given diagrammatic representation of distribution of water on Earth and select the correct statements for X, Y and Z.\n[Diagrams: Seas and oceans/Freshwater -> Total water; Ice caps/Groundwater/Surface water -> Freshwater; Lakes/Swamps/Rivers -> Surface water]\n(i) X is a persistent body of dense ice that is constantly moving under its own weight.\n(ii) Y is found below the water table and rainwater is its main source.\n(iii) Z is an important source of water to the perennial rivers.\n(a) (i) and (ii) only\n(b) (ii) and (iii) only\n(c) (i) and (iii) only\n(d) (i), (ii) and (iii)",
+    "model": ""
+  },
+  {
+    "q": "The temperature of every person may not be 37\u00b0C.",
+    "model": ""
+  },
+  {
+    "q": "The range of a laboratory thermometer is from 0\u00b0C to 110\u00b0C.",
+    "model": ""
+  },
+  {
+    "q": "Mercury is a toxic substance.",
+    "model": ""
+  },
+  {
+    "q": "Air is good conductor and water is poor conductor of heat.",
+    "model": ""
+  },
+  {
+    "q": "The transfer of heat by radiation does not require any medium.",
+    "model": ""
+  },
+  {
+    "q": "In summer, we prefer light-coloured clothes and in winter we usually wear dark-coloured clothes.",
+    "model": ""
+  },
+  {
+    "q": "During the day, land loses heat faster than water and becomes cooler.",
+    "model": ""
+  },
+  {
+    "q": "On heating, the density of the substance always decreases.",
+    "model": ""
+  },
+  {
+    "q": "The constant movement of water while heating is called convection current.",
+    "model": ""
+  },
+  {
+    "q": "Cooking of vegetables is an electrical change.",
+    "model": ""
+  },
+  {
+    "q": "Water boils at 212\u00b0F temperature but, it begins to evaporate at 32\u00b0F.",
+    "model": ""
+  },
+  {
+    "q": "Groundwater cannot be extracted using a water well.",
+    "model": ""
+  },
+  {
+    "q": "Mist is the tiny droplets of water hanging in the air.",
+    "model": ""
+  },
+  {
+    "q": "The sub-surface runoff is usually referred as interflow.",
+    "model": ""
+  },
+  {
+    "q": "List-I: (P) Heat, (Q) Temperature, (R) Black surface | List-II: (1) Measure of hotness or coldness, (2) Good absorber, (3) Form of energy\n(a) P-(3), Q-(1), R-(2)\n(b) P-(1), Q-(2), R-(3)\n(c) P-(3), Q-(2), R-(1)\n(d) P-(2), Q-(3), R-(1)",
+    "model": ""
+  },
+  {
+    "q": "List-I: (P) Actual movement of molecules, (Q) Rubber, cork, plastic, wood, (R) Boiling point of water, (S) Gold, silver, copper, iron | List-II: (1) Convection currents, (2) 100\u00b0C, (3) Good conductors, (4) Insulators\n(a) P-(1), Q-(4), R-(2), S-(3)\n(b) P-(4), Q-(2), R-(1), S-(3)\n(c) P-(1), Q-(2), R-(3), S-(4)\n(d) P-(3), Q-(1), R-(4), S-(2)",
+    "model": ""
+  },
+  {
+    "q": "List-I: (P) Vegetation, (Q) Condensation, (R) Snow and rain drops, (S) Infiltration | List-II: (1) Clouds, (2) Sleet, (3) At the surface, (4) Transpiration\n(a) P-(4), Q-(1), R-(2), S-(3)\n(b) P-(4), Q-(2), R-(1), S-(3)\n(c) P-(1), Q-(2), R-(3), S-(4)\n(d) P-(3), Q-(1), R-(4), S-(2)",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Directions: In the following questions, a statement of assertion is followed by a statement of reason. Mark the correct choice as:"
+  },
+  {
+    "q": "(a) If both assertion and reason are true and reason is the correct explanation of assertion\n(b) If both assertion and reason are true but reason is not the correct explanation of assertion\n(c) If assertion is true but reason is false\n(d) If assertion is false but reason is true.",
+    "model": ""
+  },
+  {
+    "q": "Assertion: Temperature is the measure of the heat energy.\nReason: Energy is the capacity to do work.",
+    "model": ""
+  },
+  {
+    "q": "Assertion: Convection is a process of transfer of heat in which actual movement of material medium required.\nReason: The heat from the sun reaches us through millions of miles of empty space by convection.",
+    "model": ""
+  },
+  {
+    "q": "Refer to the given diagram showing a natural cyclic process.",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Ms. Rakhi, a science teacher listed some keywords on the blackboard as :"
+  },
+  {
+    "q": "(i) Freezing (ii) Evaporation (iii) Melting (iv) Sublimation (v) Condensation (vi) Vaporisation\nShe asked students to match the keywords with the common changes which are listed as :\nP : When we put a lid on a vessel containing hot milk, the inside of the lid gets wet.",
+    "model": ""
+  }
+];
+const longBook = [
+  {
+    "q": "At what common temperature, would a block of wood and a block of metal feel equally cold or equally hot when touched?",
+    "model": "When the temperature of the object is equal to that of the human body, no transfer of heat takes place between the body and the object. Thus, when the temperature of the block of wood or block of metal is equal to 37\u00b0C, i.e., the temperature of the human body, these appear equally hot or cold on touching on account of non-transfer of heat."
+  },
+  {
+    "q": "Pieces of copper and glass are heated to the same temperature. Why does the piece of copper feel hotter on touching?",
+    "model": "We know that copper is a far better conductor of heat than glass. When we touch the hot copper piece, it transmits heat readily to the hand. But this is not in the case when the hot glass piece is touched."
+  },
+  {
+    "q": "Place a safety pin on a sheet of white paper. Hold the sheet over a burning candle until the paper becomes yellow and chars. Now shake off the pin. It will leave a white trace on the paper. Explain this phenomenon.",
+    "model": "This is due to the reason that the pin, being a good conductor of heat, takes heat from the paper under it and gives away to the surroundings. As a result of this, the paper under the pin is comparatively colder than its remaining part."
+  },
+  {
+    "q": "If air is a bad conductor of heat, why do we not feel warm without clothes?",
+    "model": "Ans.: Air is a poor conductor of heat. Moving air carries heat due to convection. Thus, when we are without clothes, the moving air in contact with our bodies carries away the heat from our bodies and hence we feel cold."
+  },
+  {
+    "q": "Why do we prefer white or light coloured clothes in summer than dark coloured clothes?",
+    "model": "Ans.: White or light coloured clothes absorb the least heat from the Sun and hence keep us comfortable in summer. On the other hand, dark coloured clothes absorb more heat from the Sun and keeps us hot in summer. Thus we prefer white or light coloured clothes in summer more than dark coloured clothes."
+  },
+  {
+    "q": "The water table varies from place to place. Why?",
+    "model": "Ans.: Water table is the upper level of the Earth's layer where water is found. The water found below the water table is known as groundwater. The availability of groundwater or the level of water table depends on the amount of rainfall and recharge conditions in an area, e.g., in places near the river, one may obtain water after digging only a few feet, while one may have to dig several feet down in a desert before you get water. Thus, the water table varies from place to place."
+  },
+  {
+    "q": "There is abundance of water on our planet Earth. Why is there a scarcity of water then?",
+    "model": "Ans.: Although there is abundance of water on our planet Earth, but only a very small fraction of water is fit for consumption. More than 97% of water that exists the Earth is in seas and oceans that is highly salty and unfit for drinking or other purposes."
+  },
+  {
+    "q": "What differences can you find between a clinical thermometer and a laboratory thermometer?",
+    "model": "Ans.: The clinical thermometer is smaller. It measures only from 35\u00b0C to 42\u00b0C. It is mainly used for medical purposes. There is a small bend or kink in the capillary tube. This prevents the mercury from coming down, when the thermometer is taken out of patient's mouth. Thus the doctor can read the temperature after removing the thermometer.\nThe laboratory thermometer is larger than clinical thermometer and it is used to measure temperature from 0\u00b0C up to 100\u00b0C or more in the laboratory. It has no kink in its capillary tube."
+  },
+  {
+    "q": "Can convection take place in solids? Why?",
+    "model": "Ans.: No. The molecules in a solid are only free to vibrate about their fixed positions. For convection to take place, the molecules need to move carrying the heat with them. Hence convection can not take place in solids."
+  },
+  {
+    "q": "If you live on the top floor of a building, you must have noticed that, in summer the roof gets very hot. Suggest a few ways by which people who live on the top floor of a building can protect themselves from the radiant heat of the Sun?",
+    "model": "Ans.: The roof top may be painted white so as to reflect the radiant heat from the sun. If green or white Perspex sheets are used on a roof they prevent the main roof from absorbing the radiant heat of the Sun. Watering the roof and maintaining a rooftop garden are the other ways to protect from the heat of the Sun."
+  },
+  {
+    "isHeader": true,
+    "text": "(a) What is water table?"
+  },
+  {
+    "q": "(b) What is groundwater?\n(c) What is an aquifer?",
+    "model": "Ans.: (a) If we dig a hole in the ground, we find moist soil at certain depth. On further digging, we reach a depth at which all spaces between the soil particles and cracks in the rocks are filled with water. The upper limit of this depth is called the water table.\n(b) The water found beneath the earth's surface and below the water table is called groundwater.\n(c) At places beneath the earth's surface, the groundwater is stored between layers of hard rocks below the water table. This is known as an aquifer. Water in the aquifers can be pumped out with the help of tubewells or hand pumps."
+  },
+  {
+    "isHeader": true,
+    "text": "Study the given figure of water cycle."
+  },
+  {
+    "q": "(a) Name the number labels as shown in the figure.\n(b) Define the process labelled as 5.",
+    "model": "Ans.: (a) (1) Groundwater (2) Evaporation (3) Condensation (4) Clouds (5) Transpiration (6) Infiltration (7) Precipitation\n(b) The process labelled as 5 is transpiration. Transpiration is the loss of water in the form of water vapour from the aerial parts of a plant such as leaves."
+  },
+  {
+    "q": "You may have noticed that a few sharp jerks are given to clinical thermometer before using it. Why is it done so? (NCERT Exemplar)",
+    "model": "Ans.: A clinical thermometer has a kink which prevents immediate backflow of the mercury from the tube to the bulb, thus allowing us to read the temperature conveniently. This is the reason why we give a jerk to the thermometer before taking a new reading. The jerk positions the mercury below the kink into the bulb."
+  },
+  {
+    "q": "At a camp site there are tents of two shades - one made with black fabric and the other with white fabric. Which one will you prefer for resting on a hot summer afternoon? Give reason for your choice. Would you like to prefer the same tent during winter? (NCERT Exemplar)",
+    "model": "Ans.: (i) On a hot summer afternoon, the tent made up of white fabric will be preferred as white colour is a bad absorber and good reflector of heat.\n(ii) No, the black fabric tent will be preferred during winter."
+  },
+  {
+    "q": "Why is it advised not to hold the thermometer by its bulb while reading it? (NCERT Exemplar)",
+    "model": "Ans.: It is advised not to hold the thermometer by its bulb while reading it because on holding a thermometer by its bulb, the mercury in the bulb expands due to our body temperature and gives false reading."
+  },
+  {
+    "q": "For setting curd, a small amount of curd is added to warm milk. The microbes present in the curd help in setting if the temperature of the mixture remains approximately between 35\u00b0C to 40\u00b0C. At places, where room temperature remains much below the range, setting of curd becomes difficult. Suggest a way to set curd in such a situation. (NCERT Exemplar)",
+    "model": "Ans.: (i) In order to maintain the desired temperature of the mixture, the container can be wrapped either by woollen material or any other poor conductor of heat. Alternatively, the mixture can be kept in a heat resistant container.\n(ii) The container can be kept in the Sun or near the gas stove while cooking."
+  },
+  {
+    "q": "A shopkeeper serves you cold lassi in a tumbler. By chance, the tumbler had a small leak. You were given another tumbler by the shopkeeper to put the leaky tumbler in it. Will this arrangement help to keep the lassi cold for a longer time? Explain.",
+    "model": "Yes, the air trapped between the two tumblers acts as an insulator and prevents heat transfer, keeping the lassi cold for a longer time."
+  },
+  {
+    "q": "Two test tubes with water are heated by a candle flame as shown in figure. Which thermometers (Figure (a) or figure (b)) will record a higher temperature? Explain.",
+    "model": "Thermometer in Figure (a) will record a higher temperature because heat from the candle flame travels upwards by convection, heating the water near the top first."
+  },
+  {
+    "q": "Explain how large water bodies prevent extreme temperature in areas around them.",
+    "model": "Water has a high specific heat capacity. It absorbs and releases heat slowly, which moderates the temperature of the surrounding coastal areas, causing sea and land breezes."
+  },
+  {
+    "q": "Explain how water seeps through the surface of the Earth and gets stored as groundwater.",
+    "model": "Water from rain and other sources seeps through the porous soil and rocks. This process is called infiltration. The water collects over impermeable rocks underground, forming an aquifer."
+  },
+  {
+    "q": "The water cycle helps in the redistribution and replenishment of water on the Earth. Justify the statement.",
+    "model": "The water cycle involves evaporation, condensation, and precipitation. It continuously moves water from oceans to land and back, redistributing it across the globe and replenishing freshwater sources like rivers and groundwater."
+  }
+];
+const extraBook = [
+  {
+    "q": "Did you know? Absolute Zero",
+    "model": "Absolute zero (0 Kelvin or -273.15\u00b0C) is the lowest possible temperature where nothing could be colder and no heat energy remains in a substance."
+  },
+  {
+    "q": "Trivia: Water's anomalous expansion",
+    "model": "Unlike most substances, water expands when it freezes into ice. This is why ice floats on liquid water and why glass bottles of water can burst in the freezer!"
+  },
+  {
+    "q": "Fun Fact: Thermal radiation",
+    "model": "Everything around you, including your own body, is constantly emitting thermal radiation! Human bodies emit primarily in the infrared spectrum, which is why night-vision goggles can see us in the dark."
+  }
+];
 
-const fillBook = [];
-renderFill('fillbook-container', fillBook, 'fb');
-document.getElementById('fill-count').textContent = `(${fillBook.length})`;
-
-const tfBook = [{"q": "Heat transfer takes place in solids through convection.", "a": false}, {"q": "Heat transfer through convection takes place by the actual movement of particles.", "a": true}, {"q": "Areas with clay materials allow more seepage of water than those with sandy materials.", "a": false}, {"q": "The movement of cooler air from land to sea is called land breeze.", "a": true}];
-renderTF('tfbook-container', tfBook, 'tb');
-document.getElementById('tf-count').textContent = `(${tfBook.length})`;
-
-const shortBook = [{"q": "(a) What is an indicator? (b) How will you prepare China rose indicator?", "model": "(a) An indicator is a special type of substance used to test whether a substance is acidic or basic. It changes color in acidic and basic solutions.\n(b) China rose indicator is prepared by keeping some warm water in a beaker and adding some China rose petals. Keep the mixture for some time till water becomes colored. This colored water is used as an indicator."}, {"q": "Give an important use of neutralisation reaction in daily life.", "model": "An important use is treating indigestion using antacids (like milk of magnesia) which are mild bases that neutralize excess stomach acid."}, {"q": "(a) Why do doctors advice to make up for salt loss to the people who sweat more? (b) Give the colours of phenolphthalein and methyl orange indicators in acidic and basic media.", "model": "(a) Sweating causes loss of water and essential salts (electrolytes) from the body. Doctors advise making up for it to prevent dehydration and maintain electrolyte balance.\n(b) Phenolphthalein: colourless in acidic, pink in basic. Methyl orange: red in acidic, yellow in basic."}, {"q": "A substance 'X' gives pink colour with phenolphthalein. When another substance 'Y' is added to it, the pink colour disappears after some time. What are substances 'X' and 'Y'?", "model": "Substance 'X' is a base (since it turns phenolphthalein pink). Substance 'Y' is an acid (which neutralizes the base, making the solution colourless again)."}, {"q": "(a) Which acids are used to make the following salts? (i) Sulphates (ii) Acetates (iii) Nitrates (b) Why should curd and other sour substances not be kept in aluminium or copper containers?", "model": "(a) (i) Sulphuric acid (ii) Acetic acid (iii) Nitric acid.\n(b) Sour substances contain acids which can react with metals like aluminium and copper to form toxic compounds, causing food poisoning."}, {"q": "What are strong and weak bases? Give two examples of each.", "model": "Strong bases completely dissociate into hydroxide ions in water (e.g., Sodium hydroxide, Potassium hydroxide). Weak bases partially dissociate in water (e.g., Ammonium hydroxide, Calcium hydroxide)."}, {"q": "Write important uses of hydrochloric and sulphuric acids.", "model": "Hydrochloric acid is used for cleaning metal surfaces before galvanization and for cleaning toilets. Sulphuric acid is used in car batteries and manufacturing fertilizers like superphosphate."}, {"q": "Are all acids corrosive in nature? Name few acids which are non-corrosive and may be part of our food.", "model": "No, not all acids are corrosive. Organic acids are generally weak and non-corrosive. Examples include citric acid (lemons), lactic acid (curd), and acetic acid (vinegar)."}, {"q": "(a) Why do antacid tablets relieve the uneasiness due to indigestion? (b) What is used to neutralise an excessive basic soil?", "model": "(a) Antacids are mild bases that neutralize the excess acid produced in the stomach during indigestion, providing relief.\n(b) Organic matter (compost or manure) is added to excessively basic soil, as it releases acids which neutralise the basic nature."}, {"q": "(a) Why is sulphuric acid called \"King of Chemicals\"? (b) Which bases are called alkalies? Give an example of alkali.", "model": "(a) It is called the king of chemicals because it has a vast number of industrial applications and is highly reactive. (b) Bases that are soluble in water are called alkalies. Example: Sodium hydroxide (NaOH)."}];
-renderSubjective('short-container', shortBook, 'sb');
-document.getElementById('short-count').textContent = `(${shortBook.length})`;
-
-const longBook = [{"q": "Four solutions A, B, C and D are taken in four test tubes. They were tested with four indicators - methyl orange, phenolphthalein, China rose and blue litmus. The observations are recorded below. Identify A, B, C and D as acids, bases or neutral salts.\nSoln. A: Methyl orange (Orange), Phenolphthalein (Colourless), China rose (Pink), Blue litmus (Blue).\nSoln. B: Methyl orange (Yellow), Phenolphthalein (Pink), China rose (Green), Blue litmus (Blue).\nSoln. C: Methyl orange (Red), Phenolphthalein (Colourless), China rose (Magenta), Blue litmus (Red).\nSoln. D: Methyl orange (Yellow), Phenolphthalein (Pink), China rose (Green), Blue litmus (Blue).", "model": "A is a neutral salt solution. B is a base. C is an acid. D is a base."}, {"q": "What is meant by acid rain? How is acid rain caused? What damage is caused by acid rain?", "model": "Acid rain is rain containing elevated levels of hydrogen ions (low pH) due to the presence of dissolved acids. It is caused by emissions of sulfur dioxide and nitrogen oxides reacting with water molecules in the atmosphere to produce acids. It damages monuments, buildings, kills aquatic life, and harms vegetation."}, {"q": "Give few important applications of neutralisation reactions.", "model": "1. Treating indigestion with antacids. 2. Treating ant stings (formic acid) with baking soda. 3. Treating acidic soil with quicklime or slaked lime. 4. Treating basic soil with organic matter. 5. Treating factory wastes containing acids before discharging them into water bodies."}, {"q": "(a) How will you prepare turmeric indicator? Using this indicator give tests for lime water, salt solution and soap solution. (b) Can turmeric paper be used to differentiate between an acid and a neutral solution? Explain your answer.", "model": "(a) Mix turmeric powder with a little water to make a paste. Apply on blotting paper and dry to get turmeric strips. Lime water and soap solution will turn it red (basic). Salt solution will show no change (yellow). (b) No, turmeric indicator remains yellow in both acidic and neutral solutions."}, {"q": "(a) Complete the following table : Indicator | Colour in acidic medium | Colour in basic medium | Colour in neutral medium (Blue litmus, Red litmus, China rose, Turmeric, Methyl orange, Phenolphthalein). (b) Why do we feel a burning sensation in the stomach when we overeat? What is the medicine used? Given one example.", "model": "(a) Blue litmus: Red (acid), Blue (base), Blue (neutral). Red litmus: Red (acid), Blue (base), Red (neutral). China rose: Magenta (acid), Green (base), No change (neutral). Turmeric: Yellow (acid), Red (base), Yellow (neutral). Methyl orange: Red (acid), Yellow (base), Orange (neutral). Phenolphthalein: Colourless (acid), Pink (base), Colourless (neutral). (b) Overeating causes excessive production of hydrochloric acid in the stomach, leading to a burning sensation. Antacids are used as medicine, e.g., Milk of Magnesia."}, {"q": "(a) Give one word answer for the following:\n(i) A base which is soluble in water.\n(ii) A compound which changes colour with acid and base.\n(iii) An indicator extracted from lichens.\n(iv) A substance formed when an acid and a base react.\n(v) A substance which is sour in taste and gives hydrogen ions in the solution.\n(b) If we touch the test tube immediately after carrying out the neutralization reaction of an acid and base in it, it is found to be hot. Explain.", "model": "(a) (i) Alkali (ii) Indicator (iii) Litmus (iv) Salt (v) Acid.\n(b) Neutralization reactions are exothermic, meaning they release heat, causing the test tube to become hot."}, {"q": "You are given five samples A, B, C, D and E. Out of these, two are acidic, two are basic and one is neutral. (D) is a stronger acid than (C). (B) is neutral while (E) is a weaker base than (A). Match these samples with the given pH values: 7.0, 12.8, 2.1, 9.4 and 5.5? What is the significance of pH scale?", "model": "B is neutral -> 7.0. D is stronger acid than C -> D=2.1, C=5.5. A is stronger base than E -> A=12.8, E=9.4. The pH scale indicates the strength of acidic or basic solutions."}, {"q": "Tooth enamel is one of the hardest substance in our body. How does it damage due to eating chocolates and sweets? What should we do to prevent it?", "model": "Bacteria in the mouth break down sugars from sweets into acids. These acids lower the pH in the mouth and slowly dissolve the calcium phosphate of tooth enamel, causing decay. To prevent it, we should brush our teeth with basic toothpaste to neutralize the acids."}, {"q": "What will be the action of the following substances on litmus paper? Dry HCl gas, moistened NH3 gas, lemon juice, carbonated soft drink, curd, soap solution.", "model": "Dry HCl gas: No action (needs moisture to release H+ ions). Moistened NH3 gas: Turns red litmus blue. Lemon juice: Turns blue litmus red. Carbonated soft drink: Turns blue litmus red. Curd: Turns blue litmus red. Soap solution: Turns red litmus blue."}, {"q": "(a) A yellow curry stain on a white shirt turns red when it is washed with soap. Give reason. (b) Dorji has a few bottles of soft drink in his restaurant. But unfortunately, these are not labelled. He has to serve the drinks on the demand of customers. One customer wants acidic drink, another wants basic and third one wants neutral drink. How will Dorji decide which drink is to be served to whom?", "model": "(a) Curry contains turmeric, a natural indicator which is yellow in neutral/acidic medium and red in basic medium. Soap is basic, so it turns the stain red.\n(b) Dorji can use litmus paper. The drink turning blue litmus red is acidic. The drink turning red litmus blue is basic. The one having no effect on either is neutral."}];
-renderSubjective('long-container', longBook, 'lb');
-document.getElementById('long-count').textContent = `(${longBook.length})`;
-
-const extraBook = [{"q": "Did you know? Why doesn't the stomach digest itself?", "model": "The stomach secretes a thick layer of alkaline mucus that physically coats the stomach wall, neutralizing the acid before it can burn the tissue. If this mucus layer is damaged, the acid can cause a painful sore called an ulcer!"}, {"q": "Can you swallow upside down?", "model": "Yes! Because the oesophagus uses powerful, wave-like muscular contractions called peristalsis to push food into the stomach, you can drink or eat even while standing on your head. Gravity is not required for swallowing!"}, {"q": "How long is your entire digestive tract?", "model": "If stretched out, the human adult alimentary canal is about 9 meters (30 feet) long! The small intestine alone makes up about 7.5 meters of that length."}];
-renderSubjective('extra-container', extraBook, 'eb');
-document.getElementById('extra-count').textContent = `(${extraBook.length})`;
-
-</script>
+    if(mcqBook && mcqBook.length) { renderMCQ('mcqbook-container', mcqBook, 'mcq'); document.getElementById('mcq-count').textContent = `(${mcqBook.filter(i=>!i.isHeader).length})`; }
+    if(fillBook && fillBook.length) { renderFill('fillbook-container', fillBook, 'fill'); document.getElementById('fill-count').textContent = `(${fillBook.filter(i=>!i.isHeader).length})`; }
+    if(tfBook && tfBook.length) { renderTF('tfbook-container', tfBook, 'tf'); document.getElementById('tf-count').textContent = `(${tfBook.filter(i=>!i.isHeader).length})`; }
+    if(shortBook && shortBook.length) { renderSubjective('short-container', shortBook, 'sb'); document.getElementById('short-count').textContent = `(${shortBook.filter(i=>!i.isHeader).length})`; }
+    if(longBook && longBook.length) { renderSubjective('long-container', longBook, 'lb'); document.getElementById('long-count').textContent = `(${longBook.filter(i=>!i.isHeader).length})`; }
+    if(extraBook && extraBook.length) { renderSubjective('extra-container', extraBook, 'eb'); document.getElementById('extra-count').textContent = `(${extraBook.filter(i=>!i.isHeader).length})`; }
+    </script>
 </body>
 </html>

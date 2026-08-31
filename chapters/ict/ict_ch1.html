@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1 - Number System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #FFFFFF;
+    --bg-card: #F8FAFC;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --accent: #38BDF8;
+    --border: #E2E8F0;
+    --border-hover: #CBD5E1;
+    --good: #059669;
+    --good-bg: #D1FAE5;
+    --bad: #E11D48;
+    --bad-bg: #FFE4E6;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-main: #0F172A;
+      --bg-card: #1E293B;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --primary: #6366F1;
+      --primary-hover: #818CF8;
+      --accent: #0EA5E9;
+      --border: #334155;
+      --border-hover: #475569;
+      --good: #34D399;
+      --good-bg: #064E3B;
+      --bad: #F87171;
+      --bad-bg: #7F1D1D;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{margin:0; background: var(--bg-main); color: var(--text-main); font-family:'Nunito',sans-serif; line-height:1.6;}
+  .wrap{max-width:1100px; margin:0 auto; padding:26px 16px 120px;}
+  
+  header.hero{text-align:center; padding:30px 14px 26px; border-bottom:1px solid var(--border); margin-bottom:0px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--primary); margin-bottom:8px; font-weight:600;}
+  h1{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:clamp(1.8rem,5vw,2.7rem); margin:0 0 8px; color:var(--text-main);}
+  .sub{font-size:1rem; color:var(--text-muted);}
+  
+  /* STICKY TABS */
+  .tabs-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(var(--bg-main), 0.95);
+    backdrop-filter: blur(10px);
+    padding: 12px 0;
+    box-shadow: 0 4px 10px -10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tabs-container {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; max-width: 1000px; margin: 0 auto; overflow-x: auto; padding: 0 10px;
+  }
+  .tab-btn {
+    padding: 8px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { border-color: var(--border-hover); color: var(--text-main); }
+  .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: var(--shadow); }
+  
+  .tab-content { display: none; animation: fadeIn 0.4s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .instructions { background: var(--bg-card); border: 1px dashed var(--primary); border-radius: 12px; padding: 14px 20px; margin: 22px 0 30px; font-size: 0.95rem; color: var(--text-main); }
+  .instructions b { color: var(--primary); }
+
+  /* COLLAPSIBLE HEADERS */
+  .collapsible-header {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--text-main); margin: 0 0 16px; 
+    display: flex; align-items: center; gap: 10px; border-left: 4px solid var(--primary); padding-left: 12px;
+    cursor: pointer; user-select: none; transition: 0.2s;
+  }
+  .collapsible-header:hover { opacity: 0.8; }
+  .count-badge { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--text-muted); font-weight: 500; }
+  .chevron { width: 32px; height: 32px; fill: var(--primary); background: rgba(79,70,229,0.08); border-radius: 50%; padding: 4px; transition: all 0.3s; margin-left: auto; }
+.collapsible-header:hover .chevron { background: rgba(79,70,229,0.15); }
+  .collapsible-header.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-content { overflow: hidden; transition: max-height 0.3s ease-out; }
+  .collapsible-content.collapsed { display: none; }
+
+  /* MODE SWITCH */
+  .mode-switch { display: flex; justify-content: center; gap: 0; margin-bottom: 20px; border-radius: 100px; overflow: hidden; border: 1px solid var(--primary); max-width: 380px; margin: 0 auto 20px auto; background:var(--bg-card); }
+  .mode-btn { flex: 1; padding: 10px 15px; border: none; background: transparent; color: var(--text-muted); font-size:0.95rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; transition: 0.3s; }
+  .mode-btn.active { background: var(--primary); color: #fff; }
+  #test-intro { background: var(--bg-card); border: 2px dashed var(--border); border-radius: 12px; padding: 40px 20px; text-align: center; margin-bottom: 30px; box-shadow: var(--shadow); }
+  #test-intro h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-main); margin-top: 0; }
+  .btn-start { background: var(--primary); color: white; border: none; padding: 14px 34px; font-size: 1.1rem; font-weight: 700; font-family:'Nunito',sans-serif; border-radius: 100px; cursor: pointer; margin-top: 15px; box-shadow: var(--shadow); transition: 0.2s; }
+  .btn-start:hover { transform: translateY(-2px); background: var(--primary-hover); }
+
+  /* QUESTION STYLES */
+  .q { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; box-shadow: var(--shadow); }
+  .q-text { font-weight: 700; margin-bottom: 10px; font-size: 1rem; color: var(--text-main); }
+  .q-text .num { color: var(--primary); font-family: 'JetBrains Mono', monospace; margin-right: 8px; }
+  .opts label { display: block; padding: 8px 12px; border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.95rem; border: 1px solid transparent; transition: 0.2s; }
+  .opts label:hover { background: rgba(79, 70, 229, 0.05); }
+  .opts input { margin-right: 10px; }
+  .fillblank input[type=text] { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; width: 250px; background: var(--bg-main); color: var(--text-main); }
+  .tf-row { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+  .tf-row label { font-size: 0.95rem; cursor: pointer; }
+  
+  .feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.5; }
+  .feedback.correct { background: var(--good-bg); color: var(--good); display: block; border: 1px solid var(--good); }
+  .feedback.incorrect { background: var(--bad-bg); color: var(--bad); display: block; border: 1px solid var(--bad); }
+  .feedback .exp { display: block; margin-top: 6px; font-style: italic; opacity: 0.9; }
+
+  details { margin-top: 14px; }
+  details summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--primary); font-weight: 700; }
+  details .model { margin-top: 12px; font-size: 0.95rem; background: rgba(79, 70, 229, 0.05); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: 0 8px 8px 0; line-height: 1.6; }
+
+  /* BOTTOM GRADE BAR */
+  .grade-bar{position:fixed; left:0; right:0; bottom:0; background:var(--bg-card); border-top: 1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:center; gap:16px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index:50; display:none;}
+  .grade-bar button{background:var(--primary); color:#fff; border:none; padding:12px 28px; border-radius:100px; font-weight:700; font-family:'Nunito',sans-serif; font-size:1rem; cursor:pointer;}
+  .grade-bar button:hover{background:var(--primary-hover);}
+  .score-readout{font-family:'JetBrains Mono',monospace; font-size:1.15rem; font-weight:700; color:var(--text-main);}
+  .score-readout.urgent{color:var(--bad); animation: pulse 1s infinite;}
+  @keyframes pulse { 0% { opacity:1;} 50% {opacity:0.5;} 100% {opacity:1;} }
+
+  .result-panel{display:none; background:var(--bg-card); border:2px solid var(--border); border-radius:14px; padding:24px; text-align:center; margin-bottom:40px; box-shadow:var(--shadow);}
+  .result-panel.show{display:block;}
+  .result-panel .score-big{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:2.8rem; color:var(--primary);}
+  .result-panel .msg{font-size:1.1rem; margin-top:10px; line-height:1.6;}
+
+  /* VIDEO LINKS (TAB 1) */
+  .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .topic-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); position:relative; }
+  .topic-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
+  .video-btn { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(79, 70, 229, 0.05); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text-main); font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; transition: 0.2s; }
+  .video-btn:hover { background: rgba(79, 70, 229, 0.1); border-color: var(--border-hover); }
+  .thumb-wrapper { position: relative; width: 44px; height: 28px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+  .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+  .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(79, 70, 229, 0.9); border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+  .play-icon svg { width: 8px; height: 8px; fill: white; margin-left: 2px; }
+</style>
+</head>
+<body>
+
+<div style="padding: 10px 20px; background: var(--bg-card); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between;">
+    <a href="javascript:history.back()" style="color: var(--primary); text-decoration: none; font-weight: 700; font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 6px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back
+    </a>
+    <a href="../../index.html" style="color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.9rem; font-family: 'Nunito', sans-serif;">Home</a>
+</div>
+
+
+  <header class="hero">
+    <div class="eyebrow">ICT - CHAPTER 1</div>
+    <h1>Number System</h1>
+    <div class="sub">Complete Chapter Guide & Practice Module</div>
+  </header>
+
+<div class="tabs-wrapper">
+  <div class="tabs-container">
+    <button class="tab-btn active" onclick="openTab(event, 'tab-video')">1. Videos & Map</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-omr')">2. OMR (1 Mark)</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-short')">3. 2/3 Marks</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-long')">4. 4+ Marks</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-extra')">5. Extra Knowledge</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- TAB 1: VIDEOS & CONCEPT MAP -->
+  <div id="tab-video" class="tab-content active">
+    <div class="instructions">
+      <b>How to use:</b> Watch the video explanations for each topic by clicking the thumbnails. Then review the Concept Map below to see how everything connects!
+    </div>
+
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('video-grid', this)">
+      <span>Chapter Topics & Videos</span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="video-grid" class="collapsible-content collapsed topics-grid">
+  <p style="text-align:center; padding: 2rem; color: #94A3B8; font-size: 1.1rem; width: 100%; grid-column: 1 / -1;"><i>Video explanations coming soon for this chapter.</i></p>
+</div>
+</div>
+  <!-- TAB 2: OMR -->
+  <div id="tab-omr" class="tab-content">
+    <div class="mode-switch">
+      <button id="btn-practice" class="mode-btn active" onclick="setMode('practice')">Practice Mode</button>
+      <button id="btn-test" class="mode-btn" onclick="setMode('test')">Test Mode</button>
+    </div>
+
+    <div id="test-intro" style="display:none;">
+      <h3>Ready for the Test?</h3>
+      <p style="font-size: 1.1rem;">You have <b id="t-count" style="color:var(--primary);"></b> objective questions.</p>
+      <p style="font-size: 1.1rem;">Time Allowed: <b id="t-time" style="color:var(--primary);"></b> minutes.</p>
+      <button class="btn-start" onclick="startTest()">Start Test Now</button>
+    </div>
+
+    <div id="resultPanel" class="result-panel">
+      <div class="score-big" id="scoreBig">0 / 0</div>
+      <div class="msg" id="scoreMsg"></div>
+    </div>
+
+    <div id="omr-content">
+      <div class="instructions" id="omr-instructions">
+        <b>Practice Mode Active:</b> Click any option or type an answer to get instant correct/incorrect feedback along with explanations!
+      </div>
+      
+      <h2 class="collapsible-header collapsed" onclick="toggleSection('mcqbook-container', this)">
+        <span>OMR Practice (MCQs)</span> <span class="count-badge" id="mcq-count"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </h2>
+      <div id="mcqbook-container" class="collapsible-content collapsed"></div>
+      
+      <h2 class="collapsible-header collapsed" onclick="toggleSection('fillbook-container', this)">
+        <span>Fill in the Blanks</span> <span class="count-badge" id="fill-count"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </h2>
+      <div id="fillbook-container" class="collapsible-content collapsed"></div>
+      
+      <h2 class="collapsible-header collapsed" onclick="toggleSection('tfbook-container', this)">
+        <span>True or False</span> <span class="count-badge" id="tf-count"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </h2>
+      <div id="tfbook-container" class="collapsible-content collapsed"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: SHORT -->
+  <div id="tab-short" class="tab-content">
+    <div class="instructions">
+      <b>Mental Flashcards:</b> Try to recall the answer in your head, then click "Show Detailed Answer".
+    </div>
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('short-container', this)">
+      <span>2 and 3 Marks Questions</span> <span class="count-badge" id="short-count"></span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="short-container" class="collapsible-content collapsed"></div>
+  </div>
+
+  <!-- TAB 4: LONG -->
+  <div id="tab-long" class="tab-content">
+    <div class="instructions">
+      <b>Mental Flashcards:</b> Formulate the answer, then study the complete textbook-level explanation.
+    </div>
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('long-container', this)">
+      <span>4+ Marks & Case Based</span> <span class="count-badge" id="long-count"></span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="long-container" class="collapsible-content collapsed"></div>
+  </div>
+
+  <!-- TAB 5: EXTRA KNOWLEDGE -->
+  <div id="tab-extra" class="tab-content">
+    <div class="instructions">
+      <b>For the Bookworms:</b> Deep-dive questions and fascinating facts!
+    </div>
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('extra-container', this)">
+      <span>Knowledge Topics & Trivia</span> <span class="count-badge" id="extra-count"></span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="extra-container" class="collapsible-content collapsed"></div>
+  </div>
+
+</div> <!-- end wrap -->
+
+<div class="grade-bar" id="grade-bar">
+  <span class="score-readout" id="liveCount">00:00</span>
+  <button id="grade-btn" onclick="gradeAll()">Grade My Test</button>
+</div>
+
+<script>
+window.currentMode = 'practice'; 
+window.testTimer = null;
+window.timeRemaining = 0;
+
+function toggleSection(contentId, headerEl) {
+    const el = document.getElementById(contentId);
+    el.classList.toggle('collapsed');
+    headerEl.classList.toggle('collapsed');
+}
+
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+    tabcontent[i].classList.remove("active");
+  }
+  tablinks = document.getElementsByClassName("tab-btn");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  document.getElementById(tabName).classList.add("active");
+  evt.currentTarget.className += " active";
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+let totalMax = 0;
+
+function renderFill(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  let qNum = 1;
+  data.forEach((item,i)=>{
+    if(item.isHeader) {
+      const div = document.createElement('div');
+      div.style = 'grid-column: 1 / -1; font-weight: bold; font-size: 1.15rem; color: #38bdf8; padding: 1.5rem 0 0.5rem 0; border-bottom: 1px solid #334155; margin-bottom: 1rem; margin-top: 1rem;';
+      div.innerHTML = item.text;
+      c.appendChild(div);
+      return;
+    }
+    const div = document.createElement('div');
+    div.className='q';
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
+      <input type="text" id="${prefix}-ans-${i}" class="text-input" placeholder="type your answer">
+      <div id="${prefix}-fb-${i}" class="feedback"></div>`;
+    
+    div.querySelector('input').addEventListener('blur', (e) => gradeSpecificQuestion('fill', prefix, i));
+    c.appendChild(div);
+    qNum++;
+  });
+}
+
+
+function renderMCQ(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  let qNum = 1;
+  data.forEach((item,i)=>{
+    if(item.isHeader) {
+      const div = document.createElement('div');
+      div.style = 'grid-column: 1 / -1; font-weight: bold; font-size: 1.15rem; color: #38bdf8; padding: 1.5rem 0 0.5rem 0; border-bottom: 1px solid #334155; margin-bottom: 1rem; margin-top: 1rem;';
+      div.innerHTML = item.text;
+      c.appendChild(div);
+      return;
+    }
+    const div = document.createElement('div');
+    div.className='q';
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-q${i}" value="${j}"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
+      <div class="options">${opts}</div>
+      <div id="${prefix}-fb-${i}" class="feedback"></div>`;
+    
+    div.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('change', (e) => gradeSpecificQuestion('mcq', prefix, i));
+    });
+    c.appendChild(div);
+    qNum++;
+  });
+}
+
+
+function renderTF(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  let qNum = 1;
+  data.forEach((item,i)=>{
+    if(item.isHeader) {
+      const div = document.createElement('div');
+      div.style = 'grid-column: 1 / -1; font-weight: bold; font-size: 1.15rem; color: #38bdf8; padding: 1.5rem 0 0.5rem 0; border-bottom: 1px solid #334155; margin-bottom: 1rem; margin-top: 1rem;';
+      div.innerHTML = item.text;
+      c.appendChild(div);
+      return;
+    }
+    const div = document.createElement('div');
+    div.className='q';
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.s}</div>
+      <div class="tf-toggle">
+        <button class="tf-btn" data-val="true" onclick="selectTF(this, '${prefix}', ${i})">True</button>
+        <button class="tf-btn false-btn" data-val="false" onclick="selectTF(this, '${prefix}', ${i})">False</button>
+      </div>
+      <div id="${prefix}-fb-${i}" class="feedback"></div>`;
+    c.appendChild(div);
+    qNum++;
+  });
+}
+
+
+function renderSubjective(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  let qNum = 1;
+  data.forEach((item,i)=>{
+    if(item.isHeader) {
+      const div = document.createElement('div');
+      div.style = 'grid-column: 1 / -1; font-weight: bold; font-size: 1.15rem; color: #38bdf8; padding: 1.5rem 0 0.5rem 0; border-bottom: 1px solid #334155; margin-bottom: 1rem; margin-top: 1rem;';
+      div.innerHTML = item.text;
+      c.appendChild(div);
+      return;
+    }
+    const div = document.createElement('div');
+    div.className='q subjective';
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
+      <details><summary>Show Detailed Answer</summary><div class="model">${item.model}</div></details>`;
+    c.appendChild(div);
+    qNum++;
+  });
+}
+
+
+function gradeSpecificQuestion(type, prefix, i) {
+   let item, val, correct, answerText, expText;
+   const fb = document.getElementById(`${prefix}-fb-${i}`);
+   if(type === 'fill') {
+      const container = document.getElementById('fillbook-container');
+      item = container.fillData[i];
+      val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
+      correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+      answerText = 'Correct Answer: ' + item.a[0];
+      expText = item.exp;
+      if(val === '') { fb.style.display = 'none'; return; }
+   } else if(type === 'mcq') {
+      const container = document.getElementById('mcqbook-container');
+      item = container.mcqData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = parseInt(sel.value);
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+      expText = item.exp;
+   } else if(type === 'tf') {
+      const container = document.getElementById('tfbook-container');
+      item = container.tfData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = (sel.value === 'true');
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+      expText = item.exp;
+   }
+   
+   if(correct) {
+      fb.className = 'feedback correct'; 
+      fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${expText}</span>`;
+   } else {
+      fb.className = 'feedback incorrect'; 
+      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText} <span class="exp">${expText}</span>`;
+   }
+   fb.style.display = 'block';
+}
+
+function setMode(mode) {
+  if(window.testTimer) clearInterval(window.testTimer);
+  window.currentMode = mode;
+  document.getElementById('btn-practice').classList.toggle('active', mode==='practice');
+  document.getElementById('btn-test').classList.toggle('active', mode==='test');
+  
+  resetAllAnswers();
+  
+  if(mode === 'test') {
+    document.getElementById('omr-content').style.display = 'none';
+    document.getElementById('test-intro').style.display = 'block';
+    document.getElementById('t-count').textContent = totalMax;
+    document.getElementById('t-time').textContent = totalMax; 
+    document.getElementById('grade-bar').style.display = 'none';
+  } else {
+    document.getElementById('omr-content').style.display = 'block';
+    document.getElementById('test-intro').style.display = 'none';
+    document.getElementById('grade-bar').style.display = 'none'; 
+    document.getElementById('omr-instructions').style.display = 'block';
+  }
+}
+
+function startTest() {
+  document.getElementById('test-intro').style.display = 'none';
+  document.getElementById('omr-content').style.display = 'block';
+  document.getElementById('omr-instructions').style.display = 'none'; 
+  document.getElementById('grade-bar').style.display = 'flex';
+  
+  // EXPAND ALL TABS FOR TEST
+  document.getElementById('mcqbook-container').classList.remove('collapsed');
+  document.getElementById('mcqbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('fillbook-container').classList.remove('collapsed');
+  document.getElementById('fillbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('tfbook-container').classList.remove('collapsed');
+  document.getElementById('tfbook-container').previousElementSibling.classList.remove('collapsed');
+
+  window.timeRemaining = totalMax * 60; // 1 min per Q
+  updateTimerDisplay();
+  window.testTimer = setInterval(() => {
+    window.timeRemaining--;
+    updateTimerDisplay();
+    if(window.timeRemaining <= 0) {
+       clearInterval(window.testTimer);
+       gradeAll();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  let m = Math.floor(window.timeRemaining / 60);
+  let s = window.timeRemaining % 60;
+  const readout = document.getElementById('liveCount');
+  readout.textContent = `⏱ Time Remaining: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  if(window.timeRemaining <= 60) {
+     readout.classList.add('urgent');
+  } else {
+     readout.classList.remove('urgent');
+  }
+}
+
+function resetAllAnswers() {
+   document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
+   document.querySelectorAll('#omr-content input[type="text"]').forEach(r => r.value = '');
+   document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+   document.getElementById('resultPanel').classList.remove('show');
+}
+
+function gradeAll() {
+  if(window.testTimer) clearInterval(window.testTimer);
+  
+  let totalCorrect = 0;
+  let totalIncorrect = 0;
+  let totalUnanswered = 0;
+  
+  const gradeItem = (type, val, item, fb, rightAnsText) => {
+      let correct = false;
+      if(val === null || val === '') {
+          totalUnanswered++; 
+          fb.className='feedback incorrect'; 
+          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+      } else {
+          if(type==='fill') correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+          if(type==='mcq') correct = (val === item.answer);
+          if(type==='tf') correct = (val === item.answer);
+          
+          if(correct) {
+              totalCorrect++; 
+              fb.className='feedback correct'; 
+              fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${item.exp}</span>`;
+          } else {
+              totalIncorrect++; 
+              fb.className='feedback incorrect'; 
+              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+          }
+      }
+      fb.style.display='block';
+  };
+
+  const fillContainer = document.getElementById('fillbook-container');
+  fillContainer.fillData.forEach((item, i) => {
+     const val = document.getElementById(`${fillContainer.dataset.prefix}-${i}`).value.trim().toLowerCase();
+     const fb = document.getElementById(`${fillContainer.dataset.prefix}-fb-${i}`);
+     gradeItem('fill', val, item, fb, 'Correct Answer: ' + item.a[0]);
+  });
+  
+  const mcqContainer = document.getElementById('mcqbook-container');
+  mcqContainer.mcqData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${mcqContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${mcqContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+     gradeItem('mcq', sel ? parseInt(sel.value) : null, item, fb, rightAnsText);
+  });
+  
+  const tfContainer = document.getElementById('tfbook-container');
+  tfContainer.tfData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${tfContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${tfContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+     gradeItem('tf', sel ? (sel.value === 'true') : null, item, fb, rightAnsText);
+  });
+  
+  document.getElementById('scoreBig').textContent = totalCorrect + ' / ' + totalMax;
+  const pct = Math.round((totalCorrect/totalMax)*100);
+  let msg = `<strong>Score Breakdown:</strong><br><span style="color:var(--good); font-weight:bold;">✔ Correct: ${totalCorrect}</span> &nbsp;|&nbsp; <span style="color:var(--bad); font-weight:bold;">✘ Incorrect: ${totalIncorrect}</span> &nbsp;|&nbsp; <span>⊝ Unanswered: ${totalUnanswered}</span><br><br>`;
+  if(pct>=90) msg += "Outstanding! You crushed the time-bound test. 🏆";
+  else if(pct>=70) msg += "Great work! Just review the questions marked in red below. 🌟";
+  else if(pct>=50) msg += "Good effort — scroll down to study the explanations for the ones you missed. 📖";
+  else msg += "Time-bound tests can be tricky! Review the correct answers below and try again later. 💪";
+  
+  document.getElementById('scoreMsg').innerHTML = msg;
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('grade-bar').style.display = 'none';
+  
+  window.scrollTo({top: document.getElementById('resultPanel').offsetTop - 100, behavior: 'smooth'});
+}
+
+window.onload = function() {
+   setMode('practice');
+};
+
+</script>
+</body>
+</html>
+
+<script>
+
+const mcqBook = [
+  {
+    "q": "Which one is the default bullet style in an unordered list of items?",
+    "options": [
+      "(a) Disc",
+      "(b) Square",
+      "(c) Rectangle",
+      "(d) None of these"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "By which tag, an unordered list is represented?",
+    "options": [
+      "(a) &lt;U&gt;",
+      "(b) &lt;I&gt;",
+      "(c) &lt;UL&gt;",
+      "(d) &lt;OL&gt;"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Which among the following list allows symbols?",
+    "options": [
+      "(a) Ordered",
+      "(b) Unordered",
+      "(c) Definition",
+      "(d) None of these"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Which among the following cannot be the value of the attribute TYPE in a &lt;UL&gt; tag?",
+    "options": [
+      "(a) Square",
+      "(b) Rectangle",
+      "(c) Circle",
+      "(d) Both (i) and (ii)"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Which attribute of the &lt;IMG&gt; tag is used to display some text, if for some reason the image cannot be displayed?",
+    "options": [
+      "(a) SRC",
+      "(b) ALT",
+      "(c) HREF",
+      "(d) None of these"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "CSS stands for ______________",
+    "options": [
+      "(a) Cascade style sheets",
+      "(b) Color and style sheets",
+      "(c) Cascading style sheets",
+      "(d) None of the above"
+    ],
+    "answer": "(c) Cascading style sheets"
+  },
+  {
+    "q": "In an HTML page, which of these tags is used for embedding CSS?",
+    "options": [
+      "(a) &lt;!DOCTYPE html&gt;",
+      "(b) &lt;css&gt;",
+      "(c) &lt;style&gt;",
+      "(d) &lt;script&gt;"
+    ],
+    "answer": "(c) &lt;style&gt;"
+  },
+  {
+    "q": "Which one of the following properties is used to define the size of the font in CSS?",
+    "options": [
+      "(a) Font-size",
+      "(b) Font-color",
+      "(c) Size",
+      "(d) None of these"
+    ],
+    "answer": "(a) Font-size"
+  },
+  {
+    "q": "Which of the following properties is used to change the font face of the text in CSS?",
+    "options": [
+      "(a) Font-size",
+      "(b) Font-color",
+      "(c) Font-face",
+      "(d) None of these"
+    ],
+    "answer": "(c) Font-face"
+  },
+  {
+    "q": "Which one of the following is not a member of the generic font family?",
+    "options": [
+      "(a) Serif",
+      "(b) Sans-serif",
+      "(c) Constantia",
+      "(d) None of these"
+    ],
+    "answer": "(c) Constantia"
+  },
+  {
+    "q": "Which number system uses only 2 digits to represent a number?",
+    "options": [
+      "(a) Binary Number System",
+      "(b) Octal Number System",
+      "(c) Decimal Number System",
+      "(d) Hexadecimal Number System"
+    ],
+    "answer": "(a) Binary Number System"
+  },
+  {
+    "q": "What is the electronic state represented by the numeral 'zero'?",
+    "options": [
+      "(a) On",
+      "(b) Off",
+      "(c) None",
+      "(d) None Of These"
+    ],
+    "answer": "(b) Off"
+  },
+  {
+    "q": "Which among the following is a valid binary number?",
+    "options": [
+      "(a) 1011012",
+      "(b) 345168",
+      "(c) AB5916",
+      "(d) None of these"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "What is the base of binary number system?",
+    "options": [
+      "(a) 2",
+      "(b) 4",
+      "(c) 6",
+      "(d) 8"
+    ],
+    "answer": "(a) 2"
+  },
+  {
+    "q": "What is the most significant digit (MSD) in the number 27613?",
+    "options": [
+      "(a) 1",
+      "(b) 2",
+      "(c) 3",
+      "(d) 6"
+    ],
+    "answer": "(b) 2"
+  },
+  {
+    "q": "A computer understands only the _______ language.",
+    "options": [
+      "(i) Machine",
+      "(ii) English",
+      "(iii) Hindi",
+      "(iv) None of these"
+    ],
+    "answer": "(i) Machine"
+  },
+  {
+    "q": "The leftmost bit in a binary number is called the _______.",
+    "options": [
+      "(i) LSB",
+      "(ii) MSB",
+      "(iii) Zero",
+      "(iv) None"
+    ],
+    "answer": "(ii) MSB"
+  },
+  {
+    "q": "The base of a hexa-decimal number is _______.",
+    "options": [
+      "(i) 16",
+      "(ii) 8",
+      "(iii) 10",
+      "(iv) 24"
+    ],
+    "answer": "(i) 16"
+  },
+  {
+    "q": "The Decimal number system consists of _______ digits.",
+    "options": [
+      "(i) 0 to 9",
+      "(ii) 1 to 10",
+      "(iii) 2 to 10",
+      "(iv) None"
+    ],
+    "answer": "(i) 0 to 9"
+  },
+  {
+    "q": "Which of the following number systems uses base 16?",
+    "options": [
+      "(a) Binary",
+      "(b) Octal",
+      "(c) Decimal",
+      "(d) Hexadecimal"
+    ],
+    "answer": "(d) Hexadecimal"
+  },
+  {
+    "q": "What is the decimal equivalent of the binary number 1010?",
+    "options": [
+      "(a) 8",
+      "(b) 10",
+      "(c) 12",
+      "(d) 14"
+    ],
+    "answer": "(b) 10"
+  },
+  {
+    "q": "Which digit is NOT allowed in the octal number system?",
+    "options": [
+      "(a) 0",
+      "(b) 7",
+      "(c) 8",
+      "(d) 5"
+    ],
+    "answer": "(c) 8"
+  }
+];
+const fillBook = [
+  {
+    "q": "____________ are used to group and associate together related content so that it is easy to read.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "____________ list of HTML looks like a bullet list.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "____________ list of HTML looks like a numbered list.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "Src stands for ____________ in the &lt;IMG&gt; tag.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "__________________ are the fundamental elements of an HTML document.",
+    "a": [
+      "Tags"
+    ]
+  },
+  {
+    "q": "__________________ attribute is used to insert an image in the background of a web page.",
+    "a": [
+      "background"
+    ]
+  },
+  {
+    "q": "__________________ is used to apply a unique style to a single HTML element.",
+    "a": [
+      "The inline style"
+    ]
+  },
+  {
+    "q": "__________________ are used to format the layout of a webpage.",
+    "a": [
+      "Cascading Style Sheets (CSS)"
+    ]
+  },
+  {
+    "q": "A digit in the binary number system is known as a _______.",
+    "a": [
+      "bit"
+    ]
+  },
+  {
+    "q": "The base of _______ system is 10.",
+    "a": [
+      "Decimal"
+    ]
+  },
+  {
+    "q": "The hexadecimal equivalent of D is _______.",
+    "a": [
+      "13"
+    ]
+  },
+  {
+    "q": "The language that a computer understands is known as _______.",
+    "a": [
+      "machine language"
+    ]
+  }
+];
+const tfBook = [
+  {
+    "s": "An unordered list is a set of related information that does not have any special order or sequence.",
+    "answer": false
+  },
+  {
+    "s": "Use of images in a web page makes it more visually appealing.",
+    "answer": false
+  },
+  {
+    "s": "The type attribute is used to define the symbol for the bullets.",
+    "answer": false
+  },
+  {
+    "s": "There are 3 tags used to create a definition list.",
+    "answer": false
+  },
+  {
+    "s": "Ordered list cannot be in reverse order.",
+    "answer": false
+  },
+  {
+    "s": "To add a background image to the webpage, we can use the background-image property.",
+    "answer": true
+  },
+  {
+    "s": "The internal style sheet is not an efficient use of a style sheet.",
+    "answer": false
+  },
+  {
+    "s": "Cascading Style Sheets (CSS) are used to format the layout of a webpage.",
+    "answer": true
+  },
+  {
+    "s": "A CSS rule contains two parts- Selector and Declaration Block.",
+    "answer": true
+  },
+  {
+    "s": ": A binary number system consists of two digits 0 and 1.",
+    "answer": true
+  },
+  {
+    "s": ": You cannot perform arithmetic operations on binary numbers.",
+    "answer": false
+  },
+  {
+    "s": ": Each position in a hexadecimal number represents a power of the base (16).",
+    "answer": true
+  },
+  {
+    "s": ": The octal number system consists of 16 digits.",
+    "answer": false
+  },
+  {
+    "s": ": The hexadecimal number system uses 16 digits including 6 letters of alphabet.",
+    "answer": true
+  },
+  {
+    "s": "The base of binary number system is 10.",
+    "answer": false
+  },
+  {
+    "s": "The binary number system and octal number system are same.",
+    "answer": false
+  },
+  {
+    "s": "Hexadecimal system uses 10 digits and 5 letters to represent a number.",
+    "answer": false
+  }
+];
+const shortBook = [
+  {
+    "isHeader": true,
+    "text": "Subtract the following binary numbers."
+  },
+  {
+    "q": "(a) 1011_2 - 1001_2",
+    "model": "1011_2 - 1001_2 = 0010_2"
+  },
+  {
+    "q": "(b) 1100_2 - 0110_2",
+    "model": "1100_2 - 0110_2 = 0110_2"
+  },
+  {
+    "q": "(c) 1010_2 - 0011_2",
+    "model": "1010_2 - 0011_2 = 0111_2"
+  },
+  {
+    "q": "(d) 1101_2 - 1011_2",
+    "model": "1101_2 - 1011_2 = 0010_2"
+  },
+  {
+    "q": "(e) 1001_2 - 0111_2",
+    "model": "1001_2 - 0111_2 = 0010_2"
+  },
+  {
+    "q": "(f) 1100_2 - 1001_2",
+    "model": "1100_2 - 1001_2 = 0011_2"
+  },
+  {
+    "isHeader": true,
+    "text": "For each of the subtraction problems given above, convert the problem and your answer to decimal to check your work."
+  },
+  {
+    "q": "(a) 1011_2 - 1001_2",
+    "model": "11_10 - 9_10 = 2_10"
+  },
+  {
+    "q": "(b) 1100_2 - 0110_2",
+    "model": "12_10 - 6_10 = 6_10"
+  },
+  {
+    "q": "(c) 1010_2 - 0011_2",
+    "model": "10_10 - 3_10 = 7_10"
+  },
+  {
+    "q": "(d) 1101_2 - 1011_2",
+    "model": "13_10 - 11_10 = 2_10"
+  },
+  {
+    "q": "(e) 1001_2 - 0111_2",
+    "model": "9_10 - 7_10 = 2_10"
+  },
+  {
+    "q": "(f) 1100_2 - 1001_2",
+    "model": "12_10 - 9_10 = 3_10"
+  },
+  {
+    "q": "The binary number 11000 can be converted to its decimal number as follows:",
+    "model": "16 + 8 + 0 + 0 + 0 = 24. So, 11000 is a binary representation of decimal system number 24."
+  },
+  {
+    "q": "Find the decimal value of the octal number 45.",
+    "model": "(45)8 = 4 x 8^1 + 5 x 8^0 = 4 x 8 + 5 x 1 = 32 + 5 = 37. So (45)8 = (37)10."
+  },
+  {
+    "q": "Convert the octal number 545 to its corresponding binary by referring to the truth table:",
+    "model": "(545)8 = (101 100 101)2"
+  },
+  {
+    "q": "Find the decimal value of the Hexadecimal number 4A.",
+    "model": "(4A)16 = 4 x 16^1 + 10 x 16^0 = 4 x 16 + 10 x 1 = 64 + 10 = 74. So (4A)16 = 74_10."
+  },
+  {
+    "q": "Convert decimal number 13 into its binary equivalent.",
+    "model": "13 \u00f7 2 = 6 (Remainder 1), 6 \u00f7 2 = 3 (Remainder 0), 3 \u00f7 2 = 1 (Remainder 1), 1 \u00f7 2 = 0 (Remainder 1). Thus, the binary equivalent for the given decimal number 13_10 is 1101_2."
+  },
+  {
+    "q": "Convert binary number (1101)2 into its decimal equivalent.",
+    "model": "1 x 2^0 = 1, 0 x 2^1 = 0, 1 x 2^2 = 4, 1 x 2^3 = 8. Ans: (1101)2 = 8 + 4 + 0 + 1 = (13)10."
+  },
+  {
+    "q": "Convert binary number (10001011)2 into its decimal equivalent.",
+    "model": "Ans: (10001011)2 = 128 + 8 + 2 + 1 = (139)10."
+  },
+  {
+    "q": "What is a number system?",
+    "model": ""
+  },
+  {
+    "q": "Name four commonly used number systems.",
+    "model": "Binary, Hexadecimal, Octal, Decimal"
+  },
+  {
+    "q": "Mention the four arithmetic operations performed on binary numbers.",
+    "model": "+, -, /, x"
+  },
+  {
+    "isHeader": true,
+    "text": "Do the following: Convert the following decimal numbers to equivalent binary form."
+  },
+  {
+    "q": "(a) 59 (b) 76 (c) 189 (d) 256",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Do the following: Convert the following binary numbers to their equivalent decimal form."
+  },
+  {
+    "q": "(a) 11111 (b) 10001 (c) 10101 (d) 11110",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Do the following: Solve the following using binary arithmetic:"
+  },
+  {
+    "q": "(a) 011 x 101 (b) 1100 - 1010 (c) 1001 + 1101 (d) 1111/11",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Do the following: Add the following binary numbers:"
+  },
+  {
+    "q": "(a) (1001)2 and (0101)2 (b) (10111)2 and (110001)2",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Do the following: Subtract the following binary numbers:"
+  },
+  {
+    "q": "(a) (0110)2 from (1010)2 (b) (01011)2 from (11011)2",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Convert the following binary numbers to their equivalent decimal numbers:"
+  },
+  {
+    "q": "1. 10011, 2. 10110",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Convert the following octal numbers to their corresponding binary equivalents:"
+  },
+  {
+    "q": "1. 205, 2. 720",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Convert the following hexadecimal numbers to their corresponding binary equivalents:"
+  },
+  {
+    "q": "1. A2B16, 2. (FD654)16",
+    "model": ""
+  },
+  {
+    "q": "What is a nibble?",
+    "model": "A nibble is a group of 4 bits, or half a byte."
+  },
+  {
+    "q": "Convert the hexadecimal number A to its decimal equivalent.",
+    "model": "The hexadecimal number A is equal to 10 in the decimal system."
+  }
+];
+const longBook = [
+  {
+    "q": "Convert decimal number 43 into its binary equivalent.",
+    "model": "43 \u00f7 2 = 21 (Remainder 1), 21 \u00f7 2 = 10 (Remainder 1), 10 \u00f7 2 = 5 (Remainder 0), 5 \u00f7 2 = 2 (Remainder 1), 2 \u00f7 2 = 1 (Remainder 0), 1 \u00f7 2 = 0 (Remainder 1). Thus, the decimal number 43 is equal to 101011 in binary form. (43)10 = (101011)2."
+  },
+  {
+    "q": "State the rules to convert a decimal number to a hexadecimal number.",
+    "model": ""
+  },
+  {
+    "q": "Write the rules to multiply two binary numbers.",
+    "model": ""
+  },
+  {
+    "q": "Write the steps to convert a number from binary number system to its decimal equivalent.",
+    "model": ""
+  }
+];
+const extraBook = [
+  {
+    "q": "Did you know? The origin of Binary",
+    "model": "The modern binary number system was studied in Europe in the 16th and 17th centuries by Thomas Harriot, Juan Caramuel y Lobkowitz, and Gottfried Leibniz. However, systems related to binary numbers have appeared earlier in multiple cultures including ancient Egypt and China!"
+  },
+  {
+    "q": "Trivia: Hexadecimal colors",
+    "model": "Web developers use hexadecimal numbers every day to specify colors! A color like #FF0000 means Maximum Red (FF), zero Green (00), and zero Blue (00)."
+  },
+  {
+    "q": "Fun Fact: The term \"Byte\"",
+    "model": "The term \"byte\" was coined by Werner Buchholz in 1956. He intentionally misspelled \"bite\" so it wouldn't be accidentally confused with \"bit\"."
+  }
+];
+
+    if(mcqBook && mcqBook.length) { renderMCQ('mcqbook-container', mcqBook, 'mcq'); document.getElementById('mcq-count').textContent = `(${mcqBook.filter(i=>!i.isHeader).length})`; }
+    if(fillBook && fillBook.length) { renderFill('fillbook-container', fillBook, 'fill'); document.getElementById('fill-count').textContent = `(${fillBook.filter(i=>!i.isHeader).length})`; }
+    if(tfBook && tfBook.length) { renderTF('tfbook-container', tfBook, 'tf'); document.getElementById('tf-count').textContent = `(${tfBook.filter(i=>!i.isHeader).length})`; }
+    if(shortBook && shortBook.length) { renderSubjective('short-container', shortBook, 'sb'); document.getElementById('short-count').textContent = `(${shortBook.filter(i=>!i.isHeader).length})`; }
+    if(longBook && longBook.length) { renderSubjective('long-container', longBook, 'lb'); document.getElementById('long-count').textContent = `(${longBook.filter(i=>!i.isHeader).length})`; }
+    if(extraBook && extraBook.length) { renderSubjective('extra-container', extraBook, 'eb'); document.getElementById('extra-count').textContent = `(${extraBook.filter(i=>!i.isHeader).length})`; }
+    </script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch 1 – Number System | Class 6 Computer Science</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f1b3d;
+  --purple: #5c2d91;
+  --orange: #f97316;
+  --gold: #f59e0b;
+  --green: #16a34a;
+  --red: #dc2626;
+  --teal: #0891b2;
+  --bg: #0d1117;
+  --card: #161b27;
+  --card2: #1e2435;
+  --border: #2a3250;
+  --text: #e8eaf0;
+  --muted: #8892a4;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Quicksand', sans-serif; font-size: 15px; }
+
+.hero {
+  background: linear-gradient(135deg, #0f1b3d 0%, #0891b2 50%, #16a34a 100%);
+  padding: 28px 20px 20px; text-align: center; position: relative; overflow: hidden;
+}
+.hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.05) 0%, transparent 60%); }
+.hero-badge { display:inline-block; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); border-radius:20px; padding:4px 14px; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
+.hero h1 { font-family:'Fredoka One',cursive; font-size:26px; line-height:1.2; color:#fff; text-shadow:0 2px 8px rgba(0,0,0,0.4); margin-bottom:6px; }
+.hero-sub { font-size:13px; color:rgba(255,255,255,0.8); font-weight:500; }
+.hero-outcomes { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:14px; }
+.outcome-pill { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); border-radius:20px; padding:5px 12px; font-size:12px; font-weight:600; }
+
+.score-bar { position:sticky; top:0; z-index:100; background:#0a0e1a; border-bottom:2px solid var(--border); padding:8px 16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.score-label { font-family:'Fredoka One',cursive; font-size:13px; color:var(--gold); white-space:nowrap; }
+.score-chips { display:flex; gap:6px; flex-wrap:wrap; flex:1; }
+.chip { display:flex; align-items:center; gap:4px; background:var(--card); border-radius:12px; padding:3px 9px; font-size:12px; font-weight:700; border:1px solid var(--border); }
+.chip.got { border-color:var(--green); color:#4ade80; }
+.chip.missed { border-color:var(--red); color:#f87171; }
+.chip.total { border-color:var(--purple); color:#c084fc; }
+.progress-wrap { width:100%; height:5px; background:var(--border); border-radius:3px; margin-top:4px; overflow:hidden; display:flex; }
+.progress-green { background:var(--green); transition:width 0.4s; }
+.progress-red { background:var(--red); transition:width 0.4s; }
+
+.tab-nav { display:flex; overflow-x:auto; background:var(--card); border-bottom:2px solid var(--border); scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+.tab-nav::-webkit-scrollbar { display:none; }
+.tab-btn { flex-shrink:0; padding:11px 16px; font-family:'Quicksand',sans-serif; font-size:13px; font-weight:700; color:var(--muted); background:none; border:none; border-bottom:3px solid transparent; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
+.tab-btn.active { color:var(--orange); border-bottom-color:var(--orange); }
+.tab-btn:hover { color:var(--text); }
+
+.tab-content { display:none; padding:16px; }
+.tab-content.active { display:block; }
+
+.sec-header { font-family:'Fredoka One',cursive; font-size:20px; color:var(--gold); margin:18px 0 12px; display:flex; align-items:center; gap:8px; }
+.sec-header:first-child { margin-top:0; }
+
+.concept-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:12px; }
+.concept-card h3 { font-family:'Fredoka One',cursive; font-size:16px; color:var(--teal); margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.concept-card p, .concept-card li { font-size:14px; line-height:1.65; color:#ccd0e0; margin-bottom:6px; }
+.concept-card ul, .concept-card ol { padding-left:18px; }
+.concept-card li { margin-bottom:4px; }
+
+.highlight-box { background:linear-gradient(135deg, rgba(92,45,145,0.2), rgba(249,115,22,0.1)); border:1px solid rgba(249,115,22,0.3); border-radius:10px; padding:12px 14px; margin:10px 0; font-size:14px; line-height:1.6; }
+.highlight-box strong { color:var(--orange); }
+.tip-box { background:rgba(245,158,11,0.1); border-left:4px solid var(--gold); border-radius:0 10px 10px 0; padding:10px 14px; margin:8px 0; font-size:13px; }
+
+.comp-table { width:100%; border-collapse:collapse; font-size:13px; margin:10px 0; }
+.comp-table th { background:var(--purple); color:#fff; padding:9px 12px; text-align:left; font-family:'Fredoka One',cursive; font-size:14px; }
+.comp-table td { padding:8px 12px; border-bottom:1px solid var(--border); color:#ccd0e0; line-height:1.5; }
+.comp-table tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+
+.claude-corner { background:linear-gradient(135deg, #0a1628 0%, #1a0a2e 50%, #1a1000 100%); border:2px solid var(--gold); border-radius:16px; padding:18px; margin:16px 0; position:relative; overflow:hidden; }
+.claude-corner-header { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+.claude-corner-header h3 { font-family:'Fredoka One',cursive; font-size:17px; color:var(--gold); }
+.cc-badge { background:rgba(245,158,11,0.2); border:1px solid var(--gold); border-radius:10px; padding:2px 8px; font-size:11px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.5px; }
+.cc-fact { background:rgba(255,255,255,0.04); border-radius:10px; padding:10px 12px; margin-bottom:8px; font-size:13px; line-height:1.6; color:#d4b896; }
+.cc-fact strong { color:var(--gold); }
+
+.q-block { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:14px; }
+.q-number { font-family:'Fredoka One',cursive; font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+.q-text { font-size:14px; font-weight:600; line-height:1.55; color:var(--text); margin-bottom:12px; }
+.q-marks { display:inline-block; background:rgba(249,115,22,0.15); border:1px solid rgba(249,115,22,0.4); border-radius:8px; padding:2px 8px; font-size:11px; font-weight:700; color:var(--orange); margin-left:6px; }
+
+.mcq-options { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+.mcq-opt { background:var(--card2); border:1.5px solid var(--border); border-radius:10px; padding:10px 14px; font-size:13.5px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:10px; }
+.mcq-opt:hover { border-color:var(--orange); background:rgba(249,115,22,0.07); }
+.mcq-opt.correct { border-color:var(--green); background:rgba(22,163,74,0.12); color:#4ade80; }
+.mcq-opt.wrong { border-color:var(--red); background:rgba(220,38,38,0.1); color:#f87171; }
+.opt-letter { width:26px; height:26px; border-radius:50%; background:var(--border); display:flex; align-items:center; justify-content:center; font-family:'Fredoka One',cursive; font-size:13px; flex-shrink:0; transition:all 0.2s; }
+.mcq-opt.correct .opt-letter { background:var(--green); color:#fff; }
+.mcq-opt.wrong .opt-letter { background:var(--red); color:#fff; }
+.mcq-result { font-size:12px; margin-top:6px; font-weight:600; display:none; }
+.mcq-result.show { display:block; }
+.mcq-result.ok { color:#4ade80; }
+.mcq-result.nope { color:#f87171; }
+
+@media (max-width:400px) { .hero h1 { font-size:22px; } }
+</style>
+</head>
+<body>
+
+            <div style="padding: 10px 20px; background: #1E293B; border-bottom: 1px solid #334155; display: flex; align-items: center; justify-content: space-between;">
+                <a href="javascript:history.back()" style="color: #6366F1; text-decoration: none; font-weight: 700; font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 6px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to Hub
+                </a>
+                <span style="color:#A855F7; font-family: 'Nunito', sans-serif; font-weight: bold;">Claude Notes Mode</span>
+            </div>
+
+<div class="hero">
+  <div class="hero-badge">💻 Class 6 Computer Science</div>
+  <h1>🔢 Number System</h1>
+  <div class="hero-sub">Chapter 01 • Interactive Practice</div>
+  <div class="hero-outcomes">
+    <span class="outcome-pill">🔢 Decimal</span>
+    <span class="outcome-pill">⚙️ Binary</span>
+    <span class="outcome-pill">🐙 Octal</span>
+    <span class="outcome-pill">🔠 Hexadecimal</span>
+  </div>
+</div>
+
+<div class="score-bar">
+  <span class="score-label">📊 Score</span>
+  <div class="score-chips">
+    <span class="chip got">✅ <span id="s-got">0</span></span>
+    <span class="chip missed">❌ <span id="s-missed">0</span></span>
+    <span class="chip total">🏆 <span id="s-score">0</span>/<span id="s-max">0</span></span>
+  </div>
+  <div class="progress-wrap" style="width:100%">
+    <div class="progress-green" id="pg-green" style="width:0%"></div>
+    <div class="progress-red" id="pg-red" style="width:0%"></div>
+  </div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('learn',this)">📖 Learn</button>
+  <button class="tab-btn" onclick="switchTab('mcq',this)">🎯 MCQ</button>
+  <button class="tab-btn" onclick="switchTab('corner',this)">📡 Claude's Corner</button>
+</div>
+
+<!-- ===== LEARN ===== -->
+<div class="tab-content active" id="tab-learn">
+  <div class="sec-header">🔢 Introduction to Number Systems</div>
+  <div class="concept-card">
+    <h3>🌍 What is a Number System?</h3>
+    <p>A Number System is a mathematical notation used to represent numbers that in turn represent a quantity.</p>
+    <p>Computers only understand <strong>machine language</strong>, which is made up of numbers. That's why we need number systems to convert instructions into something a computer can process.</p>
+    <div class="tip-box">💡 <strong>Remember:</strong> There are 4 main number systems: Decimal, Binary, Octal, and Hexadecimal.</div>
+  </div>
+
+  <div class="sec-header">🔟 Decimal Number System</div>
+  <div class="concept-card">
+    <h3>Base 10</h3>
+    <p>The decimal system uses <strong>10 digits (0 to 9)</strong>.</p>
+    <p>It is a <strong>positional number system</strong>. The value of each digit depends on its position. Each position represents a specific power of 10.</p>
+    <div class="highlight-box">
+      <strong>Example: 1234</strong><br>
+      = (1 × 10³) + (2 × 10²) + (3 × 10¹) + (4 × 10⁰)<br>
+      = 1000 + 200 + 30 + 4
+    </div>
+    <p>The leftmost digit is the <strong>Most Significant Digit (MSD)</strong> and the rightmost is the <strong>Least Significant Digit (LSD)</strong>.</p>
+  </div>
+
+  <div class="sec-header">⚙️ Binary Number System</div>
+  <div class="concept-card">
+    <h3>Base 2</h3>
+    <p>The binary system uses only <strong>2 digits: 0 and 1</strong>.</p>
+    <p>Its base is 2, meaning positional values are based on powers of 2 (2⁰, 2¹, 2², etc.).</p>
+    <div class="highlight-box">
+      <strong>Conversion to Decimal: 11000</strong><br>
+      = (1 × 2⁴) + (1 × 2³) + (0 × 2²) + (0 × 2¹) + (0 × 2⁰)<br>
+      = 16 + 8 + 0 + 0 + 0 = <strong>24</strong>
+    </div>
+  </div>
+
+  <div class="sec-header">🐙 Octal & Hexadecimal</div>
+  <div class="concept-card">
+    <h3>Base 8 and Base 16</h3>
+    <table class="comp-table">
+      <tr><th>System</th><th>Base</th><th>Valid Digits</th></tr>
+      <tr><td><strong style="color:#fbbf24">Octal</strong></td><td>8</td><td>0, 1, 2, 3, 4, 5, 6, 7</td></tr>
+      <tr><td><strong style="color:#c084fc">Hexadecimal</strong></td><td>16</td><td>0-9 and A-F (A=10, B=11, C=12, D=13, E=14, F=15)</td></tr>
+    </table>
+    <div class="highlight-box">
+      <strong>Octal Example: (45)₈</strong><br>
+      = (4 × 8¹) + (5 × 8⁰) = 32 + 5 = <strong>37</strong>
+    </div>
+    <div class="highlight-box">
+      <strong>Hexadecimal Example: (4A)₁₆</strong><br>
+      = (4 × 16¹) + (10 × 16⁰) = 64 + 10 = <strong>74</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MCQ ===== -->
+<div class="tab-content" id="tab-mcq">
+  <div class="sec-header">🎯 Multiple Choice Questions</div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">Tap an option to check instantly!</p>
+  <div id="mcq-container"></div>
+</div>
+
+<!-- ===== CLAUDE'S CORNER ===== -->
+<div class="tab-content" id="tab-corner">
+  <div class="sec-header">📡 Claude's Corner</div>
+  <div style="background:rgba(245,158,11,0.08);border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--muted);">
+    🌟 <strong style="color:var(--gold)">Bonus Knowledge — Not for Exam!</strong> Extra facts to make learning deeper and more fun!
+  </div>
+
+  <div class="claude-corner">
+    <div class="claude-corner-header"><h3>⚙️ Why Binary?</h3><span class="cc-badge">Bonus</span></div>
+    <div class="cc-fact"><strong>On and Off!</strong> Computers are built using millions of tiny electronic switches called transistors. A transistor can only be in one of two states: ON (1) or OFF (0). That's why the binary system is perfectly suited for machines!</div>
+  </div>
+  
+  <div class="claude-corner">
+    <div class="claude-corner-header"><h3>🔠 Why Hexadecimal uses Letters</h3><span class="cc-badge">Bonus</span></div>
+    <div class="cc-fact"><strong>Running out of numbers!</strong> In base 16, we need single digits to represent values from 10 to 15. If we just wrote "10", a computer wouldn't know if we meant the number 10, or a "1" followed by a "0". So, scientists decided to borrow letters A through F!</div>
+  </div>
+</div>
+
+<script>
+// ===== TAB SWITCHING =====
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ===== SCORE STATE =====
+let mcqDone = {};
+
+function recalcScore() {
+  let gotCount = 0, missedCount = 0, scored = 0, allMax = 0;
+  document.querySelectorAll('.q-block[data-marks]').forEach(b => { allMax += parseInt(b.dataset.marks); });
+
+  Object.keys(mcqDone).forEach(qid => {
+    const el = document.querySelector(`[data-qid="${qid}"]`);
+    if (!el) return;
+    const m = parseInt(el.dataset.marks);
+    if (mcqDone[qid]) { gotCount++; scored += m; } else { missedCount++; }
+  });
+
+  document.getElementById('s-got').textContent = gotCount;
+  document.getElementById('s-missed').textContent = missedCount;
+  document.getElementById('s-score').textContent = scored;
+  document.getElementById('s-max').textContent = allMax;
+
+  const pct = allMax > 0 ? (scored / allMax) * 100 : 0;
+  document.getElementById('pg-green').style.width = pct + '%';
+}
+
+// ===== MCQ =====
+const mcqData = [
+  { id:'mcq1', marks:1, q:'A ________ is a way to represent numbers that in turn represent a quantity.', opts:['Machine language','Number system','Program','Computer'], correct:1 },
+  { id:'mcq2', marks:1, q:'What is the base of the Decimal number system?', opts:['2','8','10','16'], correct:2 },
+  { id:'mcq3', marks:1, q:'Which digits are used in the Binary number system?', opts:['0 to 9','0 and 1','0 to 7','0 to 9, A to F'], correct:1 },
+  { id:'mcq4', marks:1, q:'What does the rightmost digit in a number represent in a positional number system?', opts:['LSD (Least Significant Digit)','MSD (Most Significant Digit)','Base','Face value'], correct:0 },
+  { id:'mcq5', marks:1, q:'The letter C in the Hexadecimal number system represents the decimal number:', opts:['10','11','12','13'], correct:2 },
+  { id:'mcq6', marks:1, q:'Which of the following is an example of an Octal number?', opts:['10101','(45)8','(4A)16','129'], correct:1 },
+  { id:'mcq7', marks:1, q:'In the number 1234, the value of the digit 2 is equivalent to:', opts:['2 x 1000','2 x 100','2 x 10','2 x 1'], correct:1 },
+  { id:'mcq8', marks:1, q:'To convert a number from a given base to decimal, we multiply each digit by ________ of the base.', opts:['addition','successive powers','division','subtraction'], correct:1 }
+];
+
+const mcqContainer = document.getElementById('mcq-container');
+mcqData.forEach(item => {
+  const div = document.createElement('div');
+  div.className = 'q-block';
+  div.dataset.qid = item.id;
+  div.dataset.marks = item.marks;
+  const letters = ['A','B','C','D'];
+  const optsHTML = item.opts.map((o, i) =>
+    `<div class="mcq-opt" onclick="checkMCQ(this,'${item.id}',${i === item.correct})"><span class="opt-letter">${letters[i]}</span>${o}</div>`
+  ).join('');
+  div.innerHTML = `
+    <div class="q-number">MCQ <span class="q-marks">${item.marks} mark</span></div>
+    <div class="q-text">${item.q}</div>
+    <div class="mcq-options">${optsHTML}</div>
+    <div class="mcq-result" id="res-${item.id}"></div>`;
+  mcqContainer.appendChild(div);
+});
+
+function checkMCQ(el, qid, isCorrect) {
+  const block = document.querySelector(`[data-qid="${qid}"]`);
+  if (block.dataset.answered) return;
+  block.dataset.answered = '1';
+  block.querySelectorAll('.mcq-opt').forEach(o => {
+    o.style.pointerEvents = 'none';
+    if (o.getAttribute('onclick').includes('true')) { o.classList.add('correct'); o.querySelector('.opt-letter').style.background = 'var(--green)'; }
+  });
+  if (!isCorrect) { el.classList.add('wrong'); el.querySelector('.opt-letter').style.background = 'var(--red)'; }
+  const res = document.getElementById('res-' + qid);
+  res.classList.add('show');
+  if (isCorrect) { res.textContent = '✅ Correct! Well done!'; res.classList.add('ok'); mcqDone[qid] = true; }
+  else { res.textContent = '❌ Not quite — correct answer is highlighted above.'; res.classList.add('nope'); mcqDone[qid] = false; }
+  recalcScore();
+}
+
+// Initial calculation
+recalcScore();
+</script>
+</body>
+</html>

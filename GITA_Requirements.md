@@ -29,3 +29,10 @@ Every single chapter (Science, Social Science, Maths, ICT) must follow the unifi
 ## 5. Sidebar Routing State
 *   The Subject cards in index.html must write to localStorage.setItem('open-subject', '[Subject Name]').
 *   The dashboard.html sidebar automatically reads this key to expand the correct accordion menu upon loading. Maintain this exact routing logic when adding new subjects.
+
+## Data Extraction Fidelity
+**CRITICAL REQUIREMENT FOR ALL SUBJECTS:** When extracting questions from source materials (PDFs, images), you MUST maintain an exact 1:1 tally. 
+- **DO NOT SKIP ANY QUESTIONS.** 
+- If a chapter has 90 MCQs, you must extract all 90.
+- Wherever questions contain descriptions, diagrams, or additional context, include them IN FULL ALWAYS.
+- Do not summarize or truncate questions to save tokens. If necessary, batch process the extraction to ensure 100% fidelity.

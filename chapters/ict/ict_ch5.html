@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 5 - Lists and Images in HTML</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #FFFFFF;
+    --bg-card: #F8FAFC;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --accent: #38BDF8;
+    --border: #E2E8F0;
+    --border-hover: #CBD5E1;
+    --good: #059669;
+    --good-bg: #D1FAE5;
+    --bad: #E11D48;
+    --bad-bg: #FFE4E6;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-main: #0F172A;
+      --bg-card: #1E293B;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --primary: #6366F1;
+      --primary-hover: #818CF8;
+      --accent: #0EA5E9;
+      --border: #334155;
+      --border-hover: #475569;
+      --good: #34D399;
+      --good-bg: #064E3B;
+      --bad: #F87171;
+      --bad-bg: #7F1D1D;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{margin:0; background: var(--bg-main); color: var(--text-main); font-family:'Nunito',sans-serif; line-height:1.6;}
+  .wrap{max-width:1100px; margin:0 auto; padding:26px 16px 120px;}
+  
+  header.hero{text-align:center; padding:30px 14px 26px; border-bottom:1px solid var(--border); margin-bottom:0px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace; font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--primary); margin-bottom:8px; font-weight:600;}
+  h1{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:clamp(1.8rem,5vw,2.7rem); margin:0 0 8px; color:var(--text-main);}
+  .sub{font-size:1rem; color:var(--text-muted);}
+  
+  /* STICKY TABS */
+  .tabs-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(var(--bg-main), 0.95);
+    backdrop-filter: blur(10px);
+    padding: 12px 0;
+    box-shadow: 0 4px 10px -10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tabs-container {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; max-width: 1000px; margin: 0 auto; overflow-x: auto; padding: 0 10px;
+  }
+  .tab-btn {
+    padding: 8px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { border-color: var(--border-hover); color: var(--text-main); }
+  .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: var(--shadow); }
+  
+  .tab-content { display: none; animation: fadeIn 0.4s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .instructions { background: var(--bg-card); border: 1px dashed var(--primary); border-radius: 12px; padding: 14px 20px; margin: 22px 0 30px; font-size: 0.95rem; color: var(--text-main); }
+  .instructions b { color: var(--primary); }
+
+  /* COLLAPSIBLE HEADERS */
+  .collapsible-header {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--text-main); margin: 0 0 16px; 
+    display: flex; align-items: center; gap: 10px; border-left: 4px solid var(--primary); padding-left: 12px;
+    cursor: pointer; user-select: none; transition: 0.2s;
+  }
+  .collapsible-header:hover { opacity: 0.8; }
+  .count-badge { font-family: 'JetBrains Mono', monospace; font-size: 1rem; color: var(--text-muted); font-weight: 500; }
+  .chevron { width: 32px; height: 32px; fill: var(--primary); background: rgba(79,70,229,0.08); border-radius: 50%; padding: 4px; transition: all 0.3s; margin-left: auto; }
+.collapsible-header:hover .chevron { background: rgba(79,70,229,0.15); }
+  .collapsible-header.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-content { overflow: hidden; transition: max-height 0.3s ease-out; }
+  .collapsible-content.collapsed { display: none; }
+
+  /* MODE SWITCH */
+  .mode-switch { display: flex; justify-content: center; gap: 0; margin-bottom: 20px; border-radius: 100px; overflow: hidden; border: 1px solid var(--primary); max-width: 380px; margin: 0 auto 20px auto; background:var(--bg-card); }
+  .mode-btn { flex: 1; padding: 10px 15px; border: none; background: transparent; color: var(--text-muted); font-size:0.95rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; transition: 0.3s; }
+  .mode-btn.active { background: var(--primary); color: #fff; }
+  #test-intro { background: var(--bg-card); border: 2px dashed var(--border); border-radius: 12px; padding: 40px 20px; text-align: center; margin-bottom: 30px; box-shadow: var(--shadow); }
+  #test-intro h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--text-main); margin-top: 0; }
+  .btn-start { background: var(--primary); color: white; border: none; padding: 14px 34px; font-size: 1.1rem; font-weight: 700; font-family:'Nunito',sans-serif; border-radius: 100px; cursor: pointer; margin-top: 15px; box-shadow: var(--shadow); transition: 0.2s; }
+  .btn-start:hover { transform: translateY(-2px); background: var(--primary-hover); }
+
+  /* QUESTION STYLES */
+  .q { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; box-shadow: var(--shadow); }
+  .q-text { font-weight: 700; margin-bottom: 10px; font-size: 1rem; color: var(--text-main); }
+  .q-text .num { color: var(--primary); font-family: 'JetBrains Mono', monospace; margin-right: 8px; }
+  .opts label { display: block; padding: 8px 12px; border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.95rem; border: 1px solid transparent; transition: 0.2s; }
+  .opts label:hover { background: rgba(79, 70, 229, 0.05); }
+  .opts input { margin-right: 10px; }
+  .fillblank input[type=text] { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; width: 250px; background: var(--bg-main); color: var(--text-main); }
+  .tf-row { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+  .tf-row label { font-size: 0.95rem; cursor: pointer; }
+  
+  .feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.5; }
+  .feedback.correct { background: var(--good-bg); color: var(--good); display: block; border: 1px solid var(--good); }
+  .feedback.incorrect { background: var(--bad-bg); color: var(--bad); display: block; border: 1px solid var(--bad); }
+  .feedback .exp { display: block; margin-top: 6px; font-style: italic; opacity: 0.9; }
+
+  details { margin-top: 14px; }
+  details summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--primary); font-weight: 700; }
+  details .model { margin-top: 12px; font-size: 0.95rem; background: rgba(79, 70, 229, 0.05); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: 0 8px 8px 0; line-height: 1.6; }
+
+  /* BOTTOM GRADE BAR */
+  .grade-bar{position:fixed; left:0; right:0; bottom:0; background:var(--bg-card); border-top: 1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:center; gap:16px; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index:50; display:none;}
+  .grade-bar button{background:var(--primary); color:#fff; border:none; padding:12px 28px; border-radius:100px; font-weight:700; font-family:'Nunito',sans-serif; font-size:1rem; cursor:pointer;}
+  .grade-bar button:hover{background:var(--primary-hover);}
+  .score-readout{font-family:'JetBrains Mono',monospace; font-size:1.15rem; font-weight:700; color:var(--text-main);}
+  .score-readout.urgent{color:var(--bad); animation: pulse 1s infinite;}
+  @keyframes pulse { 0% { opacity:1;} 50% {opacity:0.5;} 100% {opacity:1;} }
+
+  .result-panel{display:none; background:var(--bg-card); border:2px solid var(--border); border-radius:14px; padding:24px; text-align:center; margin-bottom:40px; box-shadow:var(--shadow);}
+  .result-panel.show{display:block;}
+  .result-panel .score-big{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:2.8rem; color:var(--primary);}
+  .result-panel .msg{font-size:1.1rem; margin-top:10px; line-height:1.6;}
+
+  /* VIDEO LINKS (TAB 1) */
+  .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .topic-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); position:relative; }
+  .topic-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
+  .video-btn { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: rgba(79, 70, 229, 0.05); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text-main); font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; transition: 0.2s; }
+  .video-btn:hover { background: rgba(79, 70, 229, 0.1); border-color: var(--border-hover); }
+  .thumb-wrapper { position: relative; width: 44px; height: 28px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+  .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+  .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(79, 70, 229, 0.9); border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+  .play-icon svg { width: 8px; height: 8px; fill: white; margin-left: 2px; }
+</style>
+</head>
+<body>
+
+<div style="padding: 10px 20px; background: var(--bg-card); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between;">
+    <a href="javascript:history.back()" style="color: var(--primary); text-decoration: none; font-weight: 700; font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 6px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back
+    </a>
+    <a href="../../index.html" style="color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.9rem; font-family: 'Nunito', sans-serif;">Home</a>
+</div>
+
+
+  <header class="hero">
+    <div class="eyebrow">ICT - CHAPTER 5</div>
+    <h1>Lists and Images in HTML</h1>
+    <div class="sub">Complete Chapter Guide & Practice Module</div>
+  </header>
+
+<div class="tabs-wrapper">
+  <div class="tabs-container">
+    <button class="tab-btn active" onclick="openTab(event, 'tab-video')">1. Videos & Map</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-omr')">2. OMR (1 Mark)</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-short')">3. 2/3 Marks</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-long')">4. 4+ Marks</button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-extra')">5. Extra Knowledge</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- TAB 1: VIDEOS & CONCEPT MAP -->
+  <div id="tab-video" class="tab-content active">
+    <div class="instructions">
+      <b>How to use:</b> Watch the video explanations for each topic by clicking the thumbnails. Then review the Concept Map below to see how everything connects!
+    </div>
+
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('video-grid', this)">
+      <span>Chapter Topics & Videos</span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="video-grid" class="collapsible-content collapsed topics-grid">
+  <p style="text-align:center; padding: 2rem; color: #94A3B8; font-size: 1.1rem; width: 100%; grid-column: 1 / -1;"><i>Video explanations coming soon for this chapter.</i></p>
+</div>
+</div>
+  <!-- TAB 2: OMR -->
+  <div id="tab-omr" class="tab-content">
+    <div class="mode-switch">
+      <button id="btn-practice" class="mode-btn active" onclick="setMode('practice')">Practice Mode</button>
+      <button id="btn-test" class="mode-btn" onclick="setMode('test')">Test Mode</button>
+    </div>
+
+    <div id="test-intro" style="display:none;">
+      <h3>Ready for the Test?</h3>
+      <p style="font-size: 1.1rem;">You have <b id="t-count" style="color:var(--primary);"></b> objective questions.</p>
+      <p style="font-size: 1.1rem;">Time Allowed: <b id="t-time" style="color:var(--primary);"></b> minutes.</p>
+      <button class="btn-start" onclick="startTest()">Start Test Now</button>
+    </div>
+
+    <div id="resultPanel" class="result-panel">
+      <div class="score-big" id="scoreBig">0 / 0</div>
+      <div class="msg" id="scoreMsg"></div>
+    </div>
+
+    <div id="omr-content">
+      <div class="instructions" id="omr-instructions">
+        <b>Practice Mode Active:</b> Click any option or type an answer to get instant correct/incorrect feedback along with explanations!
+      </div>
+      
+      <h2 class="collapsible-header collapsed" onclick="toggleSection('mcqbook-container', this)">
+        <span>OMR Practice (MCQs)</span> <span class="count-badge" id="mcq-count"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </h2>
+      <div id="mcqbook-container" class="collapsible-content collapsed"></div>
+      
+      <h2 class="collapsible-header collapsed" onclick="toggleSection('fillbook-container', this)">
+        <span>Fill in the Blanks</span> <span class="count-badge" id="fill-count"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </h2>
+      <div id="fillbook-container" class="collapsible-content collapsed"></div>
+      
+      <h2 class="collapsible-header collapsed" onclick="toggleSection('tfbook-container', this)">
+        <span>True or False</span> <span class="count-badge" id="tf-count"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </h2>
+      <div id="tfbook-container" class="collapsible-content collapsed"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: SHORT -->
+  <div id="tab-short" class="tab-content">
+    <div class="instructions">
+      <b>Mental Flashcards:</b> Try to recall the answer in your head, then click "Show Detailed Answer".
+    </div>
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('short-container', this)">
+      <span>2 and 3 Marks Questions</span> <span class="count-badge" id="short-count"></span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="short-container" class="collapsible-content collapsed"></div>
+  </div>
+
+  <!-- TAB 4: LONG -->
+  <div id="tab-long" class="tab-content">
+    <div class="instructions">
+      <b>Mental Flashcards:</b> Formulate the answer, then study the complete textbook-level explanation.
+    </div>
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('long-container', this)">
+      <span>4+ Marks & Case Based</span> <span class="count-badge" id="long-count"></span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="long-container" class="collapsible-content collapsed"></div>
+  </div>
+
+  <!-- TAB 5: EXTRA KNOWLEDGE -->
+  <div id="tab-extra" class="tab-content">
+    <div class="instructions">
+      <b>For the Bookworms:</b> Deep-dive questions and fascinating facts!
+    </div>
+    <h2 class="collapsible-header collapsed" onclick="toggleSection('extra-container', this)">
+      <span>Knowledge Topics & Trivia</span> <span class="count-badge" id="extra-count"></span>
+      <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </h2>
+    <div id="extra-container" class="collapsible-content collapsed"></div>
+  </div>
+
+</div> <!-- end wrap -->
+
+<div class="grade-bar" id="grade-bar">
+  <span class="score-readout" id="liveCount">00:00</span>
+  <button id="grade-btn" onclick="gradeAll()">Grade My Test</button>
+</div>
+
+<script>
+window.currentMode = 'practice'; 
+window.testTimer = null;
+window.timeRemaining = 0;
+
+function toggleSection(contentId, headerEl) {
+    const el = document.getElementById(contentId);
+    el.classList.toggle('collapsed');
+    headerEl.classList.toggle('collapsed');
+}
+
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+    tabcontent[i].classList.remove("active");
+  }
+  tablinks = document.getElementsByClassName("tab-btn");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  document.getElementById(tabName).classList.add("active");
+  evt.currentTarget.className += " active";
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+let totalMax = 0;
+
+function renderFill(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  let qNum = 1;
+  data.forEach((item,i)=>{
+    if(item.isHeader) {
+      const div = document.createElement('div');
+      div.style = 'grid-column: 1 / -1; font-weight: bold; font-size: 1.15rem; color: #38bdf8; padding: 1.5rem 0 0.5rem 0; border-bottom: 1px solid #334155; margin-bottom: 1rem; margin-top: 1rem;';
+      div.innerHTML = item.text;
+      c.appendChild(div);
+      return;
+    }
+    const div = document.createElement('div');
+    div.className='q';
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
+      <input type="text" id="${prefix}-ans-${i}" class="text-input" placeholder="type your answer">
+      <div id="${prefix}-fb-${i}" class="feedback"></div>`;
+    
+    div.querySelector('input').addEventListener('blur', (e) => gradeSpecificQuestion('fill', prefix, i));
+    c.appendChild(div);
+    qNum++;
+  });
+}
+
+
+function renderMCQ(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  let qNum = 1;
+  data.forEach((item,i)=>{
+    if(item.isHeader) {
+      const div = document.createElement('div');
+      div.style = 'grid-column: 1 / -1; font-weight: bold; font-size: 1.15rem; color: #38bdf8; padding: 1.5rem 0 0.5rem 0; border-bottom: 1px solid #334155; margin-bottom: 1rem; margin-top: 1rem;';
+      div.innerHTML = item.text;
+      c.appendChild(div);
+      return;
+    }
+    const div = document.createElement('div');
+    div.className='q';
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-q${i}" value="${j}"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
+      <div class="options">${opts}</div>
+      <div id="${prefix}-fb-${i}" class="feedback"></div>`;
+    
+    div.querySelectorAll('input').forEach(inp => {
+      inp.addEventListener('change', (e) => gradeSpecificQuestion('mcq', prefix, i));
+    });
+    c.appendChild(div);
+    qNum++;
+  });
+}
+
+
+function renderTF(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  let qNum = 1;
+  data.forEach((item,i)=>{
+    if(item.isHeader) {
+      const div = document.createElement('div');
+      div.style = 'grid-column: 1 / -1; font-weight: bold; font-size: 1.15rem; color: #38bdf8; padding: 1.5rem 0 0.5rem 0; border-bottom: 1px solid #334155; margin-bottom: 1rem; margin-top: 1rem;';
+      div.innerHTML = item.text;
+      c.appendChild(div);
+      return;
+    }
+    const div = document.createElement('div');
+    div.className='q';
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.s}</div>
+      <div class="tf-toggle">
+        <button class="tf-btn" data-val="true" onclick="selectTF(this, '${prefix}', ${i})">True</button>
+        <button class="tf-btn false-btn" data-val="false" onclick="selectTF(this, '${prefix}', ${i})">False</button>
+      </div>
+      <div id="${prefix}-fb-${i}" class="feedback"></div>`;
+    c.appendChild(div);
+    qNum++;
+  });
+}
+
+
+function renderSubjective(containerId, data, prefix){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  let qNum = 1;
+  data.forEach((item,i)=>{
+    if(item.isHeader) {
+      const div = document.createElement('div');
+      div.style = 'grid-column: 1 / -1; font-weight: bold; font-size: 1.15rem; color: #38bdf8; padding: 1.5rem 0 0.5rem 0; border-bottom: 1px solid #334155; margin-bottom: 1rem; margin-top: 1rem;';
+      div.innerHTML = item.text;
+      c.appendChild(div);
+      return;
+    }
+    const div = document.createElement('div');
+    div.className='q subjective';
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
+      <details><summary>Show Detailed Answer</summary><div class="model">${item.model}</div></details>`;
+    c.appendChild(div);
+    qNum++;
+  });
+}
+
+
+function gradeSpecificQuestion(type, prefix, i) {
+   let item, val, correct, answerText, expText;
+   const fb = document.getElementById(`${prefix}-fb-${i}`);
+   if(type === 'fill') {
+      const container = document.getElementById('fillbook-container');
+      item = container.fillData[i];
+      val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
+      correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+      answerText = 'Correct Answer: ' + item.a[0];
+      expText = item.exp;
+      if(val === '') { fb.style.display = 'none'; return; }
+   } else if(type === 'mcq') {
+      const container = document.getElementById('mcqbook-container');
+      item = container.mcqData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = parseInt(sel.value);
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+      expText = item.exp;
+   } else if(type === 'tf') {
+      const container = document.getElementById('tfbook-container');
+      item = container.tfData[i];
+      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
+      if(!sel) return;
+      val = (sel.value === 'true');
+      correct = (val === item.answer);
+      answerText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+      expText = item.exp;
+   }
+   
+   if(correct) {
+      fb.className = 'feedback correct'; 
+      fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${expText}</span>`;
+   } else {
+      fb.className = 'feedback incorrect'; 
+      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText} <span class="exp">${expText}</span>`;
+   }
+   fb.style.display = 'block';
+}
+
+function setMode(mode) {
+  if(window.testTimer) clearInterval(window.testTimer);
+  window.currentMode = mode;
+  document.getElementById('btn-practice').classList.toggle('active', mode==='practice');
+  document.getElementById('btn-test').classList.toggle('active', mode==='test');
+  
+  resetAllAnswers();
+  
+  if(mode === 'test') {
+    document.getElementById('omr-content').style.display = 'none';
+    document.getElementById('test-intro').style.display = 'block';
+    document.getElementById('t-count').textContent = totalMax;
+    document.getElementById('t-time').textContent = totalMax; 
+    document.getElementById('grade-bar').style.display = 'none';
+  } else {
+    document.getElementById('omr-content').style.display = 'block';
+    document.getElementById('test-intro').style.display = 'none';
+    document.getElementById('grade-bar').style.display = 'none'; 
+    document.getElementById('omr-instructions').style.display = 'block';
+  }
+}
+
+function startTest() {
+  document.getElementById('test-intro').style.display = 'none';
+  document.getElementById('omr-content').style.display = 'block';
+  document.getElementById('omr-instructions').style.display = 'none'; 
+  document.getElementById('grade-bar').style.display = 'flex';
+  
+  // EXPAND ALL TABS FOR TEST
+  document.getElementById('mcqbook-container').classList.remove('collapsed');
+  document.getElementById('mcqbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('fillbook-container').classList.remove('collapsed');
+  document.getElementById('fillbook-container').previousElementSibling.classList.remove('collapsed');
+  document.getElementById('tfbook-container').classList.remove('collapsed');
+  document.getElementById('tfbook-container').previousElementSibling.classList.remove('collapsed');
+
+  window.timeRemaining = totalMax * 60; // 1 min per Q
+  updateTimerDisplay();
+  window.testTimer = setInterval(() => {
+    window.timeRemaining--;
+    updateTimerDisplay();
+    if(window.timeRemaining <= 0) {
+       clearInterval(window.testTimer);
+       gradeAll();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  let m = Math.floor(window.timeRemaining / 60);
+  let s = window.timeRemaining % 60;
+  const readout = document.getElementById('liveCount');
+  readout.textContent = `⏱ Time Remaining: ${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  if(window.timeRemaining <= 60) {
+     readout.classList.add('urgent');
+  } else {
+     readout.classList.remove('urgent');
+  }
+}
+
+function resetAllAnswers() {
+   document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
+   document.querySelectorAll('#omr-content input[type="text"]').forEach(r => r.value = '');
+   document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+   document.getElementById('resultPanel').classList.remove('show');
+}
+
+function gradeAll() {
+  if(window.testTimer) clearInterval(window.testTimer);
+  
+  let totalCorrect = 0;
+  let totalIncorrect = 0;
+  let totalUnanswered = 0;
+  
+  const gradeItem = (type, val, item, fb, rightAnsText) => {
+      let correct = false;
+      if(val === null || val === '') {
+          totalUnanswered++; 
+          fb.className='feedback incorrect'; 
+          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+      } else {
+          if(type==='fill') correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
+          if(type==='mcq') correct = (val === item.answer);
+          if(type==='tf') correct = (val === item.answer);
+          
+          if(correct) {
+              totalCorrect++; 
+              fb.className='feedback correct'; 
+              fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${item.exp}</span>`;
+          } else {
+              totalIncorrect++; 
+              fb.className='feedback incorrect'; 
+              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+          }
+      }
+      fb.style.display='block';
+  };
+
+  const fillContainer = document.getElementById('fillbook-container');
+  fillContainer.fillData.forEach((item, i) => {
+     const val = document.getElementById(`${fillContainer.dataset.prefix}-${i}`).value.trim().toLowerCase();
+     const fb = document.getElementById(`${fillContainer.dataset.prefix}-fb-${i}`);
+     gradeItem('fill', val, item, fb, 'Correct Answer: ' + item.a[0]);
+  });
+  
+  const mcqContainer = document.getElementById('mcqbook-container');
+  mcqContainer.mcqData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${mcqContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${mcqContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+     gradeItem('mcq', sel ? parseInt(sel.value) : null, item, fb, rightAnsText);
+  });
+  
+  const tfContainer = document.getElementById('tfbook-container');
+  tfContainer.tfData.forEach((item, i) => {
+     const sel = document.querySelector(`input[name="${tfContainer.dataset.prefix}-${i}"]:checked`);
+     const fb = document.getElementById(`${tfContainer.dataset.prefix}-fb-${i}`);
+     const rightAnsText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+     gradeItem('tf', sel ? (sel.value === 'true') : null, item, fb, rightAnsText);
+  });
+  
+  document.getElementById('scoreBig').textContent = totalCorrect + ' / ' + totalMax;
+  const pct = Math.round((totalCorrect/totalMax)*100);
+  let msg = `<strong>Score Breakdown:</strong><br><span style="color:var(--good); font-weight:bold;">✔ Correct: ${totalCorrect}</span> &nbsp;|&nbsp; <span style="color:var(--bad); font-weight:bold;">✘ Incorrect: ${totalIncorrect}</span> &nbsp;|&nbsp; <span>⊝ Unanswered: ${totalUnanswered}</span><br><br>`;
+  if(pct>=90) msg += "Outstanding! You crushed the time-bound test. 🏆";
+  else if(pct>=70) msg += "Great work! Just review the questions marked in red below. 🌟";
+  else if(pct>=50) msg += "Good effort — scroll down to study the explanations for the ones you missed. 📖";
+  else msg += "Time-bound tests can be tricky! Review the correct answers below and try again later. 💪";
+  
+  document.getElementById('scoreMsg').innerHTML = msg;
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('grade-bar').style.display = 'none';
+  
+  window.scrollTo({top: document.getElementById('resultPanel').offsetTop - 100, behavior: 'smooth'});
+}
+
+window.onload = function() {
+   setMode('practice');
+};
+
+</script>
+</body>
+</html>
+
+<script>
+
+const mcqBook = [
+  {
+    "q": "Which among these is the default type of &lt;OL&gt; tag?",
+    "options": [
+      "(a) Alphabet letters",
+      "(b) Roman numbers",
+      "(c) Arabic numbers",
+      "(d) None of these"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Which one of the following is a type of list that HTML supports?",
+    "options": [
+      "(a) Ordered lists",
+      "(b) Unordered lists",
+      "(c) Description lists",
+      "(d) All of the above"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "By which tag, an ordered list is represented?",
+    "options": [
+      "(a) &lt;U&gt;",
+      "(b) &lt;I&gt;",
+      "(c) &lt;UL&gt;",
+      "(d) &lt;OL&gt;"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Which of the following tag allows you to provide List Items?",
+    "options": [
+      "(a) &lt;LIST&gt;",
+      "(b) &lt;OL&gt;",
+      "(c) &lt;LI&gt;",
+      "(d) All of these"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Which among the following tag is used to define a definition term?",
+    "options": [
+      "(a) &lt;DD&gt;",
+      "(b) &lt;DT&gt;",
+      "(c) &lt;DL&gt;",
+      "(d) &lt;HT&gt;"
+    ],
+    "answer": ""
+  },
+  {
+    "q": "Which type of Artificial Intelligence does IBM's Watson machine demonstrate?",
+    "options": [
+      "Artificial Narrow Intelligence",
+      "Limited Memory",
+      "Artificial General Intelligence",
+      "Artificial Super Intelligence"
+    ],
+    "answer": "Artificial Narrow Intelligence"
+  },
+  {
+    "q": "A self-driven car is an example of which of the following type of Artificial Intelligence.",
+    "options": [
+      "Reactive machines",
+      "Theory of mind",
+      "Limited memory",
+      "Self-awareness"
+    ],
+    "answer": "Limited memory"
+  },
+  {
+    "q": "Who is the author of term Artificial Intelligence?",
+    "options": [
+      "Marvin Minski",
+      "Alan Turing",
+      "John McCarthy",
+      "Elon Musk"
+    ],
+    "answer": "John McCarthy"
+  },
+  {
+    "q": "Which of the following domains of AI deal with visual data?",
+    "options": [
+      "NLP",
+      "CV",
+      "Both (a) and (b)",
+      "Robotics"
+    ],
+    "answer": "CV"
+  },
+  {
+    "q": "Which of the following domains of AI deal with human speech and language?",
+    "options": [
+      "NLP",
+      "CV",
+      "Both (a) and (b)",
+      "Robotics"
+    ],
+    "answer": "NLP"
+  },
+  {
+    "q": "Which tag is used to create a numbered list in HTML?",
+    "options": [
+      "(a) &lt;ul&gt;",
+      "(b) &lt;ol&gt;",
+      "(c) &lt;dl&gt;",
+      "(d) &lt;li&gt;"
+    ],
+    "answer": "(b) &lt;ol&gt;"
+  },
+  {
+    "q": "What is the default bullet type for an unordered list (&lt;ul&gt;)?",
+    "options": [
+      "(a) Circle",
+      "(b) Square",
+      "(c) Disc",
+      "(d) None"
+    ],
+    "answer": "(c) Disc"
+  },
+  {
+    "q": "Which attribute of the &lt;img&gt; tag is used to specify the path to the image file?",
+    "options": [
+      "(a) alt",
+      "(b) href",
+      "(c) src",
+      "(d) link"
+    ],
+    "answer": "(c) src"
+  }
+];
+const fillBook = [
+  {
+    "q": "ALT stands for ____________.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "The individual items of the list are marked with ______ tag.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "An __________ is a type of list that does not have any special order or sequence.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "GIF stands for ____________.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "In a binary number system, the value of base or radix is ____________.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "In Excel ________ charts allow you to display data across a 3D landscape.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "________ is a collection of different kinds of data.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "HTML ________ are used to help the browser to understand the layout and format of the web page.",
+    "a": [
+      ""
+    ]
+  },
+  {
+    "q": "The ________ attribute is used to specify the alternate text for an image.",
+    "a": [
+      ""
+    ]
+  }
+];
+const tfBook = [
+  {
+    "s": "IBM's Deep Blue, a program designed to play chess, defeated world's champion chess player.",
+    "answer": false
+  },
+  {
+    "s": "Theory of mind in AI is believed as the ultimate goal of AI development.",
+    "answer": false
+  },
+  {
+    "s": "Self-Aware AI focuses on the social values of humans like beliefs, likes and dislikes etc.",
+    "answer": false
+  },
+  {
+    "s": "Websites are the only source of bulk data.",
+    "answer": false
+  },
+  {
+    "s": "Artificial general intelligence (AGI) refers to a machine with intelligence that mimics human intelligence.",
+    "answer": false
+  }
+];
+const shortBook = [
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "Unordered list in Html",
+    "model": ""
+  },
+  {
+    "q": ".jpg",
+    "model": ""
+  },
+  {
+    "q": "Src",
+    "model": ""
+  },
+  {
+    "q": "Nested Lists",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "What is the significance of lists in a web page?",
+    "model": ""
+  },
+  {
+    "q": "Explain attributes of &lt;OL&gt; tag.",
+    "model": ""
+  },
+  {
+    "q": "What are the various CSS list properties?",
+    "model": ""
+  },
+  {
+    "q": "Explain the attributes of image tag.",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "A chart is an effective way to display data in a pictorial form.",
+    "model": ""
+  },
+  {
+    "q": "The digits used in octal number system are 0 to 7.",
+    "model": ""
+  },
+  {
+    "q": "A style tag applied to an individual character is known as font tag.",
+    "model": ""
+  },
+  {
+    "q": "Ordered list in HTML is used to list the items in a sequence.",
+    "model": ""
+  },
+  {
+    "q": "BGCOLOR is used to set the background colour of a web page.",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "Data Science",
+    "model": ""
+  },
+  {
+    "q": "Bar Chart",
+    "model": ""
+  },
+  {
+    "q": "Number system",
+    "model": ""
+  },
+  {
+    "q": "Comment in HTML",
+    "model": ""
+  },
+  {
+    "q": "Marquees in HTML",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "Natural Language Processing",
+    "model": ""
+  },
+  {
+    "q": "Hexadecimal Number System",
+    "model": ""
+  },
+  {
+    "q": "Gridlines in Excel Chart",
+    "model": ""
+  },
+  {
+    "q": "Text Formatting tags in HTML",
+    "model": ""
+  },
+  {
+    "q": "List in HTML",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "Write the rules to multiply two binary numbers with an example.",
+    "model": ""
+  },
+  {
+    "q": "What is the difference between sorting and filtering data in Excel?",
+    "model": ""
+  },
+  {
+    "q": "Explain the Font tag in HTML.",
+    "model": ""
+  },
+  {
+    "q": "What are the three domains of AI?",
+    "model": ""
+  },
+  {
+    "q": "What is the significance of definition lists?",
+    "model": ""
+  },
+  {
+    "q": "",
+    "model": ""
+  },
+  {
+    "q": "Convert (16512)_8 and (1C5)_16 into their decimal equivalent [C in hexadecimal is 12]",
+    "model": ""
+  },
+  {
+    "q": "Explain different type of charts in MS Excel.",
+    "model": ""
+  },
+  {
+    "q": "Explain the types of Artificial Intelligence.",
+    "model": ""
+  },
+  {
+    "q": "Explain the types of lists available in HTML.",
+    "model": ""
+  },
+  {
+    "q": "Explain the &lt;IMG&gt; tag with its attributes using an example.",
+    "model": ""
+  },
+  {
+    "q": "Define CSS Selector.",
+    "model": ""
+  },
+  {
+    "q": "Write the general format of linking CSS with HTML?",
+    "model": ""
+  },
+  {
+    "q": "How are comments given in CSS?",
+    "model": ""
+  },
+  {
+    "q": "Write the syntax of background-image property.",
+    "model": ""
+  },
+  {
+    "q": "Explain how CSS saves time.",
+    "model": ""
+  },
+  {
+    "q": "Explain the types of CSS.",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Define the following tags with examples:"
+  },
+  {
+    "q": "(a) &lt;P&gt;\n(b) &lt;Font&gt;\n(c) &lt;Body&gt;\n(d) &lt;BR&gt;",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Write the HTML code of the following output:"
+  },
+  {
+    "q": "(a) H2SO4\n(b) (Hypotenus)^2 = (one side)^2 + (other side)^2",
+    "model": ""
+  },
+  {
+    "isHeader": true,
+    "text": "Create a CSS page that will hold details about your friends like name, address, date of birth, etc. Follow the details given below to create the table."
+  },
+  {
+    "q": "1. Background page color:Cyan\n2. Table, th, td : border should be 1px solid black.\n3. Border with collapse property\n4. th and td padding should be set to 10px\n5. font-face: Courier New\n6. font-size: 20",
+    "model": ""
+  },
+  {
+    "q": "Collect information from the internet and create an html page on \"Mobile and Internet Addiction in children\".\nMake use of the following tags:\n(a) Paragraph tag\n(b) Line break tag\n(c) Font tag\n(d) Bold, Italic and Underline tags\n(e) Subscript tag\n(f) Add comments explaining the use of the tags in the code.",
+    "model": ""
+  },
+  {
+    "q": "Define the term Artificial Intelligence.",
+    "model": null
+  },
+  {
+    "q": "What are the three domains of AI?",
+    "model": null
+  },
+  {
+    "q": "Name four types of Artificial Intelligence based on functionality.",
+    "model": null
+  },
+  {
+    "q": "Name any two examples of Computer Vision.",
+    "model": null
+  },
+  {
+    "isHeader": true,
+    "text": "Write one characteristic of each of the following types of AI machines:"
+  },
+  {
+    "q": "I. Reactive machines\nii. Limited Memory\niii. Theory of mind\niv. Self-Awareness",
+    "model": null
+  },
+  {
+    "q": "What is the basic difference between weak and strong AI?",
+    "model": "The main difference between weak and strong AI is that weak AI systems are solu..."
+  },
+  {
+    "q": "Write a brief note on NLP.",
+    "model": null
+  },
+  {
+    "q": "How is narrow intelligence different from generalised intelligence?",
+    "model": null
+  },
+  {
+    "q": "Briefly describe any two types of Artificial Intelligence based on functionality.",
+    "model": null
+  },
+  {
+    "q": "With the help of your teacher, categorize the following into three domains of AI \u2013\n1. Facial features\n2. Student's photograph\n3. Fingerprint\n4. Recorded voice\n5. Text typed into the computer\n6. Detecting traffic light Product image\n7. Voice command\n8. Student's marks sheet\n9. Customer feedback",
+    "model": null
+  },
+  {
+    "q": "What is a Definition List in HTML?",
+    "model": "A Definition List (&lt;dl&gt;) is a list of terms and their corresponding descriptions, typically using &lt;dt&gt; for terms and &lt;dd&gt; for descriptions."
+  },
+  {
+    "q": "Why is the \"alt\" attribute important in the &lt;img&gt; tag?",
+    "model": "The \"alt\" attribute provides alternate text for an image if it cannot be displayed, and it improves accessibility for users with screen readers."
+  }
+];
+const longBook = [
+  {
+    "q": "What is the use of the &lt;style&gt; tag?",
+    "model": "The &lt;style&gt; tag in html helps us to modify over text, element in page. This modification includes changing font size, font family, font colour, etc. Not only the text, you can change the style of a body or a part of a page."
+  },
+  {
+    "q": "What are the advantages of using CSS?",
+    "model": "In HTML you can write CSS once and then reuse the same sheet in multiple pages. You can define a style for each HTML element and apply it to as many web pages as you want. To make a global change, simply change the style, and all elements in all the web pages will be updated automatically."
+  }
+];
+const extraBook = [
+  {
+    "q": "Did you know? Image formats",
+    "model": "The most common image formats on the web are JPEG (great for photos), PNG (great for transparent backgrounds), and GIF (great for simple animations). Modern sites also use WebP for better compression."
+  },
+  {
+    "q": "Trivia: The first web image",
+    "model": "The first photograph ever uploaded to the web was posted by Tim Berners-Lee in 1992. It was a picture of a comedy band called Les Horribles Cernettes."
+  },
+  {
+    "q": "Fun Fact: Nested Lists",
+    "model": "You can place a list inside another list! This is called a nested list, and browsers will automatically use different bullet styles for the inner list to make it easier to read."
+  }
+];
+
+    if(mcqBook && mcqBook.length) { renderMCQ('mcqbook-container', mcqBook, 'mcq'); document.getElementById('mcq-count').textContent = `(${mcqBook.filter(i=>!i.isHeader).length})`; }
+    if(fillBook && fillBook.length) { renderFill('fillbook-container', fillBook, 'fill'); document.getElementById('fill-count').textContent = `(${fillBook.filter(i=>!i.isHeader).length})`; }
+    if(tfBook && tfBook.length) { renderTF('tfbook-container', tfBook, 'tf'); document.getElementById('tf-count').textContent = `(${tfBook.filter(i=>!i.isHeader).length})`; }
+    if(shortBook && shortBook.length) { renderSubjective('short-container', shortBook, 'sb'); document.getElementById('short-count').textContent = `(${shortBook.filter(i=>!i.isHeader).length})`; }
+    if(longBook && longBook.length) { renderSubjective('long-container', longBook, 'lb'); document.getElementById('long-count').textContent = `(${longBook.filter(i=>!i.isHeader).length})`; }
+    if(extraBook && extraBook.length) { renderSubjective('extra-container', extraBook, 'eb'); document.getElementById('extra-count').textContent = `(${extraBook.filter(i=>!i.isHeader).length})`; }
+    </script>
+</body>
+</html>

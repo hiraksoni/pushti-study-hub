@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pushti — Computer Science Ch 7–14 | Complete Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --c7:#0d47a1;--c7l:#e3f2fd;--c7d:#0a2e6b;
+  --c8:#6a1b9a;--c8l:#f3e5f5;--c8d:#3a0a6b;
+  --c9:#00695c;--c9l:#e0f2f1;--c9d:#003d35;
+  --c10:#1565c0;--c10l:#e8eaf6;--c10d:#0d2a6b;
+  --c11:#e65100;--c11l:#fff3e0;--c11d:#7c2d00;
+  --c12:#c62828;--c12l:#ffebee;--c12d:#7c0a0a;
+  --c13:#4a148c;--c13l:#ede7f6;--c13d:#2d0a6b;
+  --c14:#1b5e20;--c14l:#e8f5e9;--c14d:#0a2e0d;
+  --green:#1e7d45;--gl:#e8f5e9;
+  --red:#c0392b;--rl:#ffebee;
+  --amber:#d97706;--aml:#fff8e1;
+  --gold:#f5c518;
+  --bg:#f8f9fc;--card:#fff;--text:#1a1a2e;--muted:#64748b;--border:#e2e8f0;
+  --shadow:0 4px 20px rgba(0,0,0,0.07);--r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Quicksand',sans-serif;font-weight:500;background:var(--bg);color:var(--text);padding-bottom:80px}
+
+/* HERO */
+.hero{background:linear-gradient(160deg,#050d1a 0%,#0d47a1 25%,#6a1b9a 50%,#c62828 75%,#1b5e20 100%);padding:30px 20px 22px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='25'/%3E%3C/g%3E%3C/svg%3E")}
+.hero-inner{position:relative;z-index:1}
+.hero-tag{font-family:'Fredoka One',cursive;font-size:.82rem;color:var(--gold);margin-bottom:4px;letter-spacing:1px}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(1.4rem,4vw,2.4rem);color:#fff;text-shadow:0 3px 12px rgba(0,0,0,.4);margin-bottom:4px}
+.hero p{color:rgba(255,255,255,.82);font-size:.86rem;font-weight:600}
+.hero-chips{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.hc{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:11px}
+
+/* SCORE BAR */
+.sbar{background:#fff;padding:8px 15px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;border-bottom:2px solid var(--border);position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.spill{font-family:'Fredoka One',cursive;padding:3px 11px;border-radius:14px;font-size:.83rem}
+.prog-w{flex:1;min-width:50px;height:7px;background:var(--border);border-radius:7px;overflow:hidden}
+.prog-f{height:100%;border-radius:7px;transition:width .4s;background:linear-gradient(90deg,#0d47a1,#6a1b9a,#c62828)}
+
+/* CHAPTER TABS — top level */
+.ch-tabs{background:#fff;border-bottom:3px solid var(--border);display:flex;overflow-x:auto;position:sticky;top:40px;z-index:199;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.ch-tabs::-webkit-scrollbar{height:3px}
+.ct{flex-shrink:0;padding:10px 13px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:.74rem;border:none;background:none;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-3px;transition:all .2s;white-space:nowrap}
+.ct:hover{background:#f8f9fc}
+
+/* CHAPTER PAGES */
+.ch-page{display:none;max-width:900px;margin:0 auto;padding:18px 13px 60px}
+.ch-page.active{display:block}
+
+/* CHAPTER HERO BAND */
+.ch-hero{border-radius:var(--r) var(--r) 0 0;padding:14px 18px;color:#fff;margin-bottom:0}
+.ch-hero h2{font-family:'Fredoka One',cursive;font-size:1.2rem;margin-bottom:3px}
+.ch-hero p{font-size:.8rem;opacity:.88;font-weight:600}
+.ch-hero .total-badge{background:rgba(255,255,255,.22);font-family:'Fredoka One',cursive;font-size:.78rem;padding:3px 11px;border-radius:9px;display:inline-block;margin-top:6px}
+
+/* SECTION BANNERS */
+.sb{font-family:'Fredoka One',cursive;font-size:.88rem;padding:8px 13px;border-radius:9px;margin:12px 0 9px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px}
+.mk-c{background:rgba(255,255,255,.45);font-size:.68rem;padding:2px 8px;border-radius:7px;font-weight:700}
+
+/* QUESTION CARDS */
+.pq{background:#fff;border:2px solid var(--border);border-radius:11px;overflow:hidden;margin-bottom:10px;box-shadow:var(--shadow);transition:border-color .2s}
+.pq:hover{border-color:#90caf9}.pq.done{border-color:var(--green)}
+.pq-h{padding:12px 14px;display:flex;gap:8px;align-items:flex-start}
+.qn{color:#fff;font-family:'Fredoka One',cursive;font-size:.76rem;min-width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.qt{font-weight:700;font-size:.89rem;flex:1;line-height:1.55;white-space:pre-line}
+.qmk{font-size:.93rem;flex-shrink:0}
+.mchip{font-family:'Fredoka One',cursive;font-size:.64rem;padding:2px 7px;border-radius:6px;flex-shrink:0}
+
+/* MCQ */
+.mopts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:0 13px 9px}
+.mb{padding:8px 11px;border-radius:8px;border:2px solid var(--border);background:#fff;font-family:'Quicksand',sans-serif;font-weight:600;font-size:.83rem;cursor:pointer;text-align:left;transition:all .15s}
+.mb:hover{background:#f0f4ff;border-color:#90caf9}
+.mb.correct{background:var(--gl);border-color:var(--green);color:var(--green)}
+.mb.wrong{background:var(--rl);border-color:var(--red);color:var(--red)}
+
+/* TF */
+.tfr{display:flex;gap:7px;margin:0 13px 9px}
+.tb{padding:7px 20px;border-radius:8px;border:2px solid var(--border);background:#fff;font-family:'Fredoka One',cursive;font-size:.86rem;cursor:pointer;transition:all .15s}
+.tb:hover{background:#f0f4ff}
+.tb.correct{background:var(--gl);border-color:var(--green);color:var(--green)}
+.tb.wrong{background:var(--rl);border-color:var(--red);color:var(--red)}
+
+/* REVEAL */
+.rvb{width:calc(100% - 26px);margin:0 13px 8px;padding:8px 13px;background:var(--aml);border:2px dashed var(--amber);border-radius:8px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:.8rem;color:#92400e;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s}
+.rvb:hover{background:#fef3c7;border-style:solid}
+.ab{display:none;margin:0 13px 11px;background:var(--gl);border:2px solid var(--green);border-radius:8px;padding:11px;animation:pop .2s ease}
+.ab.show{display:block}
+@keyframes pop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.al{font-family:'Fredoka One',cursive;font-size:.68rem;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.as{padding:4px 8px;background:#fff;border-left:3px solid var(--green);border-radius:0 5px 5px 0;margin:3px 0;font-size:.83rem;color:#14532d;font-weight:600}
+.as.k{border-left-color:#1565c0;background:#e3f2fd;color:#0a2e6b;font-weight:700}
+.as.r{border-left-color:var(--amber);background:var(--aml);color:#78350f}
+.dob{display:block;margin:5px auto 0;color:#fff;border:none;border-radius:14px;padding:4px 13px;font-family:'Fredoka One',cursive;font-size:.74rem;cursor:pointer}
+
+/* CALLOUTS */
+.tip{background:#fff8e1;border:2px solid #fcd34d;border-radius:8px;padding:7px 11px;margin:7px 0;font-size:.81rem;color:#78350f;font-weight:600}
+.tip::before{content:"💡 Tip: ";font-weight:800}
+.warn{background:var(--rl);border:2px solid #fca5a5;border-radius:8px;padding:7px 11px;margin:7px 0;font-size:.81rem;color:#7f1d1d;font-weight:600}
+.warn::before{content:"⚠️ Watch out: ";font-weight:800}
+.ic{font-family:'Courier New',monospace;background:#e3f2fd;border:1px solid #90caf9;border-radius:4px;padding:1px 6px;font-size:.8rem;color:#0a2e6b}
+
+@media(max-width:480px){.mopts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="hero"><div class="hero-inner">
+  <div class="hero-tag">💻 Computer Science · Class 6 · Green Earth's School</div>
+  <h1>Chapters 7–14: Complete Practice</h1>
+  <p>Pushti's Exam-Style Master Practice Portal ⭐ Bhavnagar</p>
+  <div class="hero-chips">
+    <span class="hc">Ch 7 MS Excel</span><span class="hc">Ch 8 PowerPoint</span>
+    <span class="hc">Ch 9 Internet</span><span class="hc">Ch 10 Email</span>
+    <span class="hc">Ch 11 Scratch Variables</span><span class="hc">Ch 12 More Scratch</span>
+    <span class="hc">Ch 13 Algorithms</span><span class="hc">Ch 14 Intelligence</span>
+  </div>
+</div></div>
+
+<div class="sbar">
+  <div class="spill" style="background:#e3f2fd;color:#0a2e6b">✅ <span id="dc">0</span>/<span id="tc">0</span> done</div>
+  <div class="prog-w"><div class="prog-f" id="pf" style="width:0%"></div></div>
+  <span id="sm" style="font-size:.77rem;font-weight:700;color:var(--muted)">Choose a chapter and start! 💪</span>
+</div>
+
+<div class="ch-tabs" id="chtabs"></div>
+<div id="ch-pages"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// CHAPTER DATA
+// ═══════════════════════════════════════════════════
+const chapters = [
+
+// ───────────────────────────────────────────────────
+// CHAPTER 7 — MS EXCEL FORMULAS & FUNCTIONS
+// ───────────────────────────────────────────────────
+{
+  id:'c7', num:7, title:'MS Excel: Formulas & Functions',
+  color:'--c7', light:'--c7l', dark:'--c7d',
+  icon:'📊',
+  mcqs:[
+    {q:'Every formula in MS Excel must begin with which symbol?',opts:['# (hash)','= (equal to)','@ (at)','* (asterisk)'],ans:1,exp:'The = sign tells Excel: "calculate this." Without =, Excel treats the entry as plain text.'},
+    {q:'Which of the following is the correct Exponentiation operator in Excel?',opts:['*','/','^','&'],ans:2,exp:'^ is the exponentiation (power) operator. Example: =2^3 means 2³ = 8.'},
+    {q:'What is the result of the formula ="Good" & "Morning"?',opts:['Good Morning','GoodMorning','Good+Morning','Error'],ans:1,exp:'& joins text directly with no space. "Good"&"Morning" = GoodMorning. For a space: ="Good"&" "&"Morning"'},
+    {q:'If a cell shows #####, it means:',opts:['Formula error','Column too narrow','Division by zero','Invalid reference'],ans:1,exp:'##### just means the column is too narrow to show the number. Widen the column by dragging its border.'},
+    {q:'Which function finds the LOWEST value in a range?',opts:['=MAX()','=SUM()','=MIN()','=AVERAGE()'],ans:2,exp:'MIN = Minimum = Smallest. MAX = Maximum = Largest. Very commonly confused in exams!'},
+    {q:'The result of =10 > 5 will be:',opts:['10','5','True','False'],ans:2,exp:'Comparison operators always return TRUE or FALSE. 10 is greater than 5, so result is TRUE.'},
+    {q:'Which operator has the HIGHEST precedence in Excel?',opts:['Addition (+)','Percentage (%)','Range (:)','Multiply (*)'],ans:2,exp:'Reference operators (colon, comma, space) have the highest precedence — calculated before everything else.'},
+    {q:'AutoSum is located in which tab and group?',opts:['Insert → Charts','Home → Editing','View → Show','Data → Sort'],ans:1,exp:'AutoSum (Σ) is in the Home tab → Editing group. It automatically calculates Sum, Average, Count, Max, Min.'},
+    {q:'Which formula correctly calculates average of B2 to B8?',opts:['=AVG(B2:B8)','=AVERAGE(B2,B8)','=AVERAGE(B2:B8)','=MEAN(B2:B8)'],ans:2,exp:'The correct function is AVERAGE (not AVG or MEAN). Range uses colon: B2:B8 means B2 through B8.'},
+    {q:'What error appears when you divide a number by zero?',opts:['#REF!','#VALUE!','#####','#DIV/0!'],ans:3,exp:'#DIV/0! = Division by Zero. In mathematics too, dividing by zero is undefined — Excel shows this error.'},
+    {q:'Which is NOT a type of operator in MS Excel?',opts:['Arithmetic','Comparison','Reference','Formatting'],ans:3,exp:'The 3 types of operators are: Arithmetic (+–*/^%), Comparison (=<>), Reference (:,space). Formatting is NOT an operator type.'},
+    {q:'The Fill Handle in Excel is the small square at the:',opts:['Top-left corner','Centre of cell','Bottom-right corner','Title bar'],ans:2,exp:'Fill Handle is the small green square at the BOTTOM-RIGHT corner of a selected cell. Drag it to copy formulas.'},
+  ],
+  fills:[
+    {q:'Any formula in Excel must always begin with a(n) ________ sign.',ans:'= (equal to)',exp:'Without = Excel treats the entry as text, not a formula.'},
+    {q:'The ________ shows the actual formula of the selected cell.',ans:'Formula Bar',exp:'The Formula Bar is above the spreadsheet. Click any cell with a formula to see the formula there.'},
+    {q:'The values or cell references used in a formula are called ________.',ans:'Operands',exp:'Operands = the DATA (A1, B2, 10). Operators = the SYMBOLS that act on them (+, -, *).'},
+    {q:'Predefined, inbuilt formulas in Excel are known as ________.',ans:'Functions',exp:'Functions like SUM(), AVERAGE(), MAX(), MIN() are ready-made — you just call them by name.'},
+    {q:'The ________ symbol is used to join two text strings in Excel.',ans:'& (Ampersand)',exp:'"Hello"&"World" = "HelloWorld". Never use + for text joining — it gives #VALUE! error.'},
+    {q:'The error ________ appears when a column is too narrow to display a value.',ans:'#####',exp:'Simply widen the column by dragging its right border. It is NOT a formula error!'},
+    {q:'In Excel, ________ is the hierarchy or rank given to operations in a formula.',ans:'Operator Precedence',exp:'Similar to BODMAS in Maths. Reference > Negation > % > ^ > */  > +– > & > Comparison.'},
+    {q:'The ________ function adds all values in a specified range.',ans:'SUM',exp:'=SUM(A1:A10) adds all values from A1 to A10. Much easier than =A1+A2+A3+...+A10!'},
+  ],
+  tfs:[
+    {q:'Excel can only perform arithmetic operations and not logical comparisons.',ans:false,exp:'FALSE — Excel can do both! Comparison operators (=,<,>,<=,>=,<>) return TRUE or FALSE.'},
+    {q:'A formula can contain both cell addresses and constant numbers.',ans:true,exp:'TRUE — formulas can freely mix cell references (A1, B2) and numbers (10, 25) together.'},
+    {q:'Text strings in a formula must be enclosed in double quotes.',ans:true,exp:'TRUE — ="Hello"&"World" is correct. Single quotes will NOT work for text strings in Excel.'},
+    {q:'The #DIV/0! error appears when you multiply a number by zero.',ans:false,exp:'FALSE — multiplying by zero gives 0, not an error. #DIV/0! appears only when you DIVIDE by zero.'},
+    {q:'The MIN function finds the highest value in a range.',ans:false,exp:'FALSE — MIN = MINIMUM = LOWEST. MAX = MAXIMUM = HIGHEST. This confusion is the most common exam mistake!'},
+    {q:'AutoSum can automatically calculate Sum, Average, Count, Max and Min.',ans:true,exp:'TRUE — click the dropdown arrow on AutoSum in the Home tab to choose which calculation you want.'},
+    {q:'In Excel, =5+3*2 gives 16 because 5+3=8 and then 8*2=16.',ans:false,exp:'FALSE — operator precedence: multiplication first (3*2=6), then addition (5+6=11). Use brackets to change order: =(5+3)*2=16.'},
+    {q:'The & operator in Excel is used to join text strings.',ans:true,exp:'TRUE — & is the concatenation (text-joining) operator. ="Pushti"&" Soni" = "Pushti Soni"'},
+  ],
+  ones:[
+    {q:'What do we call the small square at the bottom-right of a selected cell?',ans:'Fill Handle',exp:'Drag the Fill Handle to copy the same formula to adjacent cells automatically.'},
+    {q:'Which function finds the highest value in a range?',ans:'MAX()',exp:'=MAX(range) returns the largest number. Example: =MAX(A1:A10)'},
+    {q:'Name the error that appears when a formula references a deleted cell.',ans:'#REF!',exp:'#REF! = invalid cell REFerence. Usually happens when a row/column used in the formula is deleted.'},
+    {q:'What is the keyboard shortcut to confirm a formula entry in a cell?',ans:'Enter key',exp:'Press Enter to confirm. The result appears in the cell. The formula bar still shows the formula.'},
+    {q:'Which Excel feature automatically writes common formulas for selected cells?',ans:'AutoSum (Σ)',exp:'AutoSum is in Home → Editing group. Click the Σ button and Excel writes the formula automatically.'},
+    {q:'What symbol is used for exponentiation (power) in MS Excel?',ans:'^ (caret)',exp:'=2^3 means 2 to the power 3 = 8. The caret symbol is used because ^ is on standard keyboards.'},
+  ],
+  shorts:[
+    {q:'Define a Formula in MS Excel. What are its two main components?',marks:2,
+     ans:['A formula is an equation entered in a cell that calculates a value.',
+          'It always starts with the = (equal to) sign.',
+          'Two main components: (1) Operators — symbols that tell Excel what to do (+, –, *, /)',
+          '(2) Operands — the values or cell references used in the calculation (A1, B2, 10)']},
+    {q:'Explain any four common Excel error codes with their causes.',marks:2,
+     ans:['##### — Column is too narrow to display the value. Fix: widen the column.',
+          '#DIV/0! — Attempting to divide by zero. Fix: check divisor cell is not 0 or empty.',
+          '#VALUE! — Wrong data type used (e.g. adding text to a number).',
+          '#REF! — Cell reference is invalid (row/column used in formula was deleted).']},
+    {q:'What is Operator Precedence in Excel? Give an example showing its effect.',marks:2,
+     ans:['Operator Precedence = the order (rank) in which Excel performs calculations.',
+          'Higher precedence operations are done FIRST, similar to BODMAS in Maths.',
+          'Example: =5+3*2 → Excel does 3*2=6 first (multiplication), then 5+6=11',
+          'But =(5+3)*2 → brackets first: 5+3=8, then 8*2=16']},
+    {q:'Using the cricket table (Tom=30 runs, John=45, Vipin=60, cells C2:C4), write formulas for: (a) Total runs (b) Average runs (c) Max wickets in D2:D4',marks:3,
+     ans:['(a) Total runs: =SUM(C2:C4) → 30+45+60 = 135',
+          '(b) Average runs: =AVERAGE(C2:C4) → 135÷3 = 45',
+          '(c) Maximum wickets: =MAX(D2:D4) → finds the highest wicket count',
+          'Note: You can also write =C2+C3+C4 for total but SUM() is preferred.']},
+    {q:'What is the difference between the SUM and AVERAGE functions? Write both syntaxes.',marks:2,
+     ans:['SUM: Adds all values in a range together. Syntax: =SUM(range)',
+          'Example: =SUM(A1:A5) adds A1+A2+A3+A4+A5',
+          'AVERAGE: Calculates the mean — adds values then divides by count. Syntax: =AVERAGE(range)',
+          'Example: for values 10,20,30: SUM=60, AVERAGE=20 (60÷3)']},
+  ],
+  longs:[
+    {q:'Solve the following as Excel would (show working for each):\n(a) =10+5*2  (b) =(10+5)*2  (c) =20/2+3^2  (d) ="Pushti"&" "&"Soni"',marks:4,
+     ans:['(a) =10+5*2 → multiplication first: 5*2=10, then 10+10 = 20',
+          '(b) =(10+5)*2 → brackets first: 10+5=15, then 15*2 = 30',
+          '(c) =20/2+3^2 → exponent first: 3^2=9, then division: 20/2=10, then add: 10+9 = 19',
+          '(d) ="Pushti"&" "&"Soni" → joins text: "Pushti Soni" (note the space in the middle &)']},
+    {q:'Identify the error in each formula and rewrite it correctly:\n(a) SUM(A1:A5)  (b) =A1+A2+  (c) ="Happy"+"Birthday"  (d) =AVERAGE C1:C5',marks:4,
+     ans:['(a) Missing = sign → Correct: =SUM(A1:A5)',
+          '(b) Trailing + with nothing after → Correct: =A1+A2',
+          '(c) Cannot use + for text, must use & → Correct: ="Happy"&"Birthday"',
+          '(d) Missing parentheses around range → Correct: =AVERAGE(C1:C5)']},
+  ]
+},
+
+// ───────────────────────────────────────────────────
+// CHAPTER 8 — ENRICHING MS POWERPOINT
+// ───────────────────────────────────────────────────
+{
+  id:'c8', num:8, title:'Enriching MS PowerPoint 2016',
+  color:'--c8', light:'--c8l', dark:'--c8d',
+  icon:'🎨',
+  mcqs:[
+    {q:'Which tab is used to insert a SmartArt graphic?',opts:['Home','Design','Insert','Transitions'],ans:2,exp:'SmartArt: Insert tab → Illustrations group → SmartArt. NOT from Design or Home tabs!'},
+    {q:'To change brightness and contrast of a picture, which tab is used?',opts:['View','Format (Picture Tools)','Review','Slide Show'],ans:1,exp:'Format tab is a contextual tab — it appears ONLY when a picture is selected. Corrections → Brightness/Contrast.'},
+    {q:'Visual effects when moving from Slide 1 to Slide 2 are called:',opts:['Animations','Transitions','SmartArt','Action Buttons'],ans:1,exp:'Transitions = slide-to-slide effects. Animations = effects on individual objects within a slide.'},
+    {q:'Which is NOT a category of Animation?',opts:['Entrance','Exit','Emphasis','Background'],ans:3,exp:'The 4 animation categories are: Entrance, Exit, Emphasis, Motion Paths. Background is a slide property, NOT an animation.'},
+    {q:'To play audio throughout the entire presentation, select:',opts:['Play Once','Play in Background','Stop after Slide','Mute'],ans:1,exp:'"Play in Background" combines Play Across Slides + Loop — audio plays through ALL slides continuously.'},
+    {q:'Which SmartArt category is used for a family tree or org chart?',opts:['List','Process','Cycle','Hierarchy'],ans:3,exp:'Hierarchy SmartArt shows ranking and parent-child relationships — perfect for org charts and family trees.'},
+    {q:'Action Buttons are found at the bottom of the ______ menu.',opts:['Pictures','Charts','Shapes','Tables'],ans:2,exp:'Insert tab → Shapes → scroll to the BOTTOM → Action Buttons section.'},
+    {q:'The "Loop until stopped" option for audio is in the ______ tab.',opts:['Format','Playback','Design','Transitions'],ans:1,exp:'Playback tab is contextual — appears ONLY when audio icon is selected. Contains all audio control options.'},
+    {q:'Which keyboard shortcut starts Slide Show from the beginning?',opts:['F1','F5','F7','F11'],ans:1,exp:'F5 = Start from Beginning. Shift+F5 = Start from Current Slide. Escape = Exit Slide Show.'},
+    {q:'To remove unwanted outer parts of an image, we use:',opts:['Rotating','Cropping','Resizing','Scaling'],ans:1,exp:'Crop removes outer portions. Select image → Format tab → Crop → drag black handles → click Crop again.'},
+    {q:'Which tab appears ONLY when a picture is selected?',opts:['Design','Animations','Format (Picture Tools)','Review'],ans:2,exp:'Format (Picture Tools) is a contextual tab. It appears and disappears based on what object is selected.'},
+    {q:'The Animation Pane is used to:',opts:['Add new slides','Reorder and manage animations','Change slide theme','Insert pictures'],ans:1,exp:'Animation Pane: Animations tab → Advanced Animation group. Shows all animations in order, lets you reorder them.'},
+  ],
+  fills:[
+    {q:'A ________ is a visual representation of your information and ideas.',ans:'SmartArt',exp:'SmartArt converts your text points into beautiful visual diagrams automatically.'},
+    {q:'The ________ group on the Insert tab contains Video and Audio options.',ans:'Media',exp:'Insert → Media group → Video or Audio. Remember: Media, not Multimedia!'},
+    {q:'To add a motion effect to a specific text box on a slide, we use ________.',ans:'Animations',exp:'Animations tab → select object → choose animation effect. Each object can have its own animation.'},
+    {q:'Built-in button shapes used for navigation in a presentation are called ________.',ans:'Action Buttons',exp:'Action Buttons (Home, Back, Next, End) are found at the bottom of the Shapes menu.'},
+    {q:'________ are special effects that appear when one slide changes to the next.',ans:'Transitions',exp:'Transitions tab → Transition to This Slide group. Can be applied to individual slides or all slides at once.'},
+    {q:'The ________ feature in PowerPoint records how long you spend on each slide.',ans:'Rehearse Timings',exp:'Slide Show → Rehearse Timings. Saves timings for self-running kiosk presentations.'},
+    {q:'To insert a picture from your computer: Insert tab → Images → Pictures → ________.',ans:'This Device',exp:'You can also choose Online Pictures to search and insert from the internet (needs internet).'},
+    {q:'The 4 categories of Animation are: Entrance, Exit, Emphasis, and ________.',ans:'Motion Paths',exp:'Motion Paths make objects MOVE along a drawn path across the slide. Blue colour indicator in Animation Pane.'},
+  ],
+  tfs:[
+    {q:'You can only insert videos saved on your local computer.',ans:false,exp:'FALSE — you can also insert Online Videos (YouTube etc.) using Insert → Video → Online Video, then paste URL.'},
+    {q:'Animations can be applied to both text boxes and images on a slide.',ans:true,exp:'TRUE — any object on a slide (text, image, shape, chart, table) can have an animation applied to it.'},
+    {q:'The "Transition to This Slide" group is found on the Design tab.',ans:false,exp:'FALSE — it is on the TRANSITIONS tab, NOT the Design tab. Design tab is for themes and backgrounds.'},
+    {q:'You can record your own voice and add it as audio to a slide.',ans:true,exp:'TRUE — Insert → Audio → Record Audio. You can record narration for any slide in your presentation.'},
+    {q:'Once a SmartArt is inserted, you cannot change its colour.',ans:false,exp:'FALSE — SmartArt Tools Design tab → Change Colors. You can also change the entire layout after insertion.'},
+    {q:'F5 is the shortcut key to start a Slide Show from the beginning.',ans:true,exp:'TRUE — F5 starts from slide 1. Shift+F5 starts from the currently selected slide. Esc exits.'},
+    {q:'Transition effects are applied to individual objects on a slide.',ans:false,exp:'FALSE — Transitions apply to the WHOLE SLIDE (slide-to-slide). Animations apply to individual objects.'},
+    {q:'The Photo Album feature creates a presentation with one photo per slide.',ans:true,exp:'TRUE — Insert → Images → Photo Album. Each photo automatically gets its own slide.'},
+  ],
+  ones:[
+    {q:'Which tab appears ONLY when a picture is selected in PowerPoint?',ans:'Format Tab (Picture Tools)',exp:'Contextual tabs appear only when a specific type of object is selected.'},
+    {q:'Name the feature used to create a photo gallery presentation.',ans:'Photo Album',exp:'Insert → Images → Photo Album. Creates a full presentation from your photos automatically.'},
+    {q:'Which animation category makes an object MOVE across the slide?',ans:'Motion Paths',exp:'Motion Paths allow the object to travel along a line, arc, circle, or custom path you draw.'},
+    {q:'What is the keyboard shortcut to start a Slide Show from the beginning?',ans:'F5',exp:'F5 = Start from Beginning. This is an extremely common exam question!'},
+    {q:'Which button applies the same transition to EVERY slide at once?',ans:'Apply to All',exp:'Transitions tab → after selecting effect → click "Apply to All" button on the right side.'},
+    {q:'Which pane allows you to reorder animations on a slide?',ans:'Animation Pane',exp:'Animations tab → Advanced Animation group → Animation Pane. Drag to reorder animations.'},
+  ],
+  shorts:[
+    {q:'What is the difference between a Slide Transition and an Animation? Give one example of each.',marks:2,
+     ans:['Transition: visual effect when moving from ONE SLIDE to the NEXT SLIDE.',
+          'Example: Fade, Push, Wipe, Morph.',
+          'Animation: visual effect applied to an INDIVIDUAL OBJECT (text/image/shape) on a single slide.',
+          'Example: Fly In (Entrance), Spin (Emphasis), Fly Out (Exit), Move along a path (Motion Paths).']},
+    {q:'List and explain all four categories of Animations in MS PowerPoint 2016.',marks:2,
+     ans:['Entrance (Green): Object APPEARS/comes IN to the slide. Example: Fly In, Bounce, Fade.',
+          'Exit (Red): Object DISAPPEARS/goes OUT of the slide. Example: Fly Out, Fade Out.',
+          'Emphasis (Yellow): Object STAYS on slide but draws attention. Example: Pulse, Spin, Grow/Shrink.',
+          'Motion Paths (Blue): Object MOVES along a drawn path across the slide. Example: Line, Arc, Circle.']},
+    {q:'Explain the step-by-step process to Crop an image in PowerPoint.',marks:2,
+     ans:['Step 1: Click the image to select it.',
+          'Step 2: The Format tab (Picture Tools) appears — click it.',
+          'Step 3: Click the Crop button in the Size group.',
+          'Step 4: Black crop handles appear on the edges — drag them inward to remove unwanted parts.',
+          'Step 5: Click Crop again (or press Escape/Enter) to confirm the crop.']},
+    {q:'What is the purpose of the Action Settings dialog box? When does it appear?',marks:2,
+     ans:['Action Settings dialog opens automatically when you draw an Action Button on a slide.',
+          'Purpose: tells PowerPoint WHAT TO DO when the button is clicked during the presentation.',
+          'Options available: Hyperlink to (another slide, last slide, URL), Run a program, Play a sound.',
+          'Example use: Hyperlink to Last Slide — clicking the button jumps to the final slide.']},
+    {q:'Describe three SmartArt categories with examples of when each is used.',marks:3,
+     ans:['Hierarchy: Shows ranking/parent-child structure. Use for: org chart, family tree.',
+          'Process: Shows steps in order (A→B→C). Use for: recipe steps, manufacturing process.',
+          'Cycle: Shows a repeating process/loop. Use for: water cycle, seasonal changes.',
+          'Other categories: List (non-sequential items), Relationship (Venn diagrams), Matrix (quadrants), Pyramid (hierarchical proportions).']},
+  ],
+  longs:[
+    {q:'Explain the step-by-step process of inserting an Audio file and setting it to play across all slides.',marks:4,
+     ans:['Step 1: Go to Insert tab → Media group → Audio → Audio on my PC.',
+          'Step 2: Browse and select your audio file (MP3, WAV etc.) → click Insert.',
+          'Step 3: A speaker icon appears on the slide. Click it to select it.',
+          'Step 4: The Playback tab (contextual) appears — click it.',
+          'Step 5: In the Audio Options group, tick "Play Across Slides" checkbox.',
+          'Step 6: Optionally tick "Loop until Stopped" for continuous background music.',
+          'Step 7: Tick "Hide During Show" to hide the speaker icon during the presentation.',
+          'Result: Audio now plays continuously through ALL slides without stopping.']},
+    {q:'What are Action Buttons? Explain how to insert one and link it to the Last Slide.',marks:4,
+     ans:['Action Buttons are built-in button shapes that add navigation and interactivity to presentations.',
+          'They perform an action when clicked: jump to a slide, play a sound, open a program.',
+          'Examples: Home (⌂), Back (◀), Next (▶), End (⏭).',
+          'How to insert and link to Last Slide:',
+          'Step 1: Insert tab → Shapes → scroll to BOTTOM → Action Buttons section.',
+          'Step 2: Click the desired button shape (e.g. End button).',
+          'Step 3: Draw it on the slide by clicking and dragging.',
+          'Step 4: Action Settings dialog opens automatically.',
+          'Step 5: Select "Hyperlink to" → choose "Last Slide" from dropdown → click OK.',
+          'Result: Clicking this button during presentation jumps directly to the last slide.']},
+  ]
+},
+
+// ───────────────────────────────────────────────────
+// CHAPTER 9 — INTERNET: ONLINE SURFING
+// ───────────────────────────────────────────────────
+{
+  id:'c9', num:9, title:'Internet: Online Surfing',
+  color:'--c9', light:'--c9l', dark:'--c9d',
+  icon:'🌐',
+  mcqs:[
+    {q:'What is the full form of WWW?',opts:['World Wide Web','World Wide Window','Wide World Web','World Web Wide'],ans:0,exp:'WWW = World Wide Web. It is the system of interconnected web pages accessed via the internet.'},
+    {q:'Which of the following is a Search Engine?',opts:['Google Chrome','Microsoft Edge','Google','Yahoo Mail'],ans:2,exp:'Google is a Search Engine (finds information). Chrome and Edge are Web Browsers (software to access sites).'},
+    {q:'The unique address of a web page on the internet is called:',opts:['ISP','URL','HTTP','WWW'],ans:1,exp:'URL = Uniform Resource Locator. It is the unique address of every web page. Example: https://www.google.com'},
+    {q:'Which protocol makes a website SECURE?',opts:['HTTP','FTP','HTTPS','SMTP'],ans:2,exp:'HTTPS = HTTP Secure. The S stands for Secure. Always look for HTTPS before entering passwords or payments.'},
+    {q:'A company that provides internet connection to users is called:',opts:['ISP','URL','WWW','HTTP'],ans:0,exp:'ISP = Internet Service Provider. Examples in India: Jio, Airtel, BSNL, ACT Fibernet.'},
+    {q:'Which of these is a web browser?',opts:['Google','Bing','Yahoo','Mozilla Firefox'],ans:3,exp:'Mozilla Firefox is a Web Browser. Google, Bing, and Yahoo are Search Engines.'},
+    {q:'To save a website you visit often for quick access, you use:',opts:['Attachments','Bookmarks/Favourites','Downloads','History'],ans:1,exp:'Bookmarks (or Favourites in Edge) save website URLs for quick access later.'},
+    {q:'Which part of a browser shows the URL of the current page?',opts:['Status bar','Toolbar','Address bar','Scroll bar'],ans:2,exp:'The Address Bar (also called the Omnibox in Chrome) shows the URL and is where you type new web addresses.'},
+    {q:'What is a Website?',opts:['A single web page','A collection of related web pages','A search engine','A web browser'],ans:1,exp:'A website is a COLLECTION of related web pages under one domain. Example: cbse.gov.in is a website with many pages.'},
+    {q:'Which shortcut key refreshes/reloads the current web page?',opts:['F1','F3','F5','F7'],ans:2,exp:'F5 = Refresh/Reload the current page. Ctrl+F5 = Hard refresh (clears cache and reloads).'},
+  ],
+  fills:[
+    {q:'________ is a global network of millions of interconnected computers.',ans:'Internet',exp:'The Internet is the physical infrastructure. WWW is just one of many services that run on the internet.'},
+    {q:'The software used to access and navigate websites is called a ________.',ans:'Web Browser',exp:'Web Browsers: Google Chrome, Mozilla Firefox, Microsoft Edge, Safari. They are NOT search engines.'},
+    {q:'________ are used to find information by typing keywords on the internet.',ans:'Search Engines',exp:'Search Engines: Google, Bing, Yahoo, DuckDuckGo. They index billions of web pages for searching.'},
+    {q:'HTTP stands for HyperText ________ Protocol.',ans:'Transfer',exp:'HTTP = HyperText Transfer Protocol. It defines how web pages are sent from server to browser.'},
+    {q:'________ is the full form of URL.',ans:'Uniform Resource Locator',exp:'URL is the complete web address. Example: https://www.pushti.com/chapter9/notes.html'},
+  ],
+  tfs:[
+    {q:'The Internet and the World Wide Web are the same thing.',ans:false,exp:'FALSE — Internet = physical network infrastructure. WWW = system of linked web pages ON the internet. Email also uses internet but is NOT part of WWW.'},
+    {q:'HTTPS is more secure than HTTP.',ans:true,exp:'TRUE — HTTPS encrypts data between your browser and the website. Always use HTTPS for banking, shopping, passwords.'},
+    {q:'Google is a web browser.',ans:false,exp:'FALSE — Google is a Search Engine. Google Chrome is the web browser. Common confusion!'},
+    {q:'You can open multiple websites at the same time using browser tabs.',ans:true,exp:'TRUE — Tabs allow multiple websites to be open simultaneously in one browser window.'},
+    {q:'Bookmarks allow you to save frequently visited website addresses.',ans:true,exp:'TRUE — Bookmarks (Favourites) save URLs for quick access. Right-click the address bar → Bookmark this page.'},
+  ],
+  ones:[
+    {q:'Name the software used to access websites on the internet.',ans:'Web Browser',exp:'Examples: Google Chrome, Mozilla Firefox, Microsoft Edge, Safari, Opera.'},
+    {q:'What is the unique address of a web page called?',ans:'URL (Uniform Resource Locator)',exp:'Example URL: https://www.silverbells.edu.in/class6/computer'},
+    {q:'Name one popular search engine used to find information on the internet.',ans:'Google (or Bing/Yahoo)',exp:'Google is the most popular search engine worldwide, handling billions of searches daily.'},
+    {q:'What does ISP stand for?',ans:'Internet Service Provider',exp:'ISP provides your internet connection. Examples: Jio, Airtel, BSNL.'},
+    {q:'Which protocol is used for SECURE websites?',ans:'HTTPS',exp:'HTTPS uses SSL/TLS encryption. The padlock icon in browser address bar shows HTTPS is active.'},
+    {q:'Name the feature that saves your most recently visited websites automatically.',ans:'History / Browser History',exp:'You can view browser history using Ctrl+H. History saves all recently visited pages with dates and times.'},
+  ],
+  shorts:[
+    {q:'What is the difference between a Web Browser and a Search Engine? Give one example of each.',marks:2,
+     ans:['Web Browser: Software used to ACCESS and display websites. Example: Google Chrome.',
+          'Search Engine: A website/tool used to FIND information by entering keywords. Example: Google.',
+          'Key difference: You use a browser to open websites. You use a search engine to find websites.',
+          'Analogy: Browser = the car, Search Engine = the GPS that tells you where to go.']},
+    {q:'Write 5 important Internet Safety Rules.',marks:2,
+     ans:['1. Never share your password with anyone — not even friends.',
+          '2. Always sign out on public or shared computers.',
+          '3. Do not click on unknown links or suspicious pop-ups.',
+          '4. Never share personal information (address, phone) with online strangers.',
+          '5. Tell a trusted adult if something online makes you uncomfortable.']},
+    {q:'Explain what a URL is. Break down the URL https://www.silverbells.edu.in into its parts.',marks:2,
+     ans:['URL = Uniform Resource Locator. It is the unique address of a web page on the internet.',
+          'https:// = Protocol (HTTPS = Secure)',
+          'www = World Wide Web (subdomain)',
+          'silverbells = Domain name (website name)',
+          '.edu = Domain extension (educational institution)',
+          '.in = Country code (India)']},
+  ],
+  longs:[
+    {q:'Explain the parts of a Web Browser and their functions. Name at least 5 parts.',marks:4,
+     ans:['Address Bar: Where you type the URL of the website you want to visit.',
+          'Back/Forward Buttons: Navigate between previously visited pages in your history.',
+          'Refresh/Reload Button: Reloads the current page (useful when page does not load properly).',
+          'Home Button: Takes you to the default start page (usually Google or a set homepage).',
+          'Bookmarks/Favourites Bar: Quick access to saved website addresses.',
+          'Tabs: Allow multiple websites to be open simultaneously in one browser window.',
+          'Search Bar: Built into Address Bar in modern browsers — type keywords to search directly.']},
+  ]
+},
+
+// ───────────────────────────────────────────────────
+// CHAPTER 10 — MORE ON INTERNET (EMAIL & SECURITY)
+// ───────────────────────────────────────────────────
+{
+  id:'c10', num:10, title:'More on Internet — Email & Security',
+  color:'--c10', light:'--c10l', dark:'--c10d',
+  icon:'📧',
+  mcqs:[
+    {q:'BCC in an email stands for:',opts:['Bold Carbon Copy','Blind Carbon Copy','Basic Carbon Copy','Best Carbon Copy'],ans:1,exp:'BCC = Blind Carbon Copy. "Blind" means BCC recipients are HIDDEN from everyone else including each other.'},
+    {q:'Emails you have received are stored in the:',opts:['Sent','Drafts','Inbox','Spam'],ans:2,exp:'Inbox = received emails. Sent = emails you sent. Drafts = emails not yet sent. Spam = unwanted emails.'},
+    {q:'Emails started but NOT yet sent are saved in:',opts:['Inbox','Sent','Drafts','Trash'],ans:2,exp:'Drafts folder stores incomplete emails. Gmail auto-saves to Drafts if you close the compose window.'},
+    {q:'To send a copy to someone without others knowing, you use:',opts:['To','CC','BCC','Subject'],ans:2,exp:'BCC (Blind Carbon Copy) sends a hidden copy. Other recipients cannot see who received BCC.'},
+    {q:'Which symbol is mandatory in every email address?',opts:['#','@','!','*'],ans:1,exp:'@ (at symbol) is mandatory. Format: username@domain.extension e.g. pushti@gmail.com'},
+    {q:'Unwanted or suspicious emails that are automatically filtered are called:',opts:['Drafts','Inbox','Trash','Spam/Junk'],ans:3,exp:'Spam (also called Junk) contains unwanted emails, advertisements, or potentially dangerous phishing emails.'},
+    {q:'What is the term for a file sent along with an email?',opts:['CC','Subject','Attachment','Forward'],ans:2,exp:'Attachments are files (documents, images, PDFs) sent along with an email message.'},
+    {q:'CC in an email means:',opts:['Close Copy','Carbon Copy','Computer Copy','Clear Copy'],ans:1,exp:'CC = Carbon Copy. All recipients in To, CC, and BCC can SEE who received CC. Unlike BCC which is hidden.'},
+    {q:'Google provides ______ GB of free storage for Gmail accounts.',opts:['5','10','15','100'],ans:2,exp:'Google gives 15 GB FREE storage shared across Gmail, Google Drive, and Google Photos.'},
+    {q:'To write a new email message in Gmail, you click:',opts:['Inbox','Compose','Forward','Reply'],ans:1,exp:'Compose button (usually a pencil icon or + icon) opens a new blank email window.'},
+  ],
+  fills:[
+    {q:'________ is an electronic service used to send and receive messages over the internet.',ans:'Email (Electronic Mail)',exp:'Email replaced traditional postal mail for fast, free, global communication.'},
+    {q:'In an email address, the ________ symbol separates the username from the domain.',ans:'@ (at symbol)',exp:'Example: pushti@gmail.com — "pushti" is username, "@" is separator, "gmail.com" is domain.'},
+    {q:'The ________ folder stores emails that have been deleted.',ans:'Trash / Bin',exp:'Deleted emails go to Trash first. They are permanently deleted after 30 days (or when you empty Trash).'},
+    {q:'________ means sending a copy of an email to someone whose identity is hidden from other recipients.',ans:'BCC (Blind Carbon Copy)',exp:'BCC recipients cannot see each other. Great for sending newsletters or mass emails privately.'},
+    {q:'The ________ folder in Gmail contains emails you started writing but have not sent.',ans:'Drafts',exp:'Gmail auto-saves emails to Drafts every few seconds. You can return and continue writing later.'},
+    {q:'Fake emails/websites that try to steal your password are called ________.',ans:'Phishing',exp:'Phishing = fraudulent emails pretending to be from trusted sources (Google, banks) to steal passwords.'},
+  ],
+  tfs:[
+    {q:'All recipients in the To, CC, and BCC fields can see each other\'s email addresses.',ans:false,exp:'FALSE — BCC recipients are HIDDEN from everyone. Only the sender knows who received BCC.'},
+    {q:'You need a Google account to use Gmail.',ans:true,exp:'TRUE — Gmail requires a Google Account. Creating a Google Account gives you Gmail + Drive + Photos etc.'},
+    {q:'The Drafts folder contains emails that have been successfully sent.',ans:false,exp:'FALSE — Drafts = NOT yet sent. Sent = already sent. Drafts are emails in progress.'},
+    {q:'An email can include both text and attached files.',ans:true,exp:'TRUE — emails can contain text, images, links, and attachments (any file type).'},
+    {q:'Phishing emails always come from unknown, suspicious-looking addresses.',ans:false,exp:'FALSE — sophisticated phishing emails can appear to come from trusted addresses. Always check carefully!'},
+    {q:'CC means the recipient receives a copy and all other recipients can see that they received it.',ans:true,exp:'TRUE — CC (Carbon Copy) is visible to everyone. BCC (Blind Carbon Copy) is hidden from everyone.'},
+  ],
+  ones:[
+    {q:'What folder stores emails you have RECEIVED?',ans:'Inbox',exp:'Inbox is the main folder showing all emails sent to you, with newest at the top.'},
+    {q:'What is the format of every email address?',ans:'username@domain.extension',exp:'Example: pushti.soni@gmail.com — username=pushti.soni, domain=gmail, extension=.com'},
+    {q:'What do we call a file sent along with an email?',ans:'Attachment',exp:'You can attach documents, images, PDFs, spreadsheets — any file type can be an attachment.'},
+    {q:'Name the folder where deleted emails are temporarily stored.',ans:'Trash / Bin',exp:'Emails stay in Trash for 30 days before permanent deletion. You can restore them during this time.'},
+    {q:'What is the purpose of the Subject field in an email?',ans:'Brief title/description of the email topic',exp:'Subject helps the recipient understand what the email is about before opening it. Always fill it!'},
+    {q:'Name the term for fake emails designed to steal passwords.',ans:'Phishing',exp:'Phishing emails pretend to be from trusted sources. Never click links in suspicious emails!'},
+  ],
+  shorts:[
+    {q:'Explain the difference between CC and BCC in an email with an example.',marks:2,
+     ans:['CC (Carbon Copy): Sends a visible copy. ALL recipients can see who received CC.',
+          'BCC (Blind Carbon Copy): Sends a HIDDEN copy. BCC recipients cannot see each other.',
+          'Example: Email To: teacher@school.com, CC: parent@gmail.com, BCC: tutor@gmail.com',
+          'The teacher can see the parent was CC\'d. NOBODY can see the tutor received a copy.']},
+    {q:'List all Gmail folders and explain what each contains.',marks:2,
+     ans:['Inbox: All emails you have RECEIVED, newest at top.',
+          'Sent: All emails you have SENT successfully.',
+          'Drafts: Emails you started writing but have NOT sent yet. Auto-saved by Gmail.',
+          'Spam/Junk: Unwanted, suspicious, or unsolicited emails filtered automatically.',
+          'Trash/Bin: Deleted emails. Stored for 30 days before permanent deletion.',
+          'Starred: Emails you have marked with a star for importance.']},
+    {q:'Write 4 important email safety tips.',marks:2,
+     ans:['1. Never open attachments from unknown senders — they may contain viruses.',
+          '2. Check the sender\'s email address carefully before clicking any links.',
+          '3. Never share your password — Google will NEVER ask for your password via email.',
+          '4. Always sign out of email accounts on shared/public computers.',
+          '5. Beware of phishing emails pretending to be from banks or Google.']},
+  ],
+  longs:[
+    {q:'What is email? Explain the advantages of email over traditional postal mail.',marks:4,
+     ans:['Email (Electronic Mail) is a service for sending and receiving messages over the internet.',
+          'Advantages of Email over Postal Mail:',
+          '1. Speed: Email is delivered INSTANTLY (seconds). Postal mail takes days or weeks.',
+          '2. Cost: Email is FREE. Postal mail costs money for stamps and envelopes.',
+          '3. Global: Email works anywhere in the world with internet access.',
+          '4. Files: You can attach documents, images, videos. Postal mail has weight/size limits.',
+          '5. Organised: Email is stored digitally, searchable, and easily organised into folders.',
+          '6. Eco-friendly: No paper, no transport emissions.',
+          'Limitations of email: Needs internet, risk of spam/phishing, privacy concerns.']},
+  ]
+},
+
+// ───────────────────────────────────────────────────
+// CHAPTER 11 — WORKING WITH VARIABLES IN SCRATCH
+// ───────────────────────────────────────────────────
+{
+  id:'c11', num:11, title:'Working with Variables in Scratch',
+  color:'--c11', light:'--c11l', dark:'--c11d',
+  icon:'🔢',
+  mcqs:[
+    {q:'A Variable in Scratch is:',opts:['A type of sprite','A background image','A container that stores a value which can change','A sound block'],ans:2,exp:'Variable = named container storing a value that CAN CHANGE during the program. Like a scoreboard in cricket.'},
+    {q:'Which data type stores letters, words or sentences?',opts:['Number','Boolean','String','Variable'],ans:2,exp:'Strings store text: letters, words, sentences. Example: "Hello", "Pushti", "Green Earth School"'},
+    {q:'In which category are Variable blocks found in Scratch?',opts:['Motion','Events','Variables','Control'],ans:2,exp:'Variables category (orange/red in Scratch) contains blocks to create variables, set values, change values.'},
+    {q:'Which block is used to ask a question to the user in Scratch?',opts:['Say block','Ask and wait block','Sensing block','Variables block'],ans:1,exp:'"Ask and wait" block (in Sensing category, light blue) asks a question and waits for the user to type an answer.'},
+    {q:'Logical operators in Scratch include:',opts:['Add, Subtract, Multiply','AND, OR, NOT','Greater than, Less than','Move, Turn, Glide'],ans:1,exp:'Logical operators: AND (both conditions true), OR (at least one true), NOT (reverses true/false).'},
+    {q:'Which block category contains blocks for DETECTING touching, colour, key presses?',opts:['Control','Events','Sensing','Operators'],ans:2,exp:'Sensing category (light blue) contains blocks for detecting: touching sprite, touching colour, asking questions, mouse position, keys pressed.'},
+    {q:'In Scratch, a Number variable can store:',opts:['Only whole numbers','Numbers with or without decimals','Only text','Only TRUE or FALSE'],ans:1,exp:'Number variables in Scratch store any numeric value — integers (1, 2, 100) or decimals (3.14, 0.5).'},
+    {q:'What does the "Set variable to" block do?',opts:['Increases variable by a value','Creates a new variable','Assigns a specific value to a variable','Deletes a variable'],ans:2,exp:'"Set [variable] to [value]" assigns a new value. "Change [variable] by [N]" increases/decreases by N.'},
+    {q:'Which colour represents Operators blocks in Scratch?',opts:['Blue','Orange','Green','Light Blue'],ans:2,exp:'Green = Operators (maths and comparisons). Light Blue = Sensing. Orange = Events/Variables/Control.'},
+    {q:'A relational operator compares two values and returns:',opts:['A number','A string','TRUE or FALSE','A variable'],ans:2,exp:'Relational operators: > (greater than), < (less than), = (equal). Result is always TRUE or FALSE.'},
+  ],
+  fills:[
+    {q:'Variables are used to store ________ and collect data.',ans:'Process',exp:'Variables store and process data: numbers, strings. They allow programs to remember information.'},
+    {q:'Letters, words or sentences stored in a variable are called ________.',ans:'Strings',exp:'Strings are text data type. In Scratch, a string variable can hold any sequence of characters.'},
+    {q:'________ operators allow you to compare two values or variables.',ans:'Relational',exp:'Relational operators: >, <, = in the green Operators category. They return TRUE or FALSE.'},
+    {q:'The ________ block in Scratch is used to ask the user a question using the keyboard.',ans:'Ask and wait',exp:'Ask and wait (light blue, Sensing category) asks a question and stores the typed answer in "answer".'},
+    {q:'________ operators include AND, OR, NOT.',ans:'Logical',exp:'AND = both conditions must be true. OR = at least one true. NOT = reverses the condition.'},
+    {q:'In Scratch, the ________ block stores keyboard input entered by the user.',ans:'Answer',exp:'After the "Ask and wait" block runs, the user\'s typed input is stored in the "answer" variable automatically.'},
+  ],
+  tfs:[
+    {q:'A variable in Scratch stores a value that CANNOT change during the program.',ans:false,exp:'FALSE — variables CAN change! That\'s their purpose. "Change score by 1" changes the value each time.'},
+    {q:'Number variables in Scratch can only store whole numbers, not decimals.',ans:false,exp:'FALSE — Number variables store any numeric value including decimals like 3.14, 0.5, 99.9.'},
+    {q:'We can use a variable more than once in a program.',ans:true,exp:'TRUE — variables can be read, updated, and used as many times as needed throughout the program.'},
+    {q:'Logical operations allow you to compare two values or strings.',ans:false,exp:'FALSE — RELATIONAL operators compare values (>, <, =). LOGICAL operators combine conditions (AND, OR, NOT).'},
+    {q:'The "Ask and wait" block is found in the Sensing category.',ans:true,exp:'TRUE — Sensing (light blue) contains Ask and wait, answer, touching, mouse position, key pressed etc.'},
+    {q:'A flowchart can have multiple entry points.',ans:false,exp:'FALSE — A flowchart has ONLY ONE entry point (the Start/Terminal box). It can have one or two exit points.'},
+  ],
+  ones:[
+    {q:'What is a Variable in Scratch?',ans:'A named container that stores a value which can change',exp:'Like a scoreboard: the board (variable) stays but the score (value) changes during the game.'},
+    {q:'Name the two data types in Scratch Variables.',ans:'Numbers and Strings',exp:'Numbers: numeric values (10, 3.14). Strings: text (words, sentences, characters).'},
+    {q:'What are the three logical operators in Scratch?',ans:'AND, OR, NOT',exp:'AND: both conditions true. OR: at least one true. NOT: reverses true to false and false to true.'},
+    {q:'What is stored in the "answer" variable in Scratch?',ans:'The text typed by the user after an Ask and wait block',exp:'"Answer" automatically stores whatever the user types in response to the Ask and wait block.'},
+    {q:'Which category colour are Operators blocks in Scratch?',ans:'Green',exp:'Green blocks = Operators (maths: +,–,×,÷ and comparisons: >,<,=). Separate from the dark blue Motion blocks.'},
+    {q:'Name the operator that makes both conditions must be TRUE to proceed.',ans:'AND',exp:'AND = both must be true. Example: "If touching wall AND score > 10 then..." — both must be satisfied.'},
+  ],
+  shorts:[
+    {q:'What is a Variable? Give a real-life analogy to explain it.',marks:2,
+     ans:['A Variable is a named container that stores a value which can CHANGE during the program.',
+          'Real-life analogy: A scoreboard at a cricket match.',
+          'The scoreboard (variable) is always visible. The score (value) changes every time a run is scored.',
+          'In Scratch: "score" starts at 0. "Change score by 1" every time the sprite catches a ball.']},
+    {q:'Differentiate between string and numeric data types with examples.',marks:2,
+     ans:['Numeric (Number): Stores numbers — integers or decimals. Can do maths on them.',
+          'Examples: 10, 45, 3.14, 0, -5',
+          'String: Stores text — letters, words, sentences. Cannot do maths directly.',
+          'Examples: "Hello", "Pushti", "Green Earth School", "India123"',
+          'Key difference: "5"+"3" as strings = "53" (joining). 5+3 as numbers = 8 (adding).']},
+    {q:'Explain the three logical operators in Scratch with examples.',marks:3,
+     ans:['AND: Returns TRUE only if BOTH conditions are true.',
+          'Example: "If touching wall AND score > 10" — both must be satisfied.',
+          'OR: Returns TRUE if AT LEAST ONE condition is true.',
+          'Example: "If touching wall OR touching edge" — either is enough.',
+          'NOT: REVERSES the condition. NOT True = False. NOT False = True.',
+          'Example: "If NOT touching wall" = proceed only when NOT touching the wall.']},
+  ],
+  longs:[
+    {q:'Write a Scratch program description (using blocks) to find the GREATER of two numbers entered by a user.',marks:4,
+     ans:['Step 1: When Green Flag clicked — start the program.',
+          'Step 2: "Ask: Enter first number and wait" → store in variable A.',
+          'Step 3: Set [A] to (answer)',
+          'Step 4: "Ask: Enter second number and wait" → store in variable B.',
+          'Step 5: Set [B] to (answer)',
+          'Step 6: If A > B then: Say "A is greater" for 2 seconds',
+          'Step 7: Else: Say "B is greater" for 2 seconds',
+          '(Using If-Else from Control category and > from Operators category)']},
+  ]
+},
+
+// ───────────────────────────────────────────────────
+// CHAPTER 12 — MORE ABOUT SCRATCH
+// ───────────────────────────────────────────────────
+{
+  id:'c12', num:12, title:'More About Scratch',
+  color:'--c12', light:'--c12l', dark:'--c12d',
+  icon:'🐱',
+  mcqs:[
+    {q:'What is the "Stage" in Scratch?',opts:['The main character','The background where sprites move','A sound file','A type of block'],ans:1,exp:'Stage = the background area where sprites perform actions. It has its own scripts and costumes (called backdrops).'},
+    {q:'Which block makes a sprite say something in a speech bubble?',opts:['Motion block','Sound block','Looks → Say block','Sensing block'],ans:2,exp:'"Say [text] for [N] seconds" is in the Looks category (purple). The speech bubble appears above the sprite.'},
+    {q:'Different appearances of a sprite are called:',opts:['Stages','Scripts','Costumes','Backdrops'],ans:2,exp:'Costumes = different looks/appearances of a sprite. You can switch between costumes to create animation effects.'},
+    {q:'The block that keeps running forever until the program stops is:',opts:['If block','Repeat block','Forever block','Wait block'],ans:2,exp:'"Forever" block (Control, orange) repeats the blocks inside it continuously until the Green Flag is clicked again.'},
+    {q:'Clicking on the Green Flag in Scratch:',opts:['Stops the program','Saves the program','Starts/Runs the program','Deletes the sprite'],ans:2,exp:'Green Flag = Run/Start the program. Red Stop button = Stop the program. These are the main controls.'},
+    {q:'What does "cloning" do in Scratch?',opts:['Deletes a sprite','Creates a copy of a sprite during program execution','Changes a costume','Stops a script'],ans:1,exp:'Cloning creates identical copies of a sprite DURING program execution. Used to create multiple enemies, bullets etc.'},
+    {q:'Scripts in Scratch must start with a:',opts:['Motion block','Hat block (event block)','Sound block','Variable block'],ans:1,exp:'Hat blocks (Events, orange) start scripts. Examples: "When Green Flag clicked", "When key pressed", "When sprite clicked".'},
+    {q:'Which Scratch block is used to switch to a different background?',opts:['Change costume','Switch backdrop to','Change size','Go to front'],ans:1,exp:'"Switch backdrop to" (in Looks, purple) changes the Stage background. Sprites have costumes; Stage has backdrops.'},
+    {q:'The Sensing block "touching colour" detects:',opts:['If a key is pressed','If the sprite is touching a specific colour on the stage','The mouse position','The sprite\'s size'],ans:1,exp:'"Touching colour?" (light blue, Sensing) is TRUE when the sprite touches the specified colour on the stage/other sprites.'},
+    {q:'Which category contains the "Repeat" and "If-then" blocks?',opts:['Looks','Motion','Control','Sensing'],ans:2,exp:'Control (orange/dark) contains: Repeat, Forever, If-then, If-then-else, Wait, Stop, When I start as a clone etc.'},
+  ],
+  fills:[
+    {q:'There are ________ blocks on a scratch project.',ans:'45 (approx.)',exp:'Scratch has blocks in 9 categories: Motion, Looks, Sound, Events, Control, Sensing, Operators, Variables, My Blocks.'},
+    {q:'Each sprite with an individual identity is called a ________.',ans:'Sprite',exp:'A sprite is any character or object in Scratch. You can have multiple sprites in one project.'},
+    {q:'We cannot add more than ________ sprite(s) to a project.',ans:'No fixed limit',exp:'Scratch allows many sprites. However, very many sprites may slow down the program.'},
+    {q:'Clicking on ________ is like switching between costumes of a sprite.',ans:'Costumes tab',exp:'Costumes tab shows all appearances of a selected sprite. Click + to add more costumes.'},
+    {q:'The ________ block is used to give a moving effect to a character.',ans:'Glide block (Motion)',exp:'"Glide [N] secs to x:[X] y:[Y]" smoothly moves the sprite to a position over a set time.'},
+  ],
+  tfs:[
+    {q:'We can add more than one sprite to a Scratch project.',ans:true,exp:'TRUE — Scratch projects can have many sprites. Each sprite has its own scripts, costumes, and sounds.'},
+    {q:'A costume and a backdrop are the same thing.',ans:false,exp:'FALSE — Costumes = different looks of a SPRITE. Backdrops = different backgrounds of the STAGE.'},
+    {q:'Scripts in Scratch must always begin with a hat/event block.',ans:true,exp:'TRUE — Every script needs a starting event (hat block) like "When Green Flag clicked" or "When key pressed".'},
+    {q:'The "Forever" block runs its inner blocks only once.',ans:false,exp:'FALSE — Forever runs CONTINUOUSLY until the program is stopped. It creates infinite loops.'},
+    {q:'Sensing blocks in Scratch are coloured light blue.',ans:true,exp:'TRUE — Sensing blocks (light blue) detect: touching colour, touching sprite, key pressed, mouse position, asking questions.'},
+  ],
+  ones:[
+    {q:'What is a Sprite in Scratch?',ans:'A character or object that performs actions in a Scratch project',exp:'Sprites have scripts (instructions), costumes (appearances), and sounds. The default sprite is a cat.'},
+    {q:'Name the two ways of starting a Scratch script.',ans:'When Green Flag clicked / When a key is pressed',exp:'Both are Hat blocks in the Events category. Other triggers: When sprite clicked, When backdrop switches etc.'},
+    {q:'What is the difference between a costume and a backdrop?',ans:'Costume = sprite appearance. Backdrop = stage background.',exp:'Costumes change how a sprite looks. Backdrops change the stage background. Both create animation effects.'},
+    {q:'Which block colour is used for Control blocks (Repeat, Forever, If-then)?',ans:'Orange (dark orange)',exp:'Control = dark orange. Events = bright orange. Variables = darker orange-red. They look similar!'},
+    {q:'What happens when you click the Red Stop button in Scratch?',ans:'All scripts stop running',exp:'Red Stop = stops all running scripts in the entire project. Green Flag = starts all scripts with "When Green Flag clicked".'},
+    {q:'Name the Scratch feature that creates identical copies of a sprite during a program.',ans:'Cloning',exp:'Create clone of [sprite] block creates a duplicate. Used for: multiple enemies, bullet effects, snow particles etc.'},
+  ],
+  shorts:[
+    {q:'Explain the difference between Sprite Costumes and Stage Backdrops.',marks:2,
+     ans:['Costumes: Different visual appearances of a SPRITE.',
+          'You can switch between them to animate the sprite (e.g. walking animation with leg positions).',
+          'Found in: Costumes tab when a sprite is selected.',
+          'Backdrops: Different background images of the STAGE.',
+          'Switching backdrops changes the scene (e.g. Day → Night, Forest → City).',
+          'Found in: Backdrops tab when the Stage is selected.']},
+    {q:'What are the various ways of creating a new sprite in Scratch?',marks:2,
+     ans:['1. Choose a Sprite: Select from Scratch\'s built-in library of sprites.',
+          '2. Upload a Sprite: Import an image from your computer.',
+          '3. Draw a Sprite: Use the built-in paint editor to draw your own sprite.',
+          '4. Surprise: Scratch randomly picks and adds a sprite for you.',
+          'Each sprite can then have its own costumes, scripts, and sounds.']},
+  ],
+  longs:[
+    {q:'Explain how you would create a simple Scratch project where a sprite switches backgrounds and changes costume when the space key is pressed.',marks:4,
+     ans:['Setting up:',
+          'Step 1: Choose a sprite from the library (e.g. Cat).',
+          'Step 2: Add 2 costumes to the sprite (e.g. costume1 and costume2).',
+          'Step 3: Add 2 backdrops to the Stage (e.g. Forest and City).',
+          'Script for the Sprite:',
+          'When [space] key pressed →',
+          '"Next costume" block (changes sprite appearance)',
+          '"Switch backdrop to [next backdrop]" block (changes background)',
+          'Running the project:',
+          'Click Green Flag to start. Press Space key → sprite changes look AND background changes simultaneously.']},
+  ]
+},
+
+// ───────────────────────────────────────────────────
+// CHAPTER 13 — PROBLEM SOLVING USING ALGORITHM AND FLOWCHART
+// ───────────────────────────────────────────────────
+{
+  id:'c13', num:13, title:'Problem-Solving: Algorithm & Flowchart',
+  color:'--c13', light:'--c13l', dark:'--c13d',
+  icon:'🔄',
+  mcqs:[
+    {q:'The symbol used to represent the START and END of a flowchart is:',opts:['Rectangle','Diamond','Oval/Terminal','Parallelogram'],ans:2,exp:'Oval (Terminal/Rounded Rectangle) = START and STOP. Only appears twice in a simple flowchart.'},
+    {q:'The flowchart symbol used for INPUT and OUTPUT operations is:',opts:['Input/Output (Parallelogram)','Process (Rectangle)','Terminal (Oval)','Decision (Diamond)'],ans:0,exp:'Parallelogram = Input/Output. Used when reading data (INPUT) or displaying results (PRINT/DISPLAY).'},
+    {q:'The symbol used to CALCULATE or PROCESS data is:',opts:['Oval','Diamond','Parallelogram','Rectangle'],ans:3,exp:'Rectangle = Process box. Used for calculations: Area=L×B, Sum=A+B, N=N+1 etc.'},
+    {q:'The Decision box in a flowchart has ______ exit points.',opts:['1','2','3','4'],ans:1,exp:'Decision box (Diamond) always has EXACTLY 2 exit points: YES and NO (or True and False).'},
+    {q:'In an algorithm, READ/INPUT is used to:',opts:['Display output','Accept values/input','Calculate results','End the program'],ans:1,exp:'READ / INPUT / GET — all accept values from the user. PRINT / DISPLAY / WRITE — show output.'},
+    {q:'A flowchart flows from:',opts:['Bottom to top','Right to left','Top to bottom','Randomly'],ans:2,exp:'Flowcharts flow TOP to BOTTOM and LEFT to RIGHT. Flow lines (arrows) show the direction.'},
+    {q:'The Connector symbol in a flowchart is:',opts:['Rectangle','Diamond','Circle','Oval'],ans:2,exp:'Circle (Connector) joins different parts of a long flowchart, especially when it spans multiple pages.'},
+    {q:'Which of the following is NOT a characteristic of an algorithm?',opts:['It must have an end point','Each step must be clear','It must use a programming language','It may or may not require input'],ans:2,exp:'Algorithms are written in plain English — they do NOT need to use a programming language.'},
+    {q:'Pseudocode is:',opts:['An actual programming language','An informal English-like description of an algorithm','A type of flowchart','A type of variable'],ans:1,exp:'Pseudocode = informal English-like description of algorithm logic. No strict syntax. Not compilable.'},
+    {q:'In the algorithm: "If N>5 Print N=N+1 Else Print N=N-1", if N=20, the output is:',opts:['19','20','21','Cannot determine'],ans:2,exp:'N=20. Is 20>5? YES → Print N=N+1 = 20+1 = 21. So output is 21.'},
+    {q:'A flowchart has:',opts:['Multiple entry points','Only one entry point','No entry point','Two entry points'],ans:1,exp:'Flowchart rule: ONLY ONE entry point (the Start oval). It can have one or TWO exit points.'},
+    {q:'The keyword used in algorithms to show output/results is:',opts:['INPUT','READ','PRINT/DISPLAY','GET'],ans:2,exp:'PRINT or DISPLAY or WRITE = show output. INPUT or READ or GET = accept input.'},
+  ],
+  fills:[
+    {q:'A rectangle in a flowchart represents ________ operations.',ans:'Processing (calculations)',exp:'Rectangle = Process box. Used for any calculation or data manipulation: Area=L×B, Count=Count+1.'},
+    {q:'When you want to show a decision-making step, you use a ________ box.',ans:'Decision (Diamond)',exp:'Diamond has two exits: YES and NO. Used for conditions: "Is marks>40?", "Is N>0?", "Is A>B?"'},
+    {q:'________ is used to connect two geometrical boxes in a flowchart.',ans:'Connector (Circle)',exp:'Connector (circle) joins parts of a flowchart across pages or long sections.'},
+    {q:'A graphical representation of an algorithm is called a ________.',ans:'Flowchart',exp:'Flowchart = visual diagram of algorithm steps using standardised symbols connected by arrows.'},
+    {q:'A set of step-by-step instructions is called an ________.',ans:'Algorithm',exp:'Algorithm = detailed, clear, finite set of instructions to solve a specific problem.'},
+    {q:'________ are the names given by users to store some values in a program.',ans:'Variables',exp:'Variables store data that may change. In algorithms: "Let A = 10", "Sum = A+B" — A, B, Sum are variables.'},
+  ],
+  tfs:[
+    {q:'Direction of arrow shows the flow in a flowchart.',ans:true,exp:'TRUE — Arrows (flow lines) connect boxes and show the direction of program execution, top to bottom.'},
+    {q:'Algorithm is difficult to understand as compared to flowchart.',ans:false,exp:'FALSE — Algorithm (text steps) is actually harder to visualise than Flowchart (graphical). Flowchart is easier to understand.'},
+    {q:'All flowcharts start with a terminal symbol.',ans:true,exp:'TRUE — Every flowchart starts with the Terminal (Oval) box containing "Start". It also ends with "Stop" in a Terminal.'},
+    {q:'A flowchart can have multiple entry points.',ans:false,exp:'FALSE — Flowchart has ONLY ONE entry point (Start). It can have one or two exit points.'},
+    {q:'An algorithm may or may not require input.',ans:true,exp:'TRUE — Some algorithms need input from user (Read N). Others work with fixed/predefined data without any input.'},
+    {q:'Pseudocode has a syntax similar to programming languages.',ans:false,exp:'FALSE — Pseudocode is written in plain English with NO strict syntax. It cannot be compiled or run directly.'},
+  ],
+  ones:[
+    {q:'What shape is used for the Decision box in a flowchart?',ans:'Diamond (Rhombus)',exp:'The Diamond has 2 exits: YES (usually right or bottom) and NO (usually left or bottom).'},
+    {q:'Name the two keywords used to accept INPUT in an algorithm.',ans:'READ / INPUT (or GET)',exp:'READ, INPUT, GET — all accept values. PRINT, DISPLAY, WRITE — all show output.'},
+    {q:'What is Pseudocode?',ans:'An informal English description of an algorithm (no strict syntax)',exp:'Pseudocode bridges the gap between algorithm and actual code. Uses English-like commands.'},
+    {q:'What shape is used for Input/Output in a flowchart?',ans:'Parallelogram',exp:'Parallelogram = Input/Output. Easy to remember: it\'s slanted/tilted — like data flowing in/out.'},
+    {q:'A flowchart has only ONE ________ point but may have one or two ________ points.',ans:'Entry / Exit',exp:'Rule: 1 entry (Start), can have 1 or 2 exits (Stop boxes). Decision box creates 2 exit paths.'},
+    {q:'What is an Algorithm?',ans:'A detailed step-by-step instruction set for solving a problem',exp:'Algorithm characteristics: Input (optional), Output (required), Clear, Finite (has an end point).'},
+  ],
+  shorts:[
+    {q:'Explain all 5 symbols used in a flowchart with their shapes and purposes.',marks:3,
+     ans:['1. Terminal (Oval): Used for START and STOP only.',
+          '2. Input/Output (Parallelogram): For reading input from user or displaying/printing output.',
+          '3. Process (Rectangle): For calculations and processing steps (e.g. Area = L × B).',
+          '4. Decision (Diamond): For Yes/No or True/False conditions. Has 2 exit points.',
+          '5. Connector (Circle): Joins different parts of a long flowchart, especially across pages.']},
+    {q:'Write an algorithm to find whether a number is Positive or Negative.',marks:2,
+     ans:['Step 1: START',
+          'Step 2: Input a number N',
+          'Step 3: If N >= 0 then Print "Number is Positive"',
+          'Step 4: Else Print "Number is Negative"',
+          'Step 5: STOP',
+          'Note: For this flowchart — Start→Read N→Diamond(N>=0)→YES:Print Positive/NO:Print Negative→Stop']},
+    {q:'Write a pseudocode to calculate the area of a rectangle.',marks:2,
+     ans:['Program starts',
+          'Read Length (L)',
+          'Read Breadth (B)',
+          'Area = L × B',
+          'Print Area',
+          'Program ends',
+          '(Note: Pseudocode uses plain English. READ accepts input, PRINT shows output, = assigns value.)']},
+    {q:'What are the differences between an Algorithm and a Flowchart?',marks:2,
+     ans:['Algorithm: Step-by-step METHOD written in plain English. Hard to visualise.',
+          'Flowchart: GRAPHICAL representation of algorithm using symbols. Easy to understand.',
+          'Algorithm uses plain text. Flowchart uses geometric shapes (oval, rectangle, diamond etc.)',
+          'Algorithm does not follow visual rules. Flowchart has strict rules (one entry point, arrows etc.)']},
+  ],
+  longs:[
+    {q:'Draw (describe in detail) a flowchart to check if a student has Passed or Failed (Pass if Marks >= 40). Also write the Algorithm.',marks:4,
+     ans:['Algorithm:',
+          'Step 1: START',
+          'Step 2: Input Marks',
+          'Step 3: If Marks >= 40 then Print "PASS" else Print "FAIL"',
+          'Step 4: STOP',
+          'Flowchart description:',
+          '[START — Oval]',
+          '↓',
+          '[Input Marks — Parallelogram]',
+          '↓',
+          '[Is Marks >= 40? — Diamond] → YES → [Print PASS — Parallelogram] → [STOP — Oval]',
+          '                           ↓ NO',
+          '                   [Print FAIL — Parallelogram] → [STOP — Oval]',
+          'Rules followed: One entry (Start), flow top-to-bottom, arrows on all lines, two exits from Decision box.']},
+  ]
+},
+
+// ───────────────────────────────────────────────────
+// CHAPTER 14 — WHAT IS INTELLIGENCE?
+// ───────────────────────────────────────────────────
+{
+  id:'c14', num:14, title:'What is Intelligence?',
+  color:'--c14', light:'--c14l', dark:'--c14d',
+  icon:'🧠',
+  mcqs:[
+    {q:'Intelligence is defined as the ability to:',opts:['Only do maths','Understand, learn, and think','Only memorise facts','Only speak languages'],ans:1,exp:'Intelligence = the ability to understand, learn, adapt, and think. It helps us solve problems and make decisions.'},
+    {q:'Which type of intelligence involves skill with numbers and logical reasoning?',opts:['Linguistic','Visual-Spatial','Logical-Mathematical','Musical'],ans:2,exp:'Logical-Mathematical: ability with numbers, patterns, logical reasoning. Scientists, mathematicians have this.'},
+    {q:'A person who is good at learning languages and communicating is said to have:',opts:['Musical intelligence','Linguistic intelligence','Spatial intelligence','Interpersonal intelligence'],ans:1,exp:'Linguistic intelligence = skill with language, words, reading, writing, speaking. Authors and poets have this.'},
+    {q:'Which intelligence involves understanding and working well with other people?',opts:['Intrapersonal','Interpersonal','Naturalistic','Bodily-Kinesthetic'],ans:1,exp:'Interpersonal = understanding others, working in groups, empathy. Teachers, counsellors have this.'},
+    {q:'Bodily-Kinesthetic intelligence is associated with:',opts:['Understanding nature','Moving and using the body skillfully','Solving maths problems','Understanding music'],ans:1,exp:'Bodily-Kinesthetic = skill with the body — athletes, dancers, surgeons, sculptors have this intelligence.'},
+    {q:'A person with Intrapersonal intelligence is good at:',opts:['Understanding other people','Playing music','Understanding themselves — their own emotions and motivations','Learning languages'],ans:2,exp:'Intrapersonal = deep understanding of ONESELF — own emotions, strengths, motivations. Philosophers, psychologists.'},
+    {q:'Which intelligence involves appreciation and skill in music?',opts:['Linguistic','Logical-Mathematical','Musical-Rhythmic','Naturalistic'],ans:2,exp:'Musical-Rhythmic = sensitivity to sound, rhythm, melody. Singers, composers, musicians have this.'},
+    {q:'Visual-Spatial intelligence involves:',opts:['Understanding plants and animals','Good eye-hand coordination','Understanding space, shapes and visual patterns','Speaking and writing well'],ans:2,exp:'Visual-Spatial = skill with images, space, patterns. Architects, artists, pilots, photographers have this.'},
+    {q:'Naturalistic intelligence is the ability to:',opts:['Solve maths problems','Recognise and categorise natural objects like plants and animals','Understand music','Communicate effectively'],ans:1,exp:'Naturalistic = skill at recognising, classifying and understanding nature. Botanists, geologists, farmers have this.'},
+    {q:'According to the theory of Multiple Intelligences, there are ______ types.',opts:['5','7','8','10'],ans:2,exp:'Howard Gardner\'s theory of Multiple Intelligences identifies 8 types. Every person has all 8 in different amounts.'},
+  ],
+  fills:[
+    {q:'________ is one of the main characteristics that differentiates humans from other living creatures.',ans:'Intelligence',exp:'Intelligence helps humans solve complex problems, learn from experience, and adapt to new situations.'},
+    {q:'The ability to use language effectively is called ________ intelligence.',ans:'Linguistic',exp:'Linguistic intelligence includes reading, writing, storytelling, memorising words. Poets and novelists have high linguistic intelligence.'},
+    {q:'People with strong ________ intelligence are very good at understanding and interacting with other people.',ans:'Interpersonal',exp:'Interpersonal = understanding others. Teachers, counsellors, salespeople, politicians typically have this.'},
+    {q:'________ intelligence involves skill with the human body, movement and physical activities.',ans:'Bodily-Kinesthetic',exp:'Bodily-Kinesthetic = skill with body movement. Athletes, dancers, surgeons, sculptors, craftspeople.'},
+    {q:'The ability to understand nature and classify living things is called ________ intelligence.',ans:'Naturalistic',exp:'Naturalistic intelligence was added by Gardner later. Farmers, botanists, geologists, animal trainers have this.'},
+  ],
+  tfs:[
+    {q:'Every person has exactly the same amount of each type of intelligence.',ans:false,exp:'FALSE — Every person has ALL 8 intelligences but in different amounts. You might be high in some, lower in others.'},
+    {q:'People with Musical intelligence have strong interest in singing and rhythm.',ans:true,exp:'TRUE — Musical-Rhythmic intelligence includes sensitivity to sound, pitch, rhythm, melody, and musical patterns.'},
+    {q:'Intrapersonal intelligence means understanding other people well.',ans:false,exp:'FALSE — INTER-personal = understanding OTHERS. INTRA-personal = understanding YOURSELF (your own emotions/motivations).'},
+    {q:'Intelligence helps us solve problems and make decisions in daily life.',ans:true,exp:'TRUE — Intelligence enables problem-solving, learning, adaptation, and decision-making in all situations.'},
+    {q:'A person can only have one type of intelligence.',ans:false,exp:'FALSE — Every person has all 8 types of intelligence. Most people are stronger in some types than others.'},
+    {q:'Logical-Mathematical intelligence involves the ability to solve puzzles and understand patterns.',ans:true,exp:'TRUE — Logical-Mathematical includes number skills, logical reasoning, pattern recognition, and problem-solving.'},
+  ],
+  ones:[
+    {q:'Name any 4 of the 8 types of Multiple Intelligences.',ans:'Linguistic, Logical-Mathematical, Visual-Spatial, Musical-Rhythmic (any 4 of 8)',exp:'Full list: Linguistic, Logical-Mathematical, Musical-Rhythmic, Visual-Spatial, Bodily-Kinesthetic, Interpersonal, Intrapersonal, Naturalistic.'},
+    {q:'Which intelligence is associated with understanding nature and living organisms?',ans:'Naturalistic',exp:'Naturalistic intelligence: recognising, classifying, understanding plants, animals, rocks, weather patterns.'},
+    {q:'What is the difference between Interpersonal and Intrapersonal intelligence?',ans:'Inter = understanding others. Intra = understanding yourself.',exp:'INTERpersonal = between people (social skills). INTRApersonal = within oneself (self-awareness).'},
+    {q:'Name the type of intelligence that athletes and dancers typically have.',ans:'Bodily-Kinesthetic',exp:'Bodily-Kinesthetic = exceptional skill in controlling body movement, balance, coordination.'},
+    {q:'Who proposed the theory of Multiple Intelligences?',ans:'Howard Gardner',exp:'Howard Gardner, an American psychologist, proposed the theory of Multiple Intelligences in 1983.'},
+    {q:'Which intelligence involves skill with images, maps, and spatial reasoning?',ans:'Visual-Spatial',exp:'Visual-Spatial: architects, pilots, surgeons, artists, chess players typically have high visual-spatial intelligence.'},
+  ],
+  shorts:[
+    {q:'Name and explain any FOUR types of Multiple Intelligences with examples of people who have each.',marks:2,
+     ans:['Linguistic: Skill with language, words, writing. Example: Authors, poets, journalists.',
+          'Logical-Mathematical: Numbers, patterns, reasoning. Example: Scientists, engineers, accountants.',
+          'Musical-Rhythmic: Sensitivity to music and rhythm. Example: Singers, composers, musicians.',
+          'Bodily-Kinesthetic: Skill with body movement. Example: Athletes, dancers, surgeons, sculptors.']},
+    {q:'What is Intelligence? Why is it important in everyday life?',marks:2,
+     ans:['Intelligence is the ability to understand, learn, adapt to new situations, and think to solve problems.',
+          'It is one of the main characteristics that differentiates humans from other living creatures.',
+          'Importance in daily life:',
+          '1. Helps us solve problems (e.g. figuring out the best route to school).',
+          '2. Helps us learn from past experiences and improve.',
+          '3. Helps us make decisions (e.g. choosing the right answer in an exam).']},
+    {q:'Explain Interpersonal and Intrapersonal intelligence clearly. Give two examples of each.',marks:2,
+     ans:['Interpersonal intelligence: Understanding, communicating, and working well WITH OTHER PEOPLE.',
+          'Examples: A good teacher who explains clearly; a counsellor who understands students\'s problems.',
+          'Intrapersonal intelligence: Deep understanding of ONESELF — own emotions, strengths, weaknesses.',
+          'Examples: A person who knows when they are stressed and how to calm down; an author who writes personal reflections.']},
+  ],
+  longs:[
+    {q:'Write a detailed note on all 8 types of Multiple Intelligences. Include what each involves and one example profession for each.',marks:4,
+     ans:['1. Linguistic: Skill with language — reading, writing, speaking. Profession: Author, journalist.',
+          '2. Logical-Mathematical: Numbers, logic, patterns, problem-solving. Profession: Scientist, engineer.',
+          '3. Musical-Rhythmic: Sensitivity to music, pitch, rhythm, melody. Profession: Singer, composer.',
+          '4. Visual-Spatial: Skill with images, maps, space, patterns. Profession: Architect, artist, pilot.',
+          '5. Bodily-Kinesthetic: Skill with body movement and coordination. Profession: Athlete, dancer, surgeon.',
+          '6. Interpersonal: Understanding and working well with OTHERS. Profession: Teacher, counsellor.',
+          '7. Intrapersonal: Deep understanding of ONESELF. Profession: Psychologist, philosopher, writer.',
+          '8. Naturalistic: Recognising/classifying nature. Profession: Botanist, geologist, farmer.']},
+  ]
+}
+
+]; // end chapters array
+
+// ═══════════════════════════════════════════════════
+// BUILD ENGINE
+// ═══════════════════════════════════════════════════
+let total = 0;
+const done = new Set();
+let qCounter = 0;
+
+function colorVal(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+function buildAll(){
+  const tabsEl = document.getElementById('chtabs');
+  const pagesEl = document.getElementById('ch-pages');
+
+  chapters.forEach((ch, ci) => {
+    // TAB
+    const tab = document.createElement('button');
+    tab.className = 'ct' + (ci===0?' active':'');
+    tab.innerHTML = `${ch.icon} Ch ${ch.num}`;
+    tab.style.cssText = ci===0?`color:var(${ch.color});background:var(${ch.light});border-bottom-color:var(${ch.color})`:'';
+    tab.onclick = () => switchCh(ch.id, ci);
+    tabsEl.appendChild(tab);
+
+    // PAGE
+    const pg = document.createElement('div');
+    pg.className = 'ch-page' + (ci===0?' active':'');
+    pg.id = 'page-'+ch.id;
+
+    // Chapter hero
+    const totalMks = ch.mcqs.length + ch.fills.length + ch.tfs.length + ch.ones.length +
+      ch.shorts.reduce((a,q)=>a+q.marks,0) + ch.longs.reduce((a,q)=>a+q.marks,0);
+
+    pg.innerHTML = `
+      <div class="ch-hero" style="background:linear-gradient(135deg,var(${ch.dark}),var(${ch.color}))">
+        <h2>${ch.icon} Chapter ${ch.num}: ${ch.title}</h2>
+        <p>Exam-style practice • All question types • Lock and reveal • Marks on every question</p>
+        <span class="total-badge">Total: ~${totalMks} marks</span>
+      </div>`;
+
+    const sections = [
+      {label:'Q-1 Multiple Choice Questions (MCQ)', data:ch.mcqs, type:'mcq', mper:1, bg:'sb-blue'},
+      {label:'Q-2 Fill in the Blanks', data:ch.fills, type:'fill', mper:1, bg:'sb-amber'},
+      {label:'Q-3 True or False', data:ch.tfs, type:'tf', mper:1, bg:'sb-green'},
+      {label:'Q-4 Answer in One Word / One Line', data:ch.ones, type:'one', mper:1, bg:'sb-purple'},
+      {label:'Q-5 Short Answer Questions', data:ch.shorts, type:'short', mper:null, bg:'sb-teal'},
+      {label:'Q-6 Long Answer Questions (any 1)', data:ch.longs, type:'long', mper:null, bg:'sb-red'},
+    ];
+
+    sections.forEach(sec => {
+      if(!sec.data || sec.data.length===0) return;
+      const totalSec = sec.mper ? sec.data.length*sec.mper : sec.data.reduce((a,q)=>a+q.marks,0);
+      const banner = document.createElement('div');
+      banner.className = `sb ${sec.bg}`;
+      banner.innerHTML = `<span>${sec.label}</span><span class="mk-c">${sec.data.length} questions = ${totalSec} marks</span>`;
+      pg.appendChild(banner);
+
+      sec.data.forEach((q, qi) => {
+        qCounter++; total++;
+        const id = ch.id+'_'+sec.type+qi;
+        const marks = sec.mper || q.marks;
+        const card = buildCard(id, q, sec.type, marks, ch);
+        pg.appendChild(card);
+      });
+    });
+
+    pagesEl.appendChild(pg);
+  });
+
+  document.getElementById('tc').textContent = total;
+}
+
+function buildCard(id, q, type, marks, ch){
+  const card = document.createElement('div');
+  card.className = 'pq'; card.id = id;
+
+  const chipStyle = `background:var(${ch.light});color:var(${ch.color})`;
+  const numStyle = `background:var(${ch.color})`;
+
+  let inner = `<div class="pq-h">
+    <div class="qn" style="${numStyle}">Q${qCounter}</div>
+    <div class="qt">${q.q}</div>
+    <span class="mchip" style="${chipStyle}">${marks} mark${marks>1?'s':''}</span>
+    <div class="qmk" id="mk-${id}"></div>
+  </div>`;
+
+  if(type==='mcq'){
+    inner += `<div class="mopts" id="opts-${id}"></div>`;
+    inner += ansBox(id, [{text:`${q.exp}`, cls:'r'}], marks, ch);
+  } else if(type==='tf'){
+    inner += `<div class="tfr"><button class="tb" onclick="chkTF('${id}',true,${q.ans})">✔ True</button>
+      <button class="tb" onclick="chkTF('${id}',false,${q.ans})">✘ False</button></div>`;
+    inner += ansBox(id, [{text:q.exp, cls:'r'}], marks, ch);
+  } else {
+    const steps = Array.isArray(q.ans) ? q.ans.map((s,si)=>({text:s,cls:si===q.ans.length-1?'k':''})) : [{text:q.ans,cls:'k'},{text:q.exp,cls:'r'}];
+    inner += `<button class="rvb" id="rbtn-${id}" onclick="rev('${id}')">🔒 Try first! Click ONLY after you have tried...</button>`;
+    inner += ansBox(id, steps, marks, ch);
+  }
+
+  card.innerHTML = inner;
+
+  if(type==='mcq'){
+    setTimeout(()=>{
+      const od = card.querySelector('#opts-'+id);
+      if(!od) return;
+      q.opts.forEach((opt,oi)=>{
+        const b = document.createElement('button');
+        b.className='mb';
+        b.textContent = String.fromCharCode(97+oi)+') '+opt;
+        b.onclick = ()=>{
+          card.querySelectorAll('.mb').forEach(x=>x.onclick=null);
+          b.classList.add(oi===q.ans?'correct':'wrong');
+          if(oi!==q.ans) card.querySelectorAll('.mb')[q.ans].classList.add('correct');
+          card.querySelector('#ans-'+id).classList.add('show');
+          markDone(id, oi===q.ans?1:0, 1);
+        };
+        od.appendChild(b);
+      });
+    },0);
+  }
+
+  return card;
+}
+
+function ansBox(id, steps, marks, ch){
+  const dobStyle = `background:var(${ch.color})`;
+  const stepsHtml = steps.map(s=>`<div class="as ${s.cls}">${s.text}</div>`).join('');
+  return `<div class="ab" id="ans-${id}"><div class="al">✅ Answer / Explanation</div>${stepsHtml}
+    <button class="dob" style="${dobStyle}" onclick="markDone('${id}',${marks},${marks})">✓ Got it!</button>
+  </div>`;
+}
+
+function switchCh(id, ci){
+  document.querySelectorAll('.ch-page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.ct').forEach((t,i)=>{
+    const ch = chapters[i];
+    if(i===ci){
+      t.classList.add('active');
+      t.style.cssText=`color:var(${ch.color});background:var(${ch.light});border-bottom-color:var(${ch.color})`;
+    } else {
+      t.classList.remove('active');
+      t.style.cssText='';
+    }
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function chkTF(id,chosen,correct){
+  const btns = document.querySelectorAll(`#${id} .tb`);
+  btns.forEach(b=>b.onclick=null);
+  btns[chosen?0:1].classList.add(chosen===correct?'correct':'wrong');
+  if(chosen!==correct) btns[correct?0:1].classList.add('correct');
+  document.getElementById('ans-'+id).classList.add('show');
+  markDone(id, chosen===correct?1:0, 1);
+}
+
+function rev(id){
+  const box = document.getElementById('ans-'+id);
+  const btn = document.getElementById('rbtn-'+id);
+  if(!btn) return;
+  const open = box.classList.contains('show');
+  box.classList.toggle('show',!open);
+  btn.innerHTML = open ? '🔒 Try first! Click ONLY after you have tried...' : '🔓 Hide answer';
+}
+
+function markDone(id, got, max){
+  done.add(id);
+  document.getElementById(id).classList.add('done');
+  const mk = document.getElementById('mk-'+id);
+  if(mk) mk.textContent = got>0?'✅':'❌';
+  const n=done.size, t=total;
+  document.getElementById('dc').textContent=n;
+  document.getElementById('tc').textContent=t;
+  const pct=Math.round(n/t*100);
+  document.getElementById('pf').style.width=pct+'%';
+  const msgs=['Choose a chapter! 💪','Good start ⭐','Halfway there 🌟','Almost done 🔥','Computer master! 🏆'];
+  document.getElementById('sm').textContent=msgs[Math.min(4,Math.floor(pct/25))];
+}
+
+buildAll();
+</script>
+</body>
+</html>
