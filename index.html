@@ -54,10 +54,10 @@
                 <a href="timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
                 <a href="midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
 
-                <div class="user-profile" style="display:flex; align-items:center; gap:10px;">
-                    <img src="https://ui-avatars.com/api/?name=Pushti&background=8B5CF6&color=ffffff&rounded=true&bold=true&font-size=0.5" alt="Pushti's Avatar" class="avatar" style="width:35px; height:35px;">
+                <div class="user-profile" id="user-profile-btn" style="display:flex; align-items:center; gap:10px; cursor:pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1" onclick="openLoginModal()" title="Click to switch user">
+                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=Pushti&background=8B5CF6&color=ffffff&rounded=true&bold=true&font-size=0.5" alt="User Avatar" class="avatar" style="width:35px; height:35px;">
                     <div style="display:flex; flex-direction:column; align-items:flex-start;">
-                        <span class="user-name" style="font-weight:600;">Pushti</span>
+                        <span class="user-name" id="user-name-display" style="font-weight:600;">Pushti</span>
                         <div style="display:flex; align-items:center; gap:4px; font-size:0.7rem; color:var(--text-muted);">
                             <span>Student</span>
                             <label class="switch" style="position:relative; display:inline-block; width:28px; height:16px;">
@@ -76,7 +76,7 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <h1 class="hero-title">Welcome, <span class="gradient-text">Pushti!</span> 👋</h1>
+                <h1 class="hero-title">Welcome, <span class="gradient-text" id="hero-name">Pushti!</span> 👋</h1>
                 <p class="hero-subtitle">Your personal study companion for CBSE Class 7. Explore chapters, watch videos, and ace your exams! 🎯</p>
                 <div class="hero-stats">
                     <div class="stat-card">
@@ -233,5 +233,100 @@
 
 </script>
 
+
+    <!-- Login Modal -->
+    <div class="login-modal-overlay" id="login-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); backdrop-filter:blur(5px); align-items:center; justify-content:center; z-index:9999;">
+        <div class="login-modal-content" style="background:var(--surface); border:1px solid var(--border); padding:25px; border-radius:16px; width:90%; max-width:350px; box-shadow:0 10px 25px rgba(0,0,0,0.2);">
+            <h2 style="margin-top:0; margin-bottom:20px; color:var(--text-main); font-family:'Outfit', sans-serif;">Switch User</h2>
+            <div style="margin-bottom:15px;">
+                <label style="display:block; margin-bottom:5px; font-size:0.9rem; color:var(--text-muted);">Select Account:</label>
+                <select id="login-user-select" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-color); color:var(--text-main); font-family:inherit; outline:none;">
+                    <option value="pushti">Pushti</option>
+                    <option value="hirak">Hirak</option>
+                    <option value="parent">Parent</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div style="margin-bottom:20px;">
+                <label style="display:block; margin-bottom:5px; font-size:0.9rem; color:var(--text-muted);">Password:</label>
+                <input type="password" id="login-password" placeholder="Enter password" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-color); color:var(--text-main); font-family:inherit; outline:none;">
+                <div id="login-error" style="color:#ef4444; font-size:0.8rem; margin-top:5px; display:none;">Incorrect password</div>
+            </div>
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button onclick="closeLoginModal()" style="padding:8px 16px; border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--text-main); cursor:pointer;">Cancel</button>
+                <button onclick="attemptLogin()" style="padding:8px 16px; border-radius:8px; border:none; background:var(--primary-color); color:white; cursor:pointer; font-weight:bold;">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const AUTH_USERS = {
+            'pushti': { name: 'Pushti', pass: 'pushti123', role: 'student', bg: '8B5CF6' },
+            'hirak':  { name: 'Hirak', pass: 'hirak123', role: 'student', bg: '10B981' },
+            'parent': { name: 'Parent', pass: 'parent123', role: 'parent', bg: 'F59E0B' },
+            'admin':  { name: 'Admin', pass: 'admin123', role: 'admin', bg: 'EF4444' }
+        };
+
+        function openLoginModal() {
+            document.getElementById('login-password').value = '';
+            document.getElementById('login-error').style.display = 'none';
+            document.getElementById('login-user-select').value = localStorage.getItem('pushti-active-user') || 'pushti';
+            document.getElementById('login-modal').style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        function attemptLogin() {
+            const userKey = document.getElementById('login-user-select').value;
+            const pass = document.getElementById('login-password').value;
+            
+            if (AUTH_USERS[userKey].pass === pass) {
+                localStorage.setItem('pushti-active-user', userKey);
+                closeLoginModal();
+                applyActiveUser();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+
+        function applyActiveUser() {
+            const userKey = localStorage.getItem('pushti-active-user') || 'pushti';
+            const user = AUTH_USERS[userKey];
+            if (!user) return;
+
+            // Update Header Profile
+            const avatarImg = document.getElementById('user-avatar');
+            if(avatarImg) avatarImg.src = `https://ui-avatars.com/api/?name=${user.name}&background=${user.bg}&color=ffffff&rounded=true&bold=true&font-size=0.5`;
+            
+            const nameDisp = document.getElementById('user-name-display');
+            if(nameDisp) nameDisp.textContent = user.name;
+            
+            // Update Hero text
+            const heroName = document.getElementById('hero-name');
+            if(heroName) heroName.textContent = user.name + "!";
+            
+            // Update Footer text
+            const footerName = document.getElementById('footer-name');
+            if(footerName) footerName.textContent = user.name;
+
+            // Flip Student/Parent toggle
+            const roleCheckbox = document.getElementById('role-checkbox');
+            if (roleCheckbox) {
+                if (user.role === 'parent' || user.role === 'admin') {
+                    if (!roleCheckbox.checked) {
+                        roleCheckbox.click(); // Programmatically flip to parent mode
+                    }
+                } else {
+                    if (roleCheckbox.checked) {
+                        roleCheckbox.click(); // Flip back to student mode
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', applyActiveUser);
+    </script>
 </body>
 </html>

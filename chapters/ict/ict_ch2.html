@@ -320,6 +320,8 @@ let totalMax = 0;
 function renderFill(containerId, data, prefix){
   const c = document.getElementById(containerId);
   if(!c) return;
+  c.fillData = data;
+  c.dataset.prefix = prefix;
   c.innerHTML = '';
   let qNum = 1;
   data.forEach((item,i)=>{
@@ -333,7 +335,7 @@ function renderFill(containerId, data, prefix){
     const div = document.createElement('div');
     div.className='q';
     div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
-      <input type="text" id="${prefix}-ans-${i}" class="text-input" placeholder="type your answer">
+      <input type="text" id="${prefix}-${i}" class="text-input" placeholder="Type your answer">
       <div id="${prefix}-fb-${i}" class="feedback"></div>`;
     
     div.querySelector('input').addEventListener('blur', (e) => gradeSpecificQuestion('fill', prefix, i));
@@ -346,6 +348,8 @@ function renderFill(containerId, data, prefix){
 function renderMCQ(containerId, data, prefix){
   const c = document.getElementById(containerId);
   if(!c) return;
+  c.mcqData = data;
+  c.dataset.prefix = prefix;
   c.innerHTML = '';
   let qNum = 1;
   data.forEach((item,i)=>{
@@ -358,7 +362,7 @@ function renderMCQ(containerId, data, prefix){
     }
     const div = document.createElement('div');
     div.className='q';
-    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-q${i}" value="${j}"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}"> ${o.replace(/^\\([a-d]\\)\\s*/i, '')}</label>`).join('');
     div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
       <div class="options">${opts}</div>
       <div id="${prefix}-fb-${i}" class="feedback"></div>`;
@@ -375,6 +379,9 @@ function renderMCQ(containerId, data, prefix){
 function renderTF(containerId, data, prefix){
   const c = document.getElementById(containerId);
   if(!c) return;
+  c.tfData = data;
+  c.dataset.prefix = prefix;
+  c.tfSelections = {};
   c.innerHTML = '';
   let qNum = 1;
   data.forEach((item,i)=>{
@@ -387,7 +394,7 @@ function renderTF(containerId, data, prefix){
     }
     const div = document.createElement('div');
     div.className='q';
-    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.s}</div>
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.s || item.q}</div>
       <div class="tf-toggle">
         <button class="tf-btn" data-val="true" onclick="selectTF(this, '${prefix}', ${i})">True</button>
         <button class="tf-btn false-btn" data-val="false" onclick="selectTF(this, '${prefix}', ${i})">False</button>
@@ -396,6 +403,14 @@ function renderTF(containerId, data, prefix){
     c.appendChild(div);
     qNum++;
   });
+}
+
+function selectTF(button, prefix, i) {
+  const container = document.getElementById('tfbook-container');
+  container.tfSelections[i] = button.dataset.val === 'true';
+  button.parentElement.querySelectorAll('.tf-btn').forEach(btn => btn.classList.remove('selected'));
+  button.classList.add('selected');
+  gradeSpecificQuestion('tf', prefix, i);
 }
 
 
@@ -429,8 +444,9 @@ function gradeSpecificQuestion(type, prefix, i) {
       const container = document.getElementById('fillbook-container');
       item = container.fillData[i];
       val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
-      correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
-      answerText = 'Correct Answer: ' + item.a[0];
+      const answers = item.a || [item.model];
+      correct = answers.some(ans => val === String(ans).toLowerCase() || val.includes(String(ans).toLowerCase()) || String(ans).toLowerCase().includes(val));
+      answerText = 'Correct Answer: ' + answers[0];
       expText = item.exp;
       if(val === '') { fb.style.display = 'none'; return; }
    } else if(type === 'mcq') {
@@ -439,26 +455,27 @@ function gradeSpecificQuestion(type, prefix, i) {
       const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
       if(!sel) return;
       val = parseInt(sel.value);
-      correct = (val === item.answer);
-      answerText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+      const answerIndex = typeof item.answer === 'number' ? item.answer : item.options.findIndex(option => option === item.answer);
+      correct = (val === answerIndex);
+      answerText = 'Correct Answer: ' + String.fromCharCode(97+answerIndex) + ') ' + item.options[answerIndex];
       expText = item.exp;
    } else if(type === 'tf') {
       const container = document.getElementById('tfbook-container');
       item = container.tfData[i];
-      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
-      if(!sel) return;
-      val = (sel.value === 'true');
-      correct = (val === item.answer);
-      answerText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+      if(!(i in container.tfSelections)) return;
+      val = container.tfSelections[i];
+      const answer = item.answer ?? item.model;
+      correct = (val === answer);
+      answerText = 'Correct Answer: ' + (answer ? 'True' : 'False');
       expText = item.exp;
    }
    
    if(correct) {
       fb.className = 'feedback correct'; 
-      fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${expText}</span>`;
+      fb.innerHTML = `<strong>Correct!</strong>${expText ? ` <span class="exp">${expText}</span>` : ''}`;
    } else {
       fb.className = 'feedback incorrect'; 
-      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText} <span class="exp">${expText}</span>`;
+      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText}${expText ? ` <span class="exp">${expText}</span>` : ''}`;
    }
    fb.style.display = 'block';
 }
@@ -527,6 +544,9 @@ function resetAllAnswers() {
    document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
    document.querySelectorAll('#omr-content input[type="text"]').forEach(r => r.value = '');
    document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+   document.querySelectorAll('#tfbook-container .tf-btn').forEach(btn => btn.classList.remove('selected'));
+   const tfContainer = document.getElementById('tfbook-container');
+   if (tfContainer) tfContainer.tfSelections = {};
    document.getElementById('resultPanel').classList.remove('show');
 }
 
@@ -539,23 +559,24 @@ function gradeAll() {
   
   const gradeItem = (type, val, item, fb, rightAnsText) => {
       let correct = false;
+      const explanation = item.exp ? ` <span class="exp">${item.exp}</span>` : '';
       if(val === null || val === '') {
           totalUnanswered++; 
           fb.className='feedback incorrect'; 
-          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText}${explanation}`;
       } else {
-          if(type==='fill') correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
-          if(type==='mcq') correct = (val === item.answer);
-          if(type==='tf') correct = (val === item.answer);
+          if(type==='fill') { const answers = item.a || [item.model]; correct = answers.some(ans => val === String(ans).toLowerCase() || val.includes(String(ans).toLowerCase()) || String(ans).toLowerCase().includes(val)); }
+          if(type==='mcq') { const answerIndex = typeof item.answer === 'number' ? item.answer : item.options.findIndex(option => option === item.answer); correct = (val === answerIndex); }
+          if(type==='tf') correct = (val === (item.answer ?? item.model));
           
           if(correct) {
               totalCorrect++; 
               fb.className='feedback correct'; 
-              fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${item.exp}</span>`;
+              fb.innerHTML = `<strong>Correct!</strong>${explanation}`;
           } else {
               totalIncorrect++; 
               fb.className='feedback incorrect'; 
-              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText}${explanation}`;
           }
       }
       fb.style.display='block';
@@ -565,23 +586,24 @@ function gradeAll() {
   fillContainer.fillData.forEach((item, i) => {
      const val = document.getElementById(`${fillContainer.dataset.prefix}-${i}`).value.trim().toLowerCase();
      const fb = document.getElementById(`${fillContainer.dataset.prefix}-fb-${i}`);
-     gradeItem('fill', val, item, fb, 'Correct Answer: ' + item.a[0]);
+     gradeItem('fill', val, item, fb, 'Correct Answer: ' + (item.a || [item.model])[0]);
   });
   
   const mcqContainer = document.getElementById('mcqbook-container');
   mcqContainer.mcqData.forEach((item, i) => {
      const sel = document.querySelector(`input[name="${mcqContainer.dataset.prefix}-${i}"]:checked`);
      const fb = document.getElementById(`${mcqContainer.dataset.prefix}-fb-${i}`);
-     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+     const answerIndex = typeof item.answer === 'number' ? item.answer : item.options.findIndex(option => option === item.answer);
+     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+answerIndex) + ') ' + item.options[answerIndex];
      gradeItem('mcq', sel ? parseInt(sel.value) : null, item, fb, rightAnsText);
   });
   
   const tfContainer = document.getElementById('tfbook-container');
   tfContainer.tfData.forEach((item, i) => {
-     const sel = document.querySelector(`input[name="${tfContainer.dataset.prefix}-${i}"]:checked`);
      const fb = document.getElementById(`${tfContainer.dataset.prefix}-fb-${i}`);
-     const rightAnsText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
-     gradeItem('tf', sel ? (sel.value === 'true') : null, item, fb, rightAnsText);
+     const answer = item.answer ?? item.model;
+     const rightAnsText = 'Correct Answer: ' + (answer ? 'True' : 'False');
+     gradeItem('tf', i in tfContainer.tfSelections ? tfContainer.tfSelections[i] : null, item, fb, rightAnsText);
   });
   
   document.getElementById('scoreBig').textContent = totalCorrect + ' / ' + totalMax;
@@ -611,56 +633,35 @@ window.onload = function() {
 
 const mcqBook = [
   {
-    "q": "Match the following.",
-    "options": [
-      "a) Plot area -&gt; 1. A box containing a unique pattern or colour to identify each data series on a chart",
-      "b) Data Marker -&gt; 2. An entire area containing the chart and all its elements",
-      "c) Axis -&gt; 3. It is any symbol such as a bar, an area, a dot, or a slice used to represent a value in a chart",
-      "d) Gridlines -&gt; 4. The horizontal and vertical lines that surround the plot area used as reference points for measuring the data values being plotted on the chart",
-      "e) Legend -&gt; 5. An area containing the chart, axes and gridlines",
-      "f) Chart Area -&gt; 6. The horizontal or vertical lines in the plot area used to identify the value of each data point on the chart"
-    ],
-    "answer": "a -&gt; 5, b -&gt; 3, c -&gt; 4, d -&gt; 6, e -&gt; 1, f -&gt; 2"
+    "q": "What is a graphical representation of data in a worksheet called?",
+    "options": ["(a) Chart", "(b) Filter", "(c) Formula", "(d) Table"],
+    "answer": "(a) Chart"
   },
   {
     "q": "A ________ can be defined as a graphical representation of data in a worksheet.",
     "options": [
-      "(i) Picture",
-      "(ii) Clipart",
-      "(iii) Chart",
-      "(iv) Theme"
+      "(a) Picture", "(b) Clipart", "(c) Chart", "(d) Theme"
     ],
-    "answer": "(iii) Chart"
+    "answer": "(c) Chart"
   },
   {
     "q": "It refers to the set of data values that are plotted in a chart.",
     "options": [
-      "(i) Data set",
-      "(ii) Data series",
-      "(iii) Data marker",
-      "(iv) Data label"
+      "(a) Data set", "(b) Data series", "(c) Data marker", "(d) Data label"
     ],
-    "answer": "(ii) Data series"
+    "answer": "(b) Data series"
   },
   {
     "q": "A ________ chart is used to show the changes in values over a period of time.",
     "options": [
-      "(i) Bar",
-      "(ii) Column",
-      "(iii) Line",
-      "(iv) Pie"
+      "(a) Bar", "(b) Column", "(c) Line", "(d) Pie"
     ],
-    "answer": "(iii) Line"
+    "answer": "(c) Line"
   },
   {
-    "q": "Which of the following chart types allow you to display data across a 3D landscape?",
-    "options": [
-      "(i) Column chart",
-      "(ii) Surface chart",
-      "(iii) Pie chart",
-      "(iv) None"
-    ],
-    "answer": "(ii) Surface chart"
+    "q": "Which chart is best suited to show proportions of a whole?",
+    "options": ["(a) Pie", "(b) Line", "(c) Bar", "(d) Radar"],
+    "answer": "(a) Pie"
   },
   {
     "q": "Which feature in Excel allows you to display only the rows that meet certain criteria?",
@@ -691,10 +692,52 @@ const mcqBook = [
       "(d) Sorting Axis"
     ],
     "answer": "(d) Sorting Axis"
+  },
+  {
+    "q": "Which chart uses vertical bars to compare values across categories?",
+    "options": ["(a) Column", "(b) Bar", "(c) Pie", "(d) Radar"],
+    "answer": "(a) Column"
+  },
+  {
+    "q": "Which chart can show more than one data series as concentric rings?",
+    "options": ["(a) Pie", "(b) Doughnut", "(c) Line", "(d) Bar"],
+    "answer": "(b) Doughnut"
+  },
+  {
+    "q": "Which chart element identifies the colours or patterns used for each data series?",
+    "options": ["(a) Gridlines", "(b) Legend", "(c) Plot Area", "(d) Axis Title"],
+    "answer": "(b) Legend"
+  },
+  {
+    "q": "Which tab is used to change chart layouts and styles?",
+    "options": ["(a) Home", "(b) Design", "(c) Data", "(d) Review"],
+    "answer": "(b) Design"
+  },
+  {
+    "q": "Which command is used to add a secondary sorting rule?",
+    "options": ["(a) Add Level", "(b) New Chart", "(c) Filter", "(d) Move Chart"],
+    "answer": "(a) Add Level"
+  },
+  {
+    "q": "After applying a filter, what happens to rows that do not meet the chosen criteria?",
+    "options": ["(a) They are deleted", "(b) They are hidden", "(c) They are sorted", "(d) They are copied"],
+    "answer": "(b) They are hidden"
   }
 ];
-const fillBook = [];
-const tfBook = [];
+const fillBook = [
+  { "q": "The horizontal axis of a chart is also called the ____________ axis.", "model": "category" },
+  { "q": "A chart showing data as points connected by lines is a ____________ chart.", "model": "line" },
+  { "q": "The set of values plotted in a chart is called a data ____________.", "model": "series" },
+  { "q": "The ____________ tab can change the fill, outline and effects of a chart element.", "model": "Format" },
+  { "q": "Filtering changes the ____________ of rows rather than deleting them.", "model": "visibility" }
+];
+const tfBook = [
+  { "q": "A pie chart can display only one data series.", "model": true },
+  { "q": "The Y-axis is the horizontal axis of a chart.", "model": false },
+  { "q": "Gridlines help a reader estimate chart values.", "model": true },
+  { "q": "Sorting hides rows that do not meet a criterion.", "model": false },
+  { "q": "A chart can be moved to a new sheet or kept as an object in an existing sheet.", "model": true }
+];
 const shortBook = [
   {
     "isHeader": true,
@@ -707,9 +750,29 @@ const shortBook = [
   {
     "q": "What is the purpose of the Plot Area in a chart?",
     "model": "The Plot Area is the specific region within the chart where the actual data series and gridlines are drawn."
+  },
+  {
+    "q": "Differentiate between a column chart and a bar chart.",
+    "model": "A column chart uses vertical bars, while a bar chart uses horizontal rectangular bars. Both are useful for comparing values across categories."
+  },
+  {
+    "q": "What is the difference between a data marker and a data label?",
+    "model": "A data marker is the bar, dot, slice or other symbol that represents a data value. A data label gives extra information about that marker, such as its value or name."
+  },
+  {
+    "q": "How do you insert a chart in Excel?",
+    "model": "Select the cells containing the data, go to the Insert tab, choose a chart type from the Charts group, and then select a chart subtype."
+  },
+  {
+    "q": "Differentiate between sorting and filtering.",
+    "model": "Sorting rearranges all rows into an order such as A-Z or smallest to largest. Filtering hides rows that do not match chosen criteria while leaving the data unchanged."
   }
 ];
-const longBook = [];
+const longBook = [
+  { "q": "Explain the main components of an Excel chart.", "model": "The Chart Area contains the whole chart and all of its objects. The Plot Area holds the plotted data, axes and gridlines. A Data Series is the set of plotted values; data markers represent individual values. The X-axis is the category axis and the Y-axis is the value axis. Other components include the chart title, axis titles, legend, gridlines and data labels." },
+  { "q": "Describe the common chart types and their uses.", "model": "Column charts use vertical bars and bar charts use horizontal bars for comparisons. Line charts show trends over time. Pie charts show the proportion of a whole and can display one data series. Doughnut charts can show more than one data series as concentric rings, while radar charts compare aggregate values of multiple data series." },
+  { "q": "Explain how to sort, filter and move a chart in Excel.", "model": "To sort, select a cell in the required column and use A-Z or Z-A in Data > Sort & Filter; use the Sort dialog and Add Level for custom sorting. To filter, use Data > Filter, then choose values from a column arrow; nonmatching rows are hidden. To move a chart, select it, use Chart Tools > Design > Move Chart, then choose New Sheet or Object In." }
+];
 const extraBook = [
   {
     "q": "Did you know? Excel's massive grid",
@@ -724,6 +787,8 @@ const extraBook = [
     "model": "Excel stores dates as sequential serial numbers so they can be used in calculations. By default, January 1, 1900 is serial number 1!"
   }
 ];
+
+totalMax = mcqBook.length + fillBook.length + tfBook.length;
 
     if(mcqBook && mcqBook.length) { renderMCQ('mcqbook-container', mcqBook, 'mcq'); document.getElementById('mcq-count').textContent = `(${mcqBook.filter(i=>!i.isHeader).length})`; }
     if(fillBook && fillBook.length) { renderFill('fillbook-container', fillBook, 'fill'); document.getElementById('fill-count').textContent = `(${fillBook.filter(i=>!i.isHeader).length})`; }

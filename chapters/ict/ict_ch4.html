@@ -320,6 +320,8 @@ let totalMax = 0;
 function renderFill(containerId, data, prefix){
   const c = document.getElementById(containerId);
   if(!c) return;
+  c.fillData = data;
+  c.dataset.prefix = prefix;
   c.innerHTML = '';
   let qNum = 1;
   data.forEach((item,i)=>{
@@ -333,7 +335,7 @@ function renderFill(containerId, data, prefix){
     const div = document.createElement('div');
     div.className='q';
     div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
-      <input type="text" id="${prefix}-ans-${i}" class="text-input" placeholder="type your answer">
+      <input type="text" id="${prefix}-${i}" class="text-input" placeholder="Type your answer">
       <div id="${prefix}-fb-${i}" class="feedback"></div>`;
     
     div.querySelector('input').addEventListener('blur', (e) => gradeSpecificQuestion('fill', prefix, i));
@@ -346,6 +348,8 @@ function renderFill(containerId, data, prefix){
 function renderMCQ(containerId, data, prefix){
   const c = document.getElementById(containerId);
   if(!c) return;
+  c.mcqData = data;
+  c.dataset.prefix = prefix;
   c.innerHTML = '';
   let qNum = 1;
   data.forEach((item,i)=>{
@@ -358,7 +362,7 @@ function renderMCQ(containerId, data, prefix){
     }
     const div = document.createElement('div');
     div.className='q';
-    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-q${i}" value="${j}"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}"> ${o.replace(/^\\([a-d]\\)\\s*/i, '')}</label>`).join('');
     div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
       <div class="options">${opts}</div>
       <div id="${prefix}-fb-${i}" class="feedback"></div>`;
@@ -375,6 +379,9 @@ function renderMCQ(containerId, data, prefix){
 function renderTF(containerId, data, prefix){
   const c = document.getElementById(containerId);
   if(!c) return;
+  c.tfData = data;
+  c.dataset.prefix = prefix;
+  c.tfSelections = {};
   c.innerHTML = '';
   let qNum = 1;
   data.forEach((item,i)=>{
@@ -387,7 +394,7 @@ function renderTF(containerId, data, prefix){
     }
     const div = document.createElement('div');
     div.className='q';
-    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.s}</div>
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.s || item.q}</div>
       <div class="tf-toggle">
         <button class="tf-btn" data-val="true" onclick="selectTF(this, '${prefix}', ${i})">True</button>
         <button class="tf-btn false-btn" data-val="false" onclick="selectTF(this, '${prefix}', ${i})">False</button>
@@ -396,6 +403,14 @@ function renderTF(containerId, data, prefix){
     c.appendChild(div);
     qNum++;
   });
+}
+
+function selectTF(button, prefix, i) {
+  const container = document.getElementById('tfbook-container');
+  container.tfSelections[i] = button.dataset.val === 'true';
+  button.parentElement.querySelectorAll('.tf-btn').forEach(btn => btn.classList.remove('selected'));
+  button.classList.add('selected');
+  gradeSpecificQuestion('tf', prefix, i);
 }
 
 
@@ -429,8 +444,9 @@ function gradeSpecificQuestion(type, prefix, i) {
       const container = document.getElementById('fillbook-container');
       item = container.fillData[i];
       val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
-      correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
-      answerText = 'Correct Answer: ' + item.a[0];
+      const answers = item.a || [item.model];
+      correct = answers.some(ans => val === String(ans).toLowerCase() || val.includes(String(ans).toLowerCase()) || String(ans).toLowerCase().includes(val));
+      answerText = 'Correct Answer: ' + answers[0];
       expText = item.exp;
       if(val === '') { fb.style.display = 'none'; return; }
    } else if(type === 'mcq') {
@@ -439,26 +455,27 @@ function gradeSpecificQuestion(type, prefix, i) {
       const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
       if(!sel) return;
       val = parseInt(sel.value);
-      correct = (val === item.answer);
-      answerText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+      const answerIndex = typeof item.answer === 'number' ? item.answer : item.options.findIndex(option => option === item.answer);
+      correct = (val === answerIndex);
+      answerText = 'Correct Answer: ' + String.fromCharCode(97+answerIndex) + ') ' + item.options[answerIndex];
       expText = item.exp;
    } else if(type === 'tf') {
       const container = document.getElementById('tfbook-container');
       item = container.tfData[i];
-      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
-      if(!sel) return;
-      val = (sel.value === 'true');
-      correct = (val === item.answer);
-      answerText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+      if(!(i in container.tfSelections)) return;
+      val = container.tfSelections[i];
+      const answer = item.answer ?? item.model;
+      correct = (val === answer);
+      answerText = 'Correct Answer: ' + (answer ? 'True' : 'False');
       expText = item.exp;
    }
    
    if(correct) {
       fb.className = 'feedback correct'; 
-      fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${expText}</span>`;
+      fb.innerHTML = `<strong>Correct!</strong>${expText ? ` <span class="exp">${expText}</span>` : ''}`;
    } else {
       fb.className = 'feedback incorrect'; 
-      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText} <span class="exp">${expText}</span>`;
+      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText}${expText ? ` <span class="exp">${expText}</span>` : ''}`;
    }
    fb.style.display = 'block';
 }
@@ -527,6 +544,9 @@ function resetAllAnswers() {
    document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
    document.querySelectorAll('#omr-content input[type="text"]').forEach(r => r.value = '');
    document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+   document.querySelectorAll('#tfbook-container .tf-btn').forEach(btn => btn.classList.remove('selected'));
+   const tfContainer = document.getElementById('tfbook-container');
+   if (tfContainer) tfContainer.tfSelections = {};
    document.getElementById('resultPanel').classList.remove('show');
 }
 
@@ -539,23 +559,24 @@ function gradeAll() {
   
   const gradeItem = (type, val, item, fb, rightAnsText) => {
       let correct = false;
+      const explanation = item.exp ? ` <span class="exp">${item.exp}</span>` : '';
       if(val === null || val === '') {
           totalUnanswered++; 
           fb.className='feedback incorrect'; 
-          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText}${explanation}`;
       } else {
-          if(type==='fill') correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
-          if(type==='mcq') correct = (val === item.answer);
-          if(type==='tf') correct = (val === item.answer);
+          if(type==='fill') { const answers = item.a || [item.model]; correct = answers.some(ans => val === String(ans).toLowerCase() || val.includes(String(ans).toLowerCase()) || String(ans).toLowerCase().includes(val)); }
+          if(type==='mcq') { const answerIndex = typeof item.answer === 'number' ? item.answer : item.options.findIndex(option => option === item.answer); correct = (val === answerIndex); }
+          if(type==='tf') correct = (val === (item.answer ?? item.model));
           
           if(correct) {
               totalCorrect++; 
               fb.className='feedback correct'; 
-              fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${item.exp}</span>`;
+              fb.innerHTML = `<strong>Correct!</strong>${explanation}`;
           } else {
               totalIncorrect++; 
               fb.className='feedback incorrect'; 
-              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText}${explanation}`;
           }
       }
       fb.style.display='block';
@@ -565,23 +586,24 @@ function gradeAll() {
   fillContainer.fillData.forEach((item, i) => {
      const val = document.getElementById(`${fillContainer.dataset.prefix}-${i}`).value.trim().toLowerCase();
      const fb = document.getElementById(`${fillContainer.dataset.prefix}-fb-${i}`);
-     gradeItem('fill', val, item, fb, 'Correct Answer: ' + item.a[0]);
+     gradeItem('fill', val, item, fb, 'Correct Answer: ' + (item.a || [item.model])[0]);
   });
   
   const mcqContainer = document.getElementById('mcqbook-container');
   mcqContainer.mcqData.forEach((item, i) => {
      const sel = document.querySelector(`input[name="${mcqContainer.dataset.prefix}-${i}"]:checked`);
      const fb = document.getElementById(`${mcqContainer.dataset.prefix}-fb-${i}`);
-     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+     const answerIndex = typeof item.answer === 'number' ? item.answer : item.options.findIndex(option => option === item.answer);
+     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+answerIndex) + ') ' + item.options[answerIndex];
      gradeItem('mcq', sel ? parseInt(sel.value) : null, item, fb, rightAnsText);
   });
   
   const tfContainer = document.getElementById('tfbook-container');
   tfContainer.tfData.forEach((item, i) => {
-     const sel = document.querySelector(`input[name="${tfContainer.dataset.prefix}-${i}"]:checked`);
      const fb = document.getElementById(`${tfContainer.dataset.prefix}-fb-${i}`);
-     const rightAnsText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
-     gradeItem('tf', sel ? (sel.value === 'true') : null, item, fb, rightAnsText);
+     const answer = item.answer ?? item.model;
+     const rightAnsText = 'Correct Answer: ' + (answer ? 'True' : 'False');
+     gradeItem('tf', i in tfContainer.tfSelections ? tfContainer.tfSelections[i] : null, item, fb, rightAnsText);
   });
   
   document.getElementById('scoreBig').textContent = totalCorrect + ' / ' + totalMax;
@@ -611,88 +633,80 @@ window.onload = function() {
 
 const mcqBook = [
   {
-    "q": "The rearrangement of data in ascending (A-Z) or descending (Z-A) orders is called ____________.",
-    "options": [
-      "(a) Filtering",
-      "(b) Clear Rules",
-      "(c) Sorting",
-      "(d) Custom Filter"
-    ],
-    "answer": "(c) Sorting"
-  },
-  {
-    "q": "To quickly sort a list based on one column, on the Home tab, in the Editing group, click on ____________.",
-    "options": [
-      "(a) Filter",
-      "(b) Sort and Filter",
-      "(c) Sort",
-      "(d) Review"
-    ],
-    "answer": "(b) Sort and Filter"
-  },
-  {
-    "q": "Which chart displays data in the form of a circle?",
-    "options": [
-      "(a) Line",
-      "(b) Pie",
-      "(c) Bar",
-      "(d) None of these"
-    ],
-    "answer": "(b) Pie"
-  },
-  {
-    "q": "Which feature allows us to arrange the given data according to a particular field either in an ascending order or descending order?",
-    "options": [
-      "(a) Data form",
-      "(b) Sort",
-      "(c) Filter",
-      "(d) None of these"
-    ],
-    "answer": "(b) Sort"
-  },
-  {
-    "q": "Which function key is used to insert a chart in a worksheet?",
-    "options": [
-      "(a) F6",
-      "(b) F8",
-      "(c) F11",
-      "(d) F2"
-    ],
-    "answer": "(c) F11"
-  },
-  {
     "q": "What does CSS stand for?",
-    "options": [
-      "(a) Creative Style Sheets",
-      "(b) Cascading Style Sheets",
-      "(c) Computer Style Sheets",
-      "(d) Colorful Style Sheets"
-    ],
+    "options": ["(a) Creative Style Sheets", "(b) Cascading Style Sheets", "(c) Computer Style Sheets", "(d) Colour Style Sheets"],
     "answer": "(b) Cascading Style Sheets"
   },
   {
+    "q": "Which body attribute sets the background colour of a web page?",
+    "options": ["(a) TEXT", "(b) BGCOLOR", "(c) BACKGROUND", "(d) LINK"],
+    "answer": "(b) BGCOLOR"
+  },
+  {
+    "q": "Which tag is used to insert a new line without starting a new paragraph?",
+    "options": ["(a) &lt;p&gt;", "(b) &lt;br&gt;", "(c) &lt;font&gt;", "(d) &lt;hr&gt;"],
+    "answer": "(b) &lt;br&gt;"
+  },
+  {
+    "q": "Which tag displays text slightly below the normal line?",
+    "options": ["(a) &lt;sup&gt;", "(b) &lt;sub&gt;", "(c) &lt;font&gt;", "(d) &lt;p&gt;"],
+    "answer": "(b) &lt;sub&gt;"
+  },
+  {
+    "q": "Which attribute of the &lt;font&gt; tag changes the font type?",
+    "options": ["(a) SIZE", "(b) COLOR", "(c) FACE", "(d) ALIGN"],
+    "answer": "(c) FACE"
+  },
+  {
+    "q": "Which is the standard syntax for an HTML comment?",
+    "options": ["(a) // comment", "(b) /* comment */", "(c) &lt;!-- comment --&gt;", "(d) # comment"],
+    "answer": "(c) &lt;!-- comment --&gt;"
+  },
+  {
     "q": "Which HTML tag is used to define an internal style sheet?",
-    "options": [
-      "(a) &lt;css&gt;",
-      "(b) &lt;script&gt;",
-      "(c) &lt;style&gt;",
-      "(d) &lt;link&gt;"
-    ],
+    "options": ["(a) &lt;css&gt;", "(b) &lt;script&gt;", "(c) &lt;style&gt;", "(d) &lt;link&gt;"],
     "answer": "(c) &lt;style&gt;"
   },
   {
     "q": "Which property is used to change the background color of an element in CSS?",
-    "options": [
-      "(a) bgcolor",
-      "(b) color",
-      "(c) background-color",
-      "(d) back-color"
-    ],
+    "options": ["(a) bgcolor", "(b) color", "(c) background-color", "(d) back-color"],
     "answer": "(c) background-color"
+  },
+  {
+    "q": "Which type of CSS is written inside the style attribute of an HTML tag?",
+    "options": ["(a) Inline CSS", "(b) Internal CSS", "(c) External CSS", "(d) Linked CSS"],
+    "answer": "(a) Inline CSS"
+  },
+  {
+    "q": "Which type of CSS is stored in a separate file with a .css extension?",
+    "options": ["(a) Inline CSS", "(b) Internal CSS", "(c) External CSS", "(d) Font CSS"],
+    "answer": "(c) External CSS"
+  },
+  {
+    "q": "Which CSS property changes the typeface of text?",
+    "options": ["(a) font-size", "(b) font-family", "(c) font-weight", "(d) font-style"],
+    "answer": "(b) font-family"
+  },
+  {
+    "q": "In a CSS rule, what separates a property from its value?",
+    "options": ["(a) Semicolon", "(b) Colon", "(c) Comma", "(d) Full stop"],
+    "answer": "(b) Colon"
   }
 ];
-const fillBook = [];
-const tfBook = [];
+const fillBook = [
+  { "q": "CSS stands for ____________.", "model": "Cascading Style Sheets" },
+  { "q": "The ____________ tag is used to insert a line break.", "model": "br" },
+  { "q": "The ____________ attribute sets the colour of unvisited links.", "model": "LINK" },
+  { "q": "An internal style sheet is placed inside the ____________ tag.", "model": "style" },
+  { "q": "The CSS property used to make text bold or lighter is ____________.", "model": "font-weight" }
+];
+const tfBook = [
+  { "q": "The &lt;br&gt; tag has no end tag.", "model": true },
+  { "q": "The &lt;sup&gt; tag displays text below the normal line.", "model": false },
+  { "q": "An external style sheet can be linked to more than one HTML page.", "model": true },
+  { "q": "The default colour of an active link is red.", "model": true },
+  { "q": "Inline CSS has lower priority than external CSS.", "model": false }
+];
 const shortBook = [
   {
     "isHeader": true,
@@ -701,12 +715,40 @@ const shortBook = [
   {
     "q": "What is an HTML attribute?",
     "model": "An attribute provides additional information about an HTML element and is always specified in the start tag."
+  },
+  {
+    "q": "Differentiate between the &lt;br&gt; tag and the &lt;p&gt; tag.",
+    "model": "The &lt;br&gt; tag inserts a single line break and has no end tag. The &lt;p&gt; tag creates a paragraph and normally leaves space before and after it."
+  },
+  {
+    "q": "What are the uses of the BGCOLOR, TEXT and BACKGROUND attributes of the &lt;body&gt; tag?",
+    "model": "BGCOLOR sets the page background colour, TEXT sets the default text colour, and BACKGROUND places an image in the page background."
+  },
+  {
+    "q": "What is a CSS selector and declaration block?",
+    "model": "The selector names the HTML element to be styled. The declaration block is enclosed in curly braces and contains one or more property-value declarations separated by semicolons."
+  },
+  {
+    "q": "Explain inline and internal CSS.",
+    "model": "Inline CSS is written in the style attribute of one HTML element. Internal CSS is written inside a &lt;style&gt; tag in the &lt;head&gt; section and can style all matching elements on that page."
+  },
+  {
+    "q": "What do font-size, font-family and font-style do in CSS?",
+    "model": "font-size changes the size of text, font-family chooses the typeface, and font-style can make text normal, italic or oblique."
   }
 ];
 const longBook = [
   {
-    "q": "Explain the difference between the &lt;br&gt; tag and the &lt;p&gt; tag.",
-    "model": "The &lt;br&gt; tag inserts a single line break without starting a new paragraph, whereas the &lt;p&gt; tag defines a new paragraph and adds vertical space before and after the text."
+    "q": "Explain the three types of CSS and compare their uses.",
+    "model": "Inline CSS is written in the style attribute of a single element, so it is useful for one special case but must be repeated. Internal CSS is written in a &lt;style&gt; tag and is useful for one webpage. External CSS is stored in a separate .css file and can be linked to many webpages, giving a consistent design and making global changes easy."
+  },
+  {
+    "q": "Explain the important HTML formatting tags and their attributes.",
+    "model": "The &lt;p&gt; tag displays a paragraph and can use ALIGN. The &lt;br&gt; tag inserts a new line. The &lt;font&gt; tag can use FACE, COLOR and SIZE to change the appearance of text. &lt;sub&gt; shows text below the normal line, while &lt;sup&gt; shows it above the normal line."
+  },
+  {
+    "q": "Describe common CSS background and font properties.",
+    "model": "Background properties include background-color, background-image, background-position and background-repeat. Font properties include font-size, font-family, font-style, font-weight, font-variant and the font shorthand property. Together they control the page's appearance."
   }
 ];
 const extraBook = [
@@ -719,10 +761,12 @@ const extraBook = [
     "model": "CSS was proposed by H\u00e5kon Wium Lie on October 10, 1994. Before CSS, nearly all of the presentational attributes of HTML documents were contained within the HTML markup itself."
   },
   {
-    "q": "Fun Fact: The <marquee> tag",
-    "model": "In the early days of the web, developers used the <marquee> tag to make text scroll across the screen. It is now completely obsolete and highly discouraged, replaced entirely by CSS animations!"
+    "q": "Fun Fact: The CSS cascade",
+    "model": "When equally specific rules conflict, inline CSS normally has the highest priority, then internal CSS, then external CSS. This priority system is called the cascade."
   }
 ];
+
+totalMax = mcqBook.length + fillBook.length + tfBook.length;
 
     if(mcqBook && mcqBook.length) { renderMCQ('mcqbook-container', mcqBook, 'mcq'); document.getElementById('mcq-count').textContent = `(${mcqBook.filter(i=>!i.isHeader).length})`; }
     if(fillBook && fillBook.length) { renderFill('fillbook-container', fillBook, 'fill'); document.getElementById('fill-count').textContent = `(${fillBook.filter(i=>!i.isHeader).length})`; }

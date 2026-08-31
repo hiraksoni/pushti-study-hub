@@ -320,6 +320,8 @@ let totalMax = 0;
 function renderFill(containerId, data, prefix){
   const c = document.getElementById(containerId);
   if(!c) return;
+  c.fillData = data;
+  c.dataset.prefix = prefix;
   c.innerHTML = '';
   let qNum = 1;
   data.forEach((item,i)=>{
@@ -333,7 +335,7 @@ function renderFill(containerId, data, prefix){
     const div = document.createElement('div');
     div.className='q';
     div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
-      <input type="text" id="${prefix}-ans-${i}" class="text-input" placeholder="type your answer">
+      <input type="text" id="${prefix}-${i}" class="text-input" placeholder="Type your answer">
       <div id="${prefix}-fb-${i}" class="feedback"></div>`;
     
     div.querySelector('input').addEventListener('blur', (e) => gradeSpecificQuestion('fill', prefix, i));
@@ -346,6 +348,8 @@ function renderFill(containerId, data, prefix){
 function renderMCQ(containerId, data, prefix){
   const c = document.getElementById(containerId);
   if(!c) return;
+  c.mcqData = data;
+  c.dataset.prefix = prefix;
   c.innerHTML = '';
   let qNum = 1;
   data.forEach((item,i)=>{
@@ -358,7 +362,7 @@ function renderMCQ(containerId, data, prefix){
     }
     const div = document.createElement('div');
     div.className='q';
-    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-q${i}" value="${j}"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('');
+    let opts = item.options.map((o,j)=>`<label><input type="radio" name="${prefix}-${i}" value="${j}"> ${o.replace(/^\\([a-d]\\)\\s*/i, '')}</label>`).join('');
     div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.q}</div>
       <div class="options">${opts}</div>
       <div id="${prefix}-fb-${i}" class="feedback"></div>`;
@@ -375,6 +379,9 @@ function renderMCQ(containerId, data, prefix){
 function renderTF(containerId, data, prefix){
   const c = document.getElementById(containerId);
   if(!c) return;
+  c.tfData = data;
+  c.dataset.prefix = prefix;
+  c.tfSelections = {};
   c.innerHTML = '';
   let qNum = 1;
   data.forEach((item,i)=>{
@@ -387,7 +394,7 @@ function renderTF(containerId, data, prefix){
     }
     const div = document.createElement('div');
     div.className='q';
-    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.s}</div>
+    div.innerHTML = `<div class="q-text"><span class="num">${qNum}.</span>${item.s || item.q}</div>
       <div class="tf-toggle">
         <button class="tf-btn" data-val="true" onclick="selectTF(this, '${prefix}', ${i})">True</button>
         <button class="tf-btn false-btn" data-val="false" onclick="selectTF(this, '${prefix}', ${i})">False</button>
@@ -396,6 +403,14 @@ function renderTF(containerId, data, prefix){
     c.appendChild(div);
     qNum++;
   });
+}
+
+function selectTF(button, prefix, i) {
+  const container = document.getElementById('tfbook-container');
+  container.tfSelections[i] = button.dataset.val === 'true';
+  button.parentElement.querySelectorAll('.tf-btn').forEach(btn => btn.classList.remove('selected'));
+  button.classList.add('selected');
+  gradeSpecificQuestion('tf', prefix, i);
 }
 
 
@@ -429,8 +444,9 @@ function gradeSpecificQuestion(type, prefix, i) {
       const container = document.getElementById('fillbook-container');
       item = container.fillData[i];
       val = document.getElementById(`${prefix}-${i}`).value.trim().toLowerCase();
-      correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
-      answerText = 'Correct Answer: ' + item.a[0];
+      const answers = item.a || [item.model];
+      correct = answers.some(ans => val === String(ans).toLowerCase() || val.includes(String(ans).toLowerCase()) || String(ans).toLowerCase().includes(val));
+      answerText = 'Correct Answer: ' + answers[0];
       expText = item.exp;
       if(val === '') { fb.style.display = 'none'; return; }
    } else if(type === 'mcq') {
@@ -439,26 +455,27 @@ function gradeSpecificQuestion(type, prefix, i) {
       const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
       if(!sel) return;
       val = parseInt(sel.value);
-      correct = (val === item.answer);
-      answerText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+      const answerIndex = typeof item.answer === 'number' ? item.answer : item.options.findIndex(option => option === item.answer);
+      correct = (val === answerIndex);
+      answerText = 'Correct Answer: ' + String.fromCharCode(97+answerIndex) + ') ' + item.options[answerIndex];
       expText = item.exp;
    } else if(type === 'tf') {
       const container = document.getElementById('tfbook-container');
       item = container.tfData[i];
-      const sel = document.querySelector(`input[name="${prefix}-${i}"]:checked`);
-      if(!sel) return;
-      val = (sel.value === 'true');
-      correct = (val === item.answer);
-      answerText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
+      if(!(i in container.tfSelections)) return;
+      val = container.tfSelections[i];
+      const answer = item.answer ?? item.model;
+      correct = (val === answer);
+      answerText = 'Correct Answer: ' + (answer ? 'True' : 'False');
       expText = item.exp;
    }
    
    if(correct) {
       fb.className = 'feedback correct'; 
-      fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${expText}</span>`;
+      fb.innerHTML = `<strong>Correct!</strong>${expText ? ` <span class="exp">${expText}</span>` : ''}`;
    } else {
       fb.className = 'feedback incorrect'; 
-      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText} <span class="exp">${expText}</span>`;
+      fb.innerHTML = `<strong>Incorrect.</strong> ${answerText}${expText ? ` <span class="exp">${expText}</span>` : ''}`;
    }
    fb.style.display = 'block';
 }
@@ -527,6 +544,9 @@ function resetAllAnswers() {
    document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
    document.querySelectorAll('#omr-content input[type="text"]').forEach(r => r.value = '');
    document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+   document.querySelectorAll('#tfbook-container .tf-btn').forEach(btn => btn.classList.remove('selected'));
+   const tfContainer = document.getElementById('tfbook-container');
+   if (tfContainer) tfContainer.tfSelections = {};
    document.getElementById('resultPanel').classList.remove('show');
 }
 
@@ -539,23 +559,24 @@ function gradeAll() {
   
   const gradeItem = (type, val, item, fb, rightAnsText) => {
       let correct = false;
+      const explanation = item.exp ? ` <span class="exp">${item.exp}</span>` : '';
       if(val === null || val === '') {
           totalUnanswered++; 
           fb.className='feedback incorrect'; 
-          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+          fb.innerHTML = `<strong>Unanswered.</strong> ${rightAnsText}${explanation}`;
       } else {
-          if(type==='fill') correct = item.a.some(ans => val === ans || val.includes(ans) || ans.includes(val));
-          if(type==='mcq') correct = (val === item.answer);
-          if(type==='tf') correct = (val === item.answer);
+          if(type==='fill') { const answers = item.a || [item.model]; correct = answers.some(ans => val === String(ans).toLowerCase() || val.includes(String(ans).toLowerCase()) || String(ans).toLowerCase().includes(val)); }
+          if(type==='mcq') { const answerIndex = typeof item.answer === 'number' ? item.answer : item.options.findIndex(option => option === item.answer); correct = (val === answerIndex); }
+          if(type==='tf') correct = (val === (item.answer ?? item.model));
           
           if(correct) {
               totalCorrect++; 
               fb.className='feedback correct'; 
-              fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${item.exp}</span>`;
+              fb.innerHTML = `<strong>Correct!</strong>${explanation}`;
           } else {
               totalIncorrect++; 
               fb.className='feedback incorrect'; 
-              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText} <span class="exp">${item.exp}</span>`;
+              fb.innerHTML = `<strong>Incorrect.</strong> ${rightAnsText}${explanation}`;
           }
       }
       fb.style.display='block';
@@ -565,23 +586,24 @@ function gradeAll() {
   fillContainer.fillData.forEach((item, i) => {
      const val = document.getElementById(`${fillContainer.dataset.prefix}-${i}`).value.trim().toLowerCase();
      const fb = document.getElementById(`${fillContainer.dataset.prefix}-fb-${i}`);
-     gradeItem('fill', val, item, fb, 'Correct Answer: ' + item.a[0]);
+     gradeItem('fill', val, item, fb, 'Correct Answer: ' + (item.a || [item.model])[0]);
   });
   
   const mcqContainer = document.getElementById('mcqbook-container');
   mcqContainer.mcqData.forEach((item, i) => {
      const sel = document.querySelector(`input[name="${mcqContainer.dataset.prefix}-${i}"]:checked`);
      const fb = document.getElementById(`${mcqContainer.dataset.prefix}-fb-${i}`);
-     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+item.answer) + ') ' + item.options[item.answer];
+     const answerIndex = typeof item.answer === 'number' ? item.answer : item.options.findIndex(option => option === item.answer);
+     const rightAnsText = 'Correct Answer: ' + String.fromCharCode(97+answerIndex) + ') ' + item.options[answerIndex];
      gradeItem('mcq', sel ? parseInt(sel.value) : null, item, fb, rightAnsText);
   });
   
   const tfContainer = document.getElementById('tfbook-container');
   tfContainer.tfData.forEach((item, i) => {
-     const sel = document.querySelector(`input[name="${tfContainer.dataset.prefix}-${i}"]:checked`);
      const fb = document.getElementById(`${tfContainer.dataset.prefix}-fb-${i}`);
-     const rightAnsText = 'Correct Answer: ' + (item.answer ? 'True' : 'False');
-     gradeItem('tf', sel ? (sel.value === 'true') : null, item, fb, rightAnsText);
+     const answer = item.answer ?? item.model;
+     const rightAnsText = 'Correct Answer: ' + (answer ? 'True' : 'False');
+     gradeItem('tf', i in tfContainer.tfSelections ? tfContainer.tfSelections[i] : null, item, fb, rightAnsText);
   });
   
   document.getElementById('scoreBig').textContent = totalCorrect + ' / ' + totalMax;
@@ -689,6 +711,26 @@ const mcqBook = [
       "(d) &lt;HT&gt;"
     ],
     "answer": "(b) &lt;DT&gt;"
+  },
+  {
+    "q": "Which attribute starts an ordered list from a chosen number?",
+    "options": ["(a) TYPE", "(b) START", "(c) REVERSED", "(d) VALUE"],
+    "answer": "(b) START"
+  },
+  {
+    "q": "Which CSS property replaces a list marker with an image?",
+    "options": ["(a) list-style-type", "(b) list-style-image", "(c) list-style-position", "(d) image-style"],
+    "answer": "(b) list-style-image"
+  },
+  {
+    "q": "Which &lt;img&gt; attribute displays alternative text if an image cannot be shown?",
+    "options": ["(a) src", "(b) alt", "(c) height", "(d) width"],
+    "answer": "(b) alt"
+  },
+  {
+    "q": "Which marquee attribute controls its speed?",
+    "options": ["(a) direction", "(b) behavior", "(c) scrollamount", "(d) bgcolor"],
+    "answer": "(c) scrollamount"
   }
 ];
 const fillBook = [
@@ -707,24 +749,36 @@ const fillBook = [
   {
     "q": "GIF stands for ____________.",
     "model": "Graphics Interchange Format"
+  },
+  {
+    "q": "The ____________ attribute reverses the numbering of an ordered list.",
+    "model": "REVERSED"
+  },
+  {
+    "q": "The marquee attribute that sets the direction of movement is ____________.",
+    "model": "direction"
   }
 ];
 const tfBook = [
   {
-    "q": "An attribute is used to define the characteristics of an HTML element.",
+    "q": "An unordered list is represented by the &lt;ul&gt; tag.",
     "model": true
   },
   {
-    "q": "The default colour of ALINK attribute is violet.",
+    "q": "The default bullet style for an unordered list is square.",
     "model": false
   },
   {
-    "q": "The &lt;U&gt; is a container tag.",
+    "q": "A definition list uses the &lt;dl&gt;, &lt;dt&gt; and &lt;dd&gt; tags.",
     "model": true
   },
   {
-    "q": "CSS stands for Collective Style Sheets.",
-    "model": false
+    "q": "The src attribute gives the path or URL of an image file.",
+    "model": true
+  },
+  {
+    "q": "The &lt;marquee&gt; tag can use the behavior attribute to scroll, slide or alternate.",
+    "model": true
   }
 ];
 const shortBook = [
@@ -767,16 +821,28 @@ const shortBook = [
   {
     "q": "Explain the attributes of image tag.",
     "model": "The &lt;IMG&gt; tag uses 'src' to define the image path, 'alt' for alternative text, 'width' and 'height' to set dimensions, and 'align' to position the image."
+  },
+  {
+    "q": "What is a marquee? Name any three marquee attributes.",
+    "model": "A marquee creates scrolling text or an image effect on a web page. Its attributes include direction (movement direction), behavior (scroll, slide or alternate), scrollamount (speed) and bgcolor (background colour)."
+  },
+  {
+    "q": "Explain the difference between list-style-type, list-style-image and list-style-position.",
+    "model": "list-style-type chooses the marker style, such as square or lower-alpha. list-style-image replaces the marker with an image. list-style-position controls whether the marker appears inside or outside the content flow."
   }
 ];
 const longBook = [
   {
-    "q": "What is the use of the &lt;style&gt; tag?",
-    "model": "The &lt;style&gt; tag in html helps us to modify over text, element in page. This modification includes changing font size, font family, font colour, etc. Not only the text, you can change the style of a body or a part of a page."
+    "q": "Explain the three types of HTML lists, including their tags and key features.",
+    "model": "An unordered list (&lt;ul&gt;) shows related items with bullets; its default bullet is a disc and TYPE can use circle or square. An ordered list (&lt;ol&gt;) shows items in sequence with numbers; TYPE changes the numbering style, START chooses the first number, and REVERSED counts backwards. A definition list uses &lt;dl&gt; for the list, &lt;dt&gt; for each term and &lt;dd&gt; for each description."
   },
   {
-    "q": "What are the advantages of using CSS?",
-    "model": "In HTML you can write CSS once and then reuse the same sheet in multiple pages. You can define a style for each HTML element and apply it to as many web pages as you want. To make a global change, simply change the style, and all elements in all the web pages will be updated automatically."
+    "q": "Explain how to insert and describe an image in an HTML page.",
+    "model": "Use the &lt;img&gt; tag. The src attribute specifies the image file's path or URL, while alt provides alternate text if the image cannot be displayed and supports screen-reader users. The width and height attributes set the image dimensions. Common formats include .jpg for photographs and GIF for simple graphics or animations."
+  },
+  {
+    "q": "Explain nested lists and the CSS properties used to style list markers.",
+    "model": "A nested list is a list placed inside another list and is useful for showing levels of related information. CSS can change its markers with list-style-type, replace markers with list-style-image, and choose an inside or outside placement with list-style-position."
   }
 ];
 const extraBook = [
@@ -793,6 +859,8 @@ const extraBook = [
     "model": "You can place a list inside another list! This is called a nested list, and browsers will automatically use different bullet styles for the inner list to make it easier to read."
   }
 ];
+
+totalMax = mcqBook.length + fillBook.length + tfBook.length;
 
     if(mcqBook && mcqBook.length) { renderMCQ('mcqbook-container', mcqBook, 'mcq'); document.getElementById('mcq-count').textContent = `(${mcqBook.filter(i=>!i.isHeader).length})`; }
     if(fillBook && fillBook.length) { renderFill('fillbook-container', fillBook, 'fill'); document.getElementById('fill-count').textContent = `(${fillBook.filter(i=>!i.isHeader).length})`; }
