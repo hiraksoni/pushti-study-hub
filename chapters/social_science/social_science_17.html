@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 17</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --accent: #10b981;
+            --accent-dark: #059669;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Standard Header */
+        .standard-header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .standard-back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .standard-back-btn:hover {
+            color: var(--primary);
+        }
+        .standard-subject-title {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .exercise-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .exercise-section h2 {
+            color: var(--primary);
+            border-bottom: 2px solid rgba(99, 102, 241, 0.2);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-block {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .question-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-reveal {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-reveal:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .answer-container {
+            margin-top: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .answer {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            display: none;
+            color: #e2e8f0;
+            margin-top: 0.5rem;
+        }
+        
+        .answer.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 640px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="standard-header">
+        <a href="../../../social_science_index.html" class="standard-back-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back to Hub
+        </a>
+        <div class="standard-subject-title">
+            Social Science <span style="color:#64748b;">|</span> Chapter 17
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Chapter 17: Markets around Us - Practice</h1>
+
+        <div class="exercise-section">
+            <h2>A. Fill in the blanks</h2>
+            
+            <div class="question-block">
+                <div class="question-text">1. ________ produce goods and provide services for consumers to use.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>Producers</strong></div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">2. Markets that sell daily necessities and have a mix of street stalls and bigger shops are called ________.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>neighbourhood markets</strong></div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">3. The system where goods move from the producer to the consumer through a series of markets is called a ________.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>chain of markets</strong></div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">4. Cooperatives help farmers sell their produce directly to consumers, reducing their dependence on ________.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>middlemen (or traders)</strong></div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">5. ________ in the market leads to better prices and quality products for consumers.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>Competition</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-section">
+            <h2>B. Choose the correct answer</h2>
+            
+            <div class="question-block">
+                <div class="question-text">1. Which of the following markets happens once a week?</div>
+                <div class="options">
+                    <div class="option">(a) Weekly markets</div>
+                    <div class="option">(b) Supermarkets</div>
+                    <div class="option">(c) Neighbourhood markets</div>
+                    <div class="option">(d) Wholesale markets</div>
+                </div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>(a) Weekly markets</strong></div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">2. Which of the following markets sells goods from only one brand?</div>
+                <div class="options">
+                    <div class="option">(a) Supermarkets</div>
+                    <div class="option">(b) Shopping malls</div>
+                    <div class="option">(c) Branded stores</div>
+                    <div class="option">(d) Retail markets</div>
+                </div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>(c) Branded stores</strong></div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">3. Which of the following is an organisation formed by people with shared interests and goals?</div>
+                <div class="options">
+                    <div class="option">(a) Wholesale markets</div>
+                    <div class="option">(b) Retail markets</div>
+                    <div class="option">(c) Cooperatives</div>
+                    <div class="option">(d) Shopping malls</div>
+                </div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>(c) Cooperatives</strong></div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">4. Which of the following is NOT a role that markets play in our lives?</div>
+                <div class="options">
+                    <div class="option">(a) Making goods and services available</div>
+                    <div class="option">(b) Linking producers and consumers</div>
+                    <div class="option">(c) Building a strong economy</div>
+                    <div class="option">(d) Promoting mindful buying</div>
+                </div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>(d) Promoting mindful buying</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-section">
+            <h2>C. Write True or False</h2>
+            
+            <div class="question-block">
+                <div class="question-text">1. There are different wholesale markets for different types of goods as they require large spaces.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>True</strong></div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">2. Online retailers have high overhead costs.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>False</strong> (They usually have lower overhead costs as they don't need physical retail stores)</div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">3. In the chain of markets, the price of a product increases at every step.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>True</strong></div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">4. Members of a cooperative society depend on middlemen to sell their goods.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>False</strong> (They reduce their dependence on middlemen by selling directly)</div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">5. If there is a high demand for a product and its availability is low, the price of the product will decrease.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>False</strong> (The price of the product will increase)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-section">
+            <h2>G. Answer the following questions in brief</h2>
+            
+            <div class="question-block">
+                <div class="question-text">1. What are the two main types of markets? Write any two differences between them.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer">The two main types of markets are wholesale markets and retail markets. 
+                    <br><br>Differences:
+                    <br>1. Wholesale markets involve buying and selling goods in bulk (large quantities), while retail markets involve selling goods in smaller quantities to consumers.
+                    <br>2. Prices in wholesale markets are generally lower than in retail markets.</div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">2. What is the difference between a producer and a consumer?</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer">A <strong>producer</strong> is someone who grows or makes goods (e.g., a farmer or a factory worker). A <strong>consumer</strong> is someone who buys and uses those goods and services for their own personal use.</div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">3. How can the chain of markets create inequalities for the different people involved?</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer">The chain of markets creates inequalities because the profit earned is not distributed equally. Producers (like farmers) often earn very little for their hard work, while middlemen (traders) and large retailers earn much higher profits. Also, consumers sometimes have to pay very high prices.</div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">4. What are cooperatives?</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer">A cooperative is an organisation formed by people who share common interests and work towards common goals. It allows producers to pool their resources, bypass middlemen, and sell their goods directly, thereby earning fairer prices.</div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">5. How do markets affect our lives?</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer">Markets affect our lives by making a variety of goods and services available to us, bringing producers and consumers together, building a strong economy by providing jobs, and influencing our lifestyle and culture by introducing new products.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-section">
+            <h2>H. Answer the following questions in detail</h2>
+            
+            <div class="question-block">
+                <div class="question-text">1. Describe the three types of people involved in buying and selling goods, using an example for each.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer">
+                        1. <strong>Producers:</strong> They grow or manufacture goods. Example: A farmer who grows mangoes in an orchard.<br>
+                        2. <strong>Traders/Middlemen:</strong> They act as intermediaries, buying goods from producers and selling them to consumers or other traders. Example: A wholesale trader who buys boxes of mangoes from the farmer and sells them to a local grocery store owner.<br>
+                        3. <strong>Consumers:</strong> They buy goods for personal use. Example: A person buying mangoes from the grocery store to eat at home.
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">2. Explain why the price of an item increases as it moves through the chain of markets.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer">As an item moves from the producer to the final consumer, it passes through various middlemen (wholesalers, distributors, retailers). Each middleman incurs overhead costs like transportation, storage, shop rent, and salaries. To cover these costs and earn a profit, each middleman adds a markup to the price of the item. As a result, the final price paid by the consumer is significantly higher than the price at which the producer sold it.</div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">3. Explain how inequalities in the chain of markets affect: (a) producers (b) consumers</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer">
+                        <strong>(a) Producers:</strong> They often earn a very small share of the final selling price despite doing the most physically demanding work. Since they cannot sell directly to consumers in small quantities or store their goods for long, they are forced to sell to middlemen at low prices, keeping them in poverty.<br>
+                        <strong>(b) Consumers:</strong> They are affected because middlemen can drive up prices by hoarding goods or adding high markups. As a result, consumers end up paying a high price, and sometimes lower-income consumers cannot afford necessities.
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">4. How does a cooperative reduce inequality in the chain of markets? Explain with the help of an example.</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer">Cooperatives reduce inequality by eliminating middlemen. When producers form a cooperative, they combine their resources to process, transport, and sell their goods directly in the market. <br>
+                    <strong>Example:</strong> If a group of farmers forms a cooperative, they can pool their mango harvest, rent a shared truck, and sell directly to consumers or large buyers. By doing so, they keep the profit that would have otherwise gone to wholesalers and retailers, thereby earning a fair price for their labor.</div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">5. What is mindful buying? How does it impact us?</div>
+                <button class="btn-reveal" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer-container">
+                    <div class="answer"><strong>Mindful buying</strong> means making conscious choices about the things we buy based on our actual needs and values, rather than impulsive desires. It involves asking if we really need an item and if it was made sustainably.<br>
+                    <strong>Impact:</strong> It helps us save money and make informed decisions. It reduces waste, which positively impacts the environment. It can also support fair trade and equality if we choose to buy from local businesses or cooperatives.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleAnswer(btn) {
+            const answer = btn.nextElementSibling.querySelector('.answer');
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+                btn.textContent = 'Reveal Answer';
+                btn.style.background = 'var(--primary)';
+            } else {
+                answer.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+                btn.style.background = 'var(--accent)';
+            }
+        }
+    </script>
+
+    <!-- FIREBASE TIMER INJECTION START -->
+    <script type="module">
+      import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+      import { db } from "../../../js/firebase-config.js";
+    
+      const activeUser = localStorage.getItem('pushti-active-user') || 'none';
+      if(activeUser !== 'none' && activeUser !== 'parent' && activeUser !== 'admin') {
+          setInterval(async () => {
+              try {
+                  const docRef = doc(db, "user_stats", activeUser);
+                  const docSnap = await getDoc(docRef);
+                  let newTime = 1;
+                  if (docSnap.exists()) {
+                      newTime = (docSnap.data().total_time || 0) + 1;
+                  }
+                  await setDoc(docRef, { total_time: newTime }, { merge: true });
+              } catch(e) {
+                  console.log("Error updating timer: ", e);
+              }
+          }, 60000);
+      }
+    </script>
+    <!-- FIREBASE TIMER INJECTION END -->
+</body>
+</html>

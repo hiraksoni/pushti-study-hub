@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 13</title>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --bg-color: #0F172A;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent: #10B981;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .standard-header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .standard-back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .standard-back-btn:hover {
+            color: var(--text-main);
+        }
+
+        .standard-subject-title {
+            margin-left: 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .question-block {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question-block:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .question {
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+        }
+
+        .options li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .options li::before {
+            content: "•";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+        }
+
+        .answer-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .reveal-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+
+        .reveal-btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .answer {
+            display: none;
+            color: var(--accent);
+            font-weight: 500;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .answer.visible {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header class="standard-header">
+        <a href="../../../social_science_index.html" class="standard-back-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back to Hub
+        </a>
+        <div class="standard-subject-title">
+            Social Science <span style="color:#64748b;">|</span> Chapter 13
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- A. Fill in the blanks -->
+        <div class="section-card">
+            <h2>A. Fill in the blanks</h2>
+            
+            <div class="question-block">
+                <div class="question">1. Gender is a _______ construct.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">social</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">2. Gender stereotypes lead to gender _______.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">discrimination</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">3. Families can either strengthen or _______ gender stereotypes.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">break</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">4. _______ opened Sarada Sadan where widows were encouraged to get educated and learn a skill that would help them earn money.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">Pandita Ramabai</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">5. 33% of seats in _______ are reserved for women.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">Panchayats</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- B. Choose the correct answer -->
+        <div class="section-card">
+            <h2>B. Choose the correct answer</h2>
+
+            <div class="question-block">
+                <div class="question">1. Which of the following is NOT an example of a gender stereotype?</div>
+                <ul class="options">
+                    <li>(a) Boys are naughty, and girls are quiet.</li>
+                    <li>(b) Girls cook better food than boys.</li>
+                    <li>(c) Both girls and boys can play cricket.</li>
+                    <li>(d) Only boys are good at sports.</li>
+                </ul>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">(c) Both girls and boys can play cricket.</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">2. Which of the following is an impact of gender inequality on women?</div>
+                <ul class="options">
+                    <li>(a) Equal opportunities for education</li>
+                    <li>(b) Devaluing the work done by women</li>
+                    <li>(c) Equal sharing of household work</li>
+                    <li>(d) Reservation for Women in Panchayats</li>
+                </ul>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">(b) Devaluing the work done by women</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">3. Who led the movement to abolish sati in 1829?</div>
+                <ul class="options">
+                    <li>(a) Savitribai Phule</li>
+                    <li>(b) Raja Rammohun Roy</li>
+                    <li>(c) Pandita Ramabai</li>
+                    <li>(d) Ishwar Chandra Vidyasagar</li>
+                </ul>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">(b) Raja Rammohun Roy</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">4. Which right guarantees equal opportunities for employment and equal pay for equal work?</div>
+                <ul class="options">
+                    <li>(a) Right to Education</li>
+                    <li>(b) Right to Freedom</li>
+                    <li>(c) Right to Property</li>
+                    <li>(d) Right to Equality</li>
+                </ul>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">(d) Right to Equality</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">5. Which of the following is a way in which we can promote gender equality?</div>
+                <ul class="options">
+                    <li>(a) Follow gender stereotypes</li>
+                    <li>(b) Rely solely on government initiatives</li>
+                    <li>(c) Treat everyone equally</li>
+                    <li>(d) Ignore laws about gender equality</li>
+                </ul>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">(c) Treat everyone equally</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- C. Write True or False -->
+        <div class="section-card">
+            <h2>C. Write True or False. Rewrite the false statements correctly.</h2>
+
+            <div class="question-block">
+                <div class="question">1. When people are treated differently or unequally because of their gender, it is known as gender discrimination.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">True</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">2. Our preconceived ideas and opinions on how boys and girls should behave lead to gender inequality.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">True</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">3. Widow remarriage became legal in 1856 because of the efforts of Savitribai Phule.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">False. Widow remarriage became legal in 1856 because of the efforts of Ishwar Chandra Vidyasagar.</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">4. Right to Equality promotes gender equality by giving equal educational opportunities to both boys and girls.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">True</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">5. We should encourage people around us to follow gender stereotypes.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">False. We should break gender stereotypes and encourage gender equality.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- D. Name the following -->
+        <div class="section-card">
+            <h2>D. Name the following</h2>
+
+            <div class="question-block">
+                <div class="question">1. A social reformer who worked for the abolition of sati</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">Raja Rammohun Roy</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">2. A social reformer who worked to make widow remarriage legal</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">Ishwar Chandra Vidyasagar</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">3. Two social reformers who established the first Indian school for girls</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">Savitribai Phule and Jyotirao Phule</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">4. A woman social reformer who was also a freedom fighter</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">Sarojini Naidu</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- E. Answer the following questions in brief -->
+        <div class="section-card">
+            <h2>E. Answer the following questions in brief</h2>
+
+            <div class="question-block">
+                <div class="question">1. What do you understand by the term gender equality? Answer in about 20-30 words.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">Gender equality means that every human being, regardless of their gender, should have equal rights to think, express, work, and access opportunities without discrimination.</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">2. What are gender stereotypes? How are gender stereotypes strengthened?</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">Gender stereotypes are fixed beliefs about how boys and girls should behave and their roles in society. They are strengthened by families, schools, and society treating children differently based on gender.</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">3. Explain why gender equality is important for us.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">Gender equality is important because it allows individuals to realise their full potential, live a life of dignity, and contribute equally to society, free from limitations set by gender roles.</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">4. Do you think it is only the government's responsibility to ensure gender equality? Why/why not?</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">No, it is a shared responsibility. While the government creates laws and policies, individuals, families, and schools must change their mindsets and actions to practice equality in everyday life.</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">5. List any three ways in which we can play a positive role in reducing gender inequality.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <span class="answer">1. Treat everyone equally regardless of gender. 2. Break gender stereotypes by encouraging boys and girls to pursue diverse interests. 3. Share household chores equally.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- F. Answer the following questions in detail -->
+        <div class="section-card">
+            <h2>F. Answer the following questions in detail</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;"><em>Try to answer these descriptive questions in your notebook, then check the key points below.</em></p>
+
+            <div class="question-block">
+                <div class="question">1. Using an example, explain how gender stereotypes lead to gender inequality.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Key Points</button>
+                    <span class="answer">If society believes the stereotype that women are only meant for household work, it limits their opportunities for education and employment. This unequal access to opportunities leads to gender inequality.</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">2. Describe any two factors that lead to gender inequality in not more than 80 words.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Key Points</button>
+                    <span class="answer">1. Preconceived Stereotypes: Beliefs that boys and girls should have different roles limit their potential. 2. Unequal burden of household work: The expectation that only women must manage the household prevents them from seeking outside employment.</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">3. How do women get affected by the unpaid work they do?</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Key Points</button>
+                    <span class="answer">Women performing unpaid household work are often not recognized for their efforts. This devalues their labor, restricts their financial independence, and limits their time to pursue careers or further education, reinforcing their lower economic status.</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">4. Explain the historical evolution of the women's movement in India in about 100 words.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Key Points</button>
+                    <span class="answer">Historically, women faced social evils like sati and denial of education. Social reformers like Raja Rammohun Roy and Savitribai Phule championed women's rights and education. Over time, the movement gained momentum, and post-independence, the Constitution granted equal rights. Women continue to advocate for equality today.</span>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question">5. Describe any two laws that the government has passed to promote gender equality.</div>
+                <div class="answer-container">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Key Points</button>
+                    <span class="answer">1. Right to Equality: Prohibits discrimination on the basis of gender and guarantees equal opportunities. 2. Laws against Dowry and Domestic Violence: Protects women from violence and abuse, making such acts punishable offenses.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(btn) {
+            const answer = btn.nextElementSibling;
+            if (answer.classList.contains('visible')) {
+                answer.classList.remove('visible');
+                btn.textContent = 'Reveal Answer';
+            } else {
+                answer.classList.add('visible');
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+
+    <!-- FIREBASE TIMER INJECTION START -->
+    <script type="module">
+      import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+      import { db } from "../../../js/firebase-config.js";
+    
+      const activeUser = localStorage.getItem('pushti-active-user') || 'none';
+      if(activeUser !== 'none' && activeUser !== 'parent' && activeUser !== 'admin') {
+          setInterval(async () => {
+              try {
+                  const docRef = doc(db, "user_stats", activeUser);
+                  const docSnap = await getDoc(docRef);
+                  let newTime = 1;
+                  if (docSnap.exists()) {
+                      newTime = (docSnap.data().total_time || 0) + 1;
+                  }
+                  await setDoc(docRef, { total_time: newTime }, { merge: true });
+              } catch(e) {
+                  console.log("Error updating timer: ", e);
+              }
+          }, 60000);
+      }
+    </script>
+    <!-- FIREBASE TIMER INJECTION END -->
+</body>
+</html>
