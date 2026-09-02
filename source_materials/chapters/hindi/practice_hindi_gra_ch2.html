@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2: वर्ण विचार - Practice Module</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --surface-color: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --primary-color: #bb86fc;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --success-color: #03dac6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .back-btn {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+
+        .back-btn:hover {
+            color: #fff;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: var(--surface-color);
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Notes Section */
+        .glass-card {
+            background: var(--surface-color);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .glass-card h2, .glass-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .glass-card ul {
+            padding-left: 1.5rem;
+        }
+
+        .glass-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Exercises Section */
+        .exercise-item {
+            margin-bottom: 2rem;
+        }
+        
+        .question {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .answer-container {
+            margin-top: 1rem;
+        }
+
+        .reveal-btn {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .reveal-btn:hover {
+            background: var(--primary-color);
+            color: var(--bg-color);
+        }
+
+        .answer {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(3, 218, 198, 0.1);
+            border-left: 4px solid var(--success-color);
+            border-radius: 0 8px 8px 0;
+            color: #e0e0e0;
+        }
+
+        .answer.show {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .options-list li {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../../hindi_index.html" class="back-btn">← Back</a>
+        <h1>Chapter 2: वर्ण विचार (Orthography)</h1>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('notes')">Grammar Notes</button>
+            <button class="tab-btn" onclick="switchTab('exercises')">Exercises</button>
+        </div>
+
+        <!-- NOTES TAB -->
+        <div id="notes" class="tab-content active">
+            <div class="glass-card">
+                <h2>वर्ण (Letter)</h2>
+                <p>भाषा की सबसे छोटी इकाई वर्ण होती है। वर्ण वह मूल ध्वनि है जिसके खंड या टुकड़े नहीं किए जा सकते। जैसे - अ, क्, ख्, च् आदि।</p>
+                <p>वर्णों का निश्चित क्रम <strong>वर्णमाला (Alphabet)</strong> कहलाता है। हिंदी की वर्णमाला में कुल 44 वर्ण हैं।</p>
+            </div>
+
+            <div class="glass-card">
+                <h2>वर्णों के भेद</h2>
+                <p>वर्णों के मुख्य रूप से दो भेद होते हैं:</p>
+                <ul>
+                    <li><strong>स्वर (Vowels):</strong> जिन वर्णों के उच्चारण में हवा बिना रुकावट के मुख से निकलती है। (11 स्वर: अ, आ, इ, ई, उ, ऊ, ऋ, ए, ऐ, ओ, औ)</li>
+                    <li><strong>व्यंजन (Consonants):</strong> जिन वर्णों के उच्चारण में हवा रुकावट के साथ मुख से बाहर निकलती है, वे व्यंजन कहलाते हैं। (33 व्यंजन)</li>
+                </ul>
+                <h3>उच्चारण के अनुसार स्वर-भेद:</h3>
+                <ul>
+                    <li><strong>ह्रस्व स्वर:</strong> जिनके उच्चारण में सबसे कम समय लगता है। (अ, इ, उ, ऋ)</li>
+                    <li><strong>दीर्घ स्वर:</strong> जिनके उच्चारण में ह्रस्व स्वर से लगभग दुगुना समय लगता है। (आ, ई, ऊ, ए, ऐ, ओ, औ)</li>
+                    <li><strong>प्लुत स्वर:</strong> जिनके उच्चारण में ह्रस्व स्वर से लगभग तिगुना समय लगता है। (जैसे - ओ३म्)</li>
+                </ul>
+            </div>
+
+            <div class="glass-card">
+                <h2>अन्य ध्वनियाँ</h2>
+                <ul>
+                    <li><strong>अयोगवाह:</strong> अं (अनुस्वार) और अः (विसर्ग)।</li>
+                    <li><strong>अनुनासिक:</strong> चंद्रबिंदु (ँ)। इसके उच्चारण में हवा मुँह के साथ-साथ नाक से भी निकलती है।</li>
+                    <li><strong>आगत ध्वनियाँ:</strong> दूसरी भाषाओं से आई ध्वनियाँ जैसे ऑ, ज़, फ़।</li>
+                </ul>
+            </div>
+            
+            <div class="glass-card">
+                <h2>उच्चारण के अनुसार व्यंजन-भेद</h2>
+                <ul>
+                    <li><strong>स्पर्श व्यंजन:</strong> कंठ, तालु, मूर्धा, दाँत या ओष्ठ के स्पर्श से उच्चरित होने वाले व्यंजन। (क से म तक)</li>
+                    <li><strong>अंतःस्थ व्यंजन:</strong> जीभ, तालु, दाँत या ओष्ठों के परस्पर सटाने से उच्चरित होने वाले व्यंजन। (य, र, ल, व)</li>
+                    <li><strong>ऊष्म व्यंजन:</strong> घर्षण या रगड़ से उत्पन्न ऊष्म वायु के द्वारा उच्चरित होने वाले व्यंजन। (श, ष, स, ह)</li>
+                </ul>
+            </div>
+
+            <div class="glass-card">
+                <h2>संयुक्त व्यंजन व व्यंजन-गुच्छ</h2>
+                <p><strong>संयुक्त व्यंजन:</strong> क्ष (क् + ष), त्र (त् + र), ज्ञ (ज् + ञ), श्र (श् + र)।</p>
+                <p><strong>व्यंजन-गुच्छ:</strong> जब दो व्यंजन एक साथ बिना स्वर के प्रयोग में आते हैं, जैसे क् + क = क्क (पक्का)।</p>
+                <p><strong>वर्ण-विच्छेद:</strong> शब्दों के वर्णों को अलग-अलग करना वर्ण-विच्छेद कहलाता है।</p>
+            </div>
+        </div>
+
+        <!-- EXERCISES TAB -->
+        <div id="exercises" class="tab-content">
+            
+            <div class="glass-card exercise-item">
+                <h3>1. उत्तर बताइए</h3>
+                
+                <div class="question">
+                    <p>(क) हिंदी वर्णमाला में कुल कितने वर्ण हैं?</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">हिंदी वर्णमाला में कुल 44 वर्ण हैं (11 स्वर और 33 व्यंजन)।</div>
+                </div>
+                
+                <div class="question">
+                    <p>(ख) हलंत चिह्न लगे व्यंजन का क्या अर्थ होता है?</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">हलंत चिह्न लगे व्यंजन का अर्थ है कि वह स्वर-रहित है (बिना स्वर के)।</div>
+                </div>
+
+                <div class="question">
+                    <p>(ग) वर्ण-विच्छेद किसे कहते हैं?</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">किसी शब्द के वर्णों को अलग-अलग करना वर्ण-विच्छेद कहलाता है।</div>
+                </div>
+            </div>
+
+            <div class="glass-card exercise-item">
+                <h3>2. इन व्यंजन-गुच्छों से बने दो-दो शब्द लिखिए</h3>
+                
+                <div class="question">
+                    <p>(क) च् + च = च्च</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">सच्चा, बच्चा</div>
+                </div>
+                <div class="question">
+                    <p>(ख) क् + त = क्त</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">भक्त, रक्त</div>
+                </div>
+                <div class="question">
+                    <p>(ग) त् + त = त्त</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">पत्ता, कुत्ता</div>
+                </div>
+                <div class="question">
+                    <p>(घ) श् + च = श्च</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">निश्चय, पश्चिम</div>
+                </div>
+            </div>
+
+            <div class="glass-card exercise-item">
+                <h3>3. वर्ण-विच्छेद के इन उदाहरणों के सामने 'सही' या 'गलत' लिखिए</h3>
+                
+                <div class="question">
+                    <p>(क) कृष्ण = क् + ऋ + ष् + अ + ण् + अ</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">गलत (सही: क् + ऋ + ष् + ण् + अ)</div>
+                </div>
+                <div class="question">
+                    <p>(ख) कपोत = क् + अ + प् + ओ + त् + अ</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">सही</div>
+                </div>
+                <div class="question">
+                    <p>(ग) विच्छेद = व् + इ + च् + छ् + ए + द् + अ</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">सही</div>
+                </div>
+                <div class="question">
+                    <p>(घ) उल्लू = उ + ल् + ल् + ऊ</p>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">सही</div>
+                </div>
+            </div>
+
+            <div class="glass-card exercise-item">
+                <h3>4. सही उत्तर चुनिए</h3>
+                
+                <div class="question">
+                    <p>(क) हिंदी वर्णमाला में ये वर्ण व्यंजन के रूप में प्रयुक्त होते हैं:</p>
+                    <ul class="options-list">
+                        <li>(1) ड़, ढ़, ऑ, अं</li>
+                        <li>(2) ऑ, अं, ज़, फ़</li>
+                        <li>(3) ज़, फ़, ड़, ढ़</li>
+                    </ul>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">सही उत्तर: (3) ज़, फ़, ड़, ढ़</div>
+                </div>
+
+                <div class="question">
+                    <p>(ख) इस शब्द में प्लुत स्वर आया है:</p>
+                    <ul class="options-list">
+                        <li>(1) भइया</li>
+                        <li>(2) ओ३म्</li>
+                        <li>(3) कौआ</li>
+                    </ul>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">सही उत्तर: (2) ओ३म्</div>
+                </div>
+
+                <div class="question">
+                    <p>(ग) इस वर्ण में व्यंजन-गुच्छ आया है:</p>
+                    <ul class="options-list">
+                        <li>(1) त्रस्त</li>
+                        <li>(2) श्रवण</li>
+                        <li>(3) विज्ञान</li>
+                    </ul>
+                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                    <div class="answer">सही उत्तर: (1) त्रस्त</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function toggleAnswer(btn) {
+            const answer = btn.nextElementSibling;
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                btn.textContent = 'Reveal Answer';
+            } else {
+                answer.classList.add('show');
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+    <!-- FIREBASE TIMER INJECTION START -->
+</body>
+</html>

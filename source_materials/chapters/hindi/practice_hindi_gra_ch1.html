@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice: Hindi Grammar Ch 1</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-color: #e0e0e0;
+            --accent-color: #bb86fc;
+            --btn-bg: rgba(187, 134, 252, 0.1);
+            --btn-hover: rgba(187, 134, 252, 0.3);
+            --correct-bg: rgba(46, 125, 50, 0.2);
+            --correct-border: #4caf50;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        .back-btn {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-right: 20px;
+            padding: 8px 12px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: var(--btn-hover);
+        }
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+            flex: 1;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        .tab-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 1rem;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--btn-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+        .tab-content {
+            display: none;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .question-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .question {
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .options {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 15px;
+        }
+        .options li {
+            margin-bottom: 8px;
+            padding: 10px 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 6px;
+            border: 1px solid transparent;
+        }
+        .reveal-btn {
+            background: var(--btn-bg);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .reveal-btn:hover {
+            background: var(--btn-hover);
+        }
+        .answer {
+            display: none;
+            margin-top: 15px;
+            padding: 12px 15px;
+            background: var(--correct-bg);
+            border-left: 4px solid var(--correct-border);
+            border-radius: 0 6px 6px 0;
+            font-weight: bold;
+            font-size: 1.05rem;
+            line-height: 1.4;
+        }
+        ul.notes-list {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            padding-left: 20px;
+        }
+        ul.notes-list li {
+            margin-bottom: 12px;
+        }
+        .highlight {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        .sub-list {
+            margin-top: 8px;
+            padding-left: 20px;
+            list-style-type: circle;
+        }
+        .sub-list li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="../../../hindi_index.html" class="back-btn">&larr; Back</a>
+    <h1>हिंदी व्याकरण - पाठ 1: भाषा, लिपि और व्याकरण</h1>
+</header>
+
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'notes')">Notes (व्याकरण)</button>
+        <button class="tab-btn" onclick="openTab(event, 'qa')">Q&A (प्रश्नोत्तर)</button>
+        <button class="tab-btn" onclick="openTab(event, 'tf')">True/False (सही/गलत)</button>
+        <button class="tab-btn" onclick="openTab(event, 'mcq')">MCQs (सही उत्तर चुनिए)</button>
+    </div>
+
+    <!-- Notes Tab -->
+    <div id="notes" class="tab-content active">
+        <h2>अध्ययन बिंदु (Key Points)</h2>
+        <ul class="notes-list">
+            <li><span class="highlight">भाषा (Language):</span> भाषा वह साधन है, जिसके द्वारा मनुष्य अपने विचारों व भावों का आदान-प्रदान करता है।</li>
+            <li><span class="highlight">भाषा के रूप:</span> मुख्य रूप से भाषा के दो रूप माने गए हैं— मौखिक भाषा (Oral) और लिखित भाषा (Written)।</li>
+            <li><span class="highlight">लिपि (Script):</span> मौखिक ध्वनियों को लिखित रूप में प्रकट करने के लिए निश्चित किए गए चिह्नों को 'लिपि' कहते हैं। हिंदी भाषा <span class="highlight">देवनागरी</span> लिपि में लिखी जाती है।</li>
+            <li><span class="highlight">व्याकरण (Grammar):</span> व्याकरण वह शास्त्र है, जिसके द्वारा हम भाषा के नियमों को जानकर शुद्ध-शुद्ध लिखना, पढ़ना और बोलना सीखते हैं।</li>
+            <li><span class="highlight">व्याकरण के अंग:</span>
+                <ul class="sub-list">
+                    <li>वर्ण विचार</li>
+                    <li>शब्द विचार</li>
+                    <li>पद विचार</li>
+                    <li>वाक्य विचार</li>
+                </ul>
+            </li>
+            <li><span class="highlight">हिंदी की उपभाषाएँ एवं बोलियाँ:</span>
+                <ul class="sub-list">
+                    <li><strong>पूर्वी हिंदी:</strong> अवधी, बघेली, छत्तीसगढ़ी</li>
+                    <li><strong>पश्चिमी हिंदी:</strong> ब्रजभाषा, खड़ी बोली, बाँगरू (हरियाणवी), बुंदेली, कन्नौजी</li>
+                    <li><strong>राजस्थानी हिंदी:</strong> मेवाती, मारवाड़ी, हाड़ौती, मेवाड़ी</li>
+                    <li><strong>पहाड़ी हिंदी:</strong> गढ़वाली, कुमाऊँनी, मंडियाली</li>
+                    <li><strong>बिहारी हिंदी:</strong> भोजपुरी, मगही, मैथिली</li>
+                </ul>
+            </li>
+            <li><span class="highlight">विशेष तथ्य:</span> भारत सरकार ने <span class="highlight">14 सितंबर 1949</span> को हिंदी को राजभाषा घोषित किया। इसी कारण हर वर्ष 14 सितंबर को हिंदी दिवस मनाया जाता है।</li>
+        </ul>
+    </div>
+
+    <!-- Q&A Tab -->
+    <div id="qa" class="tab-content">
+        <div class="question-block">
+            <div class="question"><strong>प्रश्न 1:</strong> भाषा किसे कहते हैं?</div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer"><strong>उत्तर:</strong> भाषा वह साधन है, जिसके द्वारा मनुष्य अपने विचारों व भावों का आदान-प्रदान करता है।</div>
+        </div>
+        
+        <div class="question-block">
+            <div class="question"><strong>प्रश्न 2:</strong> लिपि किसे कहते हैं?</div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer"><strong>उत्तर:</strong> मौखिक ध्वनियों को लिखित रूप में प्रकट करने के लिए निश्चित किए गए चिह्नों को 'लिपि' कहते हैं।</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question"><strong>प्रश्न 3:</strong> निम्नलिखित उपभाषाओं के अंतर्गत आने वाली दो-दो बोलियाँ लिखिए: <br><br>
+                (क) पूर्वी हिंदी <br>
+                (ख) पश्चिमी हिंदी <br>
+                (ग) पहाड़ी हिंदी
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer"><strong>उत्तर:</strong> <br>
+                (क) पूर्वी हिंदी — अवधी, बघेली <br>
+                (ख) पश्चिमी हिंदी — ब्रजभाषा, खड़ी बोली <br>
+                (ग) पहाड़ी हिंदी — गढ़वाली, कुमाऊँनी
+            </div>
+        </div>
+    </div>
+
+    <!-- True/False Tab -->
+    <div id="tf" class="tab-content">
+        <h2>निम्नलिखित कथनों के सामने 'सही' या 'गलत' लिखिए:</h2>
+        
+        <div class="question-block">
+            <div class="question">(क) अरबी भाषा की लिपि फ़ारसी है।</div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer">गलत (✗)</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question">(ख) असमिया भाषा द्रविड़ भाषा परिवार के अंतर्गत आती है।</div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer">गलत (✗)</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question">(ग) पहाड़ी हिंदी एक उपभाषा का नाम है।</div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer">सही (✓)</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question">(घ) विद्यापति मैथिली भाषा के कवि थे।</div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer">सही (✓)</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question">(ङ) तुलसीदास ने रामचरितमानस की रचना ब्रजभाषा में की थी।</div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer">गलत (✗) (अवधी में की थी)</div>
+        </div>
+    </div>
+
+    <!-- MCQs Tab -->
+    <div id="mcq" class="tab-content">
+        <h2>सही उत्तर चुनिए:</h2>
+        
+        <div class="question-block">
+            <div class="question">(क) यह लिपि बाईं से दाईं ओर लिखी जाती है—</div>
+            <ul class="options">
+                <li>(1) रोमन</li>
+                <li>(2) अरबी</li>
+                <li>(3) फ़ारसी</li>
+            </ul>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer">(1) रोमन</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question">(ख) हिंदी इन राज्यों में बोली-समझी जाती है—</div>
+            <ul class="options">
+                <li>(1) कर्नाटक, चेन्नई</li>
+                <li>(2) उत्तराखंड, छत्तीसगढ़</li>
+                <li>(3) केरल, गोवा</li>
+            </ul>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer">(2) उत्तराखंड, छत्तीसगढ़</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question">(ग) राजस्थानी भाषा के अंतर्गत ये बोलियाँ आती हैं—</div>
+            <ul class="options">
+                <li>(1) बघेली, मगही</li>
+                <li>(2) मंडियाली, अँगिका</li>
+                <li>(3) मेवाती, हाड़ौती</li>
+            </ul>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer">(3) मेवाती, हाड़ौती</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    function toggleAnswer(btn) {
+        var answerDiv = btn.nextElementSibling;
+        if (answerDiv.style.display === "block") {
+            answerDiv.style.display = "none";
+            btn.textContent = "Reveal Answer";
+        } else {
+            answerDiv.style.display = "block";
+            btn.textContent = "Hide Answer";
+        }
+    }
+</script>
+
+<!-- FIREBASE TIMER INJECTION START -->
+<script type="module">
+  import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+  import { db } from "../../../js/firebase-config.js";
+
+  const activeUser = localStorage.getItem('pushti-active-user') || 'none';
+  if(activeUser !== 'none' && activeUser !== 'parent' && activeUser !== 'admin') {
+      setInterval(async () => {
+          try {
+              const docRef = doc(db, "user_stats", activeUser);
+              const docSnap = await getDoc(docRef);
+              let newTime = 1;
+              if (docSnap.exists()) {
+                  newTime = (docSnap.data().total_time || 0) + 1;
+              }
+              await setDoc(docRef, { total_time: newTime }, { merge: true });
+          } catch(e) {
+              console.log("Error updating timer: ", e);
+          }
+      }, 60000);
+  }
+</script>
+<!-- FIREBASE TIMER INJECTION END -->
+
+</body>
+</html>
