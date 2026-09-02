@@ -65,3 +65,12 @@ body {
 ```
 
 *Rule created: 2026-09-02*
+
+## 2. Checkpoint SOP (Verification Before Completion)
+
+Before confirming to the user that any task (like building a chapter, notes, practice module, or generating content) is complete, the agent MUST perform the following mandatory verification steps:
+
+1. **Data Accuracy Check**: Ensure that the content (e.g., chapter names, video titles, thumbnails, interactive questions) matches the specific subject/chapter being worked on, and is not a leftover artifact from a copied template.
+2. **Visual & UI Verification**: Verify that the Standard Header is present, the Firebase Timer is properly injected, and no placeholder content remains visible in the production file.
+3. **Local Testing**: Check for any obvious syntax errors (e.g., missing closing tags or broken URLs) in the generated HTML.
+4. **Commit & Push**: Ensure all verified files are added, committed, and pushed to the remote repository so the user can see them live.
