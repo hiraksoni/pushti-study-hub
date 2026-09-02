@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 20</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-color: #ffffff;
+            --accent-color: #bb86fc;
+            --btn-bg: rgba(187, 134, 252, 0.2);
+            --btn-hover: rgba(187, 134, 252, 0.4);
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .back-btn {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 5px 10px;
+            background: var(--btn-bg);
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .back-btn:hover {
+            background: var(--btn-hover);
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--btn-hover);
+            border-color: var(--accent-color);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        h1, h2, h3 {
+            color: var(--accent-color);
+        }
+        .reveal-btn {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .reveal-btn:hover {
+            background: rgba(77, 184, 255, 0.1);
+        }
+        .answer {
+            display: none;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.1);
+            border-left: 3px solid #00ff00;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        th, td {
+            border: 1px solid var(--glass-border);
+            padding: 8px;
+            text-align: left;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="../../../hindi_index.html" class="back-btn">&larr; Back</a>
+        <h1>अतिरिक्त व्याकरण - शब्दों का परिवार</h1>
+    </div>
+    
+    <div class="container">        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('notes')">Notes</button>
+            <button class="tab-btn" onclick="openTab('exercises')">Exercises</button>
+        </div>
+        
+        <div id="notes" class="tab-content active">
+            <div class="glass-panel">
+                <h2>परिचय</h2>
+                <p>हिंदी में शब्दों का एक भरा-पूरा परिवार है। ये शब्द अलग-अलग नामों से जाने जाते हैं। आइए, इनका संक्षिप्त परिचय जान लें-</p>
+                <ul>
+                    <li><strong>एकार्थी शब्द</strong> - जिस शब्द का प्रयोग केवल एक ही अर्थ में होता हो, उसे एकार्थी शब्द कहा जाता है।</li>
+                    <li><strong>अनेकार्थी शब्द</strong> - ऐसे शब्द जिनके एक से अधिक अर्थ होते हों, अनेकार्थी शब्द कहलाते हैं।</li>
+                    <li><strong>समानार्थी शब्द</strong> - समान अर्थ वाले शब्दों को समानार्थी या पर्यायवाची शब्द कहा जाता है।</li>
+                    <li><strong>विलोम शब्द</strong> - विलोम अर्थ वाले शब्द विलोम या विपरीतार्थी शब्द कहलाते हैं।</li>
+                    <li><strong>समरूपी भिन्नार्थक शब्द</strong> - जिन शब्दों का उच्चारण लगभग समान हो परंतु उनके अर्थ अलग-अलग हों, उन्हें समरूपी भिन्नार्थक या समश्रुत भिन्नार्थक शब्द कहा जाता है।</li>
+                </ul>
+                <p>इसके अतिरिक्त कुछ ऐसे भी शब्द हैं जिनका प्रयोग अनेक शब्दों के समूह अर्थात् वाक्यांश के लिए होता है। कुछ शब्द जोड़े में लिखे-बोले जाने वाले भी होते हैं जिन्हें शब्द-युग्म कहा जाता है।</p>
+            </div>
+            
+            <div class="glass-panel">
+                <h2>1. एकार्थी शब्द</h2>
+                <div class="grid-2">
+                    <div>
+                        <ul>
+                            <li>अपयश - बदनामी</li>
+                            <li>अश्रु - आँसू</li>
+                            <li>अस्त्र - फेंककर चलाया जाने वाला हथियार</li>
+                            <li>अहंकार - घमंड</li>
+                            <li>आराधना - तपस्या</li>
+                            <li>कृति - रचना</li>
+                            <li>छात्र - विद्यार्थी</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul>
+                            <li>निधन - मृत्यु</li>
+                            <li>बली - बलवान</li>
+                            <li>यश - कीर्ति</li>
+                            <li>यातना - कष्ट</li>
+                            <li>शस्त्र - हाथ में पकड़कर चलाया जाने वाला हथियार</li>
+                            <li>उत्तम - श्रेष्ठ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel">
+                <h2>2. अनेकार्थी शब्द</h2>
+                <ul>
+                    <li><strong>अक्षर:</strong> नष्ट न होने वाला, वर्ण, शिव, ब्रह्मा</li>
+                    <li><strong>अर्थ:</strong> धन, प्रयोजन, कारण</li>
+                    <li><strong>कर:</strong> हाथ, टैक्स</li>
+                    <li><strong>काल:</strong> समय, मृत्यु</li>
+                    <li><strong>आम:</strong> मामूली, एक फल</li>
+                    <li><strong>दंड:</strong> सजा, डंडा</li>
+                </ul>
+            </div>
+
+            <div class="glass-panel">
+                <h2>3. समानार्थी शब्द</h2>
+                <ul>
+                    <li><strong>अतिथि:</strong> आगंतुक, पाहुन, अभ्यागत, मेहमान</li>
+                    <li><strong>अपमान:</strong> तिरस्कार, निरादर, अप्रतिष्ठा, बेइज्ज़ती</li>
+                    <li><strong>अश्व:</strong> हय, घोटक, घोड़ा, तुरंग, वाजि</li>
+                    <li><strong>अंधकार:</strong> तम, तिमिर, अँधेरा</li>
+                    <li><strong>आग:</strong> अग्नि, अनल, पावक, शिखी, आँच</li>
+                </ul>
+            </div>
+
+            <div class="glass-panel">
+                <h2>4. विलोम शब्द</h2>
+                <div class="grid-2">
+                    <div>
+                        <ul>
+                            <li>सजीव × निर्जीव</li>
+                            <li>परतंत्र × स्वतंत्र</li>
+                            <li>उत्थान × पतन</li>
+                            <li>साकार × निराकार</li>
+                            <li>प्रश्न × उत्तर</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul>
+                            <li>अनुकूल × प्रतिकूल</li>
+                            <li>सरल × कठिन</li>
+                            <li>पाप × पुण्य</li>
+                            <li>उदय × अस्त</li>
+                            <li>अपमान × सम्मान</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-panel">
+                <h2>5. समरूपी भिन्नार्थक शब्द</h2>
+                <ul>
+                    <li><strong>अपेक्षा</strong> - तुलना में, इच्छा<br><strong>उपेक्षा</strong> - अनदेखी करना, निरादर</li>
+                    <li><strong>अलि</strong> - भौंरा<br><strong>अली</strong> - सखी</li>
+                    <li><strong>अभिराम</strong> - सुंदर<br><strong>अविराम</strong> - लगातार</li>
+                    <li><strong>आकर</strong> - खान<br><strong>आकार</strong> - आकृति</li>
+                </ul>
+            </div>
+
+            <div class="glass-panel">
+                <h2>6. अनेक शब्दों के लिए एक शब्द</h2>
+                <ul>
+                    <li>जिसकी कोई उपमा न हो - अनुपम</li>
+                    <li>जिसकी चार भुजाएँ हों - चतुर्भुज</li>
+                    <li>जो परिचित न हो - अपरिचित</li>
+                    <li>जीने की प्रबल इच्छा - जिजीविषा</li>
+                    <li>जिसके समान कोई दूसरा न हो - अद्वितीय</li>
+                    <li>जो जन्म से अंधा हो - जन्मांध</li>
+                </ul>
+            </div>
+            
+            <div class="glass-panel">
+                <h2>7. शब्द-युग्म</h2>
+                <p>जब दो शब्द जोड़े में लिखे जाते हैं तब उन्हें शब्द-युग्म कहा जाता है। इनमें दो शब्दों के बीच योजक चिह्न (-) लगाया जाता है।</p>
+                <ul>
+                    <li><strong>एक ही शब्द को दो बार लिखकर बने शब्द-युग्म:</strong> एक-एक, घर-घर, पल-पल, रोम-रोम, कुछ-कुछ, धीरे-धीरे, बैठे-बैठे</li>
+                    <li><strong>मिलते-जुलते भाव वाले शब्दों से बने शब्द-युग्म:</strong> कपड़ा-लत्ता, भरा-पूरा, जला-भुना, मिला-जुला, जीव-जंतु, मोह-माया</li>
+                    <li><strong>विपरीत अर्थ वाले शब्दों से बने शब्द-युग्म:</strong> आदान-प्रदान, सुख-दुख, आयात-निर्यात, लेन-देन, जीवन-मरण, ऊँच-नीच</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="exercises" class="tab-content">
+            <div class="glass-panel">
+                <h2>अभ्यास (Exercises)</h2>
+
+                <h3>क. बोलने की बारी (मौखिक कौशल)</h3>
+                <p><strong>1. बोल-बोलकर पढ़िए और याद कीजिए -</strong></p>
+                <ul>
+                    <li>एकार्थी शब्द = Univocal words</li>
+                    <li>अनेकार्थी शब्द = Words with various meaning</li>
+                    <li>समानार्थी शब्द = Synonyms</li>
+                    <li>विलोम शब्द = Antonyms</li>
+                    <li>समरूपी भिन्नार्थक शब्द = Pair of similar words distinguished (Homonyms)</li>
+                    <li>अनेक शब्दों के लिए एक शब्द = One-word substitute</li>
+                    <li>शब्द-युग्म = Coupled words</li>
+                </ul>
+                <p><strong>2. उत्तर बताइए -</strong></p>
+                <p>(क) समरूपी भिन्नार्थक शब्द से आप क्या समझते हैं?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">जिन शब्दों का उच्चारण लगभग समान हो परंतु उनके अर्थ अलग-अलग हों, उन्हें समरूपी भिन्नार्थक शब्द कहते हैं।</div>
+                
+                <p>(ख) शब्द-युग्म से आप क्या समझते हैं?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">जब दो शब्द जोड़े में लिखे जाते हैं तब उन्हें शब्द-युग्म कहा जाता है।</div>
+
+                <h3>ख. लिखने की बारी (लिखित कौशल)</h3>
+                <p><strong>1. उत्तर लिखिए -</strong></p>
+                <p>(क) एकार्थी और अनेकार्थी शब्दों में क्या अंतर होता है?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">जिस शब्द का प्रयोग केवल एक ही अर्थ में होता हो, उसे एकार्थी शब्द कहते हैं। ऐसे शब्द जिनके एक से अधिक अर्थ होते हों, अनेकार्थी शब्द कहलाते हैं।</div>
+                
+                <p>(ख) समानार्थी और विलोम शब्दों में क्या अंतर होता है?</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">समान अर्थ वाले शब्दों को समानार्थी शब्द कहा जाता है जबकि विपरीत अर्थ वाले शब्दों को विलोम शब्द कहा जाता है।</div>
+
+                <p><strong>2. निम्नलिखित अनेकार्थी शब्दों का एक-एक अर्थ दिया गया है। आप एक अन्य अर्थ लिखिए -</strong></p>
+                <p>(क) काल = समय, ___________</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">मृत्यु</div>
+                <p>(ख) पत्र = पत्ता, ___________</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">चिट्ठी</div>
+
+                <p><strong>3. निम्नलिखित वाक्यांशों के लिए एक शब्द लिखिए -</strong></p>
+                <p>(क) जो किसी के पक्ष में न रहे</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">निष्पक्ष</div>
+                <p>(ख) जो काम कठिन हो</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">दुष्कर</div>
+
+                <h3>ग. सोचने की बारी (भाषा कौशल)</h3>
+                <p><strong>1. प्रत्येक समूह में से जो शब्द अलग हो, उसे रेखांकित कीजिए -</strong></p>
+                <p>(क) अश्व, घोटक, घोड़ा, तरंग</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">तरंग</div>
+                <p>(ख) पुत्री, बेटी, तनय, सुता</p>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">तनय</div>
+
+                <p><strong>2. सही उत्तर चुनिए -</strong></p>
+                <p>(क) अपमान के समानार्थी शब्द हैं -</p>
+                <ol>
+                    <li>तिरस्कार, प्रतिष्ठा</li>
+                    <li>अनादर, सत्कार</li>
+                    <li>तिरस्कार, अनादर</li>
+                </ol>
+                <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+                <div class="answer">3. तिरस्कार, अनादर</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Timer Script -->
+    <script type="module">
+      import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+      import { db } from "../../../js/firebase-config.js";
+
+      const activeUser = localStorage.getItem('pushti-active-user') || 'none';
+      if(activeUser !== 'none' && activeUser !== 'parent' && activeUser !== 'admin') {
+          setInterval(async () => {
+              try {
+                  const docRef = doc(db, "user_stats", activeUser);
+                  const docSnap = await getDoc(docRef);
+                  let newTime = 1;
+                  if (docSnap.exists()) {
+                      newTime = (docSnap.data().total_time || 0) + 1;
+                  }
+                  await setDoc(docRef, { total_time: newTime }, { merge: true });
+              } catch(e) {
+                  console.log("Error updating timer: ", e);
+              }
+          }, 60000);
+      }
+    </script>
+    <script>
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function toggleAnswer(btn) {
+            let answer = btn.nextElementSibling;
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+                btn.textContent = 'Reveal Answer';
+            } else {
+                answer.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            }
+        }
+    </script>
+</body>
+</html>
