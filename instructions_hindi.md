@@ -7,7 +7,7 @@ You are tasked with converting images of a Hindi textbook chapter into an intera
 2. The page MUST have a `<title>` tag with the Chapter Name.
 3. The page MUST include the standard sticky header. Use the exact code below for the header:
 ```html
-<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--bg-card); position: sticky; top: 0; z-index: 1000;">
+<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--bg-main); position: sticky; top: 0; z-index: 1000;">
     <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500; color: var(--text-main);">
         <a href="../../index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
             <i class="fas fa-home"></i> Home
@@ -68,3 +68,4 @@ Save the HTML file in: `d:\Users\expor\Downloads\Codes\chapters\hindi\hindi_ch[X
 Do NOT place it in the `source_materials` folder. Place it in `chapters\hindi\`.
 
 If you are unsure of how to style things, read `d:\Users\expor\Downloads\Codes\chapters\sanskrit\sanskrit_ch3.html` as a template for translation grids and exercises, but MAKE SURE you use the `site-header` and `tabs-wrapper` specifications provided above.
+
