@@ -157,6 +157,23 @@
   .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(79, 70, 229, 0.9); border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
   .play-icon svg { width: 8px; height: 8px; fill: white; margin-left: 2px; }
 </style>
+
+<style>
+[data-theme="light"] {
+    --bg-main: #f8fafc !important;
+    --bg-card: #ffffff !important;
+    --text-main: #0f172a !important;
+    --text-muted: #475569 !important;
+    --accent: #6366f1 !important;
+    --border: #e2e8f0 !important;
+    --surface: #f1f5f9 !important;
+}
+[data-theme="light"] .site-header {
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+[data-theme="light"] .icon-btn { color: #0f172a !important; }
+</style>
 </head>
 <body>
 
@@ -717,6 +734,39 @@ window.onload = function() {
 </script>
 <!-- FIREBASE TIMER INJECTION END -->
 
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const themeBtn = document.querySelector('.theme-toggle');
+    if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
+        themeBtn.classList.add('handled-by-inline');
+        themeBtn.addEventListener('click', (e) => {
+            // Prevent app.js from also firing if it's there
+            e.stopImmediatePropagation();
+            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', newTheme);
+            const icon = themeBtn.querySelector('i');
+            if(icon) {
+                icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+            localStorage.setItem('pushti-theme', newTheme);
+            
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ theme: newTheme }, '*');
+            }
+        });
+        const savedTheme = localStorage.getItem('pushti-theme');
+        if(savedTheme) {
+            document.body.setAttribute('data-theme', savedTheme);
+            const icon = themeBtn.querySelector('i');
+            if(icon) {
+                icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+        }
+    }
+});
+</script>
 </body>
 </html>
 
@@ -906,5 +956,38 @@ totalMax = mcqBook.length + fillBook.length + tfBook.length;
 </script>
 <!-- FIREBASE TIMER INJECTION END -->
 
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const themeBtn = document.querySelector('.theme-toggle');
+    if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
+        themeBtn.classList.add('handled-by-inline');
+        themeBtn.addEventListener('click', (e) => {
+            // Prevent app.js from also firing if it's there
+            e.stopImmediatePropagation();
+            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', newTheme);
+            const icon = themeBtn.querySelector('i');
+            if(icon) {
+                icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+            localStorage.setItem('pushti-theme', newTheme);
+            
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ theme: newTheme }, '*');
+            }
+        });
+        const savedTheme = localStorage.getItem('pushti-theme');
+        if(savedTheme) {
+            document.body.setAttribute('data-theme', savedTheme);
+            const icon = themeBtn.querySelector('i');
+            if(icon) {
+                icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+        }
+    }
+});
+</script>
 </body>
 </html>

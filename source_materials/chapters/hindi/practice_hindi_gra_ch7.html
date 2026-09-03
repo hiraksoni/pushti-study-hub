@@ -25,6 +25,23 @@
         .answer-btn { background: #4db8ff; color: #000; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; margin-top: 0.5rem; font-weight: bold; }
         .answer { display: none; margin-top: 0.5rem; color: #a5d6a7; padding: 0.8rem; background: rgba(0,0,0,0.2); border-radius: 4px; border-left: 4px solid #4db8ff; }
     </style>
+
+<style>
+[data-theme="light"] {
+    --bg-main: #f8fafc !important;
+    --bg-card: #ffffff !important;
+    --text-main: #0f172a !important;
+    --text-muted: #475569 !important;
+    --accent: #6366f1 !important;
+    --border: #e2e8f0 !important;
+    --surface: #f1f5f9 !important;
+}
+[data-theme="light"] .site-header {
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+[data-theme="light"] .icon-btn { color: #0f172a !important; }
+</style>
 </head>
 <body>
     <header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--surface); position: sticky; top: 0; z-index: 1000;">
@@ -197,5 +214,38 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
     </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const themeBtn = document.querySelector('.theme-toggle');
+    if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
+        themeBtn.classList.add('handled-by-inline');
+        themeBtn.addEventListener('click', (e) => {
+            // Prevent app.js from also firing if it's there
+            e.stopImmediatePropagation();
+            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', newTheme);
+            const icon = themeBtn.querySelector('i');
+            if(icon) {
+                icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+            localStorage.setItem('pushti-theme', newTheme);
+            
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ theme: newTheme }, '*');
+            }
+        });
+        const savedTheme = localStorage.getItem('pushti-theme');
+        if(savedTheme) {
+            document.body.setAttribute('data-theme', savedTheme);
+            const icon = themeBtn.querySelector('i');
+            if(icon) {
+                icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+        }
+    }
+});
+</script>
 </body>
 </html>
