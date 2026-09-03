@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4. यह भी एक परीक्षा</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #121212;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent: #8B5CF6;
+            --border: rgba(255, 255, 255, 0.1);
+            --surface: #1e1e1e;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tabs-wrapper { 
+            position: sticky !important; 
+            top: 61px !important; 
+            z-index: 990 !important; 
+            background: var(--bg-main) !important; 
+            border-bottom: 1px solid var(--border); 
+            padding-top: 10px; 
+            padding-bottom: 10px; 
+            margin-top: 0 !important; 
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--surface);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .translation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .hindi-text {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .english-text {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #d1d5db;
+        }
+
+        .reveal-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .answer {
+            background: rgba(139, 92, 246, 0.2);
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent);
+            margin-top: 10px;
+            color: #e5e7eb;
+        }
+
+        .question-block {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .character {
+            font-weight: bold;
+            color: #a78bfa;
+        }
+        
+        h2, h3 {
+            color: var(--accent);
+        }
+        
+        .mcq-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .mcq-option {
+            background: var(--surface);
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--bg-card); position: sticky; top: 0; z-index: 1000;">
+    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500; color: var(--text-main);">
+        <a href="../../index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+            <i class="fas fa-home"></i> Home
+        </a>
+        <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <a href="../../hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a><span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <span style="color:var(--accent); font-weight:600;">Chapter 4</span>
+    </div>
+    
+    <div class="header-right" style="display:flex; align-items:center; gap: 20px;">
+        <div class="search-container" style="display:flex; align-items:center;">
+            <button id="global-search-btn" aria-label="Search" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; padding:5px; display:flex; align-items:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+            <input id="global-search-input" type="text" placeholder="Search..." style="display:none; margin-left:10px; padding: 6px 15px; border-radius:20px; border:1px solid var(--border); background:rgba(0,0,0,0.2); color:white; width: 180px;">
+        </div>
+        
+        <nav class="header-nav" style="display:flex; align-items:center; gap: 15px;">
+            <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:white; cursor:pointer; font-size:1.2rem;">
+                <i class="fas fa-moon"></i>
+            </button>
+            
+            <a href="../../timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
+            <a href="../../midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
+
+            <div class="user-profile-wrapper" style="position:relative;">
+                <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:40px; height:40px; border:2px solid var(--accent);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
+                    <img src="https://ui-avatars.com/api/?name=Pushti&background=8B5CF6&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div id="global-dropdown" style="display:none; position:absolute; right:0; top:50px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:15px; width:220px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); flex-direction:column; gap:12px; z-index:1001;">
+                    <div style="text-align:center; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
+                        <div style="font-weight:700; font-size:1.1rem; color:var(--text-primary);">Pushti</div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.9rem; font-weight:500;">Student</span>
+                        <label class="switch" style="position:relative; display:inline-block; width:34px; height:20px;">
+                            <input type="checkbox" id="global-role-checkbox" style="opacity:0; width:0; height:0;">
+                            <span class="slider" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--border); transition:.4s; border-radius:34px;"></span>
+                        </label>
+                        <span style="font-size:0.9rem; font-weight:500;">Parent</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="tabs-wrapper">
+    <button class="tab-btn active" onclick="openTab(event, 'ChapterText')">Chapter Text</button>
+    <button class="tab-btn" onclick="openTab(event, 'Vocabulary')">Vocabulary</button>
+    <button class="tab-btn" onclick="openTab(event, 'Exercises')">Exercises</button>
+    <button class="tab-btn" onclick="openTab(event, 'Grammar')">Grammar</button>
+</div>
+
+<div id="ChapterText" class="tab-content active">
+    <h2>4. यह भी एक परीक्षा (मानवता की सीख)</h2>
+    
+    <div class="translation-grid">
+        <div class="hindi-text">
+            <h3>प्रथम दृश्य</h3>
+            <p>(पर्दा उठता है। बाज़ार का दृश्य, कुछ लोग इधर-उधर आ जा रहे हैं)</p>
+            <p><span class="character">एक बालक:</span> (कंधे पर थैला, हाथ में ब्रश) बूट पॉलिश! बूट पॉलिश! (एक राहगीर से) बाबूजी! जूते चमका दूँ, शानदार कर दूँगा।</p>
+            <p><span class="character">राहगीर:</span> नहीं रे! परे हट।</p>
+            <p><span class="character">बालक:</span> (बूट पकड़कर) आईना बना दूँगा जूतों को। अपनी शक्ल देखकर फिर पैसा देना बाबू जी! सिर्फ दो रुपए।</p>
+            <p><span class="character">राहगीर:</span> अरे हट! जोंक की तरह चिपक जाता है। भाग। (राहगीर के पीछे बालक चला जाता है- दूसरी ओर से एक हॉकर (Hawker) अखबारों का बंडल लिए आता है।)</p>
+        </div>
+        <div class="english-text">
+            <h3>Scene 1</h3>
+            <p>(The curtain rises. A market scene, some people are walking here and there)</p>
+            <p><span class="character">A Boy:</span> (With a bag on his shoulder and a brush in his hand) Boot polish! Boot polish! (To a passerby) Sir! Let me shine your shoes, I will make them look splendid.</p>
+            <p><span class="character">Passerby:</span> No! Move away.</p>
+            <p><span class="character">Boy:</span> (Holding the boot) I will make your shoes like a mirror. Give money only after seeing your face in them, Sir! Just two rupees.</p>
+            <p><span class="character">Passerby:</span> Hey, move! You stick like a leech. Go away. (The boy follows the passerby - from the other side a hawker comes holding a bundle of newspapers.)</p>
+        </div>
+    </div>
+
+    <div class="translation-grid">
+        <div class="hindi-text">
+            <p><span class="character">हॉकर:</span> (अखबार हिलाते हुए) आज की ताज़ा खबर। भूकंप से गिरे मकानों का नवनिर्माण। छात्राओं की फीस माफ़! स्कूल के लड़कों ने डाकू पकड़ा। आज की ताज़ा खबरें! (कुछ लोग अखबार खरीदने लगते हैं- दूसरी ओर से चाय वाला बालक आता है। एक हाथ में बाल्टी जिसमें कप रखे हैं- एक हाथ में केतली।)</p>
+            <p><span class="character">चायवाला:</span> चाय गरम! चाय गरम! चाय। (एक बालक अखबार पढ़ता हुआ चलता-चलता चायवाले से टकरा जाता है। बाल्टी छिटककर गिरती है दो-तीन कप बिखर जाते हैं)</p>
+            <p><span class="character">चायवाला:</span> अंधा है क्या! देखकर नहीं चलता। मेरे कप टूट गए।</p>
+            <p><span class="character">बालक:</span> चल, चल फुट यहाँ से! पैंट खराब कर दिया और ऊपर से रोब जमा रहा है। (दोनों लड़ते झगड़ते हैं। दूसरी ओर से एक बूढ़ा अंधा भिखारी बैसाखी के सहारे आता है। कटोरे में कुछ पकौड़ियाँ, अमरुद, रोटी के टुकड़े, रेज़गारी आदि हैं।)</p>
+        </div>
+        <div class="english-text">
+            <p><span class="character">Hawker:</span> (Waving the newspaper) Today's latest news. Reconstruction of houses destroyed by earthquake. Girls' school fees waived! School boys caught a dacoit. Today's latest news! (Some people start buying newspapers - from the other side comes a tea-selling boy. In one hand a bucket with cups - in the other hand a kettle.)</p>
+            <p><span class="character">Tea-seller:</span> Hot tea! Hot tea! Tea. (A boy reading a newspaper while walking collides with the tea-seller. The bucket falls away and two-three cups scatter)</p>
+            <p><span class="character">Tea-seller:</span> Are you blind? Can't you see where you're going. My cups got broken.</p>
+            <p><span class="character">Boy:</span> Get lost from here! You ruined my pants and on top of that you are bossing me around. (Both fight and argue. From the other side an old blind beggar comes leaning on crutches. In his bowl there are some fritters, guava, pieces of bread, small coins etc.)</p>
+        </div>
+    </div>
+
+    <div class="translation-grid">
+        <div class="hindi-text">
+            <p><span class="character">भिखारी:</span> बाबूजी! भूखा हूँ! मेरा सब कुछ लुट गया! भगवान तुम्हें खूब बरकत देगा। भगवान तुम्हारा भला करेगा।</p>
+            <p><span class="character">एक बालक:</span> (हाथ में किताबें) परे हट! इधर तो स्कूल को देर हो रही है और यह सामने आ रहा है। (जेब में हाथ डालकर पैसे निकाल, गिनता है।) यहाँ तो पिक्चर की टिकट में भी अठन्नी कम है! तू देगा?</p>
+            <p><span class="character">भिखारी:</span> बेटा! मैं अंधा हूँ। बेसहारा हूँ। मैं भला तुम्हें क्या दे सकता हूँ। सबको देनेवाला तो वह नीली छतरीवाला है। (एक बालक साइकिल पर आकर बूढ़े से टकरा जाता है। बूढ़ा गिर पड़ता है। लकड़ी और कटोरा दूर जा गिरता है।)</p>
+            <p><span class="character">भिखारी:</span> (चीखकर) हाय रे, मेरी टांग टूट गई रे? अब क्या करूँ रे?</p>
+        </div>
+        <div class="english-text">
+            <p><span class="character">Beggar:</span> Sir! I am hungry! I have lost everything! God will give you a lot of prosperity. God will bless you.</p>
+            <p><span class="character">A Boy:</span> (With books in hand) Move away! Here I am already getting late for school and he comes in front. (Puts his hand in his pocket, takes out money and counts.) Here I am short of fifty paise even for a movie ticket! Will you give?</p>
+            <p><span class="character">Beggar:</span> Son! I am blind. Helpless. What can I possibly give you. The one who gives to everyone is the one with the blue umbrella (God). (A boy on a bicycle comes and hits the old man. The old man falls down. His stick and bowl fall far away.)</p>
+            <p><span class="character">Beggar:</span> (Screaming) Oh! My leg is broken! What do I do now?</p>
+        </div>
+    </div>
+
+    <div class="translation-grid">
+        <div class="hindi-text">
+            <p><span class="character">साइकिलवाला:</span> (कपड़े झाड़कर साइकिल उठाता है) अंधा है क्या? सामने आ गया? इन भिखारियों ने नाक में दम कर रखा है, स्कूल की देर करवा देगा! परीक्षा का पहला दिन है। (साइकिल पर जाता है)</p>
+            <p><span class="character">भिखारी:</span> (पड़ा-पड़ा) हाय भगवान! मेरी टांग टूट गई रे। अरे कोई मुझे उठाओ। कोई तो भला-मानुष मुझे सड़क के किनारे बिठा दो रे! ऐ लाल! ऐ बाबू! मुझे सड़क के एक तरफ ले चलो रे? (एक विद्यार्थी आता है हाथ में बस्ता लिए)</p>
+            <p><span class="character">विद्यार्थी:</span> अरे! क्या हो गया बूढ़े बाबा? (टांग देखकर) अरे रे....... चोट ज्यादा लगी है। (कटोरे में पैसे-रोटी आदि डाल कर देता है) लो बाबा! यह रहा तुम्हारा कटोरा। इसमें सात रुपए हैं।</p>
+            <p><span class="character">भिखारी:</span> (कटोरा लेकर कराहता हुआ) जीते रहो बेटा। भगवान तुम्हें अच्छे नंबर से उत्तीर्ण करें। मुझ अंधे की लकड़ी कहाँ है? बेटे! मुझे सड़क के किनारे कहीं पेड़ के नीचे बिठा दो, भला होगा तुम्हारा?</p>
+        </div>
+        <div class="english-text">
+            <p><span class="character">Cyclist:</span> (Dusting his clothes and picking up his cycle) Are you blind? Came right in front? These beggars have become a nuisance, he will make me late for school! It's the first day of exams. (Leaves on his bicycle)</p>
+            <p><span class="character">Beggar:</span> (Lying there) Oh God! My leg is broken. Hey someone lift me up. Someone good soul please make me sit on the side of the road! Oh son! Oh sir! Take me to one side of the road? (A student arrives with a bag in his hand)</p>
+            <p><span class="character">Student:</span> Oh! What happened old baba? (Seeing the leg) Oh no....... the injury is deep. (Puts money, bread etc. in the bowl and gives it) Here baba! This is your bowl. There are seven rupees in it.</p>
+            <p><span class="character">Beggar:</span> (Taking the bowl, groaning) May you live long son. May God pass you with good marks. Where is my blind man's stick? Son! Make me sit somewhere under a tree by the side of the road, it will be good for you?</p>
+        </div>
+    </div>
+
+    <div class="translation-grid">
+        <div class="hindi-text">
+            <p><span class="character">विद्यार्थी:</span> (लकड़ी थमाकर) लो यह रही लकड़ी। (स्कूल की घंटी सुनाई देती है) अरे! पहली घंटी लग गई। आज परीक्षा का पहला दिन है। किंतु..... खैर (बूढ़े से) बाबा, उठो। तुम्हें फुटपाथ पर बिठा दूँ। अरे तुम्हारे पाँव में तो गहरी चोट है- खून बह रहा है। (कलाई की घड़ी देखकर सोचता हुआ स्वयं से) उधर परीक्षा का समय, इधर यह अंधा बाबा? क्या करूँ?.. (अंतरात्मा की आवाज़ गूँजती है- इंसान की सेवा सबसे पहला कर्तव्य है, इंसान की सेवा सबसे बड़ा धर्म है।)</p>
+            <p><span class="character">विद्यार्थी:</span> (बाबा से) चलो बाबा तुम्हें अस्पताल तक पहुँचा दूँ। (विद्यार्थी सहारा देकर ले जाता है)</p>
+        </div>
+        <div class="english-text">
+            <p><span class="character">Student:</span> (Handing over the stick) Here is the stick. (School bell rings) Oh! The first bell has rung. Today is the first day of the exam. But..... anyway (To the old man) Baba, get up. Let me make you sit on the footpath. Oh, you have a deep cut on your foot- it is bleeding. (Looking at his wristwatch and thinking to himself) On one side it is exam time, on the other side this blind baba? What should I do?.. (Inner voice echoes - service to humanity is the first duty, service to humanity is the greatest religion.)</p>
+            <p><span class="character">Student:</span> (To Baba) Come Baba, let me drop you to the hospital. (The student takes him supporting him)</p>
+        </div>
+    </div>
+
+    <div class="translation-grid">
+        <div class="hindi-text">
+            <h3>दूसरा दृश्य</h3>
+            <p>(प्रधानाध्यापक कक्ष)</p>
+            <p>(प्रधानाध्यापक की तख्ती के पीछे प्रधानाध्यापक जी कुछ लिखते हुए। एक अध्यापक का आना)</p>
+            <p><span class="character">अध्यापक:</span> सर परीक्षा शुरू हो गई और देवेंद्र सेन अभी तक अनुपस्थित है।</p>
+            <p><span class="character">प्रधानाध्यापक:</span> क्या! देवेंद्र! क्या बात हुई वह तो मेधावी छात्र है। अरे भाई किसी को स्कूटर लेकर भेजो, लेकिन ठहरो। मेरे पास फोन नंबर है। पहले पता कर लेता हूँ। (फोन उठाते हैं) हेलो। हेलो। हेलो। हाँ, मैं प्रधानाध्यापक बोल रहा हूँ। अरे भाई, देवेंद्र की परीक्षा शुरू हो गई है। आज पहला दिन है। वह आया क्यों नहीं अभी तक? हैं! घर से निकले घंटाभर हो गया? हाँ, परीक्षा शुरू हुए दस मिनट से ज्यादा हो गए हैं। पता लगाओ भाई। वह तो प्रथम श्रेणी में उत्तीर्ण होने वालों में से है। (फोन रखकर) उसे घर से निकले बहुत समय हो गया है। आ जाना चाहिए। देखिए वह आ जाए तो मेरे पास भेजना। वैसे उसके साथ वाले लड़के से मालूम करो कहीं एक्सीडेंट-वेक्सीडेंट तो नहीं हो गया। (अध्यापक का जाना। कुछ देर बाद देवेंद्र का हाँफते हुए आना)</p>
+        </div>
+        <div class="english-text">
+            <h3>Scene 2</h3>
+            <p>(Headmaster's office)</p>
+            <p>(The headmaster is writing something behind his nameplate. A teacher enters)</p>
+            <p><span class="character">Teacher:</span> Sir, the exam has started and Devendra Sen is still absent.</p>
+            <p><span class="character">Headmaster:</span> What! Devendra! What happened, he is a brilliant student. Brother, send someone on a scooter, but wait. I have his phone number. Let me find out first. (Picks up the phone) Hello. Hello. Hello. Yes, I am the headmaster speaking. Brother, Devendra's exam has started. Today is the first day. Why hasn't he come yet? Huh! It's been an hour since he left home? Yes, it's been more than ten minutes since the exam started. Find out brother. He is among those who pass in the first division. (Puts down the phone) It's been a long time since he left home. He should have arrived. Look, if he comes, send him to me. By the way, find out from the boy who comes with him, lest he had an accident. (Teacher leaves. After a while Devendra arrives panting)</p>
+        </div>
+    </div>
+
+    <div class="translation-grid">
+        <div class="hindi-text">
+            <p><span class="character">देवेंद्र:</span> क्या मैं अंदर आ सकता हूँ, श्रीमान्।</p>
+            <p><span class="character">प्रधानाध्यापक:</span> अरे! देवेंद्र इतनी लेट? कहाँ थे अब तक?</p>
+            <p><span class="character">देवेंद्र:</span> (घबराया स्वर) अस्पताल सर?</p>
+            <p><span class="character">प्रधानाध्यापक:</span> (कड़ककर) अस्पताल? परीक्षा क्या वहाँ हो रही थी? और यह पैंट पर खून के धब्बे? कहीं गिर पड़े थे क्या?</p>
+            <p><span class="character">देवेंद्र:</span> जी नहीं। एक अंधे बूढ़े भिखारी को किसी ने साइकिल से टक्कर मार दी। उसकी टांग ज्यादा ज़ख्मी हो गई। वह सड़क के बीचों-बीच पड़ा कराह रहा था। उसे तुरंत इलाज की जरूरत थी इसलिए अस्पताल में भर्ती करवा कर आ रहा हूँ। क्षमा चाहता हूँ सर!</p>
+            <p><span class="character">प्रधानाध्यापक:</span> शाबाश! यह जानते हुए भी कि परीक्षा का समय है, तुमने अपना कर्तव्य निभाया। इंसान की जिंदगी इस परीक्षा से बहुत बड़ी और कीमती होती है। जाओ, परीक्षा में बैठो, कमरा नंबर चार में तुम्हारा रोल नंबर है। (देवेंद्र जाता है। प्रधानाध्यापक फोन उठाते हैं)</p>
+            <p><span class="character">प्रधानाध्यापक:</span> (फोन पर) हेलो। सेन साहब? हाँ, देवेंद्र आ गया। रास्ते में किसी बूढ़े का एक्सीडेंट हो गया था, उसे अस्पताल भर्ती करवा कर आया है। अरे भाई इस परीक्षा में तो पास होगा ही, किंतु इससे भी बड़ी इंसानियत की परीक्षा में पास हो गया है। ऐसे होनहार सपूत के पिता हैं आप। बधाई हो!</p>
+            <p><strong>- सुरेंद्र अंचल</strong></p>
+            <p><strong>सीख-</strong> प्रस्तुत पाठ से यह सीख मिलती है कि हमें किसी जरूरतमंद की सहायता निस्वार्थ भाव से करनी चाहिए। लोभ का भाव मन में नहीं रखना चाहिए। उदारता और मानवता बड़ी मूल्यवान चीज है। इसे सदैव अपने स्वभाव में मुख्य रूप से बनाए रखना चाहिए।</p>
+        </div>
+        <div class="english-text">
+            <p><span class="character">Devendra:</span> May I come in, Sir.</p>
+            <p><span class="character">Headmaster:</span> Oh! Devendra so late? Where were you till now?</p>
+            <p><span class="character">Devendra:</span> (Nervous tone) Hospital Sir?</p>
+            <p><span class="character">Headmaster:</span> (Strictly) Hospital? Was the exam happening there? And what are these blood stains on your pants? Did you fall down somewhere?</p>
+            <p><span class="character">Devendra:</span> No sir. Someone hit an old blind beggar with a bicycle. His leg got badly injured. He was lying groaning in the middle of the road. He needed immediate treatment so I am coming after getting him admitted in the hospital. I apologize Sir!</p>
+            <p><span class="character">Headmaster:</span> Well done! Even knowing that it is exam time, you performed your duty. Human life is much bigger and more precious than this exam. Go, sit in the exam, your roll number is in room number four. (Devendra goes. Headmaster picks up the phone)</p>
+            <p><span class="character">Headmaster:</span> (On phone) Hello. Mr. Sen? Yes, Devendra has arrived. An old man had an accident on the way, he has come after admitting him in the hospital. Oh brother, he will definitely pass in this exam, but he has passed in an even bigger exam of humanity. You are the father of such a promising good son. Congratulations!</p>
+            <p><strong>- Surendra Anchal</strong></p>
+            <p><strong>Moral-</strong> The lesson learned from this text is that we should help a needy person selflessly. One should not keep feelings of greed in mind. Generosity and humanity are very valuable things. We should always maintain it as the main part of our nature.</p>
+        </div>
+    </div>
+</div>
+
+<div id="Vocabulary" class="tab-content">
+    <h2>शब्दार्थ (Word Meanings)</h2>
+    <div class="translation-grid">
+        <div class="hindi-text">
+            <ul>
+                <li><strong>राहगीर</strong> - मुसाफिर</li>
+                <li><strong>आईना</strong> - दर्पण</li>
+                <li><strong>शक्ल</strong> - चेहरा</li>
+                <li><strong>नवनिर्माण</strong> - फिर से बनाना, नई रचना</li>
+                <li><strong>मेधावी</strong> - होशियार</li>
+                <li><strong>अनुपस्थित</strong> - गैर हाज़िर</li>
+                <li><strong>होनहार</strong> - अच्छे लक्षणों वाला</li>
+                <li><strong>कर्तव्य</strong> - फर्ज़</li>
+                <li><strong>कराहना</strong> - दर्द भरी आवाज़ से चिल्लाना</li>
+                <li><strong>बस्ता</strong> - थैला</li>
+                <li><strong>बरकत</strong> - लाभ</li>
+            </ul>
+        </div>
+        <div class="hindi-text">
+            <ul>
+                <li><strong>बेसहारा</strong> - निःसहाय</li>
+                <li><strong>टांग</strong> - पैर</li>
+                <li><strong>सपूत</strong> - लायक</li>
+                <li><strong>ज़ख्मी</strong> - घायल</li>
+                <li><strong>एक्सीडेंट</strong> - दुर्घटना</li>
+                <li><strong>इंसानियत</strong> - मानवता</li>
+                <li><strong>जोंक</strong> - खून पीने वाला जंतु</li>
+                <li><strong>रेज़गारी</strong> - छोटे सिक्के</li>
+                <li><strong>हॉकर</strong> - फेरी वाला</li>
+                <li><strong>उत्तीर्ण</strong> - पारित/ पारंगत</li>
+                <li><strong>श्रेणी</strong> - कतार/ पंक्ति</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>मुहावरे (Idioms)</h2>
+    <div class="question-block">
+        <ul>
+            <li><strong>रोब जमाना</strong> - अपना प्रभाव दिखाना</li>
+            <li><strong>नाक में दम करना</strong> - परेशान करके रखना</li>
+        </ul>
+    </div>
+</div>
+
+<div id="Exercises" class="tab-content">
+    <h2>अभ्यास (Exercises)</h2>
+    
+    <h3>वस्तुनिष्ठ प्रश्न (MCQs)</h3>
+    
+    <div class="question-block">
+        <p><strong>(क) 'यह भी एक परीक्षा' पाठ का प्रकार क्या है?</strong></p>
+        <div class="mcq-options">
+            <span class="mcq-option">कहानी</span>
+            <span class="mcq-option">उपन्यास</span>
+            <span class="mcq-option">एकांकी</span>
+            <span class="mcq-option">निबंध</span>
+        </div>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">एकांकी</div>
+    </div>
+
+    <div class="question-block">
+        <p><strong>(ख) पाठ के पहले दृश्य का स्थल कहाँ है?</strong></p>
+        <div class="mcq-options">
+            <span class="mcq-option">मेले में</span>
+            <span class="mcq-option">प्रदर्शनी में</span>
+            <span class="mcq-option">दुकान में</span>
+            <span class="mcq-option">बाज़ार में</span>
+        </div>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">बाज़ार में</div>
+    </div>
+
+    <div class="question-block">
+        <p><strong>(ग) चाय गिरने से बालक का क्या खराब हो गया था?</strong></p>
+        <div class="mcq-options">
+            <span class="mcq-option">शर्ट</span>
+            <span class="mcq-option">पैंट</span>
+            <span class="mcq-option">बेग</span>
+            <span class="mcq-option">जूते</span>
+        </div>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">पैंट</div>
+    </div>
+
+    <div class="question-block">
+        <p><strong>(घ) देवेंद्र कैसा छात्र था?</strong></p>
+        <div class="mcq-options">
+            <span class="mcq-option">चालक</span>
+            <span class="mcq-option">आज्ञाकारी</span>
+            <span class="mcq-option">नियमित</span>
+            <span class="mcq-option">मेधावी</span>
+        </div>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">मेधावी</div>
+    </div>
+
+    <h3>किसने, किससे कहा?</h3>
+    <div class="question-block">
+        <p><strong>(क) अंधा है क्या? सामने आ गया?</strong></p>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">चायवाले ने एक बालक से</div>
+    </div>
+    <div class="question-block">
+        <p><strong>(ख) आईना बना दूँगा! जूतों को।</strong></p>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">बूट पॉलिशवाले ने राहगीर से</div>
+    </div>
+    <div class="question-block">
+        <p><strong>(ग) भगवान तुम्हें अच्छे नंबर से उत्तीर्ण करें।</strong></p>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">भिखारी ने देवेंद्र से</div>
+    </div>
+    <div class="question-block">
+        <p><strong>(घ) परीक्षा का समय है, तुमने अपना कर्तव्य निभाया।</strong></p>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">प्रधानाध्यापक ने देवेंद्र से</div>
+    </div>
+
+    <h3>लघु उत्तरीय प्रश्न</h3>
+    <div class="question-block">
+        <p><strong>(क) देवेन्द्र ने परीक्षा होने के बावजूद भी भिखारी की मदद क्यों की?</strong></p>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">क्योंकि उसके अनुसार इंसान की सेवा सबसे पहला कर्तव्य और सबसे बड़ा धर्म है।</div>
+    </div>
+    <div class="question-block">
+        <p><strong>(ख) प्रधानाध्यापक ने देवेन्द्र के पिता को बधाई क्यों दी?</strong></p>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">क्योंकि देवेन्द्र न केवल स्कूल की परीक्षा में बल्कि इंसानियत की बड़ी परीक्षा में भी पास हो गया था।</div>
+    </div>
+
+    <h3>दीर्घ उत्तरीय प्रश्न</h3>
+    <div class="question-block">
+        <p><strong>(क) बूट पॉलिशवाले ने राहगीर से क्या कहा?</strong></p>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">उसने कहा: "बाबूजी! जूते चमका दूँ, शानदार कर दूँगा। आईना बना दूँगा जूतों को। अपनी शक्ल देखकर फिर पैसा देना बाबू जी! सिर्फ दो रुपए।"</div>
+    </div>
+    <div class="question-block">
+        <p><strong>(ख) भिखारी के कटोरे में क्या-क्या था?</strong></p>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">भिखारी के कटोरे में कुछ पकौड़ियाँ, अमरुद, रोटी के टुकड़े और रेज़गारी आदि थे।</div>
+    </div>
+    <div class="question-block">
+        <p><strong>(ग) देवेन्द्र ने भिखारी के लिए क्या किया?</strong></p>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">देवेन्द्र ने भिखारी को लकड़ी थमाई, उसके कटोरे में पैसे और रोटी डाली, उसे सहारा देकर उठाया और परीक्षा छोड़कर पहले उसे अस्पताल पहुँचाकर भर्ती करवाया।</div>
+    </div>
+    <div class="question-block">
+        <p><strong>(घ) प्रधानाध्यापक ने देवेन्द्र के घर फोन क्यों लगाया?</strong></p>
+        <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+        <div class="answer" style="display:none;">क्योंकि देवेन्द्र एक मेधावी छात्र था और परीक्षा शुरू होने के दस मिनट बाद तक भी वह स्कूल नहीं पहुँचा था। वे जानना चाहते थे कि कहीं उसके साथ कोई दुर्घटना तो नहीं हो गई।</div>
+    </div>
+</div>
+
+<div id="Grammar" class="tab-content">
+    <h2>व्यावहारिक व्याकरण (Grammar)</h2>
+    
+    <h3>1. विलोम शब्द लिखिए-</h3>
+    <div class="question-block">
+        <ul>
+            <li>भिखारी × दानी (या अमीर)</li>
+            <li>बूढ़ा × जवान</li>
+            <li>नव × पुरातन (या जीर्ण)</li>
+            <li>सपूत × कपूत</li>
+            <li>उपस्थित × अनुपस्थित</li>
+            <li>मानुष × पशु (या दानव)</li>
+        </ul>
+    </div>
+
+    <h3>2. पर्यायवाची शब्द लिखिए-</h3>
+    <div class="question-block">
+        <ul>
+            <li>मेधावी - बुद्धिमान, होशियार</li>
+            <li>राहगीर - पथिक, मुसाफिर</li>
+            <li>परीक्षा - इम्तिहान, परख</li>
+            <li>जिंदगी - जीवन, जान</li>
+            <li>खून - रक्त, रुधिर</li>
+            <li>अध्यापक - शिक्षक, गुरु</li>
+        </ul>
+    </div>
+
+    <h3>संज्ञा (Noun)</h3>
+    <div class="question-block">
+        <p>किसी भी वस्तु, व्यक्ति या स्थान के नाम को संज्ञा कहते हैं। संज्ञा के तीन भेद हैं-</p>
+        <ol>
+            <li><strong>व्यक्तिवाचक संज्ञा:</strong> किसी विशेष व्यक्ति, विशेष स्थान और विशेष वस्तु के नाम को व्यक्तिवाचक संज्ञा कहते हैं। जैसे- अकबर, होली, गोदान, रामायण।</li>
+            <li><strong>जातिवाचक संज्ञा:</strong> जिस शब्द से किसी एक व्यक्ति या वस्तु का बोध न हो अपितु उसकी समस्त जाति का बोध हो, उसे जातिवाचक संज्ञा कहते हैं। जैसे- फल, पुस्तक, शहर, लड़का आदि।</li>
+            <li><strong>भाववाचक संज्ञा:</strong> जिस शब्द से किसी के गुण, दशा, भाव, अवस्था तथा स्वभाव का बोध होता है, उसे भाववाचक संज्ञा कहते हैं। जैसे- सुंदरता, मानवता, मित्रता, सफलता आदि।</li>
+        </ol>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+
+</body>
+</html>

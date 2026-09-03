@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8. विश्वराज्य ('वसुधैव कुटुंबकम')</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --surface: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #8b5cf6;
+            --accent-hover: #7c3aed;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .tabs-wrapper { 
+            position: sticky !important; 
+            top: 61px !important; 
+            z-index: 990 !important; 
+            background: var(--bg-main) !important; 
+            border-bottom: 1px solid var(--border); 
+            padding-top: 10px; 
+            padding-bottom: 10px; 
+            margin-top: 0 !important; 
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px 0;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .translation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--surface);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .hindi-text {
+            font-size: 1.1rem;
+            color: #e2e8f0;
+            white-space: pre-line;
+            border-right: 1px solid var(--border);
+            padding-right: 20px;
+        }
+
+        .english-text {
+            color: var(--text-muted);
+            white-space: pre-line;
+        }
+
+        .section-title {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            padding-bottom: 4px;
+        }
+        
+        .subsection-title {
+            color: #e2e8f0;
+            font-size: 1.2rem;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .question {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #f8fafc;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .reveal-btn {
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .reveal-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .answer {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(139, 92, 246, 0.1);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 4px 4px 0;
+            color: #e2e8f0;
+        }
+        
+        .word-meaning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+        }
+        
+        .word-item {
+            background: var(--surface);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .word {
+            font-weight: 600;
+            color: #f8fafc;
+        }
+        
+        .meaning {
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .translation-grid {
+                grid-template-columns: 1fr;
+            }
+            .hindi-text {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding-right: 0;
+                padding-bottom: 20px;
+            }
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--bg-card); position: sticky; top: 0; z-index: 1000;">
+    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500; color: var(--text-main);">
+        <a href="../../index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+            <i class="fas fa-home"></i> Home
+        </a>
+        <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <a href="../../hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a><span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <span style="color:var(--accent); font-weight:600;">Chapter 8</span>
+    </div>
+    
+    <div class="header-right" style="display:flex; align-items:center; gap: 20px;">
+        <div class="search-container" style="display:flex; align-items:center;">
+            <button id="global-search-btn" aria-label="Search" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; padding:5px; display:flex; align-items:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+            <input id="global-search-input" type="text" placeholder="Search..." style="display:none; margin-left:10px; padding: 6px 15px; border-radius:20px; border:1px solid var(--border); background:rgba(0,0,0,0.2); color:white; width: 180px;">
+        </div>
+        
+        <nav class="header-nav" style="display:flex; align-items:center; gap: 15px;">
+            <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:white; cursor:pointer; font-size:1.2rem;">
+                <i class="fas fa-moon"></i>
+            </button>
+            
+            <a href="../../timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
+            <a href="../../midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
+
+            <div class="user-profile-wrapper" style="position:relative;">
+                <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:40px; height:40px; border:2px solid var(--accent);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
+                    <img src="https://ui-avatars.com/api/?name=Pushti&background=8B5CF6&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div id="global-dropdown" style="display:none; position:absolute; right:0; top:50px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:15px; width:220px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); flex-direction:column; gap:12px; z-index:1001;">
+                    <div style="text-align:center; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
+                        <div style="font-weight:700; font-size:1.1rem; color:var(--text-primary);">Pushti</div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.9rem; font-weight:500;">Student</span>
+                        <label class="switch" style="position:relative; display:inline-block; width:34px; height:20px;">
+                            <input type="checkbox" id="global-role-checkbox" style="opacity:0; width:0; height:0;">
+                            <span class="slider" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--border); transition:.4s; border-radius:34px;"></span>
+                        </label>
+                        <span style="font-size:0.9rem; font-weight:500;">Parent</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<div class="tabs-wrapper">
+    <button class="tab-btn active" onclick="openTab(event, 'chapter-text')">Chapter Text</button>
+    <button class="tab-btn" onclick="openTab(event, 'qa')">Q&A</button>
+    <button class="tab-btn" onclick="openTab(event, 'grammar')">Grammar</button>
+    <button class="tab-btn" onclick="openTab(event, 'test-paper')">Test Paper 1</button>
+</div>
+
+<div class="container">
+    <!-- Chapter Text Tab -->
+    <div id="chapter-text" class="tab-content active">
+        <h2 class="section-title">विश्वराज्य ('वसुधैव कुटुंबकम')</h2>
+        
+        <div class="card">
+            <h3 class="subsection-title">V Connect - पाठ प्रवेश</h3>
+            <p>अलग-अलग हमसब हैं अधूरे, मिलेंगे तब होंगे पूरे, पर हम भेद-भाव में फँस कर लक्ष्य हमारा हैं भूले।</p>
+            <p>अगली कविता में हम जानें, प्रकृति क्या समझाती है, भेद-भाव को दूर करें हम यही पाठ सिखलाती है।</p>
+            
+            <h3 class="subsection-title" style="margin-top:20px;">उद्देश्य</h3>
+            <p>प्रांत, देश आदि की सीमाओं से परे एक संपूर्ण विश्व के संदर्भ में सोच-विचार करने का अवसर देना। यह बताना कि सभी जन एक ही मानव-परिवार के अंग हैं। मनुष्य, समाज और प्रकृति एक-दूसरे के पूरक हैं। इसी भाव को धारण करते हुए हम सबको अपनी जन्मभूमि को महत्व देते हुए इसकी कल्पना विश्वराज्य के रूप में करनी चाहिए। समानता पर बल देना। एकात्मवाद अर्थात् एक ईश्वर में विश्वास पर बल देना। भारतीय दर्शन के 'वसुधैव कुटुंबकम' को प्रतिष्ठित करना।</p>
+        </div>
+        
+        <div class="card">
+            <h3 class="subsection-title">मुख्य काव्य-पाठ</h3>
+            
+            <div class="translation-grid">
+                <div class="hindi-text">कहो, तुम्हारी जन्मभूमि का है कितना विस्तार?
+भिन्न-भिन्न यदि देश हमारे तो किसका संसार?
+धरती को हम काटें-छाँटें, तो उस अंबर को भी बाँटें,
+एक अनल है, एक सलिल है, एक अनिल-संचार।
+कहो, तुम्हारी जन्मभूमि का है कितना विस्तार?</div>
+                <div class="english-text">Tell me, what is the extent of your motherland?
+If our countries are different, then whose world is this?
+If we divide and chop the earth, then we should divide that sky too,
+There is one fire, one water, and one circulation of wind.
+Tell me, what is the extent of your motherland?</div>
+            </div>
+
+            <div class="translation-grid">
+                <div class="hindi-text">एक भूमि है, एक व्योम है, एक सूर्य है, एक सोम है,
+एक प्रकृति है, एक पुरुष है, अगणित रूपाकार।
+कहो, तुम्हारी जन्मभूमि का है कितना विस्तार?</div>
+                <div class="english-text">There is one earth, one sky, one sun, one moon,
+There is one nature, one supreme being, but countless forms.
+Tell me, what is the extent of your motherland?</div>
+            </div>
+            
+            <div class="translation-grid">
+                <div class="hindi-text">ठौर-ठौर का गुण अपना है,
+ऋतुओं का कँपना-तपना है,
+समशीतोष्ण एकरस हमको, होना है अविकार।
+कहो, तुम्हारी जन्मभूमि का है कितना विस्तार?</div>
+                <div class="english-text">Every place has its own quality,
+There is the shivering and heating of the seasons,
+We must remain equable and unchanging like the temperate zone.
+Tell me, what is the extent of your motherland?</div>
+            </div>
+            
+            <div class="translation-grid">
+                <div class="hindi-text">अलग-अलग हैं सभी अधूरे,
+सब मिलकर ही तो हम पूरे,
+एक-दूसरे के पूरक हैं, एक मनुज परिवार।
+कहो, तुम्हारी जन्मभूमि का है कितना विस्तार?</div>
+                <div class="english-text">Separately, we are all incomplete,
+Only together are we complete,
+We are complementary to each other, one human family.
+Tell me, what is the extent of your motherland?</div>
+            </div>
+            
+            <div class="translation-grid">
+                <div class="hindi-text">स्वर्ण-भूमि यदि अलग तुम्हारी,
+तो हम भी लोहयुद्धधारी,
+कैसे हो सकता है फिर इस विग्रह का परिहार।
+कहो, तुम्हारी जन्मभूमि का है कितना विस्तार?</div>
+                <div class="english-text">If your golden land is separate,
+Then we too are iron-clad warriors,
+How can there be a resolution to this conflict then?
+Tell me, what is the extent of your motherland?</div>
+            </div>
+            
+            <div class="translation-grid">
+                <div class="hindi-text">परित्राण का एक मंत्र है,
+विश्वराज्य, जो लोकतंत्र है,
+सब वर्णों का, सब धर्मों का, जहाँ एक अधिकार।
+कहो, तुम्हारी जन्मभूमि का है कितना विस्तार?</div>
+                <div class="english-text">There is one mantra for salvation,
+The world-state, which is a democracy,
+Where all castes and all religions have equal rights.
+Tell me, what is the extent of your motherland?</div>
+            </div>
+            
+            <div class="translation-grid">
+                <div class="hindi-text">एक देह के विविध अंग हम,
+सुख-दुख में सब एक संग हम,
+लगे एक के क्षत पर सबका स्नेह लेप सौ बार।
+कहो, तुम्हारी जन्मभूमि का है कितना विस्तार?</div>
+                <div class="english-text">We are various parts of one body,
+In happiness and sorrow, we are all together,
+The balm of everyone's love is applied a hundred times on the wound of one.
+Tell me, what is the extent of your motherland?</div>
+            </div>
+            
+            <p style="text-align:right; font-style:italic;">- मैथिलीशरण गुप्त</p>
+        </div>
+        
+        <div class="card">
+            <h3 class="subsection-title">सीख</h3>
+            <p>प्रस्तुत कविता से हमें यह प्रेरणा मिलती है कि हमें पूरे विश्व को एक परिवार की तरह समझना चाहिए तथा एक दूसरे के साथ प्रेम और भाई-चारे के भाव के साथ रहना चाहिए।</p>
+            
+            <h3 class="subsection-title" style="margin-top:20px;">कवि परिचय</h3>
+            <p>इनका जन्म चिरगाँव (झाँसी) में सन् 1886 ई० में हुआ था। इनके पिता सेठ रामचरण गुप्त को हिन्दी साहित्य से विशेष प्रेम था। घर के साहित्य वातावरण के कारण इनमें काव्य के प्रति अभिरुचि जागृत हुई। 12 दिसंबर, सन् 1964 ई० गुप्त जी का देहावसान हो गया।</p>
+        </div>
+        
+        <div class="card">
+            <h3 class="subsection-title">शब्दार्थ (Word Meaning)</h3>
+            <div class="word-meaning-grid">
+                <div class="word-item"><span class="word">विस्तार</span><span class="meaning">फैलाव</span></div>
+                <div class="word-item"><span class="word">अनल</span><span class="meaning">आग</span></div>
+                <div class="word-item"><span class="word">सलिल</span><span class="meaning">पानी</span></div>
+                <div class="word-item"><span class="word">व्योम</span><span class="meaning">आकाश</span></div>
+                <div class="word-item"><span class="word">सोम</span><span class="meaning">चंद्रमा</span></div>
+                <div class="word-item"><span class="word">अगणित</span><span class="meaning">अनगिनत</span></div>
+                <div class="word-item"><span class="word">ठौर-ठौर</span><span class="meaning">हर जगह</span></div>
+                <div class="word-item"><span class="word">समशीतोष्ण</span><span class="meaning">सर्दी और गरमी का एक जैसा मौसम होना</span></div>
+                <div class="word-item"><span class="word">स्वर्ण-भूमि</span><span class="meaning">संपन्न देश</span></div>
+                <div class="word-item"><span class="word">लोहयुद्धधारी</span><span class="meaning">लोहे को धारण करने वाला</span></div>
+                <div class="word-item"><span class="word">विग्रह</span><span class="meaning">फूट डालना</span></div>
+                <div class="word-item"><span class="word">परित्राण</span><span class="meaning">रक्षा</span></div>
+                <div class="word-item"><span class="word">क्षत</span><span class="meaning">घाव, चोट</span></div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 class="subsection-title">रोचक तथ्य (Amazing Facts)</h3>
+            <p>"वसुधैव कुटुम्बकम" एक संस्कृत श्लोक है जिसका अर्थ है "सारा विश्व मेरा परिवार है"। इस श्लोक को पहली बार मुग़ल बादशाह अकबर के मंत्री और हिंदी भाषा के कवि 'रहीम' ने अपनी कविता में उद्धृत किया था।</p>
+        </div>
+        
+        <div class="card">
+            <h3 class="subsection-title">सरदार वल्लभभाई पटेल</h3>
+            <p>वल्लभभाई पटेल का जन्म 31 अक्तूबर, 1875, नडियाद, गुजरात में हुआ था। मृत्यु 15 दिसंबर, 1950, बॉम्बे (मुंबई) में हुई थी। वर्तमान भारत को अखंड भारत बनाने में सरदार पटेल का अहम योगदान था। श्री वल्लभभाई पटेल; भारतीय बैरिस्टर, राजनेता और भारतीय स्वतंत्रता के लिए संघर्ष करने वाले देश के प्रमुख नेताओं में से एक थे।</p>
+            <p>वर्ष 1947 के बाद भारतीय स्वतंत्रता के पहले तीन वर्षों के दौरान, उन्होंने उप प्रधानमंत्री, गृह मंत्री, सूचना मंत्री और राज्य मंत्री के रूप में कार्य किया था।</p>
+            <p>भारत सरकार ने भारत को अखंड भारत बनाने में सरदार पटेल के योगदान को सम्मान देने के लिए उनके जन्मदिन को “राष्ट्रीय एकता दिवस” के रूप में मनाने का फैसला 2014 में किया था। अतः अब हर साल 31 अक्तूबर को भारत के लौह पुरुष सरदार वल्लभभाई पटेल के जन्मदिन को “राष्ट्रीय एकता दिवस” के रूप में मनाया जाता है।</p>
+        </div>
+    </div>
+
+    <!-- Q&A Tab -->
+    <div id="qa" class="tab-content">
+        <h2 class="section-title">अभ्यास (Exercise)</h2>
+        
+        <div class="card">
+            <h3 class="subsection-title">वस्तुनिष्ठ प्रश्न</h3>
+            
+            <div class="question">
+                <div class="question-text">1. (क) कवि के अनुसार हमने किसे बाँट दिया है?</div>
+                <div class="options">
+                    <div>अंबर को</div>
+                    <div>सूरज को</div>
+                    <div>धरती को</div>
+                    <div>चाँद को</div>
+                </div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">धरती को</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">1. (ख) विश्वराज्य कविता के रचयिता कौन है?</div>
+                <div class="options">
+                    <div>रवीन्द्रनाथ</div>
+                    <div>जयशंकर प्रसाद</div>
+                    <div>महादेवी वर्मा</div>
+                    <div>मैथिलीशरण गुप्त</div>
+                </div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">मैथिलीशरण गुप्त</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">1. (ग) विश्वराज्य कविता का मुख्य उद्देश्य क्या है?</div>
+                <div class="options">
+                    <div>राष्ट्रीय एकता</div>
+                    <div>सामाजिक न्याय</div>
+                    <div>विश्व शांति</div>
+                    <div>प्रेम और सहानुभूति</div>
+                </div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">विश्व शांति</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">1. (घ) 'परिहार' का पर्यायवाची शब्द कौन-सा है?</div>
+                <div class="options">
+                    <div>परोपकार</div>
+                    <div>पराजय</div>
+                    <div>विजय</div>
+                    <div>स्वार्थ</div>
+                </div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">(सही विकल्प पाठ में दिए गए अर्थ 'निवारण' या 'त्याग' से संबंधित है, दिए गए विकल्पों में सबसे सटीक उत्तर शिक्षक की सहायता से हल करें)</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 class="subsection-title">2. कविता की पंक्तियों को पूरा कीजिए-</h3>
+            
+            <div class="question">
+                <div class="question-text">(क) एक अनल है, ............................................ है कितना विस्तार?</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">एक अनल है, एक सलिल है, एक अनिल-संचार। कहो, तुम्हारी जन्मभूमि का है कितना विस्तार?</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">(ख) एक प्रकृति है, ............................................, है कितना विस्तार?</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">एक प्रकृति है, एक पुरुष है, अगणित रूपाकार। कहो, तुम्हारी जन्मभूमि का है कितना विस्तार?</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">(ग) ठौर-ठौर का गुण अपना है, ............................................, होना है अविकार।</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">ऋतुओं का कँपना-तपना है, समशीतोष्ण एकरस हमको, होना है अविकार।</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="subsection-title">3. भाव स्पष्ट कीजिए-</h3>
+            <div class="question">
+                <div class="question-text">(क) समशीतोष्ण एकरस हमको, होना है अविकार।</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">जिस प्रकार समशीतोष्ण जलवायु में न अधिक सर्दी होती है न अधिक गर्मी, उसी प्रकार मनुष्य को सुख और दुख दोनों ही परिस्थितियों में समान भाव से रहना चाहिए और विकार रहित (शांत) होना चाहिए।</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">(ख) एक देह के विविध अंग हम, सुख-दुख में सब एक संग हम।</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">सभी मनुष्य एक ही विराट शरीर के विभिन्न अंगों के समान हैं। अतः हमें सुख और दुख में एक साथ मिलकर रहना चाहिए।</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="subsection-title">लघु उत्तरीय प्रश्न</h3>
+            <div class="question">
+                <div class="question-text">4. (क) कविता में आए पाँच तत्वों के नाम बताइए।</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">धरती, अंबर (आकाश), अनल (अग्नि), सलिल (जल), अनिल (वायु)।</div>
+            </div>
+            <div class="question">
+                <div class="question-text">4. (ख) कवि के अनुसार हम अधूरे कब लगते हैं?</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">कवि के अनुसार जब हम अलग-अलग बँट जाते हैं तब हम अधूरे लगते हैं।</div>
+            </div>
+            <div class="question">
+                <div class="question-text">4. (ग) अलग-अलग ऋतुओं में हमें कैसा बने रहने का अधिकार है?</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">हमें समशीतोष्ण (समान भाव वाला) और अविकारी बने रहने का अधिकार है।</div>
+            </div>
+            <div class="question">
+                <div class="question-text">4. (घ) कवि के अनुसार रक्षा का एकमात्र मंत्र क्या है?</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">कवि के अनुसार रक्षा का एकमात्र मंत्र 'विश्वराज्य' (जो लोकतंत्र है) है।</div>
+            </div>
+            <div class="question">
+                <div class="question-text">4. (ङ) मनुष्य के विग्रह का कारण क्या होता है?</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">स्वार्थ, धरती को बाँटने की प्रवृत्ति और अपनी भूमि को अलग (स्वर्ण-भूमि) समझने की भावना विग्रह (लड़ाई/अलगाव) का कारण होती है।</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="subsection-title">दीर्घ उत्तरीय प्रश्न</h3>
+            <div class="question">
+                <div class="question-text">5. (क) दो राष्ट्रों में फूट पड़ने का कारण कवि ने क्या माना है?</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">कवि ने माना है कि जब कोई राष्ट्र अपनी भूमि को विशेष (स्वर्ण-भूमि) समझकर दूसरों से अलग होने का प्रयास करता है, और दूसरे लोग शक्ति (लोहयुद्धधारी) के बल पर उसका विरोध करते हैं, तो यह अहंकार और विभाजन की भावना ही दो राष्ट्रों के बीच फूट और युद्ध का कारण बनती है।</div>
+            </div>
+            <div class="question">
+                <div class="question-text">5. (ख) कवि ने किस रूप में विश्वराज्य की कल्पना की है?</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">कवि ने विश्वराज्य की कल्पना एक ऐसे लोकतंत्र के रूप में की है जहाँ सभी वर्णों और धर्मों के लोगों को समान अधिकार प्राप्त हों और पूरी पृथ्वी एक ही परिवार (वसुधैव कुटुंबकम) की तरह रहे।</div>
+            </div>
+            <div class="question">
+                <div class="question-text">5. (ग) 'लगे एक के क्षत पर सबका स्नेह लेप सौ बार' पंक्ति में 'क्षत' और 'स्नेह लेप' से किस ओर संकेत है?</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">'क्षत' का अर्थ है किसी एक व्यक्ति या देश का दुख या संकट, और 'स्नेह लेप' का संकेत पूरी मानवता द्वारा उस दुख को दूर करने के लिए दिए गए प्रेम, सहानुभूति और सहयोग से है।</div>
+            </div>
+            <div class="question">
+                <div class="question-text">5. (घ) कविता का प्रतिपाद्य अथवा मूल भाव अपने शब्दों में लिखिए।</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">इस कविता का मूल भाव 'वसुधैव कुटुंबकम' (पूरी पृथ्वी एक परिवार है) की भावना को स्थापित करना है। कवि समझाना चाहते हैं कि प्रकृति ने हमें एक ही हवा, पानी, सूरज और धरती दी है, इसलिए भौगोलिक सीमाओं और भेदभाव को मिटाकर हमें एक विश्वराज्य की स्थापना करनी चाहिए जहाँ सभी समान हों।</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 class="subsection-title">विषय संवर्धन गतिविधियाँ / मूल्यपरक प्रश्न</h3>
+            <div class="question">
+                <div class="question-text">सरदार वल्लभ भाई पटेल को 'लौह पुरुष' क्यों कहा जाता है?</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">उनके दृढ़ निश्चय, अदम्य साहस, और भारत की 562 रियासतों को एकता के सूत्र में बाँधकर अखंड भारत के निर्माण में उनके योगदान के कारण उन्हें 'लौह पुरुष' कहा जाता है।</div>
+            </div>
+            <div class="question">
+                <div class="question-text">आपके विचार में मानव और समाज किस प्रकार एक-दूसरे के पूरक हैं? उदाहरण सहित बताइए।</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">मानव समाज का निर्माण करता है और समाज मानव के विकास, सुरक्षा और आवश्यकताओं की पूर्ति के लिए वातावरण प्रदान करता है। जैसे शरीर और उसके अंग एक-दूसरे के बिना अधूरे हैं, वैसे ही व्यक्ति और समाज एक-दूसरे के पूरक हैं।</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grammar Tab -->
+    <div id="grammar" class="tab-content">
+        <h2 class="section-title">व्यावहारिक व्याकरण (Grammar)</h2>
+        
+        <div class="card">
+            <h3 class="subsection-title">1. निम्नलिखित शब्दों के विलोम शब्द लिखिए-</h3>
+            <div class="word-meaning-grid">
+                <div class="question">
+                    <div class="question-text">देश x</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">विदेश</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">विस्तार x</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">संक्षेप</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">पुरुष x</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">स्त्री</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">अधूरे x</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">पूरे</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">अविकार x</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">विकार</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">धरती x</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">आकाश / अंबर</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">स्वीकार x</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">अस्वीकार</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="subsection-title">2. निम्नलिखित शब्दों के पर्यायवाची शब्द लिखिए-</h3>
+            <div class="word-meaning-grid">
+                <div class="question">
+                    <div class="question-text">पुरुष -</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">नर, आदमी, मानव</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">देह -</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">शरीर, तन, काया</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">मंज़िल -</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">लक्ष्य, गंतव्य, मुकाम</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">सलिल -</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">जल, पानी, नीर</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">अनल -</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">आग, अग्नि, पावक</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">तालाब -</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">सरोवर, जलाशय, ताल</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">स्वर्ण -</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">सोना, कंचन, हेम</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">व्योम -</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">आकाश, गगन, नभ</div>
+                </div>
+                <div class="question">
+                    <div class="question-text">सोम -</div>
+                    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+                    <div class="answer" style="display:none;">चंद्रमा, शशि, इंदु</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 class="subsection-title">सर्वनाम</h3>
+            <p><strong>संज्ञा शब्दों के स्थान पर आए शब्द सर्वनाम कहे जाते हैं।</strong></p>
+            <p>सर्वनाम के छह भेद होते हैं-</p>
+            <ul>
+                <li><strong>पुरुष वाचक :</strong> अपने लिए, दूसरों के लिए और किसी अन्य व्यक्ति के लिए जिन सर्वनाम शब्दों का प्रयोग हो। (जैसे- मैं, तुम और उसका इत्यादि)</li>
+                <li><strong>निश्चयवाचक :</strong> जिन सर्वनामों में किसी निश्चित वस्तु, व्यक्ति संदर्भ या प्रसंग की ओर संकेत करते हैं। (जैसे- वह, यही आदि)</li>
+                <li><strong>अनिश्चयवाचक :</strong> जिन सर्वनामों से किसी निश्चित व्यक्ति, वस्तु अथवा घटना की ओर संकेत न होता हो। (जैसे- कुछ, कोई आदि)</li>
+                <li><strong>संबंधवाचक :</strong> जो सर्वनाम शब्द संज्ञा या सर्वनाम के बीच संबंध बताते हों। (जैसे- जो-वो, जैसा-वैसा इत्यादि)</li>
+                <li><strong>प्रश्नवाचक :</strong> जो सर्वनाम शब्द प्रश्न पूछने के लिए प्रयोग किए जाते हैं। (जैसे- क्या, कौन, कहाँ इत्यादि)</li>
+                <li><strong>निजवाचक :</strong> जिन सर्वनाम शब्दों का प्रयोग कर्ता के साथ अपनेपन का ज्ञान कराने के लिए किया जाए। (जैसे- स्वयं, खुद, अपने आप आदि)</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h3 class="subsection-title">3. रेखांकित सर्वनाम शब्दों के भेद लिखिए-</h3>
+            <div class="question">
+                <div class="question-text">(क) कहो, <ins>तुम्हारी</ins> जन्मभूमि का है कितना विस्तार।</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">पुरुषवाचक</div>
+            </div>
+            <div class="question">
+                <div class="question-text">(ख) ठौर-ठौर का गुण <ins>अपना</ins> है।</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">निजवाचक</div>
+            </div>
+            <div class="question">
+                <div class="question-text">(ग) भिन्न-भिन्न यदि देश हमारे तो <ins>किसका</ins> संसार?</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">प्रश्नवाचक</div>
+            </div>
+            <div class="question">
+                <div class="question-text">(घ) धरती को <ins>हम</ins> काटें-छाँटें।</div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">पुरुषवाचक</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Paper Tab -->
+    <div id="test-paper" class="tab-content">
+        <h2 class="section-title">प्रश्नपत्र- 1 (अध्याय- 1 से 8 तक)</h2>
+        <p>समय- 2 घंटे | पूर्णांक- 50</p>
+        
+        <div class="card">
+            <h3 class="subsection-title">1. निम्नलिखित गद्यांश को पढ़कर दिए गए प्रश्नों के उत्तर लिखिए-</h3>
+            <p style="margin-bottom: 20px; font-style: italic;">एक जंगल में परिजात का एक पेड़ था। परिजात का कोई मुकाबला नहीं था। उसकी सुंदरता बेजोड़ थी। उसका रंग-रूप निराला था। परिजात को भी अपने गुणों का पूरा-पूरा पता था। नीले आसमान में सिर उठाए इस शान से खड़ा रहता, मानों पेड़ों का सरताज हो। जब बहार के दिन आते तो परिजात अनगिनत नन्हें-नन्हें फूलों से लद जाता, लगता मानों किसी ने आकाश से सारे तारे तोड़कर परिजात की शाखाओं पर टाँक दिए हों। नन्हें फूलों से झिलमिलाता परिजात जब सुगंध भरी पराग जंगल में बिखेरता तो जंगल नंदन बन जाता। चुंबक की तरह परिजात सबको अपनी तरफ़ खींचता, जिसे देखो, वही परिजात की तरफ़ भागता। सतरंगी शालें ओढ़े चटकीली तितलियाँ सहेलियों के साथ झुंड का झुंड बनाकर परिजात का श्रृंगार देखने आतीं तथा जाते-जाते फूलों को खींचकर ढेरों पराग अपने साथ ले जातीं।</p>
+            
+            <div class="question">
+                <div class="question-text">(क) जंगल में किसका पेड़ था?</div>
+                <div class="options">
+                    <div>(i) नीम</div>
+                    <div>(ii) परिजात</div>
+                    <div>(iii) पीपल</div>
+                    <div>(iv) आम</div>
+                </div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">(ii) परिजात</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">(ख) परिजात अपने आप को स्वयं क्या समझता था?</div>
+                <div class="options">
+                    <div>(i) पेड़ों का सरताज</div>
+                    <div>(ii) पेड़ों का दास</div>
+                    <div>(iii) ईश्वर</div>
+                    <div>(iv) इनमें से कोई नहीं</div>
+                </div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">(i) पेड़ों का सरताज</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">(ग) वह अनगिनत फूलों से कब लद जाता था?</div>
+                <div class="options">
+                    <div>(i) बहार में</div>
+                    <div>(ii) पतझड़ में</div>
+                    <div>(iii) वर्षा में</div>
+                    <div>(iv) सरदी में</div>
+                </div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">(i) बहार में</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">(घ) तितलियाँ क्या करती थीं?</div>
+                <div class="options">
+                    <div>(i) उसके फूलों का पराग ले जाती थीं।</div>
+                    <div>(ii) फूल ले जाती थीं।</div>
+                    <div>(iii) डालों पर गाना गाती थीं।</div>
+                    <div>(iv) कुछ नहीं करती थीं।</div>
+                </div>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+                <div class="answer" style="display:none;">(i) उसके फूलों का पराग ले जाती थीं।</div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 class="subsection-title">अन्य प्रश्न (Test Paper Continued)</h3>
+            
+            <div class="question">
+                <div class="question-text">2. निम्नलिखित शब्दों के अर्थ लिखिए-</div>
+                <p>(क) बदी, (ख) विचलित, (ग) पुनरागमन, (घ) प्रतिकूल</p>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answers</button>
+                <div class="answer" style="display:none;">(क) बदी - बुराई <br> (ख) विचलित - अस्थिर / घबराया हुआ <br> (ग) पुनरागमन - वापस लौटना <br> (घ) प्रतिकूल - विपरीत</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">3. निम्नलिखित शब्दों से वाक्य बनाकर लिखिए-</div>
+                <p>(क) पंक्ति, (ख) सफ़र, (ग) स्वार्थ, (घ) प्रेरणा</p>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Example Answers</button>
+                <div class="answer" style="display:none;">(क) बच्चे प्रार्थना के लिए एक पंक्ति में खड़े हैं।<br>(ख) शिमला का सफ़र बहुत सुहावना था।<br>(ग) हमें स्वार्थ छोड़कर दूसरों की मदद करनी चाहिए।<br>(घ) महापुरुषों का जीवन हमें अच्छी प्रेरणा देता है।</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">8. रेखांकित शब्दों के लिए संज्ञा के भेद लिखिए-</div>
+                <p>(क) <ins>ताजमहल</ins> आगरा में है।</p>
+                <p>(ख) अधिक काम करने के कारण, मुझे <ins>थकान</ins> हो रही है।</p>
+                <p>(ग) हिरणों का <ins>झुंड</ins> भागा जा रहा है।</p>
+                <p>(घ) <ins>मानवता</ins> बड़ी मूल्यवान चीज़ है।</p>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answers</button>
+                <div class="answer" style="display:none;">(क) व्यक्तिवाचक संज्ञा <br> (ख) भाववाचक संज्ञा <br> (ग) समूहवाचक संज्ञा <br> (घ) भाववाचक संज्ञा</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">13. निम्नलिखित वर्तनी को शुद्ध करके दोबारा लिखिए-</div>
+                <p>(क) परीकषा, (ख) खरगोस, (ग) परीवार, (घ) आदीत्य</p>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answers</button>
+                <div class="answer" style="display:none;">(क) परीक्षा <br> (ख) खरगोश <br> (ग) परिवार <br> (घ) आदित्य</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">14. निम्नलिखित वाक्यों में से क्रिया विशेषण शब्द छाँटकर लिखिए-</div>
+                <p>(क) घोड़ा तेज़ भागता है।</p>
+                <p>(ख) बच्चा ज़ोर-ज़ोर से चिल्लाता है।</p>
+                <p>(ग) प्रिया धीरे-धीरे बोलती है।</p>
+                <p>(घ) मैं प्रतिदिन विद्यालय जाती हूँ।</p>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answers</button>
+                <div class="answer" style="display:none;">(क) तेज़ <br> (ख) ज़ोर-ज़ोर से <br> (ग) धीरे-धीरे <br> (घ) प्रतिदिन</div>
+            </div>
+            
+            <div class="question">
+                <div class="question-text">15. अनेक शब्दों के लिए एक शब्द लिखिए-</div>
+                <p>(क) भाषण देने वाला -</p>
+                <p>(ख) जीभ का स्वाद -</p>
+                <p>(ग) भूख से आतुर -</p>
+                <p>(घ) जहाँ घटना घटी हो -</p>
+                <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answers</button>
+                <div class="answer" style="display:none;">(क) वक्ता <br> (ख) चटखारा / स्वाद (ग) क्षुधातुर <br> (घ) घटनास्थल</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+
+</body>
+</html>
