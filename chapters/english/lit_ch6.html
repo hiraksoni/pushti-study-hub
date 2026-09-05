@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 2: Chapter 3 - The Lake Isle of Innisfree | Class 7 English Literature</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="../../js/firebase-tracker.js"></script>
+    <style>
+        :root {
+            --bg-main: #061412;
+            --bg-card: rgba(13, 35, 30, 0.85);
+            --surface: #0E2A24;
+            --accent: #10B981;
+            --accent-glow: rgba(16, 185, 129, 0.25);
+            --accent-sec: #A7F3D0;
+            --text-main: #F0FDF4;
+            --text-primary: #FFFFFF;
+            --text-muted: #94A3B8;
+            --border: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(16, 185, 129, 0.25);
+            --tag-color: #10B981;
+            --tab-active-bg: rgba(16, 185, 129, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.65;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* SITE HEADER */
+        .site-header {
+            background-color: var(--bg-main) !important;
+            background: var(--bg-main) !important;
+            opacity: 1 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 24px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* TABS */
+        .tabs-wrapper {
+            position: sticky;
+            top: 57px;
+            z-index: 990;
+            background: var(--bg-main);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 16px;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 24px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent);
+            background: rgba(16, 185, 129, 0.08);
+        }
+        .tab-btn.active {
+            background: var(--tab-active-bg);
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px 20px 60px 20px;
+        }
+
+        /* TAB CONTENT */
+        .tab-content {
+            display: none;
+            animation: tabFadeIn 0.3s ease-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HERO CARD */
+        .hero-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.08));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.18);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            color: var(--text-primary);
+            line-height: 1.25;
+        }
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.88rem;
+        }
+        .meta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 16px;
+            color: var(--text-main);
+        }
+
+        /* POEM CARD STYLING */
+        .poem-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 32px;
+            margin-bottom: 26px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        .stanza-block {
+            margin-bottom: 28px;
+            padding-left: 20px;
+            border-left: 3px solid var(--accent);
+        }
+        .stanza-block:last-child {
+            margin-bottom: 0;
+        }
+        .stanza-num {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+        .poem-line {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin: 4px 0;
+            color: var(--text-primary);
+            font-family: 'Georgia', serif;
+        }
+        .stanza-analysis {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* VOCAB TOOLTIP */
+        .vocab-word {
+            color: var(--accent);
+            font-weight: 600;
+            border-bottom: 1px dashed var(--accent);
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+        .vocab-word:hover::after {
+            content: attr(data-def);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #064E3B;
+            color: #ECFDF5;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: normal;
+            width: max-content;
+            max-width: 250px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            border: 1px solid var(--accent);
+            z-index: 100;
+            pointer-events: none;
+            line-height: 1.4;
+            font-family: system-ui, sans-serif;
+        }
+
+        /* IMAGES IN STORY */
+        .story-img-card {
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+        }
+        .story-img-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+        }
+        .story-img-caption {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* AUTHOR CARD */
+        .author-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(5, 150, 105, 0.08));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 22px;
+            margin: 26px 0;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .author-avatar {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: #10B981;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
+        }
+        .author-info h3 {
+            margin: 0 0 6px 0;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+        .author-info p {
+            margin: 0;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* MCQS */
+        .mcq-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .mcq-question {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+        }
+        .mcq-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .mcq-opt {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+        .mcq-opt:hover {
+            background: rgba(16, 185, 129, 0.08);
+            border-color: var(--accent);
+        }
+        .mcq-opt.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border-color: #10B981 !important;
+            color: #34D399;
+            font-weight: 600;
+        }
+        .mcq-opt.incorrect {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: #EF4444 !important;
+            color: #F87171;
+        }
+        .mcq-feedback {
+            margin-top: 10px;
+            font-size: 0.88rem;
+            display: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        /* REVEAL Q&A CARDS */
+        .qa-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .qa-q {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .qa-reveal-btn {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .qa-reveal-btn:hover {
+            background: var(--accent);
+            color: #064E3B;
+        }
+        .qa-answer {
+            display: none;
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-main);
+        }
+
+        /* COMPARISON TABLE */
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .comp-table th, .comp-table td {
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.93rem;
+        }
+        .comp-table th {
+            background: rgba(16, 185, 129, 0.18);
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .comp-table td {
+            background: rgba(255, 255, 255, 0.02);
+            line-height: 1.6;
+        }
+
+        /* INFO CARD */
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 22px;
+        }
+        .info-card h3 {
+            margin: 0 0 12px 0;
+            font-size: 1.2rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* LIGHT MODE COMPATIBILITY */
+        [data-theme="light"] {
+            --bg-main: #F0FDF4 !important;
+            --bg-card: #FFFFFF !important;
+            --text-main: #14532D !important;
+            --text-primary: #064E3B !important;
+            --text-muted: #4B5563 !important;
+            --surface: #DCFCE7 !important;
+            --border: #BBF7D0 !important;
+            --glass-border: rgba(16, 185, 129, 0.4) !important;
+            --accent: #059669 !important;
+            --accent-glow: rgba(5, 150, 105, 0.2) !important;
+            --tag-color: #059669 !important;
+            --tab-active-bg: rgba(16, 185, 129, 0.15) !important;
+        }
+        [data-theme="light"] .site-header {
+            background-color: #FFFFFF !important;
+            background: #FFFFFF !important;
+            border-bottom: 1px solid #BBF7D0 !important;
+        }
+        [data-theme="light"] .tabs-wrapper {
+            background: #FFFFFF !important;
+            border-bottom: 1px solid #BBF7D0 !important;
+        }
+        [data-theme="light"] .poem-card, [data-theme="light"] .info-card, [data-theme="light"] .qa-card, [data-theme="light"] .mcq-card {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        [data-theme="light"] .poem-line {
+            color: #064E3B;
+        }
+        [data-theme="light"] .comp-table th {
+            background: #D1FAE5;
+            color: #047857;
+        }
+        [data-theme="light"] .comp-table td {
+            background: #FFFFFF;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- HEADER SECTION -->
+    <header class="site-header">
+        <div class="header-left">
+            <a href="../../index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <span style="color:var(--text-muted);">&bull;</span>
+            <a href="../../english_index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+                English
+            </a>
+            <span style="color:var(--text-muted);">&bull;</span>
+            <span style="color:var(--accent);">Ch.3 The Lake Isle of Innisfree</span>
+        </div>
+
+        <div class="header-right">
+            <nav class="header-nav">
+                <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:var(--text-main); cursor:pointer; font-size:1.2rem;">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <a href="../../timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
+                <a href="../../midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
+
+                <div class="user-profile-wrapper" style="position:relative;">
+                    <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:38px; height:38px; border:2px solid var(--accent);">
+                        <img src="https://ui-avatars.com/api/?name=Pushti&background=10B981&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- STICKY TABS WRAPPER -->
+    <div class="tabs-wrapper">
+        <button class="tab-btn active" onclick="openTab(event, 'tab-text')"><i class="fas fa-feather-pointed"></i> Poem & Audio Lines</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-comprehension')"><i class="fas fa-question-circle"></i> Poem Appreciation & Q&A</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-devices')"><i class="fas fa-wand-magic-sparkles"></i> Poetic Devices & Imagery</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-art')"><i class="fas fa-palette"></i> Art Corner: Postcards</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-nature')"><i class="fas fa-seedling"></i> Nature & Solitude Connect</button>
+    </div>
+
+    <div class="container">
+
+        <!-- ==================== TAB 1: POEM TEXT ==================== -->
+        <div id="tab-text" class="tab-content active">
+
+            <div class="hero-card">
+                <span class="hero-badge">Unit 2: Wanderlust &bull; Section 3 (Poem)</span>
+                <h1 class="hero-title">The Lake Isle of Innisfree</h1>
+                <p class="hero-subtitle">By <strong>William Butler Yeats</strong> (1865–1939) &bull; A Lyrical Hymn to Solitude, Simplicity & Nature</p>
+                <div class="hero-meta">
+                    <span class="meta-pill"><i class="fas fa-user-graduate"></i> Class 7 Literature</span>
+                    <span class="meta-pill"><i class="fas fa-music"></i> Rhyme Scheme: ABAB CDCD EFEF</span>
+                    <span class="meta-pill"><i class="fas fa-water"></i> Lough Gill, County Sligo, Ireland</span>
+                    <button class="meta-pill" onclick="openChapterLog('eng_lit_ch6')" style="cursor:pointer; background:rgba(16, 185, 129, 0.2); border-color:#10B981; color:#A7F3D0; font-weight:600;"><i class="fas fa-history"></i> Revision Log &bull; Gemini 2.5 Pro</button>
+                </div>
+            </div>
+
+            <!-- Authentic Textbook Illustration -->
+            <div class="story-img-card">
+                <img src="images/innisfree/innisfree_cabin_lake.png" alt="The tranquil lake isle of Innisfree with clay and wattle cabin" style="max-height: 440px;">
+                <div class="story-img-caption">Yeats's imagined paradise: A small cabin of clay and wattles on the peaceful island of Innisfree, County Sligo.</div>
+            </div>
+
+            <!-- Complete Annotated Poem -->
+            <div class="poem-card">
+                <h2 style="color:var(--accent); margin:0 0 24px 0; display:flex; align-items:center; gap:10px;">
+                    <i class="fas fa-scroll"></i> Complete Text with Stanza Analysis
+                </h2>
+
+                <!-- Stanza 1 -->
+                <div class="stanza-block">
+                    <div class="stanza-num"><i class="fas fa-bookmark"></i> Stanza 1 &bull; The Vow of Solitude & Natural Dwelling</div>
+                    <div class="poem-line">I will arise and go now, and go to <span class="vocab-word" data-def="An uninhabited, picturesque island in Lough Gill, County Sligo, Ireland">Innisfree</span>,</div>
+                    <div class="poem-line">And a small cabin build there, of clay and <span class="vocab-word" data-def="Interwoven rods, twigs, and wooden sticks used with mud/clay to build walls and thatched roofs">wattles</span> made;</div>
+                    <div class="poem-line">Nine <span class="vocab-word" data-def="Cultivated rows of organic bean plants for self-sustaining vegetarian food">bean-rows</span> will I have there, a hive for the honey-bee,</div>
+                    <div class="poem-line">And live alone in the <span class="vocab-word" data-def="An open clearing in a forest filled with the vibrant buzzing sound of bees">bee-loud glade</span>.</div>
+                    
+                    <div class="stanza-analysis">
+                        <strong>Stanza Meaning:</strong> The speaker expresses an immediate, urgent desire to escape urban noise and retire to Innisfree. He envisions building a modest handmade hut of natural clay and wicker sticks, sustaining himself simply with nine rows of beans and a single beehive, living in tranquil solitude amidst buzzing wildlife.
+                    </div>
+                </div>
+
+                <!-- Stanza 2 -->
+                <div class="stanza-block">
+                    <div class="stanza-num"><i class="fas fa-bookmark"></i> Stanza 2 &bull; The Rhythm of Natural Peace Across Day & Night</div>
+                    <div class="poem-line">And I shall have some peace there, for peace comes dropping slow,</div>
+                    <div class="poem-line">Dropping from the <span class="vocab-word" data-def="Metaphor for morning mist, low clouds, and early dawn dew lifting slowly like a bridal veil">veils of the morning</span> to where the cricket sings;</div>
+                    <div class="poem-line">There midnight’s all a <span class="vocab-word" data-def="Soft, shimmering starlight and moonbeams reflecting gently across the undisturbed lake waters">glimmer</span>, and noon a <span class="vocab-word" data-def="Vibrant purple hue created by sunlight illuminating purple wild heather flowers across the island hills">purple glow</span>,</div>
+                    <div class="poem-line">And evening full of the <span class="vocab-word" data-def="A small seed-eating European songbird belonging to the finch family">linnet’s</span> wings.</div>
+
+                    <div class="stanza-analysis">
+                        <strong>Stanza Meaning:</strong> Peace does not arrive abruptly; it settles gently with the morning mist and chirping crickets. Nature paints the hours: midnight sparkles with gentle starlight, noon radiates a warm purple light from blooming heather, and twilight skies flutter with graceful singing linnets.
+                    </div>
+                </div>
+
+                <!-- Stanza 3 -->
+                <div class="stanza-block">
+                    <div class="stanza-num"><i class="fas fa-bookmark"></i> Stanza 3 &bull; The Deep Heart's Core & Urban Longing</div>
+                    <div class="poem-line">I will arise and go now, for always night and day</div>
+                    <div class="poem-line">I hear lake water <span class="vocab-word" data-def="Flowing and gently striking the stony lake shore with rhythmic, soothing ripples">lapping</span> with low sounds by the shore;</div>
+                    <div class="poem-line">While I stand on the <span class="vocab-word" data-def="Here refers to the busy, crowded roadway of Fleet Street in industrial London">roadway</span>, or on the pavements grey,</div>
+                    <div class="poem-line">I hear it in the <span class="vocab-word" data-def="The innermost depth of the human soul and emotional heart">deep heart’s core</span>.</div>
+
+                    <div class="stanza-analysis">
+                        <strong>Stanza Meaning:</strong> Repeating the solemn refrain <em>"I will arise and go now"</em>, the poet reveals he is currently standing on the cold, grey pavements of industrial London. Yet constantly, day and night, the hypnotic memory of gentle lake water whispers in the deepest spiritual core of his heart.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Author Card -->
+            <div class="author-card">
+                <div class="author-avatar"><i class="fas fa-feather-pointed"></i></div>
+                <div class="author-info">
+                    <h3>William Butler Yeats (1865–1939)</h3>
+                    <p>Celebrated Irish poet, dramatist, mystic, and senator. A key pillar of the Irish Literary Revival and co-founder of the Abbey Theatre in Dublin. In 1923, Yeats was awarded the <strong>Nobel Prize in Literature</strong> <em>"for his always inspired poetry, which in a highly artistic form gives expression to the spirit of a whole nation."</em></p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 2: COMPREHENSION & Q&A ==================== -->
+        <div id="tab-comprehension" class="tab-content">
+
+            <h2 style="color:var(--accent); margin:0 0 16px 0; display:flex; align-items:center; gap:10px;">
+                <i class="fas fa-check-double"></i> Section 1: Poem Appreciation (Textbook MCQs)
+            </h2>
+
+            <!-- MCQ 1 -->
+            <div class="mcq-card" id="mcq1">
+                <div class="mcq-question">a. The primary desire of the poet in the poem is to:</div>
+                <div class="mcq-options">
+                    <div class="mcq-opt" onclick="checkMcq(1, this, false)">i. Go on an expensive holiday resort</div>
+                    <div class="mcq-opt" onclick="checkMcq(1, this, true)">ii. Escape the humdrum and noise of the city</div>
+                    <div class="mcq-opt" onclick="checkMcq(1, this, false)">iii. Work in peace on commercial literary contracts</div>
+                    <div class="mcq-opt" onclick="checkMcq(1, this, false)">iv. Be with extended family and noisy friends</div>
+                </div>
+                <div class="mcq-feedback" id="fb1"></div>
+            </div>
+
+            <!-- MCQ 2 -->
+            <div class="mcq-card" id="mcq2">
+                <div class="mcq-question">b. Innisfree lures the poet because it is a:</div>
+                <div class="mcq-options">
+                    <div class="mcq-opt" onclick="checkMcq(2, this, false)">i. Far-off mysterious foreign destination</div>
+                    <div class="mcq-opt" onclick="checkMcq(2, this, false)">ii. Luxurious modern countryside villa</div>
+                    <div class="mcq-opt" onclick="checkMcq(2, this, true)">iii. Tranquil, solitary, and peaceful sanctuary</div>
+                    <div class="mcq-opt" onclick="checkMcq(2, this, false)">iv. Economical location to save rent money</div>
+                </div>
+                <div class="mcq-feedback" id="fb2"></div>
+            </div>
+
+            <!-- MCQ 3 -->
+            <div class="mcq-card" id="mcq3">
+                <div class="mcq-question">c. The poet has planned out his days on the island. He will:</div>
+                <div class="mcq-options">
+                    <div class="mcq-opt" onclick="checkMcq(3, this, false)">i. Read and write literature in seclusion</div>
+                    <div class="mcq-opt" onclick="checkMcq(3, this, false)">ii. Nurture nature (plants beans, tend bees)</div>
+                    <div class="mcq-opt" onclick="checkMcq(3, this, false)">iii. Sleep, relax, and listen to natural sounds</div>
+                    <div class="mcq-opt" onclick="checkMcq(3, this, true)">iv. Do all of the above in complete harmony</div>
+                </div>
+                <div class="mcq-feedback" id="fb3"></div>
+            </div>
+
+            <!-- Section 2: Subjective Q&A with Reveal Buttons -->
+            <h2 style="color:var(--accent); margin:32px 0 16px 0; display:flex; align-items:center; gap:10px;">
+                <i class="fas fa-book-open-reader"></i> Section 2: Detailed Textbook Questions & Answers
+            </h2>
+
+            <!-- QA 1 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">2a.</span>
+                    <span>Where is the poet now? How is this place different from where he wants to be?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans1', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans1">
+                    <strong>Answer:</strong> The poet is currently standing in the midst of a bustling, noisy, industrial city—specifically in <strong>London on the roadway (Fleet Street) amidst grey stone pavements</strong>.
+                    <br><br>
+                    This urban environment is completely stark, dull, mechanical, overcrowded, and monochromatic (grey). In contrast, the place he yearns to be—the <strong>Lake Isle of Innisfree</strong> in County Sligo, Ireland—is a vibrant, green, solitary paradise characterized by clear lapping waters, purple heather glows at noon, shimmering starlight at midnight, singing crickets, and tranquil peace.
+                </div>
+            </div>
+
+            <!-- QA 2 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">2b.</span>
+                    <span>What is the kind of dwelling place he has imagined for himself?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans2', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans2">
+                    <strong>Answer:</strong> The poet does not envision a grand brick house or luxurious mansion. Instead, he imagines building a modest, eco-friendly <strong>small rustic cabin made of natural clay and wattles</strong> (interwoven wooden twigs and branches). It symbolizes ultimate simplicity, self-reliance, and minimal disturbance to Mother Nature.
+                </div>
+            </div>
+
+            <!-- QA 3 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">2c.</span>
+                    <span>What would he like to plant on the island? What else will he do?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans3', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans3">
+                    <strong>Answer:</strong> On the island, the poet would like to:
+                    <ul style="margin:6px 0 0 0; padding-left:20px;">
+                        <li>Plant <strong>nine bean-rows</strong> to provide fresh, wholesome sustenance.</li>
+                        <li>Build and maintain a <strong>hive for the honey-bee</strong> to harvest sweet honey.</li>
+                        <li>Live alone in the <strong>bee-loud glade</strong>, immersing his senses in the peaceful sounds of buzzing bees, fluttering linnets, chirping crickets, and gentle lake ripples.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- QA 4 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">2d.</span>
+                    <span>Yeats wrote ‘The Lake Isle of Innisfree’ while living in London. He yearned for the beauty and simplicity of the country life that he had experienced as a child. Would you like to do the same? Give reasons for your answer.</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans4', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans4">
+                    <strong>Answer:</strong> Yes, absolutely. In our modern hyper-connected lives filled with digital screens, honking traffic, air pollution, and hectic examination routines, retreating to a calm natural sanctuary like Innisfree offers invaluable mental peace, physical rejuvenation, and emotional clarity. Being surrounded by natural rhythms—fresh breeze, singing birds, and quiet waters—helps restore our focus, fosters creativity, and reconnects us with the true essence of life beyond material clutter.
+                </div>
+            </div>
+
+            <!-- QA 5 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">2e.</span>
+                    <span><strong>Refrain</strong> is the repetition of words or phrases. Pick an example of refrain in the poem. Why do you think this has been repeated?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans5', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans5">
+                    <strong>Answer:</strong>
+                    The prominent refrain in the poem is the phrase:
+                    <div style="font-style:italic; color:var(--accent); margin:8px 0; font-size:1.05rem; font-weight:700;">
+                        "I will arise and go now"
+                    </div>
+                    (Appearing in line 1 of Stanza 1, and repeated in line 9 of Stanza 3).
+                    <br><br>
+                    <strong>Why it is repeated:</strong>
+                    <ol style="margin:6px 0 0 0; padding-left:20px;">
+                        <li><strong>Sense of Urgency:</strong> It emphasizes the speaker's decisive, unwavering determination to break free from his current monotonous urban existence without further delay.</li>
+                        <li><strong>Echo of Longing:</strong> It shows that his desire is not a fleeting daydream but an irresistible, deeply rooted spiritual calling that resonates in his <em>"deep heart’s core"</em> night and day.</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 3: POETIC DEVICES & IMAGERY ==================== -->
+        <div id="tab-devices" class="tab-content">
+
+            <!-- Imagery Table from Textbook Page 60 -->
+            <div class="info-card">
+                <h3><i class="fas fa-eye"></i> Sensory Imagery: Sight vs Sound</h3>
+                <p style="font-size:0.95rem; line-height:1.7;">Yeats masterfully engages our senses through rich visual and auditory imagery. Here is the complete classification matching textbook Exercise 3:</p>
+
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-eye"></i> Visual Imagery (Sight)</th>
+                            <th><i class="fas fa-ear-listen"></i> Auditory Imagery (Sound)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>"Dropping from the veils of the morning"</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">The soft, hazy morning mist and clouds lifting like a sheer veil.</span></td>
+                            <td><strong>"The bee-loud glade"</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">The continuous, vibrant buzzing of bees echoing across the forest clearing.</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>"Midnight’s all a glimmer"</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">Starlight and moonbeams shimmering and sparkling on the undisturbed lake.</span></td>
+                            <td><strong>"Where the cricket sings"</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">The high-pitched, melodic chirping of grass crickets at dawn and dusk.</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>"Noon a purple glow"</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">Sunlight reflecting off blooming purple heather flowers covering the hills.</span></td>
+                            <td><strong>"Evening full of the linnet’s wings"</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">The gentle whirring and fluttering sounds of small songbirds in flight.</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>"Pavements grey"</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">The dreary, dull, lifeless grey concrete stones of industrial London.</span></td>
+                            <td><strong>"Lake water lapping with low sounds"</strong><br><span style="font-size:0.85rem; color:var(--text-muted);">The rhythmic, gentle liquid splashing of gentle ripples against the shore.</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Literary Devices Breakdown -->
+            <div class="info-card">
+                <h3><i class="fas fa-wand-magic-sparkles"></i> Comprehensive Literary Devices Explorer</h3>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-top:14px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:16px; border-radius:12px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Alliteration</strong>
+                        <p style="margin:6px 0 0 0; font-size:0.88rem; color:var(--text-muted); line-height:1.6;">
+                            Repetition of initial consonant sounds:
+                            <br>&bull; <em>"<strong>h</strong>ive for the <strong>h</strong>oney-bee"</em> (h sound)
+                            <br>&bull; <em>"<strong>l</strong>ake water <strong>l</strong>apping with <strong>l</strong>ow sounds"</em> (l sound creates a soothing wave effect).
+                        </p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:16px; border-radius:12px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Metaphor</strong>
+                        <p style="margin:6px 0 0 0; font-size:0.88rem; color:var(--text-muted); line-height:1.6;">
+                            Direct figurative comparison:
+                            <br>&bull; <em>"veils of the morning"</em> — Compares morning clouds and dew mist to a bride's sheer translucent veil slowly lifting from her face.
+                        </p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:16px; border-radius:12px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Onomatopoeia</strong>
+                        <p style="margin:6px 0 0 0; font-size:0.88rem; color:var(--text-muted); line-height:1.6;">
+                            Words imitating natural sounds:
+                            <br>&bull; <em>"<strong>lapping</strong>"</em> reproduces the exact sound of water gently slapping against pebbles on the shore.
+                        </p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:16px; border-radius:12px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Contrast & Juxtaposition</strong>
+                        <p style="margin:6px 0 0 0; font-size:0.88rem; color:var(--text-muted); line-height:1.6;">
+                            Vivid visual contrast between:
+                            <br>&bull; The natural, peaceful, colourful, vibrant island (purple glow, green glade, glimmer).
+                            <br>&bull; The sterile, noisy, monochromatic city (<em>"pavements grey"</em>).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 4: ART CORNER: POSTCARDS ==================== -->
+        <div id="tab-art" class="tab-content">
+
+            <div class="info-card">
+                <h3><i class="fas fa-envelopes-bulk"></i> Art Corner: Travel Postcards as Souvenirs</h3>
+                <p style="font-size:0.95rem; line-height:1.7;">A travel postcard is a cherished souvenir that captures the soul, architecture, monuments, and cultural identity of a destination. Below are the authentic textbook typographic examples representing Paris and London:</p>
+
+                <!-- Textbook Image -->
+                <div class="story-img-card">
+                    <img src="images/innisfree/postcards_paris_london.png" alt="Travel postcards of Paris and London" style="max-height: 280px;">
+                    <div class="story-img-caption">Authentic souvenir postcards blending typography with iconic architectural photography (Eiffel Tower, Arc de Triomphe, Big Ben, Union Jack).</div>
+                </div>
+
+                <div style="background:rgba(16, 185, 129, 0.08); border-left:4px solid var(--accent); padding:16px; border-radius:0 10px 10px 0; margin-top:20px;">
+                    <h4 style="margin:0 0 6px 0; color:var(--accent);"><i class="fas fa-pencil"></i> Design Challenge for Pushti:</h4>
+                    <p style="margin:0; font-size:0.92rem; line-height:1.6;">Design a souvenir postcard for Bhavnagar or your favourite dream destination! Include key landmarks (like Takhteshwar Temple, Nilambag Palace, Gaurishankar Lake / Bor Talav) in the letters of the city's name!</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 5: NATURE & MINDFULNESS CONNECT ==================== -->
+        <div id="tab-nature" class="tab-content">
+
+            <div class="info-card">
+                <h3><i class="fas fa-map-location-dot"></i> Experiential Learning: The Real Lake Isle of Innisfree</h3>
+                <p style="font-size:0.95rem; line-height:1.7;">The Isle of Innisfree is a real, tiny uninhabited islet located in <strong>Lough Gill, County Sligo, Ireland</strong>. As a young boy, W.B. Yeats spent his summer holidays exploring Sligo's rugged hills, lakes, and forests with his grandparents. When he later lived as a homesick young man in industrial London, the sight of a small shop-window water fountain reminded him of the lapping lake water of Lough Gill, inspiring this timeless poem.</p>
+                <div style="display:flex; gap:12px; margin-top:10px;">
+                    <span class="meta-pill"><i class="fas fa-compass"></i> Coordinates: 54.249° N, 8.358° W</span>
+                    <span class="meta-pill"><i class="fas fa-water"></i> Lough Gill, Sligo</span>
+                </div>
+            </div>
+
+            <!-- Nature Deficit & Ecotherapy -->
+            <div class="info-card">
+                <h3><i class="fas fa-tree"></i> Modern Connection: Shinrin-Yoku (Forest Bathing) & Solitude</h3>
+                <p style="font-size:0.95rem; line-height:1.7;">What Yeats instinctively recognized in 1888 is now validated by modern cognitive neuroscience:</p>
+                <ul style="font-size:0.92rem; line-height:1.8; padding-left:20px; margin-bottom:0;">
+                    <li><strong>Lowering Cortisol:</strong> Spending just 20 minutes in green spaces reduces stress hormone levels, blood pressure, and anxiety.</li>
+                    <li><strong>Restoring Directed Attention:</strong> The sounds of gentle waves, rustling leaves, and chirping birds activate our "soft fascination," allowing the brain's prefrontal cortex to recover from mental fatigue.</li>
+                    <li><strong>The "Deep Heart's Core":</strong> Finding moments of daily quiet reflection helps maintain inner emotional balance amidst modern academic demands.</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- REVISION LOG SCRIPT -->
+    <script src="../../js/chapter_logs.js"></script>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // Tab Switching
+        function openTab(evt, tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const btns = document.querySelectorAll('.tab-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Web Audio Feedback
+        function playChime(success = true) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                if (success) {
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+                    osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.15); // E5
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.35);
+                } else {
+                    osc.frequency.setValueAtTime(329.63, ctx.currentTime); // E4
+                    osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.2); // A3
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.3);
+                }
+            } catch (e) {}
+        }
+
+        // MCQ Checking
+        function checkMcq(qNum, element, isCorrect) {
+            const card = document.getElementById('mcq' + qNum);
+            const options = card.querySelectorAll('.mcq-opt');
+            const fb = document.getElementById('fb' + qNum);
+
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+
+            if (isCorrect) {
+                element.classList.add('correct');
+                fb.style.display = 'block';
+                fb.style.background = 'rgba(16, 185, 129, 0.15)';
+                fb.style.color = '#34D399';
+                fb.innerHTML = '<i class="fas fa-check-circle"></i> Correct! Excellent comprehension of the poem.';
+                playChime(true);
+            } else {
+                element.classList.add('incorrect');
+                fb.style.display = 'block';
+                fb.style.background = 'rgba(239, 68, 68, 0.15)';
+                fb.style.color = '#F87171';
+                fb.innerHTML = '<i class="fas fa-times-circle"></i> Incorrect. Review the poem text above.';
+                options.forEach(opt => {
+                    if (opt.getAttribute('onclick').includes('true')) {
+                        opt.classList.add('correct');
+                    }
+                });
+                playChime(false);
+            }
+        }
+
+        // Reveal Answer Toggle
+        function toggleAnswer(id, btn) {
+            const ans = document.getElementById(id);
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
+                playChime(true);
+            }
+        }
+
+        // Theme Toggle Handler
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeBtn = document.querySelector('.theme-toggle');
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const current = document.body.getAttribute('data-theme') || 'dark';
+                    const next = current === 'dark' ? 'light' : 'dark';
+                    document.body.setAttribute('data-theme', next);
+                    const icon = themeBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = next === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                    localStorage.setItem('pushti-theme', next);
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({ theme: next }, '*');
+                    }
+                });
+
+                const saved = localStorage.getItem('pushti-theme');
+                if (saved) {
+                    document.body.setAttribute('data-theme', saved);
+                    const icon = themeBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = saved === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

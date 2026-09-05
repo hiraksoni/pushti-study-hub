@@ -186,6 +186,37 @@
                     date: 'September 6, 2026',
                     model: 'Gemini 2.5 Pro (via Antigravity)',
                     notes: 'Initial production release with all 5 interactive tabs, audio cues, image gallery, and glassmorphic UI.'
+        },
+
+        'eng_lit_ch6': {
+            id: 'eng_lit_ch6',
+            title: 'Chapter 3: The Lake Isle of Innisfree',
+            subject: 'English Literature',
+            unit: 'Unit 2: Wanderlust',
+            author: 'William Butler Yeats',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 12:25 AM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#10B981',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Poetry Appreciation & Literary Analysis Interactive Module',
+            summary: 'Complete interactive study suite for W.B. Yeats\'s lyrical masterpiece The Lake Isle of Innisfree, covering stanza-by-stanza annotations, visual and auditory sensory imagery, the "I will arise and go now" refrain, travel postcard art, and nature ecotherapy.',
+            changesList: [
+                'Full 3-stanza lyrical poem digitized with line-by-line paraphrase, audio rhythm guide, and ABAB CDCD EFEF rhyme scheme breakdown.',
+                'Cropped and integrated 2 authentic illustrations: the tranquil clay-and-wattles cabin on Lough Gill and Paris/London typography travel postcards.',
+                'Interactive vocabulary hover tooltips for 10 key poetic words (Innisfree, wattles, bean-rows, glade, veils of the morning, glimmer, purple glow, linnet, lapping, deep heart\'s core).',
+                'Poem Appreciation MCQs (3 textbook questions on city escape, tranquility, and holistic nature routines).',
+                'Section 2: 5 textbook short Q&As with "Reveal Answer" buttons on London vs Innisfree contrast, cabin architecture, country nostalgia, and the literary function of the Refrain.',
+                'Tab 3: Complete Visual vs Auditory Imagery comparative matrix from textbook page 60 + detailed exploration of alliteration, metaphor, and onomatopoeia.',
+                'Tab 4: Art Corner on travel postcards as cultural souvenirs + Bhavnagar landmark design challenge.',
+                'Tab 5: Experiential Learning connecting Lough Gill in County Sligo with modern neuroscience of Shinrin-yoku (forest bathing) and mental peace.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Initial production release with 5 interactive tabs, audio cues, image integration, and glassmorphic UI.'
                 }
             ]
         },
