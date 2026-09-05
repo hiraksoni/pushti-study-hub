@@ -177,7 +177,7 @@
             taskType: 'Schedule Modernization & Trend Analytics',
             summary: 'Updated school timetable starting at 7:30 AM with personalized Sanskrit track for Pushti, teacher standardization to Roger Sir, weekly hours calculation, and Kaushal Bodh (KB) spotlight.',
             changesList: [
-                'Set language slots (Mon P3, Tue P8, Fri P6, Sat P3) to Sanskrit for Pushti with Falguni Ma\'am, linking to Sanskrit Study Hub.',
+                'Kept language slots (Mon P3, Tue P8, Fri P6, Sat P3) strictly as Sanskrit with Falguni R for Pushti, omitting Gujarati information.',
                 'Standardized teacher nomenclature to Roger Sir across Chemistry, Physics, Biology, Science Lab, and Kaushal Bodh.',
                 'Adjusted daily start time to 7:30 AM with 35-minute periods and two recesses (9:15 AM & 11:15 AM).',
                 'Built automated weekly subject hours calculator comparing against previous timetable (+90m Maths).',
@@ -188,7 +188,7 @@
                     version: 'v2.1.0',
                     date: 'September 5, 2026',
                     model: 'Gemini 2.5 Pro (via Antigravity)',
-                    notes: 'Configured Sanskrit track for Pushti (Falguni Ma\'am) and standardized teacher naming to Roger Sir.'
+                    notes: 'Retained pure Sanskrit with Falguni R for Pushti (omitting Gujarati) and standardized teacher naming to Roger Sir.'
                 },
                 {
                     version: 'v2.0.0',
