@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 3: Chapter 1 - The One Who Survived: Ada Blackjack | Class 7 English Literature</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="../../js/firebase-tracker.js"></script>
+    <style>
+        :root {
+            --bg-main: #0B132B;
+            --bg-card: rgba(28, 37, 65, 0.85);
+            --surface: #1C2541;
+            --accent: #6FFFE9;
+            --accent-glow: rgba(111, 255, 233, 0.25);
+            --accent-sec: #5BC0BE;
+            --text-main: #F8FAFC;
+            --text-primary: #FFFFFF;
+            --text-muted: #94A3B8;
+            --border: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(111, 255, 233, 0.25);
+            --tag-color: #6FFFE9;
+            --tab-active-bg: rgba(111, 255, 233, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.65;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* SITE HEADER */
+        .site-header {
+            background-color: var(--bg-main) !important;
+            background: var(--bg-main) !important;
+            opacity: 1 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 24px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* TABS */
+        .tabs-wrapper {
+            position: sticky;
+            top: 57px;
+            z-index: 990;
+            background: var(--bg-main);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 16px;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 24px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent);
+            background: rgba(111, 255, 233, 0.08);
+        }
+        .tab-btn.active {
+            background: var(--tab-active-bg);
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px 20px 60px 20px;
+        }
+
+        /* TAB CONTENT */
+        .tab-content {
+            display: none;
+            animation: tabFadeIn 0.3s ease-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HERO CARD */
+        .hero-card {
+            background: linear-gradient(135deg, rgba(111, 255, 233, 0.15), rgba(91, 192, 190, 0.08));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(111, 255, 233, 0.18);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            border: 1px solid rgba(111, 255, 233, 0.3);
+        }
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            color: var(--text-primary);
+            line-height: 1.25;
+        }
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.88rem;
+        }
+        .meta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 16px;
+            color: var(--text-main);
+        }
+
+        /* STORY / PROSE STYLING */
+        .story-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        .story-section h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 0 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .story-p {
+            font-size: 1.02rem;
+            line-height: 1.8;
+            margin-bottom: 18px;
+            color: var(--text-main);
+        }
+        .dialogue {
+            color: #A5F3FC;
+            font-weight: 500;
+        }
+
+        /* GRAPHIC NOVEL STRIP CARDS */
+        .comic-panel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .comic-panel {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            position: relative;
+        }
+        .comic-panel-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #F59E0B;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+
+        /* VOCAB TOOLTIP */
+        .vocab-word {
+            color: var(--accent);
+            font-weight: 600;
+            border-bottom: 1px dashed var(--accent);
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+        .vocab-word:hover::after {
+            content: attr(data-def);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111827;
+            color: #F8FAFC;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: normal;
+            width: max-content;
+            max-width: 260px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            border: 1px solid var(--accent);
+            z-index: 100;
+            pointer-events: none;
+            line-height: 1.4;
+            font-family: system-ui, sans-serif;
+        }
+
+        /* IMAGES IN STORY */
+        .story-img-card {
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+        }
+        .story-img-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+        }
+        .story-img-caption {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* HERO PROFILE CARD */
+        .author-card {
+            background: linear-gradient(135deg, rgba(111, 255, 233, 0.12), rgba(91, 192, 190, 0.08));
+            border: 1px solid rgba(111, 255, 233, 0.3);
+            border-radius: 16px;
+            padding: 22px;
+            margin: 26px 0;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .author-avatar {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: #0284C7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 0 16px rgba(111, 255, 233, 0.4);
+        }
+        .author-info h3 {
+            margin: 0 0 6px 0;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+        .author-info p {
+            margin: 0;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* MCQS */
+        .mcq-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .mcq-question {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+        }
+        .mcq-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .mcq-opt {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+        .mcq-opt:hover {
+            background: rgba(111, 255, 233, 0.08);
+            border-color: var(--accent);
+        }
+        .mcq-opt.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border-color: #10B981 !important;
+            color: #34D399;
+            font-weight: 600;
+        }
+        .mcq-opt.incorrect {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: #EF4444 !important;
+            color: #F87171;
+        }
+        .mcq-feedback {
+            margin-top: 10px;
+            font-size: 0.88rem;
+            display: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        /* REVEAL Q&A CARDS */
+        .qa-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .qa-q {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .qa-reveal-btn {
+            background: rgba(111, 255, 233, 0.15);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .qa-reveal-btn:hover {
+            background: var(--accent);
+            color: #0B132B;
+        }
+        .qa-answer {
+            display: none;
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-main);
+        }
+
+        /* COMPARISON TABLE */
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .comp-table th, .comp-table td {
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.93rem;
+        }
+        .comp-table th {
+            background: rgba(111, 255, 233, 0.18);
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .comp-table td {
+            background: rgba(255, 255, 255, 0.02);
+            line-height: 1.6;
+        }
+
+        /* INFO CARD */
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 22px;
+        }
+        .info-card h3 {
+            margin: 0 0 12px 0;
+            font-size: 1.2rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* LIGHT MODE COMPATIBILITY */
+        [data-theme="light"] {
+            --bg-main: #F0FDF9 !important;
+            --bg-card: #FFFFFF !important;
+            --text-main: #0F172A !important;
+            --text-primary: #0F172A !important;
+            --text-muted: #475569 !important;
+            --surface: #CCFBF1 !important;
+            --border: #99F6E4 !important;
+            --glass-border: rgba(13, 148, 136, 0.4) !important;
+            --accent: #0D9488 !important;
+            --accent-glow: rgba(13, 148, 136, 0.2) !important;
+            --tag-color: #0D9488 !important;
+            --tab-active-bg: rgba(13, 148, 136, 0.15) !important;
+        }
+        [data-theme="light"] .site-header {
+            background-color: #FFFFFF !important;
+            background: #FFFFFF !important;
+            border-bottom: 1px solid #99F6E4 !important;
+        }
+        [data-theme="light"] .tabs-wrapper {
+            background: #FFFFFF !important;
+            border-bottom: 1px solid #99F6E4 !important;
+        }
+        [data-theme="light"] .story-section, [data-theme="light"] .info-card, [data-theme="light"] .qa-card, [data-theme="light"] .mcq-card {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        [data-theme="light"] .dialogue {
+            color: #0369A1;
+        }
+        [data-theme="light"] .comp-table th {
+            background: #CCFBF1;
+            color: #0F766E;
+        }
+        [data-theme="light"] .comp-table td {
+            background: #FFFFFF;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- HEADER SECTION -->
+    <header class="site-header">
+        <div class="header-left">
+            <a href="../../index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <span style="color:var(--text-muted);">&bull;</span>
+            <a href="../../english_index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+                English
+            </a>
+            <span style="color:var(--text-muted);">&bull;</span>
+            <span style="color:var(--accent);">Ch.1 The One Who Survived: Ada Blackjack</span>
+        </div>
+
+        <div class="header-right">
+            <nav class="header-nav">
+                <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:var(--text-main); cursor:pointer; font-size:1.2rem;">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <a href="../../timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
+                <a href="../../midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
+
+                <div class="user-profile-wrapper" style="position:relative;">
+                    <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:38px; height:38px; border:2px solid var(--accent);">
+                        <img src="https://ui-avatars.com/api/?name=Pushti&background=0D9488&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- STICKY TABS WRAPPER -->
+    <div class="tabs-wrapper">
+        <button class="tab-btn active" onclick="openTab(event, 'tab-story')"><i class="fas fa-book-open"></i> Graphic Story & Text</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-comprehension')"><i class="fas fa-question-circle"></i> Comprehension & Q&A</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-vocab')"><i class="fas fa-spell-check"></i> Vocabulary & Synonyms</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-grammar')"><i class="fas fa-code-branch"></i> Grammar: Transitive Verbs</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-survival')"><i class="fas fa-shield-heart"></i> Survival Skills & Women Heroes</button>
+    </div>
+
+    <div class="container">
+
+        <!-- ==================== TAB 1: GRAPHIC STORY & TEXT ==================== -->
+        <div id="tab-story" class="tab-content active">
+
+            <div class="hero-card">
+                <span class="hero-badge">Unit 3: Real-Life Heroes &bull; Section 1</span>
+                <h1 class="hero-title">The One Who Survived: Ada Blackjack</h1>
+                <p class="hero-subtitle">The True Saga of an Iñupiat Mother's Courage, Grit & Solitary Arctic Survival on Wrangel Island (1921–1923)</p>
+                <div class="hero-meta">
+                    <span class="meta-pill"><i class="fas fa-user-graduate"></i> Class 7 Literature</span>
+                    <span class="meta-pill"><i class="fas fa-snowflake"></i> Setting: Wrangel Island & Chukchi Sea</span>
+                    <span class="meta-pill"><i class="fas fa-heart"></i> Mother's Love & Unbreakable Will</span>
+                    <button class="meta-pill" onclick="openChapterLog('eng_lit_ch7')" style="cursor:pointer; background:rgba(111, 255, 233, 0.2); border-color:#6FFFE9; color:#A5F3FC; font-weight:600;"><i class="fas fa-history"></i> Revision Log &bull; Gemini 2.5 Pro</button>
+                </div>
+            </div>
+
+            <!-- Starter Activity Matrix -->
+            <div style="background:rgba(111, 255, 233, 0.08); border:1px solid rgba(111, 255, 233, 0.3); border-radius:14px; padding:20px; margin-bottom:24px;">
+                <h3 style="color:var(--accent); margin-top:0; display:flex; align-items:center; gap:8px;">
+                    <i class="fas fa-medal"></i> Starter: Legendary Heroes vs Ordinary / Everyday Heroes
+                </h3>
+                <p style="font-size:0.95rem; margin-bottom:12px;">What defines a real hero? The textbook contrasts mythical figures with everyday heroes who perform miracles through human love and resilience:</p>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                    <div style="background:rgba(0,0,0,0.2); padding:14px; border-radius:10px; border:1px solid var(--border);">
+                        <strong style="color:#F59E0B;"><i class="fas fa-shield-halved"></i> Legendary Hero</strong>
+                        <ul style="font-size:0.88rem; line-height:1.6; padding-left:18px; margin:6px 0 0 0;">
+                            <li>Possesses supernatural abilities or godlike powers.</li>
+                            <li>Undertakes mythical quests aided by magical beasts.</li>
+                            <li>Defeats monsters using enchanted weapons.</li>
+                        </ul>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.2); padding:14px; border-radius:10px; border:1px solid var(--border);">
+                        <strong style="color:#34D399;"><i class="fas fa-person-breastfeeding"></i> Ordinary / Everyday Hero</strong>
+                        <ul style="font-size:0.88rem; line-height:1.6; padding-left:18px; margin:6px 0 0 0;">
+                            <li>Possesses quiet inner determination, love, and moral duty.</li>
+                            <li>Overcomes extreme poverty, illness, and harsh nature.</li>
+                            <li>Perseveres against impossible odds to save a loved one.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scene 1 -->
+            <div class="story-section">
+                <h2><i class="fas fa-person-walking-luggage"></i> Scene 1: The Devoted Mother and the Arctic Proposal</h2>
+
+                <p class="story-p">The year was 1898 when Ada Delutuk was born into an Iñupiat Inuit family in Spruce Creek, Alaska. By 1921, the intervening years had been desperately hard for Ada: her marriage had dissolved after abandonment, two of her children had tragically passed away, and her surviving five-year-old son, <strong>Bennett</strong>, was suffering from severe tuberculosis.</p>
+
+                <p class="story-p">Desperate to afford around-the-clock medical care for Bennett in an expensive Seattle hospital, Ada had no money and only her needle and thread: <span class="dialogue">"I shall not let Bennett die,"</span> she whispered to her grandmother. <span class="dialogue">"We are poor—we have no money and little food. But I can sew. I will find a way."</span></p>
+
+                <p class="story-p">A few days later, a knock came at her humble wooden cabin door. In stepped <strong>Vilhjalmur Stefansson</strong>, a famed Arctic explorer: <span class="dialogue">"I'm sending four men to explore the Arctic. They'll need a cook and a seamstress skilled at stitching warm fur clothing. I wish to colonize Wrangel Island, north of Siberia. I know your son is ill; I will ensure he receives the finest medical treatment and pay you fifty dollars a month."</span></p>
+
+                <p class="story-p">Though terrified of the frozen wilderness and polar bears, Ada did not hesitate for a second: <span class="dialogue">"I will go, sir, for my son. I can do anything for my son."</span></p>
+            </div>
+
+            <!-- Scene 2 -->
+            <div class="story-section">
+                <h2><i class="fas fa-ship"></i> Scene 2: The Voyage of the Silverwave to Wrangel Island</h2>
+
+                <p class="story-p">On 21st September 1921, Ada set out alongside four hardened adventurers: Canadian expedition leader <strong>Allan Crawford</strong> (20), and Americans <strong>Lorne Knight</strong> (28), <strong>Fred Maurer</strong> (28), and <strong>Milton Galle</strong> (20). When the men first saw Ada, they murmured doubts: <span class="dialogue">"She looks so frail! She'll not survive in the bitter cold, Stefansson!"</span> But Ada quietly replied: <span class="dialogue">"I'll learn how to."</span></p>
+
+                <div class="story-img-card">
+                    <img src="images/ada_blackjack/silverwave_ship.png" alt="Expedition members on the ship Silverwave" style="max-height: 360px;">
+                    <div class="story-img-caption">The expedition team aboard the Silverwave en route to colonize remote Wrangel Island in the Arctic Ocean.</div>
+                </div>
+
+                <p class="story-p">Stefansson assured the team: <span class="dialogue">"I've put food for six months in the ship. The island is abundant with wildlife. I will send a relief supply ship in summer; meanwhile you will fend for yourselves."</span></p>
+
+                <p class="story-p">As the ship navigated the icy Chukchi Sea, Ada looked across the churning waters: <span class="dialogue">"Oh, I miss my son. But if I refuse, who will cook and sew for them? Bennett needs medical attention. I will keep my word."</span> They pitched their tents on the desolate shores of Wrangel Island.</p>
+            </div>
+
+            <!-- Scene 3 -->
+            <div class="story-section">
+                <h2><i class="fas fa-icicles"></i> Scene 3: The Trapped Winter & Scurvy's Fatal Grip</h2>
+
+                <p class="story-p">At first, game was plentiful. The men hunted seals and geese, built a snowhouse, and Ada stitched warm parkas and walrus-skin mukluks (boots) to protect them from the sub-zero blizzards.</p>
+
+                <p class="story-p">However, the summer of 1922 came and went without any sign of Stefansson’s promised relief ship—heavy pack ice had completely blocked the sea routes. Winter set in with furious vengeance, and rations of tea, coffee, flour, and sugar dwindled rapidly.</p>
+
+                <div class="story-img-card">
+                    <img src="images/ada_blackjack/arctic_campfire.png" alt="Campfire in the Arctic snowhouse" style="max-height: 320px;">
+                    <div class="story-img-caption">Gathered around the campfire inside the snowhouse as Arctic blizzards trapped the team on Wrangel Island.</div>
+                </div>
+
+                <p class="story-p">Disaster struck when Lorne Knight fell grievously ill after swimming across the freezing Skeleton River. It was not an ordinary fever—Knight had developed debilitating <span class="vocab-word" data-def="A severe disease caused by deficiency of vitamin C, leading to bleeding gums, skin spots, extreme joint pain, and exhaustion">scurvy</span>. He could no longer walk or sit upright.</p>
+
+                <p class="story-p">In January 1923, facing starvation, Crawford, Galle, and Maurer made a desperate gamble: <span class="dialogue">"How long can we live like this? We'll all perish! We must cross the frozen Chukchi Sea on foot across seven hundred miles of shifting pack ice to reach the Siberian mainland and seek rescue."</span></p>
+
+                <p class="story-p">Lorne Knight could not even stand. Ada vowed to stay behind alone in the igloo to nurse him: <span class="dialogue">"Don't lose heart, Lorne. I'll stay back and look after you."</span> The three young men set out into the blinding white horizon. Months passed without any word. Crawford, Galle, and Maurer were swallowed by the Arctic ice and never seen again.</p>
+            </div>
+
+            <!-- Scene 4 -->
+            <div class="story-section">
+                <h2><i class="fas fa-gun"></i> Scene 4: Alone in the White Wilderness</h2>
+
+                <p class="story-p">For six months, Ada acted as nurse, cook, and provider. She chopped frozen driftwood with frostbitten fingers, melted snow for drinking water, cleaned Knight’s bedding, and cooked warm broth. In June 1923, despite Ada’s tireless care, Lorne Knight passed away. Ada was left completely alone on a deserted Arctic island, surrounded by howling polar winds and prowling polar bears.</p>
+
+                <p class="story-p">Confronted by absolute isolation, Ada refused to surrender to despair: <span class="dialogue">"His death has left me so utterly lonely. What shall I do in this ice-bound wilderness with no food or anyone by my side? But Bennett is in Seattle waiting for me. I must keep this fire burning."</span></p>
+
+                <p class="story-p">Ada transformed into a resourceful master of survival. Though she had never fired a rifle before, she studied Lorne Knight's journals and Maurer’s hunting maps. She taught herself to set wooden box traps to catch Arctic foxes, shot birds with a shotgun, gathered moss, repaired a canvas skin boat (umiak), and built an elevated observation wooden tower to scan the horizon for approaching polar bears and rescue ships.</p>
+            </div>
+
+            <!-- Scene 5 -->
+            <div class="story-section">
+                <h2><i class="fas fa-anchor"></i> Scene 5: The Donaldson Arrives & Global Acclaim</h2>
+
+                <p class="story-p">On <strong>23 August 1923</strong>, nearly two full years after landing on Wrangel Island, Ada stepped out of her tent and rubbed her eyes. Cutting through the blue waters was a rescue schooner—the <strong>Donaldson</strong>.</p>
+
+                <div class="story-img-card">
+                    <img src="images/ada_blackjack/donaldson_rescue.png" alt="Rescue ship Donaldson reaching Ada Blackjack" style="max-height: 360px;">
+                    <div class="story-img-caption">Rescuers from the Donaldson astonished to find Ada alive, healthy, and masterfully maintaining the camp.</div>
+                </div>
+
+                <p class="story-p">The rescuers stepped ashore, stunned to find a neatly kept campsite and Ada dressed in clean reindeer-skin clothes she had stitched herself. <span class="dialogue">"Ada, where are your companions?"</span> they gasped. With tears in her eyes, she answered quietly: <span class="dialogue">"They haven't returned for months. Lorne is dead. Please take me home."</span></p>
+
+                <p class="story-p">When Ada returned to civilization, the global press erupted with sensational headlines, calling her the <strong>"Female Robinson Crusoe"</strong> and the <strong>"Heroic Miracle Survivor"</strong>.</p>
+
+                <div class="story-img-card">
+                    <img src="images/ada_blackjack/ada_press_headlines.png" alt="Press headlines celebrating Ada Blackjack" style="max-height: 300px;">
+                    <div class="story-img-caption">International newspaper headlines proclaiming Ada Blackjack as the legendary "Miracle Survivor" of the Arctic.</div>
+                </div>
+
+                <p class="story-p">Reporters surrounded her, asking: <span class="dialogue">"How did you survive? Were you a trained hunter? Have you always been brave?"</span></p>
+
+                <p class="story-p">Ada replied with timeless humility: <span class="dialogue">"No, not at all. It's only when I was solely responsible for Lorne and myself that I trained myself to hunt. I figured things out as I went along. I would never give up hope while I'm still alive. I had to do it for my son, Bennett."</span></p>
+
+                <p class="story-p">True to her word, Ada collected her modest wages, took Bennett to Seattle, and paid for the specialized treatments that cured him completely. Ada Blackjack lived to the age of 85, forever remembered as an icon of maternal devotion, quiet courage, and unbreakable resilience.</p>
+            </div>
+
+            <!-- Hero Tribute Card -->
+            <div class="author-card">
+                <div class="author-avatar"><i class="fas fa-person-breastfeeding"></i></div>
+                <div class="author-info">
+                    <h3>Ada Blackjack (1898–1983)</h3>
+                    <p>An Iñupiat woman born in Spruce Creek, Alaska, Ada was celebrated globally as the sole survivor of the ill-fated 1921 Wrangel Island expedition. Her story is celebrated not for military conquest, but for the transcendent power of maternal love, self-reliance, and quiet moral courage that triumphed over the deadliest environment on Earth.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 2: COMPREHENSION & Q&A ==================== -->
+        <div id="tab-comprehension" class="tab-content">
+
+            <!-- Activity 1: Three Stages of Ada's Life -->
+            <div class="info-card">
+                <h3><i class="fas fa-timeline"></i> 1. Three Stages of Ada’s Life on Wrangel Island</h3>
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th>Stage 1: Ada at Home with Family</th>
+                            <th>Stage 2: Ada Before Lorne Knight Dies</th>
+                            <th>Stage 3: Ada After Lorne Knight Passes Away</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                &bull; Lived in severe poverty in Nome, Alaska.<br>
+                                &bull; Abandoned by husband, lost two children.<br>
+                                &bull; Desperately needed money to treat 5-year-old son Bennett's tuberculosis.<br>
+                                &bull; Agreed to join Arctic expedition as seamstress for $50/month.
+                            </td>
+                            <td>
+                                &bull; Cooked meals and stitched waterproof fur boots/parkas for the 4 men.<br>
+                                &bull; Comforted the men as winter ice trapped their ship.<br>
+                                &bull; Sacrificially stayed behind on Wrangel Island to nurse bedridden Lorne Knight through scurvy.<br>
+                                &bull; Kept hope alive while 3 men vanished seeking help.
+                            </td>
+                            <td>
+                                &bull; Completely alone in the frozen Arctic wilderness.<br>
+                                &bull; Taught herself to shoot rifle, trap foxes, and skin seals.<br>
+                                &bull; Built an elevated observation tower to guard against polar bears.<br>
+                                &bull; Kept fire burning for months until rescued by the <em>Donaldson</em>.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section 2: Detailed Textbook Questions with Reveal Buttons -->
+            <h2 style="color:var(--accent); margin:28px 0 16px 0; display:flex; align-items:center; gap:10px;">
+                <i class="fas fa-book-open-reader"></i> Section 2: Detailed Textbook Questions & Answers
+            </h2>
+
+            <!-- QA 1 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">2a.</span>
+                    <span>Why did Ada agree to join the dangerous Arctic expedition?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans1', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans1">
+                    <strong>Answer:</strong> Ada agreed to join the perilous expedition strictly out of profound maternal love for her sick five-year-old son, <strong>Bennett</strong>. Bennett was suffering from severe tuberculosis and urgently required long-term medical treatment in an expensive hospital in Seattle. Being completely destitute and unable to afford his treatment through needlework alone, Ada accepted Vilhjalmur Stefansson's offer of <strong>fifty dollars a month</strong>, stating: <em>"I will go, sir, for my son. I can do anything for my son."</em>
+                </div>
+            </div>
+
+            <!-- QA 2 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">2b.</span>
+                    <span>How useful were Ada’s skills as a cook and a seamstress in her career and life?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans2', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans2">
+                    <strong>Answer:</strong> Ada’s domestic skills were the absolute foundation of the entire party's survival and her own:
+                    <ul style="margin:6px 0 0 0; padding-left:20px;">
+                        <li><strong>Vital Arctic Clothing:</strong> Without specialized waterproof and windproof reindeer/seal-skin parkas and mukluks (boots) stitched by Ada, the men would have succumbed to hypothermia and frostbite within weeks.</li>
+                        <li><strong>Life-Sustaining Cooking:</strong> She converted frozen game meat into nutritious broths and stews that prolonged Lorne Knight’s life and kept her nourished through months of solitary isolation.</li>
+                        <li><strong>Boat Repair:</strong> Her sewing expertise enabled her to mend the skin coverings of the umiak (canvas/seal boat) to gather driftwood across the freezing shore.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- QA 3 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">2c.</span>
+                    <span>Why did Lorne Knight not traverse the icy sea with Maurer, Crawford, and Galle?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans3', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans3">
+                    <strong>Answer:</strong> Lorne Knight was severely incapacitated by advanced <strong>scurvy</strong> and chronic physical debility after swimming across the freezing Skeleton River. The disease caused severe internal hemorrhages, swollen aching joints, loose teeth, and extreme muscular weakness. He was so completely bedridden that he could not even sit up or take a single step, making it physically impossible for him to undertake a grueling 700-mile trek across the treacherous pack ice.
+                </div>
+            </div>
+
+            <!-- QA 4 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">2d.</span>
+                    <span>Maurer, Crawford, and Galle were never seen after that. What do you think happened to them?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans4', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans4">
+                    <strong>Answer:</strong> The three young men tragically perished on the frozen Chukchi Sea. The Arctic ice pack is not a static highway; it consists of constantly shifting, grinding pressure ridges and open water channels (leads) prone to sudden cracking. It is almost certain that they either fell into sub-zero open leads and drowned, were crushed under shifting pressure ice, or became disoriented during a blinding polar blizzard and froze to death from hypothermia and exhaustion.
+                </div>
+            </div>
+
+            <!-- QA 5 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">2e.</span>
+                    <span>Would you agree that Ada’s ability to survive the expedition all by herself was a ‘miracle’? Why?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans5', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans5">
+                    <strong>Answer:</strong> While contemporary newspapers termed it a "miracle", calling it purely supernatural diminishes Ada's extraordinary human intellect, discipline, and grit. Her survival was the triumph of <strong>practical intelligence, adaptability, and unbreakable will</strong>. Despite having no formal wilderness training, she methodically learned to handle firearms, read hunting maps, improvise fox traps, construct predator blinds, and manage dwindling rations. Above all, her fierce devotion to her son Bennett provided the psychological strength to refuse to surrender to loneliness or terror.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 3: VOCABULARY & SYNONYMS ==================== -->
+        <div id="tab-vocab" class="tab-content">
+
+            <div class="info-card">
+                <h3><i class="fas fa-book-bookmark"></i> Synonyms: Sir Ernest Shackleton's Trial by Ice</h3>
+                <p style="font-size:0.95rem; line-height:1.7;">Complete the book review of <em>Trial by Ice: A Photo-Biography of Sir Ernest Shackleton</em> from textbook page 72 by filling in the blanks with the correct words matching the clue in brackets.</p>
+
+                <!-- Help Box -->
+                <div style="background:rgba(111, 255, 233, 0.08); border:1px dashed var(--accent); border-radius:12px; padding:16px; margin:16px 0; display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">gripping</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">narrated</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">inspiring</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">adversity</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">crew</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">disintegrated</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">embarked</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">ordeal</span>
+                </div>
+
+                <!-- Interactive Cloze Passage -->
+                <div style="background:rgba(255, 255, 255, 0.03); border:1px solid var(--border); border-radius:12px; padding:20px; font-size:1.02rem; line-height:2.2;">
+                    This is a 
+                    <input type="text" id="syn1" value="gripping" disabled style="background:rgba(16, 185, 129, 0.2); border:1px solid #10B981; color:#34D399; padding:4px 10px; border-radius:6px; width:110px; font-weight:700;"> 
+                    <em>(absorbing)</em> story of one of the world's foremost polar explorers. It has been 
+                    <input type="text" id="syn2" placeholder="[told]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:120px; font-weight:600;"> 
+                    <em>(told)</em> through brilliant photography and compelling text and quotes by Ernest Shackleton himself. It is an 
+                    <input type="text" id="syn3" placeholder="[encouraging]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:130px; font-weight:600;"> 
+                    <em>(encouraging)</em> tale of the triumph of the human spirit in the face of 
+                    <input type="text" id="syn4" placeholder="[hardship]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:120px; font-weight:600;"> 
+                    <em>(hardship)</em>. Shackleton led a 
+                    <input type="text" id="syn5" placeholder="[team]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:110px; font-weight:600;"> 
+                    <em>(team)</em> of twenty-seven men in an attempt to be the first people ever to walk across the vast Antarctic interior. Along the way, their ship, the <em>Endurance</em>, got stuck in thick ice in the middle of the Weddell Sea. They were stuck for ten months before the ship 
+                    <input type="text" id="syn6" placeholder="[fell apart]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:140px; font-weight:600;"> 
+                    <em>(fell apart)</em> under the pressure of the crushing ice. Shackleton and his men then 
+                    <input type="text" id="syn7" placeholder="[set out]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:120px; font-weight:600;"> 
+                    <em>(set out)</em> on a desperate journey to land in order to save themselves. At the end of this two-year-long 
+                    <input type="text" id="syn8" placeholder="[suffering]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:110px; font-weight:600;"> 
+                    <em>(suffering)</em>, Shackleton had not lost a single man.
+                </div>
+
+                <div style="margin-top:16px; display:flex; gap:12px; align-items:center;">
+                    <button onclick="validateSynonyms()" style="background:var(--accent); color:#0B132B; border:none; padding:8px 18px; border-radius:8px; font-weight:700; cursor:pointer;">
+                        <i class="fas fa-check"></i> Check Synonyms
+                    </button>
+                    <button onclick="revealSynonyms()" style="background:transparent; color:var(--text-muted); border:1px solid var(--border); padding:8px 14px; border-radius:8px; cursor:pointer;">
+                        Reveal Key
+                    </button>
+                    <span id="syn-score" style="font-weight:700; margin-left:10px;"></span>
+                </div>
+            </div>
+
+            <!-- Chapter Vocabulary Cards -->
+            <div class="info-card">
+                <h3><i class="fas fa-book-atlas"></i> High-Frequency Arctic Vocabulary Glossary</h3>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-top:14px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Scurvy</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.9rem; color:var(--text-muted);">A debilitating illness caused by vitamin C deficiency, resulting in severe lethargy, bleeding gums, joint hemorrhages, and organ failure.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Colonize</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.9rem; color:var(--text-muted);">To establish physical control over an uninhabited or foreign territory to build settlements and claim sovereignty.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Dwindling</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.9rem; color:var(--text-muted);">Gradually shrinking, decreasing in size, amount, or strength (e.g. food supplies during winter).</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Umiak</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.9rem; color:var(--text-muted);">A traditional open Inuit boat made of wooden frames covered with walrus or seal skins.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 4: GRAMMAR: TRANSITIVE & INTRANSITIVE VERBS ==================== -->
+        <div id="tab-grammar" class="tab-content">
+
+            <div class="info-card">
+                <h3><i class="fas fa-diagram-project"></i> Grammar Rules: Transitive vs Intransitive Verbs</h3>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0;">
+                    <div style="background:rgba(16, 185, 129, 0.1); border-left:4px solid #10B981; padding:16px; border-radius:0 10px 10px 0;">
+                        <strong style="color:#34D399; font-size:1.05rem;"><i class="fas fa-arrow-right"></i> Transitive Verbs</strong>
+                        <p style="font-size:0.9rem; margin:6px 0 0 0; line-height:1.6;">Verbs that <strong>require an object</strong> (direct or indirect) to complete their meaning. The action transfers from the subject to a receiver.
+                        <br><em>Example: Ada <strong>sewed</strong> <u>fur parkas</u>.</em></p>
+                    </div>
+                    <div style="background:rgba(245, 158, 11, 0.1); border-left:4px solid #F59E0B; padding:16px; border-radius:0 10px 10px 0;">
+                        <strong style="color:#FBBF24; font-size:1.05rem;"><i class="fas fa-ban"></i> Intransitive Verbs</strong>
+                        <p style="font-size:0.9rem; margin:6px 0 0 0; line-height:1.6;">Verbs that <strong>do not require an object</strong> to make complete sense. The action stays with the subject.
+                        <br><em>Example: Ada <strong>survived</strong> in the Arctic.</em></p>
+                    </div>
+                </div>
+
+                <!-- Direct vs Indirect Object Table from Page 72 -->
+                <h4 style="color:var(--text-primary); margin:20px 0 10px 0;"><i class="fas fa-table-list"></i> Direct vs Indirect Object Analysis</h4>
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th>Sentence</th>
+                            <th>Action (Verb)</th>
+                            <th>Source (Subject)</th>
+                            <th>What Action is About (Direct Object)</th>
+                            <th>Receiver of Action (Indirect Object)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>The explorers finally gave Ada the news of their expedition.</td>
+                            <td><strong style="color:var(--accent);">gave</strong></td>
+                            <td>explorers</td>
+                            <td>the news of their expedition</td>
+                            <td>Ada</td>
+                        </tr>
+                        <tr>
+                            <td>Ada’s story has taught us the value of perseverance.</td>
+                            <td><strong style="color:var(--accent);">has taught</strong></td>
+                            <td>Ada’s story</td>
+                            <td>the value of perseverance</td>
+                            <td>us</td>
+                        </tr>
+                        <tr>
+                            <td>Ladies and gentlemen, we present to you a heroic woman!</td>
+                            <td><strong style="color:var(--accent);">present</strong></td>
+                            <td>we</td>
+                            <td>a heroic woman</td>
+                            <td>you</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Practice Exercise from Page 73 -->
+            <div class="info-card">
+                <h3><i class="fas fa-list-check"></i> Practice: Identify Transitive vs Intransitive</h3>
+                <div style="display:flex; flex-direction:column; gap:12px; margin-top:14px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <div style="font-weight:600; margin-bottom:4px;">a. Many television programmes influence children in dangerous ways.</div>
+                        <div style="font-size:0.9rem; color:var(--text-muted);">
+                            Verb: <span style="color:var(--accent); font-weight:700;">influence</span> &bull; 
+                            Type: <span style="color:#34D399; font-weight:700;">Transitive</span> &bull; 
+                            Object: <em>children</em>
+                        </div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <div style="font-weight:600; margin-bottom:4px;">b. I gave my teacher no reason to complain.</div>
+                        <div style="font-size:0.9rem; color:var(--text-muted);">
+                            Verb: <span style="color:var(--accent); font-weight:700;">gave</span> &bull; 
+                            Type: <span style="color:#34D399; font-weight:700;">Transitive</span> &bull; 
+                            Direct Object: <em>no reason to complain</em> &bull; Indirect Object: <em>my teacher</em>
+                        </div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <div style="font-weight:600; margin-bottom:4px;">c. The young athlete practised in the field every day.</div>
+                        <div style="font-size:0.9rem; color:var(--text-muted);">
+                            Verb: <span style="color:var(--accent); font-weight:700;">practised</span> &bull; 
+                            Type: <span style="color:#FBBF24; font-weight:700;">Intransitive</span> (followed by prepositional phrase, no direct receiver)
+                        </div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <div style="font-weight:600; margin-bottom:4px;">d. I danced all evening at the school function with my friends.</div>
+                        <div style="font-size:0.9rem; color:var(--text-muted);">
+                            Verb: <span style="color:var(--accent); font-weight:700;">danced</span> &bull; 
+                            Type: <span style="color:#FBBF24; font-weight:700;">Intransitive</span>
+                        </div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <div style="font-weight:600; margin-bottom:4px;">e. The tsunami destroyed the coastline.</div>
+                        <div style="font-size:0.9rem; color:var(--text-muted);">
+                            Verb: <span style="color:var(--accent); font-weight:700;">destroyed</span> &bull; 
+                            Type: <span style="color:#34D399; font-weight:700;">Transitive</span> &bull; 
+                            Object: <em>the coastline</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pronunciation: Syllabic Consonants -->
+            <div class="info-card">
+                <h3><i class="fas fa-microphone-lines"></i> Pronunciation: Syllables & Syllabic Consonants</h3>
+                <p style="font-size:0.95rem; line-height:1.7;">Normally, each syllable contains a vowel sound. However, in English, certain final consonants like <strong>/l/, /n/, and /m/</strong> can form a syllable without a fully voiced vowel. These are called <strong>syllabic consonants</strong>.</p>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-top:14px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px;">
+                        <strong>puz-zle:</strong> 2 syllables (/l/)
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px;">
+                        <strong>sud-den:</strong> 2 syllables (/n/)
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px;">
+                        <strong>rhy-thm:</strong> 2 syllables (/m/)
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px;">
+                        <strong>cat-tle:</strong> 2 syllables (/l/)
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px;">
+                        <strong>lis-ten:</strong> 2 syllables (/n/)
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px;">
+                        <strong>driz-zle:</strong> 2 syllables (/l/)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 5: SURVIVAL SKILLS & WOMEN HEROES ==================== -->
+        <div id="tab-survival" class="tab-content">
+
+            <!-- Real-Life Survival Stories from Page 76 -->
+            <div class="info-card">
+                <h3><i class="fas fa-person-running"></i> Cognitive Skills: Real-World Human Survival Stories</h3>
+                <table class="comp-table">
+                    <thead>
+                        <tr>
+                            <th>Survival Case Story</th>
+                            <th>Immediate Threat</th>
+                            <th>Biological / Mental Survival Instinct</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Pamplona Bull Run</strong></td>
+                            <td>Stampeding angry horned bulls charging through cobblestone streets.</td>
+                            <td>Adrenaline surge, heightened reflexes, subconscious sprinting and obstacle evasion before cognitive fear registers.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mitsutaka Uchikoshi (Japan)</strong></td>
+                            <td>Fell unconscious on a remote freezing mountain; stranded for 24 days without food or water.</td>
+                            <td>Spontaneous hypothermic metabolic hibernation: core body temperature dropped to 22°C, slowing organ consumption to prevent brain death.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>California Toddler</strong></td>
+                            <td>Alone in a house for nearly a week after mother's unexpected demise.</td>
+                            <td>Primal drive for sustenance: opened and ate accessible pet food to maintain caloric and hydration requirements.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Wilderness Survival Kit -->
+            <div class="info-card">
+                <h3><i class="fas fa-kit-medical"></i> Stranded Wilderness Survival Kit (Top 8 Essentials)</h3>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-top:14px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px; font-size:0.9rem;">
+                        <strong style="color:var(--accent);">1. Ferrocerium Fire Striker:</strong> Creates 3,000°C sparks in wet, freezing conditions for warmth and signal smoke.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px; font-size:0.9rem;">
+                        <strong style="color:var(--accent);">2. Heavy Carbon Steel Knife:</strong> Essential for building shelters, chopping firewood, skinning game, and defense.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px; font-size:0.9rem;">
+                        <strong style="color:var(--accent);">3. Stainless Steel Canteen:</strong> Allows boiling water to kill deadly parasites and pathogens.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px; font-size:0.9rem;">
+                        <strong style="color:var(--accent);">4. Reflective Thermal Mylar Blanket:</strong> Traps 90% of radiant body heat to prevent fatal hypothermia.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px; font-size:0.9rem;">
+                        <strong style="color:var(--accent);">5. Paracord (550 lb, 50m):</strong> Multipurpose cordage for lashing shelter poles, fishing lines, and snare traps.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px; font-size:0.9rem;">
+                        <strong style="color:var(--accent);">6. First-Aid Kit & Antiseptic:</strong> Treats wound infections, fractures, and frostbite blisters.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px; font-size:0.9rem;">
+                        <strong style="color:var(--accent);">7. Signal Mirror & High-Decibel Whistle:</strong> Audible for miles and reflects sunlight into cockpits of rescue aircraft.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px; font-size:0.9rem;">
+                        <strong style="color:var(--accent);">8. Fishing Hooks & Monofilament:</strong> Low-energy passive food procurement method for coastal waters.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Incredible India: Trailblazing Women Explorers -->
+            <div class="info-card">
+                <h3><i class="fas fa-flag"></i> Incredible India: 5 Trailblazing Women Heroes</h3>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-top:14px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:16px; border-radius:12px;">
+                        <strong style="color:#F59E0B; font-size:1.05rem;">Bachendri Pal</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.88rem; color:var(--text-muted); line-height:1.6;">Made history in 1984 as the very first Indian woman to conquer the peak of Mount Everest, inspiring generations of mountaineers.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:16px; border-radius:12px;">
+                        <strong style="color:#F59E0B; font-size:1.05rem;">Arunima Sinha</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.88rem; color:var(--text-muted); line-height:1.6;">The world’s first female amputee to scale Mount Everest and the highest peaks across all seven continents after surviving a tragic train assault.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:16px; border-radius:12px;">
+                        <strong style="color:#F59E0B; font-size:1.05rem;">Captain Shiva Chouhan</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.88rem; color:var(--text-muted); line-height:1.6;">Became the first woman officer in the Indian Army to be operationally deployed at the world’s highest battlefield—the Siachen Glacier (Kumar Post at 15,632 ft).</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:16px; border-radius:12px;">
+                        <strong style="color:#F59E0B; font-size:1.05rem;">Bhawana Kanth & Avani Chaturvedi</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.88rem; color:var(--text-muted); line-height:1.6;">Pioneering combat pilots inducted into the Indian Air Force fighter squadron, breaking gender barriers in supersonic combat flight.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- REVISION LOG SCRIPT -->
+    <script src="../../js/chapter_logs.js"></script>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // Tab Switching
+        function openTab(evt, tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const btns = document.querySelectorAll('.tab-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Web Audio Feedback
+        function playChime(success = true) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                if (success) {
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+                    osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.15); // E5
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.35);
+                } else {
+                    osc.frequency.setValueAtTime(329.63, ctx.currentTime); // E4
+                    osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.2); // A3
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.3);
+                }
+            } catch (e) {}
+        }
+
+        // Reveal Answer Toggle
+        function toggleAnswer(id, btn) {
+            const ans = document.getElementById(id);
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
+                playChime(true);
+            }
+        }
+
+        // Synonyms Cloze Validation
+        const synKeys = {
+            syn2: ['narrated', 'told'],
+            syn3: ['inspiring', 'encouraging'],
+            syn4: ['adversity', 'hardship'],
+            syn5: ['crew', 'team'],
+            syn6: ['disintegrated', 'fell apart'],
+            syn7: ['embarked', 'set out'],
+            syn8: ['ordeal', 'suffering']
+        };
+
+        function validateSynonyms() {
+            let correct = 1; // syn1 is given
+            for (let i = 2; i <= 8; i++) {
+                const inp = document.getElementById('syn' + i);
+                const val = inp.value.trim().toLowerCase();
+                const expected = synKeys['syn' + i];
+                if (expected.includes(val)) {
+                    inp.style.borderColor = '#10B981';
+                    inp.style.background = 'rgba(16, 185, 129, 0.15)';
+                    correct++;
+                } else {
+                    inp.style.borderColor = '#EF4444';
+                    inp.style.background = 'rgba(239, 68, 68, 0.15)';
+                }
+            }
+            const score = document.getElementById('syn-score');
+            score.innerHTML = `Score: ${correct} / 8`;
+            score.style.color = correct >= 6 ? '#10B981' : '#F59E0B';
+            playChime(correct >= 5);
+        }
+
+        function revealSynonyms() {
+            for (let i = 2; i <= 8; i++) {
+                const inp = document.getElementById('syn' + i);
+                inp.value = synKeys['syn' + i][0];
+                inp.style.borderColor = '#10B981';
+                inp.style.background = 'rgba(16, 185, 129, 0.15)';
+            }
+            document.getElementById('syn-score').innerHTML = 'Key Revealed: 8 / 8';
+            document.getElementById('syn-score').style.color = '#6FFFE9';
+        }
+
+        // Theme Toggle Handler
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeBtn = document.querySelector('.theme-toggle');
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const current = document.body.getAttribute('data-theme') || 'dark';
+                    const next = current === 'dark' ? 'light' : 'dark';
+                    document.body.setAttribute('data-theme', next);
+                    const icon = themeBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = next === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                    localStorage.setItem('pushti-theme', next);
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({ theme: next }, '*');
+                    }
+                });
+
+                const saved = localStorage.getItem('pushti-theme');
+                if (saved) {
+                    document.body.setAttribute('data-theme', saved);
+                    const icon = themeBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = saved === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

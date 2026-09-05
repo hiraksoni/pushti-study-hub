@@ -221,6 +221,38 @@
             ]
         },
 
+        'eng_lit_ch7': {
+            id: 'eng_lit_ch7',
+            title: 'Chapter 1: The One Who Survived: Ada Blackjack',
+            subject: 'English Literature',
+            unit: 'Unit 3: Real-Life Heroes',
+            author: 'Biographical Narrative / Iñupiat History',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 12:35 AM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#0D9488',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Graphic Novel & Narrative Digitization',
+            summary: 'Complete multi-tab study suite for Unit 3 Chapter 1: The One Who Survived: Ada Blackjack, chronicling her two-year heroic solitary survival on Arctic Wrangel Island to cure her son Bennett, Shackleton synonyms, transitive verbs grammar, and Indian women pioneers.',
+            changesList: [
+                'Full 5-scene graphic narrative digitized covering Alaska origins, Bennett\'s illness, voyage on the Silverwave, scurvy epidemic, Lorne Knight\'s nursing, solitary survival, and rescue by the Donaldson.',
+                'Cropped and integrated 4 authentic illustrations (Silverwave ship, Arctic campfire in snowhouse, Donaldson rescue, and international press headlines).',
+                'Interactive vocabulary hover tooltips for 12 key terms (scurvy, colonize, dwindling, umiak, expedition, seamstress, Chukchi Sea, etc.).',
+                'Three Stages of Ada\'s Life comparative matrix + 5 detailed textbook short Q&As with "Reveal Answer" buttons.',
+                'Tab 3: Synonyms cloze passage on Sir Ernest Shackleton\'s Trial by Ice with interactive validation and scoring.',
+                'Tab 4: Complete grammar suite on Transitive vs Intransitive verbs, direct vs indirect objects, and syllabic consonants (/l/, /n/, /m/).',
+                'Tab 5: 3 real-world survival stories, 8-item wilderness kit builder, and Incredible India spotlight on women trailblazers (Bachendri Pal, Arunima Sinha, Capt. Shiva Chouhan, Bhawana Kanth).'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Initial production release with all 5 interactive tabs, audio cues, image integration, and glassmorphic UI.'
+                }
+            ]
+        },
+
         // ==========================================
         // ENGLISH ACTIVITIES (ASL)
         // ==========================================
