@@ -8,36 +8,52 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     :root {
-        --bg-main: #0F0F1A !important;
-        --bg-color: #0F0F1A;
-        --surface: #16213E;
-        --primary: #818cf8;
-        --text-main: #E8E8E8;
-        --text-muted: #B0B0C0;
-        --border: #2A2A40;
+        --bg-main: #0B1120 !important;
+        --bg-color: #0B1120;
+        --surface: #1E293B;
+        --surface-hover: #273549;
+        --primary: #F59E0B;
+        --accent: #F59E0B;
+        --accent-glow: rgba(245, 158, 11, 0.25);
+        --text-main: #F8FAFC;
+        --text-muted: #94A3B8;
+        --border: rgba(255, 255, 255, 0.1);
+        --tag-bg: rgba(255, 255, 255, 0.05);
     }
-    .site-header {
-        background-color: #0F0F1A !important;
-        background: #0F0F1A !important;
-        opacity: 1 !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
+    [data-theme="light"] {
+        --bg-main: #F8FAFC !important;
+        --bg-color: #F8FAFC;
+        --surface: #FFFFFF;
+        --surface-hover: #F1F5F9;
+        --primary: #D97706;
+        --accent: #D97706;
+        --accent-glow: rgba(217, 119, 6, 0.2);
+        --text-main: #0F172A;
+        --text-muted: #475569;
+        --border: rgba(0, 0, 0, 0.1);
+        --tag-bg: #F1F5F9;
     }
+    * { box-sizing: border-box; }
     body {
         margin: 0; padding: 0;
         font-family: 'Inter', sans-serif;
-        background-color: var(--bg-color);
-        color: var(--text-main);
+        background-color: var(--bg-main) !important;
+        background: var(--bg-main) !important;
+        color: var(--text-main) !important;
+        min-height: 100vh;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
     .header {
         display: flex;
         align-items: center;
-        padding: 20px 40px;
-        background: #0F0F1A !important;
+        padding: 16px 36px;
+        background: var(--bg-main) !important;
         border-bottom: 1px solid var(--border);
         position: sticky;
         top: 0;
         z-index: 1000;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
     }
     .back-btn {
         color: var(--text-main);
@@ -48,23 +64,28 @@
         align-items: center;
         gap: 8px;
         padding: 8px 16px;
-        background: rgba(255,255,255,0.05);
+        background: var(--surface);
+        border: 1px solid var(--border);
         border-radius: 8px;
         transition: 0.2s;
     }
-    .back-btn:hover { background: rgba(255,255,255,0.1); }
+    .back-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
     .page-title {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         font-weight: 700;
         font-family: 'Outfit', sans-serif;
         margin: 0;
         display: flex;
         align-items: center;
         gap: 12px;
+        color: var(--text-main);
     }
     .container {
         max-width: 1200px;
-        margin: 40px auto;
+        margin: 32px auto 60px auto;
         padding: 0 20px;
     }
     /* Vertical Branch & Chapter Layout */
@@ -94,7 +115,7 @@
         cursor: pointer;
         text-align: left;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        opacity: 0.6;
+        opacity: 0.8;
         position: relative;
         overflow: hidden;
         user-select: none;
@@ -102,33 +123,29 @@
         box-sizing: border-box;
     }
     .branch-nav-btn:hover {
-        opacity: 0.9;
+        opacity: 1;
         transform: translateX(4px);
         border-color: var(--branch-color, var(--primary));
         color: var(--text-main);
     }
     .branch-nav-btn.active {
         opacity: 1;
-        transform: scale(1.03) translateX(6px);
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+        transform: scale(1.02) translateX(4px);
+        background: var(--surface);
         border-color: var(--branch-color, var(--primary));
         color: var(--text-main);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 0 0 1.5px var(--branch-color, var(--primary));
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), inset 0 0 0 1.5px var(--branch-color, var(--primary));
     }
     .branch-nav-btn::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 5px;
-        height: 100%;
+        top: 0; left: 0;
+        width: 5px; height: 100%;
         background: var(--branch-color, var(--primary));
         opacity: 0;
         transition: opacity 0.3s;
     }
-    .branch-nav-btn.active::before {
-        opacity: 1;
-    }
+    .branch-nav-btn.active::before { opacity: 1; }
     .branch-icon {
         font-size: 2rem;
         display: flex;
@@ -137,16 +154,14 @@
         transition: transform 0.3s ease;
         flex-shrink: 0;
     }
-    .branch-nav-btn.active .branch-icon {
-        transform: scale(1.18);
-    }
+    .branch-nav-btn.active .branch-icon { transform: scale(1.15); }
     .branch-details {
         display: flex;
         flex-direction: column;
         gap: 0.25rem;
     }
     .branch-title {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
         font-weight: 700;
         font-family: 'Outfit', sans-serif;
         color: var(--text-main);
@@ -156,96 +171,136 @@
         color: var(--text-muted);
         font-family: 'Space Mono', monospace;
     }
-    .branch-content-area {
-        min-width: 0;
-    }
-    
-    /* Chapter Cards */
-    .category-section {
-        display: none;
-    }
+    .branch-content-area { min-width: 0; }
+    .category-section { display: none; }
     .category-section.active {
-        display: block;
-        animation: fadeIn 0.35s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        animation: fadeIn 0.3s ease-in-out;
     }
-    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-
-    @media (max-width: 860px) {
-        .subject-vertical-container {
-            grid-template-columns: 1fr;
-        }
-        .branch-sidebar {
-            position: static;
-            flex-direction: row;
-            overflow-x: auto;
-            padding-bottom: 8px;
-        }
-        .branch-nav-btn {
-            flex: 1;
-            min-width: 140px;
-            padding: 0.9rem 1rem;
-        }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
     }
-    
-    
-    .ch-actions {
-        display: flex; gap: 10px; margin-left: 20px;
-    }
-    .btn-link {
-        padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: 0.2s;
-    }
-    .btn-new {
-        background: var(--primary); color: #fff;
-    }
-    .btn-new:hover { background: var(--primary-hover); }
-    .btn-old {
-        background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid var(--border);
-    }
-    .btn-old:hover { background: rgba(255,255,255,0.15); }
-    
     .chapter-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 20px 24px;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 20px;
+        transition: all 0.25s ease;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .chapter-card:hover {
+        border-color: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .ch-num {
+        font-family: 'Space Mono', monospace;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--accent);
+        background: var(--tag-bg);
+        border: 1px solid var(--border);
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
         display: flex;
         align-items: center;
-        background: var(--bg-main);
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 16px;
-        border: 1px solid var(--border);
+        justify-content: center;
     }
-
-    
-    .ch-num {
-        font-size: 2.5rem;
-        font-weight: 800;
-        font-family: 'Outfit', sans-serif;
-        color: rgba(255,255,255,0.1);
-        width: 80px;
-        flex-shrink: 0;
-    }
-    .ch-content {
-        flex-grow: 1;
-    }
+    .ch-content { min-width: 0; }
     .ch-title {
-        font-size: 1.2rem; font-weight: 600; margin: 0 0 6px 0;
+        margin: 0 0 6px 0;
+        font-size: 1.15rem;
+        font-weight: 700;
+        font-family: 'Outfit', sans-serif;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
     }
     .ch-desc {
-        font-size: 0.9rem; color: var(--text-muted); margin: 0 0 12px 0;
+        margin: 0 0 10px 0;
+        font-size: 0.92rem;
+        color: var(--text-muted);
+        line-height: 1.5;
     }
     .ch-tags {
-        display: flex; gap: 8px; flex-wrap: wrap;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
     }
     .tag {
-        background: rgba(255,255,255,0.05);
-        color: var(--primary);
-        padding: 4px 10px;
+        font-size: 0.78rem;
+        font-weight: 500;
+        padding: 3px 10px;
         border-radius: 6px;
-        font-size: 0.75rem;
-        font-weight: 600;
-    }
-    .ch-arrow {
+        background: var(--tag-bg);
+        border: 1px solid var(--border);
         color: var(--text-muted);
-        font-size: 1.5rem;
-        margin-left: 20px;
+    }
+    .ch-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .btn-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+    }
+    .btn-notes {
+        background: rgba(139, 92, 246, 0.15) !important;
+        border-color: #8B5CF6 !important;
+        color: #A78BFA !important;
+    }
+    [data-theme="light"] .btn-notes {
+        background: rgba(139, 92, 246, 0.1) !important;
+        border-color: #8B5CF6 !important;
+        color: #7C3AED !important;
+    }
+    .btn-notes:hover {
+        background: #8B5CF6 !important;
+        color: white !important;
+    }
+    .btn-practice {
+        background: rgba(245, 158, 11, 0.15) !important;
+        border-color: #F59E0B !important;
+        color: #FBBF24 !important;
+    }
+    [data-theme="light"] .btn-practice {
+        background: rgba(217, 119, 6, 0.1) !important;
+        border-color: #D97706 !important;
+        color: #D97706 !important;
+    }
+    .btn-practice:hover {
+        background: #F59E0B !important;
+        color: #000 !important;
+    }
+    [data-theme="light"] .btn-practice:hover {
+        background: #D97706 !important;
+        color: #FFF !important;
+    }
+    @media (max-width: 900px) {
+        .subject-vertical-container { grid-template-columns: 1fr; }
+        .branch-sidebar { position: static; }
+        .chapter-card { grid-template-columns: 1fr; }
     }
 </style>
 
@@ -398,72 +453,114 @@ document.addEventListener("DOMContentLoaded", function() {
             <!-- Right Content Area: Branch Chapters -->
             <div class="branch-content-area">
                 
-                <!-- Chapters Section -->
+                                <!-- Chapters Section -->
                 <div id="sec-san_lit" class="category-section active">
                     <div class="chapter-card">
                         <div class="ch-num">01</div>
                         <div class="ch-content">
-                            <h3 class="ch-title">वन्दे भारतम्</h3>
-                            <p class="ch-desc">Chapter 1 - मातृभूमि वन्दना एवं देशप्रेम</p>
-                            <div class="ch-tags"><span class="tag" style="color:#EF4444">पद्यम्</span><span class="tag" style="color:#EF4444">श्लोकाः</span><span class="tag" style="color:#EF4444">अभ्यासः</span></div>
+                            <h3 class="ch-title">अध्यायः १: वन्दे भारतम् <span style="font-size:0.7rem; background:#10B981; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Ready</span></h3>
+                            <p class="ch-desc">मातृभूमि वन्दना एवं देशप्रेम • राष्ट्रभक्ति पद्यम् • पूर्ण अन्वयः, भावार्थः, प्रश्नोत्तराणि एवं व्याकरणम्</p>
+                            <div class="ch-tags">
+                                <span class="tag">पद्यम्</span>
+                                <span class="tag">मातृभूमि वन्दना</span>
+                                <span class="tag">श्लोकाः एवं अन्वयः</span>
+                                <span class="tag">पूर्ण प्रश्नोत्तराणि</span>
+                                <span class="tag">व्याकरणम्</span>
+                            </div>
                         </div>
                         <div class="ch-actions">
-                            <a href="source_materials/chapters/sanskrit/claude_san_ch01.html" class="btn-link btn-old" style="background:rgba(124, 58, 237, 0.15); border-color:#8B5CF6;">Claude Notes</a><a href="source_materials/chapters/sanskrit/practice_san_01.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                            <a href="source_materials/chapters/sanskrit/claude_san_ch01.html" class="btn-link btn-notes"><i class="fas fa-book-open"></i> Claude Notes</a>
+                            <a href="source_materials/chapters/sanskrit/practice_san_01.html" class="btn-link btn-practice"><i class="fas fa-pencil-alt"></i> Practice Mode</a>
                         </div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">02</div>
                         <div class="ch-content">
-                            <h3 class="ch-title">नित्यं पिबामः सुभाषितरसम्</h3>
-                            <p class="ch-desc">Chapter 2 - नीतिपरक सुभाषित श्लोकाः</p>
-                            <div class="ch-tags"><span class="tag" style="color:#EF4444">सुभाषितानि</span><span class="tag" style="color:#EF4444">अन्वयः</span><span class="tag" style="color:#EF4444">भावार्थः</span></div>
+                            <h3 class="ch-title">अध्यायः २: नित्यं पिबामः सुभाषितरसम् <span style="font-size:0.7rem; background:#10B981; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Ready</span></h3>
+                            <p class="ch-desc">नीतिपरक सुभाषित श्लोकाः • जीवनमूल्यानि एवं सदुपदेशाः • अन्वयः, भावार्थः, शब्दार्थाः एवं यथोचितं मेलनम्</p>
+                            <div class="ch-tags">
+                                <span class="tag">सुभाषितानि</span>
+                                <span class="tag">नीतिश्लोकाः</span>
+                                <span class="tag">अन्वय-भावार्थौ</span>
+                                <span class="tag">पर्यायपदानि</span>
+                                <span class="tag">अभ्यासमाला</span>
+                            </div>
                         </div>
                         <div class="ch-actions">
-                            <a href="source_materials/chapters/sanskrit/claude_san_ch02.html" class="btn-link btn-old" style="background:rgba(124, 58, 237, 0.15); border-color:#8B5CF6;">Claude Notes</a><a href="source_materials/chapters/sanskrit/practice_san_02.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                            <a href="source_materials/chapters/sanskrit/claude_san_ch02.html" class="btn-link btn-notes"><i class="fas fa-book-open"></i> Claude Notes</a>
+                            <a href="source_materials/chapters/sanskrit/practice_san_02.html" class="btn-link btn-practice"><i class="fas fa-pencil-alt"></i> Practice Mode</a>
                         </div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">03</div>
                         <div class="ch-content">
-                            <h3 class="ch-title">मित्राय नमः</h3>
-                            <p class="ch-desc">Chapter 3 - सूर्य नमस्कार एवं मित्रता का महत्त्व</p>
-                            <div class="ch-tags"><span class="tag" style="color:#EF4444">गद्यम्</span><span class="tag" style="color:#EF4444">योगाभ्यासः</span></div>
+                            <h3 class="ch-title">अध्यायः ३: मित्राय नमः <span style="font-size:0.7rem; background:#10B981; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Ready</span></h3>
+                            <p class="ch-desc">सूर्यनमस्कारः एवं स्वास्थ्याभ्यासः • द्वादश सूर्यनामानि • 'नमः' योगे चतुर्थी विभक्तिः एवं अभ्यासप्रश्नाः</p>
+                            <div class="ch-tags">
+                                <span class="tag">गद्यम्</span>
+                                <span class="tag">सूर्यनमस्कारः</span>
+                                <span class="tag">योगाभ्यासः</span>
+                                <span class="tag">चतुर्थी विभक्तिः</span>
+                                <span class="tag">अभ्यासकार्यम्</span>
+                            </div>
                         </div>
                         <div class="ch-actions">
-                            <a href="source_materials/chapters/sanskrit/claude_san_ch03.html" class="btn-link btn-old" style="background:rgba(124, 58, 237, 0.15); border-color:#8B5CF6;">Claude Notes</a><a href="source_materials/chapters/sanskrit/practice_san_03.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                            <a href="source_materials/chapters/sanskrit/claude_san_ch03.html" class="btn-link btn-notes"><i class="fas fa-book-open"></i> Claude Notes</a>
+                            <a href="source_materials/chapters/sanskrit/practice_san_03.html" class="btn-link btn-practice"><i class="fas fa-pencil-alt"></i> Practice Mode</a>
                         </div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">04</div>
                         <div class="ch-content">
-                            <h3 class="ch-title">न ज्ञायते चेत् अस्मत् ब्राह्मणत्वम्</h3>
-                            <p class="ch-desc">Chapter 4 - चातुर्य एवं बोधप्रद कथा</p>
-                            <div class="ch-tags"><span class="tag" style="color:#EF4444">कथा</span><span class="tag" style="color:#EF4444">बोधः</span></div>
+                            <h3 class="ch-title">अध्यायः ४: न ज्ञायते चेत् अस्मत् ब्राह्मणत्वम् <span style="font-size:0.7rem; background:#10B981; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Ready</span></h3>
+                            <p class="ch-desc">चातुर्य-बोधप्रद कथा • बुद्धिचातुर्यम् एवं वाक्पटुता • कथासारः, प्रश्नोत्तराणि, क्रियापदानि एवं धातुरूपाणि</p>
+                            <div class="ch-tags">
+                                <span class="tag">कथा</span>
+                                <span class="tag">बुद्धिचातुर्यम्</span>
+                                <span class="tag">क्रियापदानि</span>
+                                <span class="tag">धातुरूपाणि</span>
+                                <span class="tag">पूर्ण अभ्यासः</span>
+                            </div>
                         </div>
                         <div class="ch-actions">
-                            <a href="source_materials/chapters/sanskrit/claude_san_ch04.html" class="btn-link btn-old" style="background:rgba(124, 58, 237, 0.15); border-color:#8B5CF6;">Claude Notes</a><a href="source_materials/chapters/sanskrit/practice_san_04.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                            <a href="source_materials/chapters/sanskrit/claude_san_ch04.html" class="btn-link btn-notes"><i class="fas fa-book-open"></i> Claude Notes</a>
+                            <a href="source_materials/chapters/sanskrit/practice_san_04.html" class="btn-link btn-practice"><i class="fas fa-pencil-alt"></i> Practice Mode</a>
                         </div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">05</div>
                         <div class="ch-content">
-                            <h3 class="ch-title">सेवा हि परमो धर्मः</h3>
-                            <p class="ch-desc">Chapter 5 - परोपकार एवं सेवा भाव</p>
-                            <div class="ch-tags"><span class="tag" style="color:#EF4444">संवादः</span><span class="tag" style="color:#EF4444">सदाचारः</span></div>
+                            <h3 class="ch-title">अध्यायः ५: सेवा हि परमो धर्मः <span style="font-size:0.7rem; background:#10B981; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Ready</span></h3>
+                            <p class="ch-desc">परोपकारः एवं निःस्वार्थ सेवाभावः • संवादरूप पाठः • स्त्रीलिङ्ग-पुंलिङ्गरूपाणि, सन्धयः एवं अभ्यासप्रश्नाः</p>
+                            <div class="ch-tags">
+                                <span class="tag">संवादः</span>
+                                <span class="tag">परोपकारः</span>
+                                <span class="tag">स्त्रीलिङ्गरूपाणि</span>
+                                <span class="tag">पुंलिङ्गरूपाणि</span>
+                                <span class="tag">अभ्यासमाला</span>
+                            </div>
                         </div>
                         <div class="ch-actions">
-                            <a href="source_materials/chapters/sanskrit/claude_san_ch05.html" class="btn-link btn-old" style="background:rgba(124, 58, 237, 0.15); border-color:#8B5CF6;">Claude Notes</a><a href="source_materials/chapters/sanskrit/practice_san_05.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                            <a href="source_materials/chapters/sanskrit/claude_san_ch05.html" class="btn-link btn-notes"><i class="fas fa-book-open"></i> Claude Notes</a>
+                            <a href="source_materials/chapters/sanskrit/practice_san_05.html" class="btn-link btn-practice"><i class="fas fa-pencil-alt"></i> Practice Mode</a>
                         </div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">06</div>
                         <div class="ch-content">
-                            <h3 class="ch-title">क्रीडामः वयं रङ्गनाट्यशालाम्</h3>
-                            <p class="ch-desc">Chapter 6 - नाटक एवं अभिनय कला</p>
-                            <div class="ch-tags"><span class="tag" style="color:#EF4444">नाट्यम्</span><span class="tag" style="color:#EF4444">अभिनयः</span></div>
+                            <h3 class="ch-title">अध्यायः ६: क्रीडामः वयं रङ्गनाट्यशालाम् <span style="font-size:0.7rem; background:#10B981; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Ready</span></h3>
+                            <p class="ch-desc">नाट्यकला एवं अभिनयः • छात्राणां रंगमंच-क्रीडा • प्रश्ननिर्माणम्, यथोचितं मेलनम् एवं संवादलेखनम्</p>
+                            <div class="ch-tags">
+                                <span class="tag">नाट्यम्</span>
+                                <span class="tag">अभिनयः</span>
+                                <span class="tag">रंगमंचः</span>
+                                <span class="tag">प्रश्ननिर्माणम्</span>
+                                <span class="tag">अभ्यासकार्यम्</span>
+                            </div>
                         </div>
                         <div class="ch-actions">
-                            <a href="source_materials/chapters/sanskrit/claude_san_ch06.html" class="btn-link btn-old" style="background:rgba(124, 58, 237, 0.15); border-color:#8B5CF6;">Claude Notes</a><a href="source_materials/chapters/sanskrit/practice_san_06.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                            <a href="source_materials/chapters/sanskrit/claude_san_ch06.html" class="btn-link btn-notes"><i class="fas fa-book-open"></i> Claude Notes</a>
+                            <a href="source_materials/chapters/sanskrit/practice_san_06.html" class="btn-link btn-practice"><i class="fas fa-pencil-alt"></i> Practice Mode</a>
                         </div>
                     </div>
                 </div>
@@ -473,45 +570,69 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div class="chapter-card">
                         <div class="ch-num">13</div>
                         <div class="ch-content">
-                            <h3 class="ch-title">अध्यायः १३ - संख्याज्ञानम् (Numbers)</h3>
-                            <p class="ch-desc">१ तः ५०+ पर्यन्तं संख्यावाचकशब्दाः, गणना एवं व्यावहारिक प्रयोगाः।</p>
-                            <div class="ch-tags"><span class="tag" style="color:#3B82F6">संख्या</span><span class="tag" style="color:#3B82F6">संख्याज्ञानम्</span><span class="tag" style="color:#3B82F6">गणना</span></div>
+                            <h3 class="ch-title">अध्यायः १३: संख्याज्ञानम् (Numbers) <span style="font-size:0.7rem; background:#10B981; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Ready</span></h3>
+                            <p class="ch-desc">१ तः ५०+ पर्यन्तं संख्यावाचकशब्दाः • त्रिषु लिङ्गेषु १-४ रूपाणि, गणना एवं व्यावहारिक प्रयोगाः</p>
+                            <div class="ch-tags">
+                                <span class="tag">संख्याज्ञानम्</span>
+                                <span class="tag">१ तः ५०</span>
+                                <span class="tag">त्रिषु लिङ्गेषु</span>
+                                <span class="tag">गणनाभ्यासः</span>
+                                <span class="tag">तालिका</span>
+                            </div>
                         </div>
                         <div class="ch-actions">
-                            <a href="source_materials/chapters/sanskrit/practice_san_G1.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                            <a href="source_materials/chapters/sanskrit/practice_san_G1.html" class="btn-link btn-practice"><i class="fas fa-pencil-alt"></i> Practice Mode</a>
                         </div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">14</div>
                         <div class="ch-content">
-                            <h3 class="ch-title">अध्यायः १४ - शब्दरूपाणि (Noun Declensions)</h3>
-                            <p class="ch-desc">अकारान्त पुंल्लिङ्ग (बालक/राम), आकारान्त स्त्रीलिङ्ग (लता), नपुंसकलिंग (फल), सर्वनाम (अस्मद्, युष्मद्)।</p>
-                            <div class="ch-tags"><span class="tag" style="color:#3B82F6">शब्दरूप</span><span class="tag" style="color:#3B82F6">विभक्तिः</span><span class="tag" style="color:#3B82F6">कारकाः</span></div>
+                            <h3 class="ch-title">अध्यायः १४: शब्दरूपाणि (Noun Declensions) <span style="font-size:0.7rem; background:#10B981; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Ready</span></h3>
+                            <p class="ch-desc">अकारान्त पुं० (बालक, राम), आकारान्त स्त्री० (लता), नपुं० (फल), सर्वनाम (अस्मद्, युष्मद्) • सप्तविभक्तयः</p>
+                            <div class="ch-tags">
+                                <span class="tag">शब्दरूपाणि</span>
+                                <span class="tag">विभक्तिः</span>
+                                <span class="tag">कारकाः</span>
+                                <span class="tag">सर्वनाम</span>
+                                <span class="tag">तालिका</span>
+                            </div>
                         </div>
                         <div class="ch-actions">
-                            <a href="source_materials/chapters/sanskrit/practice_san_G1.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                            <a href="source_materials/chapters/sanskrit/practice_san_G1.html" class="btn-link btn-practice"><i class="fas fa-pencil-alt"></i> Practice Mode</a>
                         </div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">15</div>
                         <div class="ch-content">
-                            <h3 class="ch-title">अध्यायः १५ - धातुरूपाणि (Verb Conjugations)</h3>
-                            <p class="ch-desc">पठ्, गम्, लिख्, खाद्, कृ, भू धातवः - लट् लकार (वर्तमान), लृट् लकार (भविष्यत्), लङ् लकार (भूतकाल)।</p>
-                            <div class="ch-tags"><span class="tag" style="color:#3B82F6">धातुरूप</span><span class="tag" style="color:#3B82F6">लट् लकार</span><span class="tag" style="color:#3B82F6">लृट् लकार</span><span class="tag" style="color:#3B82F6">लङ् लकार</span></div>
+                            <h3 class="ch-title">अध्यायः १५: धातुरूपाणि (Verb Conjugations) <span style="font-size:0.7rem; background:#10B981; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Ready</span></h3>
+                            <p class="ch-desc">पठ्, गम्, लिख्, खाद्, कृ, भू, पा, अस् धातवः • लट् लकारः (वर्तमान), लृट् (भविष्यत्), लङ् लकारः (भूतकाल)</p>
+                            <div class="ch-tags">
+                                <span class="tag">धातुरूपाणि</span>
+                                <span class="tag">लट् लकारः</span>
+                                <span class="tag">लृट् लकारः</span>
+                                <span class="tag">लङ् लकारः</span>
+                                <span class="tag">अभ्यासमाला</span>
+                            </div>
                         </div>
                         <div class="ch-actions">
-                            <a href="source_materials/chapters/sanskrit/practice_san_G1.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                            <a href="source_materials/chapters/sanskrit/practice_san_G1.html" class="btn-link btn-practice"><i class="fas fa-pencil-alt"></i> Practice Mode</a>
                         </div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">G1</div>
                         <div class="ch-content">
-                            <h3 class="ch-title">वर्णमाला, सन्धिः एवं अव्ययानि (Core Grammar)</h3>
-                            <p class="ch-desc">स्वर-व्यंजन-मात्रा, दीर्घ एवं गुण सन्धिः, अव्ययपदानि एवं प्रत्ययाः (क्त्वा, ल्यप्, तुमुन्)।</p>
-                            <div class="ch-tags"><span class="tag" style="color:#3B82F6">वर्णमाला</span><span class="tag" style="color:#3B82F6">सन्धि</span><span class="tag" style="color:#3B82F6">अव्यय</span><span class="tag" style="color:#3B82F6">प्रत्यय</span></div>
+                            <h3 class="ch-title">G1: वर्णमाला, सन्धिः एवं अव्ययानि <span style="font-size:0.7rem; background:#10B981; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Ready</span></h3>
+                            <p class="ch-desc">स्वर-व्यंजन-मात्रा परिचयः, दीर्घ एवं गुण स्वरसन्धिः, अव्ययपदानि एवं प्रत्ययाः (क्त्वा, ल्यप्, तुमुन्)</p>
+                            <div class="ch-tags">
+                                <span class="tag">वर्णमाला</span>
+                                <span class="tag">सन्धिः</span>
+                                <span class="tag">अव्ययम्</span>
+                                <span class="tag">प्रत्ययाः</span>
+                                <span class="tag">नियममाला</span>
+                            </div>
                         </div>
                         <div class="ch-actions">
-                            <a href="source_materials/chapters/sanskrit/practice_san_G1.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                            <a href="source_materials/chapters/sanskrit/practice_san_G1.html" class="btn-link btn-practice"><i class="fas fa-pencil-alt"></i> Practice Mode</a>
                         </div>
                     </div>
                 </div>
@@ -521,9 +642,21 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div class="chapter-card">
                         <div class="ch-num">W1</div>
                         <div class="ch-content">
-                            <h3 class="ch-title">रचनात्मककार्याणि (Writing & Composition)</h3>
-                            <p class="ch-desc"><strong>पत्रलेखनम्</strong> (मञ्जूषा आधारित), <strong>चित्रवर्णनम्</strong> (पञ्च वाक्यानि), संवादलेखनम्, कथापूर्तिः</p>
-                            <div class="ch-tags"><span class="tag" style="color:#10B981">पत्रलेखनम्</span><span class="tag" style="color:#10B981">चित्रवर्णनम्</span><span class="tag" style="color:#10B981">मञ्जूषा</span></div>
+                            <h3 class="ch-title">W1: रचनात्मककार्याणि (Writing & Composition) <span style="font-size:0.7rem; background:#10B981; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Ready</span></h3>
+                            <p class="ch-desc">मञ्जूषा आधारित पत्रलेखनम् (औपचारिक एवं अनौपचारिक), चित्रवर्णनम् (पञ्च वाक्यानि), संवादपूर्तिः एवं कथापूर्तिः</p>
+                            <div class="ch-tags">
+                                <span class="tag">पत्रलेखनम्</span>
+                                <span class="tag">चित्रवर्णनम्</span>
+                                <span class="tag">मञ्जूषा</span>
+                                <span class="tag">संवादपूर्तिः</span>
+                                <span class="tag">कथापूर्तिः</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/sanskrit/practice_san_W1.html" class="btn-link btn-practice"><i class="fas fa-pencil-alt"></i> Practice Mode</a>
+                        </div>
+                    </div>
+                </div>
                         </div>
                         <div class="ch-actions">
                             <a href="source_materials/chapters/sanskrit/practice_san_W1.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
@@ -548,33 +681,37 @@ document.addEventListener("DOMContentLoaded", function() {
     </script>
 
 <script>
+function toggleTheme() {
+    const currentTheme = document.body.getAttribute('data-theme') || document.documentElement.getAttribute('data-theme') || 'dark';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+    const icon = document.querySelector('.theme-toggle i');
+    if(icon) {
+        icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+    localStorage.setItem('pushti-theme', newTheme);
+    if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ theme: newTheme }, '*');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('pushti-theme') || 'dark';
+    document.body.setAttribute('data-theme', savedTheme);
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    const icon = document.querySelector('.theme-toggle i');
+    if(icon) {
+        icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
     const themeBtn = document.querySelector('.theme-toggle');
-    if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
-        themeBtn.classList.add('handled-by-inline');
-        themeBtn.addEventListener('click', (e) => {
-            e.stopImmediatePropagation();
-            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.body.setAttribute('data-theme', newTheme);
-            const icon = themeBtn.querySelector('i');
-            if(icon) {
-                icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-            localStorage.setItem('pushti-theme', newTheme);
-            
-            if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ theme: newTheme }, '*');
-            }
-        });
-        const savedTheme = localStorage.getItem('pushti-theme');
-        if(savedTheme) {
-            document.body.setAttribute('data-theme', savedTheme);
-            const icon = themeBtn.querySelector('i');
-            if(icon) {
-                icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-        }
+    if(themeBtn) {
+        themeBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleTheme();
+        };
     }
 });
 </script>
