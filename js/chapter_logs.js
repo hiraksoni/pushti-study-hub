@@ -155,6 +155,37 @@
                     date: 'September 6, 2026',
                     model: 'Gemini 2.5 Pro (via Antigravity)',
                     notes: 'Initial production release with all 5 interactive tabs, audio cues, image gallery, and glassmorphism styling.'
+        },
+
+        'eng_lit_ch5': {
+            id: 'eng_lit_ch5',
+            title: 'Chapter 2: The Diary of a Space Traveller',
+            subject: 'English Literature',
+            unit: 'Unit 2: Wanderlust',
+            author: 'Satyajit Ray',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 12:20 AM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#38BDF8',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Curriculum Digitization & Multi-Tab Interactive Module',
+            summary: 'Complete multi-tab study suite for Unit 2 Chapter 2: The Diary of a Space Traveller by Satyajit Ray, featuring Professor Shonku, Prahlad, robot Bidhushekhar, cat Newton, Martian monsters, planet Tafa, travel itinerary writing, and ISRO achievements.',
+            changesList: [
+                'Full unabridged text digitized covering prologue, January 2-28 diary entries, Martian landing, one-eyed monster pursuit, celestial bursting spheres, planet Tafa sanctuary, and hungry black ants epilogue.',
+                'Cropped and integrated 4 authentic textbook illustrations (rocket blastoff, Bidhushekhar saying Goh! Goh!, Shonku on Martian yellow mound with cat Newton, and Shonku & Bidhushekhar at porthole window).',
+                'Interactive vocabulary hover tooltips for 12 key terms (ebbing, venture, luminous, ambrosia, fatigue, eerie, glistening, primitive, etc.).',
+                'Comprehension suite: Virgin Galactic VSS Unity reading passage + 5 interactive self-scoring MCQs with Web Audio feedback.',
+                'Section B: 6 textbook short Q&As with "Reveal Answer" buttons + comprehensive Mars vs Tafa comparative matrix.',
+                'Tab 3: Travel vocabulary cloze passage with interactive validation, score calculation, and advanced glossary.',
+                'Tab 4: 2-day Delhi & Agra cultural heritage itinerary model, itinerary writing checklist, and airport lounge dialogue roleplay.',
+                'Tab 5: Literary analysis of Foreshadowing, 11 real-world independent travel safety protocols, and Incredible India spotlight on ISRO (Mangalyaan, Chandrayaan-3, PSLV-C37).'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Initial production release with all 5 interactive tabs, audio cues, image gallery, and glassmorphic UI.'
                 }
             ]
         },

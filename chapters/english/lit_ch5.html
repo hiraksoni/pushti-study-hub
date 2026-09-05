@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 2: Chapter 2 - The Diary of a Space Traveller | Class 7 English Literature</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="../../js/firebase-tracker.js"></script>
+    <style>
+        :root {
+            --bg-main: #0B0F19;
+            --bg-card: rgba(18, 24, 38, 0.85);
+            --surface: #151D2F;
+            --accent: #38BDF8;
+            --accent-glow: rgba(56, 189, 248, 0.25);
+            --accent-sec: #818CF8;
+            --text-main: #F1F5F9;
+            --text-primary: #FFFFFF;
+            --text-muted: #94A3B8;
+            --border: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(56, 189, 248, 0.2);
+            --tag-color: #38BDF8;
+            --tab-active-bg: rgba(56, 189, 248, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.65;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* SITE HEADER */
+        .site-header {
+            background-color: var(--bg-main) !important;
+            background: var(--bg-main) !important;
+            opacity: 1 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 24px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* TABS */
+        .tabs-wrapper {
+            position: sticky;
+            top: 57px;
+            z-index: 990;
+            background: var(--bg-main);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 16px;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 24px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tab-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent);
+            background: rgba(56, 189, 248, 0.08);
+        }
+        .tab-btn.active {
+            background: var(--tab-active-bg);
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px 20px 60px 20px;
+        }
+
+        /* TAB CONTENT */
+        .tab-content {
+            display: none;
+            animation: tabFadeIn 0.3s ease-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HERO CARD */
+        .hero-card {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.08));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 28px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.18);
+            color: var(--accent);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            color: var(--text-primary);
+            line-height: 1.25;
+        }
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.88rem;
+        }
+        .meta-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 16px;
+            color: var(--text-main);
+        }
+
+        /* STORY / PROSE STYLING */
+        .story-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        .story-section h2 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 0 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .story-p {
+            font-size: 1.02rem;
+            line-height: 1.8;
+            margin-bottom: 18px;
+            color: var(--text-main);
+        }
+        .dialogue {
+            color: #93C5FD;
+            font-weight: 500;
+        }
+        .diary-entry-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #F59E0B;
+            margin: 24px 0 12px 0;
+            padding: 6px 14px;
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid #F59E0B;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* VOCAB TOOLTIP */
+        .vocab-word {
+            color: var(--accent);
+            font-weight: 600;
+            border-bottom: 1px dashed var(--accent);
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+        .vocab-word:hover::after {
+            content: attr(data-def);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1E293B;
+            color: #F8FAFC;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: normal;
+            width: max-content;
+            max-width: 250px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            border: 1px solid var(--border);
+            z-index: 100;
+            pointer-events: none;
+            line-height: 1.4;
+        }
+
+        /* IMAGES IN STORY */
+        .story-img-card {
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+        }
+        .story-img-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+        }
+        .story-img-caption {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* AUTHOR CARD */
+        .author-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(56, 189, 248, 0.08));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            padding: 22px;
+            margin: 26px 0;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .author-avatar {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: #818CF8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 0 16px rgba(129, 140, 248, 0.4);
+        }
+        .author-info h3 {
+            margin: 0 0 6px 0;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+        .author-info p {
+            margin: 0;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* INTERACTIVE MCQS */
+        .mcq-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .mcq-question {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+        }
+        .mcq-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .mcq-opt {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+        .mcq-opt:hover {
+            background: rgba(56, 189, 248, 0.08);
+            border-color: var(--accent);
+        }
+        .mcq-opt.correct {
+            background: rgba(16, 185, 129, 0.18) !important;
+            border-color: #10B981 !important;
+            color: #34D399;
+            font-weight: 600;
+        }
+        .mcq-opt.incorrect {
+            background: rgba(239, 68, 68, 0.18) !important;
+            border-color: #EF4444 !important;
+            color: #F87171;
+        }
+        .mcq-feedback {
+            margin-top: 10px;
+            font-size: 0.88rem;
+            display: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        /* REVEAL Q&A CARDS */
+        .qa-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .qa-q {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .qa-reveal-btn {
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .qa-reveal-btn:hover {
+            background: var(--accent);
+            color: #0F172A;
+        }
+        .qa-answer {
+            display: none;
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-main);
+        }
+
+        /* COMPARISON TABLE */
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .comp-table th, .comp-table td {
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.93rem;
+        }
+        .comp-table th {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .comp-table td {
+            background: rgba(255, 255, 255, 0.02);
+            line-height: 1.6;
+        }
+
+        /* GRAMMAR & STUDY CARDS */
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 22px;
+        }
+        .info-card h3 {
+            margin: 0 0 12px 0;
+            font-size: 1.2rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* LIGHT MODE COMPATIBILITY */
+        [data-theme="light"] {
+            --bg-main: #F8FAFC !important;
+            --bg-card: #FFFFFF !important;
+            --text-main: #1E293B !important;
+            --text-primary: #0F172A !important;
+            --text-muted: #64748B !important;
+            --surface: #F1F5F9 !important;
+            --border: #E2E8F0 !important;
+            --glass-border: rgba(56, 189, 248, 0.4) !important;
+            --accent: #0284C7 !important;
+            --accent-glow: rgba(2, 132, 199, 0.2) !important;
+            --tag-color: #0284C7 !important;
+            --tab-active-bg: rgba(2, 132, 199, 0.12) !important;
+        }
+        [data-theme="light"] .site-header {
+            background-color: #FFFFFF !important;
+            background: #FFFFFF !important;
+            border-bottom: 1px solid #E2E8F0 !important;
+        }
+        [data-theme="light"] .tabs-wrapper {
+            background: #FFFFFF !important;
+            border-bottom: 1px solid #E2E8F0 !important;
+        }
+        [data-theme="light"] .story-section {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        [data-theme="light"] .dialogue {
+            color: #1D4ED8;
+        }
+        [data-theme="light"] .comp-table th {
+            background: #E0F2FE;
+            color: #0369A1;
+        }
+        [data-theme="light"] .comp-table td {
+            background: #FFFFFF;
+        }
+        [data-theme="light"] .diary-entry-header {
+            background: #FEF3C7;
+            color: #B45309;
+            border-left-color: #D97706;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- HEADER SECTION -->
+    <header class="site-header">
+        <div class="header-left">
+            <a href="../../index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <span style="color:var(--text-muted);">&bull;</span>
+            <a href="../../english_index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+                English
+            </a>
+            <span style="color:var(--text-muted);">&bull;</span>
+            <span style="color:var(--accent);">Ch.2 The Diary of a Space Traveller</span>
+        </div>
+
+        <div class="header-right">
+            <nav class="header-nav">
+                <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:var(--text-main); cursor:pointer; font-size:1.2rem;">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <a href="../../timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
+                <a href="../../midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
+
+                <div class="user-profile-wrapper" style="position:relative;">
+                    <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:38px; height:38px; border:2px solid var(--accent);">
+                        <img src="https://ui-avatars.com/api/?name=Pushti&background=38BDF8&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- STICKY TABS WRAPPER -->
+    <div class="tabs-wrapper">
+        <button class="tab-btn active" onclick="openTab(event, 'tab-text')"><i class="fas fa-book-open"></i> Chapter Text</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-comprehension')"><i class="fas fa-question-circle"></i> Comprehension & Q&A</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-vocab')"><i class="fas fa-language"></i> Vocabulary & Travel Cloze</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-writing')"><i class="fas fa-map-location-dot"></i> Itinerary & Dialogue</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-critical')"><i class="fas fa-rocket"></i> Critical Thinking & ISRO</button>
+    </div>
+
+    <div class="container">
+
+        <!-- ==================== TAB 1: CHAPTER TEXT ==================== -->
+        <div id="tab-text" class="tab-content active">
+
+            <div class="hero-card">
+                <span class="hero-badge">Unit 2: Wanderlust &bull; Section 2</span>
+                <h1 class="hero-title">The Diary of a Space Traveller</h1>
+                <p class="hero-subtitle">By <strong>Satyajit Ray</strong> &bull; The Interplanetary Exploits of Professor Trilokeshwar Shonku</p>
+                <div class="hero-meta">
+                    <span class="meta-pill"><i class="fas fa-user-graduate"></i> Class 7 Literature</span>
+                    <span class="meta-pill"><i class="fas fa-shuttle-space"></i> Sci-Fi & Interplanetary Travel</span>
+                    <span class="meta-pill"><i class="fas fa-robot"></i> Robot Bidhushekhar & Cat Newton</span>
+                    <button class="meta-pill" onclick="openChapterLog('eng_lit_ch5')" style="cursor:pointer; background:rgba(56, 189, 248, 0.2); border-color:#38BDF8; color:#7DD3FC; font-weight:600;"><i class="fas fa-history"></i> Revision Log &bull; Gemini 2.5 Pro</button>
+                </div>
+            </div>
+
+            <!-- Frame Narrative Introduction -->
+            <div class="story-section">
+                <h2><i class="fas fa-scroll"></i> Prologue: The Indestructible Mysterious Diary</h2>
+
+                <p class="story-p">It was from <span class="vocab-word" data-def="A friend or acquaintance who delivers the mysterious manuscript to the narrator">Tarak Chatterjee</span> that I got Professor Trilokeshwar Shonku’s diary. At once, something struck me as odd. The colour of the ink had been green the first time when I’d looked at it. Now it was red. How could that be?</p>
+
+                <p class="story-p">I put the diary in my pocket. Obviously, I had made a mistake. My heart skipped a beat when I opened the diary at home. The ink was now blue, and before my very eyes, the ink turned to yellow.</p>
+
+                <p class="story-p">The diary fell from my trembling hands. My dog—<strong>Bhulo</strong>—pounced upon it as soon as it hit the floor. But amazingly his teeth could do no damage to the notebook. I tried pulling a page out, and realized that the paper was impossible to tear. It was like elastic. I lit my stove and dropped the diary into the naked flames. Nothing happened. Only the colour of the ink changed.</p>
+
+                <p class="story-p">That same night, I read the diary. This is what I read. It is for you to judge whether it is true or false, possible or impossible.</p>
+            </div>
+
+            <!-- Professor Shonku's Diary Entries -->
+            <div class="story-section">
+                <h2><i class="fas fa-pen-fancy"></i> Professor Shonku’s Diary</h2>
+
+                <div class="diary-entry-header"><i class="far fa-calendar-alt"></i> 2 January</div>
+                <p class="story-p">My anxieties regarding the rocket are slowly <span class="vocab-word" data-def="Decreasing gradually or fading away">ebbing</span> away. The closer I get to my date of departure, the more <span class="vocab-word" data-def="Excited, eager and motivated">enthusiastic</span> I feel.</p>
+
+                <p class="story-p">Now I am beginning to think that my first attempt had failed only because of Prahlad. He had moved the arms of the clock. In a complex <span class="vocab-word" data-def="An undertaking, project or adventure usually involving risk">venture</span> like this, every second matters. Prahlad’s mistake delayed me by nearly three and a half hours! No wonder that the rocket rose and fell again with a loud thud.</p>
+
+                <div class="story-img-card">
+                    <img src="images/space_traveller/rocket_launch.png" alt="Professor Shonku's rocket blasting into space" style="max-height: 380px;">
+                    <div class="story-img-caption">Professor Shonku's home-built rocket blasting into space on its historic journey towards Mars.</div>
+                </div>
+
+                <div class="diary-entry-header"><i class="far fa-calendar-alt"></i> 5 January</div>
+                <p class="story-p">I am tired of Prahlad’s actions. He’s been with me for twenty-seven years, yet it seems his brain does not function at all. Prahlad is a fool, but it may well be useful to have him with me. Sometimes, slow and foolish people can show more courage than clever ones, as it takes them longer to reason, to feel scared.</p>
+
+                <p class="story-p">There is no doubt that Prahlad is very brave. So I think I will take Prahlad with me. Weight should not be a problem. Prahlad weighs 62 kg. My weight is 58 kg. My robot Bidhushekhar is 90 kg, and all the other material weighs another 60 kg. My rocket can take anything upto 500 kg.</p>
+
+                <div class="diary-entry-header"><i class="far fa-calendar-alt"></i> 8 January</div>
+                <p class="story-p">I have decided to take my cat <strong>Newton</strong> with me. He has been meowing pathetically. Perhaps he knows that the time of my departure is now quite close.</p>
+
+                <div class="diary-entry-header"><i class="far fa-calendar-alt"></i> 21 January</div>
+                <p class="story-p">We left Earth seven days ago. Our food supply should last us five years. Newton does not have to be fed more than once a week. One fish pill is good enough for him to last seven days. For Prahlad and myself, I have taken the special pill. One tiny pill keeps hunger and thirst at bay for twenty-four hours. I have taken 200,000 pills with me.</p>
+
+                <p class="story-p">Newton was restless during the first few days, possibly because he wasn’t used to being kept in a confined space. Since yesterday, however, he has been sitting quietly on my desk, staring out of the window. The sky looks totally black, but there are endless bright, <span class="vocab-word" data-def="Bright, shining, glowing with brilliant light">luminous</span> stars and planets.</p>
+
+                <p class="story-p">Prahlad appears to feel absolutely no interest in watching the scenery outside.</p>
+
+                <div class="diary-entry-header"><i class="far fa-calendar-alt"></i> 28 January</div>
+                <p class="story-p">I am teaching Bidhushekhar to speak. Today, I asked Bidhushekhar: <span class="dialogue">"How are you feeling?"</span></p>
+
+                <p class="story-p">He clapped his hands and said, <span class="dialogue">"Goh! Goh!"</span></p>
+
+                <div class="story-img-card" style="max-width: 320px; margin: 15px auto;">
+                    <img src="images/space_traveller/bidhushekhar_goh.png" alt="Robot Bidhushekhar clapping hands and saying Goh Goh" style="max-height: 240px;">
+                    <div class="story-img-caption">Bidhushekhar responding "Goh! Goh!" — meaning "Good! Good!"</div>
+                </div>
+
+                <p class="story-p">Undoubtedly, what he was trying to say was <span class="dialogue">"Good! Good!"</span></p>
+
+                <p class="story-p">Today, the planet Mars is looking as big as a grapefruit. According to my calculations, we will get there in another month. I have put to one side all that we shall have to take with us.</p>
+            </div>
+
+            <!-- Landing on Mars -->
+            <div class="story-section">
+                <h2><i class="fas fa-planet-ringed"></i> The Mars Odyssey: Bizarre Landscapes & Martian Menace</h2>
+
+                <p class="story-p">My camera, binoculars, weapons, first-aid box—each of these things will have to be carried. There is no doubt in my mind that there is life on Mars, though I have no idea whether that life is large or small, peaceful or violent. Surely whatever creatures there are, they won’t look anything like man.</p>
+
+                <p class="story-p">There are five hours to landing. The blue patches on the planet—that I had initially thought were water—appear to be something different. Besides, there are slim, red, thread-like structures. I cannot imagine what they are.</p>
+
+                <p class="story-p">We landed on Mars two hours ago. I am writing my diary sitting on a soft yellow ‘rocky’ mound. Everything here—the trees, the ground, stones and rocks—is kind of soft, and feels like rubber.</p>
+
+                <p class="story-p">A little distance away, a red river is flowing by. It took me a while to realize that it was a river, as its ‘water’ looked like clear jelly, a bit like guava jelly. Perhaps all rivers here are red. It is these rivers that had appeared as red threads from space. What had struck me as water, it turned out, were grass and trees and plants. All of it is blue, instead of green. What is green is the sky. Everything is the opposite of what we see on Earth.</p>
+
+                <div class="story-img-card">
+                    <img src="images/space_traveller/shonku_mars.png" alt="Professor Shonku writing on Mars with rocket and cat Newton" style="max-height: 420px;">
+                    <div class="story-img-caption">Professor Shonku recording his Martian observations on a soft yellow mound, alongside his rocket and cat Newton.</div>
+                </div>
+
+                <p class="story-p">I haven’t yet seen a living creature. Did I make a mistake in my assumptions? There is no noise at all, except the slight gurgling of the river. The atmosphere is decidedly <span class="vocab-word" data-def="Strange, mysterious, and frighteningly silent">eerie</span>. Why is everything so quiet?</p>
+
+                <p class="story-p">It doesn’t feel cold. If anything, it is quite warm. But there is the occasional gust of wind that is very cold indeed. It lasts for only a few seconds, but seems to freeze the very marrow in my bones. Perhaps there is something in the nature of snowy mountains in the distance.</p>
+
+                <p class="story-p">At first, I was afraid to taste the water in the river. Then, when I saw Newton drinking it, I felt bold enough to cup my hand and drink a mouthful of water myself. It tasted like <span class="vocab-word" data-def="The mythical food/drink of the gods in Greek and Roman mythology, granting vitality">ambrosia</span>. One sip was enough to wipe out every sign of both physical and mental <span class="vocab-word" data-def="Extreme tiredness or physical/mental exhaustion">fatigue</span>.</p>
+
+                <p class="story-p">It is only Bidhushekhar who is still causing me concern. God knows what’s wrong with him. I switched him on as soon as we landed, but he did not move. <span class="dialogue">"What’s the matter? Don’t you want to go out?"</span> I asked him.</p>
+
+                <p class="story-p">He shook his head. <span class="dialogue">"Why? What’s wrong?"</span></p>
+
+                <p class="story-p">This time, Bidhushekhar raised his arms over his head and uttered just one word. His voice sounded frightened. <span class="dialogue">"Denghah!"</span> he said.</p>
+
+                <p class="story-p">I have no problem in following his words. So I could guess instantly that what he meant to say was <span class="dialogue">"Danger"</span>. <span class="dialogue">"What danger? What are you afraid of?"</span> I went on.</p>
+
+                <p class="story-p">Bidhushekhar’s tone remained grave as he answered, <span class="dialogue">"Denghah. Teril denghah."</span> (Danger. Terrible danger.)</p>
+
+                <p class="story-p">He said nothing more, nor did he show any interest in joining us. So, in the end, we had to leave him in the rocket. Only Prahlad, Newton and I set foot on Martian soil.</p>
+
+                <p class="story-p">We have had the most terrifying experience on Mars. I am still in complete shock. As soon as the sun rose, a strong fishy smell hit my nostrils and I heard a strange sound as if a large-sized cricket was chirping loudly: <span class="dialogue">"Tintiri! Tintiri! Tintiri!"</span></p>
+
+                <p class="story-p">I looked around. But, at that precise moment, a terrible scream froze my blood. Then, I saw Prahlad. His eyes were bulging, his right arm was wrapped around Newton, and he was sprinting towards the rocket.</p>
+
+                <p class="story-p">The creature that was chasing him was not human, nor an animal or a fish. Yet, it had something in common with all three. It was about four feet high. It had legs and feet, but instead of arms there were huge fins, like fish. Its head was very big, in the centre of which was a single, large green eye. The mouth was gaping wide, but there were no teeth. Its whole body was covered by fish-scales, <span class="vocab-word" data-def="Shining and sparkling brightly with reflected light">glistening</span> in the Sun.</p>
+
+                <p class="story-p">The creature could not run very fast. It kept stumbling, almost at every step. I wheeled around and saw at a distance thousands of similar creatures making their way towards us, swaying on their feet. They were all making that horrible chirping noise. Their bodies shone so brightly in the sun that it was blinding.</p>
+
+                <p class="story-p">Bidhushekhar swung his arm and hit the creature. It gave a little squeak, flapped its fins and fell to the ground. Afraid that he might enrage the entire Martian army, I dragged Bidhushekhar into the rocket.</p>
+
+                <p class="story-p">But, just as I was about to shut the door, I felt something cold and damp against my feet and everything went black. When I opened my eyes, the rocket was flying once more. How on earth did the rocket take off? Who started it? Where were we headed for?</p>
+            </div>
+
+            <!-- Deep Space Fireworks & Planet Tafa -->
+            <div class="story-section">
+                <h2><i class="fas fa-meteor"></i> Celestial Fireworks & Sanctuary on Planet Tafa</h2>
+
+                <p class="story-p">We are still flying through space. I feel exhausted both mentally and physically; so do Prahlad and Newton.</p>
+
+                <p class="story-p">Bidhushekhar wanted me to open the window. I removed the shutter and the sight that met my eyes was perfectly dazzling. There was an endless stretch of bright bubbles in the sky, forming and bursting. Countless golden spheres were expanding and enlarging, until they exploded and made a great golden spray of light, like a fountain. It is as if some king in this new spatial world is having a display of fireworks at some extraordinary royal festival.</p>
+
+                <div class="story-img-card">
+                    <img src="images/space_traveller/space_spheres_window.png" alt="Professor Shonku and Bidhushekhar viewing bursting space spheres" style="max-height: 380px;">
+                    <div class="story-img-caption">Professor Shonku and Bidhushekhar gazing through the rocket porthole at bursting celestial golden spheres.</div>
+                </div>
+
+                <p class="story-p">Bidhushekhar suddenly shouted, <span class="dialogue">"Tafa!"</span> and rushed to the window. I followed him and looked out. There were no lights and no rocks—nothing except a bright white planet, clear and pure like a full moon, looking down at us. There was no doubt that our rocket was heading for it. If Bidhushekhar had to be believed, that planet was called <strong>Tafa</strong>.</p>
+
+                <p class="story-p">Tafa is clearly visible, and now we can see millions of blinking lights on its surface, as if they are myriad fireflies, glowing in the dark. Their light is strong enough to illuminate our cabin.</p>
+
+                <p class="story-p">We reached Tafa yesterday. A large number of people had gathered to welcome me. Their heads are large, and so are their eyes, but their arms and legs are very thin, as if they have no use for their limbs.</p>
+
+                <p class="story-p">I think these creatures are far behind our human civilization. They were totally <span class="vocab-word" data-def="Relating to an early or basic stage of development, without modern structures">primitive</span>. There are no buildings or houses in Tafa, nor are there trees and plants. The inhabitants live underground. They just disappear into holes. But they have given us a proper house to live in.</p>
+
+                <p class="story-p">I have decided to stop writing my diary after today, as I do not see any chance of anything happening here that might be worth recording. My only regret is that there is no way of sending my diary back to Earth. It is packed with such a lot of valuable information. The fools who live here will neither understand it nor let me go back.</p>
+
+                <!-- Epilogue -->
+                <div style="background:rgba(255, 255, 255, 0.04); border-left:4px solid var(--accent); padding:16px 20px; border-radius:0 10px 10px 0; margin-top:24px;">
+                    <h4 style="margin:0 0 8px 0; color:var(--accent);"><i class="fas fa-book"></i> Epilogue by the Narrator</h4>
+                    <p style="margin:0; font-size:0.95rem; line-height:1.7;">After I had found Professor Shonku’s diary, I made a copy of the entire diary and dropped it off at the press for printing. But when I returned home and went to my bedroom to get the original diary from the bookshelf, I saw that nearly a hundred hungry black ants had eaten the entire diary. All I could do was stare in disbelief because it had seemed completely indestructible.</p>
+                </div>
+            </div>
+
+            <!-- Author Card -->
+            <div class="author-card">
+                <div class="author-avatar"><i class="fas fa-feather-pointed"></i></div>
+                <div class="author-info">
+                    <h3>Satyajit Ray (1921–1992)</h3>
+                    <p>Legendary Indian filmmaker, author, screenwriter, lyricist, and graphic artist. Universally revered as one of the greatest filmmakers of the 20th century (creator of *The Apu Trilogy*, *Feluda*, and *Professor Shonku*). Ray was awarded the <strong>Padma Bhushan</strong> in 1965 and India's highest civilian honour, the <strong>Bharat Ratna</strong>, in 1992, alongside an Honorary Academy Award (Oscar) for Lifetime Achievement.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 2: COMPREHENSION & Q&A ==================== -->
+        <div id="tab-comprehension" class="tab-content">
+
+            <!-- Section 1: Space Tourism Reality Passage -->
+            <div class="info-card">
+                <h3><i class="fas fa-shuttle-space"></i> Reading Passage: Space Tourism Becomes a Reality</h3>
+                <p style="font-size:0.95rem; line-height:1.7;">On December 13, 2018, Virgin Galactic’s suborbital spaceliner, <strong>VSS Unity</strong>, made history when it soared to the edge of space, 51.4 miles (82 km) above sea level. On February 22, 2019, the aircraft repeated the feat with its first passenger—astronaut trainer <strong>Beth Moses</strong>—on board.</p>
+                <p style="font-size:0.95rem; line-height:1.7; font-style:italic; color:#93C5FD;">"It was so clear! It was crystal, crystal clear. And interestingly, you could sort of see ice crystals right out the window, and then the beautiful curvature of the Earth. It was so black in space and so clear and bright, especially with snow in the mountains. You could see the Pacific Ocean, see the southwestern United States. I felt like I was infinitely high. It was just beautiful. It was the most amazing thing."</p>
+                <p style="font-size:0.92rem; color:var(--text-muted); margin-bottom:0;">The company received deposits from more than 600 space tourists ($250,000 each) for this once-in-a-lifetime journey. Sir Richard Branson intended to mark the 50th anniversary of the Apollo 11 moon landing with his historic flight.</p>
+            </div>
+
+            <!-- Section A: Interactive MCQs -->
+            <h2 style="color:var(--accent); margin:28px 0 16px 0; display:flex; align-items:center; gap:10px;">
+                <i class="fas fa-check-double"></i> Section A: Interactive Comprehension Quiz
+            </h2>
+
+            <!-- MCQ 1 -->
+            <div class="mcq-card" id="mcq1">
+                <div class="mcq-question">1. What peculiar characteristic of the diary's ink astonished the narrator?</div>
+                <div class="mcq-options">
+                    <div class="mcq-opt" onclick="checkMcq(1, this, false)">A. It disappeared immediately after being written</div>
+                    <div class="mcq-opt" onclick="checkMcq(1, this, true)">B. It changed colors from green to red, then blue, and finally yellow</div>
+                    <div class="mcq-opt" onclick="checkMcq(1, this, false)">C. It glowed with blinding fluorescent green in pitch darkness</div>
+                    <div class="mcq-opt" onclick="checkMcq(1, this, false)">D. It could only be read under direct solar ultraviolet light</div>
+                </div>
+                <div class="mcq-feedback" id="fb1"></div>
+            </div>
+
+            <!-- MCQ 2 -->
+            <div class="mcq-card" id="mcq2">
+                <div class="mcq-question">2. Why did Professor Shonku's initial rocket launch attempt fail?</div>
+                <div class="mcq-options">
+                    <div class="mcq-opt" onclick="checkMcq(2, this, false)">A. The rocket fuel froze in the cold winter night</div>
+                    <div class="mcq-opt" onclick="checkMcq(2, this, false)">B. Robot Bidhushekhar refused to step inside the cabin</div>
+                    <div class="mcq-opt" onclick="checkMcq(2, this, true)">C. Prahlad moved the hands of the clock, causing a 3.5-hour delay</div>
+                    <div class="mcq-opt" onclick="checkMcq(2, this, false)">D. The total weight exceeded the rocket's 500 kg limit</div>
+                </div>
+                <div class="mcq-feedback" id="fb2"></div>
+            </div>
+
+            <!-- MCQ 3 -->
+            <div class="mcq-card" id="mcq3">
+                <div class="mcq-question">3. What was remarkable about the rivers on Mars according to Professor Shonku?</div>
+                <div class="mcq-options">
+                    <div class="mcq-opt" onclick="checkMcq(3, this, false)">A. They flowed with bubbling, scalding hot sulfur</div>
+                    <div class="mcq-opt" onclick="checkMcq(3, this, true)">B. Their 'water' was red and had the consistency of clear guava jelly</div>
+                    <div class="mcq-opt" onclick="checkMcq(3, this, false)">C. They ran backwards up steep rocky mountain slopes</div>
+                    <div class="mcq-opt" onclick="checkMcq(3, this, false)">D. They were frozen solid into bright emerald ice sheets</div>
+                </div>
+                <div class="mcq-feedback" id="fb3"></div>
+            </div>
+
+            <!-- MCQ 4 -->
+            <div class="mcq-card" id="mcq4">
+                <div class="mcq-question">4. How did Robot Bidhushekhar warn Professor Shonku of imminent danger on Mars?</div>
+                <div class="mcq-options">
+                    <div class="mcq-opt" onclick="checkMcq(4, this, false)">A. He flashed red emergency siren lights from his metallic eyes</div>
+                    <div class="mcq-opt" onclick="checkMcq(4, this, true)">B. He raised his arms and urgently repeated "Denghah! Teril denghah!"</div>
+                    <div class="mcq-opt" onclick="checkMcq(4, this, false)">C. He pulled the emergency ignition lever inside the rocket</div>
+                    <div class="mcq-opt" onclick="checkMcq(4, this, false)">D. He pointed his laser weapon towards the red guava river</div>
+                </div>
+                <div class="mcq-feedback" id="fb4"></div>
+            </div>
+
+            <!-- MCQ 5 -->
+            <div class="mcq-card" id="mcq5">
+                <div class="mcq-question">5. How was the indestructible original diary ultimately destroyed on Earth?</div>
+                <div class="mcq-options">
+                    <div class="mcq-opt" onclick="checkMcq(5, this, false)">A. It dissolved in concentrated nitric acid in Shonku's laboratory</div>
+                    <div class="mcq-opt" onclick="checkMcq(5, this, false)">B. The dog Bhulo buried it under an ancient banyan tree</div>
+                    <div class="mcq-opt" onclick="checkMcq(5, this, true)">C. Nearly a hundred hungry black ants completely ate it on the bookshelf</div>
+                    <div class="mcq-opt" onclick="checkMcq(5, this, false)">D. The press printing machine crushed it into paper pulp</div>
+                </div>
+                <div class="mcq-feedback" id="fb5"></div>
+            </div>
+
+            <!-- Section B: Textbook Questions with Reveal Buttons -->
+            <h2 style="color:var(--accent); margin:32px 0 16px 0; display:flex; align-items:center; gap:10px;">
+                <i class="fas fa-book-reader"></i> Section B: Textbook Short Answer Questions
+            </h2>
+
+            <!-- QA 1 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">1.</span>
+                    <span>What were the two amazing facts about the diary?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans1', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans1">
+                    <strong>Answer:</strong>
+                    <ol style="margin:6px 0 0 0; padding-left:20px;">
+                        <li><strong>Colour-Changing Ink:</strong> The ink changed colour before the reader's eyes—starting as green when first seen, then turning red, then blue, and finally yellow upon opening it at home.</li>
+                        <li><strong>Indestructible Elastic Paper:</strong> The dog Bhulo’s sharp teeth could cause no damage to the notebook; the pages could not be torn as they stretched like elastic; and when dropped into the naked flames of a lit stove, the diary did not catch fire or burn at all.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- QA 2 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">2.</span>
+                    <span>What had happened during Professor Shonku’s first attempt to go to space?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans2', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans2">
+                    <strong>Answer:</strong> During the first attempt, Professor Shonku's servant, <strong>Prahlad</strong>, inadvertently moved the hands of the clock. In a high-precision scientific venture where every split second matters, Prahlad's blunder caused a delay of nearly <strong>three and a half hours</strong>. As a result of this mistiming, the rocket rose into the air and crashed back down to the ground with a loud thud.
+                </div>
+            </div>
+
+            <!-- QA 3: Table Mars vs Tafa -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">3.</span>
+                    <span>Fill in the table to describe the two planets visited by Professor Shonku (Mars vs Tafa).</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans3', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans3">
+                    <strong>Answer: Comprehensive Comparative Analysis</strong>
+                    <table class="comp-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Planet Mars</th>
+                                <th>Planet Tafa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Colour</strong></td>
+                                <td>Soft yellow ground and rocks; red rivers; blue vegetation; <strong>green sky</strong>.</td>
+                                <td>Pure, clear white like a full moon; glowing with millions of blinking lights resembling fireflies.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Terrain</strong></td>
+                                <td>Rubbery, soft yellow rocky mounds; rivers of clear red guava-jelly water; distant snowy mountains.</td>
+                                <td>No rocks, no trees, no plants, and no surface buildings. Smooth, luminescent surface.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>People / Appearance</strong></td>
+                                <td>4 feet tall; fish-like fins instead of arms; huge head with a single large green eye; no teeth; covered in glistening fish scales; chirping <em>"Tintiri!"</em>.</td>
+                                <td>Large heads with huge eyes, but extremely thin, frail arms and legs (as if having no functional use for physical limbs).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Shonku’s Observations</strong></td>
+                                <td>Decidedly eerie silence; bone-chilling wind gusts; ambrosia-like water that wiped out fatigue; hostile creatures attacking in hordes.</td>
+                                <td>Peaceful, welcoming subterranean inhabitants who live in underground holes. Culturally primitive by human standards, but hospitable.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- QA 4 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">4.</span>
+                    <span>Bidhushekhar was more than just an ordinary robot. Give two reasons.</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans4', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans4">
+                    <strong>Answer:</strong>
+                    <ol style="margin:6px 0 0 0; padding-left:20px;">
+                        <li><strong>Intuition & Danger Perception:</strong> Bidhushekhar was not merely a mechanical automaton; he possessed instinctive premonitions. He sensed the impending Martian threat before any human could, refusing to leave the rocket and warning gravely, <em>"Denghah! Teril denghah!"</em></li>
+                        <li><strong>Courage & Defensive Loyalty:</strong> When the terrifying one-eyed Martian monster pursued Prahlad and Newton, Bidhushekhar bravely swung his heavy metallic arm and knocked the creature to the ground, defending his human companions. Furthermore, he recognized the destination planet <em>"Tafa!"</em> in deep space.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- QA 5 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">5.</span>
+                    <span>What did the narrator want to do with the diary? Why was it not possible?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans5', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans5">
+                    <strong>Answer:</strong> The narrator recognized the monumental scientific and historical value of the diary and wanted to publish it for the world to read. He meticulously made a complete handwritten copy and delivered it to a printing press. However, preserving the original diary was impossible because upon returning home, he discovered that nearly a hundred hungry black ants had completely eaten and devoured the supposedly indestructible original notebook.
+                </div>
+            </div>
+
+            <!-- QA 6 -->
+            <div class="qa-card">
+                <div class="qa-q">
+                    <span style="color:var(--accent); font-weight:800;">6.</span>
+                    <span>How has space travel now become a reality according to the reading passage?</span>
+                </div>
+                <button class="qa-reveal-btn" onclick="toggleAnswer('ans6', this)"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="qa-answer" id="ans6">
+                    <strong>Answer:</strong> Space travel has transitioned from science fiction into commercial reality through suborbital commercial spaceflights such as Virgin Galactic’s <em>VSS Unity</em>. In 2018–2019, it successfully soared past the boundary of space (51.4 miles above sea level) carrying test passengers like astronaut trainer Beth Moses. With over 600 private tourists placing deposits, human space tourism has officially commenced.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 3: VOCABULARY & TRAVEL CLOZE ==================== -->
+        <div id="tab-vocab" class="tab-content">
+
+            <div class="info-card">
+                <h3><i class="fas fa-suitcase-rolling"></i> Vocabulary: Words Related to Travel</h3>
+                <p style="font-size:0.95rem; line-height:1.7;">Complete the textbook travel passage from page 55 by choosing the correct travel terminology from the interactive word bank.</p>
+
+                <!-- Help Box -->
+                <div style="background:rgba(56, 189, 248, 0.08); border:1px dashed var(--accent); border-radius:12px; padding:16px; margin:16px 0; display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">booked</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">boarded</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">passengers</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">reached</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">sightseeing</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">tight / packed</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">depart</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">catch</span>
+                    <span style="background:rgba(255,255,255,0.08); padding:4px 12px; border-radius:6px; font-weight:600; color:var(--accent);">light</span>
+                </div>
+
+                <!-- Interactive Travel Cloze Passage -->
+                <div style="background:rgba(255, 255, 255, 0.03); border:1px solid var(--border); border-radius:12px; padding:20px; font-size:1.02rem; line-height:2.1;">
+                    To make the travel convenient, we had ensured that tickets were 
+                    <input type="text" id="cloze1" placeholder="[1]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:110px; font-weight:600;"> 
+                    well in advance. When we 
+                    <input type="text" id="cloze2" placeholder="[2]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:110px; font-weight:600;"> 
+                    the train at about 8 a.m., we realized that there were not too many 
+                    <input type="text" id="cloze3" placeholder="[3]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:120px; font-weight:600;">; 
+                    more than half the train was empty. Once we 
+                    <input type="text" id="cloze4" placeholder="[4]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:110px; font-weight:600;"> 
+                    Delhi, we decided to finish our work before we went 
+                    <input type="text" id="cloze5" placeholder="[5]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:130px; font-weight:600;">. 
+                    The schedule was so 
+                    <input type="text" id="cloze6" placeholder="[6]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:110px; font-weight:600;"> 
+                    that we could not see any historical sites. In fact, we reached the station to see the train ready to 
+                    <input type="text" id="cloze7" placeholder="[7]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:110px; font-weight:600;"> 
+                    the station. We ran with our luggage and somehow managed to 
+                    <input type="text" id="cloze8" placeholder="[8]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:110px; font-weight:600;"> 
+                    it. It was good that we were travelling 
+                    <input type="text" id="cloze9" placeholder="[9]" style="background:rgba(0,0,0,0.4); border:1px solid var(--border); color:var(--accent); padding:4px 10px; border-radius:6px; width:110px; font-weight:600;"> 
+                    and could run with our bags.
+                </div>
+
+                <div style="margin-top:16px; display:flex; gap:12px; align-items:center;">
+                    <button onclick="validateCloze()" style="background:var(--accent); color:#0F172A; border:none; padding:8px 18px; border-radius:8px; font-weight:700; cursor:pointer;">
+                        <i class="fas fa-check"></i> Check Answers
+                    </button>
+                    <button onclick="revealCloze()" style="background:transparent; color:var(--text-muted); border:1px solid var(--border); padding:8px 14px; border-radius:8px; cursor:pointer;">
+                        Reveal Key
+                    </button>
+                    <span id="cloze-score" style="font-weight:700; margin-left:10px;"></span>
+                </div>
+            </div>
+
+            <!-- Advanced Glossary Cards -->
+            <div class="info-card">
+                <h3><i class="fas fa-book-bookmark"></i> Core Chapter Vocabulary Glossary</h3>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-top:14px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Ebbing</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.9rem; color:var(--text-muted);">Fading away gradually; lessening or weakening in intensity.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Ambrosia</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.9rem; color:var(--text-muted);">The immortal nectar/food of the Olympian gods; something supremely revitalizing and delicious.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Fatigue</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.9rem; color:var(--text-muted);">Extreme mental or physical exhaustion resulting from prolonged labor, stress, or space travel.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Eerie</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.9rem; color:var(--text-muted);">Strange, mysterious, and unsettling, evoking a sense of fear and silence.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Luminous</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.9rem; color:var(--text-muted);">Radiating bright, glowing light, especially in deep dark outer space.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:var(--accent); font-size:1.05rem;">Primitive</strong>
+                        <p style="margin:4px 0 0 0; font-size:0.9rem; color:var(--text-muted);">Belonging to an early stage in technical or cultural evolution; lacking modern structural architecture.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 4: WRITING & SPEAKING: ITINERARY & DIALOGUE ==================== -->
+        <div id="tab-writing" class="tab-content">
+
+            <!-- Writing: Itinerary Masterclass -->
+            <div class="info-card">
+                <h3><i class="fas fa-route"></i> Writing Skill: Creating a 2-Day Travel Itinerary</h3>
+                <p style="font-size:0.95rem; line-height:1.7;">An <strong>itinerary</strong> is a structured, chronological travel plan that outlines dates, scheduled stops, transit durations, accommodation, and curated points of interest.</p>
+
+                <!-- Model Itinerary from Textbook -->
+                <div style="background:linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(99, 102, 241, 0.06)); border:1px solid var(--glass-border); border-radius:14px; padding:22px; margin:18px 0;">
+                    <h4 style="margin:0 0 14px 0; color:var(--accent); font-size:1.15rem; text-align:center;">
+                        <i class="fas fa-monument"></i> Model Itinerary: Delhi & Agra Cultural Heritage Tour
+                    </h4>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                        <!-- Day 1 -->
+                        <div style="background:rgba(0,0,0,0.2); padding:16px; border-radius:10px; border:1px solid var(--border);">
+                            <div style="font-weight:700; color:#F59E0B; margin-bottom:8px; font-size:1.05rem;"><i class="fas fa-sun"></i> DAY 1: Historical Delhi</div>
+                            <ul style="font-size:0.9rem; line-height:1.7; padding-left:18px; margin:0;">
+                                <li><strong>9:00 a.m.</strong> — Arrive at New Delhi Railway Station.</li>
+                                <li><strong>10:00 a.m.</strong> — Check in at hotel, freshen up, and enjoy breakfast.</li>
+                                <li><strong>11:00 a.m.</strong> — Depart for Old Delhi: Jama Masjid, Red Fort, and rickshaw ride in Chandni Chowk.</li>
+                                <li><strong>2:00–3:00 p.m.</strong> — Lunch break savoring authentic cuisine.</li>
+                                <li><strong>3:00–7:00 p.m.</strong> — Visit Rajghat (Mahatma Gandhi Memorial), the 12th-century 234-foot Qutub Minar, India Gate, and the new Parliament House (Sansad Bhavan).</li>
+                                <li><strong>8:00 p.m.</strong> — Traditional dinner and rest.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Day 2 -->
+                        <div style="background:rgba(0,0,0,0.2); padding:16px; border-radius:10px; border:1px solid var(--border);">
+                            <div style="font-weight:700; color:#34D399; margin-bottom:8px; font-size:1.05rem;"><i class="fas fa-archway"></i> DAY 2: The Mughal Splendour of Agra</div>
+                            <ul style="font-size:0.9rem; line-height:1.7; padding-left:18px; margin:0;">
+                                <li><strong>9:00 a.m.–12:00 p.m.</strong> — Highway road journey via Yamuna Expressway to Agra (203 km).</li>
+                                <li><strong>12:00 p.m.</strong> — Check in at hotel in Agra.</li>
+                                <li><strong>1:00–2:00 p.m.</strong> — Lunch break.</li>
+                                <li><strong>2:00–4:00 p.m.</strong> — Guided exploration of the timeless white-marble Taj Mahal.</li>
+                                <li><strong>4:00–7:00 p.m.</strong> — Visit the monumental red sandstone Agra Fort built by Emperor Akbar in 1573.</li>
+                                <li><strong>8:00 p.m.</strong> — Dinner and return journey.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Itinerary Checklist -->
+                <h4 style="color:var(--text-primary); margin:20px 0 10px 0;"><i class="fas fa-list-check"></i> Essential Components of a Perfect Itinerary:</h4>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px; font-size:0.88rem;">
+                        <strong>1. Time Allocation:</strong> Realistic travel buffers between stops to prevent exhaustion.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px; font-size:0.88rem;">
+                        <strong>2. Route Efficiency:</strong> Grouping nearby landmarks to minimize transit backtracking.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px; font-size:0.88rem;">
+                        <strong>3. Meal & Rest Windows:</strong> Designated times for breakfast, lunch, hydration, and rest.
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:12px; border-radius:8px; font-size:0.88rem;">
+                        <strong>4. Emergency Contacts:</strong> Local helpline numbers, medical kits, and valid photo ID.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Speaking: Airport Departure Lounge Dialogue -->
+            <div class="info-card">
+                <h3><i class="fas fa-comments"></i> Speaking Skill: Airport Departure Lounge Dialogue</h3>
+                <p style="font-size:0.95rem; line-height:1.7;">A model conversation between siblings <strong>Arshad</strong> and <strong>Hina</strong> demonstrating how observing surroundings, reading, and sketching make layovers engaging rather than tedious.</p>
+
+                <div style="background:rgba(255, 255, 255, 0.03); border-left:4px solid #818CF8; border-radius:0 12px 12px 0; padding:18px; font-size:0.95rem; line-height:1.8;">
+                    <p style="margin-bottom:10px;"><strong>ARSHAD:</strong> Didn’t you get bored waiting for your flight for three whole hours?</p>
+                    <p style="margin-bottom:10px; color:#93C5FD;"><strong>HINA:</strong> No, not at all! It was actually fascinating sitting and watching people from every corner of the world. There is so much you can observe and do while waiting at an airport lounge!</p>
+                    <p style="margin-bottom:10px;"><strong>ARSHAD:</strong> Really? What could possibly be interesting about rows of metal chairs and boarding announcements?</p>
+                    <p style="margin-bottom:10px; color:#93C5FD;"><strong>HINA:</strong> First, I watched the ground crew through the giant glass windows loading luggage pods and refueling the enormous Boeing 777. Then, I observed travelers in colorful traditional attire—some reading paperbacks, business executives typing on sleek laptops, and toddlers giggling with balloon toys.</p>
+                    <p style="margin-bottom:10px;"><strong>ARSHAD:</strong> That does sound lively! Did you also manage to do any of your own work?</p>
+                    <p style="margin-bottom:0; color:#93C5FD;"><strong>HINA:</strong> Absolutely! I completed two chapters of my science fiction novel and sketched a quick charcoal portrait of the air-traffic control tower in my travel journal. The time simply flew by!</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 5: CRITICAL THINKING & ISRO ==================== -->
+        <div id="tab-critical" class="tab-content">
+
+            <!-- Literary Device: Foreshadowing -->
+            <div class="info-card">
+                <h3><i class="fas fa-binoculars"></i> Literary Device: Foreshadowing in Ray's Sci-Fi</h3>
+                <p style="font-size:0.95rem; line-height:1.7;"><strong>Foreshadowing</strong> is a literary device wherein an author drops subtle clues, hints, or warnings in advance about dramatic events that will unfold later in the plot.</p>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin-top:14px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:16px; border-radius:12px;">
+                        <div style="font-weight:700; color:#F59E0B; margin-bottom:6px;"><i class="fas fa-palette"></i> 1. Colour-Changing Ink</div>
+                        <p style="font-size:0.9rem; line-height:1.6; margin:0; color:var(--text-muted);">The shifting ink colors (green, red, blue, yellow) foreshadow that Shonku’s expedition will encounter strange spatial environments where natural laws differ wildly from Earth (like green skies and red rivers).</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:16px; border-radius:12px;">
+                        <div style="font-weight:700; color:#EF4444; margin-bottom:6px;"><i class="fas fa-triangle-exclamation"></i> 2. Bidhushekhar's Reluctance</div>
+                        <p style="font-size:0.9rem; line-height:1.6; margin:0; color:var(--text-muted);">Bidhushekhar’s mechanical hesitation and terrified cry <em>"Denghah! Teril denghah!"</em> foreshadows the shocking emergence of the one-eyed Martian monsters.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:16px; border-radius:12px;">
+                        <div style="font-weight:700; color:#38BDF8; margin-bottom:6px;"><i class="fas fa-wind"></i> 3. Bone-Freezing Wind & Fishy Smell</div>
+                        <p style="font-size:0.9rem; line-height:1.6; margin:0; color:var(--text-muted);">The sudden eerie silence, freezing bone marrow wind, and strong pungent fish odor foreshadow that the quiet Martian landscape conceals a predatory scaled life-form.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Life Skills: Independent Travel Safety Scenarios -->
+            <div class="info-card">
+                <h3><i class="fas fa-shield-halved"></i> Cognitive Skills: Independent Travel Safety Scenarios</h3>
+                <p style="font-size:0.95rem; line-height:1.7;">As students grow, independent travel becomes essential for education, competitions, and life skills. Here are the expert action protocols for the real-life situations from page 58:</p>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:#F87171;">Lost without a phone:</strong>
+                        <p style="font-size:0.88rem; margin:4px 0 0 0; color:var(--text-muted);">Do not panic. Approach a uniformed police officer, a bank security guard, or enter a reputable retail store to request a phone call to emergency family contacts.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:#F87171;">De-boarded at the wrong station:</strong>
+                        <p style="font-size:0.88rem; margin:4px 0 0 0; color:var(--text-muted);">Stay on the well-lit platform near the Station Master’s office. Inquire about the next connecting service; never wander into deserted dark alleys outside.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:#F87171;">Acquaintance offers an unscheduled lift:</strong>
+                        <p style="font-size:0.88rem; margin:4px 0 0 0; color:var(--text-muted);">Politely decline unless your parents have explicitly confirmed the ride. Always prioritize planned public transit routes.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:14px; border-radius:10px;">
+                        <strong style="color:#F87171;">Boarding gate closed at airport:</strong>
+                        <p style="font-size:0.88rem; margin:4px 0 0 0; color:var(--text-muted);">Immediately locate the airline’s customer service desk inside the terminal to rebook on the next available flight.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Incredible India: Space Exploration & ISRO -->
+            <div class="info-card">
+                <h3><i class="fas fa-flag"></i> Incredible India: Trailblazing Space Exploration</h3>
+                <div style="background:linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(16, 185, 129, 0.08)); border:1px solid rgba(245, 158, 11, 0.3); border-radius:12px; padding:20px; line-height:1.8; font-size:0.96rem;">
+                    <p style="margin-top:0;">India has emerged as one of the elite global superpowers in space science, driven by the ingenuity and cost-effective brilliance of the <strong>Indian Space Research Organisation (ISRO)</strong>:</p>
+                    <ul style="padding-left:20px; margin-bottom:0;">
+                        <li><strong>Mars Orbiter Mission (Mangalyaan - 2013):</strong> India became the first nation in the world to successfully reach Martian orbit on its maiden attempt, executed at a record fraction of NASA’s Maven budget.</li>
+                        <li><strong>World Record Satellite Launch (PSLV-C37 - 2017):</strong> ISRO set an unprecedented historic world record by launching <strong>104 satellites into orbit simultaneously</strong> in a single rocket mission.</li>
+                        <li><strong>Chandrayaan-3 (2023):</strong> India made history as the very first nation to land successfully on the lunar south pole, demonstrating remarkable precision engineering.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- REVISION LOG SCRIPT -->
+    <script src="../../js/chapter_logs.js"></script>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        // Tab Switching
+        function openTab(evt, tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const btns = document.querySelectorAll('.tab-btn');
+            btns.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Web Audio Feedback
+        function playChime(success = true) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                if (success) {
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+                    osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.15); // E5
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.35);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.35);
+                } else {
+                    osc.frequency.setValueAtTime(329.63, ctx.currentTime); // E4
+                    osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.2); // A3
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.3);
+                }
+            } catch (e) {}
+        }
+
+        // MCQ Checking
+        function checkMcq(qNum, element, isCorrect) {
+            const card = document.getElementById('mcq' + qNum);
+            const options = card.querySelectorAll('.mcq-opt');
+            const fb = document.getElementById('fb' + qNum);
+
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+
+            if (isCorrect) {
+                element.classList.add('correct');
+                fb.style.display = 'block';
+                fb.style.background = 'rgba(16, 185, 129, 0.15)';
+                fb.style.color = '#34D399';
+                fb.innerHTML = '<i class="fas fa-check-circle"></i> Correct! Excellent understanding of the text.';
+                playChime(true);
+            } else {
+                element.classList.add('incorrect');
+                fb.style.display = 'block';
+                fb.style.background = 'rgba(239, 68, 68, 0.15)';
+                fb.style.color = '#F87171';
+                fb.innerHTML = '<i class="fas fa-times-circle"></i> Incorrect. Review the chapter text above.';
+                options.forEach(opt => {
+                    if (opt.getAttribute('onclick').includes('true')) {
+                        opt.classList.add('correct');
+                    }
+                });
+                playChime(false);
+            }
+        }
+
+        // Reveal Answer Toggle
+        function toggleAnswer(id, btn) {
+            const ans = document.getElementById(id);
+            if (ans.style.display === 'block') {
+                ans.style.display = 'none';
+                btn.innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
+            } else {
+                ans.style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
+                playChime(true);
+            }
+        }
+
+        // Cloze Validation
+        const clozeKeys = {
+            cloze1: ['booked'],
+            cloze2: ['boarded'],
+            cloze3: ['passengers'],
+            cloze4: ['reached'],
+            cloze5: ['sightseeing'],
+            cloze6: ['tight', 'packed'],
+            cloze7: ['depart', 'leave'],
+            cloze8: ['catch', 'board'],
+            cloze9: ['light']
+        };
+
+        function validateCloze() {
+            let correct = 0;
+            for (let i = 1; i <= 9; i++) {
+                const inp = document.getElementById('cloze' + i);
+                const val = inp.value.trim().toLowerCase();
+                const expected = clozeKeys['cloze' + i];
+                if (expected.includes(val)) {
+                    inp.style.borderColor = '#10B981';
+                    inp.style.background = 'rgba(16, 185, 129, 0.15)';
+                    correct++;
+                } else {
+                    inp.style.borderColor = '#EF4444';
+                    inp.style.background = 'rgba(239, 68, 68, 0.15)';
+                }
+            }
+            const score = document.getElementById('cloze-score');
+            score.innerHTML = `Score: ${correct} / 9`;
+            score.style.color = correct >= 7 ? '#10B981' : '#F59E0B';
+            playChime(correct >= 6);
+        }
+
+        function revealCloze() {
+            for (let i = 1; i <= 9; i++) {
+                const inp = document.getElementById('cloze' + i);
+                inp.value = clozeKeys['cloze' + i][0];
+                inp.style.borderColor = '#10B981';
+                inp.style.background = 'rgba(16, 185, 129, 0.15)';
+            }
+            document.getElementById('cloze-score').innerHTML = 'Key Revealed: 9 / 9';
+            document.getElementById('cloze-score').style.color = '#38BDF8';
+        }
+
+        // Theme Toggle Handler
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeBtn = document.querySelector('.theme-toggle');
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const current = document.body.getAttribute('data-theme') || 'dark';
+                    const next = current === 'dark' ? 'light' : 'dark';
+                    document.body.setAttribute('data-theme', next);
+                    const icon = themeBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = next === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                    localStorage.setItem('pushti-theme', next);
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({ theme: next }, '*');
+                    }
+                });
+
+                const saved = localStorage.getItem('pushti-theme');
+                if (saved) {
+                    document.body.setAttribute('data-theme', saved);
+                    const icon = themeBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = saved === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
