@@ -1,90 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grammar Chapter 10: Finite and Non-Finite Verbs</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice: English Grammar Ch 10</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-color: #e0e0e0;
+            --accent-color: #bb86fc;
+            --btn-bg: rgba(187, 134, 252, 0.1);
+            --btn-hover: rgba(187, 134, 252, 0.3);
+            --correct-bg: rgba(46, 125, 50, 0.2);
+            --correct-border: #4caf50;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+            flex: 1;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        .tab-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 1rem;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--btn-bg);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+        .tab-content {
+            display: none;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .question-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .question {
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .reveal-btn {
+            background: var(--btn-bg);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .reveal-btn:hover {
+            background: var(--btn-hover);
+        }
+        .answer {
+            display: none;
+            margin-top: 15px;
+            padding: 12px 15px;
+            background: var(--correct-bg);
+            border-left: 4px solid var(--correct-border);
+            border-radius: 0 6px 6px 0;
+            font-weight: bold;
+            font-size: 1.05rem;
+            line-height: 1.4;
+        }
+        ul.notes-list {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            padding-left: 20px;
+        }
+        ul.notes-list li {
+            margin-bottom: 12px;
+        }
+        .highlight {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+    </style>
+
 <style>
-    :root {
-        --bg-color: #0F0F1A;
-        --surface: #16213E;
-        --primary: #818cf8;
-        --text-main: #E8E8E8;
-        --text-muted: #B0B0C0;
-        --border: #2A2A40;
-    }
-    body {
-        margin: 0; padding: 0;
-        font-family: 'Inter', sans-serif;
-        background-color: var(--bg-color);
-        color: var(--text-main);
-    }
-    header {
-        display: flex;
-        align-items: center;
-        padding: 15px 20px;
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-    }
-    .back-btn {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 600;
-        margin-right: 20px;
-        padding: 8px 12px;
-        background: rgba(129, 140, 248, 0.1);
-        border-radius: 8px;
-        transition: 0.2s;
-    }
-    .back-btn:hover { background: rgba(129, 140, 248, 0.2); }
-    .viewer-container {
-        max-width: 1000px;
-        margin: 20px auto;
-        padding: 0 10px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        align-items: center;
-    }
-    .page-image {
-        width: 100%;
-        max-width: 900px;
-        height: auto;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    [data-theme="light"] {
-        --bg-color: #f8fafc;
-        --surface: #ffffff;
-        --text-main: #0f172a;
-        --text-muted: #475569;
-        --border: #e2e8f0;
-    }
+[data-theme="light"] {
+    --bg-main: #f8fafc !important;
+    --bg-card: #ffffff !important;
+    --text-main: #0f172a !important;
+    --text-muted: #475569 !important;
+    --accent: #6366f1 !important;
+    --border: #e2e8f0 !important;
+    --surface: #f1f5f9 !important;
+}
+[data-theme="light"] .site-header {
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
 </style>
 </head>
 <body>
-    <header>
-        <a href="../../english_index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
-        <h1 style="margin:0; font-size:1.2rem; font-family:'Outfit',sans-serif;">Chapter 10: Finite and Non-Finite Verbs</h1>
-    </header>
-    <div class="viewer-container">
-        <img src="../../source_materials/Eng Gr Images/Eng Gr_31.jpg" class="page-image" alt="Page 31" loading="lazy">
-        <img src="../../source_materials/Eng Gr Images/Eng Gr_32.jpg" class="page-image" alt="Page 32" loading="lazy">
-        <img src="../../source_materials/Eng Gr Images/Eng Gr_33.jpg" class="page-image" alt="Page 33" loading="lazy">
+
+<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--surface); position: sticky; top: 0; z-index: 1000;">
+    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500; color: var(--text-main);">
+        <a href="../../english_index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+            <i class="fas fa-arrow-left"></i> Back to English
+        </a>
+        <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <span style="color:var(--accent); font-weight:600;">Chapter 10 Practice</span>
     </div>
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const savedTheme = localStorage.getItem('pushti-theme');
-        if(savedTheme) {
-            document.body.setAttribute('data-theme', savedTheme);
+</header>
+<style>
+.tabs-wrapper { position: sticky !important; top: 50px !important; z-index: 990 !important; background: var(--bg-color) !important; border-bottom: 1px solid var(--border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; display: flex !important; gap: 10px !important; justify-content: center !important; flex-wrap: wrap !important; }
+</style>
+
+<div class="container">
+    <div class="tabs-wrapper">
+        <button class="tab-btn active" onclick="openTab(event, 'notes')">Notes</button>
+        <button class="tab-btn" onclick="openTab(event, 'qa')">Exercises</button>
+    </div>
+
+    <!-- Notes Tab -->
+    <div id="notes" class="tab-content active">
+        <h2>Chapter 10: Finite and Non-Finite Verbs</h2>
+        <ul class="notes-list">
+            <li><span class="highlight">Finite Verbs:</span> Verbs that have a subject and show tense (past, present, or future). They can stand alone as the main verb in a sentence.<br>
+            - Example: She <em>writes</em> every day. (present tense)<br>
+            - Example: They <em>went</em> to the park. (past tense)
+            </li>
+            <li><span class="highlight">Non-Finite Verbs:</span> Verbs that do not change according to the subject or show tense. They include infinitives (to + verb), gerunds (-ing forms acting as nouns), and participles.<br>
+            - They cannot stand alone as the main verb.<br>
+            - Example: She likes <em>to read</em> books. (infinitive)<br>
+            - Example: The <em>broken</em> vase needs to be fixed. (participle)
+            </li>
+        </ul>
+    </div>
+
+    <!-- Exercises Tab -->
+    <div id="qa" class="tab-content">
+        
+        <div class="question-block">
+            <div class="question"><strong>Exercise A:</strong> Fill in the blanks with the correct finite verbs.<br><br>
+            1. She ________ to school every morning. (walk)<br>
+            2. They ________ their grandparents last weekend. (visit)<br>
+            3. He ________ for the exam tomorrow. (study)<br>
+            4. I ________ my homework before dinner. (finish)<br>
+            5. We ________ to the movie theatre tonight. (go)<br>
+            6. She ________ a novel every Sunday. (read)<br>
+            7. He ________ dinner yesterday. (cook)<br>
+            8. They ________ television in the evening. (watch)
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer"><strong>Answers:</strong><br>
+            1. walks<br>
+            2. visited<br>
+            3. will study (or is studying / studies)<br>
+            4. finished<br>
+            5. will go (or are going / went)<br>
+            6. reads<br>
+            7. cooked<br>
+            8. will watch (or watched)
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question"><strong>Exercise B:</strong> Underline the non-finite verbs in these sentences.<br><br>
+            1. The doctor wants to examine the child.<br>
+            2. He avoided talking to strangers.<br>
+            3. He enjoys playing football.<br>
+            4. The tired runner finished the race.<br>
+            5. They decided to go on a vacation.<br>
+            6. The broken toy was on the floor.<br>
+            7. She hopes to travel the world.<br>
+            8. The smiling baby made everyone happy.
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer"><strong>Answers:</strong><br>
+            1. <u>to examine</u><br>
+            2. <u>talking</u><br>
+            3. <u>playing</u><br>
+            4. <u>tired</u><br>
+            5. <u>to go</u><br>
+            6. <u>broken</u><br>
+            7. <u>to travel</u><br>
+            8. <u>smiling</u>
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question"><strong>Exercise C:</strong> Complete these sentences using the to + verb form of non-finite verbs in brackets.<br><br>
+            1. He wants ________ a new language. (learn)<br>
+            2. She decided ________ a new hobby. (start)<br>
+            3. They plan ________ the museum. (visit)<br>
+            4. He forgot ________ his friend. (call)<br>
+            5. She hopes ________ the competition. (win)<br>
+            6. They need ________ their grades. (improve)<br>
+            7. He agreed ________ with the project. (help)<br>
+            8. She offered ________ us home. (drive)
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer"><strong>Answers:</strong><br>
+            1. to learn<br>
+            2. to start<br>
+            3. to visit<br>
+            4. to call<br>
+            5. to win<br>
+            6. to improve<br>
+            7. to help<br>
+            8. to drive
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question"><strong>Exercise D:</strong> Identify whether the words in bold in these sentences are finite or non-finite.<br><br>
+            1. The mermaid loves <strong>reading</strong>.<br>
+            2. Deeva <strong>jumped</strong> from a high rock.<br>
+            3. He likes to <strong>play</strong> chess.<br>
+            4. They are <strong>eating</strong> sandwiches.<br>
+            5. <strong>Running</strong> every morning keeps her fit.<br>
+            6. He <strong>banged</strong> hard on the door.<br>
+            7. <strong>Baking</strong> cookies is her hobby.<br>
+            8. She <strong>went</strong> with her father.
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer"><strong>Answers:</strong><br>
+            1. non-finite<br>
+            2. finite<br>
+            3. non-finite<br>
+            4. non-finite<br>
+            5. non-finite<br>
+            6. finite<br>
+            7. non-finite<br>
+            8. finite
+            </div>
+        </div>
+
+        <div class="question-block">
+            <div class="question"><strong>Exercise E:</strong> Complete these sentences by adding -ing or -en/-ed form to the verbs in the brackets.<br><br>
+            1. The ________ water is refreshing. (run)<br>
+            2. She has ________ three books. (write)<br>
+            3. He found a ________ branch. (break)<br>
+            4. They were ________ a movie. (watch)<br>
+            5. The ________ tree blocked the road. (fall)<br>
+            6. She is ________ a song. (sing)<br>
+            7. He has ________ an apple. (eat)<br>
+            8. The ________ cake smells delicious. (bake)
+            </div>
+            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
+            <div class="answer"><strong>Answers:</strong><br>
+            1. running<br>
+            2. written<br>
+            3. broken<br>
+            4. watching<br>
+            5. fallen<br>
+            6. singing<br>
+            7. eaten<br>
+            8. baked
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
         }
-    });
-    </script>
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    function toggleAnswer(btn) {
+        var answerDiv = btn.nextElementSibling;
+        if (answerDiv.style.display === "block") {
+            answerDiv.style.display = "none";
+            btn.textContent = "Reveal Answer";
+        } else {
+            answerDiv.style.display = "block";
+            btn.textContent = "Hide Answer";
+        }
+    }
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('pushti-theme');
+    if(savedTheme) {
+        document.body.setAttribute('data-theme', savedTheme);
+    }
+});
+</script>
 </body>
 </html>

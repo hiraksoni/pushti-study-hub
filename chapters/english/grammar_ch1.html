@@ -15,6 +15,9 @@
             --btn-hover: rgba(187, 134, 252, 0.3);
             --correct-bg: rgba(46, 125, 50, 0.2);
             --correct-border: #4caf50;
+            --extra-bg: rgba(255, 167, 38, 0.05);
+            --extra-border: #ffa726;
+            --extra-text: #ffb74d;
         }
         body {
             background-color: var(--bg-color);
@@ -42,7 +45,7 @@
         }
         .container {
             width: 90%;
-            max-width: 800px;
+            max-width: 900px;
             margin: 30px auto;
             flex: 1;
         }
@@ -86,57 +89,118 @@
             from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .question-block {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        
+        /* New Table Styles for Notes */
+        table.notes-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
         }
-        .question-block:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        table.notes-table th, table.notes-table td {
+            border: 1px solid var(--glass-border);
+            padding: 12px 15px;
+            text-align: left;
+            vertical-align: top;
         }
-        .question {
-            font-size: 1.15rem;
+        table.notes-table th {
+            background: rgba(187, 134, 252, 0.1);
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        table.notes-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        
+        /* Exercise Styles */
+        .exercise-section {
+            margin-bottom: 40px;
+        }
+        .exercise-title {
+            font-size: 1.25rem;
+            color: var(--accent-color);
             margin-bottom: 15px;
-            line-height: 1.5;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
         }
-        .reveal-btn {
+        .instruction {
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        .q-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+        }
+        .q-text {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .action-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .reveal-btn-small {
             background: var(--btn-bg);
             border: 1px solid var(--accent-color);
             color: var(--accent-color);
-            padding: 8px 16px;
-            border-radius: 6px;
+            padding: 5px 12px;
+            border-radius: 4px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            width: max-content;
         }
-        .reveal-btn:hover {
+        .reveal-btn-small:hover {
             background: var(--btn-hover);
         }
-        .answer {
+        .answer-inline {
             display: none;
-            margin-top: 15px;
-            padding: 12px 15px;
+            padding: 6px 12px;
             background: var(--correct-bg);
-            border-left: 4px solid var(--correct-border);
-            border-radius: 0 6px 6px 0;
+            border-left: 3px solid var(--correct-border);
+            border-radius: 0 4px 4px 0;
             font-weight: bold;
-            font-size: 1.05rem;
-            line-height: 1.4;
+            font-size: 1rem;
+            color: #fff;
+            animation: fadeIn 0.3s ease-in-out;
         }
-        ul.notes-list {
-            line-height: 1.8;
-            font-size: 1.1rem;
-            padding-left: 20px;
+        
+        /* Extra Practice Styles */
+        .extra-practice {
+            margin-top: 25px;
+            padding: 20px;
+            background: var(--extra-bg);
+            border: 1px dashed var(--extra-border);
+            border-radius: 12px;
         }
-        ul.notes-list li {
-            margin-bottom: 12px;
+        .extra-title {
+            color: var(--extra-text);
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.15rem;
         }
-        .highlight {
-            color: var(--accent-color);
-            font-weight: 600;
+        .extra-practice .q-item {
+            background: rgba(0,0,0,0.15);
+            border-color: rgba(255, 167, 38, 0.2);
+        }
+        .extra-practice .reveal-btn-small {
+            border-color: var(--extra-border);
+            color: var(--extra-text);
+            background: rgba(255, 167, 38, 0.1);
+        }
+        .extra-practice .reveal-btn-small:hover {
+            background: rgba(255, 167, 38, 0.25);
         }
     </style>
 
@@ -172,113 +236,286 @@
 
 <div class="container">
     <div class="tabs-wrapper">
-        <button class="tab-btn active" onclick="openTab(event, 'notes')">Notes</button>
-        <button class="tab-btn" onclick="openTab(event, 'qa')">Exercises</button>
+        <button class="tab-btn active" onclick="openTab(event, 'notes')">Comprehensive Notes</button>
+        <button class="tab-btn" onclick="openTab(event, 'qa')">Interactive Exercises</button>
     </div>
 
     <!-- Notes Tab -->
     <div id="notes" class="tab-content active">
-        <h2>Chapter 1: Nouns: Formation</h2>
-        <ul class="notes-list">
-            <li><span class="highlight">Nouns</span> are the names of persons, places, things or animals.</li>
-            <li><span class="highlight">Proper Nouns:</span> Unique names of specific persons, places or things. Proper nouns always start with a capital letter. (e.g. Albert Einstein, New York, Titanic)</li>
-            <li><span class="highlight">Common Nouns:</span> General terms used for any persons, places or things. They are not specific and are only capitalised at the beginning of a sentence. (e.g. teacher, city, book)</li>
-            <li><span class="highlight">Collective Nouns:</span> Represent collection of individuals, animals or items viewed as one entity. (e.g. a team of players, a flock of birds, a bunch of grapes, a class of students)</li>
-            <li><span class="highlight">Abstract Nouns:</span> Denote ideas, qualities or conditions that are intangible and cannot be perceived with the senses. These nouns often symbolise emotions or concepts. (e.g. love, freedom, bravery, wisdom)</li>
-            <li>Common Suffixes to form Abstract Nouns: 
-                <ul>
-                    <li>From Adjectives: deep -> depth, strong -> strength, true -> truth, popular -> popularity</li>
-                    <li>From Verbs: judge -> judgement, act -> action, know -> knowledge, move -> movement</li>
-                    <li>From Common Nouns: friend -> friendship, child -> childhood, slave -> slavery, beauty -> beautiful (Wait, beautiful is an adjective, beauty is the abstract noun)</li>
-                </ul>
-            </li>
-            <li><span class="highlight">Concrete Nouns:</span> Nouns that refer to the things we can touch, see, hear, smell or taste. (e.g. trees, pencils, books, mugs, wood, water, gold, iron, cotton)</li>
-            <li><span class="highlight">Compound Nouns:</span> Nouns formed by the combination of more than one part of speech. They consist of two or more than two words. (e.g. land + lord = landlord, sales + man = salesman)</li>
-            <li><span class="highlight">Gender:</span> Nouns can be classified into four genders: masculine, feminine, common and neuter.</li>
-        </ul>
+        <h2>Chapter 1: Nouns (Advanced Overview)</h2>
+        <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px;">
+            A <strong>Noun</strong> is the foundation of English grammar. It is a naming word used to identify a person, place, thing, animal, idea, or state of being. 
+            Beyond the basic definitions found in textbooks, understanding the deep structural categories of nouns helps in mastering syntax, agreement, and expression.
+        </p>
+
+        <h3 style="color: var(--accent-color);">1. Categories of Nouns</h3>
+        <table class="notes-table">
+            <thead>
+                <tr>
+                    <th style="width: 20%;">Noun Type</th>
+                    <th style="width: 40%;">Comprehensive Definition</th>
+                    <th style="width: 40%;">Rich Examples</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Proper Nouns</strong></td>
+                    <td>Specific, unique identities of entities. <em>Always</em> capitalized regardless of their position in a sentence. Often omit articles (the/a/an).</td>
+                    <td><em>Albert Einstein, Tokyo, Mount Kilimanjaro, The Renaissance, Titanic</em></td>
+                </tr>
+                <tr>
+                    <td><strong>Common Nouns</strong></td>
+                    <td>Generic terms for a class or group. They represent non-specific items and are only capitalized at the beginning of a sentence.</td>
+                    <td><em>scientist, city, mountain, era, ship, philosophy, teacher</em></td>
+                </tr>
+                <tr>
+                    <td><strong>Collective Nouns</strong></td>
+                    <td>Words that denote a group of individuals or things acting as a single unit. They can take singular or plural verbs depending on whether the group acts collectively or as individuals.</td>
+                    <td><em>a murmuration of starlings, a board of directors, a fleet of ships, a pride of lions</em></td>
+                </tr>
+                <tr>
+                    <td><strong>Abstract Nouns</strong></td>
+                    <td>Ideas, qualities, states, or concepts that cannot be physically interacted with (untouchable). Often formed using specific suffixes.</td>
+                    <td><em>melancholy, justice, brilliance, childhood, bravery, freedom</em></td>
+                </tr>
+                <tr>
+                    <td><strong>Concrete Nouns</strong></td>
+                    <td>Tangible, physical entities that can be experienced through the five senses (sight, hearing, taste, touch, smell).</td>
+                    <td><em>velvet, thunder, mahogany, smartphone, coffee, ocean</em></td>
+                </tr>
+                <tr>
+                    <td><strong>Compound Nouns</strong></td>
+                    <td>Created by joining two or more words. They can be spaced, hyphenated, or solid.</td>
+                    <td><em>mother-in-law (hyphenated), ice cream (spaced), toothpaste (solid)</em></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 style="color: var(--accent-color); margin-top: 30px;">2. Formation of Abstract Nouns (Morphology)</h3>
+        <table class="notes-table">
+            <thead>
+                <tr>
+                    <th style="width: 25%;">Origin</th>
+                    <th style="width: 35%;">Rule / Pattern</th>
+                    <th style="width: 40%;">Examples</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>From Adjectives</strong></td>
+                    <td>Adding suffixes like <em>-ness, -ity, -th</em></td>
+                    <td>deep &rarr; <em>depth</em>, popular &rarr; <em>popularity</em>, happy &rarr; <em>happiness</em></td>
+                </tr>
+                <tr>
+                    <td><strong>From Verbs</strong></td>
+                    <td>Adding suffixes like <em>-tion, -ment, -ledge</em></td>
+                    <td>judge &rarr; <em>judgement</em>, act &rarr; <em>action</em>, know &rarr; <em>knowledge</em></td>
+                </tr>
+                <tr>
+                    <td><strong>From Common Nouns</strong></td>
+                    <td>Adding suffixes like <em>-ship, -hood, -dom</em></td>
+                    <td>friend &rarr; <em>friendship</em>, child &rarr; <em>childhood</em>, king &rarr; <em>kingdom</em></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 style="color: var(--accent-color); margin-top: 30px;">3. The Concept of Gender in Nouns</h3>
+        <table class="notes-table">
+            <thead>
+                <tr>
+                    <th>Gender</th>
+                    <th>Definition</th>
+                    <th>Examples</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Masculine</strong></td>
+                    <td>Refers to male living beings.</td>
+                    <td><em>emperor, duke, gander, drake, wizard</em></td>
+                </tr>
+                <tr>
+                    <td><strong>Feminine</strong></td>
+                    <td>Refers to female living beings.</td>
+                    <td><em>empress, duchess, goose, duck, witch</em></td>
+                </tr>
+                <tr>
+                    <td><strong>Common</strong></td>
+                    <td>Can refer to either male or female (gender-neutral).</td>
+                    <td><em>doctor, monarch, parent, cousin, student, driver</em></td>
+                </tr>
+                <tr>
+                    <td><strong>Neuter</strong></td>
+                    <td>Refers to inanimate objects, lacking biological gender.</td>
+                    <td><em>computer, landscape, vehicle, textbook, abstract concepts</em></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <!-- Exercises Tab -->
     <div id="qa" class="tab-content">
         
-        <div class="question-block">
-            <div class="question"><strong>Exercise A:</strong> Choose the correct common nouns from the box and complete these sentences. <br><br>
-            [river, scientist, festival, mountain, plays, monument, city, museum] <br><br>
-            1. Albert Einstein was a great ________. <br>
-            2. The Amazon ________ flows through South America. <br>
-            3. Diwali is a popular ________ in India. <br>
-            4. Mount Everest stands as the tallest ________ on the planet. <br>
-            5. Shakespeare wrote many famous ________. <br>
-            6. The Taj Mahal is a beautiful ________. <br>
-            7. My friend lives in a ________. <br>
-            8. We visited the ________ in Paris.
+        <!-- EXERCISE A -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise A: Appropriate Common Nouns</div>
+            <div class="instruction">Choose the correct common nouns from the box and complete these sentences.<br>
+            <em>[river, scientist, festival, mountain, plays, monument, city, museum]</em></div>
+            
+            <div class="q-item">
+                <div class="q-text">1. Albert Einstein was a great ________.</div>
+                <div class="action-row">
+                    <button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button>
+                    <div class="answer-inline">scientist</div>
+                </div>
             </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong> <br>1. scientist<br>2. river<br>3. festival<br>4. mountain<br>5. plays<br>6. monument<br>7. city<br>8. museum</div>
+            <div class="q-item">
+                <div class="q-text">2. The Amazon ________ flows through South America.</div>
+                <div class="action-row">
+                    <button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button>
+                    <div class="answer-inline">river</div>
+                </div>
+            </div>
+            <div class="q-item">
+                <div class="q-text">3. Diwali is a popular ________ in India.</div>
+                <div class="action-row">
+                    <button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button>
+                    <div class="answer-inline">festival</div>
+                </div>
+            </div>
+            <div class="q-item">
+                <div class="q-text">4. Mount Everest stands as the tallest ________ on the planet.</div>
+                <div class="action-row">
+                    <button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button>
+                    <div class="answer-inline">mountain</div>
+                </div>
+            </div>
+            <div class="q-item">
+                <div class="q-text">5. Shakespeare wrote many famous ________.</div>
+                <div class="action-row">
+                    <button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button>
+                    <div class="answer-inline">plays</div>
+                </div>
+            </div>
+            <div class="q-item">
+                <div class="q-text">6. The Taj Mahal is a beautiful ________.</div>
+                <div class="action-row">
+                    <button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button>
+                    <div class="answer-inline">monument</div>
+                </div>
+            </div>
+            <div class="q-item">
+                <div class="q-text">7. My friend lives in a ________.</div>
+                <div class="action-row">
+                    <button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button>
+                    <div class="answer-inline">city</div>
+                </div>
+            </div>
+            <div class="q-item">
+                <div class="q-text">8. We visited the ________ in Paris.</div>
+                <div class="action-row">
+                    <button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button>
+                    <div class="answer-inline">museum</div>
+                </div>
+            </div>
+
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook: Common & Proper Pairings</h4>
+                <div class="instruction" style="color:#e0e0e0; font-size:0.95rem;">Identify the most fitting common noun to pair with the given proper noun context.</div>
+                <div class="q-item">
+                    <div class="q-text">E1. Jupiter is the largest gas ________ in our solar system.</div>
+                    <div class="action-row">
+                        <button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button>
+                        <div class="answer-inline">planet</div>
+                    </div>
+                </div>
+                <div class="q-item">
+                    <div class="q-text">E2. The Pacific is the deepest ________ on Earth.</div>
+                    <div class="action-row">
+                        <button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button>
+                        <div class="answer-inline">ocean</div>
+                    </div>
+                </div>
+                <div class="q-item">
+                    <div class="q-text">E3. Elon Musk is the visionary ________ behind SpaceX.</div>
+                    <div class="action-row">
+                        <button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button>
+                        <div class="answer-inline">entrepreneur / founder / CEO</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise B:</strong> Fill in the blanks with appropriate collective nouns. <br><br>
-            1. a ________ of bees <br>
-            2. a ________ of cards <br>
-            3. a ________ of lions <br>
-            4. a ________ of flowers <br>
-            5. a ________ of fish <br>
-            6. a ________ of students <br>
-            7. a ________ of musicians <br>
-            8. a ________ of ships
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong> <br>1. swarm<br>2. pack<br>3. pride<br>4. bouquet<br>5. school<br>6. class<br>7. band<br>8. fleet</div>
-        </div>
+        <!-- EXERCISE B -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise B: Collective Nouns</div>
+            <div class="instruction">Fill in the blanks with appropriate collective nouns.</div>
+            
+            <div class="q-item"><div class="q-text">1. a ________ of bees</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">swarm</div></div></div>
+            <div class="q-item"><div class="q-text">2. a ________ of cards</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">deck / pack</div></div></div>
+            <div class="q-item"><div class="q-text">3. a ________ of lions</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">pride</div></div></div>
+            <div class="q-item"><div class="q-text">4. a ________ of flowers</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">bouquet / bunch</div></div></div>
+            <div class="q-item"><div class="q-text">5. a ________ of fish</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">school / shoal</div></div></div>
+            <div class="q-item"><div class="q-text">6. a ________ of students</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">class</div></div></div>
+            <div class="q-item"><div class="q-text">7. a ________ of musicians</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">band</div></div></div>
+            <div class="q-item"><div class="q-text">8. a ________ of ships</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">fleet</div></div></div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise C:</strong> Read each sentence carefully and identify the concrete and abstract nouns. <br><br>
-            1. The statue is made of marble. <br>
-            2. Her bravery saved the day. <br>
-            3. He has great wisdom. <br>
-            4. The house was built with bricks. <br>
-            5. They showed immense courage during the event. <br>
-            6. She wore a necklace made of gold. <br>
-            7. His kindness was appreciated by everyone. <br>
-            8. The book was placed on the table.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong> <br>
-            1. statue (concrete), marble (concrete) <br>
-            2. bravery (abstract), day (abstract) <br>
-            3. wisdom (abstract) <br>
-            4. house (concrete), bricks (concrete) <br>
-            5. courage (abstract), event (abstract) <br>
-            6. necklace (concrete), gold (concrete) <br>
-            7. kindness (abstract) <br>
-            8. book (concrete), table (concrete)
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook: Advanced Collective Nouns</h4>
+                <div class="instruction" style="color:#e0e0e0; font-size:0.95rem;">Test your vocabulary with these rare or advanced collective nouns!</div>
+                <div class="q-item"><div class="q-text">E1. A ________ of crows.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">murder</div></div></div>
+                <div class="q-item"><div class="q-text">E2. A ________ of geese (in flight).</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">skein / flock</div></div></div>
+                <div class="q-item"><div class="q-text">E3. A ________ of owls.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">parliament</div></div></div>
+                <div class="q-item"><div class="q-text">E4. An ________ of ants.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">army / colony</div></div></div>
             </div>
         </div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise D:</strong> Rewrite these sentences by changing the gender. Make other changes if necessary. <br><br>
-            1. The milkmaid met a wizard. <br>
-            2. A gander is bigger than a drake. <br>
-            3. She was married to a great prince. <br>
-            4. The groom is the son of a prominent landlord. <br>
-            5. The old man had a little daughter. <br>
-            6. The lady expressed her gratitude to my aunt for her assistance. <br>
-            7. The schoolmaster acted as the host in the party at his house. <br>
-            8. The duke wishes to speak with his daughter.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong> <br>
-            1. The milkman met a witch. <br>
-            2. A goose is bigger than a duck. <br>
-            3. He was married to a great princess. <br>
-            4. The bride is the daughter of a prominent landlady. <br>
-            5. The old woman had a little son. <br>
-            6. The gentleman expressed his gratitude to my uncle for his assistance. <br>
-            7. The schoolmistress acted as the hostess in the party at her house. <br>
-            8. The duchess wishes to speak with her son.
+        <!-- EXERCISE C -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise C: Concrete & Abstract Nouns</div>
+            <div class="instruction">Identify the concrete and abstract nouns in each sentence.</div>
+            
+            <div class="q-item"><div class="q-text">1. The statue is made of marble.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">statue (concrete), marble (concrete)</div></div></div>
+            <div class="q-item"><div class="q-text">2. Her bravery saved the day.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">bravery (abstract), day (abstract)</div></div></div>
+            <div class="q-item"><div class="q-text">3. He has great wisdom.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">wisdom (abstract)</div></div></div>
+            <div class="q-item"><div class="q-text">4. The house was built with bricks.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">house (concrete), bricks (concrete)</div></div></div>
+            <div class="q-item"><div class="q-text">5. They showed immense courage during the event.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">courage (abstract), event (abstract)</div></div></div>
+            <div class="q-item"><div class="q-text">6. She wore a necklace made of gold.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">necklace (concrete), gold (concrete)</div></div></div>
+            <div class="q-item"><div class="q-text">7. His kindness was appreciated by everyone.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">kindness (abstract)</div></div></div>
+            <div class="q-item"><div class="q-text">8. The book was placed on the table.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">book (concrete), table (concrete)</div></div></div>
+
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook: Dual-Nature Nouns</h4>
+                <div class="instruction" style="color:#e0e0e0; font-size:0.95rem;">Some nouns can be concrete OR abstract depending on context. Identify the noun 'glass' in these sentences.</div>
+                <div class="q-item"><div class="q-text">E1. The window is made of thick <strong>glass</strong>.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">Concrete (A physical material)</div></div></div>
+                <div class="q-item"><div class="q-text">E2. She poured water into her drinking <strong>glass</strong>.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">Concrete (A physical object)</div></div></div>
+                <div class="q-item"><div class="q-text">E3. He examined the evidence under a magnifying <strong>glass</strong>.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">Concrete (A tool)</div></div></div>
             </div>
         </div>
+
+        <!-- EXERCISE D -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise D: Changing Gender</div>
+            <div class="instruction">Rewrite these sentences by changing the gender. Make other changes if necessary.</div>
+            
+            <div class="q-item"><div class="q-text">1. The milkmaid met a wizard.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">The milkman met a witch.</div></div></div>
+            <div class="q-item"><div class="q-text">2. A gander is bigger than a drake.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">A goose is bigger than a duck.</div></div></div>
+            <div class="q-item"><div class="q-text">3. She was married to a great prince.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">He was married to a great princess.</div></div></div>
+            <div class="q-item"><div class="q-text">4. The groom is the son of a prominent landlord.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">The bride is the daughter of a prominent landlady.</div></div></div>
+            <div class="q-item"><div class="q-text">5. The old man had a little daughter.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">The old woman had a little son.</div></div></div>
+            <div class="q-item"><div class="q-text">6. The lady expressed her gratitude to my aunt for her assistance.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">The gentleman expressed his gratitude to my uncle for his assistance.</div></div></div>
+            <div class="q-item"><div class="q-text">7. The schoolmaster acted as the host in the party at his house.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">The schoolmistress acted as the hostess in the party at her house.</div></div></div>
+            <div class="q-item"><div class="q-text">8. The duke wishes to speak with his daughter.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">The duchess wishes to speak with her son.</div></div></div>
+
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook: Tricky Gender Swaps</h4>
+                <div class="instruction" style="color:#e0e0e0; font-size:0.95rem;">Change the gender of the nouns in these complex sentences.</div>
+                <div class="q-item"><div class="q-text">E1. The hero saved the emperor from a vicious tiger.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">The heroine saved the empress from a vicious tigress.</div></div></div>
+                <div class="q-item"><div class="q-text">E2. The widower left his estate to his nephew.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">The widow left her estate to her niece.</div></div></div>
+                <div class="q-item"><div class="q-text">E3. The monk gave a blessing to the stallion.</div><div class="action-row"><button class="reveal-btn-small" onclick="toggleAnswerInline(this)">View Answer</button><div class="answer-inline">The nun gave a blessing to the mare.</div></div></div>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -297,13 +534,13 @@
         evt.currentTarget.classList.add("active");
     }
 
-    function toggleAnswer(btn) {
+    function toggleAnswerInline(btn) {
         var answerDiv = btn.nextElementSibling;
-        if (answerDiv.style.display === "block") {
+        if (answerDiv.style.display === "block" || answerDiv.style.display === "inline-block") {
             answerDiv.style.display = "none";
-            btn.textContent = "Reveal Answer";
+            btn.textContent = "View Answer";
         } else {
-            answerDiv.style.display = "block";
+            answerDiv.style.display = "inline-block";
             btn.textContent = "Hide Answer";
         }
     }
