@@ -318,6 +318,47 @@
         },
 
         // ==========================================
+        // ENGLISH GRAMMAR & COMPOSITION
+        // ==========================================
+        'eng_grammar_vocab': {
+            id: 'eng_grammar_vocab',
+            title: 'Chapter 26: Vocabulary & Language Mechanics',
+            subject: 'English Grammar',
+            unit: 'Spotlight English Grammar 7',
+            author: 'Spotlight Grammar / CBSE Curriculum',
+            version: 'v2.0.0',
+            lastModified: 'September 6, 2026, 01:15 AM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#818CF8',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Grammar Overhaul & Multi-Tab Pedagogical Module',
+            summary: 'Comprehensive overhaul of Chapter 26 (Vocabulary) following the full 5-tab SOP: Homophones, Homonyms, 5 Suffix Rules, Incorrect Phrases, Redundancies, audio feedback, and interactive self-scoring mastery quiz.',
+            changesList: [
+                'Upgraded to modern 5-tab glassmorphic SOP layout with responsive dual-theme support (dark/light) and sticky navigation.',
+                'Tab 1: Complete Homophones Lab covering 14 textbook pairs (pgs 149-150) + 5 high-yield curriculum enrichment pairs, deer/dear visual comparison, and interactive Exercise A with Web Audio feedback.',
+                'Tab 2: Homonyms & Dual Meanings Lab with 10 textbook anchor words + complete dictionary definitions and dual contextual sentences for Exercise B (bark, pound, drop, die, right, point, current, tire).',
+                'Tab 3: Suffixes & 5 Golden Spelling Rules complete with master directory (50+ words), Rule 1 to 5 visual breakdown with "Stay Ahead" exceptions, and Exercise C root word transformation solutions.',
+                'Tab 4: Language Polish suite with 10 Common Incorrect Phrases, 6 Indian English expressions to avoid, full 22-term Redundancy Buster, and Exercise E model sentences.',
+                'Tab 5: 15-question interactive Vocabulary Mastery Lab with instant grading, Web Audio chime synthesis, and high-resolution textbook scans lightbox (Pages 149-158).',
+                'Integrated Revision Log modal and provenance tracking under Gemini 2.5 Pro (via Antigravity).'
+            ],
+            history: [
+                {
+                    version: 'v2.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Major curriculum overhaul bringing Chapter 26 to full parity with the 5-tab Literature SOP, with audio chimes, dual-theme support, and full textbook exercise solutions.'
+                },
+                {
+                    version: 'v1.0.0',
+                    date: 'August 2026',
+                    model: 'Legacy System',
+                    notes: 'Initial text-based notes compilation.'
+                }
+            ]
+        },
+
+        // ==========================================
         // ENGLISH ACTIVITIES (ASL)
         // ==========================================
         'eng_act_asl': {
