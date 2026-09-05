@@ -59,39 +59,97 @@
         margin: 40px auto;
         padding: 0 20px;
     }
-    /* Tabs/Boxes for Sub-categories */
-    .tabs-grid {
+    /* Vertical Branch & Chapter Layout */
+    .subject-vertical-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        margin-bottom: 40px;
+        grid-template-columns: 280px 1fr;
+        gap: 2rem;
+        align-items: start;
+        margin-top: 10px;
     }
-    .tab-card {
-        background: var(--bg-main);
+    .branch-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        position: sticky;
+        top: 80px;
+    }
+    .branch-nav-btn {
+        display: flex;
+        align-items: center;
+        gap: 1.1rem;
+        padding: 1.2rem 1.4rem;
+        background: var(--surface);
         border: 1px solid var(--border);
         border-radius: 16px;
-        padding: 24px;
+        color: var(--text-muted);
         cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        text-align: left;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0.6;
         position: relative;
         overflow: hidden;
+        user-select: none;
+        width: 100%;
+        box-sizing: border-box;
     }
-    .tab-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    .branch-nav-btn:hover {
+        opacity: 0.9;
+        transform: translateX(4px);
+        border-color: var(--branch-color, var(--primary));
+        color: var(--text-main);
     }
-    .tab-card.active {
-        border-color: var(--primary);
+    .branch-nav-btn.active {
+        opacity: 1;
+        transform: scale(1.03) translateX(6px);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+        border-color: var(--branch-color, var(--primary));
+        color: var(--text-main);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 0 0 1.5px var(--branch-color, var(--primary));
     }
-    .tab-card::before {
-        content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
-        background: var(--tab-color, var(--primary));
+    .branch-nav-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        background: var(--branch-color, var(--primary));
+        opacity: 0;
+        transition: opacity 0.3s;
     }
-    .tab-title {
-        font-size: 1.25rem; font-weight: 700; margin: 0 0 8px 0; font-family: 'Outfit', sans-serif;
+    .branch-nav-btn.active::before {
+        opacity: 1;
     }
-    .tab-stats {
-        font-size: 0.85rem; color: var(--text-muted); font-family: 'Space Mono', monospace;
+    .branch-icon {
+        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+    }
+    .branch-nav-btn.active .branch-icon {
+        transform: scale(1.18);
+    }
+    .branch-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    .branch-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        font-family: 'Outfit', sans-serif;
+        color: var(--text-main);
+    }
+    .branch-stats {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        font-family: 'Space Mono', monospace;
+    }
+    .branch-content-area {
+        min-width: 0;
     }
     
     /* Chapter Cards */
@@ -100,9 +158,26 @@
     }
     .category-section.active {
         display: block;
-        animation: fadeIn 0.4s ease;
+        animation: fadeIn 0.35s ease;
     }
     @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+    @media (max-width: 860px) {
+        .subject-vertical-container {
+            grid-template-columns: 1fr;
+        }
+        .branch-sidebar {
+            position: static;
+            flex-direction: row;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+        .branch-nav-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 0.9rem 1rem;
+        }
+    }
     
     
     .ch-actions {
@@ -274,102 +349,137 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
     <div class="container">
-        <!-- Tabs -->
-        <div class="tabs-grid">
+        <!-- Vertical Branch & Chapter Panels Layout -->
+        <div class="subject-vertical-container">
             
-            <div id="tab-math1" class="tab-card active" style="--tab-color: #F43F5E" onclick="showCategory('math1')">
-                <h2 class="tab-title">Term 1 Chapters</h2>
-                <div class="tab-stats">0/8 Chapters Ready</div>
+            <!-- Left Sidebar: Branches -->
+            <aside class="branch-sidebar">
+                <button id="tab-num" class="branch-nav-btn active" style="--branch-color: #F43F5E;" onclick="showCategory('num')" aria-label="Number Systems & Arithmetic">
+                    <div class="branch-icon">🔢</div>
+                    <div class="branch-details">
+                        <span class="branch-title">Number Systems</span>
+                        <span class="branch-stats">4 Chapters (Ch 1, 2, 6, 8)</span>
+                    </div>
+                </button>
+
+                <button id="tab-geo" class="branch-nav-btn" style="--branch-color: #10B981;" onclick="showCategory('geo')" aria-label="Geometry & Lines">
+                    <div class="branch-icon">📐</div>
+                    <div class="branch-details">
+                        <span class="branch-title">Geometry</span>
+                        <span class="branch-stats">2 Chapters (Ch 5, 7)</span>
+                    </div>
+                </button>
+
+                <button id="tab-alg" class="branch-nav-btn" style="--branch-color: #8B5CF6;" onclick="showCategory('alg')" aria-label="Algebra & Decimals">
+                    <div class="branch-icon">🔣</div>
+                    <div class="branch-details">
+                        <span class="branch-title">Algebra & Decimals</span>
+                        <span class="branch-stats">2 Chapters (Ch 3, 4)</span>
+                    </div>
+                </button>
+            </aside>
+
+            <!-- Right Content Area: Branch Chapters -->
+            <div class="branch-content-area">
+                
+                <!-- Number Systems Section -->
+                <div id="sec-num" class="category-section active">
+                    <div class="chapter-card">
+                        <div class="ch-num">01</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Large Numbers Around Us</h3>
+                            <p class="ch-desc">Understanding place value, comparison, and estimation of large quantities.</p>
+                            <div class="ch-tags"><span class="tag" style="color:#F43F5E">Place Value</span><span class="tag" style="color:#F43F5E">Large Numbers</span><span class="tag" style="color:#F43F5E">Estimation</span></div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/maths/claude_maths_ch1.html" class="btn-link btn-old" style="background:rgba(124, 58, 237, 0.15); border-color:#8B5CF6;">Claude Notes</a>
+                        </div>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="ch-num">02</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Arithmetic Expressions</h3>
+                            <p class="ch-desc">Solving complex mathematical expressions, order of operations, and brackets.</p>
+                            <div class="ch-tags"><span class="tag" style="color:#F43F5E">BODMAS</span><span class="tag" style="color:#F43F5E">Operations</span><span class="tag" style="color:#F43F5E">Brackets</span></div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/maths/claude_maths_ch2.html" class="btn-link btn-old" style="background:rgba(124, 58, 237, 0.15); border-color:#8B5CF6;">Claude Notes</a>
+                        </div>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="ch-num">06</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Number Play</h3>
+                            <p class="ch-desc">Factors, multiples, prime factorization, HCF, LCM, and divisibility rules.</p>
+                            <div class="ch-tags"><span class="tag" style="color:#F43F5E">Factors</span><span class="tag" style="color:#F43F5E">Multiples</span><span class="tag" style="color:#F43F5E">HCF & LCM</span></div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/maths/claude_maths_hcf.html" class="btn-link btn-old" style="background:rgba(124, 58, 237, 0.15); border-color:#8B5CF6;">Claude Notes</a>
+                        </div>
+                    </div>
+                    <div class="chapter-card" style="opacity: 0.6;">
+                        <div class="ch-num">08</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Working with Fractions <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                            <p class="ch-desc">Proper, improper, mixed fractions, addition, subtraction, multiplication, and division.</p>
+                            <div class="ch-tags"><span class="tag" style="color:#F43F5E">Fractions</span><span class="tag" style="color:#F43F5E">Operations</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Geometry Section -->
+                <div id="sec-geo" class="category-section">
+                    <div class="chapter-card" style="opacity: 0.6;">
+                        <div class="ch-num">05</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Parallel and Intersecting Lines <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                            <p class="ch-desc">Geometry of lines, angles, transversals, alternate angles, and corresponding angles.</p>
+                            <div class="ch-tags"><span class="tag" style="color:#10B981">Lines</span><span class="tag" style="color:#10B981">Angles</span><span class="tag" style="color:#10B981">Transversals</span></div>
+                        </div>
+                    </div>
+                    <div class="chapter-card" style="opacity: 0.6;">
+                        <div class="ch-num">07</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">A Tale of Three Intersecting Lines <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                            <p class="ch-desc">Classification of triangles, angle sum property, exterior angle theorem.</p>
+                            <div class="ch-tags"><span class="tag" style="color:#10B981">Triangles</span><span class="tag" style="color:#10B981">Angle Sum</span><span class="tag" style="color:#10B981">Properties</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Algebra & Decimals Section -->
+                <div id="sec-alg" class="category-section">
+                    <div class="chapter-card" style="opacity: 0.6;">
+                        <div class="ch-num">03</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">A Peek Beyond the Point <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                            <p class="ch-desc">Decimal notation, conversion from fractions, arithmetic with decimals in daily life.</p>
+                            <div class="ch-tags"><span class="tag" style="color:#8B5CF6">Decimals</span><span class="tag" style="color:#8B5CF6">Conversions</span></div>
+                        </div>
+                    </div>
+                    <div class="chapter-card" style="opacity: 0.6;">
+                        <div class="ch-num">04</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Expressions using Letter-Numbers <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                            <p class="ch-desc">Introduction to variables, algebraic expressions, forming and solving simple linear equations.</p>
+                            <div class="ch-tags"><span class="tag" style="color:#8B5CF6">Variables</span><span class="tag" style="color:#8B5CF6">Expressions</span><span class="tag" style="color:#8B5CF6">Equations</span></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        
-        <!-- Sections -->
-        
-            <div id="sec-math1" class="category-section active">
-                
-                <div class="chapter-card">
-                    <div class="ch-num">01</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Large Numbers Around Us</h3>
-                        <p class="ch-desc">Understanding place value and large quantities.</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/maths/claude_maths_ch1.html" class="btn-link btn-old" style="background:rgba(124, 58, 237, 0.15); border-color:#8B5CF6;">Claude Notes</a>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">02</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Arithmetic Expressions</h3>
-                        <p class="ch-desc">Solving complex mathematical expressions.</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/maths/claude_maths_ch2.html" class="btn-link btn-old" style="background:rgba(124, 58, 237, 0.15); border-color:#8B5CF6;">Claude Notes</a>
-                    </div>
-                </div>
-                <div class="chapter-card" style="opacity: 0.6;">
-                    <div class="ch-num">03</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">A Peek Beyond the Point <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
-                        <p class="ch-desc">Decimals and their applications.</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                </div>
-                <div class="chapter-card" style="opacity: 0.6;">
-                    <div class="ch-num">04</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Expressions using Letter-Numbers <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
-                        <p class="ch-desc">Introduction to algebra.</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                </div>
-                <div class="chapter-card" style="opacity: 0.6;">
-                    <div class="ch-num">05</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Parallel and Intersecting Lines <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
-                        <p class="ch-desc">Geometry of lines and angles.</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">06</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Number Play</h3>
-                        <p class="ch-desc">Factors, multiples, and divisibility.</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/maths/claude_maths_hcf.html" class="btn-link btn-old" style="background:rgba(124, 58, 237, 0.15); border-color:#8B5CF6;">Claude Notes</a>
-                    </div>
-                </div>
-                <div class="chapter-card" style="opacity: 0.6;">
-                    <div class="ch-num">07</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">A Tale of Three Intersecting Lines <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
-                        <p class="ch-desc">Triangles and properties.</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                </div>
-                <div class="chapter-card" style="opacity: 0.6;">
-                    <div class="ch-num">08</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Working with Fractions <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
-                        <p class="ch-desc">Adding, subtracting, multiplying fractions.</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                </div>
-            </div>
     </div>
 
     <script>
         function showCategory(catId) {
-            document.querySelectorAll('.tab-card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.branch-nav-btn').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.category-section').forEach(s => s.classList.remove('active'));
             
-            document.getElementById('tab-' + catId).classList.add('active');
-            document.getElementById('sec-' + catId).classList.add('active');
+            const activeTab = document.getElementById('tab-' + catId);
+            const activeSec = document.getElementById('sec-' + catId);
+            if(activeTab) activeTab.classList.add('active');
+            if(activeSec) activeSec.classList.add('active');
         }
     </script>
 

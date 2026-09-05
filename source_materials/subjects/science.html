@@ -36,6 +36,142 @@
     border-bottom: 1px solid #e2e8f0 !important;
 }
 [data-theme="light"] .icon-btn { color: #0f172a !important; }
+
+/* Vertical Branch & Chapter Layout */
+.subject-vertical-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+    align-items: start;
+    margin-top: 1.5rem;
+}
+
+.branch-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    position: sticky;
+    top: 90px;
+}
+
+.branch-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.4rem;
+    background: var(--bg-card, rgba(255, 255, 255, 0.05));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 14px;
+    color: var(--text-muted, #94a3b8);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.65;
+    position: relative;
+    overflow: hidden;
+}
+
+.branch-nav-btn:hover {
+    opacity: 0.9;
+    transform: translateX(4px);
+    border-color: var(--accent, #6366f1);
+    color: var(--text-main, #f8fafc);
+}
+
+.branch-nav-btn.active {
+    opacity: 1;
+    transform: scale(1.03) translateX(6px);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(139, 92, 246, 0.12));
+    border-color: var(--accent, #6366f1);
+    color: var(--accent, #6366f1);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25), inset 0 0 0 1px rgba(99, 102, 241, 0.4);
+}
+
+.branch-icon {
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.branch-nav-btn.active .branch-icon {
+    transform: scale(1.18);
+}
+
+.branch-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.branch-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: inherit;
+}
+
+.branch-count {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.branch-panel {
+    display: none;
+    animation: fadeInSlide 0.35s ease;
+}
+
+.branch-panel.active {
+    display: block;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.branch-panel-header {
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.branch-panel-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-main, #f8fafc);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+@media (max-width: 860px) {
+    .subject-vertical-container {
+        grid-template-columns: 1fr;
+    }
+    .branch-sidebar {
+        position: static;
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+    }
+    .branch-nav-btn {
+        flex: 1;
+        min-width: 140px;
+        padding: 0.8rem 1rem;
+    }
+}
 </style>
 </head>
 <body>
@@ -146,98 +282,162 @@ document.addEventListener("DOMContentLoaded", function() {
       <p class="subject-desc">Explore the wonders of Biology, Chemistry, and Physics</p>
     </div>
 
-    <!-- Biology Section -->
-    <section class="chapter-section">
-      <h2 class="section-title">🧬 Biology</h2>
-      <div class="chapter-list">
+    <!-- Vertical Branch & Chapter Panels Layout -->
+    <div class="subject-vertical-container">
+      
+      <!-- Left Sidebar: Branches -->
+      <aside class="branch-sidebar">
         
-        <a href="../chapters/science/biology-ch2-adolescence.html" class="chapter-card">
-          <span class="chapter-number">02</span>
-          <div class="chapter-info">
-            <h3>Adolescence: A Stage of Growth and Change</h3>
-            <p>Learn about the physical, emotional, and behavioural changes during adolescence, puberty, nutrition, and hygiene.</p>
-            <div class="topic-tags">
-              <span class="tag">Puberty</span>
-              <span class="tag">Menstrual Cycle</span>
-              <span class="tag">Hormones</span>
-              <span class="tag">Nutrition</span>
-              <span class="tag">Hygiene</span>
-            </div>
+        <!-- Biology Tab Button -->
+        <button class="branch-nav-btn active" onclick="switchBranch(this, 'branch-biology')" aria-label="Biology">
+          <div class="branch-icon">🧬</div>
+          <div class="branch-details">
+            <span class="branch-title">Biology</span>
+            <span class="branch-count">2 Chapters</span>
           </div>
-          <i class="fas fa-chevron-right chapter-arrow"></i>
-        </a>
+        </button>
 
-        <a href="../chapters/science/biology-ch3-life-processes.html" class="chapter-card">
-          <span class="chapter-number">03</span>
-          <div class="chapter-info">
-            <h3>Life Processes in Animals</h3>
-            <p>Explore nutrition, digestion, and respiration in animals including the human digestive system.</p>
-            <div class="topic-tags">
-              <span class="tag">Nutrition</span>
-              <span class="tag">Digestion</span>
-              <span class="tag">Respiration</span>
-              <span class="tag">Ruminants</span>
-              <span class="tag">Breathing</span>
-            </div>
+        <!-- Chemistry Tab Button -->
+        <button class="branch-nav-btn" onclick="switchBranch(this, 'branch-chemistry')" aria-label="Chemistry">
+          <div class="branch-icon">🧪</div>
+          <div class="branch-details">
+            <span class="branch-title">Chemistry</span>
+            <span class="branch-count">2 Chapters</span>
           </div>
-          <i class="fas fa-chevron-right chapter-arrow"></i>
-        </a>
-      </div>
-    </section>
+        </button>
 
-    <!-- Chemistry Section -->
-    <section class="chapter-section">
-      <h2 class="section-title">🧪 Chemistry</h2>
-      <div class="chapter-list">
+        <!-- Physics Tab Button -->
+        <button class="branch-nav-btn" onclick="switchBranch(this, 'branch-physics')" aria-label="Physics">
+          <div class="branch-icon">⚡</div>
+          <div class="branch-details">
+            <span class="branch-title">Physics</span>
+            <span class="branch-count">Upcoming</span>
+          </div>
+        </button>
+
+      </aside>
+
+      <!-- Right Content Area: Branch Chapters -->
+      <div class="branch-content-area">
         
-        <a href="../chapters/science/chemistry-ch1-acids-bases.html" class="chapter-card">
-          <span class="chapter-number">01</span>
-          <div class="chapter-info">
-            <h3>Exploring Substances: Acidic, Basic and Neutral</h3>
-            <p>Learn about acids, bases, salts, indicators, neutralisation, and their everyday uses.</p>
-            <div class="topic-tags">
-              <span class="tag">Acids</span>
-              <span class="tag">Bases</span>
-              <span class="tag">Indicators</span>
-              <span class="tag">Neutralisation</span>
-              <span class="tag">Salts</span>
-            </div>
+        <!-- Biology Chapters Panel -->
+        <div id="branch-biology" class="branch-panel active">
+          <div class="branch-panel-header">
+            <h2>🧬 Biology Chapters</h2>
+            <span class="tag">Class 7 CBSE</span>
           </div>
-          <span class="badge badge-accent">Coming Soon</span>
-        </a>
 
-        <a href="../chapters/science/chemistry-ch2-metals.html" class="chapter-card">
-          <span class="chapter-number">02</span>
-          <div class="chapter-info">
-            <h3>The World of Metals and Non-metals</h3>
-            <p>Discover the properties, uses, and differences between metals and non-metals.</p>
-            <div class="topic-tags">
-              <span class="tag">Metals</span>
-              <span class="tag">Non-metals</span>
-              <span class="tag">Corrosion</span>
-              <span class="tag">Properties</span>
-            </div>
-          </div>
-          <span class="badge badge-accent">Coming Soon</span>
-        </a>
-      </div>
-    </section>
+          <div class="chapter-list">
+            <a href="../chapters/science/biology-ch2-adolescence.html" class="chapter-card">
+              <span class="chapter-number">02</span>
+              <div class="chapter-info">
+                <h3>Adolescence: A Stage of Growth and Change</h3>
+                <p>Learn about physical, emotional, and behavioural changes during adolescence, puberty, nutrition, and hygiene.</p>
+                <div class="topic-tags">
+                  <span class="tag">Puberty</span>
+                  <span class="tag">Menstrual Cycle</span>
+                  <span class="tag">Hormones</span>
+                  <span class="tag">Nutrition</span>
+                  <span class="tag">Hygiene</span>
+                </div>
+              </div>
+              <i class="fas fa-chevron-right chapter-arrow"></i>
+            </a>
 
-    <!-- Physics Section (Coming Soon) -->
-    <section class="chapter-section">
-      <h2 class="section-title">⚡ Physics</h2>
-      <div class="chapter-list">
-        <div class="chapter-card coming-soon">
-          <span class="chapter-number">—</span>
-          <div class="chapter-info">
-            <h3>Physics Chapters</h3>
-            <p>Physics chapters will be added soon!</p>
+            <a href="../chapters/science/biology-ch3-life-processes.html" class="chapter-card">
+              <span class="chapter-number">03</span>
+              <div class="chapter-info">
+                <h3>Life Processes in Animals</h3>
+                <p>Explore nutrition, digestion, and respiration in animals including the human digestive system.</p>
+                <div class="topic-tags">
+                  <span class="tag">Nutrition</span>
+                  <span class="tag">Digestion</span>
+                  <span class="tag">Respiration</span>
+                  <span class="tag">Ruminants</span>
+                  <span class="tag">Breathing</span>
+                </div>
+              </div>
+              <i class="fas fa-chevron-right chapter-arrow"></i>
+            </a>
           </div>
-          <span class="badge badge-accent">Coming Soon</span>
         </div>
+
+        <!-- Chemistry Chapters Panel -->
+        <div id="branch-chemistry" class="branch-panel">
+          <div class="branch-panel-header">
+            <h2>🧪 Chemistry Chapters</h2>
+            <span class="tag">Class 7 CBSE</span>
+          </div>
+
+          <div class="chapter-list">
+            <a href="../chapters/science/chemistry-ch1-acids-bases.html" class="chapter-card">
+              <span class="chapter-number">01</span>
+              <div class="chapter-info">
+                <h3>Exploring Substances: Acidic, Basic and Neutral</h3>
+                <p>Learn about acids, bases, salts, indicators, neutralisation, and their everyday uses.</p>
+                <div class="topic-tags">
+                  <span class="tag">Acids</span>
+                  <span class="tag">Bases</span>
+                  <span class="tag">Indicators</span>
+                  <span class="tag">Neutralisation</span>
+                  <span class="tag">Salts</span>
+                </div>
+              </div>
+              <span class="badge badge-accent">Coming Soon</span>
+            </a>
+
+            <a href="../chapters/science/chemistry-ch2-metals.html" class="chapter-card">
+              <span class="chapter-number">02</span>
+              <div class="chapter-info">
+                <h3>The World of Metals and Non-metals</h3>
+                <p>Discover the properties, uses, and differences between metals and non-metals.</p>
+                <div class="topic-tags">
+                  <span class="tag">Metals</span>
+                  <span class="tag">Non-metals</span>
+                  <span class="tag">Corrosion</span>
+                  <span class="tag">Properties</span>
+                </div>
+              </div>
+              <span class="badge badge-accent">Coming Soon</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Physics Chapters Panel -->
+        <div id="branch-physics" class="branch-panel">
+          <div class="branch-panel-header">
+            <h2>⚡ Physics Chapters</h2>
+            <span class="tag">Class 7 CBSE</span>
+          </div>
+
+          <div class="chapter-list">
+            <div class="chapter-card coming-soon">
+              <span class="chapter-number">—</span>
+              <div class="chapter-info">
+                <h3>Physics Chapters</h3>
+                <p>Physics chapters and interactive simulations will be added soon!</p>
+              </div>
+              <span class="badge badge-accent">Coming Soon</span>
+            </div>
+          </div>
+        </div>
+
       </div>
-    </section>
+    </div>
   </main>
+
+  <script>
+    function switchBranch(btn, panelId) {
+      document.querySelectorAll('.branch-nav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.branch-panel').forEach(p => p.classList.remove('active'));
+      
+      btn.classList.add('active');
+      const targetPanel = document.getElementById(panelId);
+      if(targetPanel) {
+        targetPanel.classList.add('active');
+      }
+    }
+  </script>
 
   <!-- Footer -->
   <footer class="site-footer">

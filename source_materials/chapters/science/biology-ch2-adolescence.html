@@ -41,6 +41,86 @@
     border-bottom: 1px solid #e2e8f0 !important;
 }
 [data-theme="light"] .icon-btn { color: #0f172a !important; }
+
+/* Chapter Page Vertical Tabs Layout */
+.chapter-vertical-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 2rem;
+    align-items: start;
+    margin-top: 1.5rem;
+}
+
+.chapter-tabs.vertical-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    border-bottom: none;
+    border-right: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    padding-right: 1rem;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    position: sticky;
+    top: 90px;
+}
+
+.chapter-tabs.vertical-tabs .tab {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1.15rem;
+    border-radius: 12px;
+    background: var(--bg-card, rgba(255, 255, 255, 0.04));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+    color: var(--text-muted, #94a3b8);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.65;
+    transform: none;
+}
+
+.chapter-tabs.vertical-tabs .tab::after {
+    display: none;
+}
+
+.chapter-tabs.vertical-tabs .tab:hover {
+    opacity: 0.95;
+    transform: translateX(4px);
+    border-color: var(--accent, #6366f1);
+    color: var(--text-main, #f8fafc);
+}
+
+.chapter-tabs.vertical-tabs .tab.active {
+    opacity: 1;
+    transform: scale(1.03) translateX(6px);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.12));
+    border-color: var(--accent, #6366f1);
+    color: var(--accent, #6366f1);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25), inset 0 0 0 1px rgba(99, 102, 241, 0.4);
+}
+
+@media (max-width: 900px) {
+    .chapter-vertical-layout {
+        grid-template-columns: 1fr;
+    }
+    .chapter-tabs.vertical-tabs {
+        position: static;
+        flex-direction: row;
+        overflow-x: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+        padding-right: 0;
+        padding-bottom: 0.5rem;
+    }
+    .chapter-tabs.vertical-tabs .tab {
+        flex-shrink: 0;
+        width: auto;
+    }
+}
 </style>
 </head>
 <body>
@@ -225,19 +305,21 @@ document.addEventListener("DOMContentLoaded", function() {
             <p class="chapter-subtitle">Understanding the physical, emotional, and social changes during the teenage years</p>
         </div>
 
-        <!-- ==================== CHAPTER TABS ==================== -->
-        <div class="chapter-tabs">
-            <button class="tab active" data-tab="overview">📖 Overview</button>
-            <button class="tab" data-tab="notes">📝 Detailed Notes</button>
-            <button class="tab" data-tab="deepdive">🔬 Deep Dive</button>
-            <button class="tab" data-tab="gallery">🖼️ Visual Gallery</button>
-            <button class="tab" data-tab="videos">🎥 Watch & Learn</button>
-            <button class="tab" data-tab="explore">🔗 Explore More</button>
-            <button class="tab" data-tab="recall">💡 Quick Recall</button>
-        </div>
+        <!-- ==================== VERTICAL CHAPTER LAYOUT ==================== -->
+        <div class="chapter-vertical-layout">
+            <!-- Left Side: Chapter Tabs -->
+            <div class="chapter-tabs vertical-tabs">
+                <button class="tab active" data-tab="overview">📖 Overview</button>
+                <button class="tab" data-tab="notes">📝 Detailed Notes</button>
+                <button class="tab" data-tab="deepdive">🔬 Deep Dive</button>
+                <button class="tab" data-tab="gallery">🖼️ Visual Gallery</button>
+                <button class="tab" data-tab="videos">🎥 Watch & Learn</button>
+                <button class="tab" data-tab="explore">🔗 Explore More</button>
+                <button class="tab" data-tab="recall">💡 Quick Recall</button>
+            </div>
 
-        <!-- ==================== TAB CONTENT ==================== -->
-        <div class="tab-content">
+            <!-- Right Side: Tab Content -->
+            <div class="tab-content">
 
             <!-- ========================================== -->
             <!-- ============= OVERVIEW TAB =============== -->
@@ -1546,6 +1628,7 @@ document.addEventListener("DOMContentLoaded", function() {
             </section>
 
         </div> <!-- end tab-content -->
+        </div> <!-- end chapter-vertical-layout -->
     </main>
 
     <!-- ==================== FOOTER ==================== -->
