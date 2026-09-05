@@ -124,6 +124,37 @@
                     date: 'September 5, 2026',
                     model: 'Gemini 2.5 Pro (via Antigravity)',
                     notes: 'Initial release of Tagore poetry module with interactive literary device cards.'
+        },
+
+        'eng_lit_ch4': {
+            id: 'eng_lit_ch4',
+            title: 'Chapter 1: Atlantis',
+            subject: 'English Literature',
+            unit: 'Unit 2: Wanderlust',
+            author: 'Plato (Critias & Timaeus)',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 12:15 AM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#3B82F6',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Curriculum Digitization & Multi-Tab Interactive Module',
+            summary: 'Complete multi-tab study suite for Unit 2 Chapter 1: Atlantis, covering Plato\'s legendary concentric island empire, advanced vocabulary, interactive grammar (conjunctions, semicolons, compound sentences), and modern sinking cities.',
+            changesList: [
+                'Full 4-scene unabridged text from textbook pages 37-47 digitized (The Origin of the Legend, The Golden Empire, hubris & war with Athens, The Cataclysm overnight sinking).',
+                'Extracted and integrated 3 high-resolution authentic illustrations: Kircher\'s 1665 Map of Atlantis, Poseidon Ocean Throne, and Concentric Circular Moats and Metropolis.',
+                'Interactive vocabulary hover tooltips for 12 advanced terms (submerged, concentric, conduits, hubris, cataclysm, iridescent, etc.).',
+                'Section A: 5 interactive comprehension MCQs with instant visual validation and score badge.',
+                'Section B: 5 textbook short Q&As with interactive "Reveal Answer" buttons for active study.',
+                'Tab 3: Complete rainforest cloze passage with interactive help-box word bank matching textbook exercise.',
+                'Tab 4: Complete grammar suite covering coordinating conjunctions (FANBOYS), compound sentences, Ron\'s Istanbul email, Semicolon (;) rules & practice, and Greek roots (Acrobat, Democracy, Dinosaur).',
+                'Tab 5: Deep inquiry into why Atlantis endures for 2,300 years, Santorini/Thera volcanic correlation, modern sinking cities (Venice MOSE barrier & Majuli island Assam), and KWL reflection chart.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Initial production release with all 5 interactive tabs, audio cues, image gallery, and glassmorphism styling.'
                 }
             ]
         },

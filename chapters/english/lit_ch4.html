@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 2 Ch 1: Atlantis — Plato | Pushti Study Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #121212;
+            --bg-card: rgba(30, 30, 30, 0.75);
+            --text-main: #e0e0e0;
+            --text-primary: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: rgba(255, 255, 255, 0.1);
+            --surface: #1e1e1e;
+            --correct-bg: rgba(16, 185, 129, 0.15);
+            --correct-border: #10b981;
+            --tag-bg: rgba(59, 130, 246, 0.15);
+            --tag-color: #93c5fd;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* HEADER */
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--bg-main);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+        .header-left a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* STICKY TABS */
+        .tabs-wrapper {
+            position: sticky !important;
+            top: 61px !important;
+            z-index: 990 !important;
+            background: var(--bg-main) !important;
+            border-bottom: 1px solid var(--border);
+            padding-top: 12px;
+            padding-bottom: 12px;
+            margin-top: 0 !important;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+            font-size: 0.92rem;
+            transition: all 0.25s ease;
+        }
+        .tab-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--accent);
+            color: #fff;
+        }
+        .tab-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+        }
+        .tab-content {
+            display: none;
+            padding: 24px 0 60px;
+            animation: fadeIn 0.35s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HERO CARD */
+        .hero-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(30, 30, 30, 0.85));
+            border: 1px solid var(--accent);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 10px;
+        }
+        .hero-title {
+            font-size: 2.1rem;
+            margin: 0 0 8px;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .hero-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin: 0 0 16px;
+        }
+        .hero-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .meta-pill {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-main);
+        }
+
+        /* STORY PROSE */
+        .story-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+        .story-section h2 {
+            font-size: 1.45rem;
+            color: var(--accent);
+            margin-top: 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .story-p {
+            font-size: 1.08rem;
+            line-height: 1.85;
+            margin-bottom: 18px;
+            color: var(--text-main);
+            text-align: justify;
+        }
+        .dialogue {
+            color: #93c5fd;
+            font-style: italic;
+        }
+        .vocab-word {
+            color: #60a5fa;
+            font-weight: 600;
+            border-bottom: 1px dashed #60a5fa;
+            cursor: pointer;
+            position: relative;
+        }
+        .vocab-word:hover::after {
+            content: attr(data-def);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            white-space: nowrap;
+            z-index: 100;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            pointer-events: none;
+            font-style: normal;
+        }
+
+        /* STORY IMAGE CARD */
+        .story-img-card {
+            margin: 24px auto;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            max-width: 680px;
+        }
+        .story-img-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+        }
+        .story-img-caption {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* AUTHOR BOX */
+        .author-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid #3b82f6;
+            border-radius: 12px;
+            padding: 22px;
+            margin: 28px 0;
+            display: flex;
+            gap: 18px;
+            align-items: center;
+        }
+        .author-icon {
+            font-size: 2.2rem;
+            color: #60a5fa;
+            flex-shrink: 0;
+        }
+        .author-info h4 {
+            margin: 0 0 6px;
+            color: #93c5fd;
+            font-size: 1.15rem;
+        }
+        .author-info p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        /* CARDS / QUESTIONS */
+        .q-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: border-color 0.2s;
+        }
+        .q-card:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        .q-num {
+            display: inline-block;
+            background: var(--tag-bg);
+            color: var(--tag-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+        .q-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0 0 12px;
+            color: var(--text-primary);
+        }
+        .reveal-btn {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid var(--accent);
+            color: #93c5fd;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.88rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+        .reveal-btn:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+        .answer-box {
+            display: none;
+            margin-top: 14px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.98rem;
+            line-height: 1.7;
+            color: var(--text-main);
+        }
+
+        /* MCQ STYLING */
+        .mcq-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .mcq-opt {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .mcq-opt:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .mcq-opt.correct {
+            background: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #34d399;
+            font-weight: 600;
+        }
+        .mcq-opt.incorrect {
+            background: rgba(239, 68, 68, 0.15) !important;
+            border-color: #ef4444 !important;
+            color: #fca5a5;
+        }
+        .opt-radio {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.7rem;
+        }
+        .mcq-opt.correct .opt-radio {
+            border-color: #10b981;
+            background: #10b981;
+            color: #fff;
+        }
+        .mcq-opt.incorrect .opt-radio {
+            border-color: #ef4444;
+            background: #ef4444;
+            color: #fff;
+        }
+
+        /* SPIDER DIAGRAM GRID */
+        .spider-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .spider-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            border-top: 4px solid var(--accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .spider-title {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .spider-body {
+            font-size: 0.92rem;
+            line-height: 1.65;
+            color: var(--text-main);
+        }
+
+        /* CLOZE WORD BOX */
+        .cloze-box {
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px dashed var(--accent);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        .cloze-word {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.88rem;
+            font-family: monospace;
+            color: var(--tag-color);
+        }
+
+        /* LIGHT MODE COMPATIBILITY */
+        [data-theme="light"] {
+            --bg-main: #f8fafc !important;
+            --bg-card: #ffffff !important;
+            --text-main: #1e293b !important;
+            --text-primary: #0f172a !important;
+            --text-muted: #64748b !important;
+            --accent: #2563eb !important;
+            --border: #e2e8f0 !important;
+            --surface: #f1f5f9 !important;
+            --correct-bg: #d1fae5 !important;
+            --correct-border: #059669 !important;
+            --tag-bg: #dbeafe !important;
+            --tag-color: #1d4ed8 !important;
+        }
+        [data-theme="light"] .site-header {
+            background: #ffffff !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+        [data-theme="light"] .hero-card {
+            background: linear-gradient(135deg, #eff6ff, #ffffff) !important;
+            border-color: #3b82f6 !important;
+        }
+        [data-theme="light"] .story-section {
+            background: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        [data-theme="light"] .story-p {
+            color: #1e293b !important;
+        }
+        [data-theme="light"] .dialogue {
+            color: #1d4ed8 !important;
+        }
+        [data-theme="light"] .story-img-card {
+            background: #f1f5f9 !important;
+            border-color: #cbd5e1 !important;
+        }
+        [data-theme="light"] .q-card {
+            background: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        [data-theme="light"] .spider-card {
+            background: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        [data-theme="light"] .mcq-opt {
+            background: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .mcq-opt:hover {
+            background: #f1f5f9 !important;
+        }
+        [data-theme="light"] .answer-box {
+            background: #f8fafc !important;
+            color: #1e293b !important;
+        }
+        [data-theme="light"] .meta-pill {
+            background: #f1f5f9 !important;
+            border-color: #cbd5e1 !important;
+            color: #334155 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SITE HEADER -->
+    <header class="site-header">
+        <div class="header-left">
+            <a href="../../index.html"><i class="fas fa-home"></i> Home</a>
+            <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span>
+            <a href="../../english_index.html">English</a>
+            <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span>
+            <span style="color:var(--accent); font-weight:600;">Unit 2: Atlantis</span>
+        </div>
+        
+        <div class="header-right">
+            <div class="search-container" style="position:relative;">
+                <button id="global-search-btn" aria-label="Search" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; padding:5px; display:flex; align-items:center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                <input id="global-search-input" type="text" placeholder="Search text..." style="display:none; position:absolute; right:30px; top:0; padding: 6px 14px; border-radius:20px; border:1px solid var(--border); background:rgba(0,0,0,0.6); color:white; width: 180px;">
+            </div>
+            
+            <nav class="header-nav">
+                <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:var(--text-main); cursor:pointer; font-size:1.2rem;">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <a href="../../timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
+                <a href="../../midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
+
+                <div class="user-profile-wrapper" style="position:relative;">
+                    <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:38px; height:38px; border:2px solid var(--accent);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
+                        <img src="https://ui-avatars.com/api/?name=Pushti&background=3B82F6&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div id="global-dropdown" style="display:none; position:absolute; right:0; top:48px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:15px; width:220px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); flex-direction:column; gap:12px; z-index:1001;">
+                        <div style="text-align:center; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
+                            <div style="font-weight:700; font-size:1.1rem; color:var(--text-primary);">Pushti</div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.9rem; font-weight:500;">Student</span>
+                            <label class="switch" style="position:relative; display:inline-block; width:34px; height:20px;">
+                                <input type="checkbox" id="global-role-checkbox" style="opacity:0; width:0; height:0;">
+                                <span class="slider" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--border); transition:.4s; border-radius:34px;"></span>
+                            </label>
+                            <span style="font-size:0.9rem; font-weight:500;">Parent</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <style>
+    .switch input:checked + .slider { background-color: var(--accent, #3B82F6); }
+    .switch input:checked + .slider:before { transform: translateX(14px); }
+    .slider:before { position:absolute; content:""; height:14px; width:14px; left:3px; bottom:3px; background-color:white; transition:.4s; border-radius:50%; }
+    </style>
+
+    <!-- STICKY TABS WRAPPER -->
+    <div class="tabs-wrapper">
+        <button class="tab-btn active" onclick="openTab(event, 'tab-text')">Chapter Text</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-comprehension')">Comprehension & Q&A</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-vocab')">Vocabulary & Synonyms</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-grammar')">Grammar: Conjunctions & Semicolons</button>
+        <button class="tab-btn" onclick="openTab(event, 'tab-critical')">Critical Thinking & Sinking Cities</button>
+    </div>
+
+    <div class="container">
+
+        <!-- ==================== TAB 1: CHAPTER TEXT ==================== -->
+        <div id="tab-text" class="tab-content active">
+
+            <div class="hero-card">
+                <span class="hero-badge">Unit 2: Wanderlust &bull; Section 1</span>
+                <h1 class="hero-title">Atlantis</h1>
+                <p class="hero-subtitle">The Legend of the Sunken Continent &bull; Recorded by <strong>Plato</strong> in <em>Timaeus</em> & <em>Critias</em> (360 B.C.E.)</p>
+                <div class="hero-meta">
+                    <span class="meta-pill"><i class="fas fa-user-graduate"></i> Class 7 Literature</span>
+                    <span class="meta-pill"><i class="fas fa-compass"></i> Theme: Exploration, Utopian Architecture & Fall</span>
+                    <span class="meta-pill"><i class="fas fa-water"></i> Concentric Rings of Land & Water</span>
+                    <button class="meta-pill" onclick="openChapterLog('eng_lit_ch4')" style="cursor:pointer; background:rgba(59, 130, 246, 0.2); border-color:#3B82F6; color:#93c5fd; font-weight:600;"><i class="fas fa-history"></i> Revision Log &bull; Gemini 2.5 Pro</button>
+                </div>
+            </div>
+
+            <!-- Starter Box -->
+            <div style="background:rgba(59, 130, 246, 0.08); border:1px solid rgba(59, 130, 246, 0.3); border-radius:12px; padding:20px; margin-bottom:24px;">
+                <h3 style="color:#60a5fa; margin-top:0; display:flex; align-items:center; gap:8px;"><i class="fas fa-map-location-dot"></i> Starter: Wanderlust & Unexplored Lands (KWL)</h3>
+                <p style="font-size:0.95rem; margin-bottom:12px;">Despite spectacular achievements in modern science, there remain thousands of mysterious places waiting to be explored:</p>
+                <ul style="font-size:0.92rem; line-height:1.7; padding-left:20px; margin-bottom:0;">
+                    <li><strong>What lures people to travel:</strong> Curiosity for the unknown, yearning for ancient secrets, adventure, and rediscovering forgotten civilizations.</li>
+                    <li><strong>Dangers explorers face:</strong> Extreme weather, uncharted terrains, ocean trenches, high altitude, and loss of communication.</li>
+                    <li><strong>Necessary preparations:</strong> Thorough historical research, specialized navigation gear, physical resilience, and respect for nature.</li>
+                </ul>
+            </div>
+
+            <!-- Scene 1 -->
+            <div class="story-section">
+                <h2><i class="fas fa-scroll"></i> Scene 1: The Riddle of Solon and Plato's Egyptian Records</h2>
+
+                <p class="story-p">The legendary lost city of Atlantis is one of the oldest and greatest mysteries of the world. Read on to find out more about this myth.</p>
+
+                <p class="story-p">The story of Atlantis was first mentioned in two of <span class="vocab-word" data-def="Ancient Greek philosopher (428-347 B.C.E.), student of Socrates, founder of the Academy">Plato's</span> dialogues, the <em>Timaeus</em> and the <em>Critias</em>, written in 360 B.C.E. While the <em>Timaeus</em> is an account of the creation and structure of the universe and ancient civilizations, <em>Critias</em> mentions an alleged historical tale of Atlantis.</p>
+
+                <p class="story-p">Atlantis, the mythical city of dreams and incredible architecture, is thought to be one of the most extraordinary civilizations of the ancient world. It is rumoured that it vanished overnight, without warning. It sank, in a night and a day, into the ocean around 9,600 B.C.E. But it was never forgotten. It is as stimulating and fascinating as it has ever been.</p>
+
+                <div class="story-img-card">
+                    <img src="images/atlantis/atlantis_map.png" alt="Athanasius Kircher's alleged map of Atlantis" style="max-height: 380px;">
+                    <div class="story-img-caption">Athanasius Kircher's alleged historical map of Atlantis (Note: Historical orientation has North at the bottom).</div>
+                </div>
+
+                <p class="story-p">Plato writes in <em>Critias</em> that he heard the story of Atlantis from his grandfather, who had heard it from <span class="vocab-word" data-def="Revered Athenian statesman, lawmaker, and one of the Seven Sages of Greece">Solon</span>, an Athenian statesman and one of the wisest of the ancient Greeks. Solon, who lived around 200 years before Plato's time, had learnt it from an Egyptian priest. According to the Egyptian priest, Atlantis had disappeared 9,000 years before Plato.</p>
+
+                <p class="story-p">In his book, Plato described the location of Atlantis vividly: <span class="dialogue">"For the ocean there was at that time navigable; for in front of the mouth which ... Greeks call, as ... 'the pillars of Heracles', there lay an island which was larger than Libya and Asia together."</span> (<span class="vocab-word" data-def="Hercules in Greek mythology; pillars refer to the promontories at the Strait of Gibraltar">Heracles</span> here refers to Hercules; <span class="vocab-word" data-def="Here refers to Asia Minor, the westernmost peninsula of Asia">Asia</span> here refers to Asia Minor, the western-most part of Asia.) In other words, it is in the Atlantic Ocean, west of the Strait of Gibraltar, beyond the Mediterranean.</p>
+
+                <div class="story-img-card">
+                    <img src="images/atlantis/poseidon_throne.png" alt="Poseidon on his throne" style="max-height: 360px;">
+                    <div class="story-img-caption">Poseidon, Greek God of the Sea, founded the royal Poseidon Dynasty and appointed Atlas as king.</div>
+                </div>
+
+                <p class="story-p">The myth goes like this: At the beginning of history, the <span class="vocab-word" data-def="The twelve major deities of ancient Greece who resided on Mount Olympus">Olympians</span> decided to divide the earth between themselves and live peacefully. The island of Atlantis and the nearby land went to <span class="vocab-word" data-def="The Greek god of the sea, earthquakes, and horses">Poseidon</span>, the god of the sea, who founded the Poseidon Dynasty. After a while, Poseidon appointed his first-born Atlas to be king of the island. The entire island, the capital city and the surrounding sea were all named after him—Atlantis.</p>
+            </div>
+
+            <!-- Scene 2 -->
+            <div class="story-section">
+                <h2><i class="fas fa-monument"></i> Scene 2: The Concentric City & Technological Marvels</h2>
+
+                <p class="story-p">Atlantis was a <span class="vocab-word" data-def="An exceptionally powerful sovereign nation with immense military and economic dominance">superpower</span> in the ancient world with 10,000 chariots and numerous bulls and elephants. It had fertile soil, plentiful pure water, abundant vegetation and such mineral wealth that gold was inlaid in buildings and was among the precious metals and stones worn as jewellery.</p>
+
+                <p class="story-p">In the centre of the island were public baths that had fountains with natural hot and cold springs for health and vigour, and recreation areas. Atlanteans mined white, black and red stones for use in their construction. Slaves performed manual labour, allowing the elite to pursue knowledge, enjoy sporting events and continually improve upon an already thriving society. It had a glorious culture with wonderful palaces and temples, harbours and docks. The people of Atlantis lived in a golden age of harmony and abundance.</p>
+
+                <div class="story-img-card">
+                    <img src="images/atlantis/atlantis_concentric_city.png" alt="The concentric circular rings of Atlantis" style="max-height: 480px;">
+                    <div class="story-img-caption">The utopian metropolis: Concentric circular moats of land and water connected by bridges, tunnels, and rock-carved canals.</div>
+                </div>
+
+                <p class="story-p">Atlantis was apparently a technologically advanced society. In addition to magnificent architectural structures, a network of bridges and tunnels linked the concentric rings of land, and clever uses of natural resources provided security and abundance. This irrigation system ensured great harvests.</p>
+
+                <p class="story-p">The water rings served as canals for trade and helped form a series of natural defenses that made an invasion of Atlantis extremely difficult. The circles of land had outer walls covered in brass, and the inner walls were made of the precious metal, <span class="vocab-word" data-def="A legendary reddish-gold metal said to be second only to gold in value">orichalcum</span>. Atlantis had an advanced form of governance and a skilled military. Many groves provided solitude and beauty; racetracks were used for athletic competitions. The flowers were so richly scented that they made the warm air <span class="vocab-word" data-def="Making one feel ecstatic and happy, as if in a pleasant dream">intoxicating</span>. Great herds of tame cattle grazed the pastures, and the water in the streams was as clear as crystal.</p>
+            </div>
+
+            <!-- Scene 3 -->
+            <div class="story-section">
+                <h2><i class="fas fa-crown"></i> Scene 3: The Citadel of Poseidon and the Utopian Age</h2>
+
+                <p class="story-p">This island housed the magnificent palace that had amazing architecture to protect it from the harsh north winds. The Atlanteans built a citadel that was situated in the centre of Atlantis with a temple dedicated to Poseidon, the Greek god of the sea, bedecked in silver and gold.</p>
+
+                <p class="story-p">Inside was a gold statue of Poseidon riding a chariot pulled by six winged horses. This temple served as the home of the primary ruler. The rulers of Atlantis would meet in this temple to discuss laws, pass judgements and pay tribute to Poseidon. They would pledge to obey and support the law.</p>
+
+                <p class="story-p">The mythical island was enclosed within three circular <span class="vocab-word" data-def="Deep, wide circular waterways or ditches surrounding a fortress">moats</span> of increasing width and separated by rings of land proportional in size. The first ring-shaped island had many small temples and beautiful gardens. The second ring of land had horse-racing tracks and army quarters for the king's bodyguards. There were bridges and tunnels for the ships to pass into the city around the mountain; they carved docks from the rock walls of the moats. A ship could sail right into the city when given permission by the king. There were excellent sailors who had explored the oceans of the world. Every day, the canals were full of sailing ships bringing important cargoes. The city's dockyards were busy even at night.</p>
+
+                <p class="story-p">Living in this <span class="vocab-word" data-def="Aiming for or modeled on a state of ideal socio-political perfection">utopian</span> land, the people had a lot of freedom. Great universities, observatories, libraries, laboratories and academies for people of all ages show that the legendary city was a hub of arts and sciences. Portions of the city were devoted to commerce and industry because the Atlanteans used the discoveries of their scientists and technologists as the basis of a flourishing trade with other nations.</p>
+
+                <p class="story-p">Travellers to the city wrote glorious accounts of the skilled craftsmen who worked in precious metals; of the gentle sea breeze that cleared the smoke of their <span class="vocab-word" data-def="Workshops or factories where metal is melted and cast into shapes">foundries</span> from the air; of the busy markets where country folk sold the rich produce of their farms; and of the frequent festivals which brought throngs of Atlanteans singing and dancing into the streets.</p>
+
+                <p class="story-p">This was a perfect state, where people obeyed the law and possessed goodness and wisdom and valued the true things in life, such as friendship and knowledge. They had wealth and luxury, and they were neither greedy nor dishonest. This lasted for many generations.</p>
+            </div>
+
+            <!-- Scene 4 -->
+            <div class="story-section">
+                <h2><i class="fas fa-bolt"></i> Scene 4: Ambition, War, and Catastrophic Destruction</h2>
+
+                <p class="story-p">Then, unfortunately, things began to change. The Atlanteans became ambitious. They decided to conquer the lands around the Mediterranean. Their large armies of well-trained warriors began to invade other nearby islands and to make the people their slaves. And then there were wars!</p>
+
+                <p class="story-p">In about 9500 B.C.E., the Atlantean army clashed with warriors from Athens. Arrows darkened the sky, the hooves of the chariot horses were like thunder upon <span class="vocab-word" data-def="Mountain in northern Greece revered as the legendary home of the gods">Olympus</span>. The attempt to invade Athens and the Atlantean greed angered the gods.</p>
+
+                <p class="story-p">They sent fire and earthquakes to submerge Atlantis into the Atlantic Ocean. The fire and the earthquakes were followed by a tsunami, and the island was flooded. By the time the seas became calm, Atlantis had disappeared from the face of the earth.</p>
+
+                <p class="story-p">The race of Atlanteans was the most technologically advanced, powerful and prosperous ever seen. Yet their decline was swift and dramatic: within a day, the magnificent civilization had vanished!</p>
+
+                <p class="story-p" style="font-weight:600; color:var(--accent); font-size:1.15rem; text-align:center; margin-top:28px;">
+                    <i class="fas fa-question-circle"></i> "Was Atlantis real, or is it a legend? One thing is certain—the story continues to inspire people to investigate history and explore the world."
+                </p>
+            </div>
+
+            <!-- Author Box -->
+            <div class="author-box">
+                <div class="author-icon"><i class="fas fa-book-atlas"></i></div>
+                <div class="author-info">
+                    <h4>About Plato (428 &ndash; 347 B.C.E.)</h4>
+                    <p>Plato was an ancient Greek philosopher, the prized student of Socrates, and the teacher of Aristotle. In 387 B.C.E., he founded the Academy in Athens, the first institution of higher learning in the Western world. His philosophical dialogues, particularly <em>Timaeus</em> and <em>Critias</em>, remain our sole historical window into the legend of Atlantis.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 2: COMPREHENSION & Q&A ==================== -->
+        <div id="tab-comprehension" class="tab-content">
+            
+            <h2 style="color:var(--accent);"><i class="fas fa-list-check"></i> Section A: Reading Comprehension MCQs</h2>
+            <p style="color:var(--text-muted); font-size:0.95rem;">Test your understanding of the textbook text. Click an option to see immediate visual feedback.</p>
+
+            <!-- MCQ 1 -->
+            <div class="q-card" id="mcq-box-1">
+                <span class="q-num">Question 1 (Textbook p. 41)</span>
+                <div class="q-title">The interest in the city of Atlantis has never declined because:</div>
+                <div class="mcq-options">
+                    <div class="mcq-opt" onclick="checkMCQ(this, false, 1)">
+                        <span class="opt-radio">A</span>
+                        <span>The famous philosopher Plato spoke about it.</span>
+                    </div>
+                    <div class="mcq-opt" onclick="checkMCQ(this, false, 1)">
+                        <span class="opt-radio">B</span>
+                        <span>It was one of the oldest civilizations.</span>
+                    </div>
+                    <div class="mcq-opt" onclick="checkMCQ(this, false, 1)">
+                        <span class="opt-radio">C</span>
+                        <span>It is believed to be a utopian civilization.</span>
+                    </div>
+                    <div class="mcq-opt" onclick="checkMCQ(this, true, 1)">
+                        <span class="opt-radio">D</span>
+                        <span>It disappeared mysteriously.</span>
+                    </div>
+                </div>
+                <div class="answer-box" id="mcq-ans-1">
+                    <strong>Correct Answer: (iv) It disappeared mysteriously.</strong><br>
+                    <em>Explanation:</em> The complete disappearance of a dazzling, technologically advanced superpower overnight in a day and a night makes Atlantis the ultimate unsolved riddle of world history.
+                </div>
+            </div>
+
+            <!-- MCQ 2 -->
+            <div class="q-card" id="mcq-box-2">
+                <span class="q-num">Question 2 (Textbook p. 41)</span>
+                <div class="q-title">The people of Atlantis lived in a golden age of harmony and abundance because:</div>
+                <div class="mcq-options">
+                    <div class="mcq-opt" onclick="checkMCQ(this, false, 2)">
+                        <span class="opt-radio">A</span>
+                        <span>People feared the king and obeyed him.</span>
+                    </div>
+                    <div class="mcq-opt" onclick="checkMCQ(this, false, 2)">
+                        <span class="opt-radio">B</span>
+                        <span>They were ruled by kind and fair rulers.</span>
+                    </div>
+                    <div class="mcq-opt" onclick="checkMCQ(this, true, 2)">
+                        <span class="opt-radio">C</span>
+                        <span>There was harmonious interdependence.</span>
+                    </div>
+                    <div class="mcq-opt" onclick="checkMCQ(this, false, 2)">
+                        <span class="opt-radio">D</span>
+                        <span>Land and water were not polluted then.</span>
+                    </div>
+                </div>
+                <div class="answer-box" id="mcq-ans-2">
+                    <strong>Correct Answer: (iii) There was harmonious interdependence.</strong><br>
+                    <em>Explanation:</em> People obeyed the law, possessed wisdom and goodness, and valued true things in life like friendship and knowledge above greed.
+                </div>
+            </div>
+
+            <!-- MCQ 3 -->
+            <div class="q-card" id="mcq-box-3">
+                <span class="q-num">Question 3 (Textbook p. 41)</span>
+                <div class="q-title">The Atlantean civilization disappeared when people became:</div>
+                <div class="mcq-options">
+                    <div class="mcq-opt" onclick="checkMCQ(this, true, 3)">
+                        <span class="opt-radio">A</span>
+                        <span>Greedy and ambitious.</span>
+                    </div>
+                    <div class="mcq-opt" onclick="checkMCQ(this, false, 3)">
+                        <span class="opt-radio">B</span>
+                        <span>Lethargic and weary.</span>
+                    </div>
+                    <div class="mcq-opt" onclick="checkMCQ(this, false, 3)">
+                        <span class="opt-radio">C</span>
+                        <span>Scientifically and technologically advanced.</span>
+                    </div>
+                    <div class="mcq-opt" onclick="checkMCQ(this, false, 3)">
+                        <span class="opt-radio">D</span>
+                        <span>Disobedient and challenged gods.</span>
+                    </div>
+                </div>
+                <div class="answer-box" id="mcq-ans-3">
+                    <strong>Correct Answer: (i) Greedy and ambitious.</strong><br>
+                    <em>Explanation:</em> Once the Atlanteans turned to conquest, trying to enslave their Mediterranean neighbours and attacking Athens, their unbridled hubris and greed angered the gods.
+                </div>
+            </div>
+
+            <!-- SECTION B: SHORT QUESTIONS -->
+            <h2 style="color:var(--accent); margin-top:40px;"><i class="fas fa-feather-pointed"></i> Section B: Textbook Questions & Answers</h2>
+
+            <div class="q-card">
+                <span class="q-num">Question 2a (Textbook p. 42)</span>
+                <div class="q-title">Where did Atlantis find its first mention? Who had mentioned it?</div>
+                <button class="reveal-btn" onclick="toggleAns('qa-2a')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="answer-box" id="qa-2a">
+                    <strong>Answer:</strong> Atlantis found its first written mention in ancient Greece around <strong>360 B.C.E.</strong> It was recorded by the revered Greek philosopher <strong>Plato</strong> in two of his famous philosophical dialogues, <em>Timaeus</em> and <em>Critias</em>.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <span class="q-num">Question 2b (Textbook p. 42)</span>
+                <div class="q-title">How did Plato learn about Atlantis?</div>
+                <button class="reveal-btn" onclick="toggleAns('qa-2b')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="answer-box" id="qa-2b">
+                    <strong>Answer:</strong> Plato learned about Atlantis through an oral chain of wisdom. He heard the story from his grandfather (Critias), who had heard it from <strong>Solon</strong>, one of the wisest statesmen of Athens. Solon had travelled to Egypt around 200 years before Plato's time, where an Egyptian priest translated temple records documenting the catastrophe that had submerged the island 9,000 years earlier.
+                </div>
+            </div>
+
+            <div class="q-card">
+                <span class="q-num">Question 2c (Textbook p. 42)</span>
+                <div class="q-title">What in your opinion led to the destruction of Atlantis?</div>
+                <button class="reveal-btn" onclick="toggleAns('qa-2c')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="answer-box" id="qa-2c">
+                    <strong>Answer:</strong> In my opinion, the destruction of Atlantis was brought about by <strong>uncontrolled human greed, hubris (arrogance), and moral decay</strong>. While the Atlanteans maintained their values of wisdom and friendship, they prospered. But when their wealth made them ambitious and imperialistic, they waged unjust wars to enslave others. According to the myth, this moral downfall provoked the wrath of the gods, who destroyed them with violent earthquakes, volcanic fire, and a devastating tsunami.
+                </div>
+            </div>
+
+            <!-- SPIDER DIAGRAM (2d) -->
+            <h2 style="color:var(--accent); margin-top:40px;"><i class="fas fa-diagram-project"></i> Question 2d: The Dream Civilization Spider Diagram</h2>
+            <p style="color:var(--text-muted); font-size:0.95rem;">Key dimensions describing the legendary metropolis of Atlantis from textbook page 42:</p>
+
+            <div class="spider-grid">
+                <div class="spider-card" style="border-top-color:#3b82f6;">
+                    <div class="spider-title"><i class="fas fa-location-dot"></i> 1. Location</div>
+                    <div class="spider-body">
+                        In the Atlantic Ocean, west of the Strait of Gibraltar (the ancient "Pillars of Heracles"), beyond the mouth of the Mediterranean Sea.
+                    </div>
+                </div>
+
+                <div class="spider-card" style="border-top-color:#10b981;">
+                    <div class="spider-title"><i class="fas fa-city"></i> 2. Architectural Design</div>
+                    <div class="spider-body">
+                        Engineered into three concentric rings of water (moats) and rings of land connected by tunnels, bridges, and rock-carved canals for sailing ships. Inner walls lined with shimmering orichalcum and outer walls with brass.
+                    </div>
+                </div>
+
+                <div class="spider-card" style="border-top-color:#f59e0b;">
+                    <div class="spider-title"><i class="fas fa-coins"></i> 3. Wealth</div>
+                    <div class="spider-body">
+                        Bountiful harvests from volcanic soil, gold and gemstone inlaid buildings, vast mines of red and black building stone, herds of elephants, tame cattle, and 10,000 war chariots.
+                    </div>
+                </div>
+
+                <div class="spider-card" style="border-top-color:#ec4899;">
+                    <div class="spider-title"><i class="fas fa-wand-magic-sparkles"></i> 4. Magnificence</div>
+                    <div class="spider-body">
+                        Natural hot and cold thermal baths, a towering royal citadel with a gold statue of Poseidon in a six-winged horse chariot, great universities, observatories, libraries, and intoxicating fragrant gardens.
+                    </div>
+                </div>
+
+                <div class="spider-card" style="border-top-color:#ef4444;">
+                    <div class="spider-title"><i class="fas fa-volcano"></i> 5. Destruction</div>
+                    <div class="spider-body">
+                        Greed and unprovoked invasion of Athens angered the Olympians. Submerged around 9500 B.C.E. within a single day and night by earthquakes, fire, and a catastrophic tsunami.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 3: VOCABULARY & SYNONYMS ==================== -->
+        <div id="tab-vocab" class="tab-content">
+            <h2 style="color:var(--accent);"><i class="fas fa-spell-check"></i> Vocabulary: Synonyms (Textbook p. 43)</h2>
+            <p style="color:var(--text-main); line-height:1.7;">
+                Read this passage about rainforests and fill in the blanks with words from the help box corresponding to the clues in brackets:
+            </p>
+
+            <div class="cloze-box">
+                <span class="cloze-word">constantly</span>
+                <span class="cloze-word">tribal</span>
+                <span class="cloze-word">indigenous</span>
+                <span class="cloze-word">immunity</span>
+                <span class="cloze-word">exposed</span>
+                <span class="cloze-word">endure</span>
+                <span class="cloze-word">gigantic</span>
+                <span class="cloze-word">queer</span>
+                <span class="cloze-word">unravelled</span>
+                <span class="cloze-word">enduring</span>
+                <span class="cloze-word">exotic</span>
+                <span class="cloze-word">sweltering</span>
+            </div>
+
+            <div class="q-card" style="line-height:2.1; font-size:1.02rem;">
+                Entering the rainforest environment means (a) 
+                <select id="syn-a" class="vocab-select" onchange="checkSynonym('syn-a', 'enduring')">
+                    <option value="">-- select --</option>
+                    <option value="enduring">enduring</option>
+                    <option value="sweltering">sweltering</option>
+                    <option value="gigantic">gigantic</option>
+                </select> <em>(tolerate)</em> extreme humidity and putting up with the (b) 
+                <select id="syn-b" class="vocab-select" onchange="checkSynonym('syn-b', 'sweltering')">
+                    <option value="">-- select --</option>
+                    <option value="sweltering">sweltering</option>
+                    <option value="exotic">exotic</option>
+                    <option value="queer">queer</option>
+                </select> <em>(scorching)</em> heat and creatures that will (c) 
+                <select id="syn-c" class="vocab-select" onchange="checkSynonym('syn-c', 'constantly')">
+                    <option value="">-- select --</option>
+                    <option value="constantly">constantly</option>
+                    <option value="endure">endure</option>
+                    <option value="tribal">tribal</option>
+                </select> <em>(always)</em> bite you, but it is worth the discomfort when you're experiencing the greatest nature show on earth. It can be one of the purest and most intense travel experiences. It is like a mystery waiting to be (d) 
+                <select id="syn-d" class="vocab-select" onchange="checkSynonym('syn-d', 'unravelled')">
+                    <option value="">-- select --</option>
+                    <option value="unravelled">unravelled</option>
+                    <option value="exposed">exposed</option>
+                    <option value="immunity">immunity</option>
+                </select> <em>(solved)</em>. The dense rainforests are filled with (e) 
+                <select id="syn-e" class="vocab-select" onchange="checkSynonym('syn-e', 'gigantic')">
+                    <option value="">-- select --</option>
+                    <option value="gigantic">gigantic</option>
+                    <option value="exotic">exotic</option>
+                    <option value="queer">queer</option>
+                </select> <em>(enormous)</em> trees, (f) 
+                <select id="syn-f" class="vocab-select" onchange="checkSynonym('syn-f', 'exotic')">
+                    <option value="">-- select --</option>
+                    <option value="exotic">exotic</option>
+                    <option value="indigenous">indigenous</option>
+                    <option value="sweltering">sweltering</option>
+                </select> <em>(unusual)</em> plants and (g) 
+                <select id="syn-g" class="vocab-select" onchange="checkSynonym('syn-g', 'queer')">
+                    <option value="">-- select --</option>
+                    <option value="queer">queer</option>
+                    <option value="enduring">enduring</option>
+                    <option value="tribal">tribal</option>
+                </select> <em>(strange)</em> animals. Interestingly, it also is home to (h) 
+                <select id="syn-h" class="vocab-select" onchange="checkSynonym('syn-h', 'indigenous')">
+                    <option value="">-- select --</option>
+                    <option value="indigenous">indigenous</option>
+                    <option value="tribal">tribal</option>
+                    <option value="exposed">exposed</option>
+                </select> <em>(native)</em> peoples who have lived in the rainforests for thousands of years.
+                <br><br>
+                Although the (i) 
+                <select id="syn-i" class="vocab-select" onchange="checkSynonym('syn-i', 'tribal')">
+                    <option value="">-- select --</option>
+                    <option value="tribal">tribal</option>
+                    <option value="indigenous">indigenous</option>
+                    <option value="constantly">constantly</option>
+                </select> <em>(belonging to a group)</em> children do not go through formal schooling, the people in their community teach them how to (j) 
+                <select id="syn-j" class="vocab-select" onchange="checkSynonym('syn-j', 'endure')">
+                    <option value="">-- select --</option>
+                    <option value="endure">endure</option>
+                    <option value="exposed">exposed</option>
+                    <option value="unravelled">unravelled</option>
+                </select> <em>(withstand)</em> the hardships in the forest. They worship the forest and live a sustainable existence, meaning they use the land without harming the plants and animals. Unfortunately, these people have been losing their lives and the land. European explorers (k) 
+                <select id="syn-k" class="vocab-select" onchange="checkSynonym('syn-k', 'exposed')">
+                    <option value="">-- select --</option>
+                    <option value="exposed">exposed</option>
+                    <option value="immunity">immunity</option>
+                    <option value="endured">endured</option>
+                </select> <em>(subjected)</em> them to diseases such as smallpox, measles and even the common cold against which these people had no (l) 
+                <select id="syn-l" class="vocab-select" onchange="checkSynonym('syn-l', 'immunity')">
+                    <option value="">-- select --</option>
+                    <option value="immunity">immunity</option>
+                    <option value="enduring">enduring</option>
+                    <option value="indigenous">indigenous</option>
+                </select> <em>(protection)</em> at all since none of them had ever been exposed to these diseases before.
+            </div>
+            
+            <button class="reveal-btn" onclick="revealAllSynonyms()"><i class="fas fa-check-double"></i> Check All Synonyms</button>
+        </div>
+
+        <!-- ==================== TAB 4: GRAMMAR & STUDY SKILLS ==================== -->
+        <div id="tab-grammar" class="tab-content">
+            <h2 style="color:var(--accent);"><i class="fas fa-link"></i> Grammar: Conjunctions (Textbook p. 44–46)</h2>
+            <p style="color:var(--text-main); font-size:0.95rem; line-height:1.7;">
+                <strong>Conjunctions</strong> are joining words that link words, phrases, and clauses within a sentence.
+            </p>
+
+            <div class="spider-grid">
+                <div class="spider-card" style="border-top-color:#3b82f6;">
+                    <div class="spider-title"><i class="fas fa-cubes"></i> Coordinating Conjunctions</div>
+                    <div class="spider-body">
+                        Join words or clauses of equal grammatical rank: <strong>FANBOYS</strong> (For, And, Nor, But, Or, Yet, So).<br>
+                        <em>Example:</em> "Andrew could either practise his football <strong>or</strong> watch TV."
+                    </div>
+                </div>
+
+                <div class="spider-card" style="border-top-color:#10b981;">
+                    <div class="spider-title"><i class="fas fa-handshake"></i> Correlative Conjunctions</div>
+                    <div class="spider-body">
+                        Pairs that work together in tandem: <strong>either... or</strong>, <strong>neither... nor</strong>, <strong>not only... but also</strong>.<br>
+                        <em>Example:</em> "The kitten would <strong>neither</strong> stay indoors <strong>nor</strong> would it walk safely."
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dialogue Conjunction Exercise (p. 45) -->
+            <div class="q-card" style="margin-top:24px;">
+                <span class="q-num">Exercise 2: Conversation Snippets (Textbook p. 45)</span>
+                <div class="q-title">Use coordinating or correlative conjunctions to complete the conversations:</div>
+                <div style="line-height:1.9; font-size:0.98rem; background:rgba(255,255,255,0.03); padding:16px; border-radius:8px;">
+                    <strong>JAY:</strong> I think we are going to Lucknow for our school excursion. I hope you are joining us, Manish?<br>
+                    <strong>MANISH:</strong> No, I can't join you guys. I would have loved to, <span style="color:#60a5fa; font-weight:700;">[but]</span> my mother's not been keeping well, <span style="color:#60a5fa; font-weight:700;">[and]</span> my dad <span style="color:#60a5fa; font-weight:700;">[nor / and]</span> my sister are here. Someone will have to be with Mum.<br><br>
+                    <strong>SARA:</strong> Are we going for a picnic this Sunday, Daddy?<br>
+                    <strong>MR MEHRA:</strong> Well, <span style="color:#60a5fa; font-weight:700;">[either]</span> we are going for a picnic, <span style="color:#60a5fa; font-weight:700;">[or]</span> we are <span style="color:#60a5fa; font-weight:700;">[going for a film later!]</span><br>
+                    <strong>SARA:</strong> Yay!
+                </div>
+            </div>
+
+            <!-- Punctuation: Semicolon (p. 46-47) -->
+            <h2 style="color:var(--accent); margin-top:40px;"><i class="fas fa-ellipsis-vertical"></i> Punctuation: The Semicolon (;) Masterclass</h2>
+            
+            <div style="background:rgba(59, 130, 246, 0.08); border-left:4px solid var(--accent); padding:18px; border-radius:0 10px 10px 0; margin-bottom:20px; line-height:1.75;">
+                <strong>Two Golden Rules for the Semicolon:</strong><br>
+                1. <strong>To Link Independent Clauses:</strong> A semicolon joins two complete, independent sentences without a coordinating conjunction when the thoughts are closely linked.<br>
+                2. <strong>In Complex Lists:</strong> A semicolon separates a series of three or more items when individual items already contain internal commas.
+            </div>
+
+            <div class="q-card">
+                <span class="q-num">Textbook Exercise: Add Semicolons (p. 47)</span>
+                <div class="q-title">Correctly punctuate the textbook sentences:</div>
+                <div style="line-height:2; font-size:0.96rem;">
+                    1. He wanted to go for a swim<strong>;</strong> we drove to the Swimming Club and sat around the park till he was in the pool.<br>
+                    2. She did the laundry<strong>;</strong> she has done it for the last three years.<br>
+                    3. They finished whitewashing the fence and planting flowers in the garden<strong>;</strong> they admired their work.<br>
+                    4. They planted vegetables<strong>;</strong> they will harvest them in August.<br>
+                    5. My favourite vegetable is the turnip<strong>;</strong> most people don't like it.
+                </div>
+            </div>
+
+            <!-- Multilingualism (p. 47) -->
+            <h2 style="color:var(--accent); margin-top:40px;"><i class="fas fa-language"></i> Multilingualism: Greek Roots in English (Textbook p. 47)</h2>
+            <div class="spider-grid">
+                <div class="spider-card" style="border-top-color:#8b5cf6;">
+                    <div class="spider-title">Acrobat</div>
+                    <div class="spider-body">From Greek <em>akron</em> (tip/edge) + <em>bainein</em> (to walk). An acrobat is someone who walks on the edge or tiptoes on high wires.</div>
+                </div>
+                <div class="spider-card" style="border-top-color:#8b5cf6;">
+                    <div class="spider-title">Democracy</div>
+                    <div class="spider-body">From Greek <em>demos</em> (people) + <em>kratia</em> (power/rule). Power residing in the people.</div>
+                </div>
+                <div class="spider-card" style="border-top-color:#8b5cf6;">
+                    <div class="spider-title">Dinosaur</div>
+                    <div class="spider-body">From Greek <em>deinos</em> (terrible/fear-inspiring) + <em>sauros</em> (lizard). A fear-inspiring giant reptile.</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== TAB 5: CRITICAL THINKING & SINKING CITIES ==================== -->
+        <div id="tab-critical" class="tab-content">
+            <h2 style="color:var(--accent);"><i class="fas fa-brain"></i> Critical Thinking & Real-Life Connect (Textbook p. 42–43)</h2>
+
+            <div class="q-card">
+                <span class="q-num">Question 1 (Textbook p. 42)</span>
+                <div class="q-title">Why has the story of Atlantis been repeated for over 2,300 years after Plato's death?</div>
+                <button class="reveal-btn" onclick="toggleAns('ct-1')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="answer-box" id="ct-1">
+                    <strong>Answer:</strong> The story of Atlantis endures because it speaks to two timeless aspects of the human imagination:
+                    <ul style="margin:8px 0 0; padding-left:20px;">
+                        <li><strong>The Utopian Dream:</strong> Humanity's eternal aspiration to build an ideal society of sublime beauty, advanced technology, and peaceful harmony.</li>
+                        <li><strong>The Cautionary Tale (Hubris):</strong> It acts as a profound moral warning that no matter how mighty or prosperous a civilization becomes, unchecked arrogance, military greed, and ethical decay will inevitably bring about self-destruction.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="q-card">
+                <span class="q-num">Question 2 (Textbook p. 42)</span>
+                <div class="q-title">Is it possible that this fabled city existed? Is it history or legend? Give two reasons.</div>
+                <button class="reveal-btn" onclick="toggleAns('ct-2')"><i class="fas fa-eye"></i> Reveal Answer</button>
+                <div class="answer-box" id="ct-2">
+                    <strong>Answer:</strong> While widely regarded as a philosophical allegory invented by Plato to teach civic virtue, many historians believe it may be rooted in real historical catastrophes:
+                    <ul style="margin:8px 0 0; padding-left:20px;">
+                        <li><strong>The Minoan Volcanic Cataclysm (Thera / Santorini):</strong> Around 1600 B.C.E., the massive volcanic eruption of Thera generated colossal tsunamis that devastated the advanced Minoan civilization of Crete, echoing the sudden destruction described in Atlantis.</li>
+                        <li><strong>Geological Possibility of Submerged Lands:</strong> Rising sea levels at the end of the last Ice Age flooded vast coastal plains across the Mediterranean and Atlantic, leaving ancient memories passed down through Egyptian priests.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cross-Curricular Connect (p. 43) -->
+            <div style="background:linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1)); border:1px solid #3b82f6; border-radius:14px; padding:24px; margin-top:30px;">
+                <h3 style="color:#60a5fa; margin-top:0; display:flex; align-items:center; gap:10px;"><i class="fas fa-earth-americas"></i> Cross-Curricular Connect: Sinking Lands & Global Warming (Textbook p. 43)</h3>
+                <p style="line-height:1.8; font-size:0.98rem;">
+                    While Atlantis sank due to ancient mythic wrath, today entire real-world islands and coastal cities face submergence due to <strong>anthropogenic climate change, rising sea levels, and environmental degradation</strong>:
+                </p>
+                <div class="spider-grid" style="margin-top:16px;">
+                    <div class="spider-card" style="border-top-color:#3b82f6;">
+                        <div class="spider-title"><i class="fas fa-water"></i> Venice, Italy</div>
+                        <div class="spider-body">
+                            Known as the floating city, Venice suffers frequent <em>Acqua Alta</em> (high tide flooding) due to groundwater extraction and rising Mediterranean seas, prompting the multi-billion-euro MOSE floodgate barrier system.
+                        </div>
+                    </div>
+                    <div class="spider-card" style="border-top-color:#10b981;">
+                        <div class="spider-title"><i class="fas fa-tree"></i> Majuli Island (Assam, India)</div>
+                        <div class="spider-body">
+                            The world's largest inhabited river island in the Brahmaputra River has shrunk from 1,250 sq km to under 400 sq km due to severe bank erosion, annual floods, and deforestation upstream.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+    function openTab(evt, tabId) {
+        let tabContents = document.getElementsByClassName("tab-content");
+        for (let i = 0; i < tabContents.length; i++) {
+            tabContents[i].classList.remove("active");
+        }
+        let tabBtns = document.getElementsByClassName("tab-btn");
+        for (let i = 0; i < tabBtns.length; i++) {
+            tabBtns[i].classList.remove("active");
+        }
+        document.getElementById(tabId).classList.add("active");
+        evt.currentTarget.classList.add("active");
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleAns(ansId) {
+        const el = document.getElementById(ansId);
+        if (el.style.display === "block") {
+            el.style.display = "none";
+        } else {
+            el.style.display = "block";
+        }
+    }
+
+    function checkMCQ(optEl, isCorrect, qNum) {
+        const parent = optEl.closest('.mcq-options');
+        const options = parent.querySelectorAll('.mcq-opt');
+        options.forEach(o => {
+            o.classList.remove('correct', 'incorrect');
+        });
+
+        if (isCorrect) {
+            optEl.classList.add('correct');
+        } else {
+            optEl.classList.add('incorrect');
+            options.forEach(o => {
+                if (o.innerText.includes("disappeared mysteriously") || 
+                    o.innerText.includes("harmonious interdependence") || 
+                    o.innerText.includes("Greedy and ambitious")) {
+                    o.classList.add('correct');
+                }
+            });
+        }
+        document.getElementById('mcq-ans-' + qNum).style.display = 'block';
+    }
+
+    function checkSynonym(selId, expected) {
+        const el = document.getElementById(selId);
+        if (el.value === expected) {
+            el.style.borderColor = "#10b981";
+            el.style.background = "rgba(16, 185, 129, 0.2)";
+            el.style.color = "#34d399";
+        } else if (el.value !== "") {
+            el.style.borderColor = "#ef4444";
+            el.style.background = "rgba(239, 68, 68, 0.2)";
+            el.style.color = "#fca5a5";
+        }
+    }
+
+    function revealAllSynonyms() {
+        const answers = {
+            'syn-a': 'enduring',
+            'syn-b': 'sweltering',
+            'syn-c': 'constantly',
+            'syn-d': 'unravelled',
+            'syn-e': 'gigantic',
+            'syn-f': 'exotic',
+            'syn-g': 'queer',
+            'syn-h': 'indigenous',
+            'syn-i': 'tribal',
+            'syn-j': 'endure',
+            'syn-k': 'exposed',
+            'syn-l': 'immunity'
+        };
+        for (let k in answers) {
+            const el = document.getElementById(k);
+            if (el) {
+                el.value = answers[k];
+                el.style.borderColor = "#10b981";
+                el.style.background = "rgba(16, 185, 129, 0.2)";
+                el.style.color = "#34d399";
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeBtn = document.querySelector('.theme-toggle');
+        if(themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.body.setAttribute('data-theme', newTheme);
+                const icon = themeBtn.querySelector('i');
+                if(icon) {
+                    icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+                localStorage.setItem('pushti-theme', newTheme);
+            });
+            const savedTheme = localStorage.getItem('pushti-theme');
+            if(savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+                const icon = themeBtn.querySelector('i');
+                if(icon) {
+                    icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+            }
+        }
+    });
+    </script>
+
+    <!-- FIREBASE TIMER INJECTION START -->
+    <script type="module">
+        import { db, doc, setDoc, increment } from '../../firebase-config.js';
+        
+        setInterval(() => {
+            const activeUser = localStorage.getItem('pushti-active-user');
+            if (activeUser === 'pushti' || activeUser === 'hirak') {
+                const statsRef = doc(db, 'user_stats', activeUser);
+                setDoc(statsRef, { total_time: increment(60) }, { merge: true })
+                    .catch(err => console.error("Error logging time:", err));
+            }
+        }, 60000);
+    </script>
+    <!-- FIREBASE TIMER INJECTION END -->
+
+    <!-- CHAPTER REVISION LOGS SCRIPT -->
+    <script src="../../js/chapter_logs.js"></script>
+</body>
+</html>
