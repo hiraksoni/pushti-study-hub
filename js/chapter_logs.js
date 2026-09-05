@@ -169,20 +169,27 @@
             subject: 'School Schedule & Analytics',
             unit: 'Daily Routine & Weekly Hours',
             author: 'SBPS Bhavnagar',
-            version: 'v2.0.0',
-            lastModified: 'September 5, 2026, 11:20 PM IST',
+            version: 'v2.1.0',
+            lastModified: 'September 5, 2026, 11:55 PM IST',
             modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
             modelBadgeColor: '#3B82F6',
             aiProvider: 'Google DeepMind',
             taskType: 'Schedule Modernization & Trend Analytics',
-            summary: 'Updated school timetable starting at 7:30 AM with automatic weekly hours calculation, trend badges (increased/decreased), and Kaushal Bodh (KB) spotlight.',
+            summary: 'Updated school timetable starting at 7:30 AM with personalized Sanskrit track for Pushti, teacher standardization to Roger Sir, weekly hours calculation, and Kaushal Bodh (KB) spotlight.',
             changesList: [
+                'Set language slots (Mon P3, Tue P8, Fri P6, Sat P3) to Sanskrit for Pushti with Falguni Ma\'am, linking to Sanskrit Study Hub.',
+                'Standardized teacher nomenclature to Roger Sir across Chemistry, Physics, Biology, Science Lab, and Kaushal Bodh.',
                 'Adjusted daily start time to 7:30 AM with 35-minute periods and two recesses (9:15 AM & 11:15 AM).',
-                'Built automated weekly subject hours calculator comparing against previous timetable.',
-                'Added trend indicators (+90 mins increase in Mathematics, Kaushal Bodh highlighted).',
-                'Integrated Kaushal Bodh (KB) textbook spotlight and contextual notes on non-exam subjects.'
+                'Built automated weekly subject hours calculator comparing against previous timetable (+90m Maths).',
+                'Integrated Kaushal Bodh (KB) vocational textbook spotlight and changelog audit.'
             ],
             history: [
+                {
+                    version: 'v2.1.0',
+                    date: 'September 5, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Configured Sanskrit track for Pushti (Falguni Ma\'am) and standardized teacher naming to Roger Sir.'
+                },
                 {
                     version: 'v2.0.0',
                     date: 'September 5, 2026',
