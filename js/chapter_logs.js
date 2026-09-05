@@ -285,6 +285,38 @@
             ]
         },
 
+        'eng_lit_ch9': {
+            id: 'eng_lit_ch9',
+            title: 'Chapter 3: Florence Nightingale',
+            subject: 'English Literature',
+            unit: 'Unit 3: Real-Life Heroes',
+            author: 'Emma Lazarus',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 01:45 AM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#FBBF24',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Lyrical Poem Digitization & Healthcare Heroism Suite',
+            summary: 'Complete multi-tab study suite for Unit 3 Chapter 3: Florence Nightingale by Emma Lazarus, exploring the Crimean War setting at Scutari, Contrasting Imagery (light vs dark), rhyming scheme (AABCCB), everyday heroes recognition, and interactive gold medal crafting.',
+            changesList: [
+                'Full 6-stanza lyrical poem digitized with line-by-line paraphrase, audio rhythm guide, and AABCCB rhyme scheme breakdown.',
+                'Cropped and integrated 3 authentic illustrations (Florence tending soldier with lamp, bedside care, and gold medal with red ribbon photograph).',
+                'Interactive vocabulary hover tooltips for 20 archaic and poetic terms (whitewashed, walketh, darksome, lighteth, dismal, plaintive, tenderness, fretful, coarse, profane, standeth, hushed, couch, stoop, content, graven, quivering lids, sainted brow, flits for aye, storied page).',
+                'Poem appreciation suite with 3 self-scoring MCQs and 6 detailed textbook short Q&As with "Reveal Answer" buttons.',
+                'Tab 3: Contrasting Imagery analysis matrix comparing positive suggestions (angelic smile, whitewashed walls) vs negative suggestions (dismal corridors, darksome floors) + poetic devices (Archaism, Metaphor, Synecdoche, Alliteration).',
+                'Tab 4: Experiential Learning on unsung everyday heroes (sanitation workers, nurses, bus drivers, teachers) + Interactive Virtual Medal Studio to customize and award medals.',
+                'Tab 5: Florence Nightingale’s revolution of modern healthcare, data science (Nightingale rose diagram), 95% mortality reduction at Scutari, and National Florence Nightingale Awards in India.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Initial production release with all 5 interactive tabs, audio feedback, authentic illustrations, and glassmorphic UI. Completes 100% of Class 7 English Literature curriculum!'
+                }
+            ]
+        },
+
         // ==========================================
         // ENGLISH ACTIVITIES (ASL)
         // ==========================================

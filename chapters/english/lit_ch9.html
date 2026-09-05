@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 3: Chapter 3 - Florence Nightingale | Class 7 English Literature</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="../../js/firebase-tracker.js"></script>
+    <style>
+        :root {
+            --bg-main: #0B132B;
+            --bg-card: rgba(28, 37, 65, 0.85);
+            --surface: #1C2541;
+            --accent: #FBBF24;
+            --accent-glow: rgba(251, 191, 36, 0.25);
+            --accent-sec: #38BDF8;
+            --text-main: #F8FAFC;
+            --text-primary: #FFFFFF;
+            --text-muted: #94A3B8;
+            --border: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(251, 191, 36, 0.3);
+            --tag-color: #FBBF24;
+            --tab-active-bg: rgba(251, 191, 36, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.65;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body.light-mode {
+            --bg-main: #F8FAFC;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --surface: #FFFFFF;
+            --accent: #D97706;
+            --accent-glow: rgba(217, 119, 6, 0.2);
+            --accent-sec: #0284C7;
+            --text-main: #0F172A;
+            --text-primary: #0F172A;
+            --text-muted: #64748B;
+            --border: rgba(0, 0, 0, 0.1);
+            --glass-border: rgba(217, 119, 6, 0.35);
+            --tag-color: #B45309;
+            --tab-active-bg: rgba(217, 119, 6, 0.12);
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 20px 24px 80px 24px;
+        }
+
+        /* Navbar & Top Bar */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateX(-2px);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-toggle-btn, .log-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle-btn:hover, .log-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        /* Hero Header */
+        .chapter-hero {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(56, 189, 248, 0.1));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px 36px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-hero::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 170px;
+            height: 170px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .unit-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: var(--tab-active-bg);
+            border: 1px solid var(--accent);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 0 0 10px 0;
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-author {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .hero-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .hero-tag {
+            padding: 4px 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--tag-color);
+            font-weight: 500;
+        }
+
+        /* 5-Tab Bar */
+        .tab-bar {
+            display: flex;
+            gap: 8px;
+            background: var(--bg-card);
+            padding: 8px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 28px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .tab-btn.active {
+            background: var(--tab-active-bg);
+            color: var(--accent);
+            border-color: var(--glass-border);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Tab Content Panels */
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards & Section Styling */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 26px 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+        }
+
+        .card-title i {
+            color: var(--accent);
+        }
+
+        /* Stanza Cards & Poem Styling */
+        .stanza-card {
+            border-left: 4px solid var(--accent);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .stanza-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            background: var(--tab-active-bg);
+            color: var(--accent);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .poem-lines {
+            font-size: 1.12rem;
+            line-height: 2;
+            font-family: 'Georgia', serif;
+            color: var(--text-primary);
+            margin-bottom: 14px;
+            padding-left: 8px;
+        }
+
+        .paraphrase-box {
+            background: rgba(56, 189, 248, 0.08);
+            border-left: 3px solid var(--accent-sec);
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .vocab-word {
+            color: var(--accent);
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 1px dashed var(--accent);
+            position: relative;
+        }
+
+        .vocab-word:hover::after {
+            content: attr(data-def);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0F172A;
+            color: #F8FAFC;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--accent);
+            pointer-events: none;
+        }
+
+        /* Image Containers */
+        .story-img-container {
+            margin: 22px 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 14px;
+            padding: 14px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .story-img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            max-height: 420px;
+            object-fit: contain;
+        }
+
+        .story-img-caption {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Q&A / Reveal Engine */
+        .qa-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin-bottom: 16px;
+            transition: border-color 0.2s ease;
+        }
+
+        .qa-card:hover {
+            border-color: var(--glass-border);
+        }
+
+        .q-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .q-badge {
+            background: var(--tab-active-bg);
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .reveal-btn {
+            background: rgba(251, 191, 36, 0.12);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 8px;
+        }
+
+        .reveal-btn:hover {
+            background: var(--accent);
+            color: #0F172A;
+            transform: translateY(-1px);
+        }
+
+        .answer-box {
+            display: none;
+            margin-top: 14px;
+            padding: 14px 18px;
+            background: rgba(56, 189, 248, 0.08);
+            border-left: 3px solid var(--accent-sec);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-main);
+            animation: fadeIn 0.25s ease;
+        }
+
+        /* MCQs */
+        .mcq-option {
+            display: block;
+            margin: 8px 0;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .mcq-option:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--accent);
+        }
+
+        .mcq-option.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border-color: #10B981 !important;
+            color: #10B981 !important;
+            font-weight: 600;
+        }
+
+        .mcq-option.wrong {
+            background: rgba(239, 68, 68, 0.15) !important;
+            border-color: #EF4444 !important;
+            color: #EF4444 !important;
+        }
+
+        /* Contrasting Imagery Table */
+        .contrast-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        .contrast-table th {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 2px solid var(--accent);
+            font-size: 0.95rem;
+        }
+
+        .contrast-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.93rem;
+            line-height: 1.6;
+        }
+
+        .pos-badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10B981;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .neg-badge {
+            background: rgba(239, 68, 68, 0.15);
+            color: #EF4444;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        /* Medal Designer Studio */
+        .medal-studio {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 20px;
+            margin: 18px 0;
+        }
+
+        .medal-preview-area {
+            text-align: center;
+            padding: 24px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.15) 0%, transparent 70%);
+            border-radius: 12px;
+            margin-bottom: 18px;
+        }
+
+        .virtual-medal {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.3)); }
+            50% { transform: scale(1.03); filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.6)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.3)); }
+        }
+
+        .virtual-ribbon {
+            width: 32px;
+            height: 60px;
+            background: linear-gradient(180deg, #DC2626 0%, #B91C1C 100%);
+            border-radius: 4px 4px 0 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .virtual-coin {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FDE047 0%, #D97706 100%);
+            border: 4px solid #F59E0B;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2), 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #78350F;
+            font-weight: 800;
+            text-align: center;
+            padding: 8px;
+            margin-top: -8px;
+        }
+
+        .score-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            background: var(--tab-active-bg);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 1.7rem; }
+            .chapter-hero { padding: 22px 20px; }
+            .tab-btn { min-width: 110px; font-size: 0.8rem; padding: 10px 8px; }
+            .glass-card { padding: 18px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Navigation Bar -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <a href="../../english_index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> English Hub
+                </a>
+                <a href="../../midterm.html" class="back-link">
+                    <i class="fas fa-calendar-check"></i> Midterm Syllabus
+                </a>
+            </div>
+            <div class="nav-right">
+                <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <button class="log-btn" onclick="openChapterLog('eng_lit_ch9')" title="View Chapter Revision Log">
+                    <i class="fas fa-history"></i> Revision Log
+                </button>
+            </div>
+        </header>
+
+        <!-- Chapter Hero Banner -->
+        <div class="chapter-hero">
+            <div class="unit-badge">
+                <i class="fas fa-shield-alt"></i> Unit 3: Real-Life Heroes &bull; Chapter 3 (Poem)
+            </div>
+            <h1 class="hero-title">Florence Nightingale</h1>
+            <div class="hero-author">
+                <span><i class="fas fa-feather-alt"></i> By <strong>Emma Lazarus</strong> (Author of <em>The New Colossus</em>)</span>
+                <span>&bull;</span>
+                <span><i class="fas fa-lamp"></i> "The Lady with the Lamp"</span>
+                <span>&bull;</span>
+                <span><i class="fas fa-heartbeat"></i> Founder of Modern Nursing</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:0.98rem; margin:0 0 14px 0; max-width:850px;">
+                Walk through the darksome, dismal military hospital corridors of the Crimean War with <strong>Florence Nightingale</strong>. In this luminous 6-stanza lyric, renowned 19th-century American poet Emma Lazarus immortalizes the selfless compassion of "The Lady with the Lamp", exploring how true heroism requires no monument of cold stone, but is graven forever upon human hearts.
+            </p>
+            <div class="hero-tags">
+                <span class="hero-tag"><i class="fas fa-feather"></i> Lyrical Poetry</span>
+                <span class="hero-tag"><i class="fas fa-balance-scale"></i> Contrasting Imagery</span>
+                <span class="hero-tag"><i class="fas fa-music"></i> AABCCB Rhyme Scheme</span>
+                <span class="hero-tag"><i class="fas fa-medal"></i> Everyday Heroes Medal</span>
+                <span class="hero-tag"><i class="fas fa-check-double"></i> 100% Literature Complete!</span>
+            </div>
+        </div>
+
+        <!-- 5-Tab Bar -->
+        <nav class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab('tab-poem')">
+                <i class="fas fa-scroll"></i> 1. The Poem & Rhythm
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-appreciation')">
+                <i class="fas fa-award"></i> 2. Appreciation & Q&A
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-imagery')">
+                <i class="fas fa-yin-yang"></i> 3. Contrasting Imagery
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-experiential')">
+                <i class="fas fa-hands-helping"></i> 4. Everyday Heroes & Medal
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-legacy')">
+                <i class="fas fa-hospital-user"></i> 5. Nightingale's Legacy
+            </button>
+        </nav>
+
+        <!-- ============================================================== -->
+        <!-- TAB 1: THE POEM, AUDIO RHYTHM & LINE-BY-LINE PARAPHRASE        -->
+        <!-- ============================================================== -->
+        <div id="tab-poem" class="tab-panel active">
+            
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-history"></i> Historical Setting: The Crimean War (1854)</h2>
+                    <span class="score-pill"><i class="fas fa-map-marker-alt"></i> Scutari Hospital</span>
+                </div>
+                <p class="story-p">
+                    During the Crimean War (1853–1856), British soldiers wounded on bloody battlefields were transported across the Black Sea to the Barrack Hospital at Scutari (modern-day Istanbul, Turkey). The wards were rat-infested, filthy, freezing, and lacked basic medicines or clean water. More men died of typhus, cholera, and dysentery than from battle wounds.
+                </p>
+                <p class="story-p">
+                    Defying Victorian social expectations that wealthy women should stay at home, 34-year-old <strong>Florence Nightingale</strong> organized a corps of 38 nurses to travel to the war zone. At night, after all the doctors had retired, she walked through four miles of darkened hospital corridors carrying a small Turkish oil lamp to comfort the dying. Soldiers kissed her shadow as she passed.
+                </p>
+            </div>
+
+            <!-- Authentic Illustration 1 -->
+            <div class="story-img-container">
+                <img src="images/nightingale/nightingale_ward_lamp.png" alt="Florence Nightingale walking through Scutari hospital ward carrying her lamp">
+                <div class="story-img-caption">Authentic Textbook Illustration (Page 89): "A soft, angelic smile lighteth her face the while..." Florence Nightingale tending to a wounded soldier in the gloomy ward with her lamp.</div>
+            </div>
+
+            <!-- Stanza 1 -->
+            <div class="stanza-card">
+                <div class="stanza-badge">Stanza 1 &bull; Rhyme: AABCCB</div>
+                <div class="poem-lines">
+                    Upon the <span class="vocab-word" data-def="Coated with a wash of lime and water, giving a clean white surface">whitewashed</span> walls<br>
+                    A woman’s shadow falls,<br>
+                    A woman <span class="vocab-word" data-def="Archaic poetic English for 'walks'">walketh</span> o’er the <span class="vocab-word" data-def="Dark, gloomy, and shadowy">darksome</span> floors.<br>
+                    A soft, <span class="vocab-word" data-def="Like an angel; pure, gentle, and benevolent">angelic</span> smile<br>
+                    <span class="vocab-word" data-def="Archaic poetic English for 'illuminates' or 'lights up'">Lighteth</span> her face the while,<br>
+                    In passing through the <span class="vocab-word" data-def="Dreary, depressing, cheerless, and grim">dismal</span> corridors.
+                </div>
+                <div class="paraphrase-box">
+                    <strong>Paraphrase:</strong> Against the bare, whitewashed walls of the military hospital, the silent silhouette of a woman appears as she walks over the gloomy floors late at night. Even amidst such dreary surroundings, a gentle, heavenly smile illuminates her countenance as she paces the depressing, endless hospital corridors.
+                </div>
+            </div>
+
+            <!-- Stanza 2 -->
+            <div class="stanza-card">
+                <div class="stanza-badge">Stanza 2 &bull; Rhyme: DDEFFE</div>
+                <div class="poem-lines">
+                    And now and then there slips<br>
+                    A word from out her lips,<br>
+                    More sweet and grateful to those listening ears<br>
+                    Than the most <span class="vocab-word" data-def="Mournful, sorrowful, sad, and touching">plaintive</span> tale<br>
+                    Of the sad <span class="vocab-word" data-def="A European songbird famous for its melodious nocturnal song, traditionally associated with melancholy beauty">nightingale</span>,<br>
+                    Whose name and <span class="vocab-word" data-def="Gentleness, kind affection, and compassionate care">tenderness</span> this woman bears.
+                </div>
+                <div class="paraphrase-box">
+                    <strong>Paraphrase:</strong> As she tends to the beds, quiet words of comfort slip from her lips. To the ears of the wounded soldiers, her gentle whispers are more sweet and welcome than the sorrowful melodies of the nightingale bird—a bird whose very name and gentle tenderness Florence shares.
+                </div>
+            </div>
+
+            <!-- Stanza 3 -->
+            <div class="stanza-card">
+                <div class="stanza-badge">Stanza 3 &bull; Rhyme: GGHIIH</div>
+                <div class="poem-lines">
+                    Her presence in the room<br>
+                    Of <span class="vocab-word" data-def="Extreme physical suffering or emotional anguish">agony</span> and gloom,<br>
+                    No <span class="vocab-word" data-def="Restless, irritable, complaining, or distressed">fretful</span> murmurs, no coarse words <span class="vocab-word" data-def="Disrespectful, irreverent, or vulgar speech">profane</span>;<br>
+                    For while she <span class="vocab-word" data-def="Archaic poetic English for 'stands'">standeth</span> there,<br>
+                    All words are <span class="vocab-word" data-def="Silenced, quieted into reverent awe">hushed</span> save prayer;<br>
+                    She seems God’s angel weeping o’er man’s pain.
+                </div>
+                <div class="paraphrase-box">
+                    <strong>Paraphrase:</strong> The moment Florence enters a ward filled with intense pain and depression, all complaining cries, rough curses, and angry swearing instantly vanish. While she stands beside the beds, the entire room falls silent in sacred reverence, broken only by quiet prayers. She appears like an angel sent by God, weeping with pure empathy for suffering humanity.
+                </div>
+            </div>
+
+            <!-- Stanza 4 -->
+            <div class="stanza-card">
+                <div class="stanza-badge">Stanza 4 &bull; Rhyme: JJKLLK</div>
+                <div class="poem-lines">
+                    And some of them arise,<br>
+                    With eager, tearful eyes,<br>
+                    From off their <span class="vocab-word" data-def="A hospital cot or bed on which a wounded soldier lies">couch</span> to see her passing by.<br>
+                    Some, e’en too weak for this,<br>
+                    Can only <span class="vocab-word" data-def="Bend one's head and body forward and down">stoop</span> and kiss<br>
+                    Her shadow, and fall back <span class="vocab-word" data-def="Peaceful, satisfied, and at rest">content</span> to die.
+                </div>
+                <div class="paraphrase-box">
+                    <strong>Paraphrase:</strong> Soldiers who still retain some strength lift themselves up on their cots with tear-filled, grateful eyes just to catch a glimpse of her. Those who are dying and too frail even to raise their heads can only bend down and kiss her shadow on the floor or pillow, falling back at peace, comforted in their final moments.
+                </div>
+            </div>
+
+            <!-- Authentic Illustration 2 -->
+            <div class="story-img-container">
+                <img src="images/nightingale/nightingale_tending_soldier.png" alt="Florence Nightingale offering cup of medicine to wounded soldier">
+                <div class="story-img-caption">Authentic Textbook Illustration (Page 90): "Her name is graven on each noble heart..." Florence offering healing care and water to a bedridden patient in the ward.</div>
+            </div>
+
+            <!-- Stanza 5 -->
+            <div class="stanza-card">
+                <div class="stanza-badge">Stanza 5 &bull; Rhyme: MMNPPN</div>
+                <div class="poem-lines">
+                    No monument of stone<br>
+                    Needs this heroic one—<br>
+                    Her name is <span class="vocab-word" data-def="Deeply engraved, carved, or permanently imprinted">graven</span> on each noble heart;<br>
+                    And in all after years<br>
+                    Her praise will be the tears<br>
+                    Which at that name from <span class="vocab-word" data-def="Trembling, shaking with emotion eyelids">quivering lids</span> will start.
+                </div>
+                <div class="paraphrase-box">
+                    <strong>Paraphrase:</strong> Florence Nightingale needs no marble statues or stone monuments to preserve her memory. Her name is permanently carved upon the loving hearts of millions. For generations to come, the truest praise of her heroism will not be empty speeches, but genuine tears of gratitude welling up in people's eyes whenever her name is spoken.
+                </div>
+            </div>
+
+            <!-- Stanza 6 -->
+            <div class="stanza-card">
+                <div class="stanza-badge">Stanza 6 &bull; Rhyme: QQRSSR</div>
+                <div class="poem-lines">
+                    And those who live not now,<br>
+                    To see the <span class="vocab-word" data-def="Holy, pure, angelic forehead">sainted brow</span>,<br>
+                    And the angelic smile before it <span class="vocab-word" data-def="Disappears or passes away forever">flits for aye</span>,<br>
+                    They in the future age<br>
+                    Will kiss the <span class="vocab-word" data-def="Celebrated in history; the recorded historical page of her deeds">storied</span> page<br>
+                    Whereon the shadow of her life will lie.
+                </div>
+                <div class="paraphrase-box">
+                    <strong>Paraphrase:</strong> Future generations who were not alive to look upon her saintly forehead and radiant smile before she passed away will revere her through history. Readers in distant centuries will gratefully kiss the history books that recount the immortal story of her compassionate life.
+                </div>
+            </div>
+
+            <!-- Author Card -->
+            <div class="glass-card" style="margin-top:24px;">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-feather"></i> About the Poet: Emma Lazarus (1849–1887)</h3>
+                </div>
+                <p class="story-p">
+                    <strong>Emma Lazarus</strong> was an influential 19th-century American poet, essayist, and humanitarian activist born in New York City. She is best known across the world for her immortal sonnet <strong>"The New Colossus"</strong> (1883), which is engraved on a bronze plaque mounted inside the pedestal of the <strong>Statue of Liberty</strong> in New York Harbour:
+                    <br><br>
+                    <em style="color:var(--accent); font-family:'Georgia',serif; display:block; padding-left:16px; border-left:3px solid var(--accent);">
+                        "Give me your tired, your poor,<br>
+                        Your huddled masses yearning to breathe free,<br>
+                        The wretched refuse of your teeming shore.<br>
+                        Send these, the homeless, tempest-tost to me,<br>
+                        I lift my lamp beside the golden door!"
+                    </em>
+                    <br>
+                    Like Florence Nightingale lifting her lamp in the darkness of Scutari, Emma Lazarus celebrated figures whose compassionate light guided the suffering and displaced.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- TAB 2: POEM APPRECIATION, MCQS & TEXTUAL Q&A                   -->
+        <!-- ============================================================== -->
+        <div id="tab-appreciation" class="tab-panel">
+
+            <!-- Section 1: Textbook MCQs -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-check-circle"></i> 1. Textbook Poem Appreciation MCQs (Pages 90–91)</h2>
+                    <span class="score-pill" id="mcq-score">Score: 0/3</span>
+                </div>
+
+                <!-- Q1 -->
+                <div class="qa-card" id="mcq-box-1">
+                    <div class="q-title"><span class="q-badge">Q1 (a)</span> Where is the setting of the poem?</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 1)">i. in a battlefield</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 1)">ii. in a reformatory</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, true, 1)">iii. in a hospital</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 1)">iv. in an orphanage</div>
+                    <div class="answer-box" id="mcq-ans-1">
+                        <strong>Correct Answer: iii. in a hospital.</strong><br>
+                        <em>Explanation:</em> The poem is set in the military hospital at Scutari during the Crimean War, described with "whitewashed walls", "darksome floors", "dismal corridors", and wounded soldiers lying on their "couch" (hospital bed).
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="qa-card" id="mcq-box-2">
+                    <div class="q-title"><span class="q-badge">Q2 (b)</span> What does 'shadow' imply in the second line of the first stanza?</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 2)">i. The place was dark and gloomy.</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 2)">ii. Florence Nightingale looked frightening.</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 2)">iii. She walked without disturbing the wounded.</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, true, 2)">iv. She was awake serving the wounded at night.</div>
+                    <div class="answer-box" id="mcq-ans-2">
+                        <strong>Correct Answer: iv. She was awake serving the wounded at night.</strong><br>
+                        <em>Explanation:</em> The shadow cast on the walls by her lamp shows that while others slept, Florence Nightingale was tirelessly awake on night rounds attending to soldiers in the dark hours.
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="qa-card" id="mcq-box-3">
+                    <div class="q-title"><span class="q-badge">Q3 (c)</span> What is implied by 'darksome floors'?</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 3)">i. unclean floors</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, true, 3)">ii. gloomy environment</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 3)">iii. dark flooring</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 3)">iv. dark night</div>
+                    <div class="answer-box" id="mcq-ans-3">
+                        <strong>Correct Answer: ii. gloomy environment.</strong><br>
+                        <em>Explanation:</em> 'Darksome floors' metaphorically emphasizes the bleak, cheerless, and grim atmosphere of the war hospital filled with disease, suffering, and sorrow.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Detailed Textual Q&A -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-question-circle"></i> 2. Textual Questions Answered Briefly (Page 91)</h2>
+                </div>
+
+                <!-- Q2a -->
+                <div class="qa-card">
+                    <div class="q-title">
+                        <span class="q-badge">2 (a)</span> Despite caring for so many and working tirelessly, how did Florence react to the patients?
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer('ans-tb-a', this)">
+                        <i class="fas fa-eye"></i> Reveal Answer
+                    </button>
+                    <div class="answer-box" id="ans-tb-a">
+                        <strong>Answer:</strong> Despite working round-the-clock amidst immense fatigue and infectious disease, Florence reacted with unwavering warmth, patience, and love. A <em>"soft, angelic smile"</em> constantly lit up her face as she passed through the dismal corridors, and she spoke gentle words of comfort that brought solace to every patient.
+                    </div>
+                </div>
+
+                <!-- Q2b -->
+                <div class="qa-card">
+                    <div class="q-title">
+                        <span class="q-badge">2 (b)</span> How do Florence's words seem to the listeners?
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer('ans-tb-b', this)">
+                        <i class="fas fa-eye"></i> Reveal Answer
+                    </button>
+                    <div class="answer-box" id="ans-tb-b">
+                        <strong>Answer:</strong> To the wounded and suffering soldiers, Florence's words sounded infinitely sweet and deeply grateful. The poet writes that her quiet whispers were sweeter than the most touching and melodious song of a nightingale, bringing relief and emotional healing to their pain-wracked minds.
+                    </div>
+                </div>
+
+                <!-- Q2c -->
+                <div class="qa-card">
+                    <div class="q-title">
+                        <span class="q-badge">2 (c)</span> What is the impact of Florence's presence in the room?
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer('ans-tb-c', this)">
+                        <i class="fas fa-eye"></i> Reveal Answer
+                    </button>
+                    <div class="answer-box" id="ans-tb-c">
+                        <strong>Answer:</strong> Florence’s presence worked a sacred, miraculous transformation in the hospital ward:
+                        <ul style="margin:6px 0; padding-left:20px;">
+                            <li>All irritable, fretful complaints and vulgar, profane curses ceased immediately.</li>
+                            <li>The entire room fell into a reverent silence, where <em>"all words are hushed save prayer."</em></li>
+                            <li>Wounded men gathered their remaining strength to rise and see her, while the dying kissed her passing shadow and felt peaceful enough to pass away.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Q2d -->
+                <div class="qa-card">
+                    <div class="q-title">
+                        <span class="q-badge">2 (d)</span> Pick the line in stanza 3 that shows Florence's deep compassion.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer('ans-tb-d', this)">
+                        <i class="fas fa-eye"></i> Reveal Answer
+                    </button>
+                    <div class="answer-box" id="ans-tb-d">
+                        <strong>Answer:</strong> The line in Stanza 3 that epitomizes her profound compassion is:<br>
+                        <strong style="color:var(--accent); font-family:'Georgia',serif; font-size:1.05rem;">"She seems God’s angel weeping o’er man’s pain."</strong><br>
+                        <em>Significance:</em> This powerful line portrays Florence not just as a nurse, but as a divine messenger who feels such intense empathy that she personally weeps for the agony of humanity.
+                    </div>
+                </div>
+
+                <!-- Q2e -->
+                <div class="qa-card">
+                    <div class="q-title">
+                        <span class="q-badge">2 (e)</span> Why doesn't Florence need a monument of stone?
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer('ans-tb-e', this)">
+                        <i class="fas fa-eye"></i> Reveal Answer
+                    </button>
+                    <div class="answer-box" id="ans-tb-e">
+                        <strong>Answer:</strong> Florence Nightingale needs no monument of cold stone or marble because her name is permanently <strong>"graven on each noble heart."</strong> While physical statues can crumble and weather away over centuries, true selfless love survives forever in human memory. Her enduring monument is the tears of gratitude that well up in people's eyes whenever her name is spoken across generations.
+                    </div>
+                </div>
+
+                <!-- Q2f -->
+                <div class="qa-card">
+                    <div class="q-title">
+                        <span class="q-badge">2 (f)</span> Rhyming words and rhyme scheme of the poem.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer('ans-tb-f', this)">
+                        <i class="fas fa-eye"></i> Reveal Answer
+                    </button>
+                    <div class="answer-box" id="ans-tb-f">
+                        <strong>Answer:</strong>
+                        <br><strong>Rhyme Scheme:</strong> Each of the 6 stanzas follows a consistent 6-line rhyme scheme: <strong style="color:var(--accent);">A A B C C B</strong>.
+                        <ul style="margin:8px 0; padding-left:20px;">
+                            <li><strong>Stanza 1:</strong> walls – falls (A), floors – corridors (B), smile – while (C) $ightarrow$ <em>aabccb</em></li>
+                            <li><strong>Stanza 2:</strong> slips – lips (D), ears – bears (E), tale – nightingale (F) $ightarrow$ <em>ddeffe</em></li>
+                            <li><strong>Stanza 3:</strong> room – gloom (G), profane – pain (H), there – prayer (I) $ightarrow$ <em>gghiih</em></li>
+                            <li><strong>Stanza 4:</strong> arise – eyes (J), by – die (K), this – kiss (L) $ightarrow$ <em>jjkllk</em></li>
+                            <li><strong>Stanza 5:</strong> stone – one (M), heart – start (N), years – tears (P) $ightarrow$ <em>mmnppn</em></li>
+                            <li><strong>Stanza 6:</strong> now – brow (Q), aye – lie (R), age – page (S) $ightarrow$ <em>qqrssr</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- TAB 3: CONTRASTING IMAGERY & POETIC DEVICES                    -->
+        <!-- ============================================================== -->
+        <div id="tab-imagery" class="tab-panel">
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-adjust"></i> 1. Contrasting Imagery Analysis (Page 91, Question 3)</h2>
+                    <span class="score-pill"><i class="fas fa-balance-scale"></i> Light vs. Darkness</span>
+                </div>
+                <p class="story-p">
+                    <strong>Contrasting imagery</strong> consists of poetic descriptions that oppose each other to heighten emotional impact. In <em>Florence Nightingale</em>, Emma Lazarus masterfully contrasts the <strong>grim, disease-ridden atmosphere</strong> of the Crimean war hospital with the <strong>luminous, divine warmth</strong> brought by Florence:
+                </p>
+
+                <!-- Comparison Table from Textbook Page 91 -->
+                <table class="contrast-table">
+                    <thead>
+                        <tr style="background:rgba(255,255,255,0.05);">
+                            <th style="color:#10B981;"><i class="fas fa-sun"></i> Images with Positive Suggestion</th>
+                            <th style="color:#EF4444;"><i class="fas fa-cloud-moon"></i> Images with Negative Suggestion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="pos-badge">A soft, angelic smile</span><br>Shows her pure, calming benevolence.</td>
+                            <td><span class="neg-badge">The dismal corridors</span><br>Reflects the dreary, endless rows of sickbeds.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="pos-badge">Whitewashed walls</span><br>Suggests cleanliness, light, and clinical hope.</td>
+                            <td><span class="neg-badge">Darksome floors</span><br>Evokes shadowy, grime-filled hospital conditions.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="pos-badge">Lighteth her face</span><br>Luminous radiance of her lamp and spirit.</td>
+                            <td><span class="neg-badge">Agony and gloom</span><br>The visceral suffering and hopelessness of war.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="pos-badge">Whose tenderness this woman bears</span><br>Gentle bedside healing and soothing touch.</td>
+                            <td><span class="neg-badge">Fretful murmurs, words profane</span><br>Curses, groans, and complaints of wounded men.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="pos-badge">All words are hushed save prayer</span><br>Transforms a deathward into a sacred temple.</td>
+                            <td><span class="neg-badge">Most plaintive tale of sad nightingale</span><br>Melancholic songs of tragedy and loss.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="pos-badge">Sainted brow & Storied page</span><br>Reverence and eternal historical immortality.</td>
+                            <td><span class="neg-badge">Fall back content to die</span><br>The grim reality of mortality on the front lines.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Poetic Devices Explorer -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-gem"></i> 2. Poetic Devices in Florence Nightingale</h2>
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:16px;">
+                        <h4 style="color:var(--accent); margin:0 0 6px 0;"><i class="fas fa-feather"></i> Archaism (Poetic Diction)</h4>
+                        <p style="margin:0; font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                            Use of ancient Elizabethan verb inflections: <em>walketh</em> (walks), <em>lighteth</em> (lights up), <em>standeth</em> (stands), and <em>flits for aye</em> (disappears forever) to grant the poem timeless solemnity.
+                        </p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:16px;">
+                        <h4 style="color:var(--accent-sec); margin:0 0 6px 0;"><i class="fas fa-dove"></i> Metaphor & Allusion</h4>
+                        <p style="margin:0; font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                            <em>"She seems God’s angel weeping o’er man’s pain."</em> Directly identifies Florence with a divine angel. Also plays on her surname: <em>"nightingale"</em>—the bird of nocturnal song.
+                        </p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:16px;">
+                        <h4 style="color:#10B981; margin:0 0 6px 0;"><i class="fas fa-bolt"></i> Synecdoche</h4>
+                        <p style="margin:0; font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                            Using a part to represent the whole: <em>"listening ears"</em> represents the wounded soldiers, <em>"sainted brow"</em> represents Florence’s noble persona, and <em>"quivering lids"</em> represents grieving eyes.
+                        </p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:16px;">
+                        <h4 style="color:#EC4899; margin:0 0 6px 0;"><i class="fas fa-link"></i> Alliteration</h4>
+                        <p style="margin:0; font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                            Repetition of consonant sounds creates melodic flow: <em>"<strong>w</strong>hitewashed <strong>w</strong>alls"</em> (/w/), <em>"<strong>w</strong>oman <strong>w</strong>alketh"</em> (/w/), <em>"<strong>m</strong>ost <strong>p</strong>laintive... <strong>n</strong>ame and <strong>t</strong>enderness"</em>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- TAB 4: EXPERIENTIAL LEARNING & EVERYDAY HERO MEDAL             -->
+        <!-- ============================================================== -->
+        <div id="tab-experiential" class="tab-panel">
+
+            <!-- Experiential Learning Guide -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-hand-holding-heart"></i> 1. Experiential Learning: Everyday Heroes (Page 92)</h2>
+                    <span class="score-pill"><i class="fas fa-users"></i> Unsung Champions</span>
+                </div>
+                <p class="story-p">
+                    Textbook prompt: <em>"A real-life hero is a person who contributes to making our lives more convenient. It could be a teacher, sweeper, plumber, driver, nurse, etc."</em>
+                </p>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px; margin-top:14px;">
+                    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:10px; padding:14px;">
+                        <h4 style="color:var(--accent); margin:0 0 6px 0;"><i class="fas fa-broom"></i> Sanitation Workers</h4>
+                        <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Wake up before dawn to keep our streets clean, preventing deadly epidemics like cholera and dengue from spreading.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:10px; padding:14px;">
+                        <h4 style="color:var(--accent-sec); margin:0 0 6px 0;"><i class="fas fa-user-nurse"></i> Nurses & Caregivers</h4>
+                        <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Work 12-hour night shifts monitoring oxygen, administering medication, and comforting distressed patients.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:10px; padding:14px;">
+                        <h4 style="color:#10B981; margin:0 0 6px 0;"><i class="fas fa-bus"></i> School Bus Drivers</h4>
+                        <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Safely navigate chaotic traffic and monsoons every day to ensure thousands of schoolchildren return home safely.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:10px; padding:14px;">
+                        <h4 style="color:#F472B6; margin:0 0 6px 0;"><i class="fas fa-chalkboard-teacher"></i> Teachers</h4>
+                        <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Dedicate their lives to dispelling ignorance and igniting curiosity in young minds, shaping the future of our republic.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Authentic Illustration 3 -->
+            <div class="story-img-container">
+                <img src="images/nightingale/gold_hero_medal.png" alt="Gold medal with red ribbon for honoring everyday heroes">
+                <div class="story-img-caption">Authentic Textbook Photograph (Page 92): "Make a medal to honour a real-life hero!" Cardboard, gold paint, and ribbon craft.</div>
+            </div>
+
+            <!-- Interactive Virtual Medal Studio -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-medal"></i> 2. Interactive Medal Studio (Art Corner, Page 92)</h2>
+                    <span class="score-pill"><i class="fas fa-paint-brush"></i> Craft & Customize</span>
+                </div>
+                <p style="color:var(--text-muted); font-size:0.95rem;">
+                    Design and award a virtual Gold Medal to an everyday hero in Pushti's school or community:
+                </p>
+
+                <div class="medal-studio">
+                    <div class="medal-preview-area">
+                        <div class="virtual-medal">
+                            <div class="virtual-ribbon" id="med-ribbon"></div>
+                            <div class="virtual-coin" id="med-coin">
+                                <i class="fas fa-star" style="font-size:1.4rem; margin-bottom:4px;"></i>
+                                <span id="coin-title" style="font-size:0.75rem; line-height:1.2;">OUR HERO</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px;">
+                        <div>
+                            <label style="font-size:0.85rem; font-weight:600; color:var(--text-muted); display:block; margin-bottom:6px;">Choose Recipient:</label>
+                            <select id="hero-select" onchange="updateMedal()" style="width:100%; padding:10px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); font-size:0.9rem;">
+                                <option value="School Nurse">School Nurse / Caregiver</option>
+                                <option value="Sanitation Hero">Sanitation Worker / Sweeper</option>
+                                <option value="Beloved Teacher">Inspiring School Teacher</option>
+                                <option value="Faithful Driver">Bus Driver / Conductor</option>
+                                <option value="Security Guard">Night Security Guard</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="font-size:0.85rem; font-weight:600; color:var(--text-muted); display:block; margin-bottom:6px;">Ribbon Color:</label>
+                            <select id="ribbon-select" onchange="updateMedal()" style="width:100%; padding:10px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); font-size:0.9rem;">
+                                <option value="linear-gradient(180deg, #DC2626 0%, #B91C1C 100%)">Patriot Crimson</option>
+                                <option value="linear-gradient(180deg, #2563EB 0%, #1D4ED8 100%)">Royal Sapphire</option>
+                                <option value="linear-gradient(180deg, #10B981 0%, #059669 100%)">Emerald Green</option>
+                                <option value="linear-gradient(180deg, #F59E0B 0%, #D97706 100%)">Saffron Gold</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="font-size:0.85rem; font-weight:600; color:var(--text-muted); display:block; margin-bottom:6px;">Custom Inscription:</label>
+                            <input type="text" id="custom-msg" value="YOU ARE THE BEST!" oninput="updateMedal()" style="width:100%; padding:10px; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); font-size:0.9rem; box-sizing:border-box;">
+                        </div>
+                    </div>
+
+                    <div style="margin-top:16px; text-align:center;">
+                        <button class="reveal-btn" onclick="presentMedal()" style="padding:10px 24px; font-size:0.95rem;">
+                            <i class="fas fa-gift"></i> Present Medal & Play Fanfare
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- TAB 5: NIGHTINGALE'S LEGACY & HEALTHCARE REVOLUTION           -->
+        <!-- ============================================================== -->
+        <div id="tab-legacy" class="tab-panel">
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-heartbeat"></i> The Revolution of Modern Healthcare</h2>
+                    <span class="score-pill"><i class="fas fa-history"></i> 1820 – 1910</span>
+                </div>
+                <p class="story-p">
+                    Florence Nightingale is celebrated not only for her gentle bedside bedside manner, but as a brilliant <strong>mathematician, statistician, and hospital architect</strong> who permanently revolutionized public health:
+                </p>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:18px; margin:20px 0;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:18px;">
+                        <h4 style="color:var(--accent); margin:0 0 8px 0;"><i class="fas fa-chart-pie"></i> Pioneer of Data Science</h4>
+                        <p style="margin:0; font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                            She invented the <strong>Polar Area Diagram</strong> (also known as the Nightingale Rose diagram) to visually prove to the British Parliament that poor sanitation and lack of clean water—not battle injuries—were killing 80% of soldiers. She was the first female member of the Royal Statistical Society.
+                        </p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:18px;">
+                        <h4 style="color:var(--accent-sec); margin:0 0 8px 0;"><i class="fas fa-soap"></i> Sanitation & Hygiene Protocol</h4>
+                        <p style="margin:0; font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                            Nightingale mandated rigorous handwashing, boiling hospital linens, clearing blocked sewer pipes, and opening windows for fresh air. In six months at Scutari, the mortality rate plummeted from <strong>42% to 2%</strong>!
+                        </p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:18px;">
+                        <h4 style="color:#10B981; margin:0 0 8px 0;"><i class="fas fa-university"></i> Professional Nursing Schools</h4>
+                        <p style="margin:0; font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                            In 1860, she established the world's first professional nursing training school at St. Thomas' Hospital in London, elevating nursing from disreputable menial labor to a highly respected, scientifically rigorous medical profession.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- National Florence Nightingale Awards in India -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-flag"></i> Florence Nightingale's Impact on India</h2>
+                </div>
+                <p class="story-p">
+                    Between 1858 and 1890, Florence Nightingale focused extensively on public health in India. She collaborated with British officials and Indian reform committees to build sanitary drainage systems in Indian villages, draft irrigation policies to avert famines, and improve sanitation in the Indian Army.
+                </p>
+                <div style="background:rgba(251, 191, 36, 0.08); border-left:4px solid var(--accent); padding:16px 20px; border-radius:8px; margin-top:14px;">
+                    <h4 style="margin:0 0 6px 0; color:var(--accent);"><i class="fas fa-award"></i> The National Florence Nightingale Awards</h4>
+                    <p style="margin:0; font-size:0.95rem; line-height:1.6;">
+                        Established by the Ministry of Health and Family Welfare, Government of India, the prestigious <strong>National Florence Nightingale Award</strong> is conferred annually by the <strong>President of India</strong> at Rashtrapati Bhavan to honor exemplary Indian nurses, midwives, and lady health visitors for their selfless devotion and meritorious healthcare service.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Course Milestone Celebration Card -->
+            <div class="glass-card" style="border-color:#10B981; background:linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(56, 189, 248, 0.1));">
+                <div class="card-header" style="border-color:rgba(16, 185, 129, 0.3);">
+                    <h2 class="card-title" style="color:#10B981;"><i class="fas fa-check-double"></i> Curriculum Milestone: 100% Literature Suite Complete!</h2>
+                    <span class="score-pill" style="background:rgba(16, 185, 129, 0.2); border-color:#10B981; color:#10B981;">9 / 9 Chapters Ready</span>
+                </div>
+                <p class="story-p" style="color:var(--text-main); font-weight:500;">
+                    🎉 Congratulations, Pushti! With the completion of <strong>Unit 3, Chapter 3: Florence Nightingale</strong>, all 9 chapters across Unit 1 (Where Learning Begins), Unit 2 (Wanderlust), and Unit 3 (Real-Life Heroes) are now <strong>100% digitized, interactive, and live</strong> on Pushti Study Hub!
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Chapter Logs & Scripts -->
+    <script src="../../js/chapter_logs.js"></script>
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playChime(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.15); // G5
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.35);
+            } else if (type === 'wrong') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(260, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(220, audioCtx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime); // E5
+                gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.12);
+            } else if (type === 'fanfare') {
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, idx) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    o.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.1);
+                    g.gain.setValueAtTime(0.1, audioCtx.currentTime + idx * 0.1);
+                    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + idx * 0.1 + 0.25);
+                    o.start(audioCtx.currentTime + idx * 0.1);
+                    o.stop(audioCtx.currentTime + idx * 0.1 + 0.25);
+                });
+            }
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            playChime('click');
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+
+            event.currentTarget.classList.add('active');
+            const target = document.getElementById(tabId);
+            if (target) {
+                target.classList.add('active');
+            }
+            window.scrollTo({ top: 120, behavior: 'smooth' });
+        }
+
+        // Dark/Light Theme Toggle
+        function toggleTheme() {
+            playChime('click');
+            const body = document.body;
+            body.classList.toggle('light-mode');
+            const icon = document.getElementById('theme-icon');
+            if (body.classList.contains('light-mode')) {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        }
+
+        // Reveal Answer Toggle
+        function toggleAnswer(ansId, btn) {
+            playChime('click');
+            const ansBox = document.getElementById(ansId);
+            if (!ansBox) return;
+            if (ansBox.style.display === 'block') {
+                ansBox.style.display = 'none';
+                btn.innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
+            } else {
+                ansBox.style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
+            }
+        }
+
+        // MCQ Engine
+        let answeredQuestions = new Set();
+        let correctCount = 0;
+
+        function checkMCQ(elem, isCorrect, qNum) {
+            if (answeredQuestions.has(qNum)) return;
+            answeredQuestions.add(qNum);
+
+            const parent = elem.closest('.qa-card');
+            const options = parent.querySelectorAll('.mcq-option');
+            const ansBox = document.getElementById(`mcq-ans-${qNum}`);
+
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+
+            if (isCorrect) {
+                elem.classList.add('correct');
+                playChime('correct');
+                correctCount++;
+            } else {
+                elem.classList.add('wrong');
+                playChime('wrong');
+                options.forEach(opt => {
+                    if (opt.innerText.includes('in a hospital') || 
+                        opt.innerText.includes('awake serving') || 
+                        opt.innerText.includes('gloomy environment')) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            if (ansBox) {
+                ansBox.style.display = 'block';
+            }
+
+            document.getElementById('mcq-score').innerText = `Score: ${correctCount}/3`;
+        }
+
+        // Virtual Medal Studio
+        function updateMedal() {
+            const recipient = document.getElementById('hero-select').value;
+            const ribbonGrad = document.getElementById('ribbon-select').value;
+            const customMsg = document.getElementById('custom-msg').value;
+
+            document.getElementById('med-ribbon').style.background = ribbonGrad;
+            document.getElementById('coin-title').innerText = customMsg ? customMsg.toUpperCase() : recipient.toUpperCase();
+        }
+
+        function presentMedal() {
+            playChime('fanfare');
+            const recipient = document.getElementById('hero-select').value;
+            alert(`🎖️ Gold Medal of Honor proudly presented to: ${recipient}!\n"For your selfless service, compassion, and tireless dedication to our community."`);
+        }
+    </script>
+</body>
+</html>
