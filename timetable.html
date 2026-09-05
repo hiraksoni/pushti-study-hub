@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class Time Table</title>
+    <title>Class Time Table — SBPS 7 Alpha | Pushti Study Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-color: #FAFAFA;
@@ -13,6 +14,7 @@
             --text-muted: #64748B;
             --border: #E2E8F0;
             --primary: #4F46E5;
+            --accent: #6366f1;
             
             --sub-math: #EFF6FF;
             --sub-math-txt: #1D4ED8;
@@ -28,6 +30,9 @@
             --sub-other-txt: #475569;
             --test-border: #EF4444;
             --test-bg: #FEF2F2;
+
+            --changed-border: #F59E0B;
+            --changed-bg: rgba(245, 158, 11, 0.12);
         }
 
         [data-theme="dark"] {
@@ -37,6 +42,7 @@
             --text-muted: #94A3B8;
             --border: #2A2A40;
             --primary: #818CF8;
+            --accent: #818cf8;
             
             --sub-math: rgba(29, 78, 216, 0.2);
             --sub-math-txt: #93C5FD;
@@ -52,6 +58,19 @@
             --sub-other-txt: #CBD5E1;
             --test-border: #FCA5A5;
             --test-bg: rgba(239, 68, 68, 0.1);
+
+            --changed-border: #FBBF24;
+            --changed-bg: rgba(245, 158, 11, 0.2);
+        }
+
+        [data-theme="light"] {
+            --bg-main: #f8fafc !important;
+            --bg-card: #ffffff !important;
+            --text-main: #0f172a !important;
+            --text-muted: #475569 !important;
+            --accent: #6366f1 !important;
+            --border: #e2e8f0 !important;
+            --surface: #ffffff !important;
         }
 
         body {
@@ -59,43 +78,153 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 20px 40px;
+            padding: 0 0 60px;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 20px;
         }
-        
-        .header h1 {
+
+        /* HEADER */
+        .site-header {
+            background: var(--surface) !important;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 24px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+        .header-left a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* BANNER */
+        .tt-banner {
+            text-align: center;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(16, 185, 129, 0.08));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+        }
+        .tt-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+        .tt-banner h1 {
             font-size: 2.2rem;
-            margin-bottom: 5px;
+            margin: 0 0 6px;
             color: var(--text-main);
         }
-        
-        .header p {
+        .tt-banner p {
             color: var(--text-muted);
-            font-size: 1.1rem;
-            margin: 0;
+            font-size: 1.05rem;
+            margin: 0 0 14px;
+        }
+        .tt-meta-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+        .tt-meta-pill {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
+        /* CONTROLS TOOLBAR */
+        .tt-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 18px;
+        }
+        .tool-btn {
+            background: var(--bg-color);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .tool-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .tool-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+        }
+
+        /* TABLE STYLING */
         .tt-wrapper {
             background: var(--surface);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border-radius: 14px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.06);
             overflow-x: auto;
             border: 1px solid var(--border);
+            margin-bottom: 30px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 1000px;
+            min-width: 1040px;
         }
 
         th, td {
             border: 1px solid var(--border);
-            padding: 12px 10px;
+            padding: 10px 8px;
             text-align: center;
             vertical-align: middle;
         }
@@ -110,30 +239,32 @@
         .day-label {
             font-weight: 700;
             background-color: var(--bg-color);
-            width: 80px;
+            width: 90px;
+            font-size: 1rem;
         }
 
         .break-cell {
             background-color: var(--bg-color);
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             letter-spacing: 4px;
             writing-mode: vertical-rl;
             text-orientation: upright;
             color: var(--text-muted);
-            width: 40px;
+            width: 44px;
         }
 
         .cell {
-            border-radius: 6px;
+            border-radius: 8px;
             margin: 2px;
-            padding: 8px 4px;
+            padding: 10px 6px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100%;
-            min-height: 70px;
+            min-height: 72px;
+            transition: all 0.2s;
+            position: relative;
         }
 
         .subj {
@@ -143,7 +274,7 @@
         }
 
         .teacher {
-            font-size: 0.75rem;
+            font-size: 0.76rem;
             font-weight: 500;
             opacity: 0.85;
         }
@@ -161,310 +292,982 @@
             color: var(--test-border);
         }
 
-        /* Live highlight feature */
+        /* CHANGE HIGHLIGHTING */
+        body.show-changes .is-changed {
+            position: relative;
+            box-shadow: 0 0 0 2px var(--changed-border) !important;
+            background-color: var(--changed-bg) !important;
+        }
+        body.show-changes .is-changed::before {
+            content: "UPDATED";
+            position: absolute;
+            top: -6px;
+            right: 4px;
+            background: #f59e0b;
+            color: #000;
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 1px 4px;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+            z-index: 5;
+        }
+
+        .change-pill {
+            display: none;
+            font-size: 0.68rem;
+            margin-top: 4px;
+            padding: 2px 6px;
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid #f59e0b;
+            color: #d97706;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        [data-theme="dark"] .change-pill {
+            color: #fde68a;
+        }
+        body.show-changes .change-pill {
+            display: inline-block;
+        }
+
+        /* LIVE HIGHLIGHT */
         tr.active-day {
             background-color: rgba(79, 70, 229, 0.05);
         }
-        
         td.active-period .cell {
             box-shadow: 0 0 0 3px var(--primary);
             transform: scale(1.02);
+        }
+
+        /* ANALYTICS DASHBOARD */
+        .analytics-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 28px;
+        }
+        .analytics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+        }
+        .analytics-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+        }
+
+        /* STATS OVERVIEW CARDS */
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .stat-diff {
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+        .diff-up {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+        .diff-same {
+            background: rgba(100, 116, 139, 0.15);
+            color: var(--text-muted);
+        }
+
+        /* SUBJECT WORKLOAD GRID */
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
+        }
+        .subj-stat-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             transition: all 0.2s;
         }
-    </style>
+        .subj-stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .subj-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .subj-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .subj-name {
+            font-weight: 700;
+            font-size: 0.98rem;
+            margin-bottom: 2px;
+        }
+        .subj-periods {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .subj-right {
+            text-align: right;
+        }
+        .subj-hours {
+            font-weight: 700;
+            font-size: 1.1rem;
+            font-family: 'Space Mono', monospace;
+        }
 
-<style>
-[data-theme="light"] {
-    --bg-main: #f8fafc !important;
-    --bg-card: #ffffff !important;
-    --text-main: #0f172a !important;
-    --text-muted: #475569 !important;
-    --accent: #6366f1 !important;
-    --border: #e2e8f0 !important;
-    --surface: #f1f5f9 !important;
-}
-[data-theme="light"] .site-header {
-    background: #f8fafc !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-}
-[data-theme="light"] .icon-btn { color: #0f172a !important; }
-</style>
+        /* CHANGELOG PANEL */
+        .changelog-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 28px;
+        }
+        .changelog-box h3 {
+            margin-top: 0;
+            color: #f59e0b;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.25rem;
+        }
+
+        /* NON-EXAM SUBJECT CARD (KAUSHAL BODH) */
+        .non-exam-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(99, 102, 241, 0.1));
+            border: 1px solid #10b981;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+        .non-exam-icon {
+            font-size: 2.8rem;
+            color: #10b981;
+            flex-shrink: 0;
+        }
+        .non-exam-info h4 {
+            margin: 0 0 6px;
+            font-size: 1.2rem;
+            color: #10b981;
+        }
+        .non-exam-info p {
+            margin: 0 0 10px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+        .source-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            max-width: 600px;
+            width: 90%;
+            padding: 28px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            background: transparent;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        /* FOOTER / USER PROFILE */
+        .user-profile-wrapper { position: relative; }
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 1.2rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </head>
-<body>
-<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--surface); position: sticky; top: 0; z-index: 1000;">
-    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500; color: var(--text-main);">
-        <a href="./index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
-            <i class="fas fa-home"></i> Home
-        </a>
-        <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <span style="color:var(--accent); font-weight:600;">Time Table</span>
-    </div>
-    
-    <div class="header-right" style="display:flex; align-items:center; gap: 20px;">
-        <div class="search-container" style="display:flex; align-items:center;">
-            <button id="global-search-btn" aria-label="Search" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; padding:5px; display:flex; align-items:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-            <input id="global-search-input" type="text" placeholder="Search..." style="display:none; margin-left:10px; padding: 6px 15px; border-radius:20px; border:1px solid var(--border); background:rgba(0,0,0,0.2); color:white; width: 180px;">
+<body data-theme="dark" class="show-changes">
+
+    <!-- STICKY SITE HEADER -->
+    <header class="site-header">
+        <div class="header-left">
+            <a href="./index.html">
+                <i class="fas fa-home" style="color: var(--primary);"></i>
+                <span>Home</span>
+            </a>
+            <span style="color: var(--text-muted);">&gt;</span>
+            <span style="color: var(--primary); font-weight: 600;">Time Table</span>
         </div>
         
-        <nav class="header-nav" style="display:flex; align-items:center; gap: 15px;">
-            <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:white; cursor:pointer; font-size:1.2rem;">
+        <div class="header-right">
+            <button class="theme-toggle" title="Toggle Light / Dark Mode">
                 <i class="fas fa-moon"></i>
             </button>
-            
-            <a href="./timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
-            <a href="./midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
+            <a href="./timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--bg-color); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
+            <a href="./midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--bg-color); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
 
-            <div class="user-profile-wrapper" style="position:relative;">
-                <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:40px; height:40px; border:2px solid var(--accent);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
-                    <img src="https://ui-avatars.com/api/?name=Pushti&background=8B5CF6&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
+            <div class="user-profile-wrapper">
+                <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:38px; height:38px; border:2px solid var(--primary);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
+                    <img src="https://ui-avatars.com/api/?name=Pushti&background=4F46E5&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div id="global-dropdown" style="display:none; position:absolute; right:0; top:50px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:15px; width:220px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); flex-direction:column; gap:12px; z-index:1001;">
-                    <div style="text-align:center; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
-                        <div style="font-weight:700; font-size:1.1rem; color:var(--text-primary);">Pushti</div>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.9rem; font-weight:500;">Student</span>
-                        <label class="switch" style="position:relative; display:inline-block; width:34px; height:20px;">
-                            <input type="checkbox" id="global-role-checkbox" style="opacity:0; width:0; height:0;">
-                            <span class="slider" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--border); transition:.4s; border-radius:34px;"></span>
-                        </label>
-                        <span style="font-size:0.9rem; font-weight:500;">Parent</span>
-                    </div>
+                <div id="global-dropdown" style="display:none; position:absolute; right:0; top:48px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:15px; width:200px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); flex-direction:column; gap:10px; z-index:1001;">
+                    <div style="font-weight:700; text-align:center; padding-bottom:8px; border-bottom:1px solid var(--border);">Pushti (Grade 7 Alpha)</div>
+                    <div style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Silver Bells Public School</div>
                 </div>
             </div>
-        </nav>
-    </div>
-</header>
-<style>
-.switch input:checked + .slider { background-color: var(--accent, #8B5CF6); }
-.switch input:checked + .slider:before { transform: translateX(14px); }
-.slider:before { position:absolute; content:""; height:14px; width:14px; left:3px; bottom:3px; background-color:white; transition:.4s; border-radius:50%; }
-.tabs-wrapper { position: static !important; }
-.site-header { background: var(--bg-main) !important; backdrop-filter: none !important; }
-.tabs-wrapper { position: sticky !important; top: 61px !important; z-index: 990 !important; background: var(--bg-main) !important; border-bottom: 1px solid var(--border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; display: flex !important; gap: 10px !important; justify-content: center !important; flex-wrap: wrap !important; }
-</style>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const searchBtn = document.getElementById('global-search-btn');
-    const searchInput = document.getElementById('global-search-input');
-    
-    if(searchBtn && searchInput) {
-        searchBtn.addEventListener('click', function() {
-            if(searchInput.style.display === 'none' || searchInput.style.display === '') {
-                searchInput.style.display = 'block';
-                searchInput.focus();
-            } else {
-                performSearch(searchInput.value.toLowerCase());
-            }
-        });
-        
-        searchInput.addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') {
-                performSearch(searchInput.value.toLowerCase());
-            }
-        });
-    }
-    
-    function performSearch(term) {
-        const cards = document.querySelectorAll('.chapter-card, .topic-card, .shloka-box, .translation-row, .shloka-block');
-        if (cards.length > 0) {
-            cards.forEach(card => {
-                if(card.innerText.toLowerCase().includes(term)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    }
-});
-</script>
-<script>
-        const savedTheme = localStorage.getItem('pushti-theme') || 'light';
-        document.body.setAttribute('data-theme', savedTheme);
-        </script>
+        </div>
+    </header>
 
-        <div class="header">
-        <h1>Weekly Time Table</h1>
-        <p>Live schedule with active period highlighting</p>
+    <div class="container">
+
+        <!-- TIMETABLE HERO BANNER -->
+        <div class="tt-banner">
+            <span class="tt-badge"><i class="fas fa-calendar-check"></i> Active School Schedule</span>
+            <h1>SBPS 7 Alpha — Weekly Time Table</h1>
+            <p>Silver Bells Public School, Shantinagar, Kalvibid, Bhavnagar, Gujarat</p>
+            <div class="tt-meta-row">
+                <div class="tt-meta-pill"><i class="fas fa-user-tie" style="color:var(--primary);"></i> <strong>Class Teacher:</strong> Phil</div>
+                <div class="tt-meta-pill"><i class="fas fa-clock" style="color:#10b981;"></i> <strong>School Hours:</strong> 7:30 AM &ndash; 1:30 PM</div>
+                <div class="tt-meta-pill"><i class="fas fa-shield-halved" style="color:#f59e0b;"></i> <strong>Class ID:</strong> SBPS7A</div>
+                <div class="tt-meta-pill"><i class="fas fa-rotate" style="color:#3b82f6;"></i> <strong>Generated:</strong> 9/2/2026 (Sept 2026 Edition)</div>
+            </div>
+        </div>
+
+        <!-- TOOLBAR: HIGHLIGHT CHANGES & FILTER CONTROLS -->
+        <div class="tt-toolbar">
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                <button class="tool-btn active" id="btn-toggle-changes" onclick="toggleChangeHighlight()">
+                    <i class="fas fa-highlighter" style="color:#f59e0b;"></i>
+                    <span id="txt-toggle-changes">Highlighting Changes (v2)</span>
+                    <span style="background:#f59e0b; color:#000; padding:1px 6px; border-radius:10px; font-size:0.75rem; font-weight:800;">8</span>
+                </button>
+                <button class="tool-btn" onclick="scrollToSection('analytics-section')">
+                    <i class="fas fa-chart-pie" style="color:#10b981;"></i> Subject Hours & Trends
+                </button>
+                <button class="tool-btn" onclick="scrollToSection('changelog-section')">
+                    <i class="fas fa-list-check" style="color:#6366f1;"></i> View Changelog Table
+                </button>
+            </div>
+            <div style="font-size:0.85rem; color:var(--text-muted);">
+                <i class="fas fa-circle-dot" style="color:#10b981;"></i> Live period auto-highlights during school hours
+            </div>
+        </div>
+
+        <!-- TIMETABLE TABLE -->
+        <div class="tt-wrapper">
+            <table id="timetable">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th class="is-changed">
+                            1<br>
+                            <span style="font-size:0.85rem; font-weight:700; color:#f59e0b;">7:30 - 8:25</span><br>
+                            <span style="font-size:0.72rem; color:var(--text-muted);">(55 min &bull; +15m)</span>
+                        </th>
+                        <th>
+                            2<br>
+                            <span style="font-size:0.85rem; color:var(--text-muted);">8:25 - 9:10</span><br>
+                            <span style="font-size:0.72rem; color:var(--text-muted);">(45 min)</span>
+                        </th>
+                        <th>
+                            3<br>
+                            <span style="font-size:0.85rem; color:var(--text-muted);">9:10 - 9:50</span><br>
+                            <span style="font-size:0.72rem; color:var(--text-muted);">(40 min)</span>
+                        </th>
+                        <th>
+                            4<br>
+                            <span style="font-size:0.85rem; color:var(--text-muted);">9:50 - 10:30</span><br>
+                            <span style="font-size:0.72rem; color:var(--text-muted);">(40 min)</span>
+                        </th>
+                        <th>
+                            BREAK<br>
+                            <span style="font-size:0.8rem; color:var(--text-muted);">10:30 - 10:50</span><br>
+                            <span style="font-size:0.72rem; color:var(--text-muted);">(20 min)</span>
+                        </th>
+                        <th>
+                            5<br>
+                            <span style="font-size:0.85rem; color:var(--text-muted);">10:50 - 11:30</span><br>
+                            <span style="font-size:0.72rem; color:var(--text-muted);">(40 min &bull; Test)</span>
+                        </th>
+                        <th>
+                            6<br>
+                            <span style="font-size:0.85rem; color:var(--text-muted);">11:30 - 12:10</span><br>
+                            <span style="font-size:0.72rem; color:var(--text-muted);">(40 min)</span>
+                        </th>
+                        <th>
+                            7<br>
+                            <span style="font-size:0.85rem; color:var(--text-muted);">12:10 - 12:50</span><br>
+                            <span style="font-size:0.72rem; color:var(--text-muted);">(40 min)</span>
+                        </th>
+                        <th>
+                            8<br>
+                            <span style="font-size:0.85rem; color:var(--text-muted);">12:50 - 13:30</span><br>
+                            <span style="font-size:0.72rem; color:var(--text-muted);">(40 min)</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Monday -->
+                    <tr data-day="1">
+                        <td class="day-label">Monday</td>
+                        <td data-period="1">
+                            <div class="cell math is-changed">
+                                <span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span>
+                                <span class="teacher">Phil</span>
+                                <span class="change-pill">Starts 7:30 (+15m)</span>
+                            </div>
+                        </td>
+                        <td data-period="2"><div class="cell sci"><span class="subj">Chemistry</span><span class="teacher">Rogersir</span></div></td>
+                        <td data-period="3">
+                            <div class="cell lang is-changed">
+                                <span class="subj">GUJ \ sans (SBPS)</span>
+                                <span class="teacher">Prabhat / FalguniR</span>
+                                <span class="change-pill">Parallel Language</span>
+                            </div>
+                        </td>
+                        <td data-period="4"><div class="cell lang"><span class="subj"><a href="hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a></span><span class="teacher">Yogita</span></div></td>
+                        <td class="break-cell" rowspan="6">BREAK</td>
+                        <td data-period="5"><div class="cell test"><span class="subj">Maths Test</span><span class="teacher">Phil</span></div></td>
+                        <td data-period="6"><div class="cell soc"><span class="subj"><a href="social_science_index.html" style="text-decoration:none; color:inherit;">Social Studies</a></span><span class="teacher">KG</span></div></td>
+                        <td data-period="7"><div class="cell sci"><span class="subj">Physics</span><span class="teacher">Rogersir</span></div></td>
+                        <td data-period="8"><div class="cell lang"><span class="subj"><a href="english_index.html" style="text-decoration:none; color:inherit;">English</a></span><span class="teacher">Seema D</span></div></td>
+                    </tr>
+
+                    <!-- Tuesday -->
+                    <tr data-day="2">
+                        <td class="day-label">Tuesday</td>
+                        <td data-period="1">
+                            <div class="cell math is-changed">
+                                <span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span>
+                                <span class="teacher">Phil</span>
+                                <span class="change-pill">Starts 7:30 (+15m)</span>
+                            </div>
+                        </td>
+                        <td data-period="2"><div class="cell lang"><span class="subj"><a href="hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a></span><span class="teacher">Yogita</span></div></td>
+                        <td data-period="3"><div class="cell lang"><span class="subj"><a href="english_index.html" style="text-decoration:none; color:inherit;">English</a></span><span class="teacher">Seema D</span></div></td>
+                        <td data-period="4"><div class="cell soc"><span class="subj"><a href="social_science_index.html" style="text-decoration:none; color:inherit;">Social Studies</a></span><span class="teacher">KG</span></div></td>
+                        <td data-period="5">
+                            <div class="cell test is-changed">
+                                <span class="subj">HT (Hindi Test)</span>
+                                <span class="teacher">Yogita</span>
+                                <span class="change-pill">Label updated: HT</span>
+                            </div>
+                        </td>
+                        <td data-period="6"><div class="cell sci"><span class="subj">Chemistry</span><span class="teacher">Rogersir</span></div></td>
+                        <td data-period="7"><div class="cell tech"><span class="subj">AI / Robo (SBPS)</span><span class="teacher">VJ</span></div></td>
+                        <td data-period="8">
+                            <div class="cell lang is-changed">
+                                <span class="subj">GUJ \ sans (SBPS)</span>
+                                <span class="teacher">Prabhat / FalguniR</span>
+                                <span class="change-pill">Parallel Language</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Wednesday -->
+                    <tr data-day="3">
+                        <td class="day-label">Wednesday</td>
+                        <td data-period="1">
+                            <div class="cell math is-changed">
+                                <span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span>
+                                <span class="teacher">Phil</span>
+                                <span class="change-pill">Starts 7:30 (+15m)</span>
+                            </div>
+                        </td>
+                        <td data-period="2"><div class="cell sci"><span class="subj">Chemistry</span><span class="teacher">Rogersir</span></div></td>
+                        <td data-period="3"><div class="cell lang"><span class="subj"><a href="english_index.html" style="text-decoration:none; color:inherit;">English</a></span><span class="teacher">Seema D</span></div></td>
+                        <td data-period="4"><div class="cell tech"><span class="subj">AI / Robo (SBPS)</span><span class="teacher">VJ</span></div></td>
+                        <td data-period="5"><div class="cell test"><span class="subj">Science Test</span><span class="teacher">Rogersir</span></div></td>
+                        <td data-period="6"><div class="cell other"><span class="subj">HPE</span><span class="teacher">Sports Kartavya / Phil</span></div></td>
+                        <td data-period="7"><div class="cell soc"><span class="subj"><a href="social_science_index.html" style="text-decoration:none; color:inherit;">Social Studies</a></span><span class="teacher">KG</span></div></td>
+                        <td data-period="8">
+                            <div class="cell lang is-changed">
+                                <span class="subj"><a href="hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a></span>
+                                <span class="teacher">Yogita</span>
+                                <span class="change-pill">Teacher: Yogita</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Thursday -->
+                    <tr data-day="4">
+                        <td class="day-label">Thursday</td>
+                        <td data-period="1">
+                            <div class="cell math is-changed">
+                                <span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span>
+                                <span class="teacher">Phil</span>
+                                <span class="change-pill">Starts 7:30 (+15m)</span>
+                            </div>
+                        </td>
+                        <td data-period="2"><div class="cell soc"><span class="subj"><a href="social_science_index.html" style="text-decoration:none; color:inherit;">Social Studies</a></span><span class="teacher">KG</span></div></td>
+                        <td data-period="3"><div class="cell sci"><span class="subj">Physics</span><span class="teacher">Rogersir</span></div></td>
+                        <td data-period="4"><div class="cell lang"><span class="subj"><a href="hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a></span><span class="teacher">Yogita</span></div></td>
+                        <td data-period="5"><div class="cell test"><span class="subj">S.ST Test</span><span class="teacher">KG</span></div></td>
+                        <td data-period="6"><div class="cell lang"><span class="subj"><a href="english_index.html" style="text-decoration:none; color:inherit;">English</a></span><span class="teacher">Seema D</span></div></td>
+                        <td data-period="7"><div class="cell tech"><span class="subj"><a href="ict_index.html" style="text-decoration:none; color:inherit;">ICT Theory</a></span><span class="teacher">Parita</span></div></td>
+                        <td data-period="8">
+                            <div class="cell other is-changed">
+                                <span class="subj">Lab / Project</span>
+                                <span class="teacher">Rogersir</span>
+                                <span class="change-pill">Teacher: Rogersir</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Friday -->
+                    <tr data-day="5">
+                        <td class="day-label">Friday</td>
+                        <td data-period="1">
+                            <div class="cell math is-changed">
+                                <span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span>
+                                <span class="teacher">Phil</span>
+                                <span class="change-pill">Starts 7:30 (+15m)</span>
+                            </div>
+                        </td>
+                        <td data-period="2"><div class="cell soc"><span class="subj"><a href="social_science_index.html" style="text-decoration:none; color:inherit;">Social Studies</a></span><span class="teacher">KG</span></div></td>
+                        <td data-period="3"><div class="cell sci"><span class="subj">Biology</span><span class="teacher">Rogersir</span></div></td>
+                        <td data-period="4"><div class="cell lang"><span class="subj"><a href="hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a></span><span class="teacher">Yogita</span></div></td>
+                        <td data-period="5"><div class="cell test"><span class="subj">Eng Test</span><span class="teacher">Seema D</span></div></td>
+                        <td data-period="6">
+                            <div class="cell lang is-changed">
+                                <span class="subj">GUJ \ sans (SBPS)</span>
+                                <span class="teacher">Prabhat / FalguniR</span>
+                                <span class="change-pill">Parallel Language</span>
+                            </div>
+                        </td>
+                        <td data-period="7"><div class="cell lang"><span class="subj"><a href="english_index.html" style="text-decoration:none; color:inherit;">English</a></span><span class="teacher">Seema D</span></div></td>
+                        <td data-period="8">
+                            <div class="cell other is-changed" style="cursor:pointer;" onclick="openKBModal()" title="Click to view details about Kaushal Bodh">
+                                <span class="subj" style="color:#10b981;"><i class="fas fa-book-sparkles"></i> KB</span>
+                                <span class="teacher">Rogersir</span>
+                                <span class="change-pill">Kaushal Bodh (NEP)</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Saturday -->
+                    <tr data-day="6">
+                        <td class="day-label">Saturday</td>
+                        <td data-period="1">
+                            <div class="cell math is-changed">
+                                <span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span>
+                                <span class="teacher">Phil</span>
+                                <span class="change-pill">Starts 7:30 (+15m)</span>
+                            </div>
+                        </td>
+                        <td data-period="2"><div class="cell lang"><span class="subj"><a href="english_index.html" style="text-decoration:none; color:inherit;">English</a></span><span class="teacher">Seema D</span></div></td>
+                        <td data-period="3">
+                            <div class="cell lang is-changed">
+                                <span class="subj">GUJ \ sans (SBPS)</span>
+                                <span class="teacher">Prabhat / FalguniR</span>
+                                <span class="change-pill">Parallel Language</span>
+                            </div>
+                        </td>
+                        <td data-period="4"><div class="cell soc"><span class="subj"><a href="social_science_index.html" style="text-decoration:none; color:inherit;">Social Studies</a></span><span class="teacher">KG</span></div></td>
+                        <td data-period="5"><div class="cell tech"><span class="subj"><a href="ict_index.html" style="text-decoration:none; color:inherit;">ICT Practical</a></span><span class="teacher">Comp Lab, Parita</span></div></td>
+                        <td data-period="6"><div class="cell sci"><span class="subj">Physics</span><span class="teacher">Rogersir</span></div></td>
+                        <td data-period="7"><div class="cell other"><span class="subj">HPE</span><span class="teacher">Sports Kartavya / Phil</span></div></td>
+                        <td data-period="8"><div class="cell math"><span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span><span class="teacher">Phil</span></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- SECTION: WEEKLY HOURS & WORKLOAD ANALYTICS -->
+        <!-- ========================================================================= -->
+        <div id="analytics-section" class="analytics-section">
+            <div class="analytics-header">
+                <div class="analytics-title">
+                    <i class="fas fa-chart-line"></i> Weekly Subject Hours & Load Trends
+                </div>
+                <div style="font-size:0.9rem; color:var(--text-muted);">
+                    Comparison: <strong>New Timetable (Sept 2026)</strong> vs <strong>Previous Timetable</strong>
+                </div>
+            </div>
+
+            <!-- OVERVIEW METRICS -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <span class="stat-label">Total Weekly Hours</span>
+                    <div class="stat-value">
+                        34.0 <span style="font-size:1rem; font-weight:500;">hrs/wk</span>
+                        <span class="stat-diff diff-up"><i class="fas fa-arrow-up"></i> +1.5 hrs (+90m)</span>
+                    </div>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Was 32.5 hrs/wk (1950m &rarr; 2040m)</span>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label">Period 1 Daily Duration</span>
+                    <div class="stat-value">
+                        55 <span style="font-size:1rem; font-weight:500;">mins</span>
+                        <span class="stat-diff diff-up"><i class="fas fa-arrow-up"></i> +15 mins</span>
+                    </div>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Shifted from 7:45 AM &rarr; 7:30 AM</span>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label">Total Weekly Periods</span>
+                    <div class="stat-value">
+                        48 <span style="font-size:1rem; font-weight:500;">periods</span>
+                        <span class="stat-diff diff-same"><i class="fas fa-minus"></i> Unchanged</span>
+                    </div>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">8 periods/day &times; 6 days (Mon&ndash;Sat)</span>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label">Weekly Tests Dedicated</span>
+                    <div class="stat-value">
+                        5 <span style="font-size:1rem; font-weight:500;">tests</span>
+                        <span class="stat-diff diff-same"><i class="fas fa-minus"></i> Period 5</span>
+                    </div>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Maths, Hindi, Science, S.St, English</span>
+                </div>
+            </div>
+
+            <!-- INDIVIDUAL SUBJECT CARDS -->
+            <div style="margin-bottom: 12px; font-weight: 700; color: var(--text-main); font-size: 1.05rem;">
+                Subject-Wise Time Allocation & Net Change:
+            </div>
+
+            <div class="subject-grid">
+                
+                <!-- Maths -->
+                <div class="subj-stat-card" style="border-left: 4px solid #1D4ED8;">
+                    <div class="subj-left">
+                        <div class="subj-icon" style="background: var(--sub-math); color: var(--sub-math-txt);">📐</div>
+                        <div>
+                            <div class="subj-name">Mathematics</div>
+                            <div class="subj-periods">7 Teaching + 1 Test = 8 Periods</div>
+                        </div>
+                    </div>
+                    <div class="subj-right">
+                        <div class="subj-hours" style="color: #1D4ED8;">6h 50m</div>
+                        <span class="stat-diff diff-up"><i class="fas fa-arrow-trend-up"></i> +90m (+32%)</span>
+                    </div>
+                </div>
+
+                <!-- Social Studies -->
+                <div class="subj-stat-card" style="border-left: 4px solid #B45309;">
+                    <div class="subj-left">
+                        <div class="subj-icon" style="background: var(--sub-soc); color: var(--sub-soc-txt);">🗺️</div>
+                        <div>
+                            <div class="subj-name">Social Studies</div>
+                            <div class="subj-periods">6 Teaching + 1 Test = 7 Periods</div>
+                        </div>
+                    </div>
+                    <div class="subj-right">
+                        <div class="subj-hours" style="color: #B45309;">4h 50m</div>
+                        <span class="stat-diff diff-same"><i class="fas fa-minus"></i> 0m (Same)</span>
+                    </div>
+                </div>
+
+                <!-- English -->
+                <div class="subj-stat-card" style="border-left: 4px solid #7E22CE;">
+                    <div class="subj-left">
+                        <div class="subj-icon" style="background: var(--sub-lang); color: var(--sub-lang-txt);">📚</div>
+                        <div>
+                            <div class="subj-name">English</div>
+                            <div class="subj-periods">6 Teaching + 1 Test = 7 Periods</div>
+                        </div>
+                    </div>
+                    <div class="subj-right">
+                        <div class="subj-hours" style="color: #7E22CE;">4h 45m</div>
+                        <span class="stat-diff diff-same"><i class="fas fa-minus"></i> 0m (Same)</span>
+                    </div>
+                </div>
+
+                <!-- Science Combined -->
+                <div class="subj-stat-card" style="border-left: 4px solid #15803D;">
+                    <div class="subj-left">
+                        <div class="subj-icon" style="background: var(--sub-sci); color: var(--sub-sci-txt);">🔬</div>
+                        <div>
+                            <div class="subj-name">Science (Chem, Phy, Bio, Lab)</div>
+                            <div class="subj-periods">7 Teaching + 1 Lab + 1 Test = 9 Periods</div>
+                        </div>
+                    </div>
+                    <div class="subj-right">
+                        <div class="subj-hours" style="color: #15803D;">6h 10m</div>
+                        <span class="stat-diff diff-same"><i class="fas fa-minus"></i> 0m (Same)</span>
+                    </div>
+                </div>
+
+                <!-- Hindi -->
+                <div class="subj-stat-card" style="border-left: 4px solid #d946ef;">
+                    <div class="subj-left">
+                        <div class="subj-icon" style="background: rgba(217, 70, 239, 0.15); color: #c026d3;">अ</div>
+                        <div>
+                            <div class="subj-name">Hindi</div>
+                            <div class="subj-periods">5 Teaching + 1 Test = 6 Periods</div>
+                        </div>
+                    </div>
+                    <div class="subj-right">
+                        <div class="subj-hours" style="color: #c026d3;">4h 05m</div>
+                        <span class="stat-diff diff-same"><i class="fas fa-minus"></i> 0m (Same)</span>
+                    </div>
+                </div>
+
+                <!-- Gujarati / Sanskrit -->
+                <div class="subj-stat-card" style="border-left: 4px solid #8b5cf6;">
+                    <div class="subj-left">
+                        <div class="subj-icon" style="background: rgba(139, 92, 246, 0.15); color: #7c3aed;">🕉️</div>
+                        <div>
+                            <div class="subj-name">Gujarati \ Sanskrit (Parallel)</div>
+                            <div class="subj-periods">4 Teaching Periods (SBPS)</div>
+                        </div>
+                    </div>
+                    <div class="subj-right">
+                        <div class="subj-hours" style="color: #7c3aed;">2h 40m</div>
+                        <span class="stat-diff diff-same"><i class="fas fa-minus"></i> 0m (Same)</span>
+                    </div>
+                </div>
+
+                <!-- Technology / ICT / AI -->
+                <div class="subj-stat-card" style="border-left: 4px solid #0E7490;">
+                    <div class="subj-left">
+                        <div class="subj-icon" style="background: var(--sub-tech); color: var(--sub-tech-txt);">💻</div>
+                        <div>
+                            <div class="subj-name">ICT, AI & Robotics</div>
+                            <div class="subj-periods">2 AI/Robo + 1 Theory + 1 Practical = 4 Periods</div>
+                        </div>
+                    </div>
+                    <div class="subj-right">
+                        <div class="subj-hours" style="color: #0E7490;">2h 40m</div>
+                        <span class="stat-diff diff-same"><i class="fas fa-minus"></i> 0m (Same)</span>
+                    </div>
+                </div>
+
+                <!-- HPE -->
+                <div class="subj-stat-card" style="border-left: 4px solid #f97316;">
+                    <div class="subj-left">
+                        <div class="subj-icon" style="background: rgba(249, 115, 22, 0.15); color: #ea580c;">⚽</div>
+                        <div>
+                            <div class="subj-name">HPE (Physical Education)</div>
+                            <div class="subj-periods">2 Activity Periods (Wed & Sat)</div>
+                        </div>
+                    </div>
+                    <div class="subj-right">
+                        <div class="subj-hours" style="color: #ea580c;">1h 20m</div>
+                        <span class="stat-diff diff-same"><i class="fas fa-minus"></i> 0m (Same)</span>
+                    </div>
+                </div>
+
+                <!-- Kaushal Bodh (KB) -->
+                <div class="subj-stat-card" style="border-left: 4px solid #10b981;">
+                    <div class="subj-left">
+                        <div class="subj-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">🛠️</div>
+                        <div>
+                            <div class="subj-name">KB (Kaushal Bodh)</div>
+                            <div class="subj-periods">1 Vocational Period (Friday P8)</div>
+                        </div>
+                    </div>
+                    <div class="subj-right">
+                        <div class="subj-hours" style="color: #10b981;">40m</div>
+                        <span class="stat-diff diff-same"><i class="fas fa-minus"></i> 0m (Same)</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- SECTION: NON-EXAM SUBJECT SPOTLIGHT: KAUSHAL BODH (KB) -->
+        <!-- ========================================================================= -->
+        <div class="non-exam-card">
+            <div class="non-exam-icon">
+                <i class="fas fa-screwdriver-wrench"></i>
+            </div>
+            <div class="non-exam-info">
+                <h4>Non-Exam Subject Spotlight: Kaushal Bodh (KB) &bull; Friday Period 8</h4>
+                <p>
+                    <strong>Kaushal Bodh (कौशल बोध)</strong> is the official NCERT NEP 2020 Vocational Education Activity Book for Grade 7. While it is not formally evaluated in the written mid-term/annual exams, it is a vital hands-on curriculum fostering experiential learning, design thinking, material handling, domestic services, and craft skills.
+                </p>
+                <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                    <span class="source-pill"><i class="fas fa-file-pdf"></i> source_materials/KaushalBodh7.pdf (217 Pages)</span>
+                    <span style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-user-chalkboard"></i> Facilitator: Rogersir</span>
+                    <button class="tool-btn" onclick="openKBModal()" style="padding:4px 12px; font-size:0.82rem;">
+                        <i class="fas fa-circle-info"></i> View Curriculum Overview
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- SECTION: CHANGELOG TABLE (DETAILED BEFORE & AFTER) -->
+        <!-- ========================================================================= -->
+        <div id="changelog-section" class="changelog-box">
+            <h3><i class="fas fa-clipboard-list"></i> What Changed in this Version (Sept 2026 Edition)</h3>
+            <p style="color:var(--text-muted); font-size:0.95rem; margin-top:0;">
+                Summary of changes verified from the newly generated SBPS 7 Alpha schedule:
+            </p>
+
+            <table style="width:100%; border-collapse:collapse; margin-top:14px; font-size:0.92rem;">
+                <thead>
+                    <tr style="background:var(--bg-color);">
+                        <th style="text-align:left; padding:10px 14px;">Component / Slot</th>
+                        <th style="text-align:left; padding:10px 14px;">Previous Value</th>
+                        <th style="text-align:left; padding:10px 14px;">New Updated Value</th>
+                        <th style="text-align:left; padding:10px 14px;">Impact & Explanation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding:10px 14px; font-weight:700;">Period 1 Timing</td>
+                        <td style="padding:10px 14px; color:#ef4444;"><del>7:45 &ndash; 8:25 (40 mins)</del></td>
+                        <td style="padding:10px 14px; color:#10b981; font-weight:700;">7:30 &ndash; 8:25 (55 mins)</td>
+                        <td style="padding:10px 14px;">Starts 15 mins earlier. Period 1 lengthened by +15 mins daily.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 14px; font-weight:700;">Maths Weekly Hours</td>
+                        <td style="padding:10px 14px; color:#ef4444;"><del>4h 40m teaching</del></td>
+                        <td style="padding:10px 14px; color:#10b981; font-weight:700;">6h 10m teaching (+90 mins)</td>
+                        <td style="padding:10px 14px;">Because Maths is scheduled every day during Period 1, its teaching time expanded by +1.5 hours per week!</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 14px; font-weight:700;">Language Slot (Mon P3, Tue P8, Fri P6, Sat P3)</td>
+                        <td style="padding:10px 14px; color:#ef4444;"><del>Sanskrit (Falguni R)</del></td>
+                        <td style="padding:10px 14px; color:#10b981; font-weight:700;">GUJ \ sans (SBPS)<br><span style="font-size:0.8rem; color:var(--text-muted);">Prabhat / FalguniR</span></td>
+                        <td style="padding:10px 14px;">Explicitly designated as combined parallel batch for Gujarati and Sanskrit students.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 14px; font-weight:700;">Wednesday Period 8 (Hindi)</td>
+                        <td style="padding:10px 14px; color:#ef4444;"><del>Neelam</del></td>
+                        <td style="padding:10px 14px; color:#10b981; font-weight:700;">Yogita</td>
+                        <td style="padding:10px 14px;">Teacher assignment updated to Yogita for all Hindi classes.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 14px; font-weight:700;">Thursday Period 8 (Lab)</td>
+                        <td style="padding:10px 14px; color:#ef4444;"><del>Phil / Roger Iyer</del></td>
+                        <td style="padding:10px 14px; color:#10b981; font-weight:700;">Rogersir</td>
+                        <td style="padding:10px 14px;">Supervised exclusively by Rogersir as Lab/Project.</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px 14px; font-weight:700;">Friday Period 8 (KB)</td>
+                        <td style="padding:10px 14px; color:var(--text-muted);">KB (Roger Iyer)</td>
+                        <td style="padding:10px 14px; color:#10b981; font-weight:700;">KB (Rogersir)</td>
+                        <td style="padding:10px 14px;">Kaushal Bodh (Vocational Education) formalized with Rogersir.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
-    <div class="tt-wrapper">
-        <table id="timetable">
-            <thead>
-                <tr>
-                    <th>Day</th>
-                    <th>1<br><span style="font-size:0.75rem; color:var(--text-muted)">7:45 - 8:25</span></th>
-                    <th>2<br><span style="font-size:0.75rem; color:var(--text-muted)">8:25 - 9:10</span></th>
-                    <th>3<br><span style="font-size:0.75rem; color:var(--text-muted)">9:10 - 9:50</span></th>
-                    <th>4<br><span style="font-size:0.75rem; color:var(--text-muted)">9:50 - 10:30</span></th>
-                    <th>Break<br><span style="font-size:0.75rem; color:var(--text-muted)">10:30 - 10:50</span></th>
-                    <th>5<br><span style="font-size:0.75rem; color:var(--text-muted)">10:50 - 11:30</span></th>
-                    <th>6<br><span style="font-size:0.75rem; color:var(--text-muted)">11:30 - 12:10</span></th>
-                    <th>7<br><span style="font-size:0.75rem; color:var(--text-muted)">12:10 - 12:50</span></th>
-                    <th>8<br><span style="font-size:0.75rem; color:var(--text-muted)">12:50 - 13:30</span></th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Monday -->
-                <tr data-day="1">
-                    <td class="day-label">Monday</td>
-                    <td data-period="1"><div class="cell math"><span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span><span class="teacher">Phil</span></div></td>
-                    <td data-period="2"><div class="cell sci"><span class="subj">Chemistry</span><span class="teacher">Roger Iyer</span></div></td>
-                    <td data-period="3"><div class="cell lang"><span class="subj"><a href="sanskrit_index.html" style="text-decoration:none; color:inherit;">Sanskrit</a></span><span class="teacher">Falguni R</span></div></td>
-                    <td data-period="4"><div class="cell lang"><span class="subj"><a href="hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a></span><span class="teacher">Yogita</span></div></td>
-                    <td class="break-cell" rowspan="6">BREAK</td>
-                    <td data-period="5"><div class="cell test"><span class="subj">Maths Test</span><span class="teacher">Phil</span></div></td>
-                    <td data-period="6"><div class="cell soc"><span class="subj"><a href="social_science_index.html" style="text-decoration:none; color:inherit;">Social Studies</a></span><span class="teacher">KG</span></div></td>
-                    <td data-period="7"><div class="cell sci"><span class="subj">Physics</span><span class="teacher">Roger Iyer</span></div></td>
-                    <td data-period="8"><div class="cell lang"><span class="subj"><a href="english_index.html" style="text-decoration:none; color:inherit;">English</a></span><span class="teacher">Seema D</span></div></td>
-                </tr>
-                <!-- Tuesday -->
-                <tr data-day="2">
-                    <td class="day-label">Tuesday</td>
-                    <td data-period="1"><div class="cell math"><span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span><span class="teacher">Phil</span></div></td>
-                    <td data-period="2"><div class="cell lang"><span class="subj"><a href="hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a></span><span class="teacher">Yogita</span></div></td>
-                    <td data-period="3"><div class="cell lang"><span class="subj"><a href="english_index.html" style="text-decoration:none; color:inherit;">English</a></span><span class="teacher">Seema D</span></div></td>
-                    <td data-period="4"><div class="cell soc"><span class="subj"><a href="social_science_index.html" style="text-decoration:none; color:inherit;">Social Studies</a></span><span class="teacher">KG</span></div></td>
-                    <td data-period="5"><div class="cell test"><span class="subj">Hindi Test</span><span class="teacher">Yogita</span></div></td>
-                    <td data-period="6"><div class="cell sci"><span class="subj">Chemistry</span><span class="teacher">Roger Iyer</span></div></td>
-                    <td data-period="7"><div class="cell tech"><span class="subj">AI / Robo</span><span class="teacher">VJ</span></div></td>
-                    <td data-period="8"><div class="cell lang"><span class="subj"><a href="sanskrit_index.html" style="text-decoration:none; color:inherit;">Sanskrit</a></span><span class="teacher">Falguni R</span></div></td>
-                </tr>
-                <!-- Wednesday -->
-                <tr data-day="3">
-                    <td class="day-label">Wednesday</td>
-                    <td data-period="1"><div class="cell math"><span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span><span class="teacher">Phil</span></div></td>
-                    <td data-period="2"><div class="cell sci"><span class="subj">Chemistry</span><span class="teacher">Roger Iyer</span></div></td>
-                    <td data-period="3"><div class="cell lang"><span class="subj"><a href="english_index.html" style="text-decoration:none; color:inherit;">English</a></span><span class="teacher">Seema D</span></div></td>
-                    <td data-period="4"><div class="cell tech"><span class="subj">AI / Robo</span><span class="teacher">VJ</span></div></td>
-                    <td data-period="5"><div class="cell test"><span class="subj">Science Test</span><span class="teacher">Roger Iyer</span></div></td>
-                    <td data-period="6"><div class="cell other"><span class="subj">HPE</span><span class="teacher">Sports Gr / Kartavya</span></div></td>
-                    <td data-period="7"><div class="cell soc"><span class="subj"><a href="social_science_index.html" style="text-decoration:none; color:inherit;">Social Studies</a></span><span class="teacher">KG</span></div></td>
-                    <td data-period="8"><div class="cell lang"><span class="subj"><a href="hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a></span><span class="teacher">Neelam</span></div></td>
-                </tr>
-                <!-- Thursday -->
-                <tr data-day="4">
-                    <td class="day-label">Thursday</td>
-                    <td data-period="1"><div class="cell math"><span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span><span class="teacher">Phil</span></div></td>
-                    <td data-period="2"><div class="cell soc"><span class="subj"><a href="social_science_index.html" style="text-decoration:none; color:inherit;">Social Studies</a></span><span class="teacher">KG</span></div></td>
-                    <td data-period="3"><div class="cell sci"><span class="subj">Physics</span><span class="teacher">Roger Iyer</span></div></td>
-                    <td data-period="4"><div class="cell lang"><span class="subj"><a href="hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a></span><span class="teacher">Yogita</span></div></td>
-                    <td data-period="5"><div class="cell test"><span class="subj">Social St. Test</span><span class="teacher">KG</span></div></td>
-                    <td data-period="6"><div class="cell lang"><span class="subj"><a href="english_index.html" style="text-decoration:none; color:inherit;">English</a></span><span class="teacher">Seema D</span></div></td>
-                    <td data-period="7"><div class="cell tech"><span class="subj"><a href="ict_index.html" style="text-decoration:none; color:inherit;">ICT Theory</a></span><span class="teacher">Parita</span></div></td>
-                    <td data-period="8"><div class="cell other"><span class="subj">Lab Project</span><span class="teacher">Phil / Roger Iyer</span></div></td>
-                </tr>
-                <!-- Friday -->
-                <tr data-day="5">
-                    <td class="day-label">Friday</td>
-                    <td data-period="1"><div class="cell math"><span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span><span class="teacher">Phil</span></div></td>
-                    <td data-period="2"><div class="cell soc"><span class="subj"><a href="social_science_index.html" style="text-decoration:none; color:inherit;">Social Studies</a></span><span class="teacher">KG</span></div></td>
-                    <td data-period="3"><div class="cell sci"><span class="subj">Biology</span><span class="teacher">Roger Iyer</span></div></td>
-                    <td data-period="4"><div class="cell lang"><span class="subj"><a href="hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a></span><span class="teacher">Yogita</span></div></td>
-                    <td data-period="5"><div class="cell test"><span class="subj">English Test</span><span class="teacher">Seema D</span></div></td>
-                    <td data-period="6"><div class="cell lang"><span class="subj"><a href="sanskrit_index.html" style="text-decoration:none; color:inherit;">Sanskrit</a></span><span class="teacher">Falguni R</span></div></td>
-                    <td data-period="7"><div class="cell lang"><span class="subj"><a href="english_index.html" style="text-decoration:none; color:inherit;">English</a></span><span class="teacher">Seema D</span></div></td>
-                    <td data-period="8"><div class="cell other"><span class="subj">KB</span><span class="teacher">Roger Iyer</span></div></td>
-                </tr>
-                <!-- Saturday -->
-                <tr data-day="6">
-                    <td class="day-label">Saturday</td>
-                    <td data-period="1"><div class="cell math"><span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span><span class="teacher">Phil</span></div></td>
-                    <td data-period="2"><div class="cell lang"><span class="subj"><a href="english_index.html" style="text-decoration:none; color:inherit;">English</a></span><span class="teacher">Seema D</span></div></td>
-                    <td data-period="3"><div class="cell lang"><span class="subj"><a href="sanskrit_index.html" style="text-decoration:none; color:inherit;">Sanskrit</a></span><span class="teacher">Falguni R</span></div></td>
-                    <td data-period="4"><div class="cell soc"><span class="subj"><a href="social_science_index.html" style="text-decoration:none; color:inherit;">Social Studies</a></span><span class="teacher">KG</span></div></td>
-                    <td data-period="5"><div class="cell tech"><span class="subj"><a href="ict_index.html" style="text-decoration:none; color:inherit;">ICT Practical</a></span><span class="teacher">Comp Lab, Parita</span></div></td>
-                    <td data-period="6"><div class="cell sci"><span class="subj">Physics</span><span class="teacher">Roger Iyer</span></div></td>
-                    <td data-period="7"><div class="cell other"><span class="subj">HPE</span><span class="teacher">Sports Gr / Kartavya</span></div></td>
-                    <td data-period="8"><div class="cell math"><span class="subj"><a href="maths_index.html" style="text-decoration:none; color:inherit;">Maths</a></span><span class="teacher">Phil</span></div></td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- MODAL FOR KAUSHAL BODH (KB) -->
+    <div id="kb-modal" class="modal-overlay" onclick="closeKBModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeKBModal()">&times;</button>
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+                <div style="width:44px; height:44px; border-radius:10px; background:rgba(16,185,129,0.15); color:#10b981; display:flex; align-items:center; justify-content:center; font-size:1.4rem;">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div>
+                    <h3 style="margin:0; font-size:1.25rem; color:#10b981;">Kaushal Bodh (कौशल बोध)</h3>
+                    <span style="font-size:0.85rem; color:var(--text-muted);">Grade 7 Activity Book &bull; NCERT NEP 2020</span>
+                </div>
+            </div>
+            <p style="font-size:0.95rem; line-height:1.65; color:var(--text-main);">
+                <strong>Kaushal Bodh</strong> introduces students to foundational vocational crafts and practical handiwork without academic exam stress:
+            </p>
+            <ul style="font-size:0.92rem; line-height:1.7; padding-left:20px; color:var(--text-main);">
+                <li><strong>Work Form 1 (Agriculture & Environment):</strong> Gardening, seed preservation, soil composting.</li>
+                <li><strong>Work Form 2 (Materials & Engineering):</strong> Woodcraft, paper fabrication, wire joining, basic electrical safety.</li>
+                <li><strong>Work Form 3 (Domestic & Human Services):</strong> Nutrition, tailoring, bookbinding, community service.</li>
+            </ul>
+            <div style="background:var(--bg-color); border:1px solid var(--border); border-radius:8px; padding:12px; margin-top:16px;">
+                <div style="font-size:0.85rem; font-weight:700; color:var(--primary); margin-bottom:4px;">
+                    <i class="fas fa-folder-open"></i> Local Source Material Location:
+                </div>
+                <code style="font-size:0.82rem; color:var(--text-muted); word-break:break-all;">
+                    source_materials/KaushalBodh7.pdf
+                </code>
+            </div>
+        </div>
     </div>
 
+    <!-- SCRIPTS -->
     <script>
-        // Inherit Dark Mode from parent dashboard
-        window.addEventListener('message', (event) => {
-            if (event.data && event.data.theme) {
-                document.body.setAttribute('data-theme', event.data.theme);
+        // Toggle changes highlight on table
+        function toggleChangeHighlight() {
+            document.body.classList.toggle('show-changes');
+            const isShown = document.body.classList.contains('show-changes');
+            const btn = document.getElementById('btn-toggle-changes');
+            const txt = document.getElementById('txt-toggle-changes');
+            if (isShown) {
+                btn.classList.add('active');
+                txt.innerText = 'Highlighting Changes (v2)';
+            } else {
+                btn.classList.remove('active');
+                txt.innerText = 'Show Changed Cells';
             }
-        });
-        // Initial check
-        if (window.parent && window.parent.document.body.getAttribute('data-theme') === 'dark') {
-            document.body.setAttribute('data-theme', 'dark');
         }
 
-        // Live Highlighting Logic
+        // Smooth scroll helper
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if(el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // KB Modal
+        function openKBModal() {
+            document.getElementById('kb-modal').style.display = 'flex';
+        }
+        function closeKBModal() {
+            document.getElementById('kb-modal').style.display = 'none';
+        }
+
+        // Live Highlighting Logic (Updated for 7:30 AM start)
         function updateLiveHighlight() {
             const now = new Date();
             let day = now.getDay(); // 0 = Sun, 1 = Mon ... 6 = Sat
             
-            // Clear previous highlights
             document.querySelectorAll('tr').forEach(tr => tr.classList.remove('active-day'));
             document.querySelectorAll('td').forEach(td => td.classList.remove('active-period'));
 
             if (day >= 1 && day <= 6) {
-                const row = document.querySelector(	r[data-day=""]);
+                const row = document.querySelector(`tr[data-day="${day}"]`);
                 if (row) row.classList.add('active-day');
 
                 const hour = now.getHours();
                 const min = now.getMinutes();
-                const time = hour + min / 60; // decimal hours for easy comparison
+                const time = hour + min / 60; // decimal hours
 
                 let period = -1;
                 
-                if (time >= 7.75 && time < 8.416) period = 1; // 7:45 - 8:25 (8.416)
-                else if (time >= 8.416 && time < 9.166) period = 2; // 8:25 - 9:10
-                else if (time >= 9.166 && time < 9.833) period = 3; // 9:10 - 9:50
-                else if (time >= 9.833 && time < 10.5) period = 4; // 9:50 - 10:30
-                // 10:30 - 10:50 is Break
-                else if (time >= 10.833 && time < 11.5) period = 5; // 10:50 - 11:30
-                else if (time >= 11.5 && time < 12.166) period = 6; // 11:30 - 12:10
-                else if (time >= 12.166 && time < 12.833) period = 7; // 12:10 - 12:50
-                else if (time >= 12.833 && time < 13.5) period = 8; // 12:50 - 13:30
+                // Period 1: 7:30 - 8:25 (7.5 to 8.416)
+                if (time >= 7.5 && time < 8.416) period = 1;
+                // Period 2: 8:25 - 9:10 (8.416 to 9.166)
+                else if (time >= 8.416 && time < 9.166) period = 2;
+                // Period 3: 9:10 - 9:50 (9.166 to 9.833)
+                else if (time >= 9.166 && time < 9.833) period = 3;
+                // Period 4: 9:50 - 10:30 (9.833 to 10.5)
+                else if (time >= 9.833 && time < 10.5) period = 4;
+                // Break: 10:30 - 10:50
+                // Period 5: 10:50 - 11:30 (10.833 to 11.5)
+                else if (time >= 10.833 && time < 11.5) period = 5;
+                // Period 6: 11:30 - 12:10 (11.5 to 12.166)
+                else if (time >= 11.5 && time < 12.166) period = 6;
+                // Period 7: 12:10 - 12:50 (12.166 to 12.833)
+                else if (time >= 12.166 && time < 12.833) period = 7;
+                // Period 8: 12:50 - 13:30 (12.833 to 13.5)
+                else if (time >= 12.833 && time < 13.5) period = 8;
 
                 if (period !== -1 && row) {
-                    const pCell = row.querySelector(	d[data-period=""]);
+                    const pCell = row.querySelector(`td[data-period="${period}"]`);
                     if (pCell) pCell.classList.add('active-period');
                 }
             }
         }
 
         updateLiveHighlight();
-        setInterval(updateLiveHighlight, 60000); // Check every minute
-    </script>
+        setInterval(updateLiveHighlight, 60000);
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const themeBtn = document.querySelector('.theme-toggle');
-    if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
-        themeBtn.classList.add('handled-by-inline');
-        themeBtn.addEventListener('click', (e) => {
-            // Prevent app.js from also firing if it's there
-            e.stopImmediatePropagation();
-            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.body.setAttribute('data-theme', newTheme);
-            const icon = themeBtn.querySelector('i');
-            if(icon) {
-                icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-            localStorage.setItem('pushti-theme', newTheme);
-            
-            if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ theme: newTheme }, '*');
+        // Universal theme persistence
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeBtn = document.querySelector('.theme-toggle');
+            if(themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    document.body.setAttribute('data-theme', newTheme);
+                    const icon = themeBtn.querySelector('i');
+                    if(icon) {
+                        icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                    }
+                    localStorage.setItem('pushti-theme', newTheme);
+                });
+                const savedTheme = localStorage.getItem('pushti-theme') || 'dark';
+                document.body.setAttribute('data-theme', savedTheme);
+                const icon = themeBtn.querySelector('i');
+                if(icon) {
+                    icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                }
             }
         });
-        const savedTheme = localStorage.getItem('pushti-theme');
-        if(savedTheme) {
-            document.body.setAttribute('data-theme', savedTheme);
-            const icon = themeBtn.querySelector('i');
-            if(icon) {
-                icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-        }
-    }
-});
-</script>
+    </script>
 </body>
 </html>
