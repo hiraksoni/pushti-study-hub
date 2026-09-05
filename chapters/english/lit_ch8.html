@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 3: Chapter 2 - The Narayanpur Incident | Class 7 English Literature</title>
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="../../js/firebase-tracker.js"></script>
+    <style>
+        :root {
+            --bg-main: #0B1120;
+            --bg-card: rgba(30, 41, 59, 0.85);
+            --surface: #1E293B;
+            --accent: #F59E0B;
+            --accent-glow: rgba(245, 158, 11, 0.25);
+            --accent-sec: #10B981;
+            --text-main: #F8FAFC;
+            --text-primary: #FFFFFF;
+            --text-muted: #94A3B8;
+            --border: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(245, 158, 11, 0.3);
+            --tag-color: #F59E0B;
+            --tab-active-bg: rgba(245, 158, 11, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.65;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Light mode support */
+        body.light-mode {
+            --bg-main: #F8FAFC;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --surface: #FFFFFF;
+            --accent: #D97706;
+            --accent-glow: rgba(217, 119, 6, 0.2);
+            --accent-sec: #059669;
+            --text-main: #0F172A;
+            --text-primary: #0F172A;
+            --text-muted: #64748B;
+            --border: rgba(0, 0, 0, 0.1);
+            --glass-border: rgba(217, 119, 6, 0.35);
+            --tag-color: #B45309;
+            --tab-active-bg: rgba(217, 119, 6, 0.12);
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 20px 24px 80px 24px;
+        }
+
+        /* Navbar & Top Bar */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateX(-2px);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .theme-toggle-btn, .log-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle-btn:hover, .log-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        /* Hero Header */
+        .chapter-hero {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(16, 185, 129, 0.08));
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px 36px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-hero::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .unit-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: var(--tab-active-bg);
+            border: 1px solid var(--accent);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 0 0 10px 0;
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-author {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .hero-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .hero-tag {
+            padding: 4px 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--tag-color);
+            font-weight: 500;
+        }
+
+        /* 5-Tab Bar */
+        .tab-bar {
+            display: flex;
+            gap: 8px;
+            background: var(--bg-card);
+            padding: 8px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 28px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .tab-btn.active {
+            background: var(--tab-active-bg);
+            color: var(--accent);
+            border-color: var(--glass-border);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Tab Content Panels */
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards & Section Styling */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 26px 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+        }
+
+        .card-title i {
+            color: var(--accent);
+        }
+
+        /* Narrative Story Styling */
+        .scene-card {
+            border-left: 4px solid var(--accent);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 22px;
+            position: relative;
+        }
+
+        .scene-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 10px;
+            background: var(--tab-active-bg);
+            color: var(--accent);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .story-p {
+            font-size: 1.02rem;
+            line-height: 1.8;
+            margin-bottom: 16px;
+            color: var(--text-main);
+        }
+
+        .dialogue {
+            font-style: italic;
+            color: #E2E8F0;
+            border-left: 3px solid rgba(245, 158, 11, 0.4);
+            padding-left: 14px;
+            margin: 10px 0;
+            display: block;
+        }
+
+        body.light-mode .dialogue {
+            color: #334155;
+        }
+
+        .vocab-word {
+            color: var(--accent);
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 1px dashed var(--accent);
+            position: relative;
+        }
+
+        .vocab-word:hover::after {
+            content: attr(data-def);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0F172A;
+            color: #F8FAFC;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--accent);
+            pointer-events: none;
+        }
+
+        /* Image Display */
+        .story-img-container {
+            margin: 22px 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 14px;
+            padding: 14px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .story-img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            max-height: 420px;
+            object-fit: contain;
+        }
+
+        .story-img-caption {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Q&A / Reveal Buttons */
+        .qa-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin-bottom: 16px;
+            transition: border-color 0.2s ease;
+        }
+
+        .qa-card:hover {
+            border-color: var(--glass-border);
+        }
+
+        .q-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .q-badge {
+            background: var(--tab-active-bg);
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .reveal-btn {
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 8px;
+        }
+
+        .reveal-btn:hover {
+            background: var(--accent);
+            color: #0F172A;
+            transform: translateY(-1px);
+        }
+
+        .answer-box {
+            display: none;
+            margin-top: 14px;
+            padding: 14px 18px;
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 3px solid var(--accent-sec);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-main);
+            animation: fadeIn 0.25s ease;
+        }
+
+        /* Flowchart / Graphic Organizer */
+        .flowchart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .flow-step {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+        }
+
+        .flow-step:not(:last-child)::after {
+            content: '↓';
+            position: absolute;
+            bottom: -20px;
+            left: 36px;
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 800;
+            z-index: 2;
+        }
+
+        .flow-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #0F172A;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .flow-content h4 {
+            margin: 0 0 4px 0;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .flow-content p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Interactive Quiz / Collocations */
+        .colloc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .colloc-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .colloc-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .colloc-pair {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .colloc-pill {
+            background: var(--tab-active-bg);
+            color: var(--accent);
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .colloc-ex {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* MCQs / Interactive Choice Engine */
+        .mcq-option {
+            display: block;
+            margin: 8px 0;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .mcq-option:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--accent);
+        }
+
+        .mcq-option.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border-color: var(--accent-sec) !important;
+            color: #10B981 !important;
+            font-weight: 600;
+        }
+
+        .mcq-option.wrong {
+            background: rgba(239, 68, 68, 0.15) !important;
+            border-color: #EF4444 !important;
+            color: #EF4444 !important;
+        }
+
+        /* Hero Attributes Explorer */
+        .attribute-bubble-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .attr-bubble {
+            padding: 8px 18px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .attr-bubble:hover, .attr-bubble.active {
+            background: var(--tab-active-bg);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .attr-detail-box {
+            padding: 16px 20px;
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.65;
+            margin-top: 14px;
+        }
+
+        /* Speech Prompt Box */
+        .speech-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-top: 16px;
+        }
+
+        .speech-guide-item {
+            margin-bottom: 12px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .guide-step-num {
+            background: var(--tab-active-bg);
+            color: var(--accent);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        /* History & Freedom Fighters Cards */
+        .patriot-card {
+            display: flex;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+
+        .patriot-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: var(--tab-active-bg);
+            border: 1px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .patriot-info h4 {
+            margin: 0 0 4px 0;
+            color: var(--text-primary);
+            font-size: 1.05rem;
+        }
+
+        .patriot-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Floating / Interactive Score Tracker */
+        .score-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            background: var(--tab-active-bg);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 1.7rem; }
+            .chapter-hero { padding: 22px 20px; }
+            .tab-btn { min-width: 110px; font-size: 0.8rem; padding: 10px 8px; }
+            .glass-card { padding: 18px 20px; }
+            .patriot-card { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Navigation Bar -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <a href="../../english_index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> English Hub
+                </a>
+                <a href="../../midterm.html" class="back-link">
+                    <i class="fas fa-calendar-check"></i> Midterm Syllabus
+                </a>
+            </div>
+            <div class="nav-right">
+                <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <button class="log-btn" onclick="openChapterLog('eng_lit_ch8')" title="View Chapter Revision Log">
+                    <i class="fas fa-history"></i> Revision Log
+                </button>
+            </div>
+        </header>
+
+        <!-- Chapter Hero Banner -->
+        <div class="chapter-hero">
+            <div class="unit-badge">
+                <i class="fas fa-shield-alt"></i> Unit 3: Real-Life Heroes &bull; Chapter 2
+            </div>
+            <h1 class="hero-title">The Narayanpur Incident</h1>
+            <div class="hero-author">
+                <span><i class="fas fa-feather-alt"></i> By <strong>Shashi Deshpande</strong> (Sahitya Akademi Award & Padma Shri)</span>
+                <span>&bull;</span>
+                <span><i class="fas fa-history"></i> Quit India Movement (1942)</span>
+                <span>&bull;</span>
+                <span><i class="fas fa-clock"></i> Est. Reading & Practice: 25 Mins</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:0.98rem; margin:0 0 14px 0; max-width:850px;">
+                In the turbulent monsoon of 1942, while Mahatma Gandhi's call of <em>"Do or Die"</em> rings across India, an ordinary schoolteacher's family in small-town Narayanpur wages a courageous, non-violent resistance against British rule. Follow 18-year-old Mohan, 13-year-old Babu, and 11-year-old Manju as they navigate a silent protest, a clandestine cyclostyling machine in their puja room, and a dramatic midnight visit by Sub-Inspector Patil.
+            </p>
+            <div class="hero-tags">
+                <span class="hero-tag"><i class="fas fa-book-open"></i> Historical Fiction</span>
+                <span class="hero-tag"><i class="fas fa-flag"></i> Freedom Struggle 1942</span>
+                <span class="hero-tag"><i class="fas fa-users"></i> Student Patriots</span>
+                <span class="hero-tag"><i class="fas fa-print"></i> Underground Resistance</span>
+                <span class="hero-tag"><i class="fas fa-check-circle"></i> Complete 5-Tab Suite</span>
+            </div>
+        </div>
+
+        <!-- 5-Tab Bar -->
+        <nav class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab('tab-story')">
+                <i class="fas fa-book-reader"></i> 1. The Story
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-qa')">
+                <i class="fas fa-question-circle"></i> 2. Q&A & Organizer
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-vocab')">
+                <i class="fas fa-spell-check"></i> 3. Collocations & Moods
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-writing')">
+                <i class="fas fa-microphone-alt"></i> 4. Hero Speech & Writing
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-history')">
+                <i class="fas fa-monument"></i> 5. Quit India & Youth
+            </button>
+        </nav>
+
+        <!-- ============================================================== -->
+        <!-- TAB 1: THE STORY & DRAMATIC NARRATIVE                          -->
+        <!-- ============================================================== -->
+        <div id="tab-story" class="tab-panel active">
+            
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-scroll"></i> Historical Background: Narayanpur, 1942</h2>
+                    <span class="score-pill"><i class="fas fa-calendar-alt"></i> August 1942</span>
+                </div>
+                <p class="story-p">
+                    The year is <strong>1942</strong>—the height of the <span class="vocab-word" data-def="A massive civil disobedience movement launched by Mahatma Gandhi in August 1942 demanding an immediate end to British rule in India">Quit India Movement</span>. In the small town of Narayanpur, an ordinary schoolteacher, a devoted follower of Gandhiji, has just been arrested and hauled away to jail by the British authorities.
+                </p>
+                <p class="story-p">
+                    Left behind in their home are his courageous wife (<strong>Amma</strong>), his elder son—18-year-old college student <strong>Mohan</strong>—younger son <strong>Babu</strong> (aged 13), and daughter <strong>Manju</strong> (aged 11, two years younger). Far from cowering in fear, the entire family is keenly determined to take part in the struggle for mother India's independence.
+                </p>
+            </div>
+
+            <!-- Scene 1 -->
+            <div class="scene-card">
+                <div class="scene-badge"><i class="fas fa-walking"></i> Scene 1: The Silent March to the Barred Gates</div>
+                <p class="story-p">
+                    Manju had just settled down with a book when she was startled by Babu's urgent hiss, almost in her ear:
+                    <span class="dialogue">"Manju, I say, Manju!"</span>
+                </p>
+                <p class="story-p">
+                    Manju looked up with a start. <span class="dialogue">"Oh, Babu, what is it? How you startled me!"</span> Babu urged her to follow him immediately. When she asked about Amma, Babu promised they would be back before their mother returned. Locking the front door with a heavy padlock and thrusting the key at Manju, Babu pulled her along through the streets of Narayanpur in a <span class="vocab-word" data-def="A sudden moment of intense, hurried activity">flurry</span>.
+                </p>
+                <p class="story-p">
+                    The destination was the Collector's office compound. The college students were taking out a protest march. Soon, monsoon clouds broke into a heavy <span class="vocab-word" data-def="A sudden, heavy fall of monsoon rain">downpour</span>, forcing crowds to shelter under a giant tamarind tree.
+                </p>
+                <p class="story-p">
+                    Then came the magical whisper: <em>"They're coming, they're coming!"</em> Heedless of the pouring rain, crowds surged forward. Policemen armed with lathis lined the avenue. But the students marched forward in <strong>complete silence</strong>. No slogans. No shouts. Only the rhythmic shuffle of wet feet, the gentle drip-drip of rain, and the low murmur of onlookers.
+                </p>
+
+                <!-- Illustration 1 -->
+                <div class="story-img-container">
+                    <img src="images/narayanpur/silent_procession_gandhi.png" alt="Silent student procession holding Mahatma Gandhi's portrait aloft facing police">
+                    <div class="story-img-caption">Authentic Textbook Illustration (Page 78): Students solemnly marching with Mahatma Gandhi's portrait in complete silence, defying police intimidation at the Collector's barred gates.</div>
+                </div>
+
+                <p class="story-p">
+                    Babu and Manju spotted Mohan! Dressed in white pyjamas and a cream-coloured shirt, Mohan and another youth held <span class="vocab-word" data-def="Up in the air; high overhead">aloft</span> a large framed portrait of Mahatma Gandhi. Though their arms must have ached from holding it up for so long, their faces remained calm, resolute, and completely expressionless.
+                </p>
+                <p class="story-p">
+                    At the barred iron gates of the Collectorate, leaders including a brave student named <strong>Suman</strong> met the DSP (Deputy Superintendent of Police). The DSP took off his police hat, ruffled his hair, and gave an easy laugh. The students remained deadly serious. Suman handed him a folded sheet of paper. The officer took it without glancing at it and nodded. The students turned their backs on him, shouted together:
+                    <span class="dialogue">"Mahatma Gandhi ki jai!"</span>
+                    And then they briskly marched back the way they had come!
+                </p>
+                <p class="story-p">
+                    <span class="dialogue">"Is that all?"</span> Manju asked in genuine disappointment.
+                </p>
+            </div>
+
+            <!-- Scene 2 -->
+            <div class="scene-card">
+                <div class="scene-badge"><i class="fas fa-brain"></i> Scene 2: The Strategy of War & The Secret Machine</div>
+                <p class="story-p">
+                    <span class="dialogue">"What else did you want? A dance? A drama?"</span> Babu scoffed. Yet, when Mohan returned home, Babu asked him the very same question: why had they retreated so quietly? Were they afraid of the police?
+                </p>
+                <p class="story-p">
+                    Mohan smiled, immensely pleased with the tactical success:
+                    <span class="dialogue">"Scared? Not by a long chalk! We had planned it this way. The police wanted us to protest and become violent so they could beat us up with lathis and haul us away to jail. But we are not prepared to go to jail—not yet! Not until we've given them much more trouble!"</span>
+                </p>
+                <p class="story-p">
+                    When Babu asked what the point was, Mohan explained:
+                    <span class="dialogue">"It's like a declaration of war. That paper was a formal notice served on the Collector, as the representative of His Majesty's British government, ordering them to quit India or face the consequences!"</span>
+                </p>
+                <p class="story-p">
+                    Later that night, after a quiet dinner, a mysterious visitor arrived. Suman and another student slipped into the house. The boy staggered under the weight of a bulky parcel wrapped in layers of old newspaper.
+                </p>
+
+                <!-- Illustration 2 -->
+                <div class="story-img-container">
+                    <img src="images/narayanpur/cyclostyling_machine_parcel.png" alt="Suman and students smuggling the cyclostyling machine into the house">
+                    <div class="story-img-caption">Authentic Textbook Illustration (Page 79): Suman keeping watch at the door as the heavy newspaper-wrapped cyclostyling machine is secretly smuggled inside.</div>
+                </div>
+
+                <p class="story-p">
+                    The mysterious parcel was brought directly into the small <em>puja room</em>. When the layers of newspaper were unpeeled, Babu and Manju stared in awe. It was a <span class="vocab-word" data-def="An early mechanical printing device used before photocopiers to reproduce hundreds of copies of written text from a wax stencil">cyclostyling machine</span>! The students and Amma were preparing to duplicate hundreds of secret copies of Mahatma Gandhi's speech to distribute to the public before daybreak.
+                </p>
+            </div>
+
+            <!-- Scene 3 -->
+            <div class="scene-card">
+                <div class="scene-badge"><i class="fas fa-eye"></i> Scene 3: The Midnight Vigil & Sub-Inspector Patil's Arrival</div>
+                <p class="story-p">
+                    Mohan assigned tasks with military precision: Babu was stationed in the dark front room to keep watch on the deserted street, while Manju sat in the corridor to relay any warning.
+                </p>
+                <p class="story-p">
+                    Babu sat motionless, feeling a nervous thickening in his throat. For the first time, he was actively contributing to the freedom of India. In the silence of the night, the nine o'clock town siren wined. Babu sank into a <span class="vocab-word" data-def="A state of being pleasantly lost in one's deep thoughts; a daydream">reverie</span> about the global war being fought across continents.
+                </p>
+                <p class="story-p">
+                    Suddenly, a bicycle headlight swept across the road! A man got off and walked briskly towards their door. Babu threw himself into the hall: <em>"Someone's coming!"</em>
+                </p>
+                <p class="story-p">
+                    Inside the puja room, the oil wick lamp flickered nervously. Amma emerged and closed the door, ordering the younger children to bed. Then came the sharp knocks on the front door:
+                    <span class="dialogue">Knock, knock!</span>
+                    Mohan opened the door a crack. It was <strong>Sub-Inspector Patil</strong>, an officer in the British police!
+                </p>
+
+                <!-- Illustration 3 -->
+                <div class="story-img-container">
+                    <img src="images/narayanpur/sub_inspector_patil.png" alt="Sub-Inspector Patil arrives at the door late at night to warn the family">
+                    <div class="story-img-caption">Authentic Textbook Illustration (Page 80): Sub-Inspector Patil standing at the doorway, quietly informing Amma and Mohan about an imminent police raid.</div>
+                </div>
+
+                <p class="story-p">
+                    Amma held Manju's hand in a tight, trembling clutch, yet kept her voice steady. Sub-Inspector Patil spoke softly:
+                    <span class="dialogue">"I haven't come to trouble you. Your husband was my friend in school. I am a friend. There is going to be a search in your house tonight. The Sahib heard about a cyclostyling machine being used here to copy the Mahatma's speech."</span>
+                </p>
+                <p class="story-p">
+                    Mohan furiously denied having any machine, accusing Patil of spying. But Sub-Inspector Patil looked directly at Amma:
+                    <span class="dialogue">"Mohan, you're still young. There are things you don't understand. I am a policeman, yes, but your father was and still is my friend. And this is my country as much as it is yours! Give the machine to me quickly—I will keep it safe until the danger passes."</span>
+                </p>
+                <p class="story-p">
+                    Amma made an instinctive, courageous decision. She trusted Patil's patriotic conscience. She opened the puja room door, called Suman out, and Mohan <span class="vocab-word" data-def="Carried or pulled something heavy with great effort and physical strain">lugged</span> the heavy machine out. Babu swiftly handed Patil a large cloth bag. In minutes, Patil, Mohan, and Suman slipped away into the dark with the machine and the stencils.
+                </p>
+            </div>
+
+            <!-- Scene 4 -->
+            <div class="scene-card">
+                <div class="scene-badge"><i class="fas fa-door-closed"></i> Scene 4: The Midnight Raid</div>
+                <p class="story-p">
+                    Mohan returned shortly, whispering that Suman was safely away. The house descended into an uncanny, breathless silence. Amma urged everyone to go to sleep.
+                </p>
+                <p class="story-p">
+                    Sleep seemed impossible, yet exhausted by the tension, Manju drifted off. Suddenly, she woke with a violent jolt to a furious, thundering pounding on the front door!
+                </p>
+
+                <!-- Illustration 4 -->
+                <div class="story-img-container">
+                    <img src="images/narayanpur/police_midnight_raid.png" alt="British police officers raid the house with kerosene lanterns late at night">
+                    <div class="story-img-caption">Authentic Textbook Illustration (Page 82): Armed British police officers brandishing batons and kerosene lanterns at the doorway to raid the home.</div>
+                </div>
+
+                <p class="story-p">
+                    <span class="dialogue">"Open the door!" a harsh, authoritarian voice barked into the night.</span>
+                </p>
+                <p class="story-p">
+                    Amma comforted a terrified Manju with a gentle pat on the shoulder. <span class="dialogue">"Mohan, see who it is,"</span> Amma said calmly. But this time, nobody had any doubts. There was no need for Mohan to announce:
+                    <span class="dialogue">"Amma, it's the police."</span>
+                </p>
+                <p class="story-p" style="background:rgba(16, 185, 129, 0.1); border-left:4px solid var(--accent-sec); padding:12px 16px; border-radius:8px;">
+                    <strong>The Climax:</strong> The British police had arrived to seize the illicit machine and arrest the underground rebels. But thanks to Amma's sharp intuition, the children's disciplined vigilance, and Sub-Inspector Patil's covert patriotism, the machine was already miles away in safe hands. The British officers would search every corner of the house in vain!
+                </p>
+            </div>
+
+            <!-- Author Card -->
+            <div class="glass-card" style="margin-top:24px;">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-user-edit"></i> About the Author: Shashi Deshpande</h3>
+                </div>
+                <p class="story-p">
+                    <strong>Shashi Deshpande</strong> (born 1938 in Dharwad, Karnataka) is one of India's most celebrated English-language novelists, short-story writers, and essayists. Educated in Mumbai and Bangalore, she is renowned for her acute psychological depth, vivid depictions of family dynamics, and the quiet heroism of Indian women and children.
+                </p>
+                <p class="story-p">
+                    She was awarded the prestigious <strong>Sahitya Akademi Award</strong> in 1990 for her novel <em>That Long Silence</em>, and was honoured by the Government of India with the <strong>Padma Shri</strong> in 2009 for her outstanding contributions to Indian Literature. <em>The Narayanpur Incident</em> showcases her unique ability to bring history alive through the eyes of courageous young protagonists.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- TAB 2: COMPREHENSION, FLOWCHART & Q&A                          -->
+        <!-- ============================================================== -->
+        <div id="tab-qa" class="tab-panel">
+
+            <!-- Section 1: Textbook MCQs -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-tasks"></i> 1. Textbook Comprehension MCQs (Page 83)</h2>
+                    <span class="score-pill" id="mcq-score">Score: 0/3</span>
+                </div>
+                
+                <!-- Q1 -->
+                <div class="qa-card" id="mcq-box-1">
+                    <div class="q-title"><span class="q-badge">Q1 (a)</span> The setting of the Narayanpur incident is:</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, true, 1)">i. during the Quit India Movement</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 1)">ii. during the civil war for equal rights</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 1)">iii. the day India got its Independence</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 1)">iv. when Gandhiji encouraged the use of khadi</div>
+                    <div class="answer-box" id="mcq-ans-1">
+                        <strong>Correct Answer: i. during the Quit India Movement.</strong><br>
+                        <em>Explanation:</em> The opening sentence of the story clearly specifies: "The year is 1942—the time of the Quit India Movement."
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="qa-card" id="mcq-box-2">
+                    <div class="q-title"><span class="q-badge">Q2 (b)</span> Narayanpur is seething within and it all comes to a head:</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, true, 2)">i. when a group of children dare to confront the police</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 2)">ii. the daring brother Mohan goes underground</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 2)">iii. the family moves to a sleepy village with no turbulence</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 2)">iv. people feel independence ought to be the top priority</div>
+                    <div class="answer-box" id="mcq-ans-2">
+                        <strong>Correct Answer: i. when a group of children dare to confront the police.</strong><br>
+                        <em>Explanation:</em> The tension culminates when the youth and schoolchildren actively organize processions, face armed DSPs, and operate an underground communication network.
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="qa-card" id="mcq-box-3">
+                    <div class="q-title"><span class="q-badge">Q3 (c)</span> The cyclostyling machine had to be smuggled into the house because:</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, true, 3)">i. the British did not want anti-government material distributed</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 3)">ii. the police had already arrested Appa</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 3)">iii. procuring machines then was not as easy as now</div>
+                    <div class="mcq-option" onclick="checkMCQ(this, false, 3)">iv. all of the above</div>
+                    <div class="answer-box" id="mcq-ans-3">
+                        <strong>Correct Answer: i. the British did not want anti-government material distributed.</strong><br>
+                        <em>Explanation:</em> Under the British Raj's censorship laws during 1942, duplicating and distributing nationalist speeches of Mahatma Gandhi was strictly banned as seditious activity.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Graphic Organizer Flowchart -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-sitemap"></i> 2. Graphic Organizer Flowchart (Page 84)</h2>
+                    <span class="score-pill"><i class="fas fa-project-diagram"></i> Story Architecture</span>
+                </div>
+                <p style="color:var(--text-muted); font-size:0.95rem;">
+                    The graphic organizer tracks the narrative plot arc of <em>The Narayanpur Incident</em> from initial setting to suspenseful climax:
+                </p>
+
+                <div class="flowchart-container">
+                    <div class="flow-step">
+                        <div class="flow-num"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="flow-content">
+                            <h4>SETTING & CONTEXT</h4>
+                            <p><strong>When:</strong> August 1942 &bull; <strong>Where:</strong> Narayanpur (small Indian town) &bull; <strong>Background:</strong> The Quit India Movement; Father (schoolteacher) arrested by the British.</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="flow-num"><i class="fas fa-users"></i></div>
+                        <div class="flow-content">
+                            <h4>CHARACTERS INVOLVED</h4>
+                            <p><strong>Major:</strong> Mohan (18), Babu (13), Manju (11), Amma, Suman.<br><strong>Minor:</strong> Sub-Inspector Patil, DSP, British Police, Appa (father in jail).</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="flow-num"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="flow-content">
+                            <h4>PLOT / CENTRAL PROBLEM</h4>
+                            <p>Young patriots wage non-violent resistance against British rule and take the perilous risk of running a clandestine printing press to distribute Gandhiji's banned message.</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="flow-num">1</div>
+                        <div class="flow-content">
+                            <h4>EVENT 1: The Silent Procession</h4>
+                            <p>College students march silently holding Gandhiji's portrait aloft to the Collectorate gates; they hand a Quit India notice to the DSP without offering any excuse for police violence.</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="flow-num">2</div>
+                        <div class="flow-content">
+                            <h4>EVENT 2: The Secret Cyclostyling Operation</h4>
+                            <p>Suman and fellow student secretly smuggle a heavy cyclostyling machine into Mohan's puja room wrapped in newspapers to duplicate the Mahatma's speech under candlelight.</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-step">
+                        <div class="flow-num">3</div>
+                        <div class="flow-content">
+                            <h4>EVENT 3: Sub-Inspector Patil's Covert Warning</h4>
+                            <p>Patil, an old schoolmate of their father, arrives at midnight to warn of a raid. Amma trusts his national conscience and hands over the machine for safekeeping.</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-step" style="border-color:var(--accent-sec);">
+                        <div class="flow-num" style="background:var(--accent-sec); color:white;"><i class="fas fa-check"></i></div>
+                        <div class="flow-content">
+                            <h4>ENDING / CLIMAX</h4>
+                            <p>The British police pound furiously on the door to conduct a search, but the secret machine and leaflets are already safely gone—foiling the colonial raid!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Critical Thinking Q&A -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-lightbulb"></i> 3. Critical Thinking & Detailed Q&A (Page 85)</h2>
+                </div>
+
+                <!-- Q1 -->
+                <div class="qa-card">
+                    <div class="q-title">
+                        <span class="q-badge">Q1</span> In the story, Amma and her children Mohan, Babu, and Manju are acutely aware of their role and duty towards their nation. Do you agree? Give reasons.
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer('ans-ct-1', this)">
+                        <i class="fas fa-eye"></i> Reveal Answer
+                    </button>
+                    <div class="answer-box" id="ans-ct-1">
+                        <strong>Answer:</strong> Yes, I completely agree. Each family member demonstrates profound political awareness, disciplined courage, and clear commitment to the freedom struggle:
+                        <ul style="margin:8px 0; padding-left:20px;">
+                            <li><strong>Mohan (18):</strong> A disciplined student leader who understands protest tactics—marching silently to deny the police any excuse for lathi charges, and organizing underground communication with the cyclostyling machine.</li>
+                            <li><strong>Amma:</strong> The moral backbone of the family. Despite her husband's arrest, she opens her sacred puja room for underground patriotic work and exhibits decisive wisdom in trusting Sub-Inspector Patil.</li>
+                            <li><strong>Babu (13):</strong> Keeps a vigilant night watch in the dark front room, overcoming fear and understanding the gravity of his role as the family's lookout.</li>
+                            <li><strong>Manju (11):</strong> Acts as the vital relay link between Babu and the puja room, and readily gives up her fear to assist the national cause.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="qa-card">
+                    <div class="q-title">
+                        <span class="q-badge">Q2</span> Why did the students march in complete silence instead of shouting anti-British slogans?
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer('ans-ct-2', this)">
+                        <i class="fas fa-eye"></i> Reveal Answer
+                    </button>
+                    <div class="answer-box" id="ans-ct-2">
+                        <strong>Answer:</strong> The silent march was a deliberate, masterly tactical strategy. As Mohan explained, the British police fully expected the students to shout slogans, turn unruly, or throw stones. That would have given the police a legal pretext to unleash brutal lathi charges and haul all the student leaders away to jail. By marching in absolute, dignified silence, the students denied the police any excuse to use force, allowing them to remain free to wage further underground resistance.
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="qa-card">
+                    <div class="q-title">
+                        <span class="q-badge">Q3</span> What was the notice served to the Collector?
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer('ans-ct-3', this)">
+                        <i class="fas fa-eye"></i> Reveal Answer
+                    </button>
+                    <div class="answer-box" id="ans-ct-3">
+                        <strong>Answer:</strong> The paper handed by Suman to the DSP was an ultimatum served on the District Collector as the representative of the British Crown (His Majesty's government). It officially notified the colonial administration that the people of Narayanpur considered British rule an occupation, and demanded that the British <strong>"Quit India"</strong> immediately or face the consequences of total non-cooperation and resistance.
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="qa-card">
+                    <div class="q-title">
+                        <span class="q-badge">Q4</span> Why did Mohan distrust Sub-Inspector Patil, and why did Amma decide to trust him?
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer('ans-ct-4', this)">
+                        <i class="fas fa-eye"></i> Reveal Answer
+                    </button>
+                    <div class="answer-box" id="ans-ct-4">
+                        <strong>Answer:</strong> 
+                        <ul style="margin:6px 0; padding-left:20px;">
+                            <li><strong>Mohan's Distrust:</strong> Mohan saw Patil only as a police officer wearing the British uniform—an agent of the oppressive colonial machinery who had already imprisoned his father.</li>
+                            <li><strong>Amma's Trust:</strong> Amma recognized Patil as an old schoolmate and lifelong friend of her husband. More importantly, she heard sincerity in his voice when he declared: <em>"I am a policeman, yes, but your father was and still is my friend. And this is my country as much as it is yours."</em> Amma realized that true patriots existed even inside the police force, working secretly to protect freedom fighters.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="qa-card">
+                    <div class="q-title">
+                        <span class="q-badge">Q5</span> Conclusive Ending Paragraph (80 Words) beginning with: <em>"Mohan walked up to the door and opened it..."</em>
+                    </div>
+                    <button class="reveal-btn" onclick="toggleAnswer('ans-ct-5', this)">
+                        <i class="fas fa-eye"></i> Reveal Answer
+                    </button>
+                    <div class="answer-box" id="ans-ct-5">
+                        <strong>Model Paragraph (Textbook Page 85, Question 2):</strong><br>
+                        <em>Mohan walked up to the door and opened it.</em> A senior police inspector and four constables with lanterns pushed their way inside. "Where is the machine? We know you are printing the Mahatma's treasonous speeches!" the officer barked, overturning beds and raiding the kitchen. They barged into the puja room, finding only brass lamps, incense, and pictures of deities. Frustrated and empty-handed, the officer spat in anger and marched his men out. Behind the bolted door, Amma and the children exchanged proud, triumphant smiles into the night.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- TAB 3: COLLOCATIONS & WORDS THAT EXPRESS MOODS                 -->
+        <!-- ============================================================== -->
+        <div id="tab-vocab" class="tab-panel">
+
+            <!-- Collocations -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-link"></i> 1. Collocations (Textbook Pages 85–86)</h2>
+                    <span class="score-pill"><i class="fas fa-book"></i> Natural English Pairs</span>
+                </div>
+                <p style="color:var(--text-muted); font-size:0.95rem;">
+                    <strong>Definition:</strong> A <em>collocation</em> is a combination of words that commonly occur together and sound natural to native speakers (e.g., we say <em>"heavy rain"</em>, never <em>"weighty rain"</em>).
+                </p>
+
+                <div class="colloc-grid">
+                    <div class="colloc-card">
+                        <div class="colloc-pair"><span class="colloc-pill">a + iii</span> Great Joy</div>
+                        <div class="colloc-ex"><em>"Topping the exam was a moment of <strong>great joy</strong> for Meenakshi."</em></div>
+                    </div>
+                    <div class="colloc-card">
+                        <div class="colloc-pair"><span class="colloc-pill">b + vi</span> Big Mistake</div>
+                        <div class="colloc-ex"><em>"Wasting my time in silly activities was a <strong>big mistake</strong>."</em></div>
+                    </div>
+                    <div class="colloc-card">
+                        <div class="colloc-pair"><span class="colloc-pill">c + v</span> Heavy Rain</div>
+                        <div class="colloc-ex"><em>"The roads are flooded because of <strong>heavy rain</strong>."</em></div>
+                    </div>
+                    <div class="colloc-card">
+                        <div class="colloc-pair"><span class="colloc-pill">d + ii</span> Deep Thought</div>
+                        <div class="colloc-ex"><em>"I saw him sitting alone under the tree in <strong>deep thought</strong>."</em></div>
+                    </div>
+                    <div class="colloc-card">
+                        <div class="colloc-pair"><span class="colloc-pill">e + i</span> Large Population</div>
+                        <div class="colloc-ex"><em>"Providing employment to such a <strong>large population</strong> is a difficult task."</em></div>
+                    </div>
+                    <div class="colloc-card">
+                        <div class="colloc-pair"><span class="colloc-pill">f + iv</span> Strong Wind</div>
+                        <div class="colloc-ex"><em>"I could barely take a step forward. The <strong>strong wind</strong> was pushing me back."</em></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Words that Express Moods -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-smile-beam"></i> 2. Words That Express Moods (Textbook Page 86)</h2>
+                    <span class="score-pill"><i class="fas fa-heart"></i> Emotional Vocabulary</span>
+                </div>
+                <p style="color:var(--text-muted); font-size:0.95rem;">
+                    In <em>The Narayanpur Incident</em>, words convey the characters' intense psychological states. Match each mood word with its exact meaning:
+                </p>
+
+                <div style="overflow-x:auto;">
+                    <table style="width:100%; border-collapse:collapse; margin:16px 0; font-size:0.95rem;">
+                        <thead>
+                            <tr style="background:rgba(255,255,255,0.05); text-align:left;">
+                                <th style="padding:10px 14px; border-bottom:2px solid var(--accent); color:var(--accent);">Mood Word</th>
+                                <th style="padding:10px 14px; border-bottom:2px solid var(--accent); color:var(--accent);">Exact Meaning</th>
+                                <th style="padding:10px 14px; border-bottom:2px solid var(--accent); color:var(--accent);">Textbook Sentence Practice</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom:1px solid var(--border);">
+                                <td style="padding:10px 14px; font-weight:700; color:var(--text-primary);">1. Amused</td>
+                                <td style="padding:10px 14px; color:var(--accent-sec);"><i class="fas fa-arrow-right"></i> Laughing / Pleasantly Entertained</td>
+                                <td style="padding:10px 14px;">The children were <strong>amused</strong> to see the clown.</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid var(--border);">
+                                <td style="padding:10px 14px; font-weight:700; color:var(--text-primary);">2. Content</td>
+                                <td style="padding:10px 14px; color:var(--accent-sec);"><i class="fas fa-arrow-right"></i> Satisfied / At Peace</td>
+                                <td style="padding:10px 14px;">Rahul seemed very <strong>content</strong> in life. He did not aspire for anything else.</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid var(--border);">
+                                <td style="padding:10px 14px; font-weight:700; color:var(--text-primary);">3. Ecstatic</td>
+                                <td style="padding:10px 14px; color:var(--accent-sec);"><i class="fas fa-arrow-right"></i> Overjoyed / Extremely Happy</td>
+                                <td style="padding:10px 14px;">Lizzy was <strong>ecstatic</strong> when she topped her exam.</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid var(--border);">
+                                <td style="padding:10px 14px; font-weight:700; color:var(--text-primary);">4. Enraged</td>
+                                <td style="padding:10px 14px; color:var(--accent-sec);"><i class="fas fa-arrow-right"></i> Furious / Filled with Anger</td>
+                                <td style="padding:10px 14px;">The rude behaviour of the student made the teacher <strong>enraged</strong>.</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid var(--border);">
+                                <td style="padding:10px 14px; font-weight:700; color:var(--text-primary);">5. Melancholic</td>
+                                <td style="padding:10px 14px; color:var(--accent-sec);"><i class="fas fa-arrow-right"></i> Sad / Mournful / Pensive</td>
+                                <td style="padding:10px 14px;">I saw the earthquake victims looking <strong>melancholic</strong>.</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid var(--border);">
+                                <td style="padding:10px 14px; font-weight:700; color:var(--text-primary);">6. Anxious</td>
+                                <td style="padding:10px 14px; color:var(--accent-sec);"><i class="fas fa-arrow-right"></i> Worried / Uneasy / Apprehensive</td>
+                                <td style="padding:10px 14px;">Mini was <strong>anxious</strong> because her mother was unwell.</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid var(--border);">
+                                <td style="padding:10px 14px; font-weight:700; color:var(--text-primary);">7. Frustration</td>
+                                <td style="padding:10px 14px; color:var(--accent-sec);"><i class="fas fa-arrow-right"></i> Disappointment / Feeling Blocked</td>
+                                <td style="padding:10px 14px;">Nikhil was unhappy. Repeated failure had led to a lot of <strong>frustration</strong>.</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid var(--border);">
+                                <td style="padding:10px 14px; font-weight:700; color:var(--text-primary);">8. Terrified</td>
+                                <td style="padding:10px 14px; color:var(--accent-sec);"><i class="fas fa-arrow-right"></i> Horrified / Extremely Frightened</td>
+                                <td style="padding:10px 14px;">The knocking on the door in the middle of the night <strong>terrified</strong> me.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- TAB 4: HERO ATTRIBUTES & SPEECH WRITING                        -->
+        <!-- ============================================================== -->
+        <div id="tab-writing" class="tab-panel">
+
+            <!-- Hero Attributes Mind Map -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-shield-virus"></i> 1. Attributes of a Real-Life Hero (Page 87 Mind Map)</h2>
+                    <span class="score-pill"><i class="fas fa-medal"></i> Click to Explore</span>
+                </div>
+                <p style="color:var(--text-muted); font-size:0.95rem;">
+                    Heroes in real life are rarely fictional superhumans. As note on page 87 states: <em>"Real-life heroes often come from ordinary families. They do not win all their battles at one go, and are often challenged by the very people they seek to help (like Pandita Ramabai)."</em>
+                </p>
+
+                <div class="attribute-bubble-grid">
+                    <div class="attr-bubble active" onclick="showAttrDetail('brave', this)">
+                        <i class="fas fa-fire"></i> Brave
+                    </div>
+                    <div class="attr-bubble" onclick="showAttrDetail('smart', this)">
+                        <i class="fas fa-brain"></i> Smart & Clever
+                    </div>
+                    <div class="attr-bubble" onclick="showAttrDetail('ethical', this)">
+                        <i class="fas fa-balance-scale"></i> Ethical & Moral
+                    </div>
+                    <div class="attr-bubble" onclick="showAttrDetail('determined', this)">
+                        <i class="fas fa-mountain"></i> Determined
+                    </div>
+                    <div class="attr-bubble" onclick="showAttrDetail('challenges', this)">
+                        <i class="fas fa-trophy"></i> Love Challenges
+                    </div>
+                    <div class="attr-bubble" onclick="showAttrDetail('battles', this)">
+                        <i class="fas fa-fist-raised"></i> Fight Their Own Battles
+                    </div>
+                    <div class="attr-bubble" onclick="showAttrDetail('thoughtful', this)">
+                        <i class="fas fa-hand-holding-heart"></i> Thoughtful & Compassionate
+                    </div>
+                </div>
+
+                <div class="attr-detail-box" id="attr-display">
+                    <strong>Brave (Courageous):</strong> True courage is not the absence of fear, but taking principled action in spite of fear. Mohan, Babu, and Amma felt fear when the police knocked, yet their commitment to India’s freedom propelled them to act bravely.
+                </div>
+            </div>
+
+            <!-- Speech Writing Guide & Sample -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-bullhorn"></i> 2. Inspirational Speech Writing Template (Page 87)</h2>
+                </div>
+                <p style="color:var(--text-muted); font-size:0.95rem;">
+                    Textbook prompt: <em>"Imagine you know someone who has the qualities of a real-life hero. Write an inspirational speech that an ordinary hero might deliver."</em>
+                </p>
+
+                <div class="speech-box">
+                    <div class="speech-guide-item">
+                        <div class="guide-step-num">1</div>
+                        <div>
+                            <strong>Opening Salutation & Hook:</strong>
+                            <p style="margin:4px 0 0 0; color:var(--text-muted); font-size:0.9rem;">Greet the audience warmly and state your core conviction.</p>
+                        </div>
+                    </div>
+                    <div class="speech-guide-item">
+                        <div class="guide-step-num">2</div>
+                        <div>
+                            <strong>Statement of Problem / Thesis:</strong>
+                            <p style="margin:4px 0 0 0; color:var(--text-muted); font-size:0.9rem;">Identify an injustice or challenge facing the community (e.g., colonial tyranny, apathy, inequality).</p>
+                        </div>
+                    </div>
+                    <div class="speech-guide-item">
+                        <div class="guide-step-num">3</div>
+                        <div>
+                            <strong>Call to Moral Action:</strong>
+                            <p style="margin:4px 0 0 0; color:var(--text-muted); font-size:0.9rem;">Provide realistic, disciplined solutions and invoke solidarity.</p>
+                        </div>
+                    </div>
+                    <div class="speech-guide-item">
+                        <div class="guide-step-num">4</div>
+                        <div>
+                            <strong>Rousing Conclusion:</strong>
+                            <p style="margin:4px 0 0 0; color:var(--text-muted); font-size:0.9rem;">End with an unforgettable slogan or pledge that leaves the listener inspired.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:20px; margin-top:20px;">
+                    <h4 style="color:var(--accent); margin:0 0 10px 0;"><i class="fas fa-file-alt"></i> Model Student Speech: "The Power in Silent Courage"</h4>
+                    <p class="story-p" style="font-size:0.95rem; font-style:italic;">
+                        "Respected teachers and fellow students,<br><br>
+                        Good morning. Today, when we think of heroes, our minds often rush to silver screens and caped warriors. But history teaches us that true heroes are born in ordinary homes—in the quiet defiance of students like Mohan, Suman, and young Babu in Narayanpur in 1942.<br><br>
+                        When the British banned free speech, these young patriots did not wait for adult leaders to rescue them. They picked up the mantle of freedom. They marched without shouting violent slogans, knowing that dignity is a far more devastating weapon than anger. They hid cyclostyling machines in sacred prayer rooms, risking their lives so that the voice of Mahatma Gandhi could reach every doorstep.<br><br>
+                        Friends, our country no longer faces foreign chains, but we face modern battles—poverty, illiteracy, corruption, and climate crisis. You do not need a uniform or political office to be a hero today. When you plant a tree, speak up against bullying, help an underprivileged child learn to read, or uphold truth with integrity, you are continuing the sacred legacy of Narayanpur.<br><br>
+                        Let us remember: extraordinary courage resides within every ordinary Indian. Thank you. Jai Hind!"
+                    </p>
+                </div>
+            </div>
+
+            <!-- Multilingualism: National War Memorial -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-monument"></i> 3. Multilingualism: National War Memorial Tribute (Page 87)</h2>
+                </div>
+                <p style="color:var(--text-muted); font-size:0.95rem;">
+                    The National War Memorial in New Delhi commemorates over 26,000 soldiers of the Indian Armed Forces who made the supreme sacrifice to defend our nation's sovereignty. Here is a tri-lingual tribute:
+                </p>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px; margin-top:14px;">
+                    <div style="background:rgba(255,255,255,0.03); padding:16px; border-radius:12px; border:1px solid var(--border);">
+                        <span style="color:var(--accent); font-weight:700; font-size:0.85rem; text-transform:uppercase;">English</span>
+                        <p style="margin:8px 0 0 0; font-size:0.95rem; font-style:italic; line-height:1.6;">
+                            "When you go home, tell them of us and say,<br>
+                            For your tomorrow, we gave our today."
+                        </p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); padding:16px; border-radius:12px; border:1px solid var(--border);">
+                        <span style="color:#10B981; font-weight:700; font-size:0.85rem; text-transform:uppercase;">Hindi (राष्ट्रकवि दिनकर)</span>
+                        <p style="margin:8px 0 0 0; font-size:0.95rem; font-style:italic; line-height:1.6;">
+                            "कलम, आज उनकी जय बोल!<br>
+                            जला अस्थियाँ बारी-बारी, छिटकाई जिसने चिंगारी,<br>
+                            जो चढ़ गये पुण्यवेदी पर, लिए बिना गर्दन का मोल।<br>
+                            कलम, आज उनकी जय बोल!"
+                        </p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); padding:16px; border-radius:12px; border:1px solid var(--border);">
+                        <span style="color:#60A5FA; font-weight:700; font-size:0.85rem; text-transform:uppercase;">Sanskrit (संस्कृतम्)</span>
+                        <p style="margin:8px 0 0 0; font-size:0.95rem; font-style:italic; line-height:1.6;">
+                            "जननी जन्मभूमिश्च स्वर्गादपि गरीयसी।"<br>
+                            <span style="font-size:0.85rem; color:var(--text-muted);">(Mother and Motherland are more exalted and sacred than Heaven itself.)</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- TAB 5: QUIT INDIA 1942 & REAL YOUTH PATRIOTS                   -->
+        <!-- ============================================================== -->
+        <div id="tab-history" class="tab-panel">
+
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-history"></i> The Quit India Movement & Underground Resistance (1942)</h2>
+                    <span class="score-pill"><i class="fas fa-flag"></i> Historic Context</span>
+                </div>
+                <p class="story-p">
+                    On <strong>8 August 1942</strong>, at the Gowalia Tank Maidan in Bombay (now August Kranti Maidan), Mahatma Gandhi delivered his historic <em>Quit India</em> speech with the electrifying mantra: <strong>"Karo ya Maro" (Do or Die)</strong>.
+                </p>
+                <p class="story-p">
+                    Within hours, the British colonial government arrested Mahatma Gandhi, Jawaharlal Nehru, Sardar Vallabhbhai Patel, and virtually every senior leader of the Indian National Congress. The British expected the movement to collapse overnight. Instead, India's youth, students, women, and ordinary citizens stepped forward to lead the nation.
+                </p>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:18px; margin:20px 0;">
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:18px;">
+                        <h4 style="color:var(--accent); margin:0 0 8px 0;"><i class="fas fa-print"></i> The Cyclostyling Press</h4>
+                        <p style="margin:0; font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                            With all printing presses seized and newspapers censored, students typed messages on wax stencils and operated hand-cranked cyclostyling machines in secret cellars and temples to distribute bulletins across towns.
+                        </p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:18px;">
+                        <h4 style="color:var(--accent-sec); margin:0 0 8px 0;"><i class="fas fa-broadcast-tower"></i> Congress Radio</h4>
+                        <p style="margin:0; font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                            22-year-old student <strong>Usha Mehta</strong> set up an underground radio station that broadcasted the true news of the freedom struggle across India from secret locations in Bombay, constantly evading British detection.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real Teenage Freedom Fighters -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-child"></i> Real Teen Freedom Fighters of 1942</h2>
+                </div>
+
+                <!-- Kanaklata Barua -->
+                <div class="patriot-card">
+                    <div class="patriot-icon"><i class="fas fa-female"></i></div>
+                    <div class="patriot-info">
+                        <h4>Kanaklata Barua (Assam, Age: 17) &bull; <em>"Birbala"</em></h4>
+                        <p>
+                            In September 1942, 17-year-old Kanaklata led a procession of unarmed villagers holding the Tricolor towards the Gohpur police station to hoist the Indian flag. When British police threatened to shoot, she walked forward fearlessly, declaring: <em>"You can kill my body, but you cannot kill our freedom!"</em> She was shot dead clutching the flag, which fellow patriot Mukunda Kakati caught before it touched the ground.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Shirish Kumar -->
+                <div class="patriot-card">
+                    <div class="patriot-icon"><i class="fas fa-flag"></i></div>
+                    <div class="patriot-info">
+                        <h4>Shirish Kumar Mehta (Nandurbar, Maharashtra, Age: 15)</h4>
+                        <p>
+                            During the Quit India protests in September 1942, 15-year-old school student Shirish Kumar took out a peaceful procession of schoolchildren carrying the national flag. When British police aimed their guns at young girls in the march, Shirish stepped in front of the bullets shouting <em>"Vande Mataram!"</em> and laid down his life along with four school companions.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Matangini Hazra -->
+                <div class="patriot-card">
+                    <div class="patriot-icon"><i class="fas fa-dove"></i></div>
+                    <div class="patriot-info">
+                        <h4>Matangini Hazra (Tamluk, Bengal, Age: 73) &bull; <em>"Gandhi Buri"</em></h4>
+                        <p>
+                            Affectionately called "Old Lady Gandhi", 73-year-old Matangini led a procession of 6,000 freedom fighters to take over the Tamluk police station in 1942. Even after British bullets struck both her hands, she kept the Tricolor flying high and chanted <em>"Vande Mataram"</em> until her dying breath.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Youth Action Today -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-hands-helping"></i> Youth Action: How Pushti & Class 7 Students Can Serve India Today</h2>
+                </div>
+                <p style="color:var(--text-muted); font-size:0.95rem;">
+                    Textbook page 85 prompt: <em>"During the freedom struggle, students were involved in non-violent political activities. What actions can students take today to contribute positively to their country?"</em>
+                </p>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px; margin-top:16px;">
+                    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:10px; padding:14px;">
+                        <h4 style="color:var(--accent); margin:0 0 6px 0;"><i class="fas fa-graduation-cap"></i> 1. Academic Excellence</h4>
+                        <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Studying with passion and discipline to develop scientific and creative problem-solving skills for India's progress.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:10px; padding:14px;">
+                        <h4 style="color:var(--accent-sec); margin:0 0 6px 0;"><i class="fas fa-seedling"></i> 2. Environmental Stewardship</h4>
+                        <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Eliminating single-use plastics, conserving water, planting indigenous trees, and championing clean energy in Bhavnagar.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:10px; padding:14px;">
+                        <h4 style="color:#60A5FA; margin:0 0 6px 0;"><i class="fas fa-heart"></i> 3. Civic Empathy & Respect</h4>
+                        <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Treating every citizen with equality, opposing bullying, respecting public property, and honoring India's diverse heritage.</p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:10px; padding:14px;">
+                        <h4 style="color:#EC4899; margin:0 0 6px 0;"><i class="fas fa-mobile-alt"></i> 4. Digital Truth & Literacy</h4>
+                        <p style="margin:0; font-size:0.88rem; color:var(--text-muted);">Promoting factual knowledge online, helping elders learn digital tools, and refusing to spread rumors or fake news.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Chapter Logs & Interactive Scripts -->
+    <script src="../../js/chapter_logs.js"></script>
+    <script>
+        // Web Audio Synthesizer for Interactive Feedback
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playChime(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15); // A5
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.35);
+            } else if (type === 'wrong') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(260, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(220, audioCtx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime); // E5
+                gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.12);
+            }
+        }
+
+        // Tab Switching Engine
+        function switchTab(tabId) {
+            playChime('click');
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+
+            event.currentTarget.classList.add('active');
+            const target = document.getElementById(tabId);
+            if (target) {
+                target.classList.add('active');
+            }
+            window.scrollTo({ top: 120, behavior: 'smooth' });
+        }
+
+        // Dark/Light Mode Toggle
+        function toggleTheme() {
+            playChime('click');
+            const body = document.body;
+            body.classList.toggle('light-mode');
+            const icon = document.getElementById('theme-icon');
+            if (body.classList.contains('light-mode')) {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        }
+
+        // Reveal Answer Toggle
+        function toggleAnswer(ansId, btn) {
+            playChime('click');
+            const ansBox = document.getElementById(ansId);
+            if (!ansBox) return;
+            if (ansBox.style.display === 'block') {
+                ansBox.style.display = 'none';
+                btn.innerHTML = '<i class="fas fa-eye"></i> Reveal Answer';
+            } else {
+                ansBox.style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
+            }
+        }
+
+        // MCQ Engine
+        let answeredQuestions = new Set();
+        let correctCount = 0;
+
+        function checkMCQ(elem, isCorrect, qNum) {
+            if (answeredQuestions.has(qNum)) return;
+            answeredQuestions.add(qNum);
+
+            const parent = elem.closest('.qa-card');
+            const options = parent.querySelectorAll('.mcq-option');
+            const ansBox = document.getElementById(`mcq-ans-${qNum}`);
+
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+
+            if (isCorrect) {
+                elem.classList.add('correct');
+                playChime('correct');
+                correctCount++;
+            } else {
+                elem.classList.add('wrong');
+                playChime('wrong');
+                // Highlight the correct one
+                options.forEach(opt => {
+                    if (opt.innerText.includes('Quit India') || 
+                        opt.innerText.includes('group of children') || 
+                        opt.innerText.includes('British did not want')) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            if (ansBox) {
+                ansBox.style.display = 'block';
+            }
+
+            document.getElementById('mcq-score').innerText = `Score: ${correctCount}/3`;
+        }
+
+        // Hero Attribute Details
+        const attrDetails = {
+            brave: "<strong>Brave (Courageous):</strong> True courage is not the absence of fear, but taking principled action in spite of fear. Mohan, Babu, and Amma felt fear when the police knocked, yet their commitment to India's freedom propelled them to act bravely.",
+            smart: "<strong>Smart & Clever:</strong> True heroes use their intellect and foresight. Mohan planned the silent march specifically to avoid arrest, and Amma shrewdly trusted Sub-Inspector Patil to save the cyclostyling machine.",
+            ethical: "<strong>Ethical & Moral:</strong> Guided by Gandhian principles of non-violence (Ahimsa) and truth (Satyagraha), the student patriots refused to engage in senseless destruction or hate.",
+            determined: "<strong>Determined:</strong> Despite their father being imprisoned and the constant threat of armed raids, the family never wavered in their resolve to participate in the freedom struggle.",
+            challenges: "<strong>Love Challenges:</strong> Real-life heroes do not seek an easy or comfortable existence. When a crisis threatens their nation, they step up to face insurmountable challenges with a smile.",
+            battles: "<strong>Fight Their Own Battles:</strong> Instead of waiting for distant leaders to act, the youth of Narayanpur took charge of their own community's protest and communication network.",
+            thoughtful: "<strong>Thoughtful & Compassionate:</strong> Real heroes are grounded in empathy. Suman wipes her sweat-stained brow and works tirelessly; Sub-Inspector Patil risks his career and safety to protect an old friend's family."
+        };
+
+        function showAttrDetail(key, elem) {
+            playChime('click');
+            document.querySelectorAll('.attr-bubble').forEach(b => b.classList.remove('active'));
+            elem.classList.add('active');
+            const box = document.getElementById('attr-display');
+            if (box && attrDetails[key]) {
+                box.innerHTML = attrDetails[key];
+            }
+        }
+    </script>
+</body>
+</html>

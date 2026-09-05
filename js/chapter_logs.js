@@ -253,6 +253,38 @@
             ]
         },
 
+        'eng_lit_ch8': {
+            id: 'eng_lit_ch8',
+            title: 'Chapter 2: The Narayanpur Incident',
+            subject: 'English Literature',
+            unit: 'Unit 3: Real-Life Heroes',
+            author: 'Shashi Deshpande',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 01:20 AM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#F59E0B',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Historical Fiction & Freedom Movement Digitization',
+            summary: 'Complete multi-tab study suite for Unit 3 Chapter 2: The Narayanpur Incident by Shashi Deshpande, depicting the 1942 Quit India Movement youth resistance, underground cyclostyling operation, collocations, words expressing moods, and inspirational speech writing.',
+            changesList: [
+                'Full 4-scene dramatic narrative digitized covering the background of 1942 Quit India, the silent procession with Gandhiji\'s portrait, smuggling the cyclostyling machine into the puja room, and Sub-Inspector Patil\'s midnight warning and raid.',
+                'Cropped and integrated 4 authentic textbook illustrations (Silent Procession with Gandhiji, Smuggling the Cyclostyle Parcel, Patil at the doorway, and British Police raid with lanterns).',
+                'Interactive vocabulary hover tooltips for key terms (Quit India, flurry, downpour, aloft, cyclostyling machine, reverie, brisk, bewilderment, lugged).',
+                'Comprehension suite with 3 self-scoring MCQs, 5-step narrative Graphic Organizer Flowchart, and 5 detailed textual Q&As with "Reveal Answer" buttons.',
+                'Tab 3: Collocations matcher (great joy, big mistake, heavy rain, deep thought, large population, strong wind) and 8-item Words That Express Moods matching & sentence quiz.',
+                'Tab 4: Attributes of a Real-Life Hero interactive mind map, model student speech template ("The Power in Silent Courage"), and tri-lingual National War Memorial tribute (English, Hindi, Sanskrit).',
+                'Tab 5: Deep historical inquiry into the 1942 Quit India Movement, underground Congress Radio by Usha Mehta, teenage martyrs (Kanaklata Barua, Shirish Kumar, Matangini Hazra), and modern youth civic action.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Initial production release with all 5 interactive tabs, audio feedback, authentic illustrations, and glassmorphic UI.'
+                }
+            ]
+        },
+
         // ==========================================
         // ENGLISH ACTIVITIES (ASL)
         // ==========================================
