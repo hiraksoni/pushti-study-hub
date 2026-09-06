@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +12,11 @@
         --bg-color: #0F0F1A;
         --surface: #16213E;
         --primary: #818cf8;
+        --primary-hover: #6366f1;
         --text-main: #E8E8E8;
         --text-muted: #B0B0C0;
         --border: #2A2A40;
+        --accent: #8b5cf6;
     }
     .site-header {
         background-color: #0F0F1A !important;
@@ -28,42 +30,6 @@
         font-family: 'Inter', sans-serif;
         background-color: var(--bg-color);
         color: var(--text-main);
-    }
-    .header {
-        display: flex;
-        align-items: center;
-        padding: 20px 40px;
-        background: #0F0F1A !important;
-        border-bottom: 1px solid var(--border);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        opacity: 1 !important;
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-    }
-    .back-btn {
-        color: var(--text-main);
-        text-decoration: none;
-        font-weight: 600;
-        margin-right: 20px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        background: rgba(255,255,255,0.05);
-        border-radius: 8px;
-        transition: 0.2s;
-    }
-    .back-btn:hover { background: rgba(255,255,255,0.1); }
-    .page-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        font-family: 'Outfit', sans-serif;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 12px;
     }
     .container {
         max-width: 1200px;
@@ -190,9 +156,8 @@
         }
     }
     
-    
     .ch-actions {
-        display: flex; gap: 10px; margin-left: 20px;
+        display: flex; gap: 10px; margin-left: 20px; align-items: center;
     }
     .btn-link {
         padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: 0.2s;
@@ -214,25 +179,30 @@
         padding: 20px;
         margin-bottom: 16px;
         border: 1px solid var(--border);
+        transition: transform 0.2s, border-color 0.2s;
     }
-
+    .chapter-card:hover {
+        border-color: rgba(255,255,255,0.25);
+        transform: translateY(-2px);
+    }
     
     .ch-num {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
         font-weight: 800;
         font-family: 'Outfit', sans-serif;
-        color: rgba(255,255,255,0.1);
-        width: 80px;
+        color: rgba(255,255,255,0.15);
+        width: 75px;
         flex-shrink: 0;
+        letter-spacing: -0.5px;
     }
     .ch-content {
         flex-grow: 1;
     }
     .ch-title {
-        font-size: 1.2rem; font-weight: 600; margin: 0 0 6px 0;
+        font-size: 1.2rem; font-weight: 600; margin: 0 0 6px 0; display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
     }
     .ch-desc {
-        font-size: 0.9rem; color: var(--text-muted); margin: 0 0 12px 0;
+        font-size: 0.88rem; color: var(--text-muted); margin: 0 0 10px 0; line-height: 1.5;
     }
     .ch-tags {
         display: flex; gap: 8px; flex-wrap: wrap;
@@ -245,10 +215,26 @@
         font-size: 0.75rem;
         font-weight: 600;
     }
-    .ch-arrow {
-        color: var(--text-muted);
-        font-size: 1.5rem;
-        margin-left: 20px;
+
+    .unit-header {
+        margin: 24px 0 12px 4px;
+        font-weight: 700;
+        font-size: 1.15rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        letter-spacing: 0.3px;
+    }
+
+    .status-badge {
+        font-size: 0.7rem;
+        background: #10B981;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
     }
 </style>
 
@@ -274,6 +260,9 @@
     -webkit-backdrop-filter: none !important;
 }
 [data-theme="light"] .icon-btn { color: #0f172a !important; }
+[data-theme="light"] .ch-num { color: rgba(15, 23, 42, 0.15) !important; }
+[data-theme="light"] .chapter-card { background: #ffffff !important; border-color: #e2e8f0 !important; }
+[data-theme="light"] .tag { background: #f1f5f9 !important; color: #4f46e5 !important; }
 </style>
 </head>
 <body>
@@ -319,49 +308,6 @@
             </nav>
         </div>
     </header>
-    <style>
-    .switch input:checked + .slider { background-color: var(--accent, #8B5CF6); }
-    .switch input:checked + .slider:before { transform: translateX(14px); }
-    .slider:before { position:absolute; content:""; height:14px; width:14px; left:3px; bottom:3px; background-color:white; transition:.4s; border-radius:50%; }
-    </style>
-    <style>.site-header { background: var(--bg-main) !important; backdrop-filter: none !important; }
-.tabs-wrapper { position: sticky !important; top: 61px !important; z-index: 990 !important; background: var(--bg-main) !important; border-bottom: 1px solid var(--border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; }</style>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const searchBtn = document.getElementById('global-search-btn');
-    const searchInput = document.getElementById('global-search-input');
-    
-    if(searchBtn && searchInput) {
-        searchBtn.addEventListener('click', function() {
-            if(searchInput.style.display === 'none' || searchInput.style.display === '') {
-                searchInput.style.display = 'block';
-                searchInput.focus();
-            } else {
-                performSearch(searchInput.value.toLowerCase());
-            }
-        });
-        
-        searchInput.addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') {
-                performSearch(searchInput.value.toLowerCase());
-            }
-        });
-    }
-    
-    function performSearch(term) {
-        const cards = document.querySelectorAll('.chapter-card, .topic-card, .shloka-box, .translation-row, .shloka-block');
-        if (cards.length > 0) {
-            cards.forEach(card => {
-                if(card.innerText.toLowerCase().includes(term)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    }
-});
-</script>
 
     <div class="container">
         <!-- Vertical Branch & Chapter Panels Layout -->
@@ -369,19 +315,19 @@ document.addEventListener("DOMContentLoaded", function() {
             
             <!-- Left Sidebar: Branches -->
             <aside class="branch-sidebar">
-                <button id="tab-hin_lit" class="branch-nav-btn active" style="--branch-color: #F59E0B;" onclick="showCategory('hin_lit')" aria-label="Literature">
-                    <div class="branch-icon">📚</div>
+                <button id="tab-hin_lit" class="branch-nav-btn active" style="--branch-color: #8B5CF6;" onclick="showCategory('hin_lit')" aria-label="Literature">
+                    <div class="branch-icon">📖</div>
                     <div class="branch-details">
                         <span class="branch-title">साहित्य (Lit)</span>
-                        <span class="branch-stats">8 Chapters</span>
+                        <span class="branch-stats">8/8 Ready (100% Complete! 🎉)</span>
                     </div>
                 </button>
 
-                <button id="tab-hin_gram" class="branch-nav-btn" style="--branch-color: #8B5CF6;" onclick="showCategory('hin_gram')" aria-label="Grammar">
+                <button id="tab-hin_gram" class="branch-nav-btn" style="--branch-color: #10B981;" onclick="showCategory('hin_gram')" aria-label="Grammar">
                     <div class="branch-icon">📝</div>
                     <div class="branch-details">
                         <span class="branch-title">व्याकरण (Grammar)</span>
-                        <span class="branch-stats">8 Chapters</span>
+                        <span class="branch-stats">8 Ready (G1-G7, G22)</span>
                     </div>
                 </button>
 
@@ -394,15 +340,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 </button>
 
                 <button id="tab-hin_reading" class="branch-nav-btn" style="--branch-color: #EC4899;" onclick="showCategory('hin_reading')" aria-label="Reading">
-                    <div class="branch-icon">📖</div>
+                    <div class="branch-icon">📚</div>
                     <div class="branch-details">
                         <span class="branch-title">अपठित बोध</span>
                         <span class="branch-stats">1 Topic</span>
                     </div>
                 </button>
 
-                <button id="tab-hin_act" class="branch-nav-btn" style="--branch-color: #10B981;" onclick="showCategory('hin_act')" aria-label="Activities">
-                    <div class="branch-icon">🎨</div>
+                <button id="tab-hin_act" class="branch-nav-btn" style="--branch-color: #F59E0B;" onclick="showCategory('hin_act')" aria-label="Activities">
+                    <div class="branch-icon">🎭</div>
                     <div class="branch-details">
                         <span class="branch-title">गतिविधियाँ (ASL)</span>
                         <span class="branch-stats">2 Modules</span>
@@ -413,240 +359,396 @@ document.addEventListener("DOMContentLoaded", function() {
             <!-- Right Content Area: Branch Chapters -->
             <div class="branch-content-area">
                 
+                <!-- SECTION 1: साहित्य (Literature) -->
                 <div id="sec-hin_lit" class="category-section active">
-                
-                <div class="chapter-card">
-                    <div class="ch-num">1</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 1 (Poem)</h3>
-                        <p class="ch-desc">हमको मन की शक्ति देना</p>
-                        <div class="ch-tags"></div>
+                    
+                    <!-- Unit 1 -->
+                    <div class="unit-header" style="color: #8B5CF6;">
+                        <i class="fas fa-bookmark"></i> Unit 1: प्रकृति एवं जीवन मूल्य (Nature & Core Life Values)
                     </div>
-                    <div class="ch-actions">
-                        <a href="chapters/hindi/hindi_ch1.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+
+                    <!-- 1.1 Chapter 1 -->
+                    <div class="chapter-card">
+                        <div class="ch-num">1.1</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 1: हम पंछी उन्मुक्त गगन के <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">शिवमंगल सिंह 'सुमन' &bull; स्वतंत्रता का मूल्य &bull; स्वर्ण-पिंजर बनाम उन्मुक्त उड़ान &bull; संपूर्ण काव्य, प्रश्नोत्तर, व्याकरण: विलोम, विशेषण</p>
+                            <div class="ch-tags">
+                                <span class="tag">कविता</span>
+                                <span class="tag">शिवमंगल सिंह 'सुमन'</span>
+                                <span class="tag">Full Q&A</span>
+                                <span class="tag">Grammar: विलोम शब्द</span>
+                                <span class="tag">Mind Map</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="chapters/hindi/hindi_ch1.html" class="btn-link btn-old" style="background:rgba(139, 92, 246, 0.15); border-color:#8B5CF6;">Practice Mode</a>
+                            <button onclick="openChapterLog('hin_lit_ch1')" class="btn-link" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); cursor:pointer; font-size:0.8rem; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:6px;" title="Revision Changelog & AI Model"><i class="fas fa-history"></i> Log</button>
+                        </div>
+                    </div>
+
+                    <!-- 1.2 Chapter 2 -->
+                    <div class="chapter-card">
+                        <div class="ch-num">1.2</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 2: बूढ़ी काकी <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">मुंशी प्रेमचंद &bull; पारिवारिक उपेक्षा, संवेदनशीलता &bull; रूपा और लाडली &bull; संपूर्ण गद्य, प्रश्नोत्तर, व्याकरण: मुहावरे</p>
+                            <div class="ch-tags">
+                                <span class="tag">कहानी</span>
+                                <span class="tag">मुंशी प्रेमचंद</span>
+                                <span class="tag">Full Q&A</span>
+                                <span class="tag">Grammar: मुहावरे</span>
+                                <span class="tag">Mind Map</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="chapters/hindi/hindi_ch2.html" class="btn-link btn-old" style="background:rgba(16, 185, 129, 0.15); border-color:#10B981;">Practice Mode</a>
+                            <button onclick="openChapterLog('hin_lit_ch2')" class="btn-link" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); cursor:pointer; font-size:0.8rem; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:6px;" title="Revision Changelog & AI Model"><i class="fas fa-history"></i> Log</button>
+                        </div>
+                    </div>
+
+                    <!-- 1.3 Chapter 3 -->
+                    <div class="chapter-card">
+                        <div class="ch-num">1.3</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 3: असफलता से सीख <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">प्रेरणादायी काव्य &bull; हार को जीत में बदलना &bull; सतत कर्मठता, आशावाद &bull; संपूर्ण काव्य, प्रश्नोत्तर, व्याकरण: तुकबंदी व विलोम</p>
+                            <div class="ch-tags">
+                                <span class="tag">कविता</span>
+                                <span class="tag">प्रेरणादायी</span>
+                                <span class="tag">Full Q&A</span>
+                                <span class="tag">Grammar: विलोम शब्द</span>
+                                <span class="tag">Mind Map</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="chapters/hindi/hindi_ch3.html" class="btn-link btn-old" style="background:rgba(236, 72, 153, 0.15); border-color:#EC4899;">Practice Mode</a>
+                            <button onclick="openChapterLog('hin_lit_ch3')" class="btn-link" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); cursor:pointer; font-size:0.8rem; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:6px;" title="Revision Changelog & AI Model"><i class="fas fa-history"></i> Log</button>
+                        </div>
+                    </div>
+
+                    <!-- Unit 2 -->
+                    <div class="unit-header" style="color: #3B82F6;">
+                        <i class="fas fa-landmark"></i> Unit 2: समाज, कर्तव्य एवं राष्ट्रीय गौरव (Society, Duty & National Pride)
+                    </div>
+
+                    <!-- 2.1 Chapter 4 -->
+                    <div class="chapter-card">
+                        <div class="ch-num">2.1</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 4: यह भी एक परीक्षा <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">सुरेन्द्र अंचल &bull; नैतिक परीक्षा बनाम परीक्षा परिणाम &bull; देवेंद्र की सच्ची इंसानियत &bull; संपूर्ण २ दृश्य एकांकी, प्रश्नोत्तर, विशेषण</p>
+                            <div class="ch-tags">
+                                <span class="tag">एकांकी (नाटक)</span>
+                                <span class="tag">सुरेन्द्र अंचल</span>
+                                <span class="tag">Full Q&A</span>
+                                <span class="tag">Grammar: विशेषण</span>
+                                <span class="tag">Mind Map</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="chapters/hindi/hindi_ch4.html" class="btn-link btn-old" style="background:rgba(59, 130, 246, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                            <button onclick="openChapterLog('hin_lit_ch4')" class="btn-link" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); cursor:pointer; font-size:0.8rem; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:6px;" title="Revision Changelog & AI Model"><i class="fas fa-history"></i> Log</button>
+                        </div>
+                    </div>
+
+                    <!-- 2.2 Chapter 5 -->
+                    <div class="chapter-card">
+                        <div class="ch-num">2.2</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 5: स्नेह भरी पाती <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">उषा वधवा &bull; नानी की पाती &bull; भारतीय सांस्कृतिक धरोहर, पर्यावरण संरक्षण &bull; संपूर्ण पत्र, प्रश्नोत्तर, व्याकरण: उपसर्ग-प्रत्यय</p>
+                            <div class="ch-tags">
+                                <span class="tag">पत्र साहित्य</span>
+                                <span class="tag">उषा वधवा</span>
+                                <span class="tag">Full Q&A</span>
+                                <span class="tag">Grammar: उपसर्ग व प्रत्यय</span>
+                                <span class="tag">Mind Map</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="chapters/hindi/hindi_ch5.html" class="btn-link btn-old" style="background:rgba(245, 158, 11, 0.15); border-color:#F59E0B;">Practice Mode</a>
+                            <button onclick="openChapterLog('hin_lit_ch5')" class="btn-link" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); cursor:pointer; font-size:0.8rem; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:6px;" title="Revision Changelog & AI Model"><i class="fas fa-history"></i> Log</button>
+                        </div>
+                    </div>
+
+                    <!-- 2.3 Chapter 6 -->
+                    <div class="chapter-card">
+                        <div class="ch-num">2.3</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 6: मिसाइल के जनक <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">डॉ. ए. पी. जे. अब्दुल कलाम &bull; आत्मकथा, सादगी, संघर्ष &bull; SLV-3 एवं अग्नि मिसाइल &bull; संपूर्ण संस्मरण, प्रश्नोत्तर, सामासिक पद</p>
+                            <div class="ch-tags">
+                                <span class="tag">आत्मकथा</span>
+                                <span class="tag">डॉ. कलाम</span>
+                                <span class="tag">Full Q&A</span>
+                                <span class="tag">Grammar: सामासिक पद</span>
+                                <span class="tag">ISRO & DRDO</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="chapters/hindi/hindi_ch6.html" class="btn-link btn-old" style="background:rgba(239, 68, 68, 0.15); border-color:#EF4444;">Practice Mode</a>
+                            <button onclick="openChapterLog('hin_lit_ch6')" class="btn-link" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); cursor:pointer; font-size:0.8rem; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:6px;" title="Revision Changelog & AI Model"><i class="fas fa-history"></i> Log</button>
+                        </div>
+                    </div>
+
+                    <!-- Unit 3 -->
+                    <div class="unit-header" style="color: #10B981;">
+                        <i class="fas fa-globe-asia"></i> Unit 3: राष्ट्रभक्ति, बंधुत्व एवं व्यापक मूल्यांकन (Patriotism, Brotherhood & Comprehensive Exam)
+                    </div>
+
+                    <!-- 3.1 Chapter 7 -->
+                    <div class="chapter-card">
+                        <div class="ch-num">3.1</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 7: माँ का उपहार <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">ऐतिहासिक प्रेरक कथा &bull; 1942 भारत छोड़ो, शारदा देवी &bull; तीस्ता नदी, डिक का जीवन-रक्षण &bull; संपूर्ण कहानी, प्रश्नोत्तर, विशेषण भेद</p>
+                            <div class="ch-tags">
+                                <span class="tag">कहानी</span>
+                                <span class="tag">देशभक्ति</span>
+                                <span class="tag">Full Q&A</span>
+                                <span class="tag">Grammar: विशेषण भेद</span>
+                                <span class="tag">Mind Map</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="chapters/hindi/hindi_ch7.html" class="btn-link btn-old" style="background:rgba(139, 92, 246, 0.15); border-color:#8B5CF6;">Practice Mode</a>
+                            <button onclick="openChapterLog('hin_lit_ch7')" class="btn-link" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); cursor:pointer; font-size:0.8rem; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:6px;" title="Revision Changelog & AI Model"><i class="fas fa-history"></i> Log</button>
+                        </div>
+                    </div>
+
+                    <!-- 3.2 Chapter 8 -->
+                    <div class="chapter-card">
+                        <div class="ch-num">3.2</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 8: विश्वराज्य ('वसुधैव कुटुंबकम') <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">राष्ट्रकवि मैथिलीशरण गुप्त &bull; वसुधैव कुटुंबकम, पंचतत्व एकता &bull; सरदार पटेल, लोकतंत्र &bull; संपूर्ण काव्य + प्रथम सत्रीय मॉडल प्रश्नपत्र-१</p>
+                            <div class="ch-tags">
+                                <span class="tag">काव्य</span>
+                                <span class="tag">मैथिलीशरण गुप्त</span>
+                                <span class="tag">Full Q&A</span>
+                                <span class="tag">Grammar: सर्वनाम भेद</span>
+                                <span class="tag">Model Test Paper 1</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="chapters/hindi/hindi_ch8.html" class="btn-link btn-old" style="background:rgba(16, 185, 129, 0.15); border-color:#10B981;">Practice Mode</a>
+                            <button onclick="openChapterLog('hin_lit_ch8')" class="btn-link" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); cursor:pointer; font-size:0.8rem; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:6px;" title="Revision Changelog & AI Model"><i class="fas fa-history"></i> Log</button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- SECTION 2: व्याकरण (Grammar) -->
+                <div id="sec-hin_gram" class="category-section">
+                    
+                    <div class="chapter-card">
+                        <div class="ch-num">G1</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 1: भाषा, लिपि और व्याकरण <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">मौखिक व लिखित भाषा, लिपि की परिभाषा, व्याकरण के अंग (वर्ण, शब्द, वाक्य विचार)</p>
+                            <div class="ch-tags">
+                                <span class="tag">भाषा व लिपि</span>
+                                <span class="tag">व्याकरण परिचय</span>
+                                <span class="tag">अभ्यास प्रश्न</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/hindi/practice_hindi_gra_ch1.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="ch-num">G2</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 2: वर्ण विचार <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">स्वर, व्यंजन, अयोगवाह, अनुस्वार व अनुनासिक, वर्ण-विच्छेद एवं उच्चारण स्थान</p>
+                            <div class="ch-tags">
+                                <span class="tag">स्वर व व्यंजन</span>
+                                <span class="tag">वर्ण-विच्छेद</span>
+                                <span class="tag">उच्चारण</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/hindi/practice_hindi_gra_ch2.html" class="btn-link btn-old" style="background:rgba(16, 185, 129, 0.15); border-color:#10B981;">Practice Mode</a>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="ch-num">G3</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 3: शब्द विचार <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">उत्पत्ति के आधार पर (तत्सम, तद्भव, देशज, विदेशी), रचना के आधार पर (रूढ़, यौगिक, योगरूढ़)</p>
+                            <div class="ch-tags">
+                                <span class="tag">तत्सम-तद्भव</span>
+                                <span class="tag">रूढ़-यौगिक</span>
+                                <span class="tag">शब्द भेद</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/hindi/practice_hindi_gra_ch3.html" class="btn-link btn-old" style="background:rgba(236, 72, 153, 0.15); border-color:#EC4899;">Practice Mode</a>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="ch-num">G4</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 4: उपसर्ग एवं प्रत्यय <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">शब्दांश, संस्कृत/हिंदी के उपसर्ग, कृत व तद्धित प्रत्यय, नए शब्दों का निर्माण</p>
+                            <div class="ch-tags">
+                                <span class="tag">उपसर्ग</span>
+                                <span class="tag">प्रत्यय</span>
+                                <span class="tag">शब्द रचना</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/hindi/practice_hindi_gra_ch4.html" class="btn-link btn-old" style="background:rgba(59, 130, 246, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="ch-num">G6</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 6: समास <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">समास विग्रह, अव्ययीभाव, तत्पुरुष, कर्मधारय, द्विगु, द्वंद्व और बहुव्रीहि समास</p>
+                            <div class="ch-tags">
+                                <span class="tag">समास विग्रह</span>
+                                <span class="tag">६ मुख्य भेद</span>
+                                <span class="tag">सामासिक पद</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/hindi/practice_hindi_gra_ch6.html" class="btn-link btn-old" style="background:rgba(245, 158, 11, 0.15); border-color:#F59E0B;">Practice Mode</a>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="ch-num">G7</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 7: संज्ञा <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">व्यक्तिवाचक, जातिवाचक, भाववाचक संज्ञा, द्रव्यवाचक व समूहवाचक, भाववाचक संज्ञा निर्माण</p>
+                            <div class="ch-tags">
+                                <span class="tag">संज्ञा भेद</span>
+                                <span class="tag">भाववाचक संज्ञा</span>
+                                <span class="tag">अभ्यास</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/hindi/practice_hindi_gra_ch7.html" class="btn-link btn-old" style="background:rgba(139, 92, 246, 0.15); border-color:#8B5CF6;">Practice Mode</a>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="ch-num">G22</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 22: मुहावरे एवं लोकोक्तियाँ <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">लोकप्रिय मुहावरे, लोकोक्तियाँ (कहावतें), अर्थ स्पष्टीकरण एवं दैनिक वाक्य प्रयोग</p>
+                            <div class="ch-tags">
+                                <span class="tag">मुहावरे</span>
+                                <span class="tag">लोकोक्तियाँ</span>
+                                <span class="tag">वाक्य प्रयोग</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/hindi/practice_hindi_gra_ch22.html" class="btn-link btn-old" style="background:rgba(16, 185, 129, 0.15); border-color:#10B981;">Practice Mode</a>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="ch-num">G20</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Extra Grammar: शब्दों का परिवार <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">शब्द परिवार की अवधारणा, मूल शब्द से नए शब्दों की व्युत्पत्ति एवं समृद्ध शब्द भंडार</p>
+                            <div class="ch-tags">
+                                <span class="tag">शब्द भंडार</span>
+                                <span class="tag">शब्द परिवार</span>
+                                <span class="tag">शब्दावली</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/hindi/practice_hindi_gra_ch20.html" class="btn-link btn-old" style="background:rgba(56, 189, 248, 0.15); border-color:#38BDF8;">Practice Mode</a>
+                        </div>
                     </div>
                 </div>
-                <div class="chapter-card">
-                    <div class="ch-num">2</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 2 (Prose)</h3>
-                        <p class="ch-desc">बूढ़ी काकी</p>
-                        <div class="ch-tags"></div>
+
+                <!-- SECTION 3: रचनात्मक लेखन (Creative Writing) -->
+                <div id="sec-hin_creative" class="category-section">
+                    
+                    <div class="chapter-card">
+                        <div class="ch-num">W23</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 23: पत्र लेखन (औपचारिक एवं अनौपचारिक) <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">प्रारूप, संबोधन, विषय-विस्तार, प्रधानाचार्य को प्रार्थना पत्र, मित्र व संबंधियों को पत्र</p>
+                            <div class="ch-tags">
+                                <span class="tag">औपचारिक पत्र</span>
+                                <span class="tag">अनौपचारिक पत्र</span>
+                                <span class="tag">आदर्श प्रारूप</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/hindi/practice_hindi_gra_ch23.html" class="btn-link btn-old" style="background:rgba(59, 130, 246, 0.15); border-color:#3B82F6;">Practice Mode</a>
+                        </div>
                     </div>
-                    <div class="ch-actions">
-                        <a href="chapters/hindi/hindi_ch2.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">3</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 3 (Poem)</h3>
-                        <p class="ch-desc">असफलता से सीख</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="chapters/hindi/hindi_ch3.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">4</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 4 (Prose)</h3>
-                        <p class="ch-desc">यह भी एक परीक्षा</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="chapters/hindi/hindi_ch4.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">5</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 5 (Prose)</h3>
-                        <p class="ch-desc">स्नेह भरी पाती</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="chapters/hindi/hindi_ch5.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+
+                    <div class="chapter-card">
+                        <div class="ch-num">W25</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">Chapter 25: अनुच्छेद लेखन (Paragraph Writing) <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">संक्षिप्त व प्रभावपूर्ण विचार अभिव्यक्ति, समसामयिक व मूल्यपरक विषयों पर आदर्श अनुच्छेद</p>
+                            <div class="ch-tags">
+                                <span class="tag">अनुच्छेद लेखन</span>
+                                <span class="tag">विचार अभिव्यक्ति</span>
+                                <span class="tag">आदर्श निबंधांश</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/hindi/practice_hindi_gra_ch25.html" class="btn-link btn-old" style="background:rgba(236, 72, 153, 0.15); border-color:#EC4899;">Practice Mode</a>
+                        </div>
                     </div>
                 </div>
-                <div class="chapter-card">
-                    <div class="ch-num">6</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 6 (Prose)</h3>
-                        <p class="ch-desc">मिसाइल के जनक</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="chapters/hindi/hindi_ch6.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">7</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 7 (Prose)</h3>
-                        <p class="ch-desc">माँ का उपहार</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="chapters/hindi/hindi_ch7.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+
+                <!-- SECTION 4: अपठित बोध (Reading Comprehension) -->
+                <div id="sec-hin_reading" class="category-section">
+                    
+                    <div class="chapter-card">
+                        <div class="ch-num">R1</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">अपठित गद्यांश (Unseen Comprehension) <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">अपठित गद्यांश पठन, मुख्य भाव ग्रहण, बहुविकल्पीय एवं लघु उत्तरीय प्रश्नों का अभ्यास</p>
+                            <div class="ch-tags">
+                                <span class="tag">अपठित गद्यांश</span>
+                                <span class="tag">बोध परीक्षण</span>
+                                <span class="tag">शीर्षक चयन</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="chapters/hindi/hindi_ch8.html" class="btn-link btn-old" style="background:rgba(139, 92, 246, 0.15); border-color:#8B5CF6;">Practice Mode</a>
+                        </div>
                     </div>
                 </div>
-                <div class="chapter-card">
-                    <div class="ch-num">8</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 8 (Poem)</h3>
-                        <p class="ch-desc">विश्वराज्य</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="chapters/hindi/hindi_ch8.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-            </div>
-            <div id="sec-hin_gram" class="category-section ">
-                
-                <div class="chapter-card">
-                    <div class="ch-num">G1</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 1</h3>
-                        <p class="ch-desc">भाषा, लिपि और व्याकरण</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/hindi/practice_hindi_gra_ch1.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
+
+                <!-- SECTION 5: गतिविधियाँ (ASL) -->
+                <div id="sec-hin_act" class="category-section">
+                    
+                    <div class="chapter-card">
+                        <div class="ch-num">ASL2</div>
+                        <div class="ch-content">
+                            <h3 class="ch-title">श्रवण एवं वाचन कौशल मूल्यांकन (ASL Schedule & Prep) <span class="status-badge">Ready</span></h3>
+                            <p class="ch-desc">Class 7 Hindi ASL - श्रवण कौशल (Listening) एवं वाचन कौशल (Speaking) मूल्यांकन तैयारी</p>
+                            <div class="ch-tags">
+                                <span class="tag">वाचन कौशल</span>
+                                <span class="tag">श्रवण कौशल</span>
+                                <span class="tag">मौखिक अभिव्यक्ति</span>
+                            </div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="source_materials/chapters/hindi/practice_hindi_asl.html" class="btn-link btn-old" style="background:rgba(245, 158, 11, 0.15); border-color:#F59E0B;">Practice Mode</a>
+                        </div>
                     </div>
                 </div>
-                <div class="chapter-card">
-                    <div class="ch-num">G2</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 2</h3>
-                        <p class="ch-desc">वर्ण विचार</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/hindi/practice_hindi_gra_ch2.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">G3</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 3</h3>
-                        <p class="ch-desc">शब्द विचार</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/hindi/practice_hindi_gra_ch3.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">G4</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 4</h3>
-                        <p class="ch-desc">उपसर्ग एवं प्रत्यय</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/hindi/practice_hindi_gra_ch4.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">G6</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 6</h3>
-                        <p class="ch-desc">समास</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/hindi/practice_hindi_gra_ch6.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">G7</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 7</h3>
-                        <p class="ch-desc">संज्ञा</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/hindi/practice_hindi_gra_ch7.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">G22</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Chapter 22</h3>
-                        <p class="ch-desc">मुहावरे एवं लोकोक्तियाँ</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/hindi/practice_hindi_gra_ch22.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">G20</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Extra Grammar</h3>
-                        <p class="ch-desc">शब्दों का परिवार</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/hindi/practice_hindi_gra_ch20.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-            </div>
-            <div id="sec-hin_creative" class="category-section ">
-                
-                <div class="chapter-card">
-                    <div class="ch-num">W23</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Letter Writing (Both informal and Formal)</h3>
-                        <p class="ch-desc">पत्र लेखन</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/hindi/practice_hindi_gra_ch23.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-                <div class="chapter-card">
-                    <div class="ch-num">W25</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Anucheed</h3>
-                        <p class="ch-desc">अनुच्छेद लेखन</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/hindi/practice_hindi_gra_ch25.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
-            </div>
-            <div id="sec-hin_reading" class="category-section ">
-                
-                <div class="chapter-card" style="opacity: 0.6;">
-                    <div class="ch-num">R1</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">Unseen Comprehension <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
-                        <p class="ch-desc">अपठित गद्यांश</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                </div>
-            </div>
-            <div id="sec-hin_act" class="category-section ">
-                
-                <div class="chapter-card">
-                    <div class="ch-num">ASL2</div>
-                    <div class="ch-content">
-                        <h3 class="ch-title">ASL Test Schedule</h3>
-                        <p class="ch-desc">Class 7 Alpha - श्रवण कौशल मूल्यांकन</p>
-                        <div class="ch-tags"></div>
-                    </div>
-                    <div class="ch-actions">
-                        <a href="source_materials/chapters/hindi/practice_hindi_asl.html" class="btn-link btn-old" style="background:rgba(37, 99, 235, 0.15); border-color:#3B82F6;">Practice Mode</a>
-                    </div>
-                </div>
+
             </div>
         </div>
-    </div>
     </div>
 
     <script>
@@ -661,36 +763,71 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     </script>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const themeBtn = document.querySelector('.theme-toggle');
-    if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
-        themeBtn.classList.add('handled-by-inline');
-        themeBtn.addEventListener('click', (e) => {
-            e.stopImmediatePropagation();
-            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.body.setAttribute('data-theme', newTheme);
-            const icon = themeBtn.querySelector('i');
-            if(icon) {
-                icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-            localStorage.setItem('pushti-theme', newTheme);
-            
-            if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ theme: newTheme }, '*');
-            }
-        });
-        const savedTheme = localStorage.getItem('pushti-theme');
-        if(savedTheme) {
-            document.body.setAttribute('data-theme', savedTheme);
-            const icon = themeBtn.querySelector('i');
-            if(icon) {
-                icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeBtn = document.querySelector('.theme-toggle');
+        if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
+            themeBtn.classList.add('handled-by-inline');
+            themeBtn.addEventListener('click', (e) => {
+                e.stopImmediatePropagation();
+                const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.body.setAttribute('data-theme', newTheme);
+                const icon = themeBtn.querySelector('i');
+                if(icon) {
+                    icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+                localStorage.setItem('pushti-theme', newTheme);
+                
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({ theme: newTheme }, '*');
+                }
+            });
+            const savedTheme = localStorage.getItem('pushti-theme');
+            if(savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+                const icon = themeBtn.querySelector('i');
+                if(icon) {
+                    icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                }
             }
         }
-    }
-});
-</script>
+
+        // Global Search
+        const searchBtn = document.getElementById('global-search-btn');
+        const searchInput = document.getElementById('global-search-input');
+        
+        if(searchBtn && searchInput) {
+            searchBtn.addEventListener('click', function() {
+                if(searchInput.style.display === 'none' || searchInput.style.display === '') {
+                    searchInput.style.display = 'block';
+                    searchInput.focus();
+                } else {
+                    performSearch(searchInput.value.toLowerCase());
+                }
+            });
+            
+            searchInput.addEventListener('keypress', function(e) {
+                if(e.key === 'Enter') {
+                    performSearch(searchInput.value.toLowerCase());
+                }
+            });
+        }
+        
+        function performSearch(term) {
+            const cards = document.querySelectorAll('.chapter-card');
+            cards.forEach(card => {
+                if(card.innerText.toLowerCase().includes(term)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    });
+    </script>
+
+    <!-- CHAPTER REVISION LOGS SCRIPT -->
+    <script src="js/chapter_logs.js"></script>
 </body>
 </html>

@@ -425,6 +425,246 @@
                     date: 'September 5, 2026',
                     model: 'Gemini 2.5 Pro (via Antigravity)',
                     notes: 'Updated schedule, added weekly hours delta calculator, and KB textbook spotlight.'
+        // ==========================================
+        // HINDI LITERATURE (वसन्त / हिन्दी साहित्य)
+        // ==========================================
+        'hin_lit_ch1': {
+            id: 'hin_lit_ch1',
+            title: 'अध्याय १: हम पंछी उन्मुक्त गगन के',
+            subject: 'Hindi Literature',
+            unit: 'Unit 1: प्रकृति एवं जीवन मूल्य',
+            author: 'शिवमंगल सिंह \'सुमन\'',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 02:40 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#8B5CF6',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Curriculum Modernization & 5-Core-Tab Architecture',
+            summary: 'Complete conversion to modern 5-core-tab interactive suite matching English Lit standards. Includes full unabridged 6 stanzas, parallel English translations, hover vocabulary tooltips, interactive MCQs, question bank, vocabulary vault, grammar rules, and concept mind map.',
+            changesList: [
+                'Full 6 stanzas digitized with parallel English translations and hover Devanagari tooltips.',
+                'Interactive MCQs with instant visual feedback and score calculation.',
+                'Question bank with interactive "उत्तर देखें" toggle for active recall.',
+                'Vocabulary Vault: Grammar types, Hindi meanings, English translations, and example sentences.',
+                'Grammar Tab: विलोम शब्द, विशेषण के भेद, and practical exercises.',
+                'Critical Thinking Tab: Freedom philosophy analysis, Mind Map flowchart, and bird conservation connect.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Initial production build with 5 core tabs, universal silence (0 audio), and zero Gujarati.'
+                }
+            ]
+        },
+
+        'hin_lit_ch2': {
+            id: 'hin_lit_ch2',
+            title: 'अध्याय २: बूढ़ी काकी',
+            subject: 'Hindi Literature',
+            unit: 'Unit 1: प्रकृति एवं जीवन मूल्य',
+            author: 'मुंशी प्रेमचंद',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 02:45 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#10B981',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Curriculum Modernization & 5-Core-Tab Architecture',
+            summary: 'Classic Premchand short story on elderly neglect, sensitivity, and moral awakening, structured into 5 core tabs with 100% text preservation.',
+            changesList: [
+                'Digitized all 6 scenes of Premchand\'s narrative with parallel English translations.',
+                'Interactive comprehension MCQs and question bank with toggle answers.',
+                'Vocabulary Vault with detailed parts of speech and examples.',
+                'Grammar Tab: मुहावरे एवं लोकोक्तियाँ (कलेजा ठंडा होना, पेट में चूहे कूदना आदि) with sentence construction.',
+                'Critical Tab: Elder care empathy, ASCII Mind Map, and interdisciplinary Social Studies connect.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Converted to modern 5-tab architecture with zero content loss.'
+                }
+            ]
+        },
+
+        'hin_lit_ch3': {
+            id: 'hin_lit_ch3',
+            title: 'अध्याय ३: असफलता से सीख',
+            subject: 'Hindi Literature',
+            unit: 'Unit 1: प्रकृति एवं जीवन मूल्य',
+            author: 'प्रेरणादायी काव्य',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 02:50 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#EC4899',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Curriculum Modernization & 5-Core-Tab Architecture',
+            summary: 'Inspirational poetry module on resilience, learning from failures, and continuous action.',
+            changesList: [
+                'Complete inspirational poem with parallel English translations and hover vocabulary tooltips.',
+                'MCQs and short/long answer questions with reveal answers.',
+                'Vocabulary Vault: कठिन शब्दों के अर्थ, व्याकरण प्रकार व प्रयोग।',
+                'Grammar: विलोम शब्द, तुकांत शब्द (rhyming words) व वाक्य-रचना।',
+                'Critical Tab: Growth Mindset psychology, Concept Mind Map, and Thomas Edison historical connect.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Converted to modern 5-tab architecture.'
+                }
+            ]
+        },
+
+        'hin_lit_ch4': {
+            id: 'hin_lit_ch4',
+            title: 'अध्याय ४: यह भी एक परीक्षा',
+            subject: 'Hindi Literature',
+            unit: 'Unit 2: समाज, कर्तव्य एवं राष्ट्रीय गौरव',
+            author: 'सुरेन्द्र अंचल',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 02:55 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#3B82F6',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Curriculum Modernization & 5-Core-Tab Architecture',
+            summary: 'Dramatic play in 2 scenes contrasting academic examination with moral empathy and humanity.',
+            changesList: [
+                'Full 2-scene dramatic play with character dialogues and stage directions in parallel Hindi/English.',
+                'Comprehension MCQs and dialogue-based "किसने किससे कहा" with toggle reveal answers.',
+                'Vocabulary Vault with dramatic terms and usage examples.',
+                'Grammar: विशेषण और उसके चार मुख्य भेद (गुणवाचक, संख्यावाचक, परिमाणवाचक, सार्वनामिक)।',
+                'Critical Tab: Moral dilemma analysis, ASCII Flowchart, and First Aid safety guidelines.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Converted to modern 5-tab architecture.'
+                }
+            ]
+        },
+
+        'hin_lit_ch5': {
+            id: 'hin_lit_ch5',
+            title: 'अध्याय ५: स्नेह भरी पाती',
+            subject: 'Hindi Literature',
+            unit: 'Unit 2: समाज, कर्तव्य एवं राष्ट्रीय गौरव',
+            author: 'उषा वधवा',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 03:00 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#F59E0B',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Curriculum Modernization & 5-Core-Tab Architecture',
+            summary: 'Epistolary literature module (letter from Nani to grandson) on cultural heritage, green environment, and loving familial bonds.',
+            changesList: [
+                'Complete epistolary prose with parallel English translations and hover vocabulary tooltips.',
+                'Comprehensive Q&A bank with toggle answer reveals.',
+                'Vocabulary Vault: Traditional idioms, cultural terms, and usage examples.',
+                'Grammar: उपसर्ग एवं प्रत्यय (मूल शब्द, नए शब्द) rules and exercises.',
+                'Critical Tab: Letter writing art, environmental conservation, and concept Mind Map.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Converted to modern 5-tab architecture.'
+                }
+            ]
+        },
+
+        'hin_lit_ch6': {
+            id: 'hin_lit_ch6',
+            title: 'अध्याय ६: मिसाइल के जनक',
+            subject: 'Hindi Literature',
+            unit: 'Unit 2: समाज, कर्तव्य एवं राष्ट्रीय गौरव',
+            author: 'डॉ. ए. पी. जे. अब्दुल कलाम',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 03:05 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#EF4444',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Curriculum Modernization & 5-Core-Tab Architecture',
+            summary: 'Inspiring autobiographical excerpts of Dr. APJ Abdul Kalam from Rameshwaram childhood to SLV-3 and Agni missile success.',
+            changesList: [
+                'Full autobiographical text digitized with parallel English translations and vocabulary hover tooltips.',
+                'Interactive MCQs and comprehensive question bank with toggle answers.',
+                'Vocabulary Vault: Scientific and biographical Hindi vocabulary.',
+                'Grammar: सामासिक पद (Compound words), विलोम शब्द, and applied grammar.',
+                'Critical Tab: ISRO/DRDO space connect, Kalaripayattu martial arts, and ASCII Mind Map.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Converted to modern 5-tab architecture.'
+                }
+            ]
+        },
+
+        'hin_lit_ch7': {
+            id: 'hin_lit_ch7',
+            title: 'अध्याय ७: माँ का उपहार',
+            subject: 'Hindi Literature',
+            unit: 'Unit 3: राष्ट्रभक्ति, बंधुत्व एवं व्यापक मूल्यांकन',
+            author: 'साहसिक ऐतिहासिक कहानी',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 03:10 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#8B5CF6',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Curriculum Modernization & 5-Core-Tab Architecture',
+            summary: 'Riveting historical story intertwining the 1942 Quit India movement, Sharda Devi\'s sacrifice, and Arun saving Commissioner Jackson\'s son Dick.',
+            changesList: [
+                'Full narrative with parallel English translations and vocabulary hover tooltips.',
+                'Comprehension MCQs, "किसने किससे कहा", short and long questions with toggle answers.',
+                'Vocabulary Vault: Historical and emotional vocabulary cards with examples.',
+                'Grammar: विलोम शब्द, पर्यायवाची शब्द, विशेषण के चार भेद identification.',
+                'Critical Tab: Beyond revenge philosophy, Teesta river geography, and concept flowchart.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Converted to modern 5-tab architecture.'
+                }
+            ]
+        },
+
+        'hin_lit_ch8': {
+            id: 'hin_lit_ch8',
+            title: 'अध्याय ८: विश्वराज्य (\'वसुधैव कुटुंबकम\')',
+            subject: 'Hindi Literature',
+            unit: 'Unit 3: राष्ट्रभक्ति, बंधुत्व एवं व्यापक मूल्यांकन',
+            author: 'राष्ट्रकवि मैथिलीशरण गुप्त',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 03:15 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#10B981',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Curriculum Modernization & 5-Core-Tab Architecture',
+            summary: 'Maithili Sharan Gupt\'s vision of universal brotherhood (Vasudhaiva Kutumbakam) and democracy, plus complete First Term Model Test Paper 1 (Chapters 1 to 8).',
+            changesList: [
+                'All 7 stanzas of Vishwarajya with parallel English translations and hover vocabulary tooltips.',
+                'MCQs, stanza completion, and भाव स्पष्टीकरण with reveal answers.',
+                'Vocabulary Vault: Classical Hindi and philosophical vocabulary cards.',
+                'Grammar: सर्वनाम के छह भेद (पुरुष, निश्चय, अनिश्चय, संबंध, प्रश्न, निज) and identification.',
+                'Critical Tab: Sardar Vallabhbhai Patel integration, ASCII Mind Map, AND Full Model Test Paper 1 (50 marks comprehensive exam) with interactive answers.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Converted to modern 5-tab architecture with complete Model Test Paper 1 preserved.'
                 }
             ]
         }
