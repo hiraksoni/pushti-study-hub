@@ -678,29 +678,34 @@
             subject: 'Science (Biology)',
             unit: 'Biology • Branch Unit 1',
             author: 'CBSE Science Curriculum',
-            version: 'v2.0.0',
-            lastModified: 'September 6, 2026, 04:55 PM IST',
+            version: 'v2.1.0',
+            lastModified: 'September 6, 2026, 06:10 PM IST',
             modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
             modelBadgeColor: '#10B981',
             aiProvider: 'Google DeepMind',
-            taskType: 'Modern Glassmorphic Redesign & Full Curriculum Overhaul',
-            summary: 'Complete modernization of Science Biology Chapter 2 matching English & Hindi literature visual standard. Zero content loss: all 54 MCQs, 10 Fills, 10 True/False, 23 Short Q&A, 4 Long Q&A, 4 Extra Vault trivia, 8 video topics, interactive test mode, and concept map cards.',
+            taskType: 'Pedagogical Restructuring & Full Scientific Rationale Overhaul',
+            summary: 'Restructured Science Biology Chapter 2: prioritized Tab 1 for Objective Practice (OMR & Weekly Test Prep), combined 2 & 3 Marks and 4+ Marks / Case Studies into Tab 2, unified Videos, Concept Map & Vault in Tab 3, categorized all questions under 6 NCERT textbook section headers, enriched all questions with deep scientific rationales, and verified all video links via YouTube oEmbed.',
             changesList: [
-                'Redesigned page from outdated flat styling into modern glassmorphic 5-tab architecture (Videos & Map, Objective OMR, 2/3 Marks, 4+ Marks, Biology Vault).',
-                'Added sleek Hero Card with Chapter metadata, duration, practice count, and AI revision log modal integration.',
-                'Created 4 Visual Concept Pillars: Hormonal Control, Physical Metamorphosis, Reproductive Cycle, and Health & Nutrition.',
-                'Modernized video lessons gallery with high-contrast thumbnails, play badges, and category headers.',
-                'Enhanced OMR Practice with instant feedback pills, color-coded explanations, and modern option radio buttons.',
-                'Integrated full-featured timed Examination Test Mode with floating bottom glass timer bar, countdown clock, and automatic grading scorecard.',
-                'Polished 2/3 Marks, 4+ Marks, and Case Study questions with interactive model answer accordions and case study callout styling.',
-                'Maintained universal silence policy (0 audio tags / 0 AudioContext), dark/light theme switching, and background Firebase timer tracking.'
+                'Prioritized Tab 1 for Objective Practice (OMR & Weekly Test Prep) with Practice Mode and Timed Examination Mode.',
+                'Combined 2 & 3 Marks and 4+ Marks / Case Studies into a unified Tab 2 (Textbook Questions & Solutions) with active recall accordions.',
+                'Unified external media in Tab 3: 4 Visual Concept Pillars, Curated Video Lessons, and Biology Vault Trivia.',
+                'Categorized questions across both tabs under 6 textbook section headers matching NCERT/CBSE chapter flow.',
+                'Overhauled all MCQ, Fill-in-the-blank, and True/False explanations with rigorous scientific and physiological rationales.',
+                'Verified and replaced all video links with active educational videos (Khan Academy, CrashCourse Biology, Amoeba Sisters, SciShow, TicTacLearn NCERT).',
+                'Maintained universal silence policy (0 audio tags / 0 AudioContext) and dark/light theme fidelity.'
             ],
             history: [
+                {
+                    version: 'v2.1.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Restructured tabs (OMR first, combined subjective second, media third), grouped by textbook sections, upgraded explanations, and verified all video links.'
+                },
                 {
                     version: 'v2.0.0',
                     date: 'September 6, 2026',
                     model: 'Gemini 2.5 Pro (via Antigravity)',
-                    notes: 'Modernized New Version tab with English/Hindi literature design aesthetic, concept map, and preserved all 105+ questions.'
+                    notes: 'Modernized New Version tab with English/Hindi literature design aesthetic and concept map.'
                 },
                 {
                     version: 'v1.0.0',
