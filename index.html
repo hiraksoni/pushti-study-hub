@@ -465,33 +465,7 @@
         </div>
 
         <div class="header-right">
-            <!-- Global Search Toggle -->
-            <div class="search-container" style="position:relative; display:flex; align-items:center;">
-                <button id="global-search-btn" class="icon-btn" aria-label="Search" title="Search syllabus...">
-                    <i class="fas fa-search"></i>
-                </button>
-                <input id="global-search-input" type="text" placeholder="Search syllabus..." style="display:none; margin-left:8px; padding: 4px 10px; border-radius:14px; border:1px solid var(--border); background:var(--surface); color:var(--text-main); font-size:0.8rem; width:140px; outline:none;">
-            </div>
 
-            <!-- Theme Toggle -->
-            <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" title="Toggle dark/light theme">
-                <i class="fas fa-moon"></i>
-            </button>
-
-            <!-- Nav Links -->
-            <a href="timetable.html" class="hdr-nav-btn"><i class="fas fa-calendar-alt"></i> Time Table</a>
-            <a href="midterm.html" class="hdr-nav-btn"><i class="fas fa-crosshairs"></i> Mid-Term</a>
-
-            <!-- User Avatar & Dropdown -->
-            <div class="user-profile-wrapper" style="position:relative;">
-                <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:32px; height:32px; border:2px solid var(--primary);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
-                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=Pushti&background=6366F1&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-                <div id="global-dropdown" style="display:none; position:absolute; right:0; top:40px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:12px; width:200px; box-shadow:0 10px 25px rgba(0,0,0,0.3); flex-direction:column; gap:8px; z-index:1001;">
-                    <div style="text-align:center; padding-bottom:6px; border-bottom:1px solid var(--border);">
-                        <div id="user-name-display" style="font-weight:700; font-size:0.95rem; color:var(--text-main);">Pushti</div>
-                        <div id="dropdown-user-role" style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase;">Student</div>
-                    </div>
                     <button id="switch-user-btn" onclick="openLoginModal()" style="padding:8px 12px; background:var(--bg-main); border:1px solid var(--border); border-radius:8px; color:var(--text-main); font-weight:600; font-size:0.78rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
                         <i class="fas fa-user-friends"></i> Switch Account
                     </button>
@@ -538,10 +512,6 @@
 
             <!-- Right Wide Content Area: Subject Cards (filling full width) -->
             <div class="branch-content-area">
-                <div id="search-empty-state" style="display:none; text-align:center; padding: 48px 24px; background:var(--surface); border:1px solid var(--border); border-radius:14px; color:var(--text-muted); font-size:0.95rem; margin-bottom:16px;">
-                    <i class="fas fa-search" style="font-size:1.8rem; margin-bottom:12px; opacity:0.4; display:block;"></i>
-                    <span id="search-empty-text">No subjects found matching your search.</span>
-                </div>
 
                 <!-- ==========================================================
                      1. LANGUAGES CATEGORY (English, Hindi, Sanskrit)
@@ -732,7 +702,7 @@
             </div>
             <div style="margin-bottom:18px;">
                 <label style="display:block; margin-bottom:5px; font-size:0.85rem; color:var(--text-muted);">Password:</label>
-                <input type="password" id="login-password" placeholder="Enter password" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-family:inherit; outline:none;">
+                <input type="password" id="login-password" placeholder="Enter password" autocomplete="new-password" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-family:inherit; outline:none;">
             </div>
             <div id="login-error" style="color:#EF4444; font-size:0.85rem; margin-bottom:12px; display:none;">Invalid password.</div>
             <div style="display:flex; justify-content:flex-end; gap:10px;">
@@ -897,66 +867,6 @@
             const icon = themeBtn.querySelector('i');
             if (icon) {
                 icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-        }
-
-        // Global Search
-        const searchBtn = document.getElementById('global-search-btn');
-        const searchInput = document.getElementById('global-search-input');
-        if (searchBtn && searchInput) {
-            searchBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (searchInput.style.display === 'none' || searchInput.style.display === '') {
-                    searchInput.style.display = 'block';
-                    searchInput.focus();
-                } else {
-                    performFilter(searchInput.value.toLowerCase().trim());
-                }
-            });
-
-            searchInput.addEventListener('input', () => {
-                performFilter(searchInput.value.toLowerCase().trim());
-            });
-        }
-
-        function performFilter(term) {
-            const emptyContainer = document.getElementById('search-empty-state');
-            const emptyText = document.getElementById('search-empty-text');
-
-            if (!term) {
-                if (emptyContainer) emptyContainer.style.display = 'none';
-                // Cleanly restore the active category tab
-                const activeBtn = document.querySelector('.branch-nav-btn.active');
-                const activeCat = (activeBtn && activeBtn.dataset.cat) ? activeBtn.dataset.cat : 'languages';
-                showCategory(activeCat);
-                return;
-            }
-
-            let totalMatches = 0;
-            document.querySelectorAll('.category-section').forEach(sec => {
-                let secMatches = 0;
-                sec.querySelectorAll('.chapter-card').forEach(card => {
-                    const matches = card.innerText.toLowerCase().includes(term);
-                    card.style.display = matches ? 'flex' : 'none';
-                    if (matches) secMatches++;
-                });
-
-                // Only show section heading if section has matching cards
-                if (secMatches > 0) {
-                    sec.classList.add('active');
-                    totalMatches += secMatches;
-                } else {
-                    sec.classList.remove('active');
-                }
-            });
-
-            if (emptyContainer && emptyText) {
-                if (totalMatches === 0) {
-                    emptyText.textContent = `No subjects found matching "${term}".`;
-                    emptyContainer.style.display = 'block';
-                } else {
-                    emptyContainer.style.display = 'none';
-                }
             }
         }
 
