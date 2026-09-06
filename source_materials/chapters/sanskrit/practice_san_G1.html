@@ -639,6 +639,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <span>2. Shashti Bahu-vachanam of लता:</span>
                 <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'">Reveal Answer</button>
                 <span class="answer">लतानाम्</span>
+            </div>
             <div class="q-row">
                 <span>3. मालाकारः वृक्षान् सिञ्चति</span>
                 <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'">Reveal Answer</button>
@@ -719,6 +720,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <span>2. Prathama Purusha Eka-vachanam of कृ (लट्):</span>
                 <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'">Reveal Answer</button>
                 <span class="answer">करोति</span>
+            </div>
             <div class="q-row">
                 <span>3. तौ छात्रौ पाठं स्मरतः</span>
                 <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'">Reveal Answer</button>
@@ -895,22 +897,7 @@ document.addEventListener("DOMContentLoaded", function() {
     </div>
 </div>
 
-<script>
-function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-        tabcontent[i].classList.remove("active");
-    }
-    tablinks = document.getElementsByClassName("tab-btn");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-</script>
+
 
 <!-- FIREBASE TIMER INJECTION START -->
 <script type="module">
@@ -1016,6 +1003,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.setAttribute('data-theme', saved);
     document.documentElement.setAttribute('data-theme', saved);
     updateThemeIcon(saved);
+
+    // Auto-open tab from URL hash if present (e.g. #tab-verbs)
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+        const targetBtn = document.querySelector(`button[onclick*="'${hash}'"]`);
+        if (targetBtn) {
+            targetBtn.click();
+        }
+    }
 
     // Bind theme toggle buttons
     document.querySelectorAll('.theme-toggle').forEach(btn => {
