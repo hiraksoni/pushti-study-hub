@@ -667,6 +667,48 @@
                     notes: 'Converted to modern 5-tab architecture with complete Model Test Paper 1 preserved.'
                 }
             ]
+        },
+
+        // ==========================================
+        // SCIENCE (BIOLOGY)
+        // ==========================================
+        'sci_bio_ch2': {
+            id: 'sci_bio_ch2',
+            title: 'Chapter 2: Adolescence - A Stage of Growth & Change',
+            subject: 'Science (Biology)',
+            unit: 'Biology • Branch Unit 1',
+            author: 'CBSE Science Curriculum',
+            version: 'v2.0.0',
+            lastModified: 'September 6, 2026, 04:55 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#10B981',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Modern Glassmorphic Redesign & Full Curriculum Overhaul',
+            summary: 'Complete modernization of Science Biology Chapter 2 matching English & Hindi literature visual standard. Zero content loss: all 54 MCQs, 10 Fills, 10 True/False, 23 Short Q&A, 4 Long Q&A, 4 Extra Vault trivia, 8 video topics, interactive test mode, and concept map cards.',
+            changesList: [
+                'Redesigned page from outdated flat styling into modern glassmorphic 5-tab architecture (Videos & Map, Objective OMR, 2/3 Marks, 4+ Marks, Biology Vault).',
+                'Added sleek Hero Card with Chapter metadata, duration, practice count, and AI revision log modal integration.',
+                'Created 4 Visual Concept Pillars: Hormonal Control, Physical Metamorphosis, Reproductive Cycle, and Health & Nutrition.',
+                'Modernized video lessons gallery with high-contrast thumbnails, play badges, and category headers.',
+                'Enhanced OMR Practice with instant feedback pills, color-coded explanations, and modern option radio buttons.',
+                'Integrated full-featured timed Examination Test Mode with floating bottom glass timer bar, countdown clock, and automatic grading scorecard.',
+                'Polished 2/3 Marks, 4+ Marks, and Case Study questions with interactive model answer accordions and case study callout styling.',
+                'Maintained universal silence policy (0 audio tags / 0 AudioContext), dark/light theme switching, and background Firebase timer tracking.'
+            ],
+            history: [
+                {
+                    version: 'v2.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Modernized New Version tab with English/Hindi literature design aesthetic, concept map, and preserved all 105+ questions.'
+                },
+                {
+                    version: 'v1.0.0',
+                    date: 'August 2026',
+                    model: 'Initial Build',
+                    notes: 'Original plain HTML structure with basic questions.'
+                }
+            ]
         }
     };
 
