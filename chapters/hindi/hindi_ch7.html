@@ -1,754 +1,1441 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter 7: माँ का उपहार</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Chapter 7: माँ का उपहार - Pushti Study Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main: #0f111a;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --text-main: #e2e8f0;
-            --text-muted: #94a3b8;
-            --accent: #8b5cf6;
-            --border: rgba(255, 255, 255, 0.1);
-            --surface: #1e1e2e;
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --primary-light: #ddd6fe;
+            --primary-rgb: 139, 92, 246;
+            --accent: #f59e0b;
+            --accent-green: #10b981;
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --card-light: #ffffff;
+            --card-border: #334155;
+            --card-border-light: #e2e8f0;
+            --text-dark: #f8fafc;
+            --text-muted-dark: #94a3b8;
+            --text-light: #1e293b;
+            --text-muted-light: #64748b;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
             margin: 0;
             padding: 0;
+            background: var(--bg-dark);
+            color: var(--text-dark);
             line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+
+        body.light-mode {
+            background: #f1f5f9;
+            color: var(--text-light);
         }
-        .tabs-wrapper { position: sticky !important; top: 61px !important; z-index: 990 !important; background: var(--bg-main) !important; border-bottom: 1px solid var(--border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; display: flex; gap: 10px; justify-content: center;}
-        .tab-btn {
-            background: var(--surface);
-            color: var(--text-main);
-            border: 1px solid var(--border);
+
+        /* Top Navigation Bar */
+        .site-header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        body.light-mode .site-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom-color: var(--card-border-light);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .header-left a {
+            color: inherit;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .header-left a:hover {
+            color: var(--primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-btn {
+            background: var(--card-dark);
+            color: var(--text-dark);
+            border: 1px solid var(--card-border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 600;
-            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
         }
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--accent);
-            border-color: var(--accent);
+        body.light-mode .nav-btn {
+            background: #ffffff;
+            color: var(--text-light);
+            border-color: var(--card-border-light);
         }
-        .tab-content {
+        .nav-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .theme-toggle-btn {
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: inherit;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        body.light-mode .theme-toggle-btn {
+            border-color: var(--card-border-light);
+        }
+        .theme-toggle-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px 20px 80px;
+        }
+
+        /* Hero Banner */
+        .chapter-hero {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(30, 41, 59, 0.7) 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        body.light-mode .chapter-hero {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(241, 245, 249, 0.9) 100%);
+            border-color: var(--card-border-light);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 0 0 10px;
+            color: #ffffff;
+        }
+        body.light-mode .hero-title {
+            color: #0f172a;
+        }
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted-dark);
+            margin-bottom: 16px;
+        }
+        body.light-mode .hero-subtitle {
+            color: var(--text-muted-light);
+        }
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.85rem;
+            color: var(--text-muted-dark);
+        }
+        body.light-mode .hero-meta {
+            color: var(--text-muted-light);
+        }
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 5 Tab Navigation */
+        .tabs-container {
+            display: flex;
+            gap: 8px;
+            background: var(--card-dark);
+            padding: 8px;
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            margin-bottom: 28px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+        body.light-mode .tabs-container {
+            background: #ffffff;
+            border-color: var(--card-border-light);
+        }
+        .tab-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted-dark);
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        body.light-mode .tab-btn {
+            color: var(--text-muted-light);
+        }
+        .tab-btn:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--primary);
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+        }
+
+        /* Tab Content */
+        .tab-pane {
             display: none;
-            padding: 20px 0;
+            animation: fadeIn 0.3s ease;
         }
-        .tab-content.active {
+        .tab-pane.active {
             display: block;
         }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Quick Revision Grid */
+        .revision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .rev-card {
+            background: var(--card-dark);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px;
+            transition: transform 0.2s;
+        }
+        body.light-mode .rev-card {
+            background: #ffffff;
+            border-color: var(--card-border-light);
+        }
+        .rev-card:hover {
+            transform: translateY(-2px);
+        }
+        .rev-card-title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--primary);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .rev-card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted-dark);
+            line-height: 1.4;
+        }
+        body.light-mode .rev-card-desc {
+            color: var(--text-muted-light);
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: var(--card-dark);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        body.light-mode .section-card {
+            background: #ffffff;
+            border-color: var(--card-border-light);
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--card-border);
+        }
+        body.light-mode .section-header {
+            border-bottom-color: var(--card-border-light);
+        }
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+        }
+
+        /* Translation Grid */
         .translation-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 20px;
-            background: var(--bg-card);
+            margin-bottom: 18px;
+            background: rgba(255, 255, 255, 0.02);
             padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
         }
-        .hindi-text {
-            font-size: 1.2rem;
-            color: #f8fafc;
-            border-right: 1px solid var(--border);
+        body.light-mode .translation-grid {
+            background: #f8fafc;
+            border-color: var(--card-border-light);
+        }
+        .hindi-col {
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            border-right: 1px solid var(--card-border);
             padding-right: 20px;
+            line-height: 1.8;
         }
-        .english-text {
-            color: var(--text-muted);
+        body.light-mode .hindi-col {
+            color: var(--text-light);
+            border-right-color: var(--card-border-light);
+        }
+        .english-col {
+            color: var(--text-muted-dark);
             font-style: italic;
+            line-height: 1.7;
+            padding-left: 6px;
         }
-        .exercise-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
+        body.light-mode .english-col {
+            color: var(--text-muted-light);
         }
-        .reveal-btn {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .answer {
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(139, 92, 246, 0.1);
-            border-left: 4px solid var(--accent);
-            border-radius: 4px;
-            color: #a78bfa;
-        }
+
         @media (max-width: 768px) {
             .translation-grid {
                 grid-template-columns: 1fr;
             }
-            .hindi-text {
+            .hindi-col {
                 border-right: none;
-                border-bottom: 1px solid var(--border);
+                border-bottom: 1px solid var(--card-border);
                 padding-right: 0;
-                padding-bottom: 20px;
-                margin-bottom: 20px;
+                padding-bottom: 16px;
+                margin-bottom: 16px;
             }
         }
-    </style>
 
-<style>
-[data-theme="light"] {
-    --bg-main: #f8fafc !important;
-    --bg-color: #f8fafc !important;
-    --bg-primary: #f8fafc !important;
-    --bg-secondary: #ffffff !important;
-    --bg-card: #ffffff !important;
-    --text-main: #0f172a !important;
-    --text-muted: #475569 !important;
-    --accent: #6366f1 !important;
-    --border: #e2e8f0 !important;
-    --surface: #f1f5f9 !important;
-}
-[data-theme="light"] .site-header {
-    background: #f8fafc !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-}
-[data-theme="light"] .icon-btn { color: #0f172a !important; }
-</style>
+        /* Interactive Vocab Word Tooltip */
+        .vocab-word {
+            color: #c084fc;
+            font-weight: 600;
+            border-bottom: 1px dashed #c084fc;
+            cursor: pointer;
+            position: relative;
+        }
+        .vocab-word:hover::after {
+            content: attr(data-meaning);
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e1b4b;
+            color: #e0e7ff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 10;
+            border: 1px solid #6366f1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            font-style: normal;
+        }
+
+        /* Question / Answer Cards */
+        .q-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+        body.light-mode .q-card {
+            background: #f8fafc;
+            border-color: var(--card-border-light);
+        }
+        .q-card:hover {
+            border-color: var(--primary);
+        }
+        .q-title {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .q-badge {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+        .toggle-btn:hover {
+            background: var(--primary-dark);
+        }
+        .ans-box {
+            display: none;
+            margin-top: 12px;
+            padding: 14px;
+            background: rgba(139, 92, 246, 0.08);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            color: #d8b4fe;
+            line-height: 1.6;
+        }
+        body.light-mode .ans-box {
+            background: rgba(139, 92, 246, 0.1);
+            color: #4c1d95;
+        }
+
+        /* MCQ Options */
+        .mcq-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .mcq-option {
+            background: var(--card-dark);
+            border: 1px solid var(--card-border);
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            text-align: left;
+            color: inherit;
+        }
+        body.light-mode .mcq-option {
+            background: #ffffff;
+            border-color: var(--card-border-light);
+        }
+        .mcq-option:hover {
+            border-color: var(--primary);
+        }
+        .mcq-option.correct {
+            background: rgba(16, 185, 129, 0.2) !important;
+            border-color: #10b981 !important;
+            color: #34d399 !important;
+            font-weight: bold;
+        }
+        .mcq-option.incorrect {
+            background: rgba(239, 68, 68, 0.2) !important;
+            border-color: #ef4444 !important;
+            color: #f87171 !important;
+        }
+
+        /* Vocabulary Vault Grid */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+        .vocab-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 18px;
+            transition: all 0.2s;
+        }
+        body.light-mode .vocab-card {
+            background: #f8fafc;
+            border-color: var(--card-border-light);
+        }
+        .vocab-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .vocab-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 6px;
+        }
+        body.light-mode .vocab-card-header {
+            border-bottom-color: var(--card-border-light);
+        }
+        .vocab-hindi {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .vocab-type {
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .vocab-meaning {
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+        .vocab-english {
+            font-size: 0.85rem;
+            color: var(--text-muted-dark);
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+        body.light-mode .vocab-english {
+            color: var(--text-muted-light);
+        }
+        .vocab-example {
+            font-size: 0.85rem;
+            background: rgba(139, 92, 246, 0.06);
+            padding: 8px;
+            border-radius: 6px;
+            border-left: 2px solid var(--primary);
+        }
+
+        /* Mind Map Flowchart */
+        .mindmap-box {
+            background: #090d16;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            color: #38bdf8;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+        body.light-mode .mindmap-box {
+            background: #f1f5f9;
+            color: #0369a1;
+            border-color: var(--card-border-light);
+        }
+
+        /* Grammar List */
+        .grammar-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            margin-bottom: 10px;
+        }
+        body.light-mode .grammar-item {
+            background: #f8fafc;
+            border-color: var(--card-border-light);
+        }
+
+        .action-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 
-<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--bg-main); position: sticky; top: 0; z-index: 1000;">
-    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500; color: var(--text-main);">
-        <a href="../../index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
-            <i class="fas fa-home"></i> Home
-        </a>
-        <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <a href="../../hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a><span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <span style="color:var(--accent); font-weight:600;">Chapter 7</span>
+<!-- Header -->
+<header class="site-header">
+    <div class="header-left">
+        <a href="../../index.html"><i class="fas fa-home"></i> Home</a>
+        <span style="opacity: 0.5;">/</span>
+        <a href="../../hindi_index.html">Hindi Literature</a>
+        <span style="opacity: 0.5;">/</span>
+        <span style="color: var(--primary); font-weight: 600;">Chapter 7</span>
     </div>
-    
-    <div class="header-right" style="display:flex; align-items:center; gap: 20px;">
-        <div class="search-container" style="display:flex; align-items:center;">
-            <button id="global-search-btn" aria-label="Search" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; padding:5px; display:flex; align-items:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-            <input id="global-search-input" type="text" placeholder="Search..." style="display:none; margin-left:10px; padding: 6px 15px; border-radius:20px; border:1px solid var(--border); background:rgba(0,0,0,0.2); color:white; width: 180px;">
-        </div>
-        
-        <nav class="header-nav" style="display:flex; align-items:center; gap: 15px;">
-            <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:white; cursor:pointer; font-size:1.2rem;">
+    <div class="header-right">
+        <nav class="header-nav">
+            <a href="../../timetable.html" class="nav-btn"><i class="far fa-calendar-alt"></i> Time Table</a>
+            <a href="../../midterm.html" class="nav-btn"><i class="fas fa-bullseye"></i> Mid-Term</a>
+            <button class="theme-toggle-btn" id="themeToggle" title="Toggle Light/Dark Mode">
                 <i class="fas fa-moon"></i>
             </button>
-            
-            <a href="../../timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
-            <a href="../../midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
-
-            <div class="user-profile-wrapper" style="position:relative;">
-                <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:40px; height:40px; border:2px solid var(--accent);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
-                    <img src="https://ui-avatars.com/api/?name=Pushti&background=8B5CF6&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-                <div id="global-dropdown" style="display:none; position:absolute; right:0; top:50px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:15px; width:220px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); flex-direction:column; gap:12px; z-index:1001;">
-                    <div style="text-align:center; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
-                        <div style="font-weight:700; font-size:1.1rem; color:var(--text-primary);">Pushti</div>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.9rem; font-weight:500;">Student</span>
-                        <label class="switch" style="position:relative; display:inline-block; width:34px; height:20px;">
-                            <input type="checkbox" id="global-role-checkbox" style="opacity:0; width:0; height:0;">
-                            <span class="slider" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--border); transition:.4s; border-radius:34px;"></span>
-                        </label>
-                        <span style="font-size:0.9rem; font-weight:500;">Parent</span>
-                    </div>
-                </div>
-            </div>
         </nav>
     </div>
 </header>
 
-<div class="tabs-wrapper">
-    <button class="tab-btn active" onclick="openTab('chapter-text', this)">Chapter Text</button>
-    <button class="tab-btn" onclick="openTab('qa', this)">Q&A</button>
-    <button class="tab-btn" onclick="openTab('grammar', this)">Grammar</button>
-    <button class="tab-btn" onclick="openTab('exercises', this)">Exercises</button>
-</div>
-
 <div class="container">
-    <div id="chapter-text" class="tab-content active">
-        <h1 style="text-align:center; color:var(--accent);">7. माँ का उपहार (बहादुरी और देशभक्ति)</h1>
-        
-        <div class="translation-grid">
-            <div class="hindi-text">
-                अब हम पढ़ेंगे उनकी गाथा,<br>
-                जिन्हें कभी न भूल सके।<br>
-                देश के खातिर, मर मिटते थे<br>
-                ऐसे वीर सपूत थे वे।<br><br>
-                खुद के लिए जो जीनेवाले, नाम नहीं<br>
-                कर पाते हैं, औरों की खातिर जो जीते,<br>
-                जग रोशन कर जाते हैं।
+    <!-- Hero Card -->
+    <div class="chapter-hero">
+        <span class="hero-badge">अध्याय ७ • वीरता एवं देशभक्ति</span>
+        <h1 class="hero-title">माँ का उपहार</h1>
+        <div class="hero-subtitle">साहस, मित्रता और राष्ट्रप्रेम की एक अविस्मरणीय प्रेरक कहानी</div>
+        <div class="hero-meta">
+            <div class="hero-meta-item"><i class="fas fa-feather-alt"></i> विधा: ऐतिहासिक व प्रेरक कहानी</div>
+            <div class="hero-meta-item"><i class="far fa-clock"></i> पठन अवधि: 25 मिनट</div>
+            <div class="hero-meta-item"><i class="fas fa-book-reader"></i> मुख्य पात्र: शारदा देवी, अरुण, डिक जैक्सन</div>
+            <div class="hero-meta-item">
+                <a href="javascript:void(0)" onclick="openChapterLog('hin_lit_ch7')" class="action-link" style="color: #c084fc;">
+                    <i class="fas fa-history"></i> Revision Log
+                </a>
             </div>
-            <div class="english-text">
-                Now we will read their saga,<br>
-                Whom we could never forget.<br>
-                For the sake of the country, they used to sacrifice themselves<br>
-                Such brave sons were they.<br><br>
-                Those who live for themselves, cannot<br>
-                make a name, those who live for others,<br>
-                illuminate the world.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                सन् 1942 में महात्मा गांधी द्वारा चलाया गया 'अंग्रेज़ों, भारत छोड़ो' आंदोलन सारे देश में आग की तरह फैल चुका था। बंगाल का बच्चा-बच्चा आंदोलन में भाग लेने के लिए उठ खड़ा हुआ था।
-            </div>
-            <div class="english-text">
-                The 'Quit India' movement launched by Mahatma Gandhi in 1942 had spread like wildfire all over the country. Every child of Bengal had stood up to participate in the movement.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                इन्हीं दिनों इस आंदोलन के दौरान कलकत्ता (अब कोलकाता) में स्वतंत्रता के दीवानों ने एक मौन जुलूस निकाला। जुलूस चुपचाप शांत-भाव से तिरंगा झंडा लिए हुए शहर की मुख्य सड़क पर आया। जुलूस के आते ही उस पर गोलियों की बौछार होने लगी। सबसे पहली गोली सत्तर वर्ष की उस वृद्ध महिला को लगी, जो तिरंगा झंडा हाथों में लिए जुलूस में सबसे आगे थी। गोली लगते ही वह वृद्धा "वंदे मातरम्" कहती हुई धड़ाम से गिर पड़ी। इससे पहले कि उसके हाथों से तिरंगा झंडा नीचे गिरता, एक छोटे-से लड़के ने दौड़कर झंडे को सँभाल लिया। लेकिन पुलिस तो जुल्म ढाने पर उतरी हुई थी। वह लगातार गोलियाँ चलाती रही, जिससे वह छोटा-सा लड़का भी गोली लगने से शहीद हो गया। पुलिस की इस गोलाबारी और लाठी चार्ज से तीन महिलाएँ और कई बच्चे शहीद हो गए। जुलूस पर गोली चलाने का आदेश देने वाला पुलिस कमिश्नर था- गॉर्डन जैक्सन।
-            </div>
-            <div class="english-text">
-                During these days, during this movement, the lovers of freedom took out a silent procession in Calcutta (now Kolkata). The procession quietly and peacefully came on the main road of the city holding the tricolor flag. As soon as the procession arrived, bullets started raining on it. The first bullet hit a seventy-year-old woman who was at the forefront of the procession holding the tricolor flag in her hands. As soon as the bullet hit her, the old woman fell down with a thud saying "Vande Mataram". Before the tricolor flag could fall from her hands, a small boy ran and held the flag. But the police were bent on committing atrocities. They kept firing continuously, due to which that little boy was also martyred by a bullet. Three women and many children were martyred by this police firing and lathi charge. The police commissioner who gave the order to fire on the procession was - Gordon Jackson.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                अंग्रेज़ों की सरकार के इस जुल्म ने स्वतंत्रता के लिए प्राण न्योछावर करने वालों के दिलों में उथल-पुथल मचा दी थी। उन्होंने एक दल बनाया और उसकी बैठक बुलाई। उस बैठक में फैसला लिया गया कि जितनी जल्दी हो सके, इस पुलिस कमिश्नर को खत्म कर देना है। शारदा देवी नाम की एक युवती ने इस काम की जिम्मेदारी अपने हाथ में ली।
-            </div>
-            <div class="english-text">
-                This oppression of the British government had created a turmoil in the hearts of those who sacrificed their lives for freedom. They formed a group and called a meeting. In that meeting, it was decided that this police commissioner should be eliminated as soon as possible. A young woman named Sharda Devi took the responsibility of this task in her hands.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                लगभग दो माह बाद गॉर्डन जैक्सन को एक हाईस्कूल के समारोह में मुख्य अतिथि के रूप में आमंत्रित किया गया। पुरस्कार वितरण के समय शारदा देवी ने जैक्सन पर गोलियाँ चला दीं। दो गोलियाँ जैक्सन का कंधा चीरती हुई निकल गईं। समारोह में भगदड़ मच गई। जैक्सन को तुरंत अस्पताल ले जाया गया। ऑपरेशन हुआ। जैक्सन बच तो गया, लेकिन उसने छुट्टी ले ली और वह तुरंत इंग्लैंड वापस चला गया।
-            </div>
-            <div class="english-text">
-                About two months later, Gordon Jackson was invited as the chief guest at a high school function. During the prize distribution, Sharda Devi fired bullets at Jackson. Two bullets pierced through Jackson's shoulder. A stampede broke out in the ceremony. Jackson was immediately taken to the hospital. An operation was performed. Jackson survived, but he took a leave and immediately went back to England.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                शारदा देवी को समारोह-स्थल पर पुलिस ने पकड़ लिया। उन पर मुकदमा चलाया गया और पंद्रह साल की सजा सुना दी गई और सजा भी काले-पानी की यानि उन्हें अंडमान भेज दिया गया।
-            </div>
-            <div class="english-text">
-                Sharda Devi was caught by the police at the ceremony venue. She was tried and sentenced to fifteen years of imprisonment, and that too in Kala Pani, meaning she was sent to the Andamans.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                वही शारदा देवी अरुण की माँ हैं। अरुण अपनी माँ शारदा देवी से इस कहानी को कई बार सुन चुका है। अरुण को इस बात पर गर्व है कि उसकी माँ कोई साधारण महिला नहीं है, बल्कि देश के स्वाधीनता संग्राम की एक बहादुर और साहसी योद्धा हैं।
-            </div>
-            <div class="english-text">
-                That same Sharda Devi is Arun's mother. Arun has heard this story from his mother Sharda Devi many times. Arun is proud that his mother is not an ordinary woman, but a brave and courageous warrior of the country's freedom struggle.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                अरुण को अपनी स्कूल की किताबों के अलावा कहानी की किताबें पढ़ने का भी शौक है। वह ज्यादातर बहादुर और साहसिक काम करने वालों की जीवनियाँ व घटनाएँ पढ़ना पसंद करता है।
-            </div>
-            <div class="english-text">
-                Besides his school books, Arun is also fond of reading story books. He mostly likes to read biographies and incidents of those who do brave and adventurous deeds.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                अरुण जब तेरह वर्ष का था, तभी उसके पिता का अचानक स्वर्गवास हो गया। इसलिए शारदा देवी ने एक कन्या विद्यालय में अध्यापिका की नौकरी कर ली और अरुण को एक बोर्डिंग स्कूल में भेज दिया। अरुण को माँ से दूर रहना अच्छा नहीं लगा, लेकिन बाद में बोर्डिंग स्कूल में अपने दोस्तों के साथ उसका मन लग गया। अरुण स्कूल का जाना-माना छात्र था। उसे "सबसे कुशल तैराक" का पुरस्कार तीन वर्षों से लगातार मिल रहा था। वैसे वह भारतीय वायुसेना में पायलेट बनना चाहता था।
-            </div>
-            <div class="english-text">
-                When Arun was thirteen years old, his father suddenly passed away. Therefore, Sharda Devi took up a job as a teacher in a girls' school and sent Arun to a boarding school. Arun did not like staying away from his mother, but later he started enjoying the boarding school with his friends. Arun was a well-known student of the school. He had been getting the "Best Swimmer" award consecutively for three years. However, he wanted to become a pilot in the Indian Air Force.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                उसका बोर्डिंग स्कूल सिलीगुड़ी में था- सेंट कोलंबस बोर्डिंग स्कूल। यह स्कूल तीस्ता नदी के किनारे पर बना था।<br>
-                इस नदी से अरुण को बहुत लगाव था। इम्तिहान के दिनों में जब वह देर रात तक पढ़ता रहता तो सुनसान अँधेरे में तीस्ता के बहने की आवाज़ उसे बहुत अच्छी लगती थी।
-            </div>
-            <div class="english-text">
-                His boarding school was in Siliguri - St. Columbus Boarding School. This school was built on the banks of the Teesta River.<br>
-                Arun had a great attachment to this river. During exam days, when he used to study late at night, he really liked the sound of Teesta flowing in the desolate darkness.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                गर्मियों में पानी कम होने से तीस्ता का बहाव मंद पड़ जाता और वर्षा ऋतु के आते ही वह बहुत तेजी से बहने लगती। जब भी अरुण अकेलापन महसूस करता, उसके किनारे जा बैठता। तीस्ता उसे अपनी माँ जैसी धीर-गंभीर लगती थी।
-            </div>
-            <div class="english-text">
-                In summer, due to less water, the flow of Teesta slowed down and as soon as the rainy season arrived, it started flowing very fast. Whenever Arun felt lonely, he would go and sit on its bank. Teesta seemed calm and serious to him like his mother.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                स्कूल के नियमानुसार अरुण पूरे साल में केवल दो बार घर आ सकता था। एक बार दुर्गापूजा की छुट्टियों में, दूसरी बार क्रिसमस की छुट्टियों में। इसके बीच वह माँ को लगातार पत्र लिखता रहता और जवाब में आए माँ के पत्रों को बार-बार पढ़ता। माँ की सभी चिट्ठियाँ उसने एक छोटे लकड़ी के डिब्बे में सँभालकर रख रखी थीं। जब भी उसे माँ की याद आती थी वह पत्र निकाल लेता और पढ़ता। पत्र पढ़ते समय उसे ऐसा महसूस होता कि माँ उसके सामने बैठी हैं और उससे बातें कर रही हैं। दुनिया में उसे माँ से ज़्यादा प्यारा कोई न था। लेकिन इस बार दुर्गापूजा की छुट्टियों में जब वह आया तो अपनी माँ से गुस्सा हो गया। गुस्से का कारण यह था कि शारदा देवी के पास आज भी रिवॉल्वर थी। वह रिवॉल्वर उनके लिए एक महत्वपूर्ण यादगार था। उन्होंने उसे एक छोटे से बक्से में रख छोड़ा था। अरुण उस रिवॉल्वर को देखना चाहता था। उसके लिए उसने माँ से कई बार कहा, परंतु माँ ने हर बार उसे यह कहकर टाल दिया कि अभी तुम छोटे हो। लेकिन इस बार अरुण ने ज़िद ही पकड़ ली, "मुझे वह रिवॉल्वर दिखाओ, मैं अब बड़ा हो गया हूँ।"
-            </div>
-            <div class="english-text">
-                According to the school rules, Arun could come home only twice in the whole year. Once during Durga Puja holidays, and the second time during Christmas holidays. In between, he would continuously write letters to his mother and read the replies from his mother again and again. He had kept all his mother's letters safely in a small wooden box. Whenever he missed his mother, he would take out a letter and read it. While reading the letter, he felt as if his mother was sitting in front of him and talking to him. There was no one dearer to him in the world than his mother. But this time when he came during the Durga Puja holidays, he got angry with his mother. The reason for the anger was that Sharda Devi still had the revolver. That revolver was an important souvenir for her. She had kept it in a small box. Arun wanted to see that revolver. For that, he asked his mother many times, but every time the mother put him off saying that you are still young. But this time Arun remained stubborn, "Show me that revolver, I have grown up now."
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                "नहीं, अभी नहीं। सही समय पर मैं तुम्हें खुद दिखा दूँगी।" बस! अरुण इसी बात पर माँ से नाराज़ था।<br>
-                अरुण के स्कूल की अलग-अलग देशों में पाँच शाखाएँ थीं। एक-दूसरे देश के स्कूलों में छात्र आते-जाते रहते थे। छात्रों के इस तरह आने-जाने का उद्देश्य यह था कि बच्चे आपस में एक-दूसरे देश के छात्रों से मिलें। उनके रहन-सहन, खान-पान, रीति-रिवाज़ और संस्कृति को खुद देखें और उसके बारे में जानें।
-            </div>
-            <div class="english-text">
-                "No, not right now. I will show you myself at the right time." That's it! Arun was angry with his mother about this.<br>
-                Arun's school had five branches in different countries. Students used to visit schools in each other's countries. The purpose of this kind of visit by students was for children to meet students of each other's country. To see for themselves and learn about their lifestyle, food, customs and culture.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                इस बार का क्रिसमस अरुण के जीवन में नया मोड़ लेकर आया। क्रिसमस की छुट्टियों से पहले अरुण के स्कूल की लंदन वाली शाखा के दस बच्चे सिलीगुड़ी आए। अरुण और उसके दोस्त उनसे मिलकर बहुत खुश थे। वे आपस में मिल बैठते, ढेर-सारी बातें करते और एक-दूसरे के बारे में ज़्यादा-से-ज़्यादा जानने की कोशिश करते। उन्हें महसूस हुआ कि उनमें आपस में काफी समानताएँ हैं।
-            </div>
-            <div class="english-text">
-                This year's Christmas brought a new turning point in Arun's life. Before the Christmas holidays, ten children from the London branch of Arun's school came to Siliguri. Arun and his friends were very happy to meet them. They used to sit together, talk a lot and try to know as much as possible about each other. They realized that they have many similarities among themselves.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                अरुण ने अपनी माँ को पत्र में उनके बारे में लिखा था। उसने पत्र में उस पिकनिक का भी वर्णन किया, जिसमें एक बड़ी दुर्घटना घटते-घटते बच गई थी।<br>
-                घटना यह थी कि लंदन लौटने से केवल एक दिन पहले पिकनिक का प्रोग्राम बनाया गया। रविवार का दिन था। सूरज की धूप बहुत अच्छी लग रही थी। ठंड के दिनों में खिली हुई धूप का तो अपना ही आनंद होता है। इतिहास के अध्यापक सुबीर राय और लंदन से आए फादर रोनाल्ड पिकनिक में बच्चों के साथ थे। सुबीर राय के जिम्मे खाने-पीने का इंतज़ाम करना था। कुछ लड़के गप्पे मार रहे थे तो कुछ बैडमिंटन खेल रहे थे। तभी कुछ लड़कों को तीस्ता नदी में नहाने की बात सूझी। वे सुबीर सर के पास पूछने गए। सुबीर सर ने कहा, "नहाने के लिए नदी में वे ही बच्चे जाएँ, जिन्हें तैरना आता हो।"
-            </div>
-            <div class="english-text">
-                Arun had written about them in a letter to his mother. In the letter, he also described the picnic in which a major accident was narrowly averted.<br>
-                The incident was that just one day before returning to London, a picnic program was made. It was Sunday. The sunlight was feeling very good. In the days of cold, bright sunshine has its own joy. History teacher Subir Roy and Father Ronald who came from London were with the children at the picnic. Subir Roy was responsible for arranging food and drinks. Some boys were chatting while some were playing badminton. Just then some boys thought of bathing in the Teesta river. They went to ask Subir sir. Subir sir said, "Only those children should go in the river to bathe, who know how to swim."
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                अठारह बच्चे नहाने के लिए तैयार हो गए। उनमें एक बच्चा लंदन से आया डिक भी था। डिक अरुण से एक वर्ष छोटा था। उसकी आँखें नीली थीं। वह माउथऑर्गन बहुत अच्छा बजाता था। जब रात में सब बच्चे खाना खाकर हॉल में जमा होते, तब डिक माउथऑर्गन बजाता। उसे बहुत-सी धुनें आती थीं। इसलिए उसे सभी बहुत चाहते थे। अरुण ने पत्र में लिखा था- "तुम जानती नहीं हो माँ, तीस्ता नदी का स्वभाव कैसा है। वह कभी-कभी तो बहुत शांत रहती है और कभी-कभी इतनी उग्र हो जाती है कि तुम सोच भी नहीं सकतीं। सबसे खतरनाक बात यह है कि वह कब अपना स्वभाव बदल लेगी, इसका कुछ पता नहीं चलता।"
-            </div>
-            <div class="english-text">
-                Eighteen children got ready to bathe. Among them was also a child named Dick who came from London. Dick was a year younger than Arun. His eyes were blue. He used to play the mouth organ very well. When all the children gathered in the hall after eating food at night, then Dick would play the mouth organ. He knew many tunes. That is why everyone loved him very much. Arun had written in the letter - "You don't know mother, what the nature of Teesta river is. It is sometimes very calm and sometimes it becomes so fierce that you can't even imagine. The most dangerous thing is that it is not known when it will change its nature."
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                "उस दिन हमें यह पता नहीं चला कि तीस्ता इस तरह अचानक अपना स्वरूप बदल लेगी। पहले दस बच्चों ने नदी में छलाँग लगाई। डिक भी उन्हीं में से एक था। मैं तीस्ता के किनारे रेत में बैठा था कि तभी 'बचाओ-बचाओ' की आवाज़ सुनाई दी। मैंने देखा डिक पानी के बहाव के साथ बहा जा रहा है और सहायता के लिए हाथ-पाँव मार रहा है। तैर रहे दूसरे लड़के उसके पास पहुँचना तो चाह रहे थे, पर पहुँच नहीं पा रहे थे क्योंकि पानी का बहाव बहुत तेज था। इस दृश्य ने मेरे दिमाग को झन्ना दिया। माँ, मैं समझ गया था कि डिक को अच्छी तरह तैरना नहीं आता।<br>
-                अगर कुछ और देर हुई तो वह भँवर की तरफ खिंचा चला जाएगा। उसका जीवन खतरे में था।"
-            </div>
-            <div class="english-text">
-                "That day we did not realize that Teesta would suddenly change its form like this. First ten children jumped into the river. Dick was also one of them. I was sitting on the sand on the bank of Teesta when a voice crying 'help, help' was heard. I saw Dick being carried away with the flow of water and thrashing his arms and legs for help. The other boys swimming wanted to reach him, but could not reach because the water flow was very fast. This sight jolted my mind. Mother, I understood that Dick does not know how to swim well.<br>
-                If it was delayed any longer, he would be dragged towards the whirlpool. His life was in danger."
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                "मैंने फौरन छलाँग लगा दी। मैं जानता था कि डिक की तरफ जाने का मतलब है- अपने को खतरे में डालना, लेकिन मैं अपने दोस्त को किस तरह डूबने देता? क्या यह हम सबके लिए शर्म की बात नहीं होती। मैंने तेज और तेज तैरने की कोशिश की। मैंने उस समय तैराकी के वे सभी तरीके अपनाए जो मैंने सीखे थे। मैंने अपना सिर ऊँचा रखा और जब किनारे की ओर देखा तो वहाँ फ़ादर रोनाल्ड और सुबीर सर खड़े थे, जो मेरा उत्साह बढ़ा रहे थे और डिक को लगातार तैरने के लिए कह रहे थे।"
-            </div>
-            <div class="english-text">
-                "I immediately jumped. I knew that going towards Dick meant putting myself in danger, but how could I let my friend drown? Wouldn't it be a matter of shame for all of us. I tried to swim faster and faster. At that time I adopted all the methods of swimming that I had learned. I kept my head high and when I looked towards the shore, Father Ronald and Subir sir were standing there, who were encouraging me and asking Dick to keep swimming."
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                मैं बता नहीं सकता माँ कि मैं किस तरह और कितनी देर में डिक के पास पहुँचा। मुझे अब हलका-सा ही याद है कि मैंने डिक के बर्फ जैसे ठंडे शरीर को खींचा और वापस किनारे पर ले आया।
-            </div>
-            <div class="english-text">
-                I can't tell you mother how and in how much time I reached Dick. I only have a faint memory now that I pulled Dick's ice-cold body and brought it back to the shore.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                "जब मेरी आँख खुली तो शाम हो चुकी थी। मैं स्कूल के अस्पताल में पलंग पर लेटा था। मैंने देखा, फ़ादर रोनाल्ड और हमारे प्रिंसिपल साहब मि. मार्टिन मेरे पास ही खड़े थे।" उन्हें देखते ही मैंने पूछा, डिक कैसा है?
-            </div>
-            <div class="english-text">
-                "When I opened my eyes, it was already evening. I was lying on a bed in the school hospital. I saw Father Ronald and our principal Mr. Martin standing near me." As soon as I saw them I asked, how is Dick?
-            </div>
-        </div>
-        
-        <div class="translation-grid">
-            <div class="hindi-text">
-                "वह ठीक है," मि. मार्टिन ने कहा, "तुम कैसे हो बेटा?"<br>
-                "मैं ठीक हूँ सर।" मैंने मुस्कराकर जवाब दिया।<br>
-                मि. मार्टिन मेरा सिर सहलाते हुए बोले, "तुमने बड़े साहस का काम किया अरुण! तेज बहाव में लगभग तीन मील तैरना कोई आसान काम नहीं था, मेरे बच्चे!"<br>
-                "बहुत बहादुर हो तुम।" फ़ादर रोनाल्ड ने भरे हुए गले से कहा।
-            </div>
-            <div class="english-text">
-                "He is fine," said Mr. Martin, "How are you son?"<br>
-                "I am fine sir." I replied smiling.<br>
-                Mr. Martin patting my head said, "You have done an act of great courage Arun! Swimming about three miles in a strong current was no easy task, my child!"<br>
-                "You are very brave." Father Ronald said with a choked voice.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                "धन्यवाद सर!" मैंने धीमे-से कहा। मेरी आँखें एक बार डिक को देखना चाह रही थीं। मैं बिस्तर से ज़रा-सा उचका और सामने के पलंग पर डिक लेटा दिखाई दिया। वह मेरी तरफ देखकर मुस्कुराया।<br>
-                "बदमाश लड़के, जब तुम ठीक से तैरना नहीं जानते थे तो नदी से खिलवाड़ करने क्यों उतरे?" मैंने उसे प्यार से डपटते हुए कहा।
-            </div>
-            <div class="english-text">
-                "Thank you sir!" I said softly. My eyes wanted to see Dick once. I got up a little from the bed and saw Dick lying on the bed opposite. He looked at me and smiled.<br>
-                "Naughty boy, when you didn't know how to swim properly, why did you get down to play with the river?" I scolded him affectionately.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                मि. मार्टिन ने हमें गर्म-गर्म कोको पीने को दिया। फ़ादर रोनाल्ड ने मेरा हाथ अपने हाथ में ले लिया, उनकी आवाज़ बहुत गंभीर और गला भरा हुआ था। उन्होंने कहा, "अरुण, कल हम लोग वापस लंदन जा रहे हैं। तुम्हारा साहस मेरी यात्रा की सबसे कीमती यादगार है। यदि तुम डिक को नहीं बचाते तो मैं उसके माता-पिता को मुँह दिखाने लायक नहीं रहता। मैं उनसे क्या कहता? ईश्वर तुम्हें लंबी उम्र दें, मेरे बच्चे! उनकी आँखों में आँसू भरे थे।"
-            </div>
-            <div class="english-text">
-                Mr. Martin gave us hot cocoa to drink. Father Ronald took my hand in his hand, his voice was very serious and his throat was choked. He said, "Arun, tomorrow we are going back to London. Your courage is the most precious souvenir of my journey. If you hadn't saved Dick, I wouldn't be fit to show my face to his parents. What would I have said to them? May God give you a long life, my child! There were tears in his eyes."
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                "जानते हो अरुण, डिक का नाम भारत आने वाले बच्चों में नहीं था। इसकी ज़िद पर ही इसे साथ लाया गया।" सुबीर सर ने कहा।<br>
-                "ज़िद, कैसी ज़िद?"<br>
-                "उसका कहना था कि भारत से उसका विशेष संबंध है।"<br>
-                विशेष संबंध, हमारे भारत में? मैंने पूछा।<br>
-                "हाँ, क्योंकि वर्षों पहले उसके पिता यहाँ सर्विस करते थे।"
-            </div>
-            <div class="english-text">
-                "Do you know Arun, Dick's name was not among the children coming to India. He was brought along only on his insistence." Subir sir said.<br>
-                "Insistence, what kind of insistence?"<br>
-                "He said that he has a special relationship with India."<br>
-                Special relationship, in our India? I asked.<br>
-                "Yes, because years ago his father used to serve here."
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                "जब फ़ादर रोनाल्ड ने उसके पिता का नाम बताया तो माँ, मैं एक मिनट के लिए सन्न रह गया। मैं मिलने पर उसके बारे में बाकी बातें बताऊँगा, जिन्हें सुनकर आप आश्चर्य करेंगी।"<br>
-                "मि. मार्टिन ने मुझे छुट्टी दे दी है। ताकि मैं कुछ दिन आपके पास रह सकूँ और मेरा टिकट भी बुक करा दिया है। रविवार की सुबह दार्जिलिंग मेल से मैं सियालदह पहुँच जाऊँगा। आशा है, आप मुझे लेने स्टेशन पर आएँगी।"<br>
-                आपका प्यारा बेटा<br>
-                अरुण
-            </div>
-            <div class="english-text">
-                "When Father Ronald told his father's name, mother, I was stunned for a minute. I will tell the rest of the things about him when we meet, hearing which you will be surprised."<br>
-                "Mr. Martin has given me leave. So that I can stay with you for a few days and has also booked my ticket. I will reach Sealdah on Sunday morning by Darjeeling Mail. Hope you will come to the station to pick me up."<br>
-                Your loving son<br>
-                Arun
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                पत्र मिलने के दिन से ही शारदा देवी अपने बेटे का बेसब्री से इंतजार कर रही थीं। सुबह ट्रेन आने से पहले ही वह स्टेशन पहुँच गईं। उन्हें मि. मार्टिन का भी एक पत्र मिला था, जिसमें उन्होंने अरुण के साहस की प्रशंसा लिखते हुए यह भी लिखा था कि डॉक्टर ने उसे कुछ दिन आराम करने की सलाह दी है। अतः हम चाहते हैं कि वह छुट्टियों के दिन आपके पास बिताए।
-            </div>
-            <div class="english-text">
-                Since the day she received the letter, Sharda Devi was eagerly waiting for her son. In the morning, even before the train arrived, she reached the station. She had also received a letter from Mr. Martin, in which while praising Arun's courage, he had also written that the doctor has advised him to rest for a few days. Therefore, we want him to spend the holidays with you.
-            </div>
-        </div>
-        
-        <div class="translation-grid">
-            <div class="hindi-text">
-                प्लेटफ़ॉर्म पर ट्रेन के रुकते ही अरुण माँ से लिपट गया।<br>
-                "आप कैसी हैं, माँ?"<br>
-                "मैं तो ठीक हूँ, तुम बताओ?" माँ ने उसे निहारते हुए पूछा।<br>
-                "मैं तो बिलकुल ठीक हूँ।" आत्मविश्वास से-भरे अरुण ने जवाब दिया।<br>
-                वे दोनों टैक्सी में बैठ गए। तब शारदा देवी ने पूछा, "बेटे, तुमने डिक के बारे में कुछ बताने की बात पत्र में लिखी थी, बताओ न, मैं भी बहुत उत्सुक हूँ।"
-            </div>
-            <div class="english-text">
-                As soon as the train stopped at the platform, Arun clung to his mother.<br>
-                "How are you, Mother?"<br>
-                "I am fine, you tell me?" Mother asked gazing at him.<br>
-                "I am absolutely fine." Arun replied full of confidence.<br>
-                They both sat in a taxi. Then Sharda Devi asked, "Son, you had written in the letter about telling something about Dick, tell me, I am also very curious."
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                "हाँ माँ, यह एक संयोग की बात है, इसलिए मैं चाहता था कि आपसे मिलने पर ही यह बात बताऊँ।"<br>
-                "क्या आप अंदाजा लगा सकती हैं माँ कि डिक कौन है? "माँ, डिक मि. गॉर्डन जैक्सन का सबसे छोटा बेटा है, जो सन् 1942 में कलकत्ता में पुलिस कमिश्नर थे और जिन पर गोली चलाने के कारण ही आपको जेल हुई थी।"
-            </div>
-            <div class="english-text">
-                "Yes mother, this is a matter of coincidence, that is why I wanted to tell this only when I met you."<br>
-                "Can you guess mother who Dick is? Mother, Dick is the youngest son of Mr. Gordon Jackson, who was the Police Commissioner in Calcutta in 1942 and because of shooting at whom you were jailed."
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                शारदा देवी अरुण की बात सुनकर सन्न रह गई। उनकी आँखों के सामने उस समय की गई पुलिस की बर्बरता का दृश्य घूम गया कि किस तरह जुलूस पर जैक्सन ने गोली चलवाकर छोटे-छोटे बच्चों तक को मरवा डाला था।
-            </div>
-            <div class="english-text">
-                Hearing Arun's words, Sharda Devi was stunned. The scene of police brutality committed at that time flashed before her eyes, how Jackson had ordered firing on the procession and got even small children killed.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                अरुण यह बात समझ नहीं पा रहा था कि आखिर उसकी माँ एकाएक उदास क्यों हो गईं। वह लगातार टैक्सी की खिड़की से बाहर देखे जा रही थीं। माँ, उसने पुकारा, परंतु उन्होंने कोई जवाब नहीं दिया। अरुण निराश हो गया कि डिक को बचाने की उसकी बहादुरी पर माँ ने कुछ नहीं कहा। "क्या मिस्टर जैक्सन के लड़के को बचा लेना माँ को अच्छा नहीं लगा?" अरुण अभी सोच ही रहा था कि घर आ गया। टैक्सी से उतरकर शारदा देवी ने किराया दिया। रामू काका अरुण का सामान अंदर ले गए।
-            </div>
-            <div class="english-text">
-                Arun could not understand why his mother suddenly became sad. She kept looking out of the taxi window continuously. Mother, he called out, but she did not give any reply. Arun became disappointed that his mother did not say anything about his bravery in saving Dick. "Did mother not like saving Mr. Jackson's son?" Arun was just thinking this when they reached home. Getting out of the taxi, Sharda Devi paid the fare. Ramu Kaka took Arun's luggage inside.
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                "तुम मेरे साथ आओ, अरुण!" माँ ने उससे कहा।<br>
-                सोने के कमरे में पहुँचकर शारदा देवी ने अलमारी खोली। उसमें से एक बक्सा निकाला और बोलीं, "अरुण बेटे, देखो यह रिवॉल्वर! मैंने इसे हमेशा अपने पास रखा क्योंकि यह शहीदों की यादगार है। आज तुम्हारे साहस, तुम्हारे विचार और तुम्हारी मित्रता के इस व्यवहार को देखकर यह रिवॉल्वर सिर्फ दिखा ही नहीं रही, बल्कि तुम्हें सौंप भी रही हूँ। क्योंकि अब तुम बड़े हो गए हो, इसे सँभालकर रखने योग्य भी!"
-            </div>
-            <div class="english-text">
-                "You come with me, Arun!" mother told him.<br>
-                Reaching the bedroom, Sharda Devi opened the cupboard. She took out a box from it and said, "Arun son, look at this revolver! I always kept it with me because it is a souvenir of the martyrs. Today, seeing your courage, your thoughts and this behavior of your friendship, I am not just showing you this revolver, but also handing it over to you. Because now you have grown up, also worthy of keeping it safely!"
-            </div>
-        </div>
-
-        <div class="translation-grid">
-            <div class="hindi-text">
-                "अरुण ने रिवॉल्वर को बड़े आदर से अपने माथे से लगाया और फिर झुककर माँ के पाँव छू लिए।"<br>
-                "शारदा देवी की आँखों में आँसू छलक आए। परंतु उनके होठों पर मुस्कुराहट थी। उनका चेहरा एक अलौकिक गर्व से चमक रहा था।"<br>
-                अरुण के दिमाग में एक और मुस्कुराता चेहरा घूम रहा था, वह था डिक जैक्सन का।
-            </div>
-            <div class="english-text">
-                "Arun respectfully touched the revolver to his forehead and then bowed down and touched his mother's feet."<br>
-                "Tears welled up in Sharda Devi's eyes. But there was a smile on her lips. Her face was shining with a supernatural pride."<br>
-                Another smiling face was wandering in Arun's mind, that was Dick Jackson's.
-            </div>
-        </div>
-
-    </div>
-    
-    <div id="qa" class="tab-content">
-        <h2 style="color:var(--accent);">प्रश्नोत्तर (Q&A)</h2>
-        
-        <div class="exercise-card">
-            <h3>1. उचित विकल्पों के सामने सही (✓) का निशान लगाइए- (MCQs)</h3>
-            
-            <p><strong>(क) महात्मा गांधी द्वारा भारत छोड़ो आंदोलन कब चलाया गया?</strong></p>
-            <p>1936 | 1942 | 1947 | 1945</p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">1942</div>
-            
-            <p><strong>(ख) शारदा देवी कौन थी?</strong></p>
-            <p>साहसी योद्धा | देश द्रोही | जासूस | आतंकी</p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">साहसी योद्धा</div>
-            
-            <p><strong>(ग) "माँ का उपहार" पाठ का मुख्य उद्देश्य क्या है?</strong></p>
-            <p>मित्रता | माँ का प्यार | माँ का त्याग | साहसिकता</p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">साहसिकता (और देशभक्ति)</div>
-            
-            <p><strong>(घ) डिक किसका बेटा था?</strong></p>
-            <p>शारदा का | मि. गॉर्डन का | सुबीर राय का | फ़ादर रोनाल्ड का</p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">मि. गॉर्डन का</div>
-        </div>
-
-        <div class="exercise-card">
-            <h3>2. किसने, किससे कहा? (Who said to whom?)</h3>
-            
-            <p><strong>(क) "अभी तुम छोटे हो"।</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">माँ (शारदा देवी) ने, अरुण से</div>
-            
-            <p><strong>(ख) "बहुत बहादुर हो तुम!"।</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">फ़ादर रोनाल्ड ने, अरुण से</div>
-
-            <p><strong>(ग) "नदी में खिलवाड़ करने क्यों उतरे?"</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">अरुण ने, डिक से</div>
-
-            <p><strong>(घ) "तुम बड़े हो गए हो, इसे सँभालकर रखने योग्य भी!"</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">माँ ने, अरुण से</div>
-        </div>
-
-        <div class="exercise-card">
-            <h3>3. लघु उत्तरीय प्रश्न</h3>
-            
-            <p><strong>(क) गॉर्डन जैक्सन कौन था?</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">गॉर्डन जैक्सन कलकत्ता में पुलिस कमिश्नर था, जिसने जुलूस पर गोली चलाने का आदेश दिया था।</div>
-            
-            <p><strong>(ख) अरुण को तीन वर्षों तक लगातार कौन-सा पुरस्कार मिला?</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">अरुण को "सबसे कुशल तैराक" का पुरस्कार मिला।</div>
-
-            <p><strong>(ग) अरुण की दोस्ती डिक से कैसे हुई?</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">क्रिसमस की छुट्टियों से पहले अरुण के स्कूल की लंदन शाखा के दस बच्चे सिलीगुड़ी आए, जिनमें डिक भी था। उनके आपस में मिलने-बैठने से दोस्ती हुई।</div>
-
-            <p><strong>(घ) अरुण के पिता की मृत्यु के बाद शारदा ने क्या किया?</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">शारदा देवी ने एक कन्या विद्यालय में अध्यापिका की नौकरी कर ली और अरुण को बोर्डिंग स्कूल भेज दिया।</div>
-        </div>
-
-    </div>
-
-    <div id="grammar" class="tab-content">
-        <h2 style="color:var(--accent);">व्याकरण (Grammar)</h2>
-        
-        <div class="exercise-card">
-            <h3>शब्दार्थ (Word Meaning)</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <div>जुल्म - अत्याचार</div><div>बेसब्री - अधीरता</div>
-                <div>योद्धा - सिपाही</div><div>प्रशंसा - तारीफ</div>
-                <div>स्वर्गवास - देहांत</div><div>निहारना - ताकना</div>
-                <div>इम्तिहान - परख</div><div>उत्सुकता - लालसा</div>
-                <div>मंद - धीमा</div><div>आत्मविश्वास - अपनी योग्यता पर भरोसा</div>
-                <div>इंतजाम - व्यवस्था</div><div>बर्बरता - क्रूरता</div>
-                <div>माउथऑर्गन - मुँह से बजाने का बाजा</div><div>अलौकिक - अजीब (सुपरनैचुरल)</div>
-                <div>उग्र - तेज़</div>
-            </div>
-        </div>
-
-        <div class="exercise-card">
-            <h3>1. निम्नलिखित शब्दों के विलोम शब्द लिखिए</h3>
-            <p>युवा × <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none'" style="margin:0; padding:2px 8px;">Reveal</button><span class="answer" style="display:none; margin:0; padding:2px;">वृद्ध</span></p>
-            <p>स्वतंत्र × <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none'" style="margin:0; padding:2px 8px;">Reveal</button><span class="answer" style="display:none; margin:0; padding:2px;">परतंत्र / गुलाम</span></p>
-            <p>बहादुर × <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none'" style="margin:0; padding:2px 8px;">Reveal</button><span class="answer" style="display:none; margin:0; padding:2px;">कायर / डरपोक</span></p>
-            <p>सपूत × <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none'" style="margin:0; padding:2px 8px;">Reveal</button><span class="answer" style="display:none; margin:0; padding:2px;">कपूत</span></p>
-            <p>साहस × <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none'" style="margin:0; padding:2px 8px;">Reveal</button><span class="answer" style="display:none; margin:0; padding:2px;">कायरता / डर</span></p>
-            <p>शर्म × <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none'" style="margin:0; padding:2px 8px;">Reveal</button><span class="answer" style="display:none; margin:0; padding:2px;">गर्व / बेशर्मी</span></p>
-        </div>
-
-        <div class="exercise-card">
-            <h3>2. निम्नलिखित शब्दों के पर्यायवाची शब्द लिखिए</h3>
-            <p>प्रशंसा - <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none'" style="margin:0; padding:2px 8px;">Reveal</button><span class="answer" style="display:none; margin:0; padding:2px;">तारीफ़ / बड़ाई</span></p>
-            <p>कोशिश - <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none'" style="margin:0; padding:2px 8px;">Reveal</button><span class="answer" style="display:none; margin:0; padding:2px;">प्रयास / प्रयत्न</span></p>
-            <p>परीक्षा - <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none'" style="margin:0; padding:2px 8px;">Reveal</button><span class="answer" style="display:none; margin:0; padding:2px;">इम्तिहान / जाँच</span></p>
-            <p>अध्यापक - <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none'" style="margin:0; padding:2px 8px;">Reveal</button><span class="answer" style="display:none; margin:0; padding:2px;">शिक्षक / गुरु</span></p>
-            <p>उत्साह - <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none'" style="margin:0; padding:2px 8px;">Reveal</button><span class="answer" style="display:none; margin:0; padding:2px;">जोश / उमंग</span></p>
-            <p>मित्र - <button class="reveal-btn" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none'" style="margin:0; padding:2px 8px;">Reveal</button><span class="answer" style="display:none; margin:0; padding:2px;">दोस्त / सखा</span></p>
-        </div>
-
-        <div class="exercise-card">
-            <h3>विशेषण (Adjectives)</h3>
-            <p>संज्ञा अथवा सर्वनाम की विशेषता प्रकट करने वाले शब्दों को <strong>विशेषण</strong> कहा जाता है। विशेषण जिस शब्द की विशेषता प्रकट करते हैं उसे <strong>विशेष्य</strong> कहते हैं।</p>
-            <ul>
-                <li><strong>गुणवाचक विशेषण:</strong> जो शब्द संज्ञा अथवा सर्वनाम के गुण या दोष का बोध कराते हैं। (जैसे- सुंदर, दानी आदि)</li>
-                <li><strong>संख्यावाचक विशेषण:</strong> जिन शब्दों से संज्ञा अथवा सर्वनाम की संख्या का बोध होता है। (जैसे- चार, तीस, प्रथम आदि)</li>
-                <li><strong>परिमाणवाचक विशेषण:</strong> जो शब्द संज्ञा अथवा सर्वनाम शब्दों की मात्रा या तौल का बोध कराते हैं। (जैसे- चार किलो, दो मीटर आदि)</li>
-                <li><strong>सार्वनामिक विशेषण:</strong> जिन सर्वनामों का प्रयोग विशेषण के रूप में होता है। (जैसे- तुम्हारा घर इत्यादि)</li>
-            </ul>
-        </div>
-
-        <div class="exercise-card">
-            <h3>3. रेखांकित विशेषण शब्दों के भेद लिखिए</h3>
-            <p><strong>(क) अरुण <ins>तेरह</ins> वर्ष का था।</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">संख्यावाचक विशेषण</div>
-
-            <p><strong>(ख) शारदा देवी एक <ins>बहादुर और साहसी</ins> योद्धा थी।</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">गुणवाचक विशेषण</div>
-
-            <p><strong>(ग) अरुण को अपने स्कूल का <ins>कुशल</ins> तैराक पुरस्कार मिला।</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">गुणवाचक विशेषण</div>
-
-            <p><strong>(घ) अरुण के स्कूल की अलग-अलग देशों में <ins>पाँच</ins> शाखाएँ थीं।</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">संख्यावाचक विशेषण</div>
-
-            <p><strong>(ङ) शारदा देवी का चेहरा एक <ins>अलौकिक</ins> गर्व से चमक रहा था।</strong></p>
-            <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
-            <div class="answer" style="display:none;">गुणवाचक विशेषण</div>
         </div>
     </div>
 
-    <div id="exercises" class="tab-content">
-        <h2 style="color:var(--accent);">Activities & Exercises</h2>
-        
-        <div class="exercise-card">
-            <h3>दीर्घ उत्तरीय प्रश्न (Long Answer Questions)</h3>
-            <p>1. जब अरुण दुर्गापूजा की छुट्टियों में घर आया, तो माँ से नाराज़ क्यों हुआ था?</p>
-            <p>2. अरुण ने पत्र में किस दुर्घटना का वर्णन किया था?</p>
-            <p>3. टैक्सी में अरुण की कौन-सी बात सुनकर शारदा सन्न रह गईं?</p>
-            <p>4. बोर्डिंग में होते हुए भी अरुण अपनी माँ के संपर्क में कैसे रहा?</p>
-            <p>5. अरुण में मातृप्रेम, देशभक्ति और बहादुरी, ये सभी भाव विद्यमान थे। अपने विचारों से स्पष्ट कीजिए।</p>
+    <!-- 5 Core Tabs Navigation -->
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="openTab('tab-text', this)">
+            <i class="fas fa-book-open"></i> पाठ एवं अनुवाद
+        </button>
+        <button class="tab-btn" onclick="openTab('tab-comprehension', this)">
+            <i class="fas fa-tasks"></i> प्रश्न-उत्तर एवं मूल्यांकन
+        </button>
+        <button class="tab-btn" onclick="openTab('tab-vocab', this)">
+            <i class="fas fa-spell-check"></i> शब्द संपदा
+        </button>
+        <button class="tab-btn" onclick="openTab('tab-grammar', this)">
+            <i class="fas fa-pencil-alt"></i> व्यावहारिक व्याकरण
+        </button>
+        <button class="tab-btn" onclick="openTab('tab-critical', this)">
+            <i class="fas fa-brain"></i> चिंतन एवं जीवन मूल्य
+        </button>
+    </div>
+
+    <!-- TAB 1: पाठ एवं अनुवाद -->
+    <div id="tab-text" class="tab-pane active">
+        <!-- Quick Revision Cards -->
+        <div class="revision-grid">
+            <div class="rev-card">
+                <div class="rev-card-title"><i class="fas fa-flag"></i> 1942 भारत छोड़ो</div>
+                <div class="rev-card-desc">कलकत्ता में मौन जुलूस पर कमिश्नर गॉर्डन जैक्सन द्वारा गोलीबारी; शारदा देवी का प्रतिशोध और काले पानी की सज़ा।</div>
+            </div>
+            <div class="rev-card">
+                <div class="rev-card-title"><i class="fas fa-water"></i> तीस्ता का किनारा</div>
+                <div class="rev-card-desc">सिलीगुड़ी के सेंट कोलंबस बोर्डिंग स्कूल में अरुण का अध्ययन और तैराकी में लगातार 3 वर्षों तक सर्वश्रेष्ठ प्रदर्शन।</div>
+            </div>
+            <div class="rev-card">
+                <div class="rev-card-title"><i class="fas fa-life-ring"></i> प्राण-रक्षक अरुण</div>
+                <div class="rev-card-desc">लंदन से आए सहपाठी डिक को तीस्ता नदी के भयानक भँवर से अपनी जान जोखिम में डालकर तीन मील तैरकर बचाना।</div>
+            </div>
+            <div class="rev-card">
+                <div class="rev-card-title"><i class="fas fa-gift"></i> माँ का उपहार</div>
+                <div class="rev-card-desc">डिक का गॉर्डन जैक्सन का पुत्र निकलना; माँ द्वारा द्वेष भूलकर अरुण के साहस व मानवता को रिवॉल्वर का उपहार सौंपना।</div>
+            </div>
         </div>
 
-        <div class="exercise-card">
-            <h3>मूल्यपरक प्रश्न (Value Based Question)</h3>
-            <p>आपके अनुसार, "माँ का उपहार" कहानी का मुख्य संदेश क्या है? अपने विचार लिखिए।</p>
-        </div>
-        
-        <div class="exercise-card">
-            <h3>विषय संवर्धन गतिविधियाँ (Subject Enrichment Activities)</h3>
-            <p>1. स्विमिंग पूल में कोई डूब रहा है और आपको स्विमिंग नहीं आती। ऐसी स्थिति में आप उसे कैसे बचाएँगे? अपने विचार लिखिए।</p>
-            <p>2. चित्रों को देखकर पहचानिए तथा इनके बारे में संक्षेप में लिखिए (सुभाष चंद्र बोस, लाल बहादुर शास्त्री)।</p>
+        <!-- पाठ प्रवेश / Starter -->
+        <div class="section-card" style="border-left: 4px solid var(--accent); background: rgba(245, 158, 11, 0.05);">
+            <div class="section-header" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+                <div>
+                    <h3 style="margin: 0; color: var(--accent); font-size: 1.1rem;"><i class="fas fa-quote-left"></i> पाठ-प्रवेश</h3>
+                    <p style="margin: 8px 0 0; font-size: 0.95rem; color: var(--text-muted-dark);">
+                        यह पाठ स्वाधीनता संग्राम के वीरों के त्याग तथा आधुनिक पीढ़ी के एक बालक के अदम्य साहस व निष्पक्ष मानवता का सुंदर समन्वय प्रस्तुत करता है।
+                    </p>
+                </div>
+            </div>
         </div>
 
-        <div class="exercise-card" style="background: rgba(139, 92, 246, 0.05); border-color: var(--accent);">
-            <h3>रोचक तथ्य (Amazing Facts)</h3>
-            <p>हर स्वतंत्रता दिवस पर माननीय प्रधानमंत्री लाल किले से झंडा फहराते हैं लेकिन 1947 में ऐसा नहीं हुआ था। जवाहरलाल नेहरू जी ने 16 अगस्त को लाल किले से झंडा फहराया था।</p>
+        <!-- Text Paragraphs with Translations and Vocab Tooltips -->
+        <div class="section-card">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-scroll"></i> मूल पाठ एवं समानांतर अनुवाद</h2>
+                <span style="font-size: 0.85rem; color: var(--text-muted-dark);"><i class="fas fa-info-circle"></i> बैंगनी शब्दों पर होवर करके अर्थ देखें</span>
+            </div>
+
+            <!-- Stanza 1 -->
+            <div class="translation-grid">
+                <div class="hindi-col">
+                    अब हम पढ़ेंगे उनकी गाथा,<br>
+                    जिन्हें कभी न भूल सके।<br>
+                    देश के खातिर, <span class="vocab-word" data-meaning="समर्पित होना / कुर्बान होना">मर मिटते थे</span><br>
+                    ऐसे वीर सपूत थे वे।<br><br>
+                    खुद के लिए जो जीनेवाले, नाम नहीं<br>
+                    कर पाते हैं, औरों की खातिर जो जीते,<br>
+                    जग रोशन कर जाते हैं।
+                </div>
+                <div class="english-col">
+                    Now we will read their saga,<br>
+                    Whom we could never forget.<br>
+                    For the sake of the country, they used to sacrifice themselves,<br>
+                    Such brave sons were they.<br><br>
+                    Those who live only for themselves cannot make a name,<br>
+                    Those who live for others illuminate the entire world.
+                </div>
+            </div>
+
+            <!-- Para 2 -->
+            <div class="translation-grid">
+                <div class="hindi-col">
+                    सन् 1942 में महात्मा गांधी द्वारा चलाया गया <strong>'अंग्रेज़ों, भारत छोड़ो'</strong> आंदोलन सारे देश में आग की तरह फैल चुका था। बंगाल का बच्चा-बच्चा आंदोलन में भाग लेने के लिए उठ खड़ा हुआ था।
+                </div>
+                <div class="english-col">
+                    The 'Quit India' movement launched by Mahatma Gandhi in 1942 had spread like wildfire all over the country. Every child of Bengal had stood up to participate in the movement.
+                </div>
+            </div>
+
+            <!-- Para 3 -->
+            <div class="translation-grid">
+                <div class="hindi-col">
+                    इन्हीं दिनों इस आंदोलन के दौरान कलकत्ता (अब कोलकाता) में स्वतंत्रता के दीवानों ने एक <strong>मौन जुलूस</strong> निकाला। जुलूस चुपचाप शांत-भाव से तिरंगा झंडा लिए हुए शहर की मुख्य सड़क पर आया। जुलूस के आते ही उस पर गोलियों की बौछार होने लगी। सबसे पहली गोली सत्तर वर्ष की उस वृद्ध महिला को लगी, जो तिरंगा झंडा हाथों में लिए जुलूस में सबसे आगे थी। गोली लगते ही वह वृद्धा <em>"वंदे मातरम्"</em> कहती हुई धड़ाम से गिर पड़ी। इससे पहले कि उसके हाथों से तिरंगा झंडा नीचे गिरता, एक छोटे-से लड़के ने दौड़कर झंडे को सँभाल लिया। लेकिन पुलिस तो <span class="vocab-word" data-meaning="अत्याचार करना">जुल्म ढाने</span> पर उतरी हुई थी। वह लगातार गोलियाँ चलाती रही, जिससे वह छोटा-सा लड़का भी गोली लगने से शहीद हो गया। पुलिस की इस गोलाबारी और लाठी चार्ज से तीन महिलाएँ और कई बच्चे शहीद हो गए। जुलूस पर गोली चलाने का आदेश देने वाला पुलिस कमिश्नर था- <strong>गॉर्डन जैक्सन</strong>।
+                </div>
+                <div class="english-col">
+                    During these days, the lovers of freedom took out a silent procession in Calcutta (now Kolkata). The procession quietly and peacefully entered the city's main road carrying the tricolor flag. As soon as the procession arrived, bullets were showered upon it. The first bullet hit a seventy-year-old lady at the forefront holding the national flag. Crying "Vande Mataram", she collapsed. Before the flag touched the ground, a little boy ran and caught it, but the ruthless police shot him dead too. Three women and several children were martyred. The commissioner ordering this brutal firing was Gordon Jackson.
+                </div>
+            </div>
+
+            <!-- Para 4 -->
+            <div class="translation-grid">
+                <div class="hindi-col">
+                    अंग्रेज़ों की सरकार के इस <span class="vocab-word" data-meaning="अत्याचार">जुल्म</span> ने स्वतंत्रता के लिए प्राण <span class="vocab-word" data-meaning="कुर्बान करना">न्योछावर</span> करने वालों के दिलों में उथल-पुथल मचा दी थी। उन्होंने एक दल बनाया और उसकी बैठक बुलाई। उस बैठक में फैसला लिया गया कि जितनी जल्दी हो सके, इस पुलिस कमिश्नर को खत्म कर देना है। <strong>शारदा देवी</strong> नाम की एक युवती ने इस काम की जिम्मेदारी अपने हाथ में ली।
+                </div>
+                <div class="english-col">
+                    This oppression caused great turmoil among revolutionaries ready to sacrifice their lives. They convened a meeting and decided to eliminate Commissioner Jackson without delay. A brave young lady named Sharda Devi undertook this perilous responsibility.
+                </div>
+            </div>
+
+            <!-- Para 5 -->
+            <div class="translation-grid">
+                <div class="hindi-col">
+                    लगभग दो माह बाद गॉर्डन जैक्सन को एक हाईस्कूल के समारोह में मुख्य अतिथि के रूप में आमंत्रित किया गया। पुरस्कार वितरण के समय शारदा देवी ने जैक्सन पर गोलियाँ चला दीं। दो गोलियाँ जैक्सन का कंधा चीरती हुई निकल गईं। समारोह में भगदड़ मच गई। जैक्सन को तुरंत अस्पताल ले जाया गया। ऑपरेशन हुआ। जैक्सन बच तो गया, लेकिन उसने छुट्टी ले ली और वह तुरंत इंग्लैंड वापस चला गया।
+                </div>
+                <div class="english-col">
+                    Two months later, Jackson was the chief guest at a school prize distribution ceremony. Sharda Devi fired upon him; two bullets pierced his shoulder. A stampede ensued. Jackson survived the surgery, took immediate leave, and fled back to England.
+                </div>
+            </div>
+
+            <!-- Para 6 -->
+            <div class="translation-grid">
+                <div class="hindi-col">
+                    शारदा देवी को समारोह-स्थल पर पुलिस ने पकड़ लिया। उन पर मुकदमा चलाया गया और पंद्रह साल की सजा सुना दी गई और सजा भी काले-पानी की यानि उन्हें अंडमान भेज दिया गया। वही शारदा देवी अरुण की माँ हैं। अरुण अपनी माँ शारदा देवी से इस कहानी को कई बार सुन चुका है। अरुण को इस बात पर गर्व है कि उसकी माँ कोई साधारण महिला नहीं है, बल्कि देश के स्वाधीनता संग्राम की एक बहादुर और साहसी <span class="vocab-word" data-meaning="सिपाही / वीर">योद्धा</span> हैं।
+                </div>
+                <div class="english-col">
+                    Sharda Devi was captured, tried, and sentenced to fifteen years of exile at the Cellular Jail (Kala Pani) in the Andamans. That very Sharda Devi is Arun's mother. Arun took immense pride in his mother being a brave freedom warrior.
+                </div>
+            </div>
+
+            <!-- Para 7 -->
+            <div class="translation-grid">
+                <div class="hindi-col">
+                    अरुण जब तेरह वर्ष का था, तभी उसके पिता का अचानक <span class="vocab-word" data-meaning="देहांत / मृत्यु">स्वर्गवास</span> हो गया। इसलिए शारदा देवी ने एक कन्या विद्यालय में अध्यापिका की नौकरी कर ली और अरुण को सिलीगुड़ी के <strong>सेंट कोलंबस बोर्डिंग स्कूल</strong> में भेज दिया। यह स्कूल तीस्ता नदी के किनारे पर बना था। अरुण स्कूल का जाना-माना छात्र था और उसे <em>"सबसे कुशल तैराक"</em> का पुरस्कार तीन वर्षों से लगातार मिल रहा था। वैसे वह भारतीय वायुसेना में पायलट बनना चाहता था।
+                </div>
+                <div class="english-col">
+                    When Arun was thirteen, his father passed away. Sharda Devi took up teaching in a girls' school and sent Arun to St. Columbus Boarding School in Siliguri along the Teesta River. Arun was renowned as the school's "Best Swimmer" for three consecutive years and aspired to become an Indian Air Force pilot.
+                </div>
+            </div>
+
+            <!-- Para 8 -->
+            <div class="translation-grid">
+                <div class="hindi-col">
+                    शारदा देवी के पास आज भी एक रिवॉल्वर थी, जो उनके लिए स्वतंत्रता संग्राम की यादगार थी। अरुण ने कई बार उसे देखने की ज़िद की, पर माँ हमेशा कहतीं- <em>"नहीं, अभी नहीं। सही समय पर मैं तुम्हें खुद दिखा दूँगी।"</em><br><br>
+                    इस बार क्रिसमस से पहले अरुण के स्कूल की <strong>लंदन वाली शाखा के दस बच्चे</strong> सिलीगुड़ी आए। उनमें एक लड़का था <strong>डिक</strong>, जिसकी आँखें नीली थीं और जो माउथऑर्गन बहुत सुरीला बजाता था। लंदन लौटने से एक दिन पहले सभी बच्चे तीस्ता नदी के किनारे पिकनिक मनाने गए।
+                </div>
+                <div class="english-col">
+                    Sharda Devi preserved her historic revolver as a souvenir. Arun pleaded to see it, but she always insisted: "Not yet; I will give it to you at the right time." Before Christmas, ten students from their London sister school visited Siliguri, including Dick, a blue-eyed boy who played the mouth organ beautifully. A day before departure, they went on a picnic by the Teesta.
+                </div>
+            </div>
+
+            <!-- Para 9 -->
+            <div class="translation-grid">
+                <div class="hindi-col">
+                    अचानक तीस्ता नदी का बहाव <span class="vocab-word" data-meaning="तेज़ / भयंकर">उग्र</span> हो गया। डिक पानी के तेज बहाव में बहने लगा और भँवर की ओर खिंचने लगा। अरुण ने रेत से तुरंत नदी में छलाँग लगा दी। अपनी जान को भारी जोखिम में डालते हुए, अरुण ने पूरी ताकत से तैरकर डिक को पकड़ा और लगभग तीन मील तक तेज बहाव में तैरते हुए उसे सुरक्षित किनारे तक खींच लाया। अस्पताल में होश आने पर प्रिंसिपल मि. मार्टिन और फ़ादर रोनाल्ड ने अरुण के अदम्य साहस की भूरी-भूरी प्रशंसा की।
+                </div>
+                <div class="english-col">
+                    Suddenly, the Teesta became turbulent. Dick was swept away toward a dangerous whirlpool. Without hesitation, Arun dove in, battled the raging torrent, and swam nearly three miles to pull Dick back to safety. At the school infirmary, Principal Martin and Father Ronald hailed Arun's extraordinary heroism.
+                </div>
+            </div>
+
+            <!-- Para 10 -->
+            <div class="translation-col translation-grid">
+                <div class="hindi-col">
+                    बातचीत के दौरान फ़ादर रोनाल्ड ने बताया कि डिक के पिता पहले भारत में ही सेवारत थे। जब अरुण ने नाम पूछा तो वह सन्न रह गया—डिक उसी पुलिस कमिश्नर <strong>गॉर्डन जैक्सन</strong> का सबसे छोटा बेटा था, जिस पर गोली चलाने के कारण अरुण की माँ को पंद्रह वर्ष की सज़ा हुई थी!<br><br>
+                    घर लौटकर जब अरुण ने अपनी माँ को यह बात बताई, तो कुछ पल के लिए शारदा देवी सन्न रह गईं। फिर वे मुस्कुराईं और उन्होंने अलमारी से वही ऐतिहासिक रिवॉल्वर निकालकर अरुण को सौंपते हुए कहा—<br>
+                    <em>"अरुण बेटे, आज तुम्हारे साहस, तुम्हारे विचार और तुम्हारी मित्रता के इस पावन व्यवहार को देखकर यह रिवॉल्वर सिर्फ दिखा ही नहीं रही, बल्कि तुम्हें सौंप भी रही हूँ। क्योंकि अब तुम बड़े हो गए हो और इसे सँभालकर रखने के योग्य भी!"</em>
+                </div>
+                <div class="english-col">
+                    Arun was stunned to learn that Dick's father was Gordon Jackson—the ruthless commissioner his own mother had shot! When Arun revealed this to Sharda Devi at home, she was momentarily silent, then smiled with radiant pride. Opening her cupboard, she handed the revolver to Arun: "Seeing your courage, magnanimity, and noble friendship, I proudly bestow this upon you today. You have grown up and proven worthy of safeguarding it!"
+                </div>
+            </div>
+        </div>
+
+        <!-- Character Profiles -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fas fa-users"></i> प्रमुख पात्र एवं चरित्र-चित्रण</h3>
+            </div>
+            <div class="revision-grid">
+                <div class="rev-card">
+                    <div class="rev-card-title"><i class="fas fa-user-shield"></i> शारदा देवी</div>
+                    <div class="rev-card-desc">अदम्य साहसी स्वतंत्रता सेनानी, देशभक्त, स्नेही माता तथा प्रतिशोध से ऊपर उठकर मानवता को सराहने वाली महान नारी।</div>
+                </div>
+                <div class="rev-card">
+                    <div class="rev-card-title"><i class="fas fa-swimmer"></i> अरुण</div>
+                    <div class="rev-card-desc">कुशल तैराक, निष्पक्ष, निडर, मित्र-वत्सल तथा शत्रु के पुत्र के प्रति भी करुणा व कर्तव्य निभाने वाला वीर किशोर।</div>
+                </div>
+                <div class="rev-card">
+                    <div class="rev-card-title"><i class="fas fa-music"></i> डिक जैक्सन</div>
+                    <div class="rev-card-desc">लंदन का छात्र, संगीत-प्रेमी (माउथऑर्गन वादक), भारत से विशेष लगाव रखने वाला सरल स्वभाव का किशोर।</div>
+                </div>
+                <div class="rev-card">
+                    <div class="rev-card-title"><i class="fas fa-chalkboard-teacher"></i> फ़ादर रोनाल्ड व मि. मार्टिन</div>
+                    <div class="rev-card-desc">कर्तव्यनिष्ठ शिक्षक और संरक्षक, जो बच्चों के चरित्र-निर्माण व वीरता की मुक्तकंठ से सराहना करते हैं।</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: प्रश्न-उत्तर एवं मूल्यांकन -->
+    <div id="tab-comprehension" class="tab-pane">
+        <!-- Interactive MCQs -->
+        <div class="section-card">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-check-circle"></i> वस्तुनिष्ठ प्रश्न (MCQs)</h2>
+                <span style="font-size: 0.85rem; color: var(--text-muted-dark);">सही विकल्प पर क्लिक करके अपनी तैयारी परखें</span>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">MCQ 1</span> महात्मा गांधी द्वारा 'अंग्रेज़ों, भारत छोड़ो' आंदोलन किस वर्ष प्रारंभ किया गया था?</div>
+                <div class="mcq-options">
+                    <button class="mcq-option" onclick="checkMcq(this, false)">1936</button>
+                    <button class="mcq-option" onclick="checkMcq(this, true)">1942</button>
+                    <button class="mcq-option" onclick="checkMcq(this, false)">1947</button>
+                    <button class="mcq-option" onclick="checkMcq(this, false)">1945</button>
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">MCQ 2</span> शारदा देवी कौन थीं?</div>
+                <div class="mcq-options">
+                    <button class="mcq-option" onclick="checkMcq(this, true)">साहसी स्वतंत्रता सेनानी योद्धा</button>
+                    <button class="mcq-option" onclick="checkMcq(this, false)">सरकारी गुप्तचर</button>
+                    <button class="mcq-option" onclick="checkMcq(this, false)">विदेशी जासूस</button>
+                    <button class="mcq-option" onclick="checkMcq(this, false)">अंग्रेज़ अधिकारी</button>
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">MCQ 3</span> "माँ का उपहार" कहानी का सर्वप्रमुख उद्देश्य क्या है?</div>
+                <div class="mcq-options">
+                    <button class="mcq-option" onclick="checkMcq(this, false)">प्रतिशोध की भावना भड़काना</button>
+                    <button class="mcq-option" onclick="checkMcq(this, true)">साहसिकता, निष्पक्ष मानवता एवं देशभक्ति</button>
+                    <button class="mcq-option" onclick="checkMcq(this, false)">केवल तैराकी के नियम सिखाना</button>
+                    <button class="mcq-option" onclick="checkMcq(this, false)">अंग्रेज़ी संस्कृति का गुणगान</button>
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">MCQ 4</span> तीस्ता नदी में डूबने से अरुण ने किसे बचाया था?</div>
+                <div class="mcq-options">
+                    <button class="mcq-option" onclick="checkMcq(this, false)">सुबीर राय को</button>
+                    <button class="mcq-option" onclick="checkMcq(this, true)">डिक जैक्सन को</button>
+                    <button class="mcq-option" onclick="checkMcq(this, false)">फ़ादर रोनाल्ड को</button>
+                    <button class="mcq-option" onclick="checkMcq(this, false)">मि. मार्टिन को</button>
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">MCQ 5</span> अरुण को बोर्डिंग स्कूल में लगातार तीन वर्षों तक कौन-सा पुरस्कार प्राप्त हुआ?</div>
+                <div class="mcq-options">
+                    <button class="mcq-option" onclick="checkMcq(this, false)">सर्वश्रेष्ठ गायक</button>
+                    <button class="mcq-option" onclick="checkMcq(this, true)">सबसे कुशल तैराक</button>
+                    <button class="mcq-option" onclick="checkMcq(this, false)">सर्वश्रेष्ठ धावक</button>
+                    <button class="mcq-option" onclick="checkMcq(this, false)">अनुशासन प्रिय छात्र</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- किसने किससे कहा -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fas fa-comments"></i> किसने, किससे कहा? (Who said to whom?)</h3>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">कथन 1</span> "अभी तुम छोटे हो।"</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>
+                <div class="ans-box"><strong>उत्तर:</strong> माँ (शारदा देवी) ने, अपने बेटे अरुण से कहा (जब अरुण रिवॉल्वर देखने की ज़िद कर रहा था)।</div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">कथन 2</span> "बहुत बहादुर हो तुम!"</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>
+                <div class="ans-box"><strong>उत्तर:</strong> फ़ादर रोनाल्ड ने, भरे हुए गले से अरुण से कहा (डिक की जान बचाने के बाद अस्पताल में)।</div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">कथन 3</span> "बदमाश लड़के, जब तुम ठीक से तैरना नहीं जानते थे तो नदी से खिलवाड़ करने क्यों उतरे?"</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>
+                <div class="ans-box"><strong>उत्तर:</strong> अरुण ने, प्यार से डपटते हुए डिक से कहा।</div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">कथन 4</span> "आज तुम्हारे साहस, तुम्हारे विचार और तुम्हारी मित्रता के इस व्यवहार को देखकर यह रिवॉल्वर सिर्फ दिखा ही नहीं रही, बल्कि तुम्हें सौंप भी रही हूँ।"</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>
+                <div class="ans-box"><strong>उत्तर:</strong> माँ (शारदा देवी) ने, गर्व के साथ अरुण से कहा।</div>
+            </div>
+        </div>
+
+        <!-- लघु उत्तरीय प्रश्न -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fas fa-pencil-ruler"></i> लघु उत्तरीय प्रश्न</h3>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">प्रश्न 1</span> गॉर्डन जैक्सन कौन था और उसने क्या अत्याचार किया था?</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>
+                <div class="ans-box">
+                    <strong>उत्तर:</strong> गॉर्डन जैक्सन 1942 में कलकत्ता का क्रूर अंग्रेज़ पुलिस कमिश्नर था। उसने स्वाधीनता सेनानियों के शांत व मौन जुलूस पर अंधाधुंध गोलीबारी और लाठीचार्ज का आदेश दिया था, जिसमें तिरंगा लिए वृद्ध महिला, छोटे बच्चे और महिलाएँ शहीद हो गए थे।
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">प्रश्न 2</span> अरुण को तीन वर्षों तक लगातार कौन-सा पुरस्कार मिला और वह भविष्य में क्या बनना चाहता था?</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>
+                <div class="ans-box">
+                    <strong>उत्तर:</strong> अरुण को तीन वर्षों तक लगातार <em>"सबसे कुशल तैराक"</em> का पुरस्कार मिला था। वह भविष्य में भारतीय वायुसेना में पायलट बनना चाहता था।
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">प्रश्न 3</span> अरुण की दोस्ती डिक से किस प्रकार हुई?</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>
+                <div class="ans-box">
+                    <strong>उत्तर:</strong> क्रिसमस की छुट्टियों से पहले अरुण के स्कूल की लंदन शाखा से दस बच्चे सिलीगुड़ी आए थे, जिनमें डिक भी शामिल था। डिक मधुर माउथऑर्गन बजाता था और मिल-बैठकर बातें करने से दोनों में गहरी मित्रता हो गई।
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">प्रश्न 4</span> अरुण के पिता की मृत्यु के बाद शारदा देवी ने क्या किया?</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>
+                <div class="ans-box">
+                    <strong>उत्तर:</strong> अरुण के पिता के देहांत के बाद शारदा देवी ने एक कन्या विद्यालय में अध्यापिका की नौकरी कर ली और अरुण की अच्छी शिक्षा के लिए उसे सिलीगुड़ी के सेंट कोलंबस बोर्डिंग स्कूल भेज दिया।
+                </div>
+            </div>
+        </div>
+
+        <!-- दीर्घ उत्तरीय प्रश्न -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fas fa-file-alt"></i> दीर्घ उत्तरीय प्रश्न</h3>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">दीर्घ प्रश्न 1</span> जब अरुण दुर्गापूजा की छुट्टियों में घर आया, तो वह माँ से नाराज़ क्यों हुआ था?</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>
+                <div class="ans-box">
+                    <strong>उत्तर:</strong> शारदा देवी के पास आज़ादी के आंदोलन की यादगार एक रिवॉल्वर थी, जिसे उन्होंने अलमारी के बक्से में संभालकर रखा था। अरुण उस रिवॉल्वर को देखना चाहता था, परंतु माँ हर बार यह कहकर टाल देती थीं कि "अभी तुम छोटे हो।" इस बार अरुण के हठ करने पर भी जब माँ ने दिखाने से मना कर दिया, तो वह माँ से नाराज़ हो गया।
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">दीर्घ प्रश्न 2</span> अरुण ने पत्र में किस दुर्घटना और अपने किस साहसिक कार्य का वर्णन किया था?</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>
+                <div class="ans-box">
+                    <strong>उत्तर:</strong> अरुण ने पत्र में तीस्ता नदी के तट पर हुई पिकनिक का वर्णन किया था। नदी में नहाने उतरे बच्चों में से डिक तेज बहाव और भँवर में खिंचने लगा। अपनी जान खतरे में डालते हुए अरुण ने फौरन नदी में छलाँग लगाई और लगभग तीन मील तक तेज बहाव में तैरते हुए बर्फ जैसे ठंडे डिक को सुरक्षित किनारे खींच लाया।
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">दीर्घ प्रश्न 3</span> टैक्सी में अरुण की कौन-सी बात सुनकर शारदा देवी सन्न रह गईं? उनकी क्या प्रतिक्रिया हुई?</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>
+                <div class="ans-box">
+                    <strong>उत्तर:</strong> अरुण ने जब बताया कि जिस डिक को उसने डूबने से बचाया, वह उसी पुलिस कमिश्नर गॉर्डन जैक्सन का बेटा है जिस पर गोली चलाने के कारण माँ को 15 साल की जेल हुई थी, तो शारदा देवी सन्न रह गईं। उनके सामने पुरानी बर्बरता का दृश्य घूम गया, परंतु बाद में उन्होंने पुत्र के निष्काम और महान मानवीय आचरण पर गर्व अनुभव किया।
+                </div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-title"><span class="q-badge">दीर्घ प्रश्न 4</span> बोर्डिंग स्कूल में होते हुए भी अरुण अपनी माँ के संपर्क में किस प्रकार रहा?</div>
+                <button class="toggle-btn" onclick="toggleAnswer(this)">उत्तर देखें</button>
+                <div class="ans-box">
+                    <strong>उत्तर:</strong> स्कूल के नियमानुसार वर्ष में केवल दो बार (दुर्गापूजा और क्रिसमस) ही घर जाने की अनुमति थी। इसके बीच अरुण माँ को लगातार पत्र लिखता और माँ के उत्तरों को लकड़ी के डिब्बे में सहेजकर बार-बार पढ़ता, जिससे उसे माँ के साक्षात् पास होने का अनुभव होता था।
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: शब्द संपदा -->
+    <div id="tab-vocab" class="tab-pane">
+        <div class="section-card">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-vault"></i> शब्द संपदा भंडार (Vocabulary Vault)</h2>
+                <span style="font-size: 0.85rem; color: var(--text-muted-dark);">कठिन शब्दों के अर्थ, व्याकरण प्रकार और वाक्य प्रयोग</span>
+            </div>
+
+            <div class="vocab-grid">
+                <div class="vocab-card">
+                    <div class="vocab-card-header">
+                        <span class="vocab-hindi">जुल्म</span>
+                        <span class="vocab-type">संज्ञा (पुल्लिंग)</span>
+                    </div>
+                    <div class="vocab-meaning"><strong>अर्थ:</strong> अत्याचार, क्रूरता</div>
+                    <div class="vocab-english">Oppression, cruelty, injustice</div>
+                    <div class="vocab-example">अंग्रेज़ पुलिस कमिश्नर ने निहत्थे नागरिकों पर घोर जुल्म ढाए।</div>
+                </div>
+
+                <div class="vocab-card">
+                    <div class="vocab-card-header">
+                        <span class="vocab-hindi">योद्धा</span>
+                        <span class="vocab-type">संज्ञा (पुल्लिंग)</span>
+                    </div>
+                    <div class="vocab-meaning"><strong>अर्थ:</strong> वीर सिपाही, लड़ाका</div>
+                    <div class="vocab-english">Warrior, valiant fighter</div>
+                    <div class="vocab-example">शारदा देवी आज़ादी के आंदोलन की एक साहसी योद्धा थीं।</div>
+                </div>
+
+                <div class="vocab-card">
+                    <div class="vocab-card-header">
+                        <span class="vocab-hindi">स्वर्गवास</span>
+                        <span class="vocab-type">संज्ञा (पुल्लिंग)</span>
+                    </div>
+                    <div class="vocab-meaning"><strong>अर्थ:</strong> देहांत, मृत्यु</div>
+                    <div class="vocab-english">Demise, passing away</div>
+                    <div class="vocab-example">अरुण के पिता के असमय स्वर्गवास के बाद माँ ने परिवार संभाला।</div>
+                </div>
+
+                <div class="vocab-card">
+                    <div class="vocab-card-header">
+                        <span class="vocab-hindi">बेसब्री</span>
+                        <span class="vocab-type">भाववाचक संज्ञा</span>
+                    </div>
+                    <div class="vocab-meaning"><strong>अर्थ:</strong> अधीरता, उत्कंठा</div>
+                    <div class="vocab-english">Impatience, eagerness</div>
+                    <div class="vocab-example">माँ स्टेशन पर अपने बेटे की बेसब्री से प्रतीक्षा कर रही थीं।</div>
+                </div>
+
+                <div class="vocab-card">
+                    <div class="vocab-card-header">
+                        <span class="vocab-hindi">निहारना</span>
+                        <span class="vocab-type">सकर्मक क्रिया</span>
+                    </div>
+                    <div class="vocab-meaning"><strong>अर्थ:</strong> प्रेमपूर्वक ताकना या देखना</div>
+                    <div class="vocab-english">To gaze affectionately</div>
+                    <div class="vocab-example">शारदा देवी ने स्टेशन पर अपने वीर पुत्र को बड़े प्यार से निहारा।</div>
+                </div>
+
+                <div class="vocab-card">
+                    <div class="vocab-card-header">
+                        <span class="vocab-hindi">आत्मविश्वास</span>
+                        <span class="vocab-type">भाववाचक संज्ञा</span>
+                    </div>
+                    <div class="vocab-meaning"><strong>अर्थ:</strong> अपनी क्षमता व योग्यता पर पूरा भरोसा</div>
+                    <div class="vocab-english">Self-confidence</div>
+                    <div class="vocab-example">अरुण ने पूरे आत्मविश्वास के साथ उफनती नदी में छलाँग लगाई।</div>
+                </div>
+
+                <div class="vocab-card">
+                    <div class="vocab-card-header">
+                        <span class="vocab-hindi">अलौकिक</span>
+                        <span class="vocab-type">विशेषण</span>
+                    </div>
+                    <div class="vocab-meaning"><strong>अर्थ:</strong> जो इस लोक का न हो, अद्भुत, दिव्य</div>
+                    <div class="vocab-english">Supernatural, extraordinary, divine</div>
+                    <div class="vocab-example">माँ का चेहरा एक अलौकिक गौरव और आत्मिक शांति से चमक उठा।</div>
+                </div>
+
+                <div class="vocab-card">
+                    <div class="vocab-card-header">
+                        <span class="vocab-hindi">उग्र</span>
+                        <span class="vocab-type">विशेषण</span>
+                    </div>
+                    <div class="vocab-meaning"><strong>अर्थ:</strong> प्रचंड, भयानक, अत्यंत तेज़</div>
+                    <div class="vocab-english">Fierce, turbulent, violent</div>
+                    <div class="vocab-example">तीस्ता नदी का बहाव पलक झपकत ही अत्यंत उग्र हो उठा।</div>
+                </div>
+
+                <div class="vocab-card">
+                    <div class="vocab-card-header">
+                        <span class="vocab-hindi">न्योछावर</span>
+                        <span class="vocab-type">भाववाचक संज्ञा</span>
+                    </div>
+                    <div class="vocab-meaning"><strong>अर्थ:</strong> देशहित में बलिदान या अर्पित करना</div>
+                    <div class="vocab-english">Sacrifice, dedicated offering</div>
+                    <div class="vocab-example">सपूतों ने स्वाधीनता की वेदी पर अपने प्राण न्योछावर कर दिए।</div>
+                </div>
+
+                <div class="vocab-card">
+                    <div class="vocab-card-header">
+                        <span class="vocab-hindi">माउथऑर्गन</span>
+                        <span class="vocab-type">संज्ञा (विदेशी शब्द)</span>
+                    </div>
+                    <div class="vocab-meaning"><strong>अर्थ:</strong> मुँह से फूंककर बजाया जाने वाला बाजा (हार्मोनिका)</div>
+                    <div class="vocab-english">Harmonica, mouth organ</div>
+                    <div class="vocab-example">डिक रात को हॉस्टल के हॉल में मधुर माउथऑर्गन बजाता था।</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: व्यावहारिक व्याकरण -->
+    <div id="tab-grammar" class="tab-pane">
+        <!-- विलोम शब्द -->
+        <div class="section-card">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-exchange-alt"></i> 1. विलोम शब्द (Antonyms)</h2>
+            </div>
+            <div class="grammar-item">
+                <span><strong>युवा</strong> (Young)</span>
+                <span><strong>× वृद्ध</strong> (Old)</span>
+            </div>
+            <div class="grammar-item">
+                <span><strong>स्वतंत्र</strong> (Independent)</span>
+                <span><strong>× परतंत्र / गुलाम</strong> (Dependent / Slave)</span>
+            </div>
+            <div class="grammar-item">
+                <span><strong>बहादुर</strong> (Brave)</span>
+                <span><strong>× कायर / डरपोक</strong> (Coward)</span>
+            </div>
+            <div class="grammar-item">
+                <span><strong>सपूत</strong> (Worthy son)</span>
+                <span><strong>× कपूत</strong> (Unworthy son)</span>
+            </div>
+            <div class="grammar-item">
+                <span><strong>साहस</strong> (Courage)</span>
+                <span><strong>× कायरता / भय</strong> (Fear / Timidity)</span>
+            </div>
+            <div class="grammar-item">
+                <span><strong>शर्म</strong> (Shame)</span>
+                <span><strong>× गर्व / स्वाभिमान</strong> (Pride / Dignity)</span>
+            </div>
+        </div>
+
+        <!-- पर्यायवाची शब्द -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fas fa-clone"></i> 2. पर्यायवाची शब्द (Synonyms)</h3>
+            </div>
+            <div class="grammar-item">
+                <span><strong>प्रशंसा</strong></span>
+                <span>तारीफ़, बड़ाई, श्लाघा, गुणगान</span>
+            </div>
+            <div class="grammar-item">
+                <span><strong>कोशिश</strong></span>
+                <span>प्रयास, प्रयत्न, चेष्टा, यत्न</span>
+            </div>
+            <div class="grammar-item">
+                <span><strong>परीक्षा</strong></span>
+                <span>इम्तिहान, परख, जाँच, मूल्यांकन</span>
+            </div>
+            <div class="grammar-item">
+                <span><strong>अध्यापक</strong></span>
+                <span>शिक्षक, गुरु, उस्ताद, आचार्य</span>
+            </div>
+            <div class="grammar-item">
+                <span><strong>उत्साह</strong></span>
+                <span>जोश, उमंग, हौसला, प्रफुल्लता</span>
+            </div>
+            <div class="grammar-item">
+                <span><strong>मित्र</strong></span>
+                <span>दोस्त, सखा, सहपाठी, मीत</span>
+            </div>
+        </div>
+
+        <!-- विशेषण एवं उनके भेद -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fas fa-highlighter"></i> 3. विशेषण और उसके चार मुख्य भेद</h3>
+            </div>
+            <p style="font-size: 0.95rem; margin-bottom: 16px;">
+                संज्ञा अथवा सर्वनाम की विशेषता (गुण, संख्या, मात्रा आदि) बताने वाले शब्दों को <strong>विशेषण</strong> कहते हैं। जिसकी विशेषता बताई जाती है, उसे <strong>विशेष्य</strong> कहा जाता है।
+            </p>
+            <div class="revision-grid">
+                <div class="rev-card">
+                    <div class="rev-card-title">१. गुणवाचक विशेषण</div>
+                    <div class="rev-card-desc">गुण, दोष, रंग, आकार का बोध (जैसे- बहादुर, कुशल, नीली आँखें)।</div>
+                </div>
+                <div class="rev-card">
+                    <div class="rev-card-title">२. संख्यावाचक विशेषण</div>
+                    <div class="rev-card-desc">निश्चित अथवा अनिश्चित संख्या का बोध (जैसे- तेरह वर्ष, पाँच शाखाएँ, तीन मील)।</div>
+                </div>
+                <div class="rev-card">
+                    <div class="rev-card-title">३. परिमाणवाचक विशेषण</div>
+                    <div class="rev-card-desc">नाप-तौल अथवा मात्रा का बोध (जैसे- थोड़ा पानी, दो मीटर कपड़ा)।</div>
+                </div>
+                <div class="rev-card">
+                    <div class="rev-card-title">४. सार्वनामिक विशेषण</div>
+                    <div class="rev-card-desc">संज्ञा से पहले आकर विशेषण की तरह प्रयुक्त सर्वनाम (जैसे- वह लड़का, यह रिवॉल्वर)।</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h4 style="color: var(--primary); margin-bottom: 12px;">अभ्यास: रेखांकित विशेषण शब्दों के भेद पहचानिए:</h4>
+                
+                <div class="q-card">
+                    <div class="q-title">(क) अरुण <ins style="color:var(--accent);">तेरह</ins> वर्ष का था।</div>
+                    <button class="toggle-btn" onclick="toggleAnswer(this)">भेद देखें</button>
+                    <div class="ans-box"><strong>उत्तर:</strong> निश्चित संख्यावाचक विशेषण (विशेष्य: वर्ष)</div>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-title">(ख) शारदा देवी एक <ins style="color:var(--accent);">बहादुर और साहसी</ins> योद्धा थीं।</div>
+                    <button class="toggle-btn" onclick="toggleAnswer(this)">भेद देखें</button>
+                    <div class="ans-box"><strong>उत्तर:</strong> गुणवाचक विशेषण (विशेष्य: योद्धा)</div>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-title">(ग) अरुण को स्कूल का सबसे <ins style="color:var(--accent);">कुशल</ins> तैराक पुरस्कार मिला।</div>
+                    <button class="toggle-btn" onclick="toggleAnswer(this)">भेद देखें</button>
+                    <div class="ans-box"><strong>उत्तर:</strong> गुणवाचक विशेषण (विशेष्य: तैराक)</div>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-title">(घ) अरुण के स्कूल की अलग-अलग देशों में <ins style="color:var(--accent);">पाँच</ins> शाखाएँ थीं।</div>
+                    <button class="toggle-btn" onclick="toggleAnswer(this)">भेद देखें</button>
+                    <div class="ans-box"><strong>उत्तर:</strong> निश्चित संख्यावाचक विशेषण (विशेष्य: शाखाएँ)</div>
+                </div>
+
+                <div class="q-card">
+                    <div class="q-title">(ङ) शारदा देवी का चेहरा एक <ins style="color:var(--accent);">अलौकिक</ins> गर्व से चमक रहा था।</div>
+                    <button class="toggle-btn" onclick="toggleAnswer(this)">भेद देखें</button>
+                    <div class="ans-box"><strong>उत्तर:</strong> गुणवाचक विशेषण (विशेष्य: गर्व)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 5: चिंतन एवं जीवन मूल्य -->
+    <div id="tab-critical" class="tab-pane">
+        <!-- Flowchart / Mindmap -->
+        <div class="section-card">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-sitemap"></i> कथानक प्रवाह एवं संकल्पना मानचित्र (Mind Map)</h2>
+            </div>
+            <div class="mindmap-box">
+[1942: भारत छोड़ो आंदोलन]
+          │
+          ▼
+[कलकत्ता मौन जुलूस पर पुलिस कमिश्नर गॉर्डन जैक्सन की बर्बर गोलीबारी]
+          │
+          ▼
+[शारदा देवी द्वारा जैक्सन पर गोली चलाना ──► 15 वर्ष की काले पानी की सज़ा]
+          │
+          ▼
+[शारदा देवी का पुत्र अरुण ──► सिलीगुड़ी सेंट कोलंबस बोर्डिंग स्कूल (कुशल तैराक)]
+          │
+          ▼
+[लंदन शाखा के 10 छात्रों का आगमन ──► डिक से मित्रता (माउथऑर्गन वादक)]
+          │
+          ▼
+[तीस्ता नदी पर पिकनिक ──► उग्र बहाव में डिक का भँवर की ओर बहना]
+          │
+          ▼
+[अरुण का प्राण-रक्षा साहसिक कार्य: 3 मील तैरकर डिक को सुरक्षित बचाना]
+          │
+          ▼
+[रहस्योद्घाटन: डिक क्रूर कमिश्नर गॉर्डन जैक्सन का ही पुत्र है!]
+          │
+          ▼
+[माँ का निर्णय: प्रतिशोध की संकीर्णता त्यागकर अरुण की निष्पक्ष मानवता की सराहना]
+          │
+          ▼
+[माँ का उपहार: स्वाधीनता की अमर यादगार "रिवॉल्वर" अरुण को समर्पित]
+            </div>
+        </div>
+
+        <!-- नैतिक एवं दार्शनिक मूल्य -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fas fa-balance-scale"></i> नैतिक एवं दार्शनिक जीवन मूल्य (Life Values)</h3>
+            </div>
+            <div class="revision-grid">
+                <div class="rev-card">
+                    <div class="rev-card-title"><i class="fas fa-heart"></i> मानवता सर्वोपरि</div>
+                    <div class="rev-card-desc">संकट के समय किसी के कुल या अतीत को देखे बिना जीवन की रक्षा करना सबसे बड़ा मानवीय धर्म है।</div>
+                </div>
+                <div class="rev-card">
+                    <div class="rev-card-title"><i class="fas fa-dove"></i> प्रतिशोध से परे क्षमा</div>
+                    <div class="rev-card-desc">जैक्सन के पुत्र को बचाकर अरुण और माँ ने सिद्ध किया कि घृणा का उत्तर प्रेम व उदात्त कर्म से दिया जाता है।</div>
+                </div>
+                <div class="rev-card">
+                    <div class="rev-card-title"><i class="fas fa-medal"></i> वास्तविक पात्रता</div>
+                    <div class="rev-card-desc">हथियार या विरासत केवल आयु से नहीं, बल्कि विचार, विवेक, साहस और चरित्र की परिपक्वता से प्राप्त होती है।</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interdisciplinary Connect & Amazing Facts -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fas fa-lightbulb"></i> अंतरविषयक संबंध एवं रोचक तथ्य (Did You Know?)</h3>
+            </div>
+            
+            <div class="q-card" style="background: rgba(139, 92, 246, 0.05); border-color: var(--primary);">
+                <div class="q-title"><i class="fas fa-landmark" style="color: var(--primary);"></i> ऐतिहासिक संदर्भ (Historical Context)</div>
+                <p style="font-size: 0.95rem; margin-bottom: 0;">
+                    8 अगस्त 1942 को बॉम्बे के गोवालिया टैंक मैदान से महात्मा गांधी ने <strong>'करो या मरो'</strong> का नारा देकर 'भारत छोड़ो आंदोलन' का शंखनाद किया था। ब्रिटिश सत्ता ने आंदोलनकारियों को अंडमान की सेलुलर जेल में कठोर यातनाएँ (काले पानी की सज़ा) दी थीं।
+                </p>
+            </div>
+
+            <div class="q-card" style="background: rgba(16, 185, 129, 0.05); border-color: var(--accent-green);">
+                <div class="q-title"><i class="fas fa-water" style="color: var(--accent-green);"></i> भौगोलिक संदर्भ: तीस्ता नदी (Geography Connect)</div>
+                <p style="font-size: 0.95rem; margin-bottom: 0;">
+                    तीस्ता नदी का उद्गम हिमालय के त्सो ल्हामो झील (सिक्किम) से होता है। यह पश्चिम बंगाल के सिलीगुड़ी से होकर बहती हुई बांग्लादेश में ब्रह्मपुत्र (जमुना) में मिलती है। पहाड़ी ढलानों के कारण इसका जलप्रवाह अत्यंत तीव्र और अप्रत्याशित रूप से उग्र हो जाता है।
+                </p>
+            </div>
+
+            <div class="q-card" style="background: rgba(245, 158, 11, 0.05); border-color: var(--accent);">
+                <div class="q-title"><i class="fas fa-star" style="color: var(--accent);"></i> रोचक तथ्य (Amazing Fact)</div>
+                <p style="font-size: 0.95rem; margin-bottom: 0;">
+                    15 अगस्त 1947 को स्वतंत्रता प्राप्ति के दिन औपचारिक ध्वजारोहण लाल किले पर नहीं हुआ था, बल्कि भारत के प्रथम प्रधानमंत्री पंडित जवाहरलाल नेहरू जी ने <strong>16 अगस्त 1947</strong> को पहली बार ऐतिहासिक लाल किले पर तिरंगा फहराया था।
+                </p>
+            </div>
+        </div>
+
+        <!-- Activities / संवर्धन गतिविधियाँ -->
+        <div class="section-card">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fas fa-hands-helping"></i> संवर्धन गतिविधियाँ एवं चिंतन</h3>
+            </div>
+            <div class="q-card">
+                <div class="q-title"><strong>गतिविधि 1:</strong> यदि आप किसी को पानी में डूबते देखें और आपको तैरना न आता हो, तो आप क्या करेंगे?</div>
+                <div class="ans-box" style="display:block;">
+                    <strong>सुझाव:</strong> स्वयं पानी में न कूदकर जोर-जोर से आवाज़ लगाकर आसपास के तैराकों को बुलाएँ, तैरने वाली कोई वस्तु (जैसे लाइफ जैकेट, ट्यूब, लंबी रस्सी या मोटी लकड़ी की शाखा) पानी में फेंकें और तुरंत आपातकालीन सहायता (जैसे 112/101) पर कॉल करें।
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
+    // Tab switching
     function openTab(tabId, btn) {
-        document.querySelectorAll('.tab-content').forEach(tab => {
-            tab.classList.remove('active');
-        });
-        document.querySelectorAll('.tab-btn').forEach(button => {
-            button.classList.remove('active');
-        });
-        
+        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
         btn.classList.add('active');
     }
-</script>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const themeBtn = document.querySelector('.theme-toggle');
-    if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
-        themeBtn.classList.add('handled-by-inline');
-        themeBtn.addEventListener('click', (e) => {
-            // Prevent app.js from also firing if it's there
-            e.stopImmediatePropagation();
-            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.body.setAttribute('data-theme', newTheme);
-            const icon = themeBtn.querySelector('i');
-            if(icon) {
-                icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-            localStorage.setItem('pushti-theme', newTheme);
-            
-            if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ theme: newTheme }, '*');
-            }
-        });
-        const savedTheme = localStorage.getItem('pushti-theme');
-        if(savedTheme) {
-            document.body.setAttribute('data-theme', savedTheme);
-            const icon = themeBtn.querySelector('i');
-            if(icon) {
-                icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-            }
+    // Toggle Answer
+    function toggleAnswer(btn) {
+        const box = btn.nextElementSibling;
+        if (box.style.display === 'block') {
+            box.style.display = 'none';
+            btn.textContent = 'उत्तर देखें';
+        } else {
+            box.style.display = 'block';
+            btn.textContent = 'उत्तर छिपाएँ';
         }
     }
-});
+
+    // Interactive MCQ
+    function checkMcq(btn, isCorrect) {
+        const parent = btn.parentElement;
+        parent.querySelectorAll('.mcq-option').forEach(opt => {
+            opt.disabled = true;
+            opt.style.cursor = 'default';
+        });
+        if (isCorrect) {
+            btn.classList.add('correct');
+        } else {
+            btn.classList.add('incorrect');
+            parent.querySelectorAll('.mcq-option').forEach(opt => {
+                // Highlight the correct one
+                if (opt.getAttribute('onclick').includes('true')) {
+                    opt.classList.add('correct');
+                }
+            });
+        }
+    }
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggle');
+    if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            themeBtn.querySelector('i').className = isLight ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('pushti-theme', isLight ? 'light' : 'dark');
+        });
+
+        // Initialize Theme from localStorage
+        const savedTheme = localStorage.getItem('pushti-theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+            themeBtn.querySelector('i').className = 'fas fa-sun';
+        }
+    }
+
+    // Revision Log Modal Helper
+    function openChapterLog(chKey) {
+        if (window.parent && window.parent.openRevisionModal) {
+            window.parent.openRevisionModal(chKey);
+        } else {
+            alert("रिवीजन लॉग: " + chKey + "\n\nइस अध्याय का पुनरावलोकन पूरा हुआ दर्ज किया गया।");
+        }
+    }
 </script>
 </body>
 </html>
