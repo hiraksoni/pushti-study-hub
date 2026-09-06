@@ -15,315 +15,374 @@
             --btn-hover: rgba(187, 134, 252, 0.3);
             --correct-bg: rgba(46, 125, 50, 0.2);
             --correct-border: #4caf50;
+            --extra-bg: rgba(255, 167, 38, 0.05);
+            --extra-border: #ffa726;
+            --extra-text: #ffb74d;
         }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        header {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            background: rgba(18, 18, 18, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 15px 20px;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            box-sizing: border-box;
-        }
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 30px auto;
-            flex: 1;
-        }
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-        .tab-btn {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--text-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            font-size: 1rem;
-        }
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--btn-bg);
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-        }
-        .tab-content {
-            display: none;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            animation: fadeIn 0.4s ease-in-out;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .question-block {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .question-block:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .question {
-            font-size: 1.15rem;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-        .reveal-btn {
-            background: var(--btn-bg);
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-        .reveal-btn:hover {
-            background: var(--btn-hover);
-        }
-        .answer {
-            display: none;
-            margin-top: 15px;
-            padding: 12px 15px;
-            background: var(--correct-bg);
-            border-left: 4px solid var(--correct-border);
-            border-radius: 0 6px 6px 0;
-            font-weight: bold;
-            font-size: 1.05rem;
-            line-height: 1.4;
-        }
-        ul.notes-list {
-            line-height: 1.8;
-            font-size: 1.1rem;
-            padding-left: 20px;
-        }
-        ul.notes-list li {
-            margin-bottom: 12px;
-        }
-        .highlight {
-            color: var(--accent-color);
-            font-weight: 600;
-        }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
+        header { position: sticky; top: 0; width: 100%; background: rgba(18,18,18,0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); padding: 15px 20px; z-index: 1000; display: flex; align-items: center; box-sizing: border-box; }
+        .container { width: 90%; max-width: 950px; margin: 30px auto; flex: 1; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
+        .tab-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-color); padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-size: 1rem; }
+        .tab-btn.active, .tab-btn:hover { background: var(--btn-bg); border-color: var(--accent-color); color: var(--accent-color); }
+        .tab-content { display: none; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 25px; animation: fadeIn 0.4s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .noun-section { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; padding: 20px; margin-bottom: 25px; }
+        .noun-title { color: var(--accent-color); font-size: 1.3rem; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px; }
+        .noun-def, .noun-layman { margin-bottom: 10px; font-size: 1.05rem; line-height: 1.5; }
+        .label { font-weight: bold; color: #fff; margin-right: 5px; display: inline-block; width: 170px; }
+        table.example-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(255,255,255,0.02); }
+        table.example-table th, table.example-table td { border: 1px solid var(--glass-border); padding: 10px; text-align: left; vertical-align: top; }
+        table.example-table th { background: var(--btn-bg); color: var(--accent-color); }
+        
+        .exercise-section { margin-bottom: 40px; }
+        .exercise-title { font-size: 1.25rem; color: var(--accent-color); margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
+        .instruction { font-size: 1.05rem; margin-bottom: 15px; color: #ccc; }
+        .q-item-single { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px 15px; background: rgba(0,0,0,0.2); border-radius: 6px; border: 1px solid var(--glass-border); }
+        .q-text { font-size: 1.1rem; margin: 0; flex: 1; }
+        .blank-box { display: inline-block; min-width: 60px; text-align: center; }
+        .answer-box { display: none; color: var(--correct-border); font-weight: bold; padding: 0 5px; }
+        .q-item-single.show-answer .blank-box { display: none; }
+        .q-item-single.show-answer .answer-box { display: inline; }
+        .reveal-btn-mini { background: var(--btn-bg); border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 15px; border-radius: 4px; cursor: pointer; transition: all 0.3s; font-weight: 600; font-size: 0.9rem; white-space: nowrap; margin-left: 15px; }
+        .reveal-btn-mini:hover { background: var(--btn-hover); }
+        
+        .extra-practice { margin-top: 20px; padding: 15px; background: var(--extra-bg); border: 1px dashed var(--extra-border); border-radius: 8px; }
+        .extra-title { color: var(--extra-text); margin-top: 0; margin-bottom: 12px; font-size: 1.1rem; }
+        .extra-practice .q-item-single { background: rgba(0,0,0,0.15); border-color: rgba(255,167,38,0.2); padding: 8px 12px; }
+        .extra-practice .reveal-btn-mini { border-color: var(--extra-border); color: var(--extra-text); background: rgba(255,167,38,0.1); }
+        .extra-practice .reveal-btn-mini:hover { background: rgba(255,167,38,0.25); }
     </style>
-
-<style>
-[data-theme="light"] {
-    --bg-main: #f8fafc !important;
-    --bg-card: #ffffff !important;
-    --text-main: #0f172a !important;
-    --text-muted: #475569 !important;
-    --accent: #6366f1 !important;
-    --border: #e2e8f0 !important;
-    --surface: #f1f5f9 !important;
-}
-[data-theme="light"] .site-header {
-    background: #f8fafc !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-}
-</style>
 </head>
 <body>
 
-<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--surface); position: sticky; top: 0; z-index: 1000;">
-    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500; color: var(--text-main);">
+<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--bg-color); position: sticky; top: 0; z-index: 1000;">
+    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500;">
         <a href="../../english_index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
             <i class="fas fa-arrow-left"></i> Back to English
         </a>
-        <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <span style="color:var(--accent); font-weight:600;">Chapter 8 Practice</span>
+        <span style="margin: 0 8px; color: #888;">&gt;</span> <span style="color:var(--accent-color); font-weight:600;">Chapter 8 Practice</span>
     </div>
 </header>
 <style>
-.tabs-wrapper { position: sticky !important; top: 50px !important; z-index: 990 !important; background: var(--bg-color) !important; border-bottom: 1px solid var(--border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; display: flex !important; gap: 10px !important; justify-content: center !important; flex-wrap: wrap !important; }
+.tabs-wrapper { position: sticky !important; top: 50px !important; z-index: 990 !important; background: var(--bg-color) !important; border-bottom: 1px solid var(--glass-border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; display: flex !important; gap: 10px !important; justify-content: center !important; flex-wrap: wrap !important; }
 </style>
 
 <div class="container">
     <div class="tabs-wrapper">
-        <button class="tab-btn active" onclick="openTab(event, 'notes')">Notes</button>
-        <button class="tab-btn" onclick="openTab(event, 'qa')">Exercises</button>
+        <button class="tab-btn active" onclick="openTab(event, 'notes')">Comprehensive Notes</button>
+        <button class="tab-btn" onclick="openTab(event, 'qa')">Interactive Exercises</button>
     </div>
 
     <!-- Notes Tab -->
     <div id="notes" class="tab-content active">
-        <h2>Chapter 8: Verbs: Revision</h2>
-        <ul class="notes-list">
-            <li><span class="highlight">Verbs:</span> Essential components of sentences, indicating actions, occurrences, experiences or states of being.</li>
-            <li><span class="highlight">Main and Auxiliary Verbs:</span><br>
-            - <strong>Main verbs:</strong> indicate the action of the subject (e.g., jump, ate).<br>
-            - <strong>Auxiliary verbs:</strong> helping verbs that indicate the tense of the main verb (e.g., be, have, do).
-            </li>
-            <li><span class="highlight">Kinds of Main Verbs:</span><br>
-            - <strong>Regular verbs:</strong> form simple past and past participle by adding <em>-ed</em> (walk &rarr; walked).<br>
-            - <strong>Irregular verbs:</strong> form past and past participles in other ways (burn &rarr; burnt).<br>
-            - <strong>Transitive verbs:</strong> require an object to complete their meaning. They answer <em>What</em> or <em>Whom</em>.<br>
-            - <strong>Intransitive verbs:</strong> do not require an object (e.g., The baby laughed).
-            </li>
-            <li><span class="highlight">Direct and Indirect Objects:</span><br>
-            - <strong>Direct objects:</strong> receive the action directly (answers 'What').<br>
-            - <strong>Indirect objects:</strong> receive the action indirectly (answers 'To Whom').<br>
-            <em>Example:</em> He sent his friend (Indirect) a message (Direct).
-            </li>
-            <li><span class="highlight">Complements:</span> Words that complete the meaning of the predicate.<br>
-            - <strong>Subject complement:</strong> follows a linking verb and describes the subject (The boy is <em>brave</em>).<br>
-            - <strong>Object complement:</strong> follows and modifies the direct object (They elected him <em>president</em>).
-            </li>
-            <li><span class="highlight">Verbs of Incomplete Prediction:</span> Verbs that require additional words to complete their meaning (e.g., seems, appears, might).</li>
-        </ul>
+        
+        <!-- SECTION 1 -->
+        <div class="noun-section">
+            <h4 class="noun-title">Verbs: The Core of a Sentence</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Essential components of sentences, indicating actions, occurrences, experiences or states of being.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> The "doing", "happening", or "being" words. Without a verb, an English sentence simply cannot exist!</div>
+            <table class="example-table">
+                <tr><th>Action & Dynamic Verbs</th><th>State of Being & Stative Verbs</th></tr>
+                <tr>
+                    <td>jump, run, swim, dance, eat, sleep<br>kick, throw, catch, read, write, sing<br>build, cook, study, drive, paint, laugh</td>
+                    <td>is, am, are, was, were, be, being, been<br>seem, appear, feel, look, smell, sound<br>taste, become, remain, stay, belong, know</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div class="noun-section">
+            <h4 class="noun-title">Main vs Auxiliary Verbs</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Main verbs indicate the action or state of the subject. Auxiliary verbs are helping verbs that indicate the tense, aspect, voice, or mood of the main verb.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> The main verb is the lead star of the sentence. Auxiliary verbs are the backup crew that tell us when and how the action occurs.</div>
+            <table class="example-table">
+                <tr><th>Main Verbs Alone (Simple Tenses)</th><th>Main Verbs with Auxiliary Verbs (Compound Tenses)</th></tr>
+                <tr>
+                    <td>1. I <strong>walk</strong> to the library.<br>
+2. She <strong>plays</strong> the violin.<br>
+3. They <strong>ate</strong> delicious dinner.<br>
+4. He <strong>sleeps</strong> early tonight.<br>
+5. We <strong>watch</strong> documentary films.<br>
+6. The dog <strong>barked</strong> at the stranger.<br>
+7. She <strong>wrote</strong> an interesting novel.<br>
+8. The birds <strong>fly</strong> south every winter.</td>
+                    <td>1. I <strong>am walking</strong> to the library.<br>
+2. She <strong>has played</strong> the violin for hours.<br>
+3. They <strong>will eat</strong> delicious dinner.<br>
+4. He <strong>was sleeping</strong> when I arrived.<br>
+5. We <strong>do watch</strong> documentary films.<br>
+6. The dog <strong>had barked</strong> all morning.<br>
+7. She <strong>is writing</strong> an interesting novel.<br>
+8. The birds <strong>have flown</strong> south for winter.</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div class="noun-section">
+            <h4 class="noun-title">Regular vs Irregular Verbs</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Regular verbs form simple past and past participle by adding -ed (or -d). Irregular verbs form past and past participles in other unpredictable ways.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> Regular verbs follow the simple "+ed" recipe. Irregular verbs rebel and change vowel sounds, change endings, or never change at all.</div>
+            <table class="example-table">
+                <tr><th>Regular Verbs (Base &rarr; Past &rarr; Past Participle)</th><th>Irregular Verbs (Base &rarr; Past &rarr; Past Participle)</th></tr>
+                <tr>
+                    <td>1. walk &rarr; walked &rarr; walked<br>
+2. play &rarr; played &rarr; played<br>
+3. call &rarr; called &rarr; called<br>
+4. look &rarr; looked &rarr; looked<br>
+5. need &rarr; needed &rarr; needed<br>
+6. clean &rarr; cleaned &rarr; cleaned<br>
+7. work &rarr; worked &rarr; worked<br>
+8. help &rarr; helped &rarr; helped</td>
+                    <td>1. go &rarr; went &rarr; gone<br>
+2. eat &rarr; ate &rarr; eaten<br>
+3. see &rarr; saw &rarr; seen<br>
+4. buy &rarr; bought &rarr; bought<br>
+5. write &rarr; wrote &rarr; written<br>
+6. break &rarr; broke &rarr; broken<br>
+7. run &rarr; ran &rarr; run<br>
+8. fly &rarr; flew &rarr; flown</td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- SECTION 4 -->
+        <div class="noun-section">
+            <h4 class="noun-title">Transitive vs Intransitive Verbs</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Transitive verbs require a direct object to complete their meaning (answering 'What?' or 'Whom?'). Intransitive verbs do not require an object.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> Transitive verbs transfer action directly onto a target. Intransitive verbs are self-contained and don't need a target object to make sense.</div>
+            <table class="example-table">
+                <tr><th>Transitive Verbs (+ Direct Object)</th><th>Intransitive Verbs (No Object Needed)</th></tr>
+                <tr>
+                    <td>1. He kicked <strong>the soccer ball</strong>.<br>
+2. She wrote <strong>a personal letter</strong>.<br>
+3. They built <strong>a sturdy wooden cabin</strong>.<br>
+4. I drank <strong>a glass of orange juice</strong>.<br>
+5. We caught <strong>a huge freshwater fish</strong>.<br>
+6. The cat chased <strong>the playful mouse</strong>.<br>
+7. Mother baked <strong>a sweet berry pie</strong>.<br>
+8. The mechanic repaired <strong>the car</strong>.</td>
+                    <td>1. The tiny baby <strong>cried</strong> endlessly.<br>
+2. The morning sun <strong>shines</strong> bright.<br>
+3. Everyone in the hall <strong>laughed</strong> loudly.<br>
+4. The guests <strong>arrived</strong> right on time.<br>
+5. The flock of pigeons <strong>flew</strong> away.<br>
+6. She gently <strong>smiled</strong> at the compliment.<br>
+7. The tired traveler <strong>slept</strong> soundly.<br>
+8. The sparkling river <strong>flows</strong> steadily.</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div class="noun-section">
+            <h4 class="noun-title">Direct vs Indirect Objects</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Direct objects receive the action of the verb directly (answers 'What?' or 'Whom?'). Indirect objects receive the action indirectly, naming the person to whom or for whom the action is performed.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> The Direct Object is the actual item being passed or acted upon (WHAT). The Indirect Object is the lucky person receiving it (TO/FOR WHOM).</div>
+            <table class="example-table">
+                <tr><th>Direct Objects (Answers 'What?' directly)</th><th>Indirect Objects (Answers 'To Whom?' / 'For Whom?')</th></tr>
+                <tr>
+                    <td>1. I bought <strong>a gold watch</strong>.<br>
+2. She read <strong>an exciting novel</strong>.<br>
+3. He kicked <strong>the football</strong>.<br>
+4. Mother baked <strong>fresh cookies</strong>.<br>
+5. We watched <strong>a thrilling documentary</strong>.<br>
+6. The teacher told <strong>a fascinating story</strong>.<br>
+7. They offered <strong>cold refreshments</strong>.<br>
+8. She wrote <strong>a heartfelt letter</strong>.</td>
+                    <td>1. I bought <strong>my father</strong> a gold watch.<br>
+2. She read <strong>her younger brother</strong> an exciting novel.<br>
+3. He passed <strong>his teammate</strong> the football.<br>
+4. Mother baked <strong>the children</strong> fresh cookies.<br>
+5. He showed <strong>us</strong> a thrilling documentary.<br>
+6. The teacher told <strong>the students</strong> a fascinating story.<br>
+7. They offered <strong>the guests</strong> cold refreshments.<br>
+8. She wrote <strong>her mother</strong> a heartfelt letter.</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div class="noun-section">
+            <h4 class="noun-title">Complements: Subject & Object</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Complements are words that complete the meaning of the predicate. A Subject Complement follows a linking verb and describes the subject. An Object Complement follows and modifies the direct object.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> Essential descriptors! A subject complement tells us more about the subject (doer). An object complement tells us more about the direct object (receiver).</div>
+            <table class="example-table">
+                <tr><th>Subject Complements (Describes the Subject)</th><th>Object Complements (Modifies the Direct Object)</th></tr>
+                <tr>
+                    <td>1. The young soldier is <strong>courageous</strong>.<br>
+2. She seems very <strong>cheerful</strong> today.<br>
+3. The warm soup tastes <strong>delicious</strong>.<br>
+4. Dr. Arjun became <strong>a famous physician</strong>.<br>
+5. The afternoon sky looks <strong>overcast</strong>.<br>
+6. Those dedicated athletes are <strong>champions</strong>.<br>
+7. The sweet milk turned <strong>sour</strong>.<br>
+8. Her soft voice sounded <strong>reassuring</strong>.</td>
+                    <td>1. The citizens elected him <strong>governor</strong>.<br>
+2. We painted the dining room <strong>mint green</strong>.<br>
+3. The family named the puppy <strong>Max</strong>.<br>
+4. The students considered the puzzle <strong>challenging</strong>.<br>
+5. His harsh remarks made her <strong>furious</strong>.<br>
+6. The judge pronounced the prisoner <strong>innocent</strong>.<br>
+7. The committee appointed Priya <strong>chairperson</strong>.<br>
+8. They proved the rumor <strong>false</strong>.</td>
+                </tr>
+            </table>
+        </div>
+        
+        <!-- SECTION 7 -->
+        <div class="noun-section">
+            <h4 class="noun-title">Verbs of Incomplete Prediction</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Verbs (especially intransitive or linking verbs) that require additional words (complements) to form a complete predicate and express a complete thought.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> Cliffhanger verbs! If you stop talking right after them ("He became..."), everyone is left waiting for you to finish ("...a doctor!").</div>
+            <table class="example-table">
+                <tr><th>Incomplete Predication (Cliffhanger Verb)</th><th>Complete Thought (+ Required Complement)</th></tr>
+                <tr>
+                    <td>1. Simbha became...<br>
+2. The traveler seems...<br>
+3. Robin and Harman are...<br>
+4. The weather looked...<br>
+5. The elderly man feels...<br>
+6. The mystery appears...<br>
+7. The dish tasted...<br>
+8. The warning sounded...</td>
+                    <td>1. Simbha became <strong>a skilled pilot</strong>.<br>
+2. The traveler seems <strong>exhausted after the journey</strong>.<br>
+3. Robin and Harman are <strong>trustworthy partners</strong>.<br>
+4. The weather looked <strong>promising for a picnic</strong>.<br>
+5. The elderly man feels <strong>rejuvenated and healthy</strong>.<br>
+6. The mystery appears <strong>completely solved</strong>.<br>
+7. The dish tasted <strong>surprisingly spicy</strong>.<br>
+8. The warning sounded <strong>urgent and loud</strong>.</td>
+                </tr>
+            </table>
+        </div>
+
     </div>
 
     <!-- Exercises Tab -->
     <div id="qa" class="tab-content">
         
-        <div class="question-block">
-            <div class="question"><strong>Exercise A:</strong> Choose the correct form of the main or auxiliary verbs.<br><br>
-            1. What ________ you usually do on weekends? (do/does)<br>
-            2. ________ they coming for the party? (Is/Are)<br>
-            3. Sheena ________ baked some cookies. (have/has)<br>
-            4. I ________ at the new restaurant yesterday. (was/were)<br>
-            5. How long ________ you think the wait will be? (do/did)<br>
-            6. They ________ been waiting for an hour. (have/has)<br>
-            7. They ________ finished their homework. (has/have)<br>
-            8. He ________ cooking dinner when I arrived. (is/was)
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. do<br>
-            2. Are<br>
-            3. has<br>
-            4. was<br>
-            5. do<br>
-            6. have<br>
-            7. have<br>
-            8. was
+        <!-- EXERCISE A -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise A: Choose the Correct Verb Form</div>
+            <div class="instruction">Choose the correct form of the main or auxiliary verbs in the brackets.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. What <span class="blank-box">_______</span><span class="answer-box">do</span> you usually do on weekends? (do/does)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. <span class="blank-box">_______</span><span class="answer-box">Are</span> they coming for the party? (Is/Are)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. Sheena <span class="blank-box">_______</span><span class="answer-box">has</span> baked some cookies. (have/has)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. I <span class="blank-box">_______</span><span class="answer-box">was</span> at the new restaurant yesterday. (was/were)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. How long <span class="blank-box">_______</span><span class="answer-box">do</span> you think the wait will be? (do/did)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. They <span class="blank-box">_______</span><span class="answer-box">have</span> been waiting for an hour. (have/has)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. They <span class="blank-box">_______</span><span class="answer-box">have</span> finished their homework. (has/have)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. He <span class="blank-box">_______</span><span class="answer-box">was</span> cooking dinner when I arrived. (is/was)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. Where <span class="blank-box">_______</span><span class="answer-box">does</span> she work during weekdays? (do/does)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. We <span class="blank-box">_______</span><span class="answer-box">were</span> walking in the park when the rain started. (was/were)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. <span class="blank-box">_______</span><span class="answer-box">Have</span> you seen my notebook anywhere? (Has/Have)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. The children <span class="blank-box">_______</span><span class="answer-box">are</span> playing happily outside. (is/are)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. I <span class="blank-box">_______</span><span class="answer-box">did</span> not know about the surprise test. (do/did)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise B:</strong> Underline and identify whether the verb is transitive (TV) or intransitive (IV).<br><br>
-            1. The dog barked loudly.<br>
-            2. She sings beautifully.<br>
-            3. He wrote a novel.<br>
-            4. They danced at the party.<br>
-            5. The sun rose early.<br>
-            6. We watched the movie.<br>
-            7. She cried for hours.<br>
-            8. He plays the guitar.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. <u>barked</u> (Intransitive - IV)<br>
-            2. <u>sings</u> (Intransitive - IV)<br>
-            3. <u>wrote</u> (Transitive - TV)<br>
-            4. <u>danced</u> (Intransitive - IV)<br>
-            5. <u>rose</u> (Intransitive - IV)<br>
-            6. <u>watched</u> (Transitive - TV)<br>
-            7. <u>cried</u> (Intransitive - IV)<br>
-            8. <u>plays</u> (Transitive - TV)
+        <!-- EXERCISE B -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise B: Transitive vs Intransitive Verbs</div>
+            <div class="instruction">Underline and identify whether the verb in each sentence is transitive (TV) or intransitive (IV).</div>
+            
+            <div class="q-item-single"><div class="q-text">1. The dog barked loudly. <span class="answer-box">&rarr; <u>barked</u> (Intransitive - IV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. She sings beautifully. <span class="answer-box">&rarr; <u>sings</u> (Intransitive - IV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. He wrote a novel. <span class="answer-box">&rarr; <u>wrote</u> (Transitive - TV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. They danced at the party. <span class="answer-box">&rarr; <u>danced</u> (Intransitive - IV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. The sun rose early. <span class="answer-box">&rarr; <u>rose</u> (Intransitive - IV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. We watched the movie. <span class="answer-box">&rarr; <u>watched</u> (Transitive - TV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. She cried for hours. <span class="answer-box">&rarr; <u>cried</u> (Intransitive - IV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. He plays the guitar. <span class="answer-box">&rarr; <u>plays</u> (Transitive - TV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. The baby slept all night without waking. <span class="answer-box">&rarr; <u>slept</u> (Intransitive - IV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. The chef prepared a delicious meal for the guests. <span class="answer-box">&rarr; <u>prepared</u> (Transitive - TV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. A flock of wild geese flew overhead. <span class="answer-box">&rarr; <u>flew</u> (Intransitive - IV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. The student opened the classroom door gently. <span class="answer-box">&rarr; <u>opened</u> (Transitive - TV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. The athletic runner dashed towards the finish line. <span class="answer-box">&rarr; <u>dashed</u> (Intransitive - IV)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise C:</strong> Identify the direct (DO) and indirect objects (IO).<br><br>
-            1. She lent her sister a book.<br>
-            2. He brought me some flowers.<br>
-            3. They offered the guests refreshments.<br>
-            4. The teacher told the students a story.<br>
-            5. She gave her dog a treat.<br>
-            6. He showed us his new car.<br>
-            7. She wrote her mother a letter.<br>
-            8. They sent their friends invitations.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. DO: a book | IO: her sister<br>
-            2. DO: some flowers | IO: me<br>
-            3. DO: refreshments | IO: the guests<br>
-            4. DO: a story | IO: the students<br>
-            5. DO: a treat | IO: her dog<br>
-            6. DO: his new car | IO: us<br>
-            7. DO: a letter | IO: her mother<br>
-            8. DO: invitations | IO: their friends
+        <!-- EXERCISE C -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise C: Direct and Indirect Objects</div>
+            <div class="instruction">Identify the direct object (DO) and indirect object (IO) in each sentence.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. She lent her sister a book. <span class="answer-box">&rarr; DO: a book | IO: her sister</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. He brought me some flowers. <span class="answer-box">&rarr; DO: some flowers | IO: me</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. They offered the guests refreshments. <span class="answer-box">&rarr; DO: refreshments | IO: the guests</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. The teacher told the students a story. <span class="answer-box">&rarr; DO: a story | IO: the students</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. She gave her dog a treat. <span class="answer-box">&rarr; DO: a treat | IO: her dog</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. He showed us his new car. <span class="answer-box">&rarr; DO: his new car | IO: us</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. She wrote her mother a letter. <span class="answer-box">&rarr; DO: a letter | IO: her mother</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. They sent their friends invitations. <span class="answer-box">&rarr; DO: invitations | IO: their friends</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. Uncle Robert bought his nephew a gleaming wristwatch. <span class="answer-box">&rarr; DO: a gleaming wristwatch | IO: his nephew</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. She handed the front desk receptionist the room key. <span class="answer-box">&rarr; DO: the room key | IO: the front desk receptionist</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. The company awarded all dedicated employees a festive bonus. <span class="answer-box">&rarr; DO: a festive bonus | IO: all dedicated employees</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. Grandmother baked the eager grandchildren blueberry muffins. <span class="answer-box">&rarr; DO: blueberry muffins | IO: the eager grandchildren</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. The curious tourist asked the local guide several questions. <span class="answer-box">&rarr; DO: several questions | IO: the local guide</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
+        
+        <!-- EXERCISE D -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise D: Identify the Complement</div>
+            <div class="instruction">Identify the complement in each sentence and state whether it is a Subject Complement or an Object Complement.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. Seeva became a doctor. <span class="answer-box">&rarr; a doctor (Subject Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. They named their daughter Emily. <span class="answer-box">&rarr; Emily (Object Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. The room smells fresh. <span class="answer-box">&rarr; fresh (Subject Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. He called his dog Max. <span class="answer-box">&rarr; Max (Object Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. The food tastes spicy. <span class="answer-box">&rarr; spicy (Subject Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. They considered the plan a success. <span class="answer-box">&rarr; a success (Object Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. She felt happy. <span class="answer-box">&rarr; happy (Subject Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. The sky looks clear. <span class="answer-box">&rarr; clear (Subject Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise D:</strong> Identify the complement and its kind.<br><br>
-            1. Seeva became a doctor.<br>
-            2. They named their daughter Emily.<br>
-            3. The room smells fresh.<br>
-            4. He called his dog Max.<br>
-            5. The food tastes spicy.<br>
-            6. They considered the plan a success.<br>
-            7. She felt happy.<br>
-            8. The sky looks clear.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. a doctor (Subject Complement)<br>
-            2. Emily (Object Complement)<br>
-            3. fresh (Subject Complement)<br>
-            4. Max (Object Complement)<br>
-            5. spicy (Subject Complement)<br>
-            6. a success (Object Complement)<br>
-            7. happy (Subject Complement)<br>
-            8. clear (Subject Complement)
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. The jury found the accused man guilty of all charges. <span class="answer-box">&rarr; guilty (Object Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. This hot tomato soup is remarkably delicious. <span class="answer-box">&rarr; delicious (Subject Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. The committee elected Mr. Verma secretary of the society. <span class="answer-box">&rarr; secretary (Object Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. The weary travelers felt completely exhausted after the hike. <span class="answer-box">&rarr; exhausted (Subject Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. The lively discussion made everyone enthusiastic about the trip. <span class="answer-box">&rarr; enthusiastic (Object Complement)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
+        
+        <!-- EXERCISE E -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise E: Verbs of Incomplete Prediction</div>
+            <div class="instruction">Complete these verbs of incomplete prediction by adding appropriate complements to make meaningful sentences.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. Simbha could have <span class="blank-box">_______</span><span class="answer-box">won the race easily.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. He became <span class="blank-box">_______</span><span class="answer-box">a highly respected professor.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. Robin and Harman are <span class="blank-box">_______</span><span class="answer-box">trustworthy friends.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. Shilpa may <span class="blank-box">_______</span><span class="answer-box">attend tomorrow's seminar.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. The baby seems <span class="blank-box">_______</span><span class="answer-box">peaceful and asleep.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. The day looked <span class="blank-box">_______</span><span class="answer-box">bright, crisp, and sunny.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. The old man feels <span class="blank-box">_______</span><span class="answer-box">quite energetic today.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. The tiger sat <span class="blank-box">_______</span><span class="answer-box">motionless in the tall grass.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise E:</strong> Complete these verbs of incomplete prediction by adding more words to make meaningful sentences.<br><br>
-            1. Simbha could have ____________________.<br>
-            2. He became ____________________.<br>
-            3. Robin and Harman are ____________________.<br>
-            4. Shilpa may ____________________.<br>
-            5. The baby seems ____________________.<br>
-            6. The day looked ____________________.<br>
-            7. The old man feels ____________________.<br>
-            8. The tiger sat ____________________.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Sample Answers:</strong><br>
-            1. Simbha could have won the race.<br>
-            2. He became a successful doctor.<br>
-            3. Robin and Harman are good friends.<br>
-            4. Shilpa may come to the party.<br>
-            5. The baby seems happy.<br>
-            6. The day looked bright and sunny.<br>
-            7. The old man feels tired.<br>
-            8. The tiger sat quietly in its cage.
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. The chilly evening is growing <span class="blank-box">_______</span><span class="answer-box">bitterly cold.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. She appears <span class="blank-box">_______</span><span class="answer-box">delighted with her new puppy.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. The enthusiastic tourists will be <span class="blank-box">_______</span><span class="answer-box">arriving by train shortly.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. The seasoned captain remained <span class="blank-box">_______</span><span class="answer-box">calm throughout the storm.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. That innovative proposal sounds <span class="blank-box">_______</span><span class="answer-box">exceptionally promising.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
 
@@ -345,24 +404,16 @@
         evt.currentTarget.classList.add("active");
     }
 
-    function toggleAnswer(btn) {
-        var answerDiv = btn.nextElementSibling;
-        if (answerDiv.style.display === "block") {
-            answerDiv.style.display = "none";
-            btn.textContent = "Reveal Answer";
+    function toggleRowAnswer(btn) {
+        var parentRow = btn.parentElement;
+        if (parentRow.classList.contains("show-answer")) {
+            parentRow.classList.remove("show-answer");
+            btn.textContent = "Answer";
         } else {
-            answerDiv.style.display = "block";
-            btn.textContent = "Hide Answer";
+            parentRow.classList.add("show-answer");
+            btn.textContent = "Hide";
         }
     }
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('pushti-theme');
-    if(savedTheme) {
-        document.body.setAttribute('data-theme', savedTheme);
-    }
-});
 </script>
 </body>
 </html>

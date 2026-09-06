@@ -15,315 +15,522 @@
             --btn-hover: rgba(187, 134, 252, 0.3);
             --correct-bg: rgba(46, 125, 50, 0.2);
             --correct-border: #4caf50;
+            --extra-bg: rgba(255, 167, 38, 0.05);
+            --extra-border: #ffa726;
+            --extra-text: #ffb74d;
         }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        header {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            background: rgba(18, 18, 18, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 15px 20px;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            box-sizing: border-box;
-        }
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 30px auto;
-            flex: 1;
-        }
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-        .tab-btn {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--text-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            font-size: 1rem;
-        }
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--btn-bg);
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-        }
-        .tab-content {
-            display: none;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            animation: fadeIn 0.4s ease-in-out;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .question-block {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .question-block:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .question {
-            font-size: 1.15rem;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-        .reveal-btn {
-            background: var(--btn-bg);
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-        .reveal-btn:hover {
-            background: var(--btn-hover);
-        }
-        .answer {
-            display: none;
-            margin-top: 15px;
-            padding: 12px 15px;
-            background: var(--correct-bg);
-            border-left: 4px solid var(--correct-border);
-            border-radius: 0 6px 6px 0;
-            font-weight: bold;
-            font-size: 1.05rem;
-            line-height: 1.4;
-        }
-        ul.notes-list {
-            line-height: 1.8;
-            font-size: 1.1rem;
-            padding-left: 20px;
-        }
-        ul.notes-list li {
-            margin-bottom: 12px;
-        }
-        .highlight {
-            color: var(--accent-color);
-            font-weight: 600;
-        }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
+        header { position: sticky; top: 0; width: 100%; background: rgba(18,18,18,0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); padding: 15px 20px; z-index: 1000; display: flex; align-items: center; box-sizing: border-box; }
+        .container { width: 90%; max-width: 950px; margin: 30px auto; flex: 1; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
+        .tab-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-color); padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-size: 1rem; }
+        .tab-btn.active, .tab-btn:hover { background: var(--btn-bg); border-color: var(--accent-color); color: var(--accent-color); }
+        .tab-content { display: none; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 25px; animation: fadeIn 0.4s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .noun-section { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; padding: 20px; margin-bottom: 25px; }
+        .noun-title { color: var(--accent-color); font-size: 1.3rem; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px; }
+        .noun-def, .noun-layman { margin-bottom: 10px; font-size: 1.05rem; line-height: 1.5; }
+        .label { font-weight: bold; color: #fff; margin-right: 5px; display: inline-block; width: 170px; }
+        table.example-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(255,255,255,0.02); }
+        table.example-table th, table.example-table td { border: 1px solid var(--glass-border); padding: 10px; text-align: left; vertical-align: top; }
+        table.example-table th { background: var(--btn-bg); color: var(--accent-color); }
+        
+        .exercise-section { margin-bottom: 40px; }
+        .exercise-title { font-size: 1.25rem; color: var(--accent-color); margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
+        .instruction { font-size: 1.05rem; margin-bottom: 15px; color: #ccc; }
+        .q-item-single { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px 15px; background: rgba(0,0,0,0.2); border-radius: 6px; border: 1px solid var(--glass-border); }
+        .q-text { font-size: 1.1rem; margin: 0; flex: 1; }
+        .blank-box { display: inline-block; min-width: 60px; text-align: center; }
+        .answer-box { display: none; color: var(--correct-border); font-weight: bold; padding: 0 5px; }
+        .q-item-single.show-answer .blank-box { display: none; }
+        .q-item-single.show-answer .answer-box { display: inline; }
+        .reveal-btn-mini { background: var(--btn-bg); border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 15px; border-radius: 4px; cursor: pointer; transition: all 0.3s; font-weight: 600; font-size: 0.9rem; white-space: nowrap; margin-left: 15px; }
+        .reveal-btn-mini:hover { background: var(--btn-hover); }
+        
+        .extra-practice { margin-top: 20px; padding: 15px; background: var(--extra-bg); border: 1px dashed var(--extra-border); border-radius: 8px; }
+        .extra-title { color: var(--extra-text); margin-top: 0; margin-bottom: 12px; font-size: 1.1rem; }
+        .extra-practice .q-item-single { background: rgba(0,0,0,0.15); border-color: rgba(255,167,38,0.2); padding: 8px 12px; }
+        .extra-practice .reveal-btn-mini { border-color: var(--extra-border); color: var(--extra-text); background: rgba(255,167,38,0.1); }
+        .extra-practice .reveal-btn-mini:hover { background: rgba(255,167,38,0.25); }
     </style>
-
-<style>
-[data-theme="light"] {
-    --bg-main: #f8fafc !important;
-    --bg-card: #ffffff !important;
-    --text-main: #0f172a !important;
-    --text-muted: #475569 !important;
-    --accent: #6366f1 !important;
-    --border: #e2e8f0 !important;
-    --surface: #f1f5f9 !important;
-}
-[data-theme="light"] .site-header {
-    background: #f8fafc !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-}
-</style>
 </head>
 <body>
 
-<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--surface); position: sticky; top: 0; z-index: 1000;">
-    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500; color: var(--text-main);">
+<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--bg-color); position: sticky; top: 0; z-index: 1000;">
+    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500;">
         <a href="../../english_index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
             <i class="fas fa-arrow-left"></i> Back to English
         </a>
-        <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <span style="color:var(--accent); font-weight:600;">Chapter 9 Practice</span>
+        <span style="margin: 0 8px; color: #888;">&gt;</span> <span style="color:var(--accent-color); font-weight:600;">Chapter 9 Practice</span>
     </div>
 </header>
 <style>
-.tabs-wrapper { position: sticky !important; top: 50px !important; z-index: 990 !important; background: var(--bg-color) !important; border-bottom: 1px solid var(--border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; display: flex !important; gap: 10px !important; justify-content: center !important; flex-wrap: wrap !important; }
+.tabs-wrapper { position: sticky !important; top: 50px !important; z-index: 990 !important; background: var(--bg-color) !important; border-bottom: 1px solid var(--glass-border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; display: flex !important; gap: 10px !important; justify-content: center !important; flex-wrap: wrap !important; }
 </style>
 
 <div class="container">
     <div class="tabs-wrapper">
-        <button class="tab-btn active" onclick="openTab(event, 'notes')">Notes</button>
-        <button class="tab-btn" onclick="openTab(event, 'qa')">Exercises</button>
+        <button class="tab-btn active" onclick="openTab(event, 'notes')">Comprehensive Notes</button>
+        <button class="tab-btn" onclick="openTab(event, 'qa')">Interactive Exercises</button>
     </div>
 
     <!-- Notes Tab -->
     <div id="notes" class="tab-content active">
-        <h2>Chapter 9: Modals and Auxiliaries</h2>
-        <ul class="notes-list">
-            <li><span class="highlight">Auxiliary Verbs:</span> Helping verbs used with main verbs to complete the meaning (indicate tense, mood, voice).</li>
-            <li><span class="highlight">Primary Auxiliaries:</span> Can be used as main or auxiliary verbs. <br>
-            - <strong>do</strong> (do, does, did): form interrogative/negative sentences.<br>
-            - <strong>be</strong> (is, am, are, was, were): show state of being, form continuous tenses and passive voice.<br>
-            - <strong>have</strong> (has, have, had): form perfect/perfect continuous tenses.
-            </li>
-            <li><span class="highlight">Modal Auxiliaries (Modals):</span> Show certainty, possibility, necessity, ability, or permission.<br>
-            - They do not change with number or person.<br>
-            - Never used alone (always with a main verb).<br>
-            - Cannot be used in continuous tenses.<br>
-            - Examples: may, can, could, must, shall, might, would, should, ought to.
-            </li>
-            <li><span class="highlight">Key Modals & Usage:</span><br>
-            - <strong>Shall / Will:</strong> express future, command, threat, promise, willingness.<br>
-            - <strong>Should:</strong> obligation, advice, probability.<br>
-            - <strong>Would:</strong> past habit, polite request, refusal.<br>
-            - <strong>Can / Could:</strong> ability, permission, general statement.<br>
-            - <strong>May / Might:</strong> permission, possibility, wish, purpose.<br>
-            - <strong>Must:</strong> necessity, strong obligation, certainty.<br>
-            - <strong>Ought (to):</strong> moral obligation, probability.
-            </li>
-        </ul>
+        
+        <!-- SECTION 1: Primary Auxiliaries -->
+        <div class="noun-section">
+            <h4 class="noun-title">Primary Auxiliary Verbs (Be, Have, Do)</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Auxiliary verbs that assist principal verbs to formulate continuous, perfect, or passive constructions, as well as questions and negative sentences. Unlike modals, primary auxiliaries can also function autonomously as main verbs.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> Multi-tasker verbs! When alone, they state facts, conditions, or possession. When paired with another verb, they act as helpers to indicate time, ask questions, or say 'no'.</div>
+            <table class="example-table">
+                <tr>
+                    <th>The 'Be' Family (am, is, are, was, were, been, being)</th>
+                    <th>The 'Have' Family (has, have, had, having)</th>
+                    <th>The 'Do' Family (do, does, did)</th>
+                </tr>
+                <tr>
+                    <td>
+                        1. She <strong>is writing</strong> an exciting adventure novel.<br>
+                        2. They <strong>were playing</strong> badminton in the courtyard yesterday.<br>
+                        3. The antique vase <strong>was broken</strong> by accident.<br>
+                        4. I <strong>am preparing</strong> my science presentation.<br>
+                        5. The highway <strong>is being paved</strong> by construction crews.<br>
+                        6. We <strong>have been waiting</strong> here since sunrise.<br>
+                        7. She <strong>is</strong> a brilliant neuroscientist at the hospital.<br>
+                        8. The students <strong>were</strong> exceptionally quiet during the exam.
+                    </td>
+                    <td>
+                        1. She <strong>has completed</strong> her master's degree with honors.<br>
+                        2. We <strong>have visited</strong> five different continents so far.<br>
+                        3. The train <strong>had departed</strong> before we reached the platform.<br>
+                        4. They <strong>have been living</strong> in this cottage for a decade.<br>
+                        5. I <strong>have</strong> three antique pocket watches in my collection.<br>
+                        6. She <strong>has</strong> a slight fever and needs to rest.<br>
+                        7. We <strong>had</strong> a wonderful family dinner last night.<br>
+                        8. Do you <strong>have</strong> an extra pencil I could borrow?
+                    </td>
+                    <td>
+                        1. <strong>Do</strong> you recognize the woman in that portrait?<br>
+                        2. He <strong>does</strong> not enjoy spicy street food.<br>
+                        3. We <strong>did</strong> not receive your email confirmation.<br>
+                        4. I <strong>do</strong> hope you recover from your illness swiftly!<br>
+                        5. She <strong>does</strong> speak French with remarkable elegance.<br>
+                        6. The diligent students <strong>did</strong> their assignment early.<br>
+                        7. He <strong>does</strong> yoga every morning at 6 AM.<br>
+                        8. Who <strong>did</strong> this magnificent charcoal sketch?
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SECTION 2: Core Rules of Modals -->
+        <div class="noun-section">
+            <h4 class="noun-title">Modal Auxiliaries: Characteristics & Core Rules</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Defective auxiliary verbs that express modal meanings (ability, permission, possibility, necessity, etc.). Unlike primary auxiliaries, modals do not inflect for person or number (no -s, -ed, or -ing forms) and are invariably followed by a bare infinitive.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> The stubborn rule-followers! They never add '-s' even with he/she/it, they can never wear '-ing' or '-ed', they always need a plain partner verb (base form), and they never stand alone as complete actions.</div>
+            <table class="example-table">
+                <tr>
+                    <th>Core Grammatical Rule</th>
+                    <th>Correct Usage Examples</th>
+                    <th>Incorrect Common Pitfalls</th>
+                </tr>
+                <tr>
+                    <td><strong>No 3rd Person '-s'</strong></td>
+                    <td>He <strong>can solve</strong> complex equations.<br>She <strong>must leave</strong> right away.</td>
+                    <td>*He cans solve* (Incorrect)<br>*She musts leave* (Incorrect)</td>
+                </tr>
+                <tr>
+                    <td><strong>Followed by Bare Infinitive</strong></td>
+                    <td>You <strong>should go</strong> home now.<br>They <strong>might come</strong> later.</td>
+                    <td>*You should to go* (Incorrect)<br>*They might coming* (Incorrect)</td>
+                </tr>
+                <tr>
+                    <td><strong>No Auxiliary 'Do' in Questions</strong></td>
+                    <td><strong>May I enter</strong> the hall?<br><strong>Can you speak</strong> French?</td>
+                    <td>*Do I may enter?* (Incorrect)<br>*Do you can speak?* (Incorrect)</td>
+                </tr>
+                <tr>
+                    <td><strong>Direct Negative with 'Not'</strong></td>
+                    <td>You <strong>must not touch</strong> the wire.<br>We <strong>cannot stay</strong> here.</td>
+                    <td>*You don't must touch* (Incorrect)<br>*We don't can stay* (Incorrect)</td>
+                </tr>
+                <tr>
+                    <td><strong>No Non-Finite Forms</strong></td>
+                    <td>She wants to <strong>be able to</strong> drive.<br>He had <strong>to go</strong> early.</td>
+                    <td>*She wants to can drive* (Incorrect)<br>*He had to must go* (Incorrect)</td>
+                </tr>
+                <tr>
+                    <td><strong>No Double Modals</strong></td>
+                    <td>I <strong>might be able to</strong> help.<br>He <strong>will have to</strong> leave.</td>
+                    <td>*I might can help* (Incorrect)<br>*He will must leave* (Incorrect)</td>
+                </tr>
+                <tr>
+                    <td><strong>Invariant Past Modals</strong></td>
+                    <td>She <strong>could run</strong> fast as a child.<br>I <strong>would read</strong> all night.</td>
+                    <td>*She can-ed run* (Incorrect)<br>*I will-ed read* (Incorrect)</td>
+                </tr>
+                <tr>
+                    <td><strong>Semi-Modal Exception</strong></td>
+                    <td>We <strong>ought to obey</strong> the law.<br>You <strong>used to live</strong> here.</td>
+                    <td>*We ought obey* (Needs 'to')<br>*You used live* (Needs 'to')</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SECTION 3: Ability & Capacity -->
+        <div class="noun-section">
+            <h4 class="noun-title">Modals of Ability & Capacity (Can, Could, Be Able To)</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Modal auxiliaries denoting physical, intellectual, or acquired capability. 'Can' indicates present or general ability; 'Could' denotes past ability or theoretical capacity; 'Be able to' expresses ability across all tenses, especially specific single-event achievements.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> Saying "I have the superpower or skill to do this!" 'Can' is your present skill, 'Could' is what you used to do back in the day, and 'Was able to' means you managed to succeed in a tough situation.</div>
+            <table class="example-table">
+                <tr>
+                    <th>Present Ability (Can / Cannot)</th>
+                    <th>Past General Ability (Could / Couldn't)</th>
+                    <th>Specific Achievements (Was / Were Able To)</th>
+                </tr>
+                <tr>
+                    <td>
+                        1. Aryan <strong>can speak</strong> four European languages fluently.<br>
+                        2. Cheetahs <strong>can sprint</strong> up to seventy miles per hour.<br>
+                        3. She <strong>can play</strong> the grand piano with extraordinary skill.<br>
+                        4. I <strong>cannot solve</strong> this cryptographic puzzle alone.<br>
+                        5. Eagles <strong>can spot</strong> tiny prey from thousands of feet in the air.<br>
+                        6. Modern smartphones <strong>can record</strong> cinematic 4K video.<br>
+                        7. We <strong>can finish</strong> the entire syllabus ahead of schedule.<br>
+                        8. He <strong>cannot swim</strong> without wearing flotation armbands.
+                    </td>
+                    <td>
+                        1. In his twenties, my grandfather <strong>could run</strong> a marathon in three hours.<br>
+                        2. She <strong>could read</strong> complicated chapter books when she was only five.<br>
+                        3. Before the injury, the gymnast <strong>could perform</strong> double backflips.<br>
+                        4. Ancient navigators <strong>could steer</strong> vessels across oceans using constellations.<br>
+                        5. We <strong>could hear</strong> the wolves howling in the distant valley all night.<br>
+                        6. I <strong>couldn't understand</strong> what the foreign tourist was saying.<br>
+                        7. Beethoven <strong>could still compose</strong> masterpieces after losing his hearing.<br>
+                        8. When we lived in the countryside, we <strong>could see</strong> the Milky Way clearly.
+                    </td>
+                    <td>
+                        1. After fighting the blaze for hours, firefighters <strong>were able to rescue</strong> the family.<br>
+                        2. Despite severe blizzards, the climbers <strong>were able to reach</strong> the summit safely.<br>
+                        3. By working overtime all week, she <strong>was able to meet</strong> the tight deadline.<br>
+                        4. The orthopedic surgeon <strong>was able to repair</strong> the fractured knee ligament.<br>
+                        5. With patient negotiation, the delegates <strong>were able to sign</strong> the peace treaty.<br>
+                        6. Although the engine failed, the pilot <strong>was able to land</strong> the plane on water.<br>
+                        7. Having practiced persistently, Rohan <strong>was able to win</strong> the gold medal.<br>
+                        8. I lost my wallet, but luckily I <strong>was able to borrow</strong> train fare from a friend.
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SECTION 4: Permission & Requests -->
+        <div class="noun-section">
+            <h4 class="noun-title">Modals of Permission, Requests & Prohibitions (May, Can, Could, Would)</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Modals indicating formal or informal authorization, granting and denying consent, or formulating requests graded by politeness, social distance, and deference.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> The good manners verbs! Use 'Can' with friends, 'Could' or 'Would' to be super polite, and 'May' when speaking to teachers, bosses, or examiners.</div>
+            <table class="example-table">
+                <tr>
+                    <th>Formal & Official Permission (May / May Not)</th>
+                    <th>Informal & Friendly Requests (Can / Cannot)</th>
+                    <th>Polite Requests & Inquiries (Could / Would)</th>
+                </tr>
+                <tr>
+                    <td>
+                        1. <strong>May</strong> I submit my term paper on Monday morning, Professor?<br>
+                        2. Candidates <strong>may leave</strong> the examination hall once papers are collected.<br>
+                        3. Visitors <strong>may not take</strong> flash photographs inside the royal art gallery.<br>
+                        4. You <strong>may begin</strong> answering the question paper now.<br>
+                        5. <strong>May</strong> we have the honor of welcoming you to our annual seminar?<br>
+                        6. Attendees <strong>may not enter</strong> the auditorium after the keynote begins.<br>
+                        7. <strong>May</strong> I inspect the original deed of the property, sir?<br>
+                        8. Children under twelve <strong>may swim</strong> only when supervised by an adult.
+                    </td>
+                    <td>
+                        1. <strong>Can</strong> I borrow your geometry compass for ten minutes?<br>
+                        2. You <strong>can borrow</strong> my notes whenever you need them.<br>
+                        3. <strong>Can</strong> we sit on the grass while having our lunch?<br>
+                        4. You <strong>cannot park</strong> your scooter in front of my driveway.<br>
+                        5. <strong>Can</strong> I invite my cousins to our gaming session tonight?<br>
+                        6. You <strong>can use</strong> my spare bicycle until yours gets repaired.<br>
+                        7. <strong>Can</strong> we take a quick five-minute break, guys?<br>
+                        8. Students <strong>cannot chew</strong> gum inside the computer laboratory.
+                    </td>
+                    <td>
+                        1. <strong>Could</strong> you please pass the water pitcher across the table?<br>
+                        2. <strong>Would</strong> you mind closing the balcony door to keep out the chill?<br>
+                        3. <strong>Could</strong> you possibly explain this mathematical proof once more?<br>
+                        4. <strong>Would</strong> you like a steaming cup of herbal tea or coffee?<br>
+                        5. <strong>Could</strong> I speak with Dr. Jenkins regarding my medical report?<br>
+                        6. <strong>Would</strong> you kindly hold the elevator doors for just a moment?<br>
+                        7. <strong>Could</strong> you help me carry these heavy luggage boxes upstairs?<br>
+                        8. <strong>Would</strong> you be so kind as to give us directions to the museum?
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SECTION 5: Possibility & Deduction -->
+        <div class="noun-section">
+            <h4 class="noun-title">Modals of Possibility, Probability & Logical Deduction (May, Might, Could, Must, Can't)</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Modals used by speakers to calibrate degrees of epistemic certainty—ranging from weak, remote possibility (might, could) to strong, factual possibility (may) and unavoidable logical deduction (must, can't).</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> The detective scale! From "a wild guess" (might/could), to "a fair chance" (may), all the way to "Sherlock Holmes certainty" (must = definitely yes, can't = definitely no).</div>
+            <table class="example-table">
+                <tr>
+                    <th>Possibility & Uncertainty (May, Might, Could)</th>
+                    <th>Strong Logical Deduction (Must)</th>
+                    <th>Negative Deduction / Impossibility (Can't / Cannot)</th>
+                </tr>
+                <tr>
+                    <td>
+                        1. Look at those dark thunderclouds; it <strong>may pour</strong> before evening.<br>
+                        2. Don't touch that stray dog; it <strong>might bite</strong> if it gets frightened.<br>
+                        3. If you leave right now, you <strong>could catch</strong> the express shuttle.<br>
+                        4. She hasn't replied to my text; she <strong>might be driving</strong> right now.<br>
+                        5. The sudden drop in temperature <strong>may cause</strong> frost on the crops.<br>
+                        6. We <strong>could encounter</strong> heavy tourist traffic near the hill station.<br>
+                        7. Scientists believe the newly discovered exoplanet <strong>might harbor</strong> water.<br>
+                        8. The museum <strong>may stay open</strong> late during the weekend cultural festival.
+                    </td>
+                    <td>
+                        1. The streets are soaking wet and puddles are everywhere; it <strong>must have rained</strong>.<br>
+                        2. She studied sixteen hours daily for six months; she <strong>must be</strong> exhausted.<br>
+                        3. His car is parked outside and the TV is on; he <strong>must be</strong> inside the house.<br>
+                        4. The engine of the motorcycle is burning hot; someone <strong>must have ridden</strong> it recently.<br>
+                        5. Wearing an Olympic gold medal and smiling broadly, she <strong>must be</strong> overjoyed.<br>
+                        6. Having lived in Tokyo for thirty years, Mr. Tanaka <strong>must know</strong> Japanese culture deeply.<br>
+                        7. There is an endless queue outside that bakery; the sourdough <strong>must be</strong> extraordinary.<br>
+                        8. You have walked thirty kilometers in the blazing heat; you <strong>must be</strong> ravenously hungry.
+                    </td>
+                    <td>
+                        1. That <strong>cannot be</strong> Mr. Harrison; he emigrated to Australia two years ago!<br>
+                        2. You <strong>can't be</strong> hungry already; you finished three large burgers ten minutes ago.<br>
+                        3. This diamond necklace <strong>cannot be</strong> genuine; it is made of cheap acrylic beads.<br>
+                        4. She <strong>can't have forgotten</strong> her twin sister's wedding anniversary today.<br>
+                        5. The front door was bolted from the inside; the thief <strong>couldn't have escaped</strong> through it.<br>
+                        6. He <strong>can't be</strong> eighty years old; he runs ten kilometers every single morning!<br>
+                        7. That timid puppy <strong>cannot be</strong> vicious; it is gently licking the baby's fingers.<br>
+                        8. You <strong>can't have finished</strong> a five-hundred-page textbook in twenty minutes!
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SECTION 6: Duty, Necessity & Advice -->
+        <div class="noun-section">
+            <h4 class="noun-title">Modals of Duty, Necessity & Advice (Must, Ought to, Should, Have to)</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Auxiliaries conveying prescriptive norms, ranging from subjective or moral duty (ought to), general recommendation and advisability (should), to absolute external or legal compulsion (must, have to).</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> The "do your duty!" verbs. 'Should' is friendly advice, 'Ought to' is what your moral compass says is right, and 'Must' / 'Have to' is the law—break it and you face penalties!</div>
+            <table class="example-table">
+                <tr>
+                    <th>Advice & Recommendation (Should / Shouldn't)</th>
+                    <th>Moral Duty & Social Expectation (Ought to)</th>
+                    <th>Compulsory Law & Strict Rule (Must / Have to)</th>
+                </tr>
+                <tr>
+                    <td>
+                        1. You <strong>should drink</strong> at least two liters of water daily for healthy kidneys.<br>
+                        2. Students <strong>should review</strong> previous examination questions before the final test.<br>
+                        3. You <strong>should not skip</strong> breakfast, especially before an intensive workday.<br>
+                        4. Motorists <strong>should drive</strong> slowly and cautiously along fog-covered highways.<br>
+                        5. If your dry cough lingers for over a week, you <strong>should visit</strong> a doctor.<br>
+                        6. You <strong>should apologize</strong> sincerely whenever you realize you were in the wrong.<br>
+                        7. We <strong>should eat</strong> balanced meals rich in fiber, vitamins, and minerals.<br>
+                        8. Travelers <strong>should keep</strong> photocopies of all identity documents in their bags.
+                    </td>
+                    <td>
+                        1. Every citizen <strong>ought to respect</strong> national symbols and the constitution.<br>
+                        2. We <strong>ought to care for</strong> our elderly grandparents with love and dignity.<br>
+                        3. Children <strong>ought to speak</strong> politely and respectfully to their teachers.<br>
+                        4. Neighbors <strong>ought to assist</strong> one another in times of crisis or distress.<br>
+                        5. People <strong>ought to conserve</strong> fresh water and avoid leaving taps running.<br>
+                        6. Commuters <strong>ought to offer</strong> their bus seats to pregnant women and seniors.<br>
+                        7. You <strong>ought to return</strong> borrowed tools and books in pristine condition.<br>
+                        8. Society <strong>ought to protect</strong> the natural habitats of endangered wildlife.
+                    </td>
+                    <td>
+                        1. Two-wheeler riders <strong>must wear</strong> an approved safety helmet by law.<br>
+                        2. Air passengers <strong>have to show</strong> their boarding pass and passport at the gate.<br>
+                        3. You <strong>must not cross</strong> the railway tracks when the barrier is lowered.<br>
+                        4. Citizens <strong>have to pay</strong> their annual income tax before the official deadline.<br>
+                        5. A surgeon <strong>must sterilize</strong> all surgical instruments prior to an operation.<br>
+                        6. Drivers <strong>must stop</strong> dead in their tracks when the traffic light turns red.<br>
+                        7. To cast your ballot, you <strong>have to be registered</strong> on the official electoral roll.<br>
+                        8. Security guards <strong>must verify</strong> the badges of everyone entering the nuclear plant.
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- SECTION 7: Future, Determination & Habits -->
+        <div class="noun-section">
+            <h4 class="noun-title">Modals of Future, Determination & Habits (Will, Would, Shall)</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Modals indicating future intention, spontaneous willingness, firm promises or threats, past habitual actions, hypothetical scenarios, and formal suggestions or offers.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> Looking forward or looking back! 'Will' is for iron promises and immediate decisions, 'Shall' is for suggestions ("Shall we?"), and 'Would' is for things you did routinely in the past.</div>
+            <table class="example-table">
+                <tr>
+                    <th>Determination & Promises (Will / Won't)</th>
+                    <th>Past Habits & Hypotheticals (Would)</th>
+                    <th>Formal Offers & Suggestions (Shall)</th>
+                </tr>
+                <tr>
+                    <td>
+                        1. I <strong>will complete</strong> the marathon even if my legs ache.<br>
+                        2. We <strong>will never forget</strong> the tremendous sacrifice made by our martyrs.<br>
+                        3. I <strong>will help</strong> you assemble that wooden wardrobe this weekend.<br>
+                        4. The stubborn mule <strong>will not move</strong> an inch forward.<br>
+                        5. I <strong>will call</strong> you the instant my flight lands in Chicago.<br>
+                        6. We <strong>will overcome</strong> this financial hardship together as a team.<br>
+                        7. I <strong>won't disclose</strong> your confidential secret to anyone.<br>
+                        8. The government <strong>will build</strong> three new solar power plants this year.
+                    </td>
+                    <td>
+                        1. When we were children, my grandfather <strong>would take</strong> us fishing every Saturday.<br>
+                        2. She <strong>would spend</strong> hours sketching portraits beside the window.<br>
+                        3. Every evening after dinner, the village elders <strong>would gather</strong> beneath the banyan tree.<br>
+                        4. If I inherited a million dollars, I <strong>would establish</strong> a free animal shelter.<br>
+                        5. <strong>Would</strong> you mind lowering your voice while in the reading room?<br>
+                        6. He said he <strong>would join</strong> the trekking expedition next month.<br>
+                        7. I <strong>would rather starve</strong> than accept a bribe from corrupt officials.<br>
+                        8. When autumn arrived, migratory flocks <strong>would fly</strong> toward warmer southern shores.
+                    </td>
+                    <td>
+                        1. <strong>Shall</strong> I carry that heavy luggage bag to the car for you?<br>
+                        2. <strong>Shall</strong> we take a pleasant stroll along the beach before sunset?<br>
+                        3. <strong>Shall</strong> we start the meeting now or wait for the manager?<br>
+                        4. The tenant <strong>shall pay</strong> the monthly rent on or before the fifth day.<br>
+                        5. You <strong>shall receive</strong> your prize at the annual sports ceremony.<br>
+                        6. <strong>Shall</strong> I prepare a hot pot of chamomile tea for everyone?<br>
+                        7. Where <strong>shall</strong> we go for dinner to celebrate your victory?<br>
+                        8. No student <strong>shall enter</strong> the examination hall after the second bell.
+                    </td>
+                </tr>
+            </table>
+        </div>
+
     </div>
 
     <!-- Exercises Tab -->
     <div id="qa" class="tab-content">
         
-        <div class="question-block">
-            <div class="question"><strong>Exercise A:</strong> Fill in the blanks with the correct primary auxiliaries.<br><br>
-            1. ________ you see him yesterday?<br>
-            2. They ________ recognise him at all.<br>
-            3. The girls ________ a fight yesterday.<br>
-            4. The girl ________ a pink dress.<br>
-            5. Geoffrey ________ coming back from London.<br>
-            6. I ________ studying for an exam.<br>
-            7. She excelled in her studies and so ________ her brother.<br>
-            8. They ________ going to the party.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. Did<br>
-            2. did not (didn't)<br>
-            3. had<br>
-            4. has<br>
-            5. is<br>
-            6. was (or am)<br>
-            7. did<br>
-            8. are (or were)
+        <!-- EXERCISE A -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise A: Primary Auxiliaries</div>
+            <div class="instruction">Fill in the blanks with the correct primary auxiliaries.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. <span class="blank-box">_______</span><span class="answer-box">Did</span> you see him yesterday?</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. They <span class="blank-box">_______</span><span class="answer-box">did not (didn't)</span> recognise him at all.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. The girls <span class="blank-box">_______</span><span class="answer-box">had</span> a fight yesterday.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. The girl <span class="blank-box">_______</span><span class="answer-box">has</span> a pink dress.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. Geoffrey <span class="blank-box">_______</span><span class="answer-box">is</span> coming back from London.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. I <span class="blank-box">_______</span><span class="answer-box">was (or am)</span> studying for an exam.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. She excelled in her studies and so <span class="blank-box">_______</span><span class="answer-box">did</span> her brother.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. They <span class="blank-box">_______</span><span class="answer-box">are (or were)</span> going to the party.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. She <span class="blank-box">_______</span><span class="answer-box">has</span> already completed her assignment.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. <span class="blank-box">_______</span><span class="answer-box">Do</span> you know where Mr. Henderson lives?</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. The athletes <span class="blank-box">_______</span><span class="answer-box">were</span> training intensely in the gym yesterday.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. They <span class="blank-box">_______</span><span class="answer-box">did</span> not expect such a warm welcome.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. We <span class="blank-box">_______</span><span class="answer-box">have</span> known each other since kindergarten.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise B:</strong> Fill in the blanks with appropriate modals.<br><br>
-            1. ________ I borrow your car, madam? (Can, May)<br>
-            2. Mohit ________ win the race. (might, could)<br>
-            3. ________ you live long! (May, Can)<br>
-            4. You ________ to obey orders. (must, ought, should)<br>
-            5. Ravi ________ speak English well. (can, may)<br>
-            6. You ________ exercise regularly to keep fit. (can, should, ought)<br>
-            7. ________ you please help me in this matter? (Should, Could, May)<br>
-            8. He is very ill. We ________ call a doctor. (would, should, must)
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. May<br>
-            2. might<br>
-            3. May<br>
-            4. ought<br>
-            5. can<br>
-            6. should<br>
-            7. Could<br>
-            8. must
+        <!-- EXERCISE B -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise B: Choose Appropriate Modals</div>
+            <div class="instruction">Fill in the blanks with appropriate modals from the options given in brackets.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. <span class="blank-box">_______</span><span class="answer-box">May</span> I borrow your car, madam? (Can, May)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. Mohit <span class="blank-box">_______</span><span class="answer-box">might</span> win the race. (might, could)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. <span class="blank-box">_______</span><span class="answer-box">May</span> you live long! (May, Can)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. You <span class="blank-box">_______</span><span class="answer-box">ought</span> to obey orders. (must, ought, should)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. Ravi <span class="blank-box">_______</span><span class="answer-box">can</span> speak English well. (can, may)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. You <span class="blank-box">_______</span><span class="answer-box">should</span> exercise regularly to keep fit. (can, should, ought)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. <span class="blank-box">_______</span><span class="answer-box">Could</span> you please help me in this matter? (Should, Could, May)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. He is very ill. We <span class="blank-box">_______</span><span class="answer-box">must</span> call a doctor. (would, should, must)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. It is raining heavily outside; you <span class="blank-box">_______</span><span class="answer-box">should</span> carry an umbrella. (should, might, could)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. <span class="blank-box">_______</span><span class="answer-box">May</span> God shower His choicest blessings upon you! (May, Must, Would)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. When I was young, I <span class="blank-box">_______</span><span class="answer-box">could</span> run five miles without stopping. (could, may, should)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. Citizens <span class="blank-box">_______</span><span class="answer-box">ought</span> to respect the national laws. (ought, can, would)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. Take warm tea; it <span class="blank-box">_______</span><span class="answer-box">might</span> soothe your throat. (might, must, shall)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise C:</strong> Fill in the blanks using modals as directed in the brackets.<br><br>
-            1. ________ you prosper, my son! (wish)<br>
-            2. I am leaving for lunch. ________ you like to come? (polite request)<br>
-            3. ________ you spare some time for me, please? (very polite request)<br>
-            4. You ________ not have spoken these words. (advice)<br>
-            5. We ________ run or we will miss the train. (necessity)<br>
-            6. I ran as fast as I ________. (ability)<br>
-            7. We ________ not give up fighting. (determination)<br>
-            8. She asked me what I ________ do then. (desirability)
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. May<br>
-            2. Would<br>
-            3. Could<br>
-            4. should<br>
-            5. must<br>
-            6. could<br>
-            7. will<br>
-            8. should
+        <!-- EXERCISE C -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise C: Modals as Directed</div>
+            <div class="instruction">Fill in the blanks using modals as directed in the brackets.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. <span class="blank-box">_______</span><span class="answer-box">May</span> you prosper, my son! (wish)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. I am leaving for lunch. <span class="blank-box">_______</span><span class="answer-box">Would</span> you like to come? (polite request)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. <span class="blank-box">_______</span><span class="answer-box">Could</span> you spare some time for me, please? (very polite request)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. You <span class="blank-box">_______</span><span class="answer-box">should</span> not have spoken these words. (advice)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. We <span class="blank-box">_______</span><span class="answer-box">must</span> run or we will miss the train. (necessity)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. I ran as fast as I <span class="blank-box">_______</span><span class="answer-box">could</span>. (ability)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. We <span class="blank-box">_______</span><span class="answer-box">will</span> not give up fighting. (determination)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. She asked me what I <span class="blank-box">_______</span><span class="answer-box">should</span> do then. (desirability)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. Students <span class="blank-box">_______</span><span class="answer-box">must</span> switch off their mobile phones during the exam. (compulsion / rule)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. <span class="blank-box">_______</span><span class="answer-box">Could</span> you pass me the salt shaker, please? (polite request)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. We <span class="blank-box">_______</span><span class="answer-box">ought to</span> help the underprivileged in our community. (moral obligation)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. I <span class="blank-box">_______</span><span class="answer-box">will</span> finish this project before the deadline at all costs. (determination)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. <span class="blank-box">_______</span><span class="answer-box">May</span> peace prevail throughout the world! (wish / prayer)</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
+        
+        <!-- EXERCISE D -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise D: Identify Modals & State Functions</div>
+            <div class="instruction">Identify the modal auxiliary in each sentence and state its grammatical function.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. She can speak three languages fluently. <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>can</strong> (expresses ability)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. You must finish your homework before you go out. <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>must</strong> (expresses necessity / obligation)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. May I use your phone for a moment? <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>May</strong> (expresses permission)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. They might come to the party later. <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>might</strong> (expresses possibility)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. He should apologise for his mistake. <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>should</strong> (expresses advice / obligation)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. We could see the mountains from our hotel room. <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>could</strong> (expresses past ability)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. You ought to take better care of your health. <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>ought to</strong> (expresses moral obligation)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. I would like a cup of tea, please. <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>would</strong> (expresses polite request / preference)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise D:</strong> Identify the modals in each of these sentences and state their functions.<br><br>
-            1. She can speak three languages fluently.<br>
-            2. You must finish your homework before you go out.<br>
-            3. May I use your phone for a moment?<br>
-            4. They might come to the party later.<br>
-            5. He should apologise for his mistake.<br>
-            6. We could see the mountains from our hotel room.<br>
-            7. You ought to take better care of your health.<br>
-            8. I would like a cup of tea, please.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. <strong>can</strong> (ability)<br>
-            2. <strong>must</strong> (necessity / obligation)<br>
-            3. <strong>May</strong> (permission)<br>
-            4. <strong>might</strong> (possibility)<br>
-            5. <strong>should</strong> (advice / obligation)<br>
-            6. <strong>could</strong> (past ability)<br>
-            7. <strong>ought</strong> (obligation)<br>
-            8. <strong>would</strong> (polite request)
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. You must wear a safety harness while climbing. <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>must</strong> (compulsion / safety rule)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. Could you lend me your dictionary for an hour? <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>Could</strong> (polite request)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. She can solve complex algebraic equations in seconds. <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>can</strong> (ability)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. The meteorologist said it might snow tonight. <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>might</strong> (weak possibility)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. We should consume more fresh green vegetables daily. <span class="blank-box">_______</span><span class="answer-box">&rarr; <strong>should</strong> (recommendation / advice)</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
+        
+        <!-- EXERCISE E -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise E: Comprehensive Modal Selection</div>
+            <div class="instruction">Fill in the blanks with can, could, may, might, must, shall, should, will, would or ought to.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. You <span class="blank-box">_______</span><span class="answer-box">must (or should)</span> wear a helmet when riding a bike.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. <span class="blank-box">_______</span><span class="answer-box">May (or Can)</span> I borrow your book for a few days?</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. He <span class="blank-box">_______</span><span class="answer-box">might (or could)</span> be at home now, but I'm not sure.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. She <span class="blank-box">_______</span><span class="answer-box">must (or should)</span> study harder to pass the exam.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. I <span class="blank-box">_______</span><span class="answer-box">can (or will)</span> help you with your project.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. You <span class="blank-box">_______</span><span class="answer-box">should (or ought to)</span> see a doctor if you are feeling unwell.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. <span class="blank-box">_______</span><span class="answer-box">Shall (or Can)</span> we meet at 10 am tomorrow?</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. We <span class="blank-box">_______</span><span class="answer-box">could (or might / will)</span> go to the beach if the weather is nice.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise E:</strong> Fill in the blanks with can, could, may, might, must, shall, should, will, would or ought to.<br><br>
-            1. You ________ wear a helmet when riding a bike.<br>
-            2. ________ I borrow your book for a few days?<br>
-            3. He ________ be at home now, but I'm not sure.<br>
-            4. She ________ study harder to pass the exam.<br>
-            5. I ________ help you with your project.<br>
-            6. You ________ see a doctor if you are feeling unwell.<br>
-            7. ________ we meet at 10 am tomorrow?<br>
-            8. We ________ go to the beach if the weather is nice.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. must (or should)<br>
-            2. May (or Can)<br>
-            3. might (or could)<br>
-            4. must (or should)<br>
-            5. can (or will)<br>
-            6. should (or ought to)<br>
-            7. Shall (or Can)<br>
-            8. could (or might / will)
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. You <span class="blank-box">_______</span><span class="answer-box">must (or should)</span> not touch bare electrical wires.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. <span class="blank-box">_______</span><span class="answer-box">May (or Can)</span> I come in, Professor?</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. They <span class="blank-box">_______</span><span class="answer-box">would</span> spend every summer holiday by the lake.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. She <span class="blank-box">_______</span><span class="answer-box">ought to (or should)</span> apologize for her harsh words.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. <span class="blank-box">_______</span><span class="answer-box">Shall</span> we begin the meeting now?</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
 
@@ -345,24 +552,16 @@
         evt.currentTarget.classList.add("active");
     }
 
-    function toggleAnswer(btn) {
-        var answerDiv = btn.nextElementSibling;
-        if (answerDiv.style.display === "block") {
-            answerDiv.style.display = "none";
-            btn.textContent = "Reveal Answer";
+    function toggleRowAnswer(btn) {
+        var parentRow = btn.parentElement;
+        if (parentRow.classList.contains("show-answer")) {
+            parentRow.classList.remove("show-answer");
+            btn.textContent = "Answer";
         } else {
-            answerDiv.style.display = "block";
-            btn.textContent = "Hide Answer";
+            parentRow.classList.add("show-answer");
+            btn.textContent = "Hide";
         }
     }
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('pushti-theme');
-    if(savedTheme) {
-        document.body.setAttribute('data-theme', savedTheme);
-    }
-});
 </script>
 </body>
 </html>

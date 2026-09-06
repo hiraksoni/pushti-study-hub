@@ -967,12 +967,18 @@
                         <strong>Answer:</strong>
                         <br><strong>Rhyme Scheme:</strong> Each of the 6 stanzas follows a consistent 6-line rhyme scheme: <strong style="color:var(--accent);">A A B C C B</strong>.
                         <ul style="margin:8px 0; padding-left:20px;">
-                            <li><strong>Stanza 1:</strong> walls – falls (A), floors – corridors (B), smile – while (C) $ightarrow$ <em>aabccb</em></li>
-                            <li><strong>Stanza 2:</strong> slips – lips (D), ears – bears (E), tale – nightingale (F) $ightarrow$ <em>ddeffe</em></li>
-                            <li><strong>Stanza 3:</strong> room – gloom (G), profane – pain (H), there – prayer (I) $ightarrow$ <em>gghiih</em></li>
-                            <li><strong>Stanza 4:</strong> arise – eyes (J), by – die (K), this – kiss (L) $ightarrow$ <em>jjkllk</em></li>
-                            <li><strong>Stanza 5:</strong> stone – one (M), heart – start (N), years – tears (P) $ightarrow$ <em>mmnppn</em></li>
-                            <li><strong>Stanza 6:</strong> now – brow (Q), aye – lie (R), age – page (S) $ightarrow$ <em>qqrssr</em></li>
+                            <li><strong>Stanza 1:</strong> walls – falls (A), floors – corridors (B), smile – while (C) $
+ightarrow$ <em>aabccb</em></li>
+                            <li><strong>Stanza 2:</strong> slips – lips (D), ears – bears (E), tale – nightingale (F) $
+ightarrow$ <em>ddeffe</em></li>
+                            <li><strong>Stanza 3:</strong> room – gloom (G), profane – pain (H), there – prayer (I) $
+ightarrow$ <em>gghiih</em></li>
+                            <li><strong>Stanza 4:</strong> arise – eyes (J), by – die (K), this – kiss (L) $
+ightarrow$ <em>jjkllk</em></li>
+                            <li><strong>Stanza 5:</strong> stone – one (M), heart – start (N), years – tears (P) $
+ightarrow$ <em>mmnppn</em></li>
+                            <li><strong>Stanza 6:</strong> now – brow (Q), aye – lie (R), age – page (S) $
+ightarrow$ <em>qqrssr</em></li>
                         </ul>
                     </div>
                 </div>
@@ -1234,59 +1240,11 @@
     <!-- Chapter Logs & Scripts -->
     <script src="../../js/chapter_logs.js"></script>
     <script>
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-        function playChime(type) {
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-
-            if (type === 'correct') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-                osc.frequency.exponentialRampToValueAtTime(783.99, audioCtx.currentTime + 0.15); // G5
-                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.35);
-            } else if (type === 'wrong') {
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(260, audioCtx.currentTime);
-                osc.frequency.setValueAtTime(220, audioCtx.currentTime + 0.12);
-                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.3);
-            } else if (type === 'click') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime); // E5
-                gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.12);
-            } else if (type === 'fanfare') {
-                const notes = [523.25, 659.25, 783.99, 1046.50];
-                notes.forEach((freq, idx) => {
-                    const o = audioCtx.createOscillator();
-                    const g = audioCtx.createGain();
-                    o.connect(g);
-                    g.connect(audioCtx.destination);
-                    o.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.1);
-                    g.gain.setValueAtTime(0.1, audioCtx.currentTime + idx * 0.1);
-                    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + idx * 0.1 + 0.25);
-                    o.start(audioCtx.currentTime + idx * 0.1);
-                    o.stop(audioCtx.currentTime + idx * 0.1 + 0.25);
-                });
-            }
-        }
+        
+        
 
         // Tab Switching
         function switchTab(tabId) {
-            playChime('click');
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
 
@@ -1300,7 +1258,6 @@
 
         // Dark/Light Theme Toggle
         function toggleTheme() {
-            playChime('click');
             const body = document.body;
             body.classList.toggle('light-mode');
             const icon = document.getElementById('theme-icon');
@@ -1313,7 +1270,6 @@
 
         // Reveal Answer Toggle
         function toggleAnswer(ansId, btn) {
-            playChime('click');
             const ansBox = document.getElementById(ansId);
             if (!ansBox) return;
             if (ansBox.style.display === 'block') {
@@ -1341,11 +1297,9 @@
 
             if (isCorrect) {
                 elem.classList.add('correct');
-                playChime('correct');
                 correctCount++;
             } else {
                 elem.classList.add('wrong');
-                playChime('wrong');
                 options.forEach(opt => {
                     if (opt.innerText.includes('in a hospital') || 
                         opt.innerText.includes('awake serving') || 
@@ -1373,7 +1327,6 @@
         }
 
         function presentMedal() {
-            playChime('fanfare');
             const recipient = document.getElementById('hero-select').value;
             alert(`🎖️ Gold Medal of Honor proudly presented to: ${recipient}!\n"For your selfless service, compassion, and tireless dedication to our community."`);
         }

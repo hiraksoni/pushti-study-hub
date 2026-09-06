@@ -15,313 +15,420 @@
             --btn-hover: rgba(187, 134, 252, 0.3);
             --correct-bg: rgba(46, 125, 50, 0.2);
             --correct-border: #4caf50;
+            --extra-bg: rgba(255, 167, 38, 0.05);
+            --extra-border: #ffa726;
+            --extra-text: #ffb74d;
         }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        header {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            background: rgba(18, 18, 18, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 15px 20px;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            box-sizing: border-box;
-        }
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 30px auto;
-            flex: 1;
-        }
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-        .tab-btn {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--text-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            font-size: 1rem;
-        }
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--btn-bg);
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-        }
-        .tab-content {
-            display: none;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            animation: fadeIn 0.4s ease-in-out;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .question-block {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .question-block:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .question {
-            font-size: 1.15rem;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-        .reveal-btn {
-            background: var(--btn-bg);
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-        .reveal-btn:hover {
-            background: var(--btn-hover);
-        }
-        .answer {
-            display: none;
-            margin-top: 15px;
-            padding: 12px 15px;
-            background: var(--correct-bg);
-            border-left: 4px solid var(--correct-border);
-            border-radius: 0 6px 6px 0;
-            font-weight: bold;
-            font-size: 1.05rem;
-            line-height: 1.4;
-        }
-        ul.notes-list {
-            line-height: 1.8;
-            font-size: 1.1rem;
-            padding-left: 20px;
-        }
-        ul.notes-list li {
-            margin-bottom: 12px;
-        }
-        .highlight {
-            color: var(--accent-color);
-            font-weight: 600;
-        }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
+        header { position: sticky; top: 0; width: 100%; background: rgba(18,18,18,0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border); padding: 15px 20px; z-index: 1000; display: flex; align-items: center; box-sizing: border-box; }
+        .container { width: 90%; max-width: 950px; margin: 30px auto; flex: 1; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
+        .tab-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-color); padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-size: 1rem; }
+        .tab-btn.active, .tab-btn:hover { background: var(--btn-bg); border-color: var(--accent-color); color: var(--accent-color); }
+        .tab-content { display: none; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 25px; animation: fadeIn 0.4s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .noun-section { background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; padding: 20px; margin-bottom: 25px; }
+        .noun-title { color: var(--accent-color); font-size: 1.3rem; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px; }
+        .noun-def, .noun-layman { margin-bottom: 10px; font-size: 1.05rem; line-height: 1.5; }
+        .label { font-weight: bold; color: #fff; margin-right: 5px; display: inline-block; width: 170px; }
+        table.example-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(255,255,255,0.02); }
+        table.example-table th, table.example-table td { border: 1px solid var(--glass-border); padding: 10px; text-align: left; vertical-align: top; }
+        table.example-table th { background: var(--btn-bg); color: var(--accent-color); }
+        
+        .exercise-section { margin-bottom: 40px; }
+        .exercise-title { font-size: 1.25rem; color: var(--accent-color); margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; }
+        .instruction { font-size: 1.05rem; margin-bottom: 15px; color: #ccc; }
+        .q-item-single { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px 15px; background: rgba(0,0,0,0.2); border-radius: 6px; border: 1px solid var(--glass-border); }
+        .q-text { font-size: 1.1rem; margin: 0; flex: 1; }
+        .blank-box { display: inline-block; min-width: 60px; text-align: center; }
+        .answer-box { display: none; color: var(--correct-border); font-weight: bold; padding: 0 5px; }
+        .q-item-single.show-answer .blank-box { display: none; }
+        .q-item-single.show-answer .answer-box { display: inline; }
+        .reveal-btn-mini { background: var(--btn-bg); border: 1px solid var(--accent-color); color: var(--accent-color); padding: 6px 15px; border-radius: 4px; cursor: pointer; transition: all 0.3s; font-weight: 600; font-size: 0.9rem; white-space: nowrap; margin-left: 15px; }
+        .reveal-btn-mini:hover { background: var(--btn-hover); }
+        
+        .extra-practice { margin-top: 20px; padding: 15px; background: var(--extra-bg); border: 1px dashed var(--extra-border); border-radius: 8px; }
+        .extra-title { color: var(--extra-text); margin-top: 0; margin-bottom: 12px; font-size: 1.1rem; }
+        .extra-practice .q-item-single { background: rgba(0,0,0,0.15); border-color: rgba(255,167,38,0.2); padding: 8px 12px; }
+        .extra-practice .reveal-btn-mini { border-color: var(--extra-border); color: var(--extra-text); background: rgba(255,167,38,0.1); }
+        .extra-practice .reveal-btn-mini:hover { background: rgba(255,167,38,0.25); }
     </style>
-
-<style>
-[data-theme="light"] {
-    --bg-main: #f8fafc !important;
-    --bg-card: #ffffff !important;
-    --text-main: #0f172a !important;
-    --text-muted: #475569 !important;
-    --accent: #6366f1 !important;
-    --border: #e2e8f0 !important;
-    --surface: #f1f5f9 !important;
-}
-[data-theme="light"] .site-header {
-    background: #f8fafc !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-}
-</style>
 </head>
 <body>
 
-<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--surface); position: sticky; top: 0; z-index: 1000;">
-    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500; color: var(--text-main);">
+<header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--bg-color); position: sticky; top: 0; z-index: 1000;">
+    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500;">
         <a href="../../english_index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
             <i class="fas fa-arrow-left"></i> Back to English
         </a>
-        <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <span style="color:var(--accent); font-weight:600;">Chapter 7 Practice</span>
+        <span style="margin: 0 8px; color: #888;">&gt;</span> <span style="color:var(--accent-color); font-weight:600;">Chapter 7 Practice</span>
     </div>
 </header>
 <style>
-.tabs-wrapper { position: sticky !important; top: 50px !important; z-index: 990 !important; background: var(--bg-color) !important; border-bottom: 1px solid var(--border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; display: flex !important; gap: 10px !important; justify-content: center !important; flex-wrap: wrap !important; }
+.tabs-wrapper { position: sticky !important; top: 50px !important; z-index: 990 !important; background: var(--bg-color) !important; border-bottom: 1px solid var(--glass-border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; display: flex !important; gap: 10px !important; justify-content: center !important; flex-wrap: wrap !important; }
 </style>
 
 <div class="container">
     <div class="tabs-wrapper">
-        <button class="tab-btn active" onclick="openTab(event, 'notes')">Notes</button>
-        <button class="tab-btn" onclick="openTab(event, 'qa')">Exercises</button>
+        <button class="tab-btn active" onclick="openTab(event, 'notes')">Comprehensive Notes</button>
+        <button class="tab-btn" onclick="openTab(event, 'qa')">Interactive Exercises</button>
     </div>
 
     <!-- Notes Tab -->
     <div id="notes" class="tab-content active">
-        <h2>Chapter 7: Articles</h2>
-        <ul class="notes-list">
-            <li><span class="highlight">Articles:</span> Words that point out the person or thing which is being referred to. Tells if mentioned in general or particular sense.</li>
-            <li><span class="highlight">Indefinite Articles (a, an):</span> Used before singular countable nouns.<br>
-            - <strong>a:</strong> before words starting with a consonant sound, or words beginning with 'e'/'u' that give a /y/ sound (a unanimous decision, a one-rupee note).<br>
-            - <strong>an:</strong> before words starting with a vowel sound, or words with silent initial consonants (an honest man).
-            </li>
-            <li><span class="highlight">Definite Article (the):</span> Used when speaking about a particular person or thing. Used before singular countable, plural countable, and uncountable nouns.<br>
-            - When referring to a particular person/thing or one already mentioned.<br>
-            - When a singular noun indicates a whole class (The dog is a faithful animal).<br>
-            - Before unique things (the sun, the earth).<br>
-            - Before proper nouns in specific cases (rivers, oceans, holy books, famous buildings, etc.).<br>
-            - With adjectives before ordinals (the first) and superlatives (the best).
-            </li>
-            <li><span class="highlight">Omission of Articles:</span> Articles are generally omitted before:<br>
-            - Proper nouns (Delhi, Shivaji)<br>
-            - Names of materials (wood, tea, coffee)<br>
-            - Abstract nouns in a general sense (Honesty, Health)<br>
-            - Arts and sciences (physics, painting)<br>
-            - Languages, games, meals, diseases, seasons, and days of the week.
-            </li>
-        </ul>
+        
+        <div class="noun-section">
+            <h4 class="noun-title">What are Articles?</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Words that point out the person or thing which is being referred to. Tells whether a noun is mentioned in a general or a particular sense.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> Little pointer words ('a', 'an', or 'the') placed in front of nouns to indicate whether you are talking about any general member of a group or one specific, known item.</div>
+            <table class="example-table">
+                <tr><th>General Sense (Indefinite: a / an)</th><th>Particular Sense (Definite: the)</th></tr>
+                <tr>
+                    <td>
+                        &bull; I saw <strong>a dog</strong> barking in the park.<br>
+                        &bull; She bought <strong>a laptop</strong> for her classes.<br>
+                        &bull; Pass me <strong>an apple</strong> from the fruit basket.<br>
+                        &bull; He wants to read <strong>a mystery book</strong> tonight.<br>
+                        &bull; We need to hire <strong>a doctor</strong> for the clinic.<br>
+                        &bull; They visited <strong>a historic city</strong> in Italy.<br>
+                        &bull; She shared <strong>an inspiring idea</strong> with us.<br>
+                        &bull; He climbed <strong>a steep mountain</strong> on holiday.<br>
+                        &bull; I need to borrow <strong>a blue pen</strong> from someone.<br>
+                        &bull; She adopted <strong>an elephant</strong> through charity.
+                    </td>
+                    <td>
+                        &bull; <strong>The dog</strong> that barked all night belongs to Rohan.<br>
+                        &bull; <strong>The laptop</strong> on the study desk is fully charged.<br>
+                        &bull; <strong>The apple</strong> you brought from Shimla is sweet.<br>
+                        &bull; <strong>The book</strong> on the top shelf was written by Tagore.<br>
+                        &bull; <strong>The doctor</strong> who treated my uncle was brilliant.<br>
+                        &bull; <strong>The city</strong> of Rome was founded centuries ago.<br>
+                        &bull; <strong>The idea</strong> suggested by Priya won the prize.<br>
+                        &bull; <strong>The mountain</strong> peak was covered in white snow.<br>
+                        &bull; <strong>The pen</strong> lying near the register has red ink.<br>
+                        &bull; <strong>The elephant</strong> at the sanctuary greeted visitors.
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="noun-section">
+            <h4 class="noun-title">Indefinite Articles (a, an)</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Used before singular countable nouns. 'a' is used before words starting with a consonant sound. 'an' is used before words starting with a vowel sound or silent initial consonants.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> Sound is king! Pay attention to the FIRST SOUND of the word, not just its spelling. If it starts with a vowel sound (a, e, i, o, u), use 'an'. If it starts with a consonant sound, use 'a'. Watch out for silent 'h' and vowel letters sounding like /y/ or /w/!</div>
+            <table class="example-table">
+                <tr><th>'a' (Consonant Sounds)</th><th>'an' (Vowel Sounds)</th><th>Tricky Sound Cases (Spelling vs Sound)</th></tr>
+                <tr>
+                    <td>
+                        &bull; a doctor<br>
+                        &bull; a pencil<br>
+                        &bull; a guitar<br>
+                        &bull; a bicycle<br>
+                        &bull; a camera<br>
+                        &bull; a teacher<br>
+                        &bull; a blanket<br>
+                        &bull; a river<br>
+                        &bull; a laptop<br>
+                        &bull; a friend
+                    </td>
+                    <td>
+                        &bull; an apple<br>
+                        &bull; an elephant<br>
+                        &bull; an umbrella<br>
+                        &bull; an orange<br>
+                        &bull; an eagle<br>
+                        &bull; an astronaut<br>
+                        &bull; an engineer<br>
+                        &bull; an octopus<br>
+                        &bull; an igloo<br>
+                        &bull; an onion
+                    </td>
+                    <td>
+                        &bull; <strong>a university</strong> (/juː/ consonant sound)<br>
+                        &bull; <strong>a European</strong> tourist (/juː/ sound)<br>
+                        &bull; <strong>a one-rupee</strong> coin (/w/ sound)<br>
+                        &bull; <strong>a uniform</strong> (/juː/ sound)<br>
+                        &bull; <strong>a unique</strong> piece (/juː/ sound)<br>
+                        &bull; <strong>an honest</strong> man (silent 'h')<br>
+                        &bull; <strong>an hour</strong> (silent 'h')<br>
+                        &bull; <strong>an heir</strong> to the throne (silent 'h')<br>
+                        &bull; <strong>an honour</strong> (silent 'h')<br>
+                        &bull; <strong>an MBA</strong> graduate (/em/ vowel sound)
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="noun-section">
+            <h4 class="noun-title">Definite Article (the)</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Used when referring to a particular person or thing, when a singular noun represents an entire class, before unique celestial/natural entities, before specific proper nouns (rivers, oceans, ranges, monuments, holy scriptures, famous trains), and with superlatives and ordinals.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> Use 'the' whenever both you and the listener know the exact specific item. Also mandatory for one-of-a-kind things in nature (the sun), the number one extreme (the tallest), and ordinal positions (the first, the third).</div>
+            <table class="example-table">
+                <tr><th>Rule Category</th><th>Detailed Examples</th></tr>
+                <tr>
+                    <td><strong>Particular or Previously Mentioned Nouns</strong></td>
+                    <td>
+                        &bull; The boy who won the race received a gold medal.<br>
+                        &bull; The car parked outside belongs to the doctor.<br>
+                        &bull; I read a book; the book was about Indian history.<br>
+                        &bull; The cake baked by mother was delicious.<br>
+                        &bull; The key that opened the vault was lost.<br>
+                        &bull; The movie we watched yesterday won multiple awards.<br>
+                        &bull; The letter from my grandfather arrived today.<br>
+                        &bull; The puppy we rescued is sleeping peacefully.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Singular Noun Indicating a Whole Class</strong></td>
+                    <td>
+                        &bull; The dog is a faithful companion to man.<br>
+                        &bull; The rose is considered the queen of flowers.<br>
+                        &bull; The cow gives us nourishing milk.<br>
+                        &bull; The elephant possesses extraordinary memory.<br>
+                        &bull; The camel is adapted to survive desert climates.<br>
+                        &bull; The computer has transformed modern society.<br>
+                        &bull; The tiger is a powerful and stealthy predator.<br>
+                        &bull; The banyan tree provides sprawling shade.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Unique Things in Nature / Universe</strong></td>
+                    <td>
+                        &bull; The sun provides light and warmth to life on Earth.<br>
+                        &bull; The moon orbits the earth every 27.3 days.<br>
+                        &bull; The earth is the third planet from the sun.<br>
+                        &bull; The sky was filled with sparkling stars.<br>
+                        &bull; The equator divides the northern and southern hemispheres.<br>
+                        &bull; The North Pole is covered by thick polar ice.<br>
+                        &bull; The universe contains billions of galaxies.<br>
+                        &bull; The horizon glowed brightly as dawn approached.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Specific Proper Nouns (Rivers, Oceans, Ranges, Monuments, Holy Books)</strong></td>
+                    <td>
+                        &bull; The Ganga, the Yamuna, the Nile, and the Amazon.<br>
+                        &bull; The Pacific Ocean, the Indian Ocean, and the Atlantic Ocean.<br>
+                        &bull; The Himalayas, the Alps, and the Andes mountain ranges.<br>
+                        &bull; The Sahara Desert and the Thar Desert.<br>
+                        &bull; The Taj Mahal, the Eiffel Tower, and the Colosseum.<br>
+                        &bull; The Gita, the Quran, the Bible, and the Ramayana.<br>
+                        &bull; The Taj Express and the Shatabdi Express.<br>
+                        &bull; The Times of India and The Hindu newspapers.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Superlatives and Ordinal Numbers</strong></td>
+                    <td>
+                        &bull; Mount Everest is the highest mountain peak in the world.<br>
+                        &bull; Jupiter is the largest planet in our solar system.<br>
+                        &bull; The blue whale is the biggest living mammal.<br>
+                        &bull; She delivered the best performance of the night.<br>
+                        &bull; It was the proudest moment of his academic life.<br>
+                        &bull; March is the third month of the calendar year.<br>
+                        &bull; Neil Armstrong was the first human on the moon.<br>
+                        &bull; This is the second reminder sent by the office.
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="noun-section">
+            <h4 class="noun-title">Omission of Articles (Zero Article)</h4>
+            <div class="noun-def"><span class="label">Textbook Definition:</span> Articles are omitted before proper nouns, material nouns used in a general sense, abstract nouns used in a general sense, names of arts and sciences, languages, games, meals, days, seasons, and diseases.</div>
+            <div class="noun-layman"><span class="label">Layman Terms:</span> Leave it out! Never put 'a', 'an', or 'the' before individual people's names, cities, general concepts, feelings, school subjects, sports, meals, or days of the week, unless referring to a specific instance.</div>
+            <table class="example-table">
+                <tr><th>Category</th><th>Examples (No Article Required)</th></tr>
+                <tr>
+                    <td><strong>Proper Nouns (People, Cities, Countries, Single Peaks)</strong></td>
+                    <td>
+                        &bull; Sachin Tendulkar, Mahatma Gandhi, Rabindranath Tagore, Shakespeare<br>
+                        &bull; Delhi, Mumbai, Paris, London, Tokyo, New York<br>
+                        &bull; India, France, Germany, Japan, Canada, Australia<br>
+                        &bull; Mount Everest, Mount Fuji, Mont Blanc, Kilimanjaro
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Material Nouns (General Uncountable Substances)</strong></td>
+                    <td>
+                        &bull; Gold is a precious and ductile metal.<br>
+                        &bull; Water is necessary for all forms of life.<br>
+                        &bull; Silver is widely used in making ornaments.<br>
+                        &bull; Iron is essential for making sturdy machinery.<br>
+                        &bull; Wood is used for building quality furniture.<br>
+                        &bull; Cotton is spun into cool fabric.<br>
+                        &bull; Plastic creates long-term environmental hazards.<br>
+                        &bull; Milk is a wholesome beverage rich in calcium.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Abstract Nouns (Qualities & Concepts in General Sense)</strong></td>
+                    <td>
+                        &bull; Honesty is the best policy for a happy life.<br>
+                        &bull; Health is true wealth.<br>
+                        &bull; Wisdom is gained through life experience.<br>
+                        &bull; Courage enables soldiers to face peril.<br>
+                        &bull; Patience brings peace of mind.<br>
+                        &bull; Kindness touches every human heart.<br>
+                        &bull; Love overcomes great difficulties.<br>
+                        &bull; Knowledge empowers young minds.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Languages and Academic Subjects / Arts</strong></td>
+                    <td>
+                        &bull; She speaks English, French, Hindi, and Spanish.<br>
+                        &bull; He is studying physics, chemistry, mathematics, and biology.<br>
+                        &bull; They are enrolled in economics, history, and geography.<br>
+                        &bull; She takes lessons in painting, sculpture, and music.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Sports, Games, and Activities</strong></td>
+                    <td>
+                        &bull; Children love playing cricket, football, hockey, and basketball.<br>
+                        &bull; She practices tennis, badminton, volleyball, and table tennis.<br>
+                        &bull; Grandmasters excel at chess, bridge, and scrabble.<br>
+                        &bull; They went out for swimming, cycling, and rowing.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Meals, Days, Months, Seasons & Common Diseases</strong></td>
+                    <td>
+                        &bull; We had breakfast at 8 AM and scheduled dinner for 7 PM.<br>
+                        &bull; Classes meet on Monday, Wednesday, and Friday.<br>
+                        &bull; The festival falls in October or November.<br>
+                        &bull; We welcome summer, winter, spring, and autumn.<br>
+                        &bull; Vaccinations prevent polio, measles, cholera, and malaria.
+                    </td>
+                </tr>
+            </table>
+        </div>
+
     </div>
 
     <!-- Exercises Tab -->
     <div id="qa" class="tab-content">
         
-        <div class="question-block">
-            <div class="question"><strong>Exercise A:</strong> Fill in the blanks with a/an.<br><br>
-            1. Can we include ________ backflip in the dance routine?<br>
-            2. Have you met him? He is ________ honourable man.<br>
-            3. It would take me ________ hour to reach there.<br>
-            4. I have ________ Master's degree in English.<br>
-            5. You should use ________ umbrella when it is raining so hard.<br>
-            6. I have never seen ________ European woman.<br>
-            7. I think I have gained ________ few kilos after the holidays.<br>
-            8. I have ________ older brother and ________ younger sister.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. a<br>
-            2. an<br>
-            3. an<br>
-            4. a<br>
-            5. an<br>
-            6. a (European gives a /y/ sound)<br>
-            7. a<br>
-            8. an, a
+        <!-- EXERCISE A -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise A: Fill in the blanks with a/an</div>
+            <div class="instruction">Fill in the blanks with the correct indefinite article (a/an).</div>
+            
+            <div class="q-item-single"><div class="q-text">1. Can we include <span class="blank-box">_______</span><span class="answer-box">a</span> backflip in the dance routine?</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. Have you met him? He is <span class="blank-box">_______</span><span class="answer-box">an</span> honourable man.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. It would take me <span class="blank-box">_______</span><span class="answer-box">an</span> hour to reach there.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. I have <span class="blank-box">_______</span><span class="answer-box">a</span> Master's degree in English.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. You should use <span class="blank-box">_______</span><span class="answer-box">an</span> umbrella when it is raining so hard.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. I have never seen <span class="blank-box">_______</span><span class="answer-box">a</span> European woman.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. I think I have gained <span class="blank-box">_______</span><span class="answer-box">a</span> few kilos after the holidays.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. I have <span class="blank-box">_______</span><span class="answer-box">an</span> older brother and <span class="blank-box">_______</span><span class="answer-box">a</span> younger sister.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. He drives <span class="blank-box">_______</span><span class="answer-box">a</span> uniform-coloured car.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. She is <span class="blank-box">_______</span><span class="answer-box">an</span> FBI agent.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. We waited for <span class="blank-box">_______</span><span class="answer-box">a</span> half-hour.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. He is <span class="blank-box">_______</span><span class="answer-box">an</span> heir to the throne.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. That is <span class="blank-box">_______</span><span class="answer-box">a</span> unique solution.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise B:</strong> Rewrite these sentences using <em>the</em> at proper places.<br><br>
-            1. Sun sets in west.<br>
-            2. Climate of this place does not suit me.<br>
-            3. Taj Express is late.<br>
-            4. Allahabad stands on bank of Ganga.<br>
-            5. Gita is holy message of Lord Krishna.<br>
-            6. Gardener is watering rose plants.<br>
-            7. This is girl I met on Monday.<br>
-            8. Horse is a noble animal.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. The Sun sets in the west.<br>
-            2. The climate of this place does not suit me.<br>
-            3. The Taj Express is late.<br>
-            4. Allahabad stands on the bank of the Ganga.<br>
-            5. The Gita is the holy message of Lord Krishna.<br>
-            6. The gardener is watering the rose plants.<br>
-            7. This is the girl I met on Monday.<br>
-            8. The horse is a noble animal.
+        <!-- EXERCISE B -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise B: Rewrite with 'the'</div>
+            <div class="instruction">Rewrite these sentences using <em>the</em> at proper places.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. Sun sets in west. <span class="answer-box">&rarr; The Sun sets in the west.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. Climate of this place does not suit me. <span class="answer-box">&rarr; The climate of this place does not suit me.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. Taj Express is late. <span class="answer-box">&rarr; The Taj Express is late.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. Allahabad stands on bank of Ganga. <span class="answer-box">&rarr; Allahabad stands on the bank of the Ganga.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. Gita is holy message of Lord Krishna. <span class="answer-box">&rarr; The Gita is the holy message of Lord Krishna.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. Gardener is watering rose plants. <span class="answer-box">&rarr; The gardener is watering the rose plants.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. This is girl I met on Monday. <span class="answer-box">&rarr; This is the girl I met on Monday.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. Horse is a noble animal. <span class="answer-box">&rarr; The horse is a noble animal.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. Moon is shining brightly in sky. <span class="answer-box">&rarr; The moon is shining brightly in the sky.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. Himalayas protect India from cold winds. <span class="answer-box">&rarr; The Himalayas protect India from cold winds.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. She is tallest girl in class. <span class="answer-box">&rarr; She is the tallest girl in the class.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. First chapter of book is interesting. <span class="answer-box">&rarr; The first chapter of the book is interesting.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. Pacific Ocean is largest ocean. <span class="answer-box">&rarr; The Pacific Ocean is the largest ocean.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise C:</strong> Fill in the blanks with correct articles wherever necessary. Write 'X' for sentences which do not require any article.<br><br>
-            1. His favourite flower is ________ rose.<br>
-            2. Aditi's father is ________ honourable man.<br>
-            3. ________ milk is good for our health.<br>
-            4. It was ________ proudest moment of my life.<br>
-            5. Vikram got ________ best present.<br>
-            6. What kind of ________ bird is that?<br>
-            7. Such ________ incident never occurred before.<br>
-            8. March is ________ third month of ________ year.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. a<br>
-            2. an<br>
-            3. X (omitted for materials/general sense)<br>
-            4. the (superlative)<br>
-            5. the (superlative)<br>
-            6. X<br>
-            7. an<br>
-            8. the, the
+        <!-- EXERCISE C -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise C: Fill in with correct articles or 'X'</div>
+            <div class="instruction">Fill in the blanks with correct articles wherever necessary. Write 'X' for sentences which do not require any article.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. His favourite flower is <span class="blank-box">_______</span><span class="answer-box">a</span> rose.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. Aditi's father is <span class="blank-box">_______</span><span class="answer-box">an</span> honourable man.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. <span class="blank-box">_______</span><span class="answer-box">X</span> milk is good for our health.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. It was <span class="blank-box">_______</span><span class="answer-box">the</span> proudest moment of my life.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. Vikram got <span class="blank-box">_______</span><span class="answer-box">the</span> best present.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. What kind of <span class="blank-box">_______</span><span class="answer-box">X</span> bird is that?</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. Such <span class="blank-box">_______</span><span class="answer-box">an</span> incident never occurred before.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. March is <span class="blank-box">_______</span><span class="answer-box">the</span> third month of <span class="blank-box">_______</span><span class="answer-box">the</span> year.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. I usually drink <span class="blank-box">_______</span><span class="answer-box">X</span> coffee in the morning.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. <span class="blank-box">_______</span><span class="answer-box">The</span> elephant is a heavy animal.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. She gave me <span class="blank-box">_______</span><span class="answer-box">X</span> useful advice.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. We went to <span class="blank-box">_______</span><span class="answer-box">the</span> hospital to visit him.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. He plays <span class="blank-box">_______</span><span class="answer-box">the</span> guitar very well.</div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
+        
+        <!-- EXERCISE D -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise D: Correct by omitting incorrect articles</div>
+            <div class="instruction">Correct these sentences by omitting the incorrect use of articles.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. The Kolkata is a beautiful city. <span class="answer-box">&rarr; Kolkata is a beautiful city.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. She studies the science every day. <span class="answer-box">&rarr; She studies science every day.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. The Rashmi is my best friend. <span class="answer-box">&rarr; Rashmi is my best friend.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. I enjoy the painting in my free time. <span class="answer-box">&rarr; I enjoy painting in my free time.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. The Sunday is my favourite day of the week. <span class="answer-box">&rarr; Sunday is my favourite day of the week.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. Health is the wealth. <span class="answer-box">&rarr; Health is wealth.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. I am learning the English literature. <span class="answer-box">&rarr; I am learning English literature.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. The honesty is an important virtue. <span class="answer-box">&rarr; Honesty is an important virtue.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise D:</strong> Correct these sentences by omitting the incorrect use of articles.<br><br>
-            1. The Kolkata is a beautiful city.<br>
-            2. She studies the science every day.<br>
-            3. The Rashmi is my best friend.<br>
-            4. I enjoy the painting in my free time.<br>
-            5. The Sunday is my favourite day of the week.<br>
-            6. Health is the wealth.<br>
-            7. I am learning the English literature.<br>
-            8. The honesty is an important virtue.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. Kolkata is a beautiful city.<br>
-            2. She studies science every day.<br>
-            3. Rashmi is my best friend.<br>
-            4. I enjoy painting in my free time.<br>
-            5. Sunday is my favourite day of the week.<br>
-            6. Health is wealth.<br>
-            7. I am learning English literature.<br>
-            8. Honesty is an important virtue.
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. The gold is a precious metal. <span class="answer-box">&rarr; Gold is a precious metal.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. He speaks the Spanish fluently. <span class="answer-box">&rarr; He speaks Spanish fluently.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. Let's play the cricket. <span class="answer-box">&rarr; Let's play cricket.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. The love is blind. <span class="answer-box">&rarr; Love is blind.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. We had the breakfast at 8 AM. <span class="answer-box">&rarr; We had breakfast at 8 AM.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
+        
+        <!-- EXERCISE E -->
+        <div class="exercise-section">
+            <div class="exercise-title">Exercise E: Rewrite by omitting unnecessary articles</div>
+            <div class="instruction">Rewrite these sentences by omitting unnecessary articles.</div>
+            
+            <div class="q-item-single"><div class="q-text">1. I spent the summer in the Paris. <span class="answer-box">&rarr; I spent the summer in Paris.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">2. He is an expert in the physics. <span class="answer-box">&rarr; He is an expert in physics.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">3. The charity begins at home. <span class="answer-box">&rarr; Charity begins at home.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">4. She wants to learn the French. <span class="answer-box">&rarr; She wants to learn French.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">5. The success requires hard work and dedication. <span class="answer-box">&rarr; Success requires hard work and dedication.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">6. I have read the book on the economics. <span class="answer-box">&rarr; I have read the book on economics.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">7. They visited the London during their vacation. <span class="answer-box">&rarr; They visited London during their vacation.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+            <div class="q-item-single"><div class="q-text">8. The kindness is appreciated by everyone. <span class="answer-box">&rarr; Kindness is appreciated by everyone.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
 
-        <div class="question-block">
-            <div class="question"><strong>Exercise E:</strong> Rewrite these sentences by omitting unnecessary articles.<br><br>
-            1. I spent the summer in the Paris.<br>
-            2. He is an expert in the physics.<br>
-            3. The charity begins at home.<br>
-            4. She wants to learn the French.<br>
-            5. The success requires hard work and dedication.<br>
-            6. I have read the book on the economics.<br>
-            7. They visited the London during their vacation.<br>
-            8. The kindness is appreciated by everyone.
-            </div>
-            <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-            <div class="answer"><strong>Answers:</strong><br>
-            1. I spent the summer in Paris.<br>
-            2. He is an expert in physics.<br>
-            3. Charity begins at home.<br>
-            4. She wants to learn French.<br>
-            5. Success requires hard work and dedication.<br>
-            6. I have read the book on economics. (or 'a book on economics')<br>
-            7. They visited London during their vacation.<br>
-            8. Kindness is appreciated by everyone.
+            <div class="extra-practice">
+                <h4 class="extra-title">✨ Beyond the Textbook</h4>
+                <div class="q-item-single"><div class="q-text">E1. She went to the bed early. <span class="answer-box">&rarr; She went to bed early.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E2. He has a great interest in the biology. <span class="answer-box">&rarr; He has a great interest in biology.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E3. The Mount Everest is very high. <span class="answer-box">&rarr; Mount Everest is very high.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E4. They invited us for the dinner. <span class="answer-box">&rarr; They invited us for dinner.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
+                <div class="q-item-single"><div class="q-text">E5. I am afraid of the dogs. <span class="answer-box">&rarr; I am afraid of dogs.</span></div><button class="reveal-btn-mini" onclick="toggleRowAnswer(this)">Answer</button></div>
             </div>
         </div>
 
@@ -343,24 +450,16 @@
         evt.currentTarget.classList.add("active");
     }
 
-    function toggleAnswer(btn) {
-        var answerDiv = btn.nextElementSibling;
-        if (answerDiv.style.display === "block") {
-            answerDiv.style.display = "none";
-            btn.textContent = "Reveal Answer";
+    function toggleRowAnswer(btn) {
+        var parentRow = btn.parentElement;
+        if (parentRow.classList.contains("show-answer")) {
+            parentRow.classList.remove("show-answer");
+            btn.textContent = "Answer";
         } else {
-            answerDiv.style.display = "block";
-            btn.textContent = "Hide Answer";
+            parentRow.classList.add("show-answer");
+            btn.textContent = "Hide";
         }
     }
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('pushti-theme');
-    if(savedTheme) {
-        document.body.setAttribute('data-theme', savedTheme);
-    }
-});
 </script>
 </body>
 </html>
