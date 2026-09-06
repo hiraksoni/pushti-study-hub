@@ -714,6 +714,47 @@
                     notes: 'Original plain HTML structure with basic questions.'
                 }
             ]
+        },
+
+        // ==========================================
+        // SCIENCE (CHEMISTRY)
+        // ==========================================
+        'sci_chem_ch2': {
+            id: 'sci_chem_ch2',
+            title: 'Chapter 2: The World of Metals and Non-Metals',
+            subject: 'Science (Chemistry)',
+            unit: 'Chemistry • Branch Unit 1',
+            author: 'CBSE Science Curriculum',
+            version: 'v2.0.0',
+            lastModified: 'September 6, 2026, 06:45 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#8B5CF6',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Pedagogical Modernization & Complete Biological Contamination Eradication',
+            summary: 'Modernized and restructured Chemistry Chapter 2 (The World of Metals and Non-Metals) matching the 3-tab architecture of Biology Chapter 2. Completely eliminated legacy biological placeholder strings, structured 147 objective items and 49 subjective questions across 6 NCERT textbook section headers, integrated 8 verified video lessons, 4 concept pillars, and 4 Chemistry Vault trivia cards with universal silence.',
+            changesList: [
+                'Purged all legacy biological placeholder strings ("According to the chapter\'s biological concepts") and digestive trivia.',
+                'Tab 1: Objective Practice & OMR Test Prep (108 MCQs, 20 Fills, 19 True/False) with Practice Mode and Timed Examination Mode.',
+                'Tab 2: Combined 49 Textbook Questions & Solutions (Short, Long, Assertion-Reason, Match-the-Following, Flowcharts, and Case Studies) with interactive answer accordions.',
+                'Tab 3: Unified Media Hub with 4 Visual Concept Pillars, 8 verified active video lessons, and 4 Chemistry Vault deep-dive trivia cards.',
+                'Organized all content strictly under 6 NCERT textbook section headers for intuitive study flow.',
+                'Provided rigorous, scientifically accurate chemical rationales for every single question explaining equations, reactivity series, and physical properties.',
+                'Enforced universal silence policy (0 audio tags, 0 AudioContext) and dynamic dark/light theme support.'
+            ],
+            history: [
+                {
+                    version: 'v2.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Full modernization: 3-tab architecture, 6 textbook sections, pure chemistry rationales, video verification, and biological artifact eradication.'
+                },
+                {
+                    version: 'v1.0.0',
+                    date: 'August 2026',
+                    model: 'Initial Build',
+                    notes: 'Original plain HTML structure with basic questions and legacy placeholders.'
+                }
+            ]
         }
     };
 
