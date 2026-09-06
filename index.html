@@ -509,7 +509,7 @@
                 <div class="sidebar-header">Curriculum Categories</div>
 
                 <!-- 1. Languages Tab -->
-                <button class="branch-nav-btn active" id="tab-languages" style="--branch-color: #818cf8;" onclick="showCategory('languages')">
+                <button class="branch-nav-btn active" id="tab-languages" data-cat="languages" style="--branch-color: #818cf8;" onclick="showCategory('languages')">
                     <div class="branch-icon">📚</div>
                     <div class="branch-details">
                         <div class="branch-title">Languages</div>
@@ -518,7 +518,7 @@
                 </button>
 
                 <!-- 2. STEM Tab (Science & Mathematics) -->
-                <button class="branch-nav-btn" id="tab-stem" style="--branch-color: #10B981;" onclick="showCategory('stem')">
+                <button class="branch-nav-btn" id="tab-stem" data-cat="stem" style="--branch-color: #10B981;" onclick="showCategory('stem')">
                     <div class="branch-icon">🔬</div>
                     <div class="branch-details">
                         <div class="branch-title">STEM</div>
@@ -527,22 +527,21 @@
                 </button>
 
                 <!-- 3. Social & Others Tab -->
-                <button class="branch-nav-btn" id="tab-social" style="--branch-color: #F59E0B;" onclick="showCategory('social')">
+                <button class="branch-nav-btn" id="tab-social" data-cat="social" style="--branch-color: #F59E0B;" onclick="showCategory('social')">
                     <div class="branch-icon">🌐</div>
                     <div class="branch-details">
                         <div class="branch-title">Social & Others</div>
                         <div class="branch-stats">SST • ICT • KB & Ethics</div>
                     </div>
                 </button>
-
-                <div class="sidebar-footnote">
-                    <div style="font-weight:700; color:var(--text-main); margin-bottom:2px;">Grade 7 CBSE</div>
-                    <div>Complete syllabus, NCERT solutions, grammar labs & revision decks.</div>
-                </div>
             </aside>
 
             <!-- Right Wide Content Area: Subject Cards (filling full width) -->
             <div class="branch-content-area">
+                <div id="search-empty-state" style="display:none; text-align:center; padding: 48px 24px; background:var(--surface); border:1px solid var(--border); border-radius:14px; color:var(--text-muted); font-size:0.95rem; margin-bottom:16px;">
+                    <i class="fas fa-search" style="font-size:1.8rem; margin-bottom:12px; opacity:0.4; display:block;"></i>
+                    <span id="search-empty-text">No subjects found matching your search.</span>
+                </div>
 
                 <!-- ==========================================================
                      1. LANGUAGES CATEGORY (English, Hindi, Sanskrit)
@@ -921,19 +920,44 @@
         }
 
         function performFilter(term) {
+            const emptyContainer = document.getElementById('search-empty-state');
+            const emptyText = document.getElementById('search-empty-text');
+
             if (!term) {
-                document.querySelectorAll('.chapter-card').forEach(c => c.style.display = 'flex');
+                if (emptyContainer) emptyContainer.style.display = 'none';
+                // Cleanly restore the active category tab
+                const activeBtn = document.querySelector('.branch-nav-btn.active');
+                const activeCat = (activeBtn && activeBtn.dataset.cat) ? activeBtn.dataset.cat : 'languages';
+                showCategory(activeCat);
                 return;
             }
-            // If searching, search across all sections
-            document.querySelectorAll('.category-section').forEach(sec => sec.classList.add('active'));
-            document.querySelectorAll('.chapter-card').forEach(card => {
-                if (card.innerText.toLowerCase().includes(term)) {
-                    card.style.display = 'flex';
+
+            let totalMatches = 0;
+            document.querySelectorAll('.category-section').forEach(sec => {
+                let secMatches = 0;
+                sec.querySelectorAll('.chapter-card').forEach(card => {
+                    const matches = card.innerText.toLowerCase().includes(term);
+                    card.style.display = matches ? 'flex' : 'none';
+                    if (matches) secMatches++;
+                });
+
+                // Only show section heading if section has matching cards
+                if (secMatches > 0) {
+                    sec.classList.add('active');
+                    totalMatches += secMatches;
                 } else {
-                    card.style.display = 'none';
+                    sec.classList.remove('active');
                 }
             });
+
+            if (emptyContainer && emptyText) {
+                if (totalMatches === 0) {
+                    emptyText.textContent = `No subjects found matching "${term}".`;
+                    emptyContainer.style.display = 'block';
+                } else {
+                    emptyContainer.style.display = 'none';
+                }
+            }
         }
 
         // Close dropdown when clicking outside
