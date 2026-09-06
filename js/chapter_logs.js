@@ -725,6 +725,44 @@
         // ==========================================
         // SCIENCE (CHEMISTRY)
         // ==========================================
+        'sci_chem_ch1': {
+            id: 'sci_chem_ch1',
+            title: 'Chapter 1: Exploring Substances - Acids, Bases and Neutral',
+            subject: 'Science (Chemistry)',
+            unit: 'Chemistry • Branch Unit 1',
+            author: 'CBSE Science Curriculum',
+            version: 'v2.0.0',
+            lastModified: 'September 6, 2026, 08:15 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#8B5CF6',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Pedagogical Modernization, 3-Tab Architecture & Sub-Topic Classification',
+            summary: 'Comprehensive modernization of Chemistry Chapter 1 (Exploring Substances: Acids, Bases and Neutral) matching the advanced architecture of Chemistry Ch 2 and Biology Ch 2. Purged all biological contamination, structured 111 objective items (74 MCQs, 21 Fills, 16 True/False) and 77 textbook questions across 6 NCERT sections with subtopic quick-jump filter pills, interactive accordion controls, 8 verified CBSE Class 7 active video lessons, 4 Core Concept Pillars, and 4 Chemistry Vault trivia deep-dives.',
+            changesList: [
+                'Purged all legacy biological placeholders and digestion text, replacing them with authentic chemical rationales.',
+                'Tab 1: Objective & OMR Prep with 111 items (74 MCQs, 21 Fills, 16 True/False) supporting Practice Mode (instant feedback) and Timed Test Mode (timer + scorecard).',
+                'Tab 2: Combined 77 Textbook Questions & Solutions (Short 2M, Conceptual 3M, Long & Case Studies 4+M) with collapsible answer accordions.',
+                'Tab 3: Unified Media Hub with 4 Core Concept Pillars, 8 verified CBSE Class 7 video lessons (Magnet Brains, BYJU\'S, Manocha Academy, Don\'t Memorise, TicTacLearn, Vedantu, LearnFatafat), and 4 Chemistry Vault trivia cards.',
+                'Added Sub-Topic filter pills across Tab 1 and Tab 2 (Acids & Bases, Natural Indicators, Synthetic Indicators, Neutralisation, Daily Neutralisation, Acid Rain & Safety).',
+                'Added Global Controls Toolbar (Expand/Collapse All Sections, Show/Hide All Answers, Jump to Media Section).',
+                'Calibrated strictly for CBSE Std 7 with universal silence (0 audio tags, 0 AudioContext).'
+            ],
+            history: [
+                {
+                    version: 'v2.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Full modernization: sticky 3-tab architecture, 6 textbook subtopic sections, subtopic pills, expand/collapse accordions, CBSE Class 7 videos, and pure chemistry rationales.'
+                },
+                {
+                    version: 'v1.0.0',
+                    date: 'August 2026',
+                    model: 'Initial Build',
+                    notes: 'Original plain HTML structure with basic questions.'
+                }
+            ]
+        },
+
         'sci_chem_ch2': {
             id: 'sci_chem_ch2',
             title: 'Chapter 2: The World of Metals and Non-Metals',
