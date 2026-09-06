@@ -3,479 +3,1444 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Pushti Study Hub - Your personal study companion for CBSE Class 7. Explore chapters, watch videos, and ace your exams!">
+    <title>Pushti Study Hub 📚 • CBSE Class 7</title>
     
-    <title>Pushti Study Hub 📚</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Favicon as inline SVG emoji -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
-    
-    <!-- Google Fonts: Poppins (Headings) and Inter (Body) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome 6 for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    <!-- Fuse.js for Search capabilities -->
-    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0" defer></script>
-    
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="css/main.css">
+    <style>
+        :root {
+            --bg-main: #0B1120;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --surface: #1E293B;
+            --surface-hover: #273549;
+            --primary: #6366F1;
+            --primary-glow: rgba(99, 102, 241, 0.28);
+            --accent: #818CF8;
+            --accent-glow: rgba(129, 140, 248, 0.25);
+            --accent-green: #10B981;
+            --accent-amber: #F59E0B;
+            --accent-rose: #EC4899;
+            --accent-blue: #38BDF8;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --text-main: #F8FAFC;
+            --text-primary: #FFFFFF;
+            --text-muted: #94A3B8;
+            --card-radius: 14px;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.35);
+        }
 
-<style>
-:root {
-    --bg-main: #0F0F1A !important;
-    --surface: #16213E !important;
-}
-.site-header {
-    background: #0F0F1A !important;
-    background-color: #0F0F1A !important;
-    opacity: 1 !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-}
-[data-theme="light"] {
-    --bg-main: #ffffff !important;
-    --bg-card: #ffffff !important;
-    --text-main: #0f172a !important;
-    --text-muted: #475569 !important;
-    --accent: #6366f1 !important;
-    --border: #e2e8f0 !important;
-    --surface: #f1f5f9 !important;
-}
-[data-theme="light"] .site-header {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-    opacity: 1 !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-}
-[data-theme="light"] .icon-btn { color: #0f172a !important; }
+        [data-theme="light"] {
+            --bg-main: #F8FAFC;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --surface: #FFFFFF;
+            --surface-hover: #F1F5F9;
+            --primary: #4F46E5;
+            --primary-glow: rgba(79, 70, 229, 0.15);
+            --accent: #6366F1;
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --accent-green: #059669;
+            --accent-amber: #D97706;
+            --accent-rose: #DB2777;
+            --accent-blue: #0284C7;
+            --border: rgba(0, 0, 0, 0.08);
+            --border-hover: rgba(0, 0, 0, 0.18);
+            --text-main: #0F172A;
+            --text-primary: #0F172A;
+            --text-muted: #475569;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08);
+        }
 
-/* Stream Vertical Grouping */
-.stream-section {
-    margin-bottom: 3rem;
-}
-.stream-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 1px solid var(--border, rgba(255,255,255,0.1));
-}
-.stream-header h2 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    font-family: 'Outfit', sans-serif;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.stream-badge {
-    font-size: 0.85rem;
-    padding: 6px 14px;
-    border-radius: 20px;
-    background: rgba(99, 102, 241, 0.12);
-    color: var(--accent, #6366f1);
-    font-weight: 600;
-    font-family: 'Space Mono', monospace;
-    border: 1px solid rgba(99, 102, 241, 0.25);
-}
-.stream-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-.stream-grid .subject-card {
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-.stream-grid .subject-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.3);
-}
-</style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100vh;
+            max-height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            user-select: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Responsive fallback for small mobile / portrait screens */
+        @media (max-width: 900px), (max-height: 550px) {
+            html, body {
+                height: auto;
+                max-height: none;
+                overflow-y: auto;
+            }
+        }
+
+        /* Custom Sleek Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.25);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.45);
+        }
+
+        /* ==========================================================================
+           1. TOP HEADER & COMPACT MICRO-KPI BAR (50px fixed)
+           ========================================================================== */
+        .site-header {
+            height: 50px;
+            min-height: 50px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-badge {
+            background: linear-gradient(135deg, var(--primary), #8B5CF6);
+            color: #FFFFFF;
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Micro-KPI Strip */
+        .header-kpi-strip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-main);
+            padding: 3px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .kpi-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            padding: 2px 8px;
+            border-radius: 14px;
+            white-space: nowrap;
+        }
+
+        .kpi-pill strong {
+            color: var(--text-main);
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+        }
+
+        .kpi-pill.live-stat {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            color: #10B981;
+        }
+
+        .kpi-pill.live-stat strong {
+            color: #10B981;
+        }
+
+        /* Header Navigation & User Actions */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-toggle-btn {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .icon-toggle-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .hdr-btn {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 8px;
+            color: var(--text-muted);
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .hdr-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent);
+        }
+
+        /* ==========================================================================
+           2. MAIN WORKSPACE: THREE-TIER VIEWPORT (height: calc(100vh - 50px))
+           ========================================================================== */
+        .workspace-grid {
+            flex: 1;
+            height: calc(100vh - 50px);
+            max-height: calc(100vh - 50px);
+            display: grid;
+            grid-template-columns: 200px 280px 1fr;
+            overflow: hidden;
+            background: var(--bg-main);
+        }
+
+        @media (max-width: 900px), (max-height: 550px) {
+            .workspace-grid {
+                height: auto;
+                max-height: none;
+                grid-template-columns: 1fr;
+                overflow: visible;
+            }
+        }
+
+        /* --------------------------------------------------------------------------
+           TIER 1: LEFT PILLAR RAIL (~200px)
+           -------------------------------------------------------------------------- */
+        .pillar-rail {
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 14px 10px;
+            gap: 8px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .rail-header {
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            padding: 2px 8px 6px;
+        }
+
+        .pillar-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-main);
+            color: var(--text-muted);
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .pillar-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent);
+            transform: translateX(2px);
+        }
+
+        .pillar-btn.active {
+            background: var(--surface-hover);
+            border-color: var(--accent);
+            color: var(--text-main);
+            box-shadow: 0 4px 14px var(--primary-glow);
+        }
+
+        .pillar-btn.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            bottom: 10px;
+            width: 3px;
+            background: var(--accent);
+            border-radius: 0 3px 3px 0;
+        }
+
+        .pillar-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .pillar-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .pillar-sub {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .rail-footer-info {
+            margin-top: auto;
+            padding: 10px;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        /* --------------------------------------------------------------------------
+           TIER 2: MIDDLE SUBJECT DECK COLUMN (~280px)
+           -------------------------------------------------------------------------- */
+        .subject-deck {
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 14px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .deck-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--text-muted);
+            padding: 0 4px 6px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Dynamic Subject Cards in Deck */
+        .subject-card-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-main);
+            color: var(--text-muted);
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+
+        .subject-card-btn:hover {
+            background: var(--surface-hover);
+            color: var(--text-main);
+            border-color: var(--accent);
+            transform: translateX(3px);
+        }
+
+        .subject-card-btn.active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.08));
+            border-color: var(--primary);
+            color: var(--text-main);
+            box-shadow: 0 4px 16px var(--primary-glow);
+            transform: translateX(5px);
+        }
+
+        /* Pointing Dock Indicator into Stage Viewport */
+        .subject-card-btn.active::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid var(--primary);
+            filter: drop-shadow(2px 0 3px rgba(0,0,0,0.3));
+        }
+
+        .card-icon-box {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+        }
+
+        .card-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .card-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-details {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+
+        .card-badge-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .card-tag {
+            font-size: 0.65rem;
+            background: var(--surface);
+            padding: 1px 6px;
+            border-radius: 6px;
+            color: var(--accent);
+            font-weight: 600;
+            border: 1px solid var(--border);
+        }
+
+        .card-arrow {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+        }
+
+        .subject-card-btn.active .card-arrow {
+            color: var(--accent);
+            transform: translateX(2px);
+        }
+
+        /* --------------------------------------------------------------------------
+           TIER 3: ANIMATED HARDWARE-ACCELERATED COMMAND DECK (RIGHT PANEL)
+           -------------------------------------------------------------------------- */
+        .stage-viewport {
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-main);
+        }
+
+        .subject-deck-panel {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 14px 18px;
+            opacity: 0;
+            transform: translateX(30px) scale(0.985);
+            pointer-events: none;
+            visibility: hidden;
+            transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.32s;
+            overflow-y: auto;
+        }
+
+        .subject-deck-panel.active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            pointer-events: auto;
+            visibility: visible;
+        }
+
+        /* Staggered card entrance animation */
+        .subject-deck-panel.active .subdiscipline-card:nth-child(1) {
+            animation: cardSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.04s backwards;
+        }
+        .subject-deck-panel.active .subdiscipline-card:nth-child(2) {
+            animation: cardSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+        }
+        .subject-deck-panel.active .subdiscipline-card:nth-child(3) {
+            animation: cardSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.16s backwards;
+        }
+
+        @keyframes cardSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Command Deck Banner (Top) */
+        .deck-banner {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--card-radius);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow: var(--shadow-sm);
+            flex-shrink: 0;
+        }
+
+        .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .banner-icon {
+            font-size: 1.8rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .banner-title-group h2 {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .banner-title-group p {
+            margin: 3px 0 0 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-launch-hub {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            background: var(--primary);
+            color: #FFFFFF;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 12px var(--primary-glow);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .btn-launch-hub:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px var(--accent-glow);
+        }
+
+        /* Sub-Disciplines Grid (Phy / Chem / Bio Style) */
+        .subdiscipline-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+            overflow-y: auto;
+            align-content: stretch;
+            padding-bottom: 2px;
+        }
+
+        .subdiscipline-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--card-radius);
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .subdiscipline-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sub-card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sub-card-icon {
+            font-size: 1.25rem;
+        }
+
+        .sub-card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.96rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .sub-card-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.35;
+            margin: 0;
+            flex: 1;
+        }
+
+        .sub-card-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 2px;
+        }
+
+        .topic-pill {
+            font-size: 0.7rem;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .sub-card-action {
+            margin-top: 6px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-sub-link {
+            text-decoration: none;
+            font-size: 0.76rem;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-sub-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Bottom Quick Launch Row inside Command Deck */
+        .deck-quick-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-top: 8px;
+            flex-shrink: 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .quick-action-btn {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            transition: all 0.2s;
+        }
+
+        .quick-action-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+    </style>
 </head>
 <body>
-    <!-- Inline script to prevent flash of wrong theme -->
-    <script>
-        const savedTheme = localStorage.getItem('pushti-theme') || 'light';
-        document.body.setAttribute('data-theme', savedTheme);
-    </script>
 
-    <!-- Header Section -->
-    <header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--bg-main, #0F0F1A); position: sticky; top: 0; z-index: 1000;">
-    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500; color: var(--text-main);">
-        <a href="./index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
-            <i class="fas fa-home"></i> Home
+    <!-- ==========================================================================
+         TOP HEADER & COMPACT MICRO-KPI BAR
+         ========================================================================== -->
+    <header class="site-header">
+        <!-- Brand -->
+        <a href="./index.html" class="header-brand">
+            <i class="fas fa-graduation-cap" style="color: var(--accent); font-size: 1.25rem;"></i>
+            <span>Pushti Study Hub</span>
+            <span class="brand-badge">Class 7 CBSE</span>
         </a>
-        
-    </div>
-    
-    <div class="header-right" style="display:flex; align-items:center; gap: 20px;">
-        <div class="search-container" style="display:flex; align-items:center;">
-            <button id="global-search-btn" aria-label="Search" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; padding:5px; display:flex; align-items:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-            <input id="global-search-input" type="text" placeholder="Search..." style="display:none; margin-left:10px; padding: 6px 15px; border-radius:20px; border:1px solid var(--border); background:rgba(0,0,0,0.2); color:white; width: 180px;">
+
+        <!-- Integrated Micro-KPI Dashboard Strip -->
+        <div class="header-kpi-strip">
+            <span class="kpi-pill"><i class="fas fa-books" style="color: var(--accent);"></i> <strong>7</strong> Subjects</span>
+            <span class="kpi-pill"><i class="fas fa-layer-group" style="color: var(--accent-amber);"></i> <strong>90</strong> Chapters</span>
+            <span class="kpi-pill"><i class="fas fa-bullseye" style="color: var(--accent-rose);"></i> <strong>450+</strong> Topics</span>
+            <span class="kpi-pill live-stat" title="Total active study time recorded for Pushti"><i class="fas fa-stopwatch"></i> Pushti: <strong id="pushti-study-time">0h 0m</strong></span>
+            <span class="kpi-pill live-stat" title="Total verification time recorded for Hirak"><i class="fas fa-shield-check"></i> Verified: <strong id="hirak-verify-time">0h 0m</strong></span>
         </div>
-        
-        <nav class="header-nav" style="display:flex; align-items:center; gap: 15px;">
-            <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:white; cursor:pointer; font-size:1.2rem;">
+
+        <!-- Header Actions -->
+        <div class="header-actions">
+            <!-- Global Search Toggle -->
+            <div class="search-container" style="display:flex; align-items:center;">
+                <button id="global-search-btn" class="icon-toggle-btn" aria-label="Search" title="Search syllabus and chapters">
+                    <i class="fas fa-search"></i>
+                </button>
+                <input id="global-search-input" type="text" placeholder="Search syllabus..." style="display:none; margin-left:8px; padding: 4px 10px; border-radius:14px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-size:0.8rem; width:150px; outline:none;">
+            </div>
+
+            <!-- Theme Toggle -->
+            <button class="icon-toggle-btn theme-toggle" aria-label="Toggle dark mode" title="Toggle dark/light theme">
                 <i class="fas fa-moon"></i>
             </button>
-            
-            <a href="./timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
-            <a href="./midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
 
+            <!-- Nav Links -->
+            <a href="timetable.html" class="hdr-btn"><i class="fas fa-calendar-alt"></i> Time Table</a>
+            <a href="midterm.html" class="hdr-btn"><i class="fas fa-crosshairs"></i> Mid-Term</a>
+
+            <!-- User Avatar & Dropdown -->
             <div class="user-profile-wrapper" style="position:relative;">
-                <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:40px; height:40px; border:2px solid var(--accent);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
-                    <img src="https://ui-avatars.com/api/?name=Pushti&background=8B5CF6&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
+                <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:32px; height:32px; border:2px solid var(--accent);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
+                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=Pushti&background=6366F1&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div id="global-dropdown" style="display:none; position:absolute; right:0; top:50px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:15px; width:220px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); flex-direction:column; gap:12px; z-index:1001;">
-                    <div style="text-align:center; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
-                        <div style="font-weight:700; font-size:1.1rem; color:var(--text-primary);">Pushti</div>
+                <div id="global-dropdown" style="display:none; position:absolute; right:0; top:42px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:12px; width:210px; box-shadow:var(--shadow-lg); flex-direction:column; gap:8px; z-index:1001;">
+                    <div style="text-align:center; padding-bottom:6px; border-bottom:1px solid var(--border);">
+                        <div id="user-name-display" style="font-weight:700; font-size:0.95rem; color:var(--text-main);">Pushti</div>
+                        <div id="dropdown-user-role" style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase;">Student</div>
                     </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.9rem; font-weight:500;">Student</span>
-                        <label class="switch" style="position:relative; display:inline-block; width:34px; height:20px;">
-                            <input type="checkbox" id="global-role-checkbox" style="opacity:0; width:0; height:0;">
-                            <span class="slider" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--border); transition:.4s; border-radius:34px;"></span>
-                        </label>
-                        <span style="font-size:0.9rem; font-weight:500;">Parent</span>
-                    </div>
+                    <button id="switch-user-btn" onclick="openLoginModal()" style="padding:8px 12px; background:var(--bg-main); border:1px solid var(--border); border-radius:8px; color:var(--text-main); font-weight:600; font-size:0.78rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+                        <i class="fas fa-user-friends"></i> Switch Account
+                    </button>
                 </div>
             </div>
-        </nav>
-    </div>
-</header>
-<style>
-.switch input:checked + .slider { background-color: var(--accent, #8B5CF6); }
-.switch input:checked + .slider:before { transform: translateX(14px); }
-.slider:before { position:absolute; content:""; height:14px; width:14px; left:3px; bottom:3px; background-color:white; transition:.4s; border-radius:50%; }
-.tabs-wrapper { position: static !important; }
-.site-header { background: #0F0F1A !important; opacity: 1 !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
-[data-theme="light"] .site-header { background: #ffffff !important; opacity: 1 !important; }
-.tabs-wrapper { position: sticky !important; top: 61px !important; z-index: 990 !important; background: var(--bg-main, #0F0F1A) !important; border-bottom: 1px solid var(--border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; display: flex !important; gap: 10px !important; justify-content: center !important; flex-wrap: wrap !important; }
-[data-theme="light"] .tabs-wrapper { background: #ffffff !important; }
-</style>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const searchBtn = document.getElementById('global-search-btn');
-    const searchInput = document.getElementById('global-search-input');
-    
-    if(searchBtn && searchInput) {
-        searchBtn.addEventListener('click', function() {
-            if(searchInput.style.display === 'none' || searchInput.style.display === '') {
-                searchInput.style.display = 'block';
-                searchInput.focus();
-            } else {
-                performSearch(searchInput.value.toLowerCase());
-            }
-        });
-        
-        searchInput.addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') {
-                performSearch(searchInput.value.toLowerCase());
-            }
-        });
-    }
-    
-    function performSearch(term) {
-        const cards = document.querySelectorAll('.chapter-card, .topic-card, .shloka-box, .translation-row, .shloka-block');
-        if (cards.length > 0) {
-            cards.forEach(card => {
-                if(card.innerText.toLowerCase().includes(term)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    }
-});
-</script>
-<style>
-.switch input:checked + .slider { background-color: var(--accent, #8B5CF6); }
-.switch input:checked + .slider:before { transform: translateX(14px); }
-.slider:before { position:absolute; content:""; height:14px; width:14px; left:3px; bottom:3px; background-color:white; transition:.4s; border-radius:50%; }
-.site-header { background: var(--bg-main) !important; backdrop-filter: none !important; }
-.tabs-wrapper { position: sticky !important; top: 61px !important; z-index: 990 !important; background: var(--bg-main) !important; border-bottom: 1px solid var(--border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; display: flex !important; gap: 10px !important; justify-content: center !important; flex-wrap: wrap !important; }
-</style>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const searchInput = document.querySelector('.search-input');
-    if(searchInput) {
-        searchInput.addEventListener('input', function(e) {
-            const term = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.chapter-card, .topic-card, .shloka-box, .translation-row, .shloka-block');
-            if (cards.length > 0) {
-                cards.forEach(card => {
-                    if(card.innerText.toLowerCase().includes(term)) {
-                        card.style.display = '';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            }
-        });
-    }
-});
-</script>
+        </div>
+    </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">Welcome, <span class="gradient-text" id="hero-name">Pushti!</span> 👋</h1>
-                <p class="hero-subtitle">Your personal study companion for CBSE Class 7. Explore chapters, watch videos, and ace your exams! 🎯</p>
-                <div class="hero-stats">
-                    <div class="stat-card">
-                        <span class="stat-number" id="subject-count">7</span>
-                        <span class="stat-label">Subjects</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" id="chapter-count">90</span>
-                        <span class="stat-label">Chapters</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" id="topic-count">450+</span>
-                        <span class="stat-label">Topics</span>
-                    </div>
-                    <div class="stat-card">
-                          <span class="stat-number" id="time-pushti">0h 0m</span>
-                          <span class="stat-label">Pushti's Study Time</span>
-                      </div>
-                      <div class="stat-card">
-                          <span class="stat-number" id="time-hirak">0h 0m</span>
-                          <span class="stat-label">Hirak's Verify Time</span>
-                      </div>
+    <!-- ==========================================================================
+         MAIN ZERO-SCROLL WORKSPACE
+         ========================================================================== -->
+    <main class="workspace-grid">
+
+        <!-- ------------------------------------------------------------------
+             TIER 1: LEFT PILLAR RAIL (Languages vs STEM & Social Sciences)
+             ------------------------------------------------------------------ -->
+        <aside class="pillar-rail">
+            <div class="rail-header">Curriculum Streams</div>
+
+            <!-- Languages Pillar Button -->
+            <button id="pillar-btn-languages" class="pillar-btn active" onclick="switchPillar('languages')">
+                <span class="pillar-icon">📚</span>
+                <div>
+                    <div class="pillar-title">Languages</div>
+                    <div class="pillar-sub">3 Subjects • Lit & Grammar</div>
                 </div>
+            </button>
+
+            <!-- STEM & Social Sciences Pillar Button -->
+            <button id="pillar-btn-stem" class="pillar-btn" onclick="switchPillar('stem')">
+                <span class="pillar-icon">🔬</span>
+                <div>
+                    <div class="pillar-title">STEM & Social</div>
+                    <div class="pillar-sub">4 Subjects • Core & Labs</div>
+                </div>
+            </button>
+
+            <!-- Quick Status Footnote -->
+            <div class="rail-footer-info">
+                <div style="font-weight: 700; color: var(--text-main); margin-bottom: 2px;">CBSE Grade 7</div>
+                <div>Complete syllabus coverage with full Q&A, Grammar & Revision labs.</div>
             </div>
-            <div class="hero-decoration" aria-hidden="true">
-                <!-- CSS-animated floating shapes -->
-                <div class="float-shape shape-1">🔬</div>
-                <div class="float-shape shape-2">📐</div>
-                <div class="float-shape shape-3">🌍</div>
-                <div class="float-shape shape-4">📖</div>
-                <div class="float-shape shape-5">🧪</div>
+        </aside>
+
+        <!-- ------------------------------------------------------------------
+             TIER 2: MIDDLE SUBJECT DECK COLUMN
+             ------------------------------------------------------------------ -->
+        <section class="subject-deck">
+            <div class="deck-header">
+                <span id="deck-stream-label">Languages Stream</span>
+                <span id="deck-stream-count">3 Subjects</span>
+            </div>
+
+            <!-- Subject Cards Container (Populated / toggled by JS) -->
+            <div id="subject-cards-container" style="display:flex; flex-direction:column; gap:8px;">
+                <!-- Dynamically Rendered Cards -->
             </div>
         </section>
 
-        <!-- Vertical Stream 1: Languages -->
-        <section class="stream-section" aria-label="Languages Stream">
-            <div class="stream-header">
-                <h2><span>📚</span> Languages Stream</h2>
-                <span class="stream-badge">3 Subjects &bull; Lit & Grammar</span>
+        <!-- ------------------------------------------------------------------
+             TIER 3: ANIMATED COMMAND DECK (RIGHT PANEL)
+             ------------------------------------------------------------------ -->
+        <section class="stage-viewport" id="stage-viewport">
+
+            <!-- 1. ENGLISH COMMAND DECK -->
+            <div id="deck-english" class="subject-deck-panel">
+                <div class="deck-banner">
+                    <div class="banner-left">
+                        <div class="banner-icon" style="color: #6366F1;">📝</div>
+                        <div class="banner-title-group">
+                            <h2>English Language & Literature <span class="brand-badge">7 Modules Ready</span></h2>
+                            <p>Masterclass in Prose, Poetry, Applied Grammar, Vocabulary & Listening/Speaking skills.</p>
+                        </div>
+                    </div>
+                    <a href="english_index.html" class="btn-launch-hub"><i class="fas fa-external-link-alt"></i> Enter English Hub</a>
+                </div>
+
+                <div class="subdiscipline-grid">
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">📖</span>
+                            <span class="sub-card-title">Literature Reader</span>
+                        </div>
+                        <p class="sub-card-desc">9 Complete Chapters with R.K. Narayan, Walter de la Mare, Florence Nightingale, full text, Q&A and extracts.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">A Hero</span>
+                            <span class="topic-pill">Night to Remember</span>
+                            <span class="topic-pill">In the Bazaars</span>
+                            <span class="topic-pill">Florence Nightingale</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="chapters/english/lit_ch1.html" class="btn-sub-link"><i class="fas fa-play"></i> Start Chapter 1</a>
+                        </div>
+                    </div>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">✍️</span>
+                            <span class="sub-card-title">Applied Grammar</span>
+                        </div>
+                        <p class="sub-card-desc">Spotlight Grammar modules with interactive brackets options, rules, and beyond-the-textbook examples.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">Nouns & Pronouns</span>
+                            <span class="topic-pill">Adjectives</span>
+                            <span class="topic-pill">Tenses</span>
+                            <span class="topic-pill">Active & Passive</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="chapters/english/grammar_vocab.html#grammar" class="btn-sub-link"><i class="fas fa-spell-check"></i> Grammar Lab</a>
+                        </div>
+                    </div>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🔠</span>
+                            <span class="sub-card-title">Vocabulary & ASL</span>
+                        </div>
+                        <p class="sub-card-desc">Comprehensive Word Power with phonetic transcription, contextual sentences, listening audio, and speaking drills.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">Homophones</span>
+                            <span class="topic-pill">Prefix/Suffix</span>
+                            <span class="topic-pill">Idioms</span>
+                            <span class="topic-pill">ASL Scripts</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="chapters/english/grammar_vocab.html#vocab" class="btn-sub-link"><i class="fas fa-microphone-lines"></i> Vocab & ASL</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deck-quick-actions">
+                    <a href="english_index.html" class="quick-action-btn"><i class="fas fa-list-ol"></i> All English Chapters</a>
+                    <a href="chapters/english/grammar_vocab.html" class="quick-action-btn"><i class="fas fa-book-open"></i> Full Grammar & Vocab Bank</a>
+                    <a href="midterm.html" class="quick-action-btn"><i class="fas fa-crosshairs"></i> Midterm Syllabus Focus</a>
+                </div>
             </div>
-            <div class="stream-grid">
-                <!-- English Card -->
-                <a href="english_index.html" class="subject-card" data-subject="english">
-                    <div class="subject-icon">📝</div>
-                    <h2>English</h2>
-                    <p class="subject-desc">Literature, Grammar, Writing</p>
-                    <p class="chapter-count">7 Modules</p>
-                    <div class="chapter-tags">
-                        <span class="tag">A Hero</span>
-                        <span class="tag">Grammar</span>
-                        <span class="tag">ASL</span>
-                    </div>
-                </a>
 
-                <!-- Hindi Card -->
-                <a href="hindi_index.html" class="subject-card" data-subject="hindi">
-                    <div class="subject-icon">अ</div>
-                    <h2>Hindi</h2>
-                    <p class="subject-desc">Literature, Grammar, Writing</p>
-                    <p class="chapter-count">6 Modules</p>
-                    <div class="chapter-tags">
-                        <span class="tag">साहित्य</span>
-                        <span class="tag">व्याकरण</span>
-                        <span class="tag">रचनात्मक लेखन</span>
+            <!-- 2. HINDI COMMAND DECK -->
+            <div id="deck-hindi" class="subject-deck-panel">
+                <div class="deck-banner">
+                    <div class="banner-left">
+                        <div class="banner-icon" style="color: #F59E0B;">अ</div>
+                        <div class="banner-title-group">
+                            <h2>हिन्दी साहित्य व व्याकरण <span class="brand-badge">6 Modules Ready</span></h2>
+                            <p>वसंत भाग-२ गद्य-पद्य, व्याकरण वाटिका, संवाद व पत्र लेखन।</p>
+                        </div>
                     </div>
-                </a>
-                
-                <!-- Sanskrit Card -->
-                <a href="sanskrit_index.html" class="subject-card" data-subject="sanskrit">
-                    <div class="subject-icon">🕉️</div>
-                    <h2>Sanskrit</h2>
-                    <p class="subject-desc">Literature, Grammar, Writing</p>
-                    <p class="chapter-count">8 Modules</p>
-                    <div class="chapter-tags">
-                        <span class="tag">वन्दे भारतम्</span>
-                        <span class="tag">व्याकरणम्</span>
-                        <span class="tag">पत्रलेखनम्</span>
+                    <a href="hindi_index.html" class="btn-launch-hub"><i class="fas fa-external-link-alt"></i> हिन्दी हब में जाएँ</a>
+                </div>
+
+                <div class="subdiscipline-grid">
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🌿</span>
+                            <span class="sub-card-title">वसंत भाग-२ (साहित्य)</span>
+                        </div>
+                        <p class="sub-card-desc">हम पंछी ँउन्मुक्त गगन के, दादी माँ, हिमालय की बेटीयाँ सहित सम्पूर्ण भावार्थ व प्रश्नोत्तर।</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">हम पंछी</span>
+                            <span class="topic-pill">दादी माँ</span>
+                            <span class="topic-pill">हिमालय</span>
+                            <span class="topic-pill">कठपुतली</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="chapters/hindi/hindi_ch1.html" class="btn-sub-link"><i class="fas fa-play"></i> पाठ १ पढ़ें</a>
+                        </div>
                     </div>
-                </a>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">⚖️</span>
+                            <span class="sub-card-title">व्याकरण वाटिका</span>
+                        </div>
+                        <p class="sub-card-desc">संज्ञा, सर्वनाम, क्रिया, काल, संधि, समास एवं विराम चिह्नों का गहन अभ्यास।</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">संज्ञा-सर्वनाम</span>
+                            <span class="topic-pill">काल</span>
+                            <span class="topic-pill">संधि</span>
+                            <span class="topic-pill">मुहावरे</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="hindi_index.html#grammar" class="btn-sub-link"><i class="fas fa-book"></i> व्याकरण खंड</a>
+                        </div>
+                    </div>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🖊️</span>
+                            <span class="sub-card-title">रचनात्मक लेखन</span>
+                        </div>
+                        <p class="sub-card-desc">अनुच्घेद लेखन, औपचारिक/अनॄपचारिक पत्र, संवाद लेखन एवं अपठित गद्यांस।</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">पत्र लेखन</span>
+                            <span class="topic-pill">संवाद</span>
+                            <span class="topic-pill">अनुच्घेद</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="hindi_index.html#writing" class="btn-sub-link"><i class="fas fa-pen-nib"></i> लेखन अभ्यास</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deck-quick-actions">
+                    <a href="hindi_index.html" class="quick-action-btn"><i class="fas fa-list-ol"></i> सम्पूर्ण पाठ्यक्रम</a>
+                    <a href="midterm.html" class="quick-action-btn"><i class="fas fa-crosshairs"></i> मिड-टर्म परीक्षा तैयारी</a>
+                </div>
             </div>
-        </section>
 
-        <!-- Vertical Stream 2: STEM & Social Sciences -->
-        <section class="stream-section" aria-label="STEM and Social Sciences Stream">
-            <div class="stream-header">
-                <h2><span>🔬</span> STEM & Social Sciences</h2>
-                <span class="stream-badge">4 Subjects &bull; Core & Labs</span>
+            <!-- 3. SANSKRIT COMMAND DECK -->
+            <div id="deck-sanskrit" class="subject-deck-panel">
+                <div class="deck-banner">
+                    <div class="banner-left">
+                        <div class="banner-icon" style="color: #EC4899;">🕉️</div>
+                        <div class="banner-title-group">
+                            <h2>संस्कृतम् • सुरुचिः व्याकरणम् <span class="brand-badge">8 Modules Ready</span></h2>
+                            <p>सुरुचिः पाठ्यपुस्तकम्, शब्दरूप-धातुरूप, सन्धिः, चित्रवर्णनम् व अभ्यास।</p>
+                        </div>
+                    </div>
+                    <a href="sanskrit_index.html" class="btn-launch-hub"><i class="fas fa-external-link-alt"></i> संस्कृत प्रवेश</a>
+                </div>
+
+                <div class="subdiscipline-grid">
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🏛️</span>
+                            <span class="sub-card-title">सुरुचिः (साहित्यम्)</span>
+                        </div>
+                        <p class="sub-card-desc">वार्तालापः (पाठ १) तः प्रत्यभिज्ञानम् (पाठ ६) पर्यन्तं सर्वे पाठाः अन्वय-शब्दार्थ सहिताः।</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">वार्तालापः</span>
+                            <span class="topic-pill">लङ्-लकारः</span>
+                            <span class="topic-pill">मुक्ताकणिकाः</span>
+                            <span class="topic-pill">प्रत्यभिज्ञानम्</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="source_materials/chapters/sanskrit/claude_san_ch01.html" class="btn-sub-link"><i class="fas fa-play"></i> पाठ १ आरम्भ</a>
+                        </div>
+                    </div>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">⚙️</span>
+                            <span class="sub-card-title">व्याकरणम् (Vyakaran Labs)</span>
+                        </div>
+                        <p class="sub-card-desc">वर्णविचारः, शब्दरूपाणि (बालक, लता), धातुरूपाणि (५ लकाराः), सन्धिः अव्यय पदानि।</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">शब्दरूप</span>
+                            <span class="topic-pill">धातुरूप</span>
+                            <span class="topic-pill">सन्धिः</span>
+                            <span class="topic-pill">अव्यय</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="source_materials/chapters/sanskrit/practice_san_G1.html" class="btn-sub-link"><i class="fas fa-cubes"></i> व्याकरण प्रयोगशाला</a>
+                        </div>
+                    </div>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🎨</span>
+                            <span class="sub-card-title">रचनात्मक लेखनम्</span>
+                        </div>
+                        <p class="sub-card-desc">चित्रवर्णनम्, पत्रलेखनम्, अपठितावबोधनम् च मञ्जूषापदानि सहितम्।</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">चित्रवर्णन</span>
+                            <span class="topic-pill">पत्रलेखन</span>
+                            <span class="topic-pill">अपठित</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="source_materials/chapters/sanskrit/practice_san_W1.html" class="btn-sub-link"><i class="fas fa-pencil-alt"></i> लेखन अभ्यासः</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deck-quick-actions">
+                    <a href="sanskrit_index.html" class="quick-action-btn"><i class="fas fa-list-ol"></i> सर्वे पाठाः</a>
+                    <a href="source_materials/chapters/sanskrit/practice_san_G1.html" class="quick-action-btn"><i class="fas fa-flask"></i> व्याकरण मोड</a>
+                    <a href="midterm.html" class="quick-action-btn"><i class="fas fa-crosshairs"></i> मिड-टर्म पाठ्यक्रमः</a>
+                </div>
             </div>
-            <div class="stream-grid">
-                <!-- Maths Card -->
-                <a href="maths_index.html" class="subject-card" data-subject="maths">
-                    <div class="subject-icon">📐</div>
-                    <h2>Mathematics</h2>
-                    <p class="subject-desc">Numbers, Expressions, Lines</p>
-                    <p class="chapter-count">8 Chapters</p>
-                    <div class="chapter-tags">
-                        <span class="tag">Number Systems</span>
-                        <span class="tag">Geometry</span>
-                        <span class="tag">Algebra</span>
-                    </div>
-                </a>
 
-                <!-- Science Card -->
-                <a href="science_index.html" class="subject-card" data-subject="science">
-                    <div class="subject-icon">🔬</div>
-                    <h2>Science</h2>
-                    <p class="subject-desc">Biology, Chemistry & Physics</p>
-                    <p class="chapter-count">7 Chapters</p>
-                    <div class="chapter-tags">
-                        <span class="tag">Adolescence</span>
-                        <span class="tag">Acids & Bases</span>
-                        <span class="tag">Electricity</span>
+            <!-- 4. SCIENCE COMMAND DECK -->
+            <div id="deck-science" class="subject-deck-panel">
+                <div class="deck-banner">
+                    <div class="banner-left">
+                        <div class="banner-icon" style="color: #10B981;">🔬</div>
+                        <div class="banner-title-group">
+                            <h2>Integrated Science • Physics, Chem & Bio <span class="brand-badge">7 Chapters Ready</span></h2>
+                            <p>NCERT Class 7 standard: conceptual deep-dives, experimental setups, formulas, diagrams and exercises.</p>
+                        </div>
                     </div>
-                </a>
+                    <a href="science_index.html" class="btn-launch-hub"><i class="fas fa-external-link-alt"></i> Enter Science Hub</a>
+                </div>
 
-                <!-- ICT Card -->
-                <a href="ict_index.html" class="subject-card" data-subject="ict">
-                    <div class="subject-icon">💻</div>
-                    <h2>ICT</h2>
-                    <p class="subject-desc">Computer Science & AI</p>
-                    <p class="chapter-count">5 Chapters</p>
-                    <div class="chapter-tags">
-                        <span class="tag">Binary & Excel</span>
-                        <span class="tag">HTML & CSS</span>
-                        <span class="tag">AI Concepts</span>
+                <div class="subdiscipline-grid">
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">⚡</span>
+                            <span class="sub-card-title">Physics Stream</span>
+                        </div>
+                        <p class="sub-card-desc">Thermodynamics, Motion & Time formulas, Electric Circuits, and Optics ray diagrams with live calculations.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">Heat & Transfer</span>
+                            <span class="topic-pill">Motion & Time</span>
+                            <span class="topic-pill">Electric Current</span>
+                            <span class="topic-pill">Light & Mirrors</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="chapters/science/science_phy_ch2.html" class="btn-sub-link"><i class="fas fa-fire"></i> Study Heat</a>
+                            <a href="chapters/science/science_phy_ch2.html" class="btn-sub-link"><i class="fas fa-tachometer-alt"></i> Motion</a>
+                        </div>
                     </div>
-                </a>
 
-                <!-- Social Science Card -->
-                <a href="social_science_index.html" class="subject-card" data-subject="social-science">
-                    <div class="subject-icon">🗺️</div>
-                    <h2>Social Science</h2>
-                    <p class="subject-desc">History, Geography, Civics</p>
-                    <p class="chapter-count">8 Chapters</p>
-                    <div class="chapter-tags">
-                        <span class="tag">Earth's Interior</span>
-                        <span class="tag">Mauryan Empire</span>
-                        <span class="tag">Equality</span>
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🧪</span>
+                            <span class="sub-card-title">Chemistry Stream</span>
+                        </div>
+                        <p class="sub-card-desc">Chemical reactions, natural and synthetic indicators, neutralization reactions, and reversible vs irreversible changes.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">Acids, Bases & Salts</span>
+                            <span class="topic-pill">Litmus & Turmeric</span>
+                            <span class="topic-pill">Physical Changes</span>
+                            <span class="topic-pill">Rusting of Iron</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="chapters/science/science_chem_ch1.html" class="btn-sub-link"><i class="fas fa-vial"></i> Acids & Bases</a>
+                            <a href="chapters/science/science_chem_ch2.html" class="btn-sub-link"><i class="fas fa-atom"></i> Changes</a>
+                        </div>
                     </div>
-                </a>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🌿</span>
+                            <span class="sub-card-title">Biology Stream</span>
+                        </div>
+                        <p class="sub-card-desc">Cellular respiration, photosynthesis, human digestive system, circulatory organs, and plant reproduction cycles.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">Nutrition in Plants</span>
+                            <span class="topic-pill">Human Digestion</span>
+                            <span class="topic-pill">Respiration</span>
+                            <span class="topic-pill">Transportation</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="chapters/science/science_bio_ch2.html" class="btn-sub-link"><i class="fas fa-leaf"></i> Plant Nutrition</a>
+                            <a href="chapters/science/science_bio_ch3.html" class="btn-sub-link"><i class="fas fa-dna"></i> Animal Nutrition</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deck-quick-actions">
+                    <a href="science_index.html" class="quick-action-btn"><i class="fas fa-list-ol"></i> All Science Chapters</a>
+                    <a href="chapters/science/science_phy_ch2.html" class="quick-action-btn"><i class="fas fa-bolt"></i> Electric Circuits</a>
+                    <a href="midterm.html" class="quick-action-btn"><i class="fas fa-crosshairs"></i> Midterm Blueprint</a>
+                </div>
             </div>
+
+            <!-- 5. MATHEMATICS COMMAND DECK -->
+            <div id="deck-maths" class="subject-deck-panel">
+                <div class="deck-banner">
+                    <div class="banner-left">
+                        <div class="banner-icon" style="color: #38BDF8;">📐</div>
+                        <div class="banner-title-group">
+                            <h2>Mathematics & Reasoning <span class="brand-badge">8 Chapters Ready</span></h2>
+                            <p>Number operations, geometric proofs, algebraic equations, and data analytics with stepwise solutions.</p>
+                        </div>
+                    </div>
+                    <a href="maths_index.html" class="btn-launch-hub"><i class="fas fa-external-link-alt"></i> Enter Maths Hub</a>
+                </div>
+
+                <div class="subdiscipline-grid">
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🔢</span>
+                            <span class="sub-card-title">Number Systems</span>
+                        </div>
+                        <p class="sub-card-desc">Properties of integers, operations on negative numbers, fractions, decimals, exponents, and order of operations.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">Integers & Rules</span>
+                            <span class="topic-pill">Fractions</span>
+                            <span class="topic-pill">Decimals</span>
+                            <span class="topic-pill">Rational Numbers</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="source_materials/chapters/maths/claude_maths_ch1.html" class="btn-sub-link"><i class="fas fa-play"></i> Integers</a>
+                            <a href="source_materials/chapters/maths/claude_maths_ch2.html" class="btn-sub-link"><i class="fas fa-percentage"></i> Fractions</a>
+                        </div>
+                    </div>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">📏</span>
+                            <span class="sub-card-title">Geometry & Mensuration</span>
+                        </div>
+                        <p class="sub-card-desc">Parallel lines & transversals, exterior angle theorem, Pythagoras theorem, congruent triangles, and 2D area/perimeter.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">Lines & Angles</span>
+                            <span class="topic-pill">Triangle Properties</span>
+                            <span class="topic-pill">Perimeter & Area</span>
+                            <span class="topic-pill">Circle Formulas</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="source_materials/chapters/maths/claude_maths_area.html" class="btn-sub-link"><i class="fas fa-draw-polygon"></i> Lines & Angles</a>
+                            <a href="source_materials/chapters/maths/claude_maths_area.html" class="btn-sub-link"><i class="fas fa-shapes"></i> Triangles</a>
+                        </div>
+                    </div>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">📊</span>
+                            <span class="sub-card-title">Algebra & Data Handling</span>
+                        </div>
+                        <p class="sub-card-desc">Linear equations in one variable, algebraic expressions terms & coefficients, mean, median, mode, and bar graphs.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">Simple Equations</span>
+                            <span class="topic-pill">Algebraic Terms</span>
+                            <span class="topic-pill">Mean & Median</span>
+                            <span class="topic-pill">Probability</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="source_materials/chapters/maths/claude_maths_practice.html" class="btn-sub-link"><i class="fas fa-equals"></i> Simple Equations</a>
+                            <a href="source_materials/chapters/maths/claude_maths_practice.html" class="btn-sub-link"><i class="fas fa-chart-bar"></i> Data Handling</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deck-quick-actions">
+                    <a href="maths_index.html" class="quick-action-btn"><i class="fas fa-list-ol"></i> Full Maths Curriculum</a>
+                    <a href="source_materials/chapters/maths/claude_maths_area.html" class="quick-action-btn"><i class="fas fa-ruler-combined"></i> Perimeter & Area</a>
+                    <a href="midterm.html" class="quick-action-btn"><i class="fas fa-crosshairs"></i> Midterm Exam Revision</a>
+                </div>
+            </div>
+
+            <!-- 6. SOCIAL SCIENCE COMMAND DECK -->
+            <div id="deck-social" class="subject-deck-panel">
+                <div class="deck-banner">
+                    <div class="banner-left">
+                        <div class="banner-icon" style="color: #F97316;">🗺️</div>
+                        <div class="banner-title-group">
+                            <h2>Social Science • History, Geog & Civics <span class="brand-badge">8 Chapters Ready</span></h2>
+                            <p>NCERT Class 7 comprehensive social science suite with timelines, map pointers, constitutional facts, and summaries.</p>
+                        </div>
+                    </div>
+                    <a href="social_science_index.html" class="btn-launch-hub"><i class="fas fa-external-link-alt"></i> Enter Social Sci Hub</a>
+                </div>
+
+                <div class="subdiscipline-grid">
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🏛️</span>
+                            <span class="sub-card-title">History • Our Pasts - II</span>
+                        </div>
+                        <p class="sub-card-desc">Medieval Indian history: Cholas, Delhi Sultanate dynasties, Mughal empire administration, Mansabdari system, and temples.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">New Kings & Kingdoms</span>
+                            <span class="topic-pill">Delhi Sultans</span>
+                            <span class="topic-pill">Mughal Empire</span>
+                            <span class="topic-pill">Tribes & Nomads</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="chapters/social_science/social_science_1.html" class="btn-sub-link"><i class="fas fa-crown"></i> Kings & Kingdoms</a>
+                            <a href="chapters/social_science/social_science_1.html" class="btn-sub-link"><i class="fas fa-shield-alt"></i> Delhi Sultans</a>
+                        </div>
+                    </div>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🌍</span>
+                            <span class="sub-card-title">Geography • Our Environment</span>
+                        </div>
+                        <p class="sub-card-desc">Atmospheric layers, hydrological cycles, plate tectonics, interior structure of the Earth, and ecosystem dynamics.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">Environment</span>
+                            <span class="topic-pill">Inside Our Earth</span>
+                            <span class="topic-pill">Our Changing Earth</span>
+                            <span class="topic-pill">Air & Water</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="chapters/social_science/social_science_6.html" class="btn-sub-link"><i class="fas fa-tree"></i> Environment</a>
+                            <a href="chapters/social_science/social_science_6.html" class="btn-sub-link"><i class="fas fa-globe-asia"></i> Inside Earth</a>
+                        </div>
+                    </div>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">⚖️</span>
+                            <span class="sub-card-title">Civics • Social & Political Life</span>
+                        </div>
+                        <p class="sub-card-desc">Democratic equality, role of government in healthcare, state legislative assemblies, MLA roles, and gender equality.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">On Equality</span>
+                            <span class="topic-pill">Role in Health</span>
+                            <span class="topic-pill">State Government</span>
+                            <span class="topic-pill">Media & Markets</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="chapters/social_science/social_science_13.html" class="btn-sub-link"><i class="fas fa-balance-scale"></i> On Equality</a>
+                            <a href="chapters/social_science/social_science_17.html" class="btn-sub-link"><i class="fas fa-hospital"></i> Healthcare</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deck-quick-actions">
+                    <a href="social_science_index.html" class="quick-action-btn"><i class="fas fa-list-ol"></i> Complete SST Directory</a>
+                    <a href="chapters/social_science/social_science_1.html" class="quick-action-btn"><i class="fas fa-monument"></i> The Mughal Empire</a>
+                    <a href="midterm.html" class="quick-action-btn"><i class="fas fa-crosshairs"></i> Midterm SST Checklist</a>
+                </div>
+            </div>
+
+            <!-- 7. ICT / COMPUTER SCIENCE COMMAND DECK -->
+            <div id="deck-ict" class="subject-deck-panel">
+                <div class="deck-banner">
+                    <div class="banner-left">
+                        <div class="banner-icon" style="color: #06B6D4;">💻</div>
+                        <div class="banner-title-group">
+                            <h2>ICT & Computer Science <span class="brand-badge">5 Modules Ready</span></h2>
+                            <p>Computer fundamentals, Microsoft Excel formulas & charts, HTML5 web design, and AI fundamentals.</p>
+                        </div>
+                    </div>
+                    <a href="ict_index.html" class="btn-launch-hub"><i class="fas fa-external-link-alt"></i> Enter ICT Hub</a>
+                </div>
+
+                <div class="subdiscipline-grid">
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🖥️</span>
+                            <span class="sub-card-title">Computing & Spreadsheets</span>
+                        </div>
+                        <p class="sub-card-desc">Hardware components, operating systems, file management, and Excel calculation formulas (SUM, AVERAGE, IF).</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">Computer Systems</span>
+                            <span class="topic-pill">Excel Formulas</span>
+                            <span class="topic-pill">Data Sorting</span>
+                            <span class="topic-pill">Charts & Graphs</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="ict_index.html#systems" class="btn-sub-link"><i class="fas fa-microchip"></i> System Basics</a>
+                            <a href="ict_index.html#excel" class="btn-sub-link"><i class="fas fa-file-excel"></i> Excel Mastery</a>
+                        </div>
+                    </div>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🌐</span>
+                            <span class="sub-card-title">Web Design & HTML5</span>
+                        </div>
+                        <p class="sub-card-desc">Structuring web pages with semantic tags, tables, hyperlinks, image embeds, CSS styling, and responsive design.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">HTML Elements</span>
+                            <span class="topic-pill">Lists & Tables</span>
+                            <span class="topic-pill">Hyperlinks</span>
+                            <span class="topic-pill">CSS Colors & Fonts</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="ict_index.html#html" class="btn-sub-link"><i class="fas fa-code"></i> HTML Coding Lab</a>
+                        </div>
+                    </div>
+
+                    <div class="subdiscipline-card">
+                        <div class="sub-card-header">
+                            <span class="sub-card-icon">🤖</span>
+                            <span class="sub-card-title">AI & Cyber Ethics</span>
+                        </div>
+                        <p class="sub-card-desc">Introduction to Artificial Intelligence, machine learning concepts, computer safety, passwords, and digital footprint.</p>
+                        <div class="sub-card-topics">
+                            <span class="topic-pill">AI Foundations</span>
+                            <span class="topic-pill">Cyber Security</span>
+                            <span class="topic-pill">Safe Browsing</span>
+                            <span class="topic-pill">Data Privacy</span>
+                        </div>
+                        <div class="sub-card-action">
+                            <a href="ict_index.html#cyber" class="btn-sub-link"><i class="fas fa-shield-virus"></i> Cyber Ethics</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="deck-quick-actions">
+                    <a href="ict_index.html" class="quick-action-btn"><i class="fas fa-laptop-code"></i> Full ICT Syllabus</a>
+                    <a href="midterm.html" class="quick-action-btn"><i class="fas fa-crosshairs"></i> Midterm Exam Topics</a>
+                </div>
+            </div>
+
         </section>
     </main>
 
-    <!-- Footer Section -->
-    <footer class="site-footer">
-        <p>Made with ❤️ for Pushti | CBSE Class 7 | 2026-27</p>
-    </footer>
-
-    <!-- Back to Top Button -->
-    <button class="back-to-top" aria-label="Back to top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <!-- App JavaScript -->
-    <script src="js/app.js"></script>
-
-<script type="module">
-    import { auth, db, onAuthStateChanged, doc, getDoc } from './firebase-config.js';
-    
-    
-      import { onSnapshot } from './firebase-config.js';
-
-      function updateTimeDisplay(seconds, elementId) {
-          if (!seconds) seconds = 0;
-          const hours = Math.floor(seconds / 3600);
-          const minutes = Math.floor((seconds % 3600) / 60);
-          document.getElementById(elementId).textContent = hours + "h " + minutes + "m";
-      }
-
-      // Listen to Pushti's time
-      onSnapshot(doc(db, "user_stats", "pushti"), (docSnap) => {
-          if (docSnap.exists()) {
-              updateTimeDisplay(docSnap.data().total_time, 'time-pushti');
-          }
-      });
-
-      // Listen to Hirak's time
-      onSnapshot(doc(db, "user_stats", "hirak"), (docSnap) => {
-          if (docSnap.exists()) {
-              updateTimeDisplay(docSnap.data().total_time, 'time-hirak');
-          }
-      });
-
-      // Parent Toggle Logic
-    const roleToggle = document.getElementById('role-checkbox');
-    if(roleToggle) {
-        roleToggle.addEventListener('change', (e) => {
-            if(e.target.checked) {
-                const pin = prompt("Please enter Parent PIN to access detailed analytics:");
-                if(pin === "1234") {
-                    window.location.href = "parent_dashboard.html";
-                } else {
-                    alert("Incorrect PIN.");
-                    e.target.checked = false;
-                }
-            }
-        });
-    }
-
-</script>
-
-
-    <!-- Login Modal -->
-    <div class="login-modal-overlay" id="login-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); backdrop-filter:blur(5px); align-items:center; justify-content:center; z-index:9999;">
-        <div class="login-modal-content" style="background:var(--surface); border:1px solid var(--border); padding:25px; border-radius:16px; width:90%; max-width:350px; box-shadow:0 10px 25px rgba(0,0,0,0.2);">
-            <h2 style="margin-top:0; margin-bottom:20px; color:var(--text-main); font-family:'Outfit', sans-serif;">Switch User</h2>
-            <div style="margin-bottom:15px;">
-                <label style="display:block; margin-bottom:5px; font-size:0.9rem; color:var(--text-muted);">Select Account:</label>
-                <select id="login-user-select" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-color); color:var(--text-main); font-family:inherit; outline:none;">
-                    <option value="pushti">Pushti</option>
-                    <option value="hirak">Hirak</option>
-                    <option value="parent">Parent</option>
+    <!-- Switch User Modal -->
+    <div class="login-modal-overlay" id="login-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); align-items:center; justify-content:center; z-index:9999;">
+        <div class="login-modal-content" style="background:var(--surface); border:1px solid var(--border); padding:24px; border-radius:16px; width:90%; max-width:350px; box-shadow:var(--shadow-lg);">
+            <h2 style="margin-top:0; margin-bottom:16px; color:var(--text-main); font-family:'Outfit', sans-serif;">Switch User</h2>
+            <div style="margin-bottom:14px;">
+                <label style="display:block; margin-bottom:5px; font-size:0.85rem; color:var(--text-muted);">Select Account:</label>
+                <select id="login-user-select" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-family:inherit; outline:none;">
+                    <option value="pushti">Pushti (Student)</option>
+                    <option value="hirak">Hirak (Parent)</option>
                     <option value="admin">Admin</option>
                 </select>
             </div>
-            <div style="margin-bottom:20px;">
-                <label style="display:block; margin-bottom:5px; font-size:0.9rem; color:var(--text-muted);">Password:</label>
-                <input type="password" id="login-password" placeholder="Enter password" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-color); color:var(--text-main); font-family:inherit; outline:none;">
-                <div id="login-error" style="color:#ef4444; font-size:0.8rem; margin-top:5px; display:none;">Incorrect password</div>
+            <div style="margin-bottom:18px;">
+                <label style="display:block; margin-bottom:5px; font-size:0.85rem; color:var(--text-muted);">Password:</label>
+                <input type="password" id="login-password" placeholder="Enter password" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-family:inherit; outline:none;">
             </div>
-            <div style="display:flex; gap:10px; justify-content:flex-end;">
-                <button onclick="closeLoginModal()" style="padding:8px 16px; border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--text-main); cursor:pointer;">Cancel</button>
-                <button onclick="attemptLogin()" style="padding:8px 16px; border-radius:8px; border:none; background:var(--primary-color); color:white; cursor:pointer; font-weight:bold;">Login</button>
+            <div id="login-error" style="color:var(--accent-rose); font-size:0.85rem; margin-bottom:12px; display:none;">Invalid password.</div>
+            <div style="display:flex; justify-content:flex-end; gap:10px;">
+                <button onclick="closeLoginModal()" style="padding:8px 16px; background:transparent; border:1px solid var(--border); border-radius:8px; color:var(--text-muted); cursor:pointer;">Cancel</button>
+                <button onclick="attemptLogin()" style="padding:8px 16px; background:var(--primary); border:none; border-radius:8px; color:#fff; font-weight:600; cursor:pointer;">Login</button>
             </div>
         </div>
     </div>
 
-    <script>
+    <!-- Firebase Real-Time User Analytics Tracker & Auth Engine -->
+    <script type="module">
+        import { auth, db, onAuthStateChanged, doc, getDoc, setDoc, onSnapshot } from './firebase-config.js';
+
         let AUTH_USERS = {
             'pushti': { name: 'Pushti', pass: 'pushti123', role: 'student', bg: '8B5CF6' },
-            'hirak':  { name: 'Hirak', pass: 'hirak123', role: 'student', bg: '10B981' },
-            'parent': { name: 'Parent', pass: 'parent123', role: 'parent', bg: 'F59E0B' },
+            'hirak':  { name: 'Hirak', pass: 'hirak123', role: 'parent', bg: '10B981' },
             'admin':  { name: 'Admin', pass: 'admin123', role: 'admin', bg: 'EF4444' }
         };
 
-        // Fetch users dynamically from Firebase
-        import { getDoc, setDoc } from './firebase-config.js';
-        
+        function updateTimeDisplay(seconds, elementId) {
+            if (!seconds) seconds = 0;
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const text = hours + "h " + minutes + "m";
+            const el = document.getElementById(elementId);
+            if (el) el.textContent = text;
+        }
+
+        // Real-time live stats subscription
+        try {
+            onSnapshot(doc(db, "user_stats", "pushti"), (docSnap) => {
+                if (docSnap && docSnap.exists()) {
+                    const t = docSnap.data().total_time;
+                    updateTimeDisplay(t, 'pushti-study-time');
+                    updateTimeDisplay(t, 'time-pushti');
+                }
+            });
+
+            onSnapshot(doc(db, "user_stats", "hirak"), (docSnap) => {
+                if (docSnap && docSnap.exists()) {
+                    const t = docSnap.data().total_time;
+                    updateTimeDisplay(t, 'hirak-verify-time');
+                    updateTimeDisplay(t, 'time-hirak');
+                }
+            });
+        } catch (err) {
+            console.log("Firebase stats subscription inactive:", err);
+        }
+
         async function loadUsers() {
             try {
                 const docSnap = await getDoc(doc(db, "settings", "users"));
-                if (docSnap.exists()) {
+                if (docSnap && docSnap.exists()) {
                     AUTH_USERS = docSnap.data();
-                    
-                    // Rebuild the select dropdown
                     const select = document.getElementById('login-user-select');
                     if (select) {
                         select.innerHTML = '';
@@ -487,111 +1452,241 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
                     }
                 } else {
-                    // Seed the default users to Firebase if they don't exist
                     await setDoc(doc(db, "settings", "users"), AUTH_USERS);
                 }
             } catch (err) {
-                console.error("Could not fetch users from Firebase, falling back to local.", err);
+                console.log("Local fallback for auth users.");
             }
         }
-        
-        // Call it on load
+
         loadUsers();
 
+        window.openLoginModal = function() {
+            const passInput = document.getElementById('login-password');
+            const err = document.getElementById('login-error');
+            const select = document.getElementById('login-user-select');
+            const dropdown = document.getElementById('global-dropdown');
+            if (dropdown) dropdown.style.display = 'none';
+            if (passInput) passInput.value = '';
+            if (err) err.style.display = 'none';
+            if (select) select.value = localStorage.getItem('pushti-active-user') || 'pushti';
+            const modal = document.getElementById('login-modal');
+            if (modal) modal.style.display = 'flex';
+        };
 
-        function openLoginModal() {
-            document.getElementById('login-password').value = '';
-            document.getElementById('login-error').style.display = 'none';
-            document.getElementById('login-user-select').value = localStorage.getItem('pushti-active-user') || 'pushti';
-            document.getElementById('login-modal').style.display = 'flex';
-        }
+        window.closeLoginModal = function() {
+            const modal = document.getElementById('login-modal');
+            if (modal) modal.style.display = 'none';
+        };
 
-        function closeLoginModal() {
-            document.getElementById('login-modal').style.display = 'none';
-        }
-
-        function attemptLogin() {
+        window.attemptLogin = function() {
             const userKey = document.getElementById('login-user-select').value;
             const pass = document.getElementById('login-password').value;
-            
-            if (AUTH_USERS[userKey].pass === pass) {
+            const err = document.getElementById('login-error');
+
+            if (AUTH_USERS[userKey] && AUTH_USERS[userKey].pass === pass) {
                 localStorage.setItem('pushti-active-user', userKey);
-                closeLoginModal();
+                window.closeLoginModal();
                 applyActiveUser();
             } else {
-                document.getElementById('login-error').style.display = 'block';
+                if (err) err.style.display = 'block';
             }
-        }
+        };
 
         function applyActiveUser() {
             const userKey = localStorage.getItem('pushti-active-user') || 'pushti';
             const user = AUTH_USERS[userKey];
             if (!user) return;
 
-            // Update Header Profile
             const avatarImg = document.getElementById('user-avatar');
-            if(avatarImg) avatarImg.src = `https://ui-avatars.com/api/?name=${user.name}&background=${user.bg}&color=ffffff&rounded=true&bold=true&font-size=0.5`;
-            
-            const nameDisp = document.getElementById('user-name-display');
-            if(nameDisp) nameDisp.textContent = user.name;
-            
-            // Update Hero text
-            const heroName = document.getElementById('hero-name');
-            if(heroName) heroName.textContent = user.name + "!";
-            
-            // Update Footer text
-            const footerName = document.getElementById('footer-name');
-            if(footerName) footerName.textContent = user.name;
-
-            // Flip Student/Parent toggle
-            const roleCheckbox = document.getElementById('role-checkbox');
-            if (roleCheckbox) {
-                if (user.role === 'parent' || user.role === 'admin') {
-                    if (!roleCheckbox.checked) {
-                        roleCheckbox.click(); // Programmatically flip to parent mode
-                    }
-                } else {
-                    if (roleCheckbox.checked) {
-                        roleCheckbox.click(); // Flip back to student mode
-                    }
-                }
+            if (avatarImg) {
+                avatarImg.src = `https://ui-avatars.com/api/?name=${user.name}&background=${user.bg}&color=ffffff&rounded=true&bold=true&font-size=0.5`;
             }
+
+            const nameDisp = document.getElementById('user-name-display');
+            if (nameDisp) nameDisp.textContent = user.name;
+
+            const roleDisp = document.getElementById('dropdown-user-role');
+            if (roleDisp) roleDisp.textContent = user.role || 'Student';
         }
 
-        document.addEventListener('DOMContentLoaded', applyActiveUser);
+        window.applyActiveUser = applyActiveUser;
+        applyActiveUser();
     </script>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const themeBtn = document.querySelector('.theme-toggle');
-    if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
-        themeBtn.classList.add('handled-by-inline');
-        themeBtn.addEventListener('click', (e) => {
-            // Prevent app.js from also firing if it's there
-            e.stopImmediatePropagation();
-            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.body.setAttribute('data-theme', newTheme);
-            const icon = themeBtn.querySelector('i');
-            if(icon) {
-                icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-            localStorage.setItem('pushti-theme', newTheme);
-            
-            if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ theme: newTheme }, '*');
-            }
+    <!-- Master Stage & Animated Transition Orchestrator -->
+    <script>
+    const STREAM_DATA = {
+        languages: {
+            label: "Languages Stream",
+            count: "3 Subjects",
+            subjects: [
+                { id: "english", name: "English", icon: "📝", desc: "Literature, Grammar, ASL", modules: "7 Modules Ready", link: "english_index.html" },
+                { id: "hindi", name: "हिन्दी (Hindi)", icon: "अ", desc: "साहित्य, व्याकरण, लेखन", modules: "6 Modules Ready", link: "hindi_index.html" },
+                { id: "sanskrit", name: "संस्कृतम् (Sanskrit)", icon: "🕉️", desc: "साहित्यम्, व्याकरणम्, रचना", modules: "8 Modules Ready", link: "sanskrit_index.html" }
+            ]
+        },
+        stem: {
+            label: "STEM & Social Science",
+            count: "4 Subjects",
+            subjects: [
+                { id: "science", name: "Science", icon: "🔬", desc: "Physics, Chemistry, Biology", modules: "7 Chapters Ready", link: "science_index.html" },
+                { id: "maths", name: "Mathematics", icon: "📐", desc: "Numbers, Expressions, Lines", modules: "8 Chapters Ready", link: "maths_index.html" },
+                { id: "social", name: "Social Science", icon: "🗺️", desc: "History, Geography, Civics", modules: "8 Chapters Ready", link: "social_science_index.html" },
+                { id: "ict", name: "ICT / Computer", icon: "💻", desc: "Systems, HTML, AI Basics", modules: "5 Chapters Ready", link: "ict_index.html" }
+            ]
+        }
+    };
+
+    let currentPillar = 'languages';
+    let currentSubjectId = 'english';
+
+    function switchPillar(pillarKey) {
+        if (!STREAM_DATA[pillarKey]) return;
+        currentPillar = pillarKey;
+
+        // Update Pillar buttons active state
+        document.querySelectorAll('.pillar-btn').forEach(btn => btn.classList.remove('active'));
+        const activePillarBtn = document.getElementById('pillar-btn-' + pillarKey);
+        if (activePillarBtn) activePillarBtn.classList.add('active');
+
+        // Update Deck Column Header
+        document.getElementById('deck-stream-label').textContent = STREAM_DATA[pillarKey].label;
+        document.getElementById('deck-stream-count').textContent = STREAM_DATA[pillarKey].count;
+
+        // Render Subject Cards for this pillar
+        renderSubjectCards(STREAM_DATA[pillarKey].subjects);
+
+        // Select the first subject in the stream
+        const firstSubject = STREAM_DATA[pillarKey].subjects[0];
+        if (firstSubject) {
+            selectSubject(firstSubject.id);
+        }
+    }
+
+    function renderSubjectCards(subjects) {
+        const container = document.getElementById('subject-cards-container');
+        container.innerHTML = '';
+
+        subjects.forEach(subj => {
+            const btn = document.createElement('button');
+            btn.className = 'subject-card-btn';
+            btn.id = 'subj-card-' + subj.id;
+            btn.onclick = () => selectSubject(subj.id);
+
+            btn.innerHTML = `
+                <div class="card-icon-box">${subj.icon}</div>
+                <div class="card-info">
+                    <div class="card-name">${subj.name}</div>
+                    <div class="card-details">${subj.desc}</div>
+                    <div class="card-badge-row">
+                        <span class="card-tag">${subj.modules}</span>
+                    </div>
+                </div>
+                <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+            `;
+            container.appendChild(btn);
         });
-        const savedTheme = localStorage.getItem('pushti-theme');
-        if(savedTheme) {
+    }
+
+    function selectSubject(subjectId) {
+        currentSubjectId = subjectId;
+
+        // Update card active states with docking translation
+        document.querySelectorAll('.subject-card-btn').forEach(card => card.classList.remove('active'));
+        const activeCard = document.getElementById('subj-card-' + subjectId);
+        if (activeCard) activeCard.classList.add('active');
+
+        // Smooth GPU Accelerated Transition on the Stage Viewport:
+        document.querySelectorAll('.subject-deck-panel').forEach(panel => {
+            panel.classList.remove('active');
+        });
+
+        const targetDeck = document.getElementById('deck-' + subjectId);
+        if (targetDeck) {
+            targetDeck.classList.add('active');
+        }
+    }
+
+    // Global Search Functionality
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchBtn = document.getElementById('global-search-btn');
+        const searchInput = document.getElementById('global-search-input');
+        
+        if (searchBtn && searchInput) {
+            searchBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (searchInput.style.display === 'none' || searchInput.style.display === '') {
+                    searchInput.style.display = 'block';
+                    searchInput.focus();
+                } else {
+                    performFilter(searchInput.value.toLowerCase().trim());
+                }
+            });
+            
+            searchInput.addEventListener('input', function() {
+                performFilter(searchInput.value.toLowerCase().trim());
+            });
+            
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performFilter(searchInput.value.toLowerCase().trim());
+                }
+            });
+        }
+        
+        function performFilter(term) {
+            if (!term) {
+                document.querySelectorAll('.subdiscipline-card').forEach(card => card.style.display = '');
+                return;
+            }
+            document.querySelectorAll('.subdiscipline-card').forEach(card => {
+                if (card.innerText.toLowerCase().includes(term)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Theme Toggle
+        const themeBtn = document.querySelector('.theme-toggle');
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.body.setAttribute('data-theme', newTheme);
+                document.documentElement.setAttribute('data-theme', newTheme);
+                const icon = themeBtn.querySelector('i');
+                if (icon) {
+                    icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+                localStorage.setItem('pushti-theme', newTheme);
+            });
+
+            const savedTheme = localStorage.getItem('pushti-theme') || 'dark';
             document.body.setAttribute('data-theme', savedTheme);
+            document.documentElement.setAttribute('data-theme', savedTheme);
             const icon = themeBtn.querySelector('i');
-            if(icon) {
+            if (icon) {
                 icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
             }
         }
-    }
-});
-</script>
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('global-dropdown');
+            const avatar = document.getElementById('global-user-avatar');
+            if (dropdown && dropdown.style.display === 'flex') {
+                if (!dropdown.contains(e.target) && !avatar.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            }
+        });
+
+        // Initialize default pillar and active subject
+        switchPillar('languages');
+    });
+    </script>
 </body>
 </html>
