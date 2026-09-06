@@ -678,23 +678,29 @@
             subject: 'Science (Biology)',
             unit: 'Biology • Branch Unit 1',
             author: 'CBSE Science Curriculum',
-            version: 'v2.1.0',
-            lastModified: 'September 6, 2026, 06:10 PM IST',
+            version: 'v2.2.0',
+            lastModified: 'September 6, 2026, 07:50 PM IST',
             modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
             modelBadgeColor: '#10B981',
             aiProvider: 'Google DeepMind',
-            taskType: 'Pedagogical Restructuring & Full Scientific Rationale Overhaul',
-            summary: 'Restructured Science Biology Chapter 2: prioritized Tab 1 for Objective Practice (OMR & Weekly Test Prep), combined 2 & 3 Marks and 4+ Marks / Case Studies into Tab 2, unified Videos, Concept Map & Vault in Tab 3, categorized all questions under 6 NCERT textbook section headers, enriched all questions with deep scientific rationales, and verified all video links via YouTube oEmbed.',
+            taskType: 'CBSE Class 7 Calibration & Full Chemistry-Style Tab 3 Architecture Upgrade',
+            summary: 'Upgraded Biology Chapter 2 to match Chemistry Chapter 2: implemented sub-topic quick-jump filter pills and global Expand/Collapse controls across all tabs, calibrated all 8 video lessons strictly for CBSE Class 7/8 Science (Magnet Brains, BYJU\'S Class 6-8, TicTacLearn, Vedantu, Peekaboo Kidz), built 4 Class 7 Core Concept Pillars, and added 4 Biology Vault trivia cards.',
             changesList: [
-                'Prioritized Tab 1 for Objective Practice (OMR & Weekly Test Prep) with Practice Mode and Timed Examination Mode.',
-                'Combined 2 & 3 Marks and 4+ Marks / Case Studies into a unified Tab 2 (Textbook Questions & Solutions) with active recall accordions.',
-                'Unified external media in Tab 3: 4 Visual Concept Pillars, Curated Video Lessons, and Biology Vault Trivia.',
-                'Categorized questions across both tabs under 6 textbook section headers matching NCERT/CBSE chapter flow.',
-                'Overhauled all MCQ, Fill-in-the-blank, and True/False explanations with rigorous scientific and physiological rationales.',
-                'Verified and replaced all video links with active educational videos (Khan Academy, CrashCourse Biology, Amoeba Sisters, SciShow, TicTacLearn NCERT).',
-                'Maintained universal silence policy (0 audio tags / 0 AudioContext) and dark/light theme fidelity.'
+                'Added Sub-Topic quick-jump filter pills across Tab 1 and Tab 2 with live question counts.',
+                'Added Global Controls Toolbar (Expand/Collapse All Sections on Tab 1 & Tab 2, Show/Hide All Answers on Tab 2, Expand/Collapse Panels on Tab 3).',
+                'Calibrated all 8 video lessons specifically for CBSE Class 7/8 standards (replaced college-level CrashCourse & Khan Medicine with Magnet Brains, BYJU\'S, TicTacLearn, Vedantu, Dr. Binocs).',
+                'Synthesized 4 Core Concept Pillars tailored for Class 7 Biology (Pubertal Growth, Endocrine Switchboard, Reproductive Phase, Adolescent Nutrition & Hygiene).',
+                'Built 4 interactive Biology Vault trivia cards with reveal buttons (Hypothalamus alarm clock, Adam\'s apple acoustics, Tadpole iodine metamorphosis, Jaggery & anaemia prevention).',
+                'Created interactive collapsible section accordions with rotating chevrons and badge counters.',
+                'Enforced universal silence (0 audio tags / 0 AudioContext) and dark/light theme support.'
             ],
             history: [
+                {
+                    version: 'v2.2.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Upgraded Tab 3 to match Chemistry chapter standard, added subtopic classification filters and expand/collapse accordions, and calibrated video curriculum specifically for CBSE Std 7.'
+                },
                 {
                     version: 'v2.1.0',
                     date: 'September 6, 2026',
