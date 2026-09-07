@@ -197,7 +197,7 @@
             display: block;
         }
 
-        .pill-gemini, .pill-claude {
+        .pill-gemini, .pill-claude, .pill-gemini-n {
             display: inline-flex;
             align-items: center;
             gap: 4px;
@@ -228,6 +228,15 @@
             background: #D97706;
             color: #FFFFFF;
         }
+        .pill-gemini-n {
+            background: rgba(6, 182, 212, 0.18);
+            border: 1px solid #06B6D4;
+            color: #67E8F9;
+        }
+        .pill-gemini-n:hover {
+            background: #06B6D4;
+            color: #FFFFFF;
+        }
         [data-theme="light"] .pill-gemini {
             background: #f3e8ff !important;
             border-color: #8b5cf6 !important;
@@ -244,6 +253,15 @@
         }
         [data-theme="light"] .pill-claude:hover {
             background: #d97706 !important;
+            color: #ffffff !important;
+        }
+        [data-theme="light"] .pill-gemini-n {
+            background: #cffafe !important;
+            border-color: #0891b2 !important;
+            color: #0e7490 !important;
+        }
+        [data-theme="light"] .pill-gemini-n:hover {
+            background: #0891b2 !important;
             color: #ffffff !important;
         }
     </style>
@@ -454,7 +472,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <div class="syllabus-content">
                             <div class="s-category">Chapters (8)</div>
                             <ul class="syllabus-list">
-                                <li>Ch.1 Large Numbers Around Us <a href="source_materials/chapters/maths/claude_maths_ch1.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a></li>
+                                <li>Ch.1 Large Numbers Around Us <a href="chapters/maths/maths_ch1.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini.v1</a> <a href="source_materials/chapters/maths/claude_maths_ch1.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a></li>
                                 <li>Ch.2 Arithmetic Expressions <a href="source_materials/chapters/maths/claude_maths_ch2.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a></li>
                                 <li>Ch.3 A Peek Beyond the Point</li>
                                 <li>Ch.4 Expressions using Letter-Numbers</li>
@@ -598,13 +616,13 @@ document.addEventListener("DOMContentLoaded", function() {
                             <div class="s-category">Chemistry (2)</div>
                             <ul class="syllabus-list">
                                 <li>Ch.1 Exploring Substances: Acids, Bases and Neutral <a href="chapters/science/science_chem_ch1.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini</a> <a href="source_materials/chapters/science/claude_chem_ch1.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a></li>
-                                <li>Ch.2 The World of Metals and Non-Metals <a href="chapters/science/science_chem_ch2.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini</a></li>
+                                <li>Ch.2 The World of Metals and Non-Metals <a href="chapters/science/science_chem_ch2.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini</a> <a href="chapters/science/science_chem_ch2_notes.html" class="pill-gemini-n"><i class="fas fa-book-open"></i> Gemini-N</a></li>
                             </ul>
                             <div class="s-category">Physics (3)</div>
                             <ul class="syllabus-list">
-                                <li>Ch.1 Electricity <a href="source_materials/chapters/science/claude_phy_ch1.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a></li>
-                                <li>Ch.2 Heat Transfer <a href="chapters/science/science_phy_ch2.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini</a></li>
-                                <li>Ch.3 Measurement of Time and Motion <span style="font-size:0.75rem; color:#EF4444;">(Pending)</span></li>
+                                <li>Ch.1 Electricity <a href="chapters/science/science_phy_ch1.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini.v1</a> <a href="source_materials/chapters/science/claude_phy_ch1.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a></li>
+                                <li>Ch.2 Heat Transfer <a href="chapters/science/science_phy_ch2.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini.v1</a> <a href="chapters/science/science_phy_ch2_notes.html" class="pill-gemini-n"><i class="fas fa-book-open"></i> Gemini-N</a></li>
+                                <li>Ch.3 Measurement of Time and Motion <a href="chapters/science/science_phy_ch3.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini.v1</a> <a href="source_materials/chapters/science/claude_phy_ch3.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a></li>
                             </ul>
                         </div>
                     </td>
@@ -698,6 +716,77 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
+
+<!-- Universal Jump to Top Button -->
+<style>
+.pushti-jump-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #ffffff;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(99, 102, 241, 0.45), 0 2px 6px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px) scale(0.9);
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 99999;
+}
+.pushti-jump-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+.pushti-jump-to-top:hover {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    transform: translateY(-3px) scale(1.06);
+}
+.pushti-jump-to-top svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+</style>
+<button id="pushti-jump-to-top" class="pushti-jump-to-top" aria-label="Jump to top" title="Jump to Top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
+</button>
+<script>
+(function() {
+    var btn = document.getElementById('pushti-jump-to-top');
+    if (!btn) return;
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            ticking = true;
+            window.requestAnimationFrame(function() {
+                var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+                if (scrollY > 100) {
+                    btn.classList.add('visible');
+                } else {
+                    btn.classList.remove('visible');
+                }
+                ticking = false;
+            });
+        }
+    }, { passive: true });
+})();
+</script>
+
 </body>
 </html>
 

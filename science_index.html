@@ -231,6 +231,20 @@
         box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
         transform: translateY(-1px);
     }
+    .btn-gemini-n {
+        background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(59, 130, 246, 0.2));
+        border: 1px solid #06B6D4;
+        color: #67E8F9;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .btn-gemini-n:hover {
+        background: #06B6D4;
+        color: #FFFFFF;
+        box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
+        transform: translateY(-1px);
+    }
     
     .chapter-card {
         display: flex;
@@ -316,6 +330,15 @@
 }
 [data-theme="light"] .btn-claude:hover {
     background: #d97706 !important;
+    color: #ffffff !important;
+}
+[data-theme="light"] .btn-gemini-n {
+    background: #cffafe !important;
+    border-color: #0891b2 !important;
+    color: #0e7490 !important;
+}
+[data-theme="light"] .btn-gemini-n:hover {
+    background: #0891b2 !important;
     color: #ffffff !important;
 }
 </style>
@@ -437,7 +460,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div class="branch-icon">⚡</div>
                     <div class="branch-details">
                         <span class="branch-title">Physics</span>
-                        <span class="branch-stats">2/3 Chapters Ready</span>
+                        <span class="branch-stats">3/3 Chapters Ready</span>
                     </div>
                 </button>
             </aside>
@@ -496,6 +519,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         </div>
                         <div class="ch-actions">
                             <a href="chapters/science/science_chem_ch2.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
+                            <a href="chapters/science/science_chem_ch2_notes.html" class="btn-link btn-gemini-n"><i class="fas fa-book-open"></i> Gemini-N</a>
                         </div>
                     </div>
                 </div>
@@ -510,6 +534,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <div class="ch-tags"><span class="tag" style="color:#10B981">Current</span><span class="tag" style="color:#10B981">Circuits</span><span class="tag" style="color:#10B981">Components</span></div>
                         </div>
                         <div class="ch-actions">
+                            <a href="chapters/science/science_phy_ch1.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini.v1</a>
                             <a href="source_materials/chapters/science/claude_phy_ch1.html" class="btn-link btn-claude"><i class="fas fa-brain"></i> Claude</a>
                         </div>
                     </div>
@@ -521,15 +546,20 @@ document.addEventListener("DOMContentLoaded", function() {
                             <div class="ch-tags"><span class="tag" style="color:#10B981">Temperature</span><span class="tag" style="color:#10B981">Conduction</span><span class="tag" style="color:#10B981">Radiation</span></div>
                         </div>
                         <div class="ch-actions">
-                            <a href="chapters/science/science_phy_ch2.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
+                            <a href="chapters/science/science_phy_ch2.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini.v1</a>
+                            <a href="chapters/science/science_phy_ch2_notes.html" class="btn-link btn-gemini-n"><i class="fas fa-book-open"></i> Gemini-N</a>
                         </div>
                     </div>
-                    <div class="chapter-card" style="opacity: 0.6;">
+                    <div class="chapter-card">
                         <div class="ch-num">03</div>
                         <div class="ch-content">
-                            <h3 class="ch-title">Measurement of time and motion <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
+                            <h3 class="ch-title">Measurement of time and motion</h3>
                             <p class="ch-desc">Understand speed, velocity, and how we measure time.</p>
                             <div class="ch-tags"><span class="tag" style="color:#10B981">Speed</span><span class="tag" style="color:#10B981">Velocity</span><span class="tag" style="color:#10B981">Time</span></div>
+                        </div>
+                        <div class="ch-actions">
+                            <a href="chapters/science/science_phy_ch3.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini.v1</a>
+                            <a href="source_materials/chapters/science/claude_phy_ch3.html" class="btn-link btn-claude"><i class="fas fa-brain"></i> Claude</a>
                         </div>
                     </div>
                 </div>
@@ -581,5 +611,76 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
+
+<!-- Universal Jump to Top Button -->
+<style>
+.pushti-jump-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #ffffff;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(99, 102, 241, 0.45), 0 2px 6px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px) scale(0.9);
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 99999;
+}
+.pushti-jump-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+.pushti-jump-to-top:hover {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    transform: translateY(-3px) scale(1.06);
+}
+.pushti-jump-to-top svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+</style>
+<button id="pushti-jump-to-top" class="pushti-jump-to-top" aria-label="Jump to top" title="Jump to Top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
+</button>
+<script>
+(function() {
+    var btn = document.getElementById('pushti-jump-to-top');
+    if (!btn) return;
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            ticking = true;
+            window.requestAnimationFrame(function() {
+                var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+                if (scrollY > 100) {
+                    btn.classList.add('visible');
+                } else {
+                    btn.classList.remove('visible');
+                }
+                ticking = false;
+            });
+        }
+    }, { passive: true });
+})();
+</script>
+
 </body>
 </html>

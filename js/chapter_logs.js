@@ -124,6 +124,8 @@
                     date: 'September 5, 2026',
                     model: 'Gemini 2.5 Pro (via Antigravity)',
                     notes: 'Initial release of Tagore poetry module with interactive literary device cards.'
+                }
+            ]
         },
 
         'eng_lit_ch4': {
@@ -155,6 +157,8 @@
                     date: 'September 6, 2026',
                     model: 'Gemini 2.5 Pro (via Antigravity)',
                     notes: 'Initial production release with all 5 interactive tabs, audio cues, image gallery, and glassmorphism styling.'
+                }
+            ]
         },
 
         'eng_lit_ch5': {
@@ -186,6 +190,8 @@
                     date: 'September 6, 2026',
                     model: 'Gemini 2.5 Pro (via Antigravity)',
                     notes: 'Initial production release with all 5 interactive tabs, audio cues, image gallery, and glassmorphic UI.'
+                }
+            ]
         },
 
         'eng_lit_ch6': {
@@ -425,6 +431,9 @@
                     date: 'September 5, 2026',
                     model: 'Gemini 2.5 Pro (via Antigravity)',
                     notes: 'Updated schedule, added weekly hours delta calculator, and KB textbook spotlight.'
+                }
+            ]
+        },
         // ==========================================
         // HINDI LITERATURE (वसन्त / हिन्दी साहित्य)
         // ==========================================
@@ -769,23 +778,47 @@
             subject: 'Science (Chemistry)',
             unit: 'Chemistry • Branch Unit 1',
             author: 'CBSE Science Curriculum',
-            version: 'v2.0.0',
-            lastModified: 'September 6, 2026, 06:45 PM IST',
+            version: 'v2.4.0',
+            lastModified: 'September 7, 2026, 10:25 PM IST',
             modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
             modelBadgeColor: '#8B5CF6',
             aiProvider: 'Google DeepMind',
-            taskType: 'Pedagogical Modernization & Complete Biological Contamination Eradication',
-            summary: 'Modernized and restructured Chemistry Chapter 2 (The World of Metals and Non-Metals) matching the 3-tab architecture of Biology Chapter 2. Completely eliminated legacy biological placeholder strings, structured 147 objective items and 49 subjective questions across 6 NCERT textbook section headers, integrated 8 verified video lessons, 4 concept pillars, and 4 Chemistry Vault trivia cards with universal silence.',
+            taskType: 'Gemini-N Master Notes SOP Alignment & Browser Freeze Fix',
+            summary: 'Resolved a browser freezing bug caused by an uncontrolled MutationObserver in scroll_to_top.js when switching categories. Fully standardized Chemistry Chapter 2 Master Notes (science_chem_ch2_notes.html) to the authoritative Gemini-N SOP standard (matching Physics Chapter 2): implemented the standard breadcrumb header, sticky navigation bar pinned on scroll at top: 57px with 7 filter pills, display controls toolbar (Expand/Collapse All, Print/PDF, Practice Suite link), and 6 collapsible accordion module wrappers with in-module jump navigation.',
             changesList: [
-                'Purged all legacy biological placeholder strings ("According to the chapter\'s biological concepts") and digestive trivia.',
-                'Tab 1: Objective Practice & OMR Test Prep (108 MCQs, 20 Fills, 19 True/False) with Practice Mode and Timed Examination Mode.',
-                'Tab 2: Combined 49 Textbook Questions & Solutions (Short, Long, Assertion-Reason, Match-the-Following, Flowcharts, and Case Studies) with interactive answer accordions.',
-                'Tab 3: Unified Media Hub with 4 Visual Concept Pillars, 8 verified active video lessons, and 4 Chemistry Vault deep-dive trivia cards.',
-                'Organized all content strictly under 6 NCERT textbook section headers for intuitive study flow.',
-                'Provided rigorous, scientifically accurate chemical rationales for every single question explaining equations, reactivity series, and physical properties.',
-                'Enforced universal silence policy (0 audio tags, 0 AudioContext) and dynamic dark/light theme support.'
+                'Eliminated browser freeze/hang on STEM tab and Science Index by removing the recursive MutationObserver in scroll_to_top.js and implementing decoupled requestAnimationFrame scroll handling.',
+                'Brought science_chem_ch2_notes.html into 100% compliance with the Gemini-N SOP established in science_phy_ch2_notes.html.',
+                'Replaced non-standard header with the standard breadcrumb site-header (Home > Science > Chemistry Ch 2 > Gemini-N Master Notes) and fully labeled action buttons (147-MCQ Practice Suite, Time Table, Mid-Term, Theme, and Audit Log).',
+                'Added mandatory sticky navigation bar (.sticky-notes-nav) pinned at top: 57px with 7 filter pills (All Modules, Mod 1 to Mod 6) that stays visible throughout scrolling.',
+                'Integrated Display Controls Toolbar with Expand All Modules, Collapse All Modules, Print Notes / Save PDF, and Practice 147 MCQs.',
+                'Structured all content into 6 collapsible .notes-module-wrapper sections with clickable accordion headers and in-module topic jump bars.',
+                'Preserved 100% of textbook enriched content: 9 NCERT Activities, 10 Solved Illustrations, 4 Simulators, and 10 Knowledge Checkpoints.'
             ],
             history: [
+                {
+                    version: 'v2.4.0',
+                    date: 'September 7, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Gemini-N SOP alignment: sticky navigation bar at top: 57px, collapsible module accordions, display controls toolbar, standard breadcrumb header, and eliminated browser freeze in scroll_to_top.js.'
+                },
+                {
+                    version: 'v2.3.0',
+                    date: 'September 7, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Multi-tab architecture overhaul: replaced single-page infinite-scroll and horizontal scrollbar navigation with 6 primary tabs, 20 subtopic pill views, enhanced card styles, and dynamic KaTeX tab rendering.'
+                },
+                {
+                    version: 'v2.2.0',
+                    date: 'September 7, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Enriched Gemini-N Master Notes with 9 NCERT Activity Corners, Electroplating Specifications Table, 10-Alloy Master Matrix, 10 Solved Illustrations, and Chapter Concept Map from scanned source PDF.'
+                },
+                {
+                    version: 'v2.1.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Added standalone Gemini-N Master Study Notes module (science_chem_ch2_notes.html) featuring 7 exhaustive concept modules, 10 physical exceptions, KaTeX chemical equations, and 4 interactive chemistry laboratory simulators.'
+                },
                 {
                     version: 'v2.0.0',
                     date: 'September 6, 2026',
@@ -797,6 +830,183 @@
                     date: 'August 2026',
                     model: 'Initial Build',
                     notes: 'Original plain HTML structure with basic questions and legacy placeholders.'
+                }
+            ]
+        },
+
+        'sci_phy_ch3': {
+            id: 'sci_phy_ch3',
+            title: 'Chapter 3: Measurement of Time and Motion',
+            subject: 'Science - Physics',
+            unit: 'Kinematics & Temporal Measurement',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 9:35 PM IST',
+            modelUsed: 'Gemini 3.8 Flash (via Antigravity)',
+            modelBadgeColor: '#10B981',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Comprehensive Interactive Study & Practice Chapter Generation',
+            summary: 'Complete 8-tab interactive module digitized from phy3.pdf with 70 MCQs across 3 levels, 10 FITBs, 10 True/False, Match & Assertion, Subjective NCERT solutions, concept map, and physics trivia.',
+            changesList: [
+                'Digitized 8 core theory sections from ancient sundials to quartz and atomic clocks.',
+                'Full Galileo simple pendulum analysis with time period and frequency formulations.',
+                '70 interactive MCQs across Level 1 (Foundation), Level 2 (Application), and Level 3 (HOTS) with instant validation and step-by-step mathematical solutions.',
+                '10 interactive Fill in the Blanks with dynamic hint reveals and fun facts.',
+                '10 True or False statements with scientific justification drawers.',
+                'Match the following lists and 5 Assertion-Reason problems with detailed explanations.',
+                'Very Short, Short, and Long answer question bank including NCERT numericals with collapsible model answers.',
+                'ASCII Concept Map, comprehensive formula sheet, and Gemini\'s Physics Vault trivia.'
+            ],
+            history: [
+                {
+                    version: 'v2.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Generated Gemini.v1 3-tab standard format module (science_phy_ch3.html) matching Chemistry chapter standard with dual-mode OMR testing and 5 textbook sections, alongside the 8-tab interactive edition.'
+                },
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini (via Antigravity)',
+                    notes: 'Initial production release of Physics Chapter 3 interactive module.'
+                }
+            ]
+        },
+
+        'sci_phy_ch1': {
+            id: 'sci_phy_ch1',
+            title: 'Chapter 1: Electricity: Circuits and their Components',
+            subject: 'Science - Physics',
+            unit: 'Electricity & Electromagnetism',
+            version: 'v2.0.0',
+            lastModified: 'September 6, 2026, 10:15 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#10B981',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Full 3-Tab Chemistry Standard Module & Dual-Mode OMR Examination Suite',
+            summary: 'Comprehensive digitization of Physics Chapter 1 from phy ch1.pdf matching Chemistry 3-Tab Architecture with 90 MCQs across 3 levels, dual Practice & Timed Test mode (60-min timer and dynamic palette), comprehensive subjective question bank (VSA, SA, LA, NCERT, Numericals, Assertion-Reason, Fill in Blanks, True/False), 4 Visual Concept Pillars, 3 active video lessons, and Gemini\'s Physics Vault.',
+            changesList: [
+                'Tab 1: 90 high-yield MCQs covering circuits, Joule\'s law, fuses/MCBs, electromagnetism, and HOTS problems.',
+                'Dual-mode switch: Practice mode with instant scientific rationale and Timed Test mode with 60-min countdown and live question palette.',
+                'Tab 2: Comprehensive subjective question bank with collapsible answers, including work/potential difference and Ohm\'s law numericals.',
+                'Tab 3: 4 Visual Concept Pillars (Circuits, Heating/Joule, Safety Devices, Electromagnets), verified video lessons, and Gemini\'s Physics Vault trivia.',
+                'Interactive dark/light theme support and universal accessibility.'
+            ],
+            history: [
+                {
+                    version: 'v2.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Modernized 3-tab edition (Gemini.v1) generated in standard Chemistry architecture (science_phy_ch1.html).'
+                },
+                {
+                    version: 'v1.0.0',
+                    date: 'September 1, 2026',
+                    model: 'Claude 3.5 Sonnet',
+                    notes: 'Original 8-tab interactive module with Quicksand typography and Claude\'s Corner (claude_phy_ch1.html).'
+                }
+            ]
+        },
+
+        'sci_phy_ch2': {
+            id: 'sci_phy_ch2',
+            title: 'Chapter 2: Heat Transfer & Temperature',
+            subject: 'Science - Physics',
+            unit: 'Thermodynamics & Heat Transfer',
+            version: 'v1.1.0',
+            lastModified: 'September 6, 2026, 11:35 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#10B981',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Full 3-Tab Chemistry Standard Module & Gemini-N Master Study Notes',
+            summary: 'Comprehensive digitization of Physics Chapter 2 from phy 2 30-Aug-2026.pdf matching Chemistry 3-Tab Architecture (80 MCQs, 20 Subjective solutions, 4 video embeds, Physics Vault) accompanied by the exhaustive Gemini-N Master Study Notes module covering 7 concept modules, 4 interactive simulators, derivations, and Olympiad insights.',
+            changesList: [
+                'Created standalone Gemini-N Master Notes (science_phy_ch2_notes.html) patterned after Claude\'s Chemistry Ch 1 notes with vast in-depth curriculum and beyond-the-book Olympiad coverage.',
+                '7 Comprehensive Concept Modules: Heat vs Temp, Thermometry, Conduction Lattices, Convection & Coastal Breezes, Radiation & Thermos Flask, Thermal & Anomalous Water Expansion, and Gemini\'s Deep Physics Vault.',
+                '4 Interactive Physics Simulators: Live Universal Scale Converter, Bimetallic Strip Temperature Simulator, Coastal Breeze Diurnal Reverser, and Thermos Flask Component Inspector.',
+                'Tab 1 of science_phy_ch2.html: 80 high-yield MCQs across 5 sections, 10 Fill in the Blanks, and 10 True/False with timed OMR test mode.',
+                'Tab 2: Comprehensive subjective question bank with collapsible answers across all 5 sections.',
+                'Tab 3: 4 Visual Concept Pillars, 4 verified active YouTube video embeds, and 4 Physics Master Key Vault traps.',
+                'Interactive dark/light theme support, mobile responsiveness, and KaTeX math rendering.'
+            ],
+            history: [
+                {
+                    version: 'v1.1.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Added Gemini-N Master Study Notes module (science_phy_ch2_notes.html) featuring 7 deep modules, interactive simulators, and Olympiad extensions.'
+                },
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Modernized 3-tab edition (Gemini.v1) generated in standard Chemistry architecture (science_phy_ch2.html).'
+                }
+            ]
+        },
+
+        // ==========================================
+        // MATHEMATICS
+        // ==========================================
+        'math_ch1': {
+            id: 'math_ch1',
+            title: 'Chapter 1: Large Numbers Around Us',
+            subject: 'Mathematics',
+            unit: 'Number Systems & Foundations',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 11:55 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#8B5CF6',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Standardized 4-Tab Mathematics Architecture (Gemini.v1)',
+            summary: 'Standardized the master format for all Mathematics chapters based on source material Maths Ch1.pdf (Class 7). Engineered a 4-Tab modular architecture featuring 5 topic-wise sub-tabs in Tab 1 to eliminate long scrolling, 60 MCQs + 20 objective questions with Timed OMR Test Mode and 60-bubble question navigator in Tab 2, exhaustive step-by-step solutions for all NCERT Try These and Exercises 1.1-1.3 in Tab 3, and 4 interactive mathematical simulators with verified video lectures and Gemini\'s Maths Vault in Tab 4.',
+            changesList: [
+                'Designed and standardized the Master 4-Tab Architecture for Mathematics: Tab 1 Theory & Illustrations, Tab 2 Objective Practice & Timed OMR, Tab 3 NCERT Exercises & Solutions, Tab 4 Interactive Maths Lab & Formula Vault.',
+                'Eliminated endless page scrolling in Tab 1 by implementing 5 modular sub-topic panes (Numeration & Powers of 10, Comparing & Ordering, Exact vs Approximate & Rounding, Estimating Operations, Product Patterns & Metric Units) with 15 solved illustrations.',
+                'Tab 2: 60 Curated MCQs across 4 graded levels (Level 1 Foundation, Level 2 Multi-Step Application, Level 3 Assertion-Reasoning, Level 4 Case Study Competency) plus 10 Fill in the Blanks and 10 True/False.',
+                'Interactive Timed OMR Exam Engine: 60:00 countdown timer, 60-bubble question navigator palette with instant jump-to-question, practice mode instant reveals, and automatic scorecards.',
+                'Tab 3: Full pedagogical step-by-step solutions for all in-text "Try These" exploration activities, NCERT Exercises 1.1, 1.2, and 1.3, and Olympiad HOTS proofs.',
+                'Tab 4 Interactive Maths Lab: Live Indian <-> International Numeration Converter (up to 12 digits, dual period commas, number names in words, expanded power forms), Multi-Tier Rounding Off Engine, Roman Numeral Converter (1-3999), and Metric Matrix.',
+                'Embedded 4 verified active YouTube video lectures from Magnet Brains with zero broken embeds.',
+                'Gemini\'s Maths Vault: 4 high-scorer secret traps covering zero-digit place omissions, general rule product fallacies, Roman subtraction limits, and boundary range counting (+1 rule).'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Standardized Initial Release (Gemini.v1) establishing the blueprint architecture for all Mathematics chapters (chapters/maths/maths_ch1.html).'
+                }
+            ]
+        },
+
+        'maths_ch1': {
+            id: 'maths_ch1',
+            title: 'Chapter 1: Large Numbers Around Us',
+            subject: 'Mathematics',
+            unit: 'Number Systems & Foundations',
+            version: 'v1.0.0',
+            lastModified: 'September 6, 2026, 11:55 PM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#8B5CF6',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Standardized 4-Tab Mathematics Architecture (Gemini.v1)',
+            summary: 'Standardized the master format for all Mathematics chapters based on source material Maths Ch1.pdf (Class 7). Engineered a 4-Tab modular architecture featuring 5 topic-wise sub-tabs in Tab 1 to eliminate long scrolling, 60 MCQs + 20 objective questions with Timed OMR Test Mode and 60-bubble question navigator in Tab 2, exhaustive step-by-step solutions for all NCERT Try These and Exercises 1.1-1.3 in Tab 3, and 4 interactive mathematical simulators with verified video lectures and Gemini\'s Maths Vault in Tab 4.',
+            changesList: [
+                'Designed and standardized the Master 4-Tab Architecture for Mathematics: Tab 1 Theory & Illustrations, Tab 2 Objective Practice & Timed OMR, Tab 3 NCERT Exercises & Solutions, Tab 4 Interactive Maths Lab & Formula Vault.',
+                'Eliminated endless page scrolling in Tab 1 by implementing 5 modular sub-topic panes (Numeration & Powers of 10, Comparing & Ordering, Exact vs Approximate & Rounding, Estimating Operations, Product Patterns & Metric Units) with 15 solved illustrations.',
+                'Tab 2: 60 Curated MCQs across 4 graded levels (Level 1 Foundation, Level 2 Multi-Step Application, Level 3 Assertion-Reasoning, Level 4 Case Study Competency) plus 10 Fill in the Blanks and 10 True/False.',
+                'Interactive Timed OMR Exam Engine: 60:00 countdown timer, 60-bubble question navigator palette with instant jump-to-question, practice mode instant reveals, and automatic scorecards.',
+                'Tab 3: Full pedagogical step-by-step solutions for all in-text "Try These" exploration activities, NCERT Exercises 1.1, 1.2, and 1.3, and Olympiad HOTS proofs.',
+                'Tab 4 Interactive Maths Lab: Live Indian <-> International Numeration Converter (up to 12 digits, dual period commas, number names in words, expanded power forms), Multi-Tier Rounding Off Engine, Roman Numeral Converter (1-3999), and Metric Matrix.',
+                'Embedded 4 verified active YouTube video lectures from Magnet Brains with zero broken embeds.',
+                'Gemini\'s Maths Vault: 4 high-scorer secret traps covering zero-digit place omissions, general rule product fallacies, Roman subtraction limits, and boundary range counting (+1 rule).'
+            ],
+            history: [
+                {
+                    version: 'v1.0.0',
+                    date: 'September 6, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Standardized Initial Release (Gemini.v1) establishing the blueprint architecture for all Mathematics chapters (chapters/maths/maths_ch1.html).'
                 }
             ]
         }
