@@ -1009,8 +1009,49 @@
                     notes: 'Standardized Initial Release (Gemini.v1) establishing the blueprint architecture for all Mathematics chapters (chapters/maths/maths_ch1.html).'
                 }
             ]
+        },
+
+        'maths_ch2': {
+            id: 'maths_ch2',
+            title: 'Chapter 2: Arithmetic Expressions',
+            subject: 'Mathematics',
+            unit: 'Operations & Algebraic Foundations',
+            version: 'v1.0.1',
+            lastModified: 'September 8, 2026, 01:15 AM IST',
+            modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
+            modelBadgeColor: '#10B981',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Standardized 4-Tab Mathematics Architecture (Gemini.v2)',
+            summary: 'Built complete production module for Class 7 Mathematics Chapter 2: "Arithmetic Expressions" following 100% SOP alignment with Chapter 1 while visually differentiated with an Emerald / Jade & Amethyst theme. Features zero promotional banners, 3-tier sticky HUD navigation (Header 60px, Tabs 45px, Sub-Nav 105px), 5 modular theory units with 10 solved illustrations in Tab 1, high-density 4-column single-line MCQ architecture (60 MCQs + 20 Objectives across 6 sections) with 60-bubble OMR test engine in Tab 2, self-practice NCERT "Figure It Out" discovery activities and Exercises 2.1-2.4 with hidden step-by-step solutions in Tab 3, and 4 interactive math discovery simulators in Tab 4.',
+            changesList: [
+                'Emerald / Jade & Amethyst mathematical color palette (--primary: #10b981; --accent-purple: #a855f7; --accent-amber: #f59e0b) on deep slate background for clean visual differentiation from Chapter 1.',
+                'Strict SOP Alignment: Zero hero banners, immediate content beneath sticky tabs, breadcrumbs, Claude Edition, Time Table, Mid-Term Syllabus, Audit Log, and Dark/Light toggle.',
+                '3-Tier Persistent Sticky Navigation: Tier 1 Site Header (top: 0), Tier 2 Primary Tabs (top: 60px), and Tier 3 Subtopic/Filter Bars (top: 105px) across all 4 tabs with auto-offset scrolling.',
+                'Tab 1: 5 modular theory units (Expression Basics, Precedence & BODMAS, Brackets & Inversion, Distributive Law, Algebraic Generalization) with 10 step-by-step solved illustrations.',
+                'Tab 2: High-density 4-column single-line MCQ grid (60 MCQs + 20 Objectives across 6 sections), fitting 6-8 questions on screen without wrapping short choices onto multiple lines, plus 60-bubble OMR palette and 60-min exam timer.',
+                'Tab 3: Active self-practice workflow for all NCERT "Figure It Out" discovery activities (Pages 25, 34-35, 37-38, 39, 42-44) and Exercises 2.1-2.4. Problem box shown first, full solutions hidden behind [Show Step-by-Step Solution] toggle, bulk toolbar controls, and strict nowrap rules on tables.',
+                'Tab 4: 4 Dynamic Discovery Simulators: (1) Live BODMAS Step-by-Step Evaluator, (2) Parentheses Target Value Solver, (3) Terms & Sign Reordering Playground, and (4) Distributive Law SVG Area Model Visualizer.',
+                'Zero AudioContext / zero sound effect errors, 100% clean console logs, and central audit log registration.'
+            ],
+            history: [
+                {
+                    version: 'v1.0.1',
+                    date: 'September 8, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Resolved primary tab mutual exclusivity, restored full rendering for Practice, NCERT, and Lab panes, and enabled seamless subtopic pane navigation and scrolling in Tab 1.'
+                },
+                {
+                    version: 'v1.0.0',
+                    date: 'September 8, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Standardized Initial Release (Gemini.v2) for Arithmetic Expressions (chapters/maths/maths_ch2.html).'
+                }
+            ]
         }
     };
+
+    CHAPTER_LOGS['math_ch1'] = CHAPTER_LOGS['maths_ch1'];
+    CHAPTER_LOGS['math_ch2'] = CHAPTER_LOGS['maths_ch2'];
 
     window.CHAPTER_LOGS = CHAPTER_LOGS;
 
