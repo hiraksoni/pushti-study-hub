@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ch 2: Arithmetic Expressions — Complete Notes | Pushti Study Hub</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+
+<style>
+/* ═══════════════════════════════════════════════
+   CSS VARIABLE ARCHITECTURE — DARK (DEFAULT) / LIGHT
+═══════════════════════════════════════════════ */
+:root {
+  --bg-base:        #060d16;
+  --surface:        #0a1726;
+  --surface-glass:  rgba(10,23,38,0.95);
+  --bg-card:        rgba(13,29,48,0.80);
+  --bg-card-hover:  rgba(16,36,60,0.95);
+
+  --border:         rgba(16,185,129,0.18);
+  --border-hover:   rgba(52,211,153,0.45);
+
+  --primary:        #10b981;
+  --primary-glow:   #34d399;
+  --primary-subtle: rgba(16,185,129,0.12);
+  --primary-deep:   rgba(16,185,129,0.06);
+
+  --accent-purple:        #a855f7;
+  --accent-purple-subtle: rgba(168,85,247,0.12);
+  --accent-amber:         #f59e0b;
+  --accent-amber-subtle:  rgba(245,158,11,0.12);
+  --accent-cyan:          #06b6d4;
+  --accent-cyan-subtle:   rgba(6,182,212,0.12);
+  --accent-rose:          #f43f5e;
+  --accent-rose-subtle:   rgba(244,63,94,0.12);
+  --accent-sky:           #38bdf8;
+  --accent-sky-subtle:    rgba(56,189,248,0.12);
+
+  --text-title:  #f0fdf4;
+  --text-main:   #cbd5e1;
+  --text-muted:  #94a3b8;
+  --text-dim:    #64748b;
+
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.45);
+  --shadow-lg: 0 8px 36px rgba(0,0,0,0.60);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --font-head: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --header-h: 60px;
+  --jump-h:   46px;
+}
+
+[data-theme="light"] {
+  --bg-base:        #f0fdf8;
+  --surface:        #ffffff;
+  --surface-glass:  rgba(255,255,255,0.97);
+  --bg-card:        rgba(255,255,255,0.95);
+  --bg-card-hover:  rgba(240,253,248,1);
+
+  --border:         rgba(16,185,129,0.25);
+  --border-hover:   rgba(5,150,105,0.55);
+
+  --primary:        #059669;
+  --primary-glow:   #10b981;
+  --primary-subtle: rgba(5,150,105,0.10);
+  --primary-deep:   rgba(5,150,105,0.05);
+
+  --text-title:  #064e3b;
+  --text-main:   #1e293b;
+  --text-muted:  #475569;
+  --text-dim:    #94a3b8;
+
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.12);
+  --shadow-lg: 0 8px 36px rgba(0,0,0,0.15);
+}
+
+/* ═══════════════════════════════════════════════  RESET + BASE  ═══ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg-base);
+  color: var(--text-main);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+  transition: background 0.25s, color 0.25s;
+}
+
+/* ═══════════════════════════════════════════════  STICKY HEADER  ═══ */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  height: var(--header-h);
+  background: var(--surface-glass);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px;
+  gap: 12px;
+}
+.header-left {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-head); font-size: 0.75rem; color: var(--text-muted);
+  flex-wrap: wrap;
+}
+.header-left a { color: var(--text-muted); text-decoration: none; }
+.header-left a:hover { color: var(--primary); }
+.header-left .sep { color: var(--text-dim); }
+.header-left .current { color: var(--primary); font-weight: 600; }
+
+.header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.ch-badge {
+  background: var(--primary-subtle);
+  border: 1px solid var(--border);
+  color: var(--primary);
+  font-family: var(--font-head); font-size: 0.7rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+}
+.theme-btn {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-muted); cursor: pointer; font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.theme-btn:hover { color: var(--primary); border-color: var(--primary); }
+
+/* ═══════════════════════════════════════════════  JUMP BAR  ═══ */
+.jump-bar {
+  position: sticky; top: var(--header-h); z-index: 90;
+  background: var(--surface-glass);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  height: var(--jump-h);
+  display: flex; align-items: center;
+  padding: 0 16px; gap: 4px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.jump-bar::-webkit-scrollbar { display: none; }
+.jump-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: 20px;
+  font-family: var(--font-head); font-size: 0.72rem; font-weight: 600;
+  white-space: nowrap; cursor: pointer; text-decoration: none;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.jump-pill:hover {
+  color: var(--primary); background: var(--primary-subtle);
+  border-color: var(--border-hover);
+}
+.jump-pill i { font-size: 0.7rem; }
+
+/* ═══════════════════════════════════════════════  CHAPTER INTRO  ═══ */
+.chapter-intro {
+  max-width: 960px; margin: 0 auto; padding: 36px 20px 24px;
+  display: flex; align-items: flex-start; gap: 20px;
+}
+.ch-num {
+  font-family: var(--font-head); font-size: 4rem; font-weight: 900;
+  color: var(--primary); opacity: 0.18; line-height: 1; flex-shrink: 0;
+  user-select: none;
+}
+.ch-text h1 {
+  font-family: var(--font-head); font-size: 1.75rem; font-weight: 800;
+  color: var(--text-title); line-height: 1.2; margin-bottom: 8px;
+}
+.ch-text .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 10px; }
+.ch-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.ch-tag {
+  background: var(--primary-subtle); border: 1px solid var(--border);
+  color: var(--primary); font-size: 0.7rem; font-weight: 600;
+  padding: 3px 10px; border-radius: 12px;
+  font-family: var(--font-head);
+}
+
+/* ═══════════════════════════════════════════════  SECTION WRAPPERS  ═══ */
+.page-content { max-width: 960px; margin: 0 auto; padding: 0 20px 80px; }
+
+.section {
+  border-top: 1px solid var(--border);
+  padding: 40px 0 20px;
+}
+.section-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 28px;
+}
+.section-icon {
+  width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.icon-emerald { background: var(--primary-subtle); color: var(--primary); border: 1px solid var(--border); }
+.icon-purple  { background: var(--accent-purple-subtle); color: var(--accent-purple); border: 1px solid rgba(168,85,247,0.2); }
+.icon-amber   { background: var(--accent-amber-subtle);  color: var(--accent-amber);  border: 1px solid rgba(245,158,11,0.2); }
+.icon-cyan    { background: var(--accent-cyan-subtle);   color: var(--accent-cyan);   border: 1px solid rgba(6,182,212,0.2); }
+.icon-rose    { background: var(--accent-rose-subtle);   color: var(--accent-rose);   border: 1px solid rgba(244,63,94,0.2); }
+.icon-sky     { background: var(--accent-sky-subtle);    color: var(--accent-sky);    border: 1px solid rgba(56,189,248,0.2); }
+
+.section-title {
+  font-family: var(--font-head); font-size: 1.25rem; font-weight: 700;
+  color: var(--text-title);
+}
+.section-subtitle { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+
+/* ═══════════════════════════════════════════════  CARDS  ═══ */
+.card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 20px 22px;
+  margin-bottom: 14px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.card:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+
+.card-h {
+  font-family: var(--font-head); font-size: 1rem; font-weight: 700;
+  color: var(--primary); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card-h i { font-size: 0.9rem; }
+
+.card-grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.card-grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+
+/* ═══════════════════════════════════════════════  FORMULA BOX  ═══ */
+.formula-box {
+  background: linear-gradient(135deg, var(--primary-deep), var(--bg-card));
+  border: 1px solid var(--primary);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-md); padding: 16px 20px;
+  margin: 14px 0;
+}
+.formula-box .label {
+  font-family: var(--font-head); font-size: 0.7rem; font-weight: 700;
+  color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 8px; display: block;
+}
+.formula-box .math-big { font-size: 1.1rem; }
+
+/* colored formula variants */
+.formula-purple { border-color: var(--accent-purple); border-left-color: var(--accent-purple); background: linear-gradient(135deg, var(--accent-purple-subtle), var(--bg-card)); }
+.formula-purple .label { color: var(--accent-purple); }
+.formula-amber  { border-color: var(--accent-amber);  border-left-color: var(--accent-amber);  background: linear-gradient(135deg, var(--accent-amber-subtle), var(--bg-card)); }
+.formula-amber  .label  { color: var(--accent-amber); }
+.formula-cyan   { border-color: var(--accent-cyan);   border-left-color: var(--accent-cyan);   background: linear-gradient(135deg, var(--accent-cyan-subtle), var(--bg-card)); }
+.formula-cyan   .label  { color: var(--accent-cyan); }
+.formula-rose   { border-color: var(--accent-rose);   border-left-color: var(--accent-rose);   background: linear-gradient(135deg, var(--accent-rose-subtle), var(--bg-card)); }
+.formula-rose   .label  { color: var(--accent-rose); }
+
+/* ═══════════════════════════════════════════════  TIP / WARN / KEY  ═══ */
+.callout {
+  border-radius: var(--radius-sm); padding: 12px 16px; margin: 12px 0;
+  display: flex; gap: 12px; align-items: flex-start;
+  font-size: 0.88rem;
+}
+.callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.callout-tip  { background: var(--primary-subtle); border: 1px solid rgba(16,185,129,0.3); }
+.callout-tip  .callout-icon { color: var(--primary); }
+.callout-warn { background: var(--accent-amber-subtle); border: 1px solid rgba(245,158,11,0.3); }
+.callout-warn .callout-icon { color: var(--accent-amber); }
+.callout-key  { background: var(--accent-purple-subtle); border: 1px solid rgba(168,85,247,0.3); }
+.callout-key  .callout-icon { color: var(--accent-purple); }
+.callout-real { background: var(--accent-cyan-subtle); border: 1px solid rgba(6,182,212,0.3); }
+.callout-real .callout-icon { color: var(--accent-cyan); }
+
+/* ═══════════════════════════════════════════════  BODMAS VISUAL  ═══ */
+.bodmas-row {
+  display: flex; gap: 4px; flex-wrap: wrap; margin: 14px 0;
+}
+.bodmas-cell {
+  flex: 1; min-width: 70px;
+  border-radius: var(--radius-sm); padding: 10px 8px; text-align: center;
+  border: 1px solid var(--border);
+}
+.bodmas-cell .letter {
+  font-family: var(--font-head); font-size: 1.5rem; font-weight: 900; line-height: 1;
+}
+.bodmas-cell .word { font-size: 0.65rem; color: var(--text-muted); margin-top: 4px; font-weight: 600; }
+
+/* ═══════════════════════════════════════════════  EXAMPLE BLOCKS  ═══ */
+.example-block {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden; margin-bottom: 14px;
+}
+.example-head {
+  background: var(--primary-subtle); border-bottom: 1px solid var(--border);
+  padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; user-select: none;
+}
+.example-head:hover { background: rgba(16,185,129,0.18); }
+.example-num {
+  font-family: var(--font-head); font-size: 0.72rem; font-weight: 700;
+  color: var(--primary); text-transform: uppercase; letter-spacing: 0.06em;
+}
+.example-q {
+  font-family: var(--font-head); font-weight: 600; color: var(--text-title);
+  font-size: 0.92rem; flex: 1; padding: 0 12px;
+}
+.toggle-icon { color: var(--text-muted); font-size: 0.8rem; transition: transform 0.2s; }
+.example-body {
+  padding: 16px 18px;
+  display: none;
+  background: var(--bg-card);
+  font-size: 0.9rem;
+}
+.example-block.open .example-body { display: block; }
+.example-block.open .toggle-icon { transform: rotate(180deg); }
+
+.step {
+  display: flex; gap: 12px; margin-bottom: 10px; align-items: flex-start;
+}
+.step-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--primary); color: white;
+  font-size: 0.68rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.step-text { flex: 1; }
+
+/* ═══════════════════════════════════════════════  EXERCISE Q-BLOCKS  ═══ */
+.q-block {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.q-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 0; }
+.q-num-badge {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--primary-subtle); border: 1px solid var(--border);
+  color: var(--primary); font-family: var(--font-head); font-weight: 700; font-size: 0.72rem;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.q-text { flex: 1; font-size: 0.9rem; color: var(--text-main); padding-top: 4px; }
+.reveal-btn {
+  padding: 6px 14px; border-radius: 20px;
+  background: var(--primary-subtle); border: 1px solid var(--border);
+  color: var(--primary); font-family: var(--font-head); font-size: 0.72rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap; margin-top: 10px;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: all 0.2s;
+}
+.reveal-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+.answer-panel {
+  display: none; margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--primary-deep);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+}
+.answer-panel.open { display: block; }
+.answer-label {
+  font-family: var(--font-head); font-size: 0.68rem; font-weight: 700;
+  color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.assess-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.assess-btn {
+  padding: 5px 12px; border-radius: 16px;
+  font-family: var(--font-head); font-size: 0.7rem; font-weight: 600;
+  cursor: pointer; border: 1px solid; transition: all 0.15s;
+}
+.assess-got  { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3); color: #10b981; }
+.assess-got:hover  { background: #10b981; color: white; }
+.assess-part { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3);  color: #f59e0b; }
+.assess-part:hover { background: #f59e0b; color: white; }
+.assess-miss { background: rgba(244,63,94,0.12);  border-color: rgba(244,63,94,0.3);   color: #f43f5e; }
+.assess-miss:hover { background: #f43f5e; color: white; }
+
+/* ═══════════════════════════════════════════════  TABLE  ═══ */
+.styled-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 14px 0; }
+.styled-table th {
+  background: var(--primary-subtle); color: var(--primary);
+  font-family: var(--font-head); font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 10px 14px; text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+.styled-table td {
+  padding: 9px 14px; border-bottom: 1px solid var(--border);
+  color: var(--text-main); vertical-align: top;
+}
+.styled-table tr:hover td { background: var(--primary-deep); }
+
+/* ═══════════════════════════════════════════════  VIDEO CARDS  ═══ */
+.video-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 16px 18px;
+  margin-bottom: 12px; display: flex; gap: 16px; align-items: center;
+  text-decoration: none; color: inherit; transition: all 0.2s;
+}
+.video-card:hover { border-color: var(--accent-rose); background: var(--bg-card-hover); }
+.video-thumb {
+  width: 72px; height: 52px; border-radius: var(--radius-sm);
+  background: var(--accent-rose-subtle); border: 1px solid rgba(244,63,94,0.25);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 1.6rem; color: var(--accent-rose);
+}
+.video-info .video-title {
+  font-family: var(--font-head); font-weight: 700; color: var(--text-title);
+  font-size: 0.9rem; margin-bottom: 4px;
+}
+.video-info .video-meta { font-size: 0.75rem; color: var(--text-muted); }
+.video-info .video-tags { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
+.vtag {
+  background: var(--accent-rose-subtle); border: 1px solid rgba(244,63,94,0.2);
+  color: var(--accent-rose); font-size: 0.65rem; font-weight: 600;
+  padding: 2px 8px; border-radius: 10px; font-family: var(--font-head);
+}
+.video-arrow { color: var(--text-dim); flex-shrink: 0; font-size: 0.85rem; margin-left: auto; }
+
+/* ═══════════════════════════════════════════════  MISSING CONTENT  ═══ */
+.extra-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--accent-amber-subtle); border: 1px solid rgba(245,158,11,0.3);
+  color: var(--accent-amber); font-size: 0.65rem; font-weight: 700;
+  padding: 2px 8px; border-radius: 10px; font-family: var(--font-head);
+  vertical-align: middle;
+}
+
+/* ═══════════════════════════════════════════════  COMPARISON TABLE  ═══ */
+.compare-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0;
+}
+.compare-card {
+  border-radius: var(--radius-md); padding: 14px 16px;
+  border: 1px solid;
+}
+.compare-card.green-card { background: var(--primary-subtle); border-color: var(--primary); }
+.compare-card.purple-card { background: var(--accent-purple-subtle); border-color: var(--accent-purple); }
+.compare-card .cc-h {
+  font-family: var(--font-head); font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;
+}
+.compare-card.green-card  .cc-h { color: var(--primary); }
+.compare-card.purple-card .cc-h { color: var(--accent-purple); }
+
+/* ═══════════════════════════════════════════════  SECTION DIVIDER  ═══ */
+.sec-divider {
+  display: flex; align-items: center; gap: 12px; margin: 30px 0 20px;
+}
+.sec-divider-line { flex: 1; height: 1px; background: var(--border); }
+.sec-divider-label {
+  font-family: var(--font-head); font-size: 0.7rem; font-weight: 700;
+  color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════════  PROPERTY PROP  ═══ */
+.prop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 14px 0; }
+.prop-card {
+  border-radius: var(--radius-sm); padding: 14px 16px;
+  border: 1px solid var(--border); background: var(--bg-card);
+}
+.prop-name {
+  font-family: var(--font-head); font-size: 0.75rem; font-weight: 700;
+  margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em;
+}
+.prop-math { font-size: 0.85rem; color: var(--text-main); }
+.prop-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 6px; }
+
+/* ═══════════════════════════════════════════════  BRACKETS VISUAL  ═══ */
+.bracket-rule {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 12px;
+}
+.br-order {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--primary); color: white;
+  font-family: var(--font-head); font-weight: 700; font-size: 0.75rem;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.br-name { font-family: var(--font-head); font-weight: 700; color: var(--text-title); font-size: 0.88rem; }
+.br-sym { font-family: var(--font-mono); font-size: 1.1rem; color: var(--primary); margin-left: 6px; }
+.br-note { font-size: 0.8rem; color: var(--text-muted); }
+
+/* ═══════════════════════════════════════════════  MISTAKE LIST  ═══ */
+.mistake-item {
+  background: var(--accent-rose-subtle); border: 1px solid rgba(244,63,94,0.2);
+  border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 8px;
+}
+.mistake-wrong { font-family: var(--font-mono); color: var(--accent-rose); font-size: 0.88rem; margin-bottom: 4px; }
+.mistake-right { font-family: var(--font-mono); color: var(--primary); font-size: 0.88rem; }
+.mistake-why { font-size: 0.82rem; color: var(--text-muted); margin-top: 6px; }
+
+/* ═══════════════════════════════════════════════  TRICK CARDS  ═══ */
+.trick-card {
+  background: linear-gradient(135deg, var(--accent-purple-subtle), var(--bg-card));
+  border: 1px solid rgba(168,85,247,0.25); border-radius: var(--radius-md);
+  padding: 16px 18px; margin-bottom: 12px;
+}
+.trick-h {
+  font-family: var(--font-head); font-weight: 700; color: var(--accent-purple);
+  font-size: 0.92rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+}
+
+/* ═══════════════════════════════════════════════  PROGRESS TRACKER  ═══ */
+.progress-bar-wrap { background: var(--bg-card); border-radius: 20px; height: 8px; overflow: hidden; margin: 10px 0 4px; }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-glow)); border-radius: 20px; width: 0%; transition: width 0.4s; }
+
+/* ═══════════════════════════════════════════════  BACK TO TOP  ═══ */
+.back-top {
+  position: fixed; bottom: 24px; right: 20px; z-index: 200;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--primary); color: white; border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 0.9rem; box-shadow: var(--shadow-md);
+  opacity: 0; pointer-events: none; transition: opacity 0.25s;
+}
+.back-top.show { opacity: 1; pointer-events: all; }
+
+/* ═══════════════════════════════════════════════  RESPONSIVE  ═══ */
+@media (max-width: 640px) {
+  .ch-num { font-size: 2.5rem; }
+  .ch-text h1 { font-size: 1.3rem; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .card-grid-2, .card-grid-3 { grid-template-columns: 1fr; }
+  .bodmas-cell .letter { font-size: 1.1rem; }
+  .video-card { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════ STICKY HEADER ════════════════════ -->
+<header class="site-header">
+  <nav class="header-left">
+    <a href="../../../index.html"><i class="fas fa-house"></i> Home</a>
+    <span class="sep">/</span>
+    <a href="../../../maths_index.html">Maths</a>
+    <span class="sep">/</span>
+    <span class="current">Ch 2: Arithmetic Expressions</span>
+  </nav>
+  <div class="header-right">
+    <span class="ch-badge"><i class="fas fa-calculator"></i> Chapter 2</span>
+    <button class="theme-btn" id="themeBtn" title="Toggle theme" onclick="toggleTheme()">
+      <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+  </div>
+</header>
+
+<!-- ════════════════════ JUMP BAR ════════════════════ -->
+<nav class="jump-bar" id="jumpBar">
+  <a href="#notes"     class="jump-pill"><i class="fas fa-book-open"></i> Notes</a>
+  <a href="#examples"  class="jump-pill"><i class="fas fa-lightbulb"></i> Solved Examples</a>
+  <a href="#exercises" class="jump-pill"><i class="fas fa-pen-to-square"></i> Exercises</a>
+  <a href="#extras"    class="jump-pill"><i class="fas fa-brain"></i> Claude Extras</a>
+  <a href="#videos"    class="jump-pill"><i class="fas fa-play-circle"></i> Videos</a>
+  <a href="#missing"   class="jump-pill"><i class="fas fa-star"></i> Beyond Textbook</a>
+  <a href="#mistakes"  class="jump-pill"><i class="fas fa-triangle-exclamation"></i> Common Mistakes</a>
+</nav>
+
+<!-- ════════════════════ CHAPTER INTRO ════════════════════ -->
+<div class="chapter-intro">
+  <div class="ch-num">02</div>
+  <div class="ch-text">
+    <h1>Arithmetic Expressions</h1>
+    <p class="subtitle">Ganita Prakash · Class 7 · NCERT 2025–26 · Pushti Study Hub</p>
+    <div class="ch-tags">
+      <span class="ch-tag">BODMAS</span>
+      <span class="ch-tag">Brackets</span>
+      <span class="ch-tag">Properties</span>
+      <span class="ch-tag">Distributive Law</span>
+      <span class="ch-tag">Comparing Expressions</span>
+    </div>
+  </div>
+</div>
+
+<main class="page-content">
+
+<!-- ═══════════════════════════════════ §1 NOTES ═══════════════════════════════════ -->
+<section class="section" id="notes">
+  <div class="section-header">
+    <div class="section-icon icon-emerald"><i class="fas fa-book-open"></i></div>
+    <div>
+      <div class="section-title">Chapter Notes</div>
+      <div class="section-subtitle">All concepts, formulas, and rules — with KaTeX math</div>
+    </div>
+  </div>
+
+  <!-- 1.1 What is an Expression? -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-square-root-variable"></i> 1.1 What Is an Arithmetic Expression?</div>
+    <p>An <strong>arithmetic expression</strong> is a combination of <em>numbers</em> and <em>arithmetic operations</em> $(+, -, \times, \div)$ that makes mathematical sense and can be evaluated to a single number.</p>
+    <div class="formula-box" style="margin-top:12px;">
+      <span class="label">Examples</span>
+      <p>$3 + 5$ &nbsp;·&nbsp; $12 - 4 \times 2$ &nbsp;·&nbsp; $(7 + 3) \div 2$ &nbsp;·&nbsp; $100 - (25 + 36)$</p>
+    </div>
+    <div class="callout callout-tip">
+      <i class="fas fa-lightbulb callout-icon"></i>
+      <div>An expression is <strong>not an equation</strong> — it has no "=" sign. It's just a calculation waiting to be done.</div>
+    </div>
+
+    <div class="sec-divider"><div class="sec-divider-line"></div><span class="sec-divider-label">Terms</span><div class="sec-divider-line"></div></div>
+    <p>When expressions are added or subtracted, each part is called a <strong>term</strong>:</p>
+    <div class="formula-box formula-cyan">
+      <span class="label">Identifying Terms</span>
+      <p>In $\;7 + 4 - 3\;$: &nbsp; Terms are $7$, $+4$, $-3$ (separated by $+$ or $-$ outside brackets)</p>
+      <p style="margin-top:8px;">In $\;2 \times 5 + 3 \times 4\;$: &nbsp; Terms are $2 \times 5$ and $3 \times 4$</p>
+    </div>
+
+    <div class="sec-divider"><div class="sec-divider-line"></div><span class="sec-divider-label">Additive Inverse</span><div class="sec-divider-line"></div></div>
+    <p>The <strong>additive inverse</strong> of a number is what you add to it to get zero.</p>
+    <div class="formula-box formula-rose">
+      <span class="label">Rule</span>
+      <p>Additive inverse of $a$ is $-a$, &nbsp; because $a + (-a) = 0$</p>
+      <p style="margin-top:6px;">Additive inverse of $7$ is $-7$ &nbsp;·&nbsp; Additive inverse of $-12$ is $+12$</p>
+    </div>
+    <div class="callout callout-key">
+      <i class="fas fa-key callout-icon"></i>
+      <div>Subtracting a number is the same as <strong>adding its additive inverse</strong>: $\;a - b = a + (-b)$</div>
+    </div>
+  </div>
+
+  <!-- 1.2 BODMAS -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-list-ol"></i> 1.2 Order of Operations — BODMAS</div>
+    <p>When an expression has multiple operations, we use <strong>BODMAS</strong> to decide which to do first:</p>
+    <div class="bodmas-row">
+      <div class="bodmas-cell" style="background:rgba(16,185,129,0.15); border-color:#10b981;">
+        <div class="letter" style="color:#10b981;">B</div>
+        <div class="word">Brackets</div>
+      </div>
+      <div class="bodmas-cell" style="background:rgba(168,85,247,0.12); border-color:#a855f7;">
+        <div class="letter" style="color:#a855f7;">O</div>
+        <div class="word">Of (Powers)</div>
+      </div>
+      <div class="bodmas-cell" style="background:rgba(245,158,11,0.12); border-color:#f59e0b;">
+        <div class="letter" style="color:#f59e0b;">D</div>
+        <div class="word">Division</div>
+      </div>
+      <div class="bodmas-cell" style="background:rgba(6,182,212,0.12); border-color:#06b6d4;">
+        <div class="letter" style="color:#06b6d4;">M</div>
+        <div class="word">Multiplication</div>
+      </div>
+      <div class="bodmas-cell" style="background:rgba(56,189,248,0.12); border-color:#38bdf8;">
+        <div class="letter" style="color:#38bdf8;">A</div>
+        <div class="word">Addition</div>
+      </div>
+      <div class="bodmas-cell" style="background:rgba(244,63,94,0.12); border-color:#f43f5e;">
+        <div class="letter" style="color:#f43f5e;">S</div>
+        <div class="word">Subtraction</div>
+      </div>
+    </div>
+    <div class="callout callout-warn">
+      <i class="fas fa-triangle-exclamation callout-icon"></i>
+      <div><strong>D and M</strong> have equal priority — do them <strong>left to right</strong>. Same for <strong>A and S</strong> — always left to right.</div>
+    </div>
+    <div class="formula-box" style="margin-top:12px;">
+      <span class="label">Quick Example</span>
+      <p>$12 - 3 \times 2 + (4 + 1)$</p>
+      <p style="margin-top:6px; color: var(--text-muted); font-size:0.85rem;">
+        Step 1 (Brackets): $= 12 - 3 \times 2 + 5$<br>
+        Step 2 (Multiply): $= 12 - 6 + 5$<br>
+        Step 3 (Left→Right): $= 6 + 5 = 11$
+      </p>
+    </div>
+  </div>
+
+  <!-- 1.3 Brackets -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-brackets-curly"></i> 1.3 Using Brackets</div>
+    <p>Brackets <strong>change the order</strong> of operations. Always solve the innermost brackets first.</p>
+
+    <div style="margin: 14px 0;">
+      <div class="bracket-rule">
+        <div class="br-order">1</div>
+        <div>
+          <div class="br-name">Round Brackets <span class="br-sym">( )</span></div>
+          <div class="br-note">Innermost — solve these first</div>
+        </div>
+      </div>
+      <div class="bracket-rule">
+        <div class="br-order">2</div>
+        <div>
+          <div class="br-name">Curly Brackets <span class="br-sym">{ }</span></div>
+          <div class="br-note">After round brackets are solved</div>
+        </div>
+      </div>
+      <div class="bracket-rule">
+        <div class="br-order">3</div>
+        <div>
+          <div class="br-name">Square Brackets <span class="br-sym">[ ]</span></div>
+          <div class="br-note">Last — after curly brackets are solved</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-box formula-amber">
+      <span class="label">Nested Brackets Example</span>
+      <p>$[3 + \{10 - (4 \times 2)\}]$</p>
+      <p style="margin-top:6px; color:var(--text-muted); font-size:0.85rem;">
+        Inner $()$: $4 \times 2 = 8$ &nbsp;→&nbsp; $[3 + \{10 - 8\}]$<br>
+        Curly $\{\}$: $10 - 8 = 2$ &nbsp;→&nbsp; $[3 + 2]$<br>
+        Square $[]$: $3 + 2 = \mathbf{5}$
+      </p>
+    </div>
+    <div class="callout callout-tip">
+      <i class="fas fa-lightbulb callout-icon"></i>
+      <div>When a <strong>negative sign precedes a bracket</strong>, remove the bracket by <strong>flipping signs</strong>: $\;-(a + b) = -a - b$, &nbsp; $-(a - b) = -a + b$</div>
+    </div>
+  </div>
+
+  <!-- 1.4 Properties -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-shapes"></i> 1.4 Properties of Arithmetic Operations</div>
+    <div class="prop-grid">
+      <div class="prop-card">
+        <div class="prop-name" style="color:#10b981;">Commutative</div>
+        <div class="prop-math">$a + b = b + a$</div>
+        <div class="prop-math">$a \times b = b \times a$</div>
+        <div class="prop-note">Order doesn't matter for $+$ and $\times$</div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name" style="color:#a855f7;">Associative</div>
+        <div class="prop-math">$(a+b)+c = a+(b+c)$</div>
+        <div class="prop-math">$(a \times b) \times c = a \times (b \times c)$</div>
+        <div class="prop-note">Grouping doesn't matter for $+$ and $\times$</div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name" style="color:#f59e0b;">Distributive</div>
+        <div class="prop-math">$a \times (b + c) = a \times b + a \times c$</div>
+        <div class="prop-math">$a \times (b - c) = a \times b - a \times c$</div>
+        <div class="prop-note">Multiplication distributes over $+$ and $-$</div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name" style="color:#06b6d4;">Identity</div>
+        <div class="prop-math">$a + 0 = a$ &nbsp;(additive)</div>
+        <div class="prop-math">$a \times 1 = a$ &nbsp;(multiplicative)</div>
+        <div class="prop-note">$0$ is additive identity, $1$ is multiplicative identity</div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-name" style="color:#f43f5e;">Zero Property</div>
+        <div class="prop-math">$a \times 0 = 0$</div>
+        <div class="prop-note">Any number times zero is zero</div>
+      </div>
+    </div>
+    <div class="callout callout-warn">
+      <i class="fas fa-triangle-exclamation callout-icon"></i>
+      <div><strong>Subtraction and Division are NOT commutative or associative.</strong> $\;8 - 3 \ne 3 - 8$ &nbsp; and &nbsp; $8 \div 4 \ne 4 \div 8$</div>
+    </div>
+  </div>
+
+  <!-- 1.5 Smart Multiplication (Distributive Trick) -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-bolt"></i> 1.5 Smart Multiplication (Tinker the Terms)</div>
+    <p>Use the distributive property to do tricky multiplications mentally:</p>
+    <div class="formula-box formula-purple">
+      <span class="label">Trick 1 — Split to Simplify</span>
+      <p>$\;99 \times 8 = (100 - 1) \times 8 = 800 - 8 = \mathbf{792}$</p>
+    </div>
+    <div class="formula-box formula-purple">
+      <span class="label">Trick 2 — Add the Easy Part</span>
+      <p>$\;52 \times 6 = (50 + 2) \times 6 = 300 + 12 = \mathbf{312}$</p>
+    </div>
+    <div class="formula-box formula-purple">
+      <span class="label">Trick 3 — Factor to Use Known Facts</span>
+      <p>$\;36 \times 25 = 36 \times \frac{100}{4} = \frac{3600}{4} = \mathbf{900}$</p>
+    </div>
+    <div class="callout callout-real">
+      <i class="fas fa-store callout-icon"></i>
+      <div><strong>Real-Life:</strong> Price of 99 pencils at ₹8 each → $99 \times 8 = (100-1)\times 8 = ₹792$</div>
+    </div>
+  </div>
+
+  <!-- 1.6 Real Life Applications -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-earth-asia"></i> 1.6 Expressions in Real Life</div>
+    <div class="card-grid-2">
+      <div>
+        <strong>GST Calculation</strong><br>
+        <span style="font-size:0.88rem; color:var(--text-muted);">Item ₹500, GST 18%:</span>
+        <div class="formula-box" style="margin-top:8px;">
+          <span class="label">Total</span>
+          $500 + 500 \times \frac{18}{100} = 500 + 90 = ₹590$
+        </div>
+      </div>
+      <div>
+        <strong>Discount</strong><br>
+        <span style="font-size:0.88rem; color:var(--text-muted);">₹800 jacket, 25% off:</span>
+        <div class="formula-box" style="margin-top:8px;">
+          <span class="label">Final Price</span>
+          $800 - 800 \times \frac{25}{100} = 800 - 200 = ₹600$
+        </div>
+      </div>
+    </div>
+    <div class="callout callout-real" style="margin-top:12px;">
+      <i class="fas fa-cricket-ball callout-icon"></i>
+      <div><strong>Cricket:</strong> Team scored $45 + 32 - 5$ (wide penalties) = $72$ runs in first 10 overs. Run rate = $72 \div 10 = 7.2$ per over.</div>
+    </div>
+  </div>
+
+  <!-- 1.7 Comparing Expressions -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-scale-balanced"></i> 1.7 Comparing Expressions Without Calculating</div>
+    <p>You can compare expressions <strong>without computing</strong> — use the structure of the expression:</p>
+
+    <table class="styled-table" style="margin:14px 0;">
+      <thead><tr><th>Expression A</th><th>Expression B</th><th>Which is Greater?</th><th>Why?</th></tr></thead>
+      <tbody>
+        <tr><td>$5 + 8$</td><td>$5 + 9$</td><td>B is greater</td><td>Same first term, $9 > 8$</td></tr>
+        <tr><td>$7 \times 4$</td><td>$7 \times 3$</td><td>A is greater</td><td>Same factor, $4 > 3$</td></tr>
+        <tr><td>$12 - 4$</td><td>$12 - 6$</td><td>A is greater</td><td>Same base, subtracting less</td></tr>
+        <tr><td>$100 \div 4$</td><td>$100 \div 5$</td><td>A is greater</td><td>Same dividend, smaller divisor gives bigger result</td></tr>
+        <tr><td>$(8+3) \times 5$</td><td>$8 + 3 \times 5$</td><td>A is greater</td><td>A = $55$; B = $23$ by BODMAS</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-tip">
+      <i class="fas fa-lightbulb callout-icon"></i>
+      <div>To compare without calculating: find what's <strong>common</strong> in both expressions, then focus on what's <strong>different</strong>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §2 SOLVED EXAMPLES ═══════════════════════════════════ -->
+<section class="section" id="examples">
+  <div class="section-header">
+    <div class="section-icon icon-amber"><i class="fas fa-lightbulb"></i></div>
+    <div>
+      <div class="section-title">Solved Examples</div>
+      <div class="section-subtitle">NCERT textbook worked examples — click to expand step-by-step solution</div>
+    </div>
+  </div>
+
+  <!-- Example 1 -->
+  <div class="example-block" onclick="toggleExample(this)">
+    <div class="example-head">
+      <span class="example-num">Example 1</span>
+      <span class="example-q">Simplify: $\;16 + 4 \times 3 - 6 \div 2$</span>
+      <i class="fas fa-chevron-down toggle-icon"></i>
+    </div>
+    <div class="example-body">
+      <div class="step"><div class="step-num">1</div><div class="step-text">No brackets. Check for ×, ÷ first (BODMAS).</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Multiply: $4 \times 3 = 12$ &nbsp;→&nbsp; $16 + 12 - 6 \div 2$</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Divide: $6 \div 2 = 3$ &nbsp;→&nbsp; $16 + 12 - 3$</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-text">Left to right addition/subtraction: $28 - 3 = \mathbf{25}$</div></div>
+      <div class="formula-box" style="margin-top:10px;"><span class="label">Answer</span>$= \mathbf{25}$</div>
+    </div>
+  </div>
+
+  <!-- Example 2 -->
+  <div class="example-block" onclick="toggleExample(this)">
+    <div class="example-head">
+      <span class="example-num">Example 2</span>
+      <span class="example-q">Simplify: $\;[18 - \{7 + (9 - 5 \times 2)\}]$</span>
+      <i class="fas fa-chevron-down toggle-icon"></i>
+    </div>
+    <div class="example-body">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Innermost $()$: $5 \times 2 = 10$, then $9 - 10 = -1$ &nbsp;→&nbsp; $[18 - \{7 + (-1)\}]$</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Curly $\{\}$: $7 + (-1) = 6$ &nbsp;→&nbsp; $[18 - 6]$</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Square $[]$: $18 - 6 = \mathbf{12}$</div></div>
+      <div class="formula-box" style="margin-top:10px;"><span class="label">Answer</span>$= \mathbf{12}$</div>
+    </div>
+  </div>
+
+  <!-- Example 3 -->
+  <div class="example-block" onclick="toggleExample(this)">
+    <div class="example-head">
+      <span class="example-num">Example 3</span>
+      <span class="example-q">Use distributive property to find $\;99 \times 37$</span>
+      <i class="fas fa-chevron-down toggle-icon"></i>
+    </div>
+    <div class="example-body">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Write $99 = 100 - 1$</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">$(100 - 1) \times 37 = 100 \times 37 - 1 \times 37$</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">$= 3700 - 37 = \mathbf{3663}$</div></div>
+      <div class="formula-box" style="margin-top:10px;"><span class="label">Answer</span>$99 \times 37 = \mathbf{3663}$</div>
+    </div>
+  </div>
+
+  <!-- Example 4 -->
+  <div class="example-block" onclick="toggleExample(this)">
+    <div class="example-head">
+      <span class="example-num">Example 4</span>
+      <span class="example-q">Verify: $(3+4)+5 = 3+(4+5)$. Which property does this show?</span>
+      <i class="fas fa-chevron-down toggle-icon"></i>
+    </div>
+    <div class="example-body">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Left side: $(3+4)+5 = 7+5 = 12$</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Right side: $3+(4+5) = 3+9 = 12$</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">Both sides equal $12$. The <strong>grouping (brackets)</strong> changed, but the values are the same.</div></div>
+      <div class="callout callout-key" style="margin-top:10px;">
+        <i class="fas fa-key callout-icon"></i>
+        <div>This is the <strong>Associative Property of Addition</strong> — changing how numbers are grouped does NOT change the sum. (NOT Commutative — order didn't change!)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Example 5 — Comparison without calculation -->
+  <div class="example-block" onclick="toggleExample(this)">
+    <div class="example-head">
+      <span class="example-num">Example 5</span>
+      <span class="example-q">Without calculating, which is greater: $\;46 + 73\;$ or $\;46 + 79$?</span>
+      <i class="fas fa-chevron-down toggle-icon"></i>
+    </div>
+    <div class="example-body">
+      <div class="step"><div class="step-num">1</div><div class="step-text">Both expressions add something to $46$.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Compare the second terms: $79 > 73$.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">The expression that adds the larger number is greater.</div></div>
+      <div class="formula-box" style="margin-top:10px;"><span class="label">Answer</span>$46 + 79 > 46 + 73$</div>
+    </div>
+  </div>
+
+  <!-- Example 6 — GST Real Life -->
+  <div class="example-block" onclick="toggleExample(this)">
+    <div class="example-head">
+      <span class="example-num">Example 6</span>
+      <span class="example-q">A phone costs ₹12,000. GST is 18%. Write an expression and find total price.</span>
+      <i class="fas fa-chevron-down toggle-icon"></i>
+    </div>
+    <div class="example-body">
+      <div class="step"><div class="step-num">1</div><div class="step-text">GST amount $= 12000 \times \dfrac{18}{100}$</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text">Total $= 12000 + 12000 \times \dfrac{18}{100}$</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text">$= 12000 + 2160 = ₹\mathbf{14,160}$</div></div>
+      <div class="callout callout-real" style="margin-top:10px;">
+        <i class="fas fa-tag callout-icon"></i>
+        <div>This expression uses BODMAS: multiplication before addition.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §3 EXERCISES ═══════════════════════════════════ -->
+<section class="section" id="exercises">
+  <div class="section-header">
+    <div class="section-icon icon-purple"><i class="fas fa-pen-to-square"></i></div>
+    <div>
+      <div class="section-title">Figure It Out — NCERT Exercises</div>
+      <div class="section-subtitle">All exercise questions from Ganita Prakash Ch2 — reveal answers to check yourself</div>
+    </div>
+  </div>
+
+  <div class="sec-divider"><div class="sec-divider-line"></div><span class="sec-divider-label">Figure It Out — Set 1 (Simplification)</span><div class="sec-divider-line"></div></div>
+
+  <!-- Q1 -->
+  <div class="q-block" id="q1">
+    <div class="q-header">
+      <div class="q-num-badge">1</div>
+      <div class="q-text">Simplify: $\;5 + 8 \times 3 - 12 \div 4$</div>
+    </div>
+    <button class="reveal-btn" onclick="revealAnswer('q1')"><i class="fas fa-eye"></i> Reveal Answer</button>
+    <div class="answer-panel" id="q1-ans">
+      <div class="answer-label"><i class="fas fa-check-circle"></i> Solution</div>
+      <p>Multiply: $8 \times 3 = 24$ &nbsp;→&nbsp; $5 + 24 - 12 \div 4$</p>
+      <p>Divide: $12 \div 4 = 3$ &nbsp;→&nbsp; $5 + 24 - 3$</p>
+      <p>Left to right: $29 - 3 = \mathbf{26}$</p>
+      <div class="assess-row">
+        <button class="assess-btn assess-got"  onclick="mark('q1','got')">✓ Got It</button>
+        <button class="assess-btn assess-part" onclick="mark('q1','part')">~ Partial</button>
+        <button class="assess-btn assess-miss" onclick="mark('q1','miss')">✗ Missed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block" id="q2">
+    <div class="q-header">
+      <div class="q-num-badge">2</div>
+      <div class="q-text">Simplify: $\;(15 - 6) \times 2 + 18 \div 3$</div>
+    </div>
+    <button class="reveal-btn" onclick="revealAnswer('q2')"><i class="fas fa-eye"></i> Reveal Answer</button>
+    <div class="answer-panel" id="q2-ans">
+      <div class="answer-label"><i class="fas fa-check-circle"></i> Solution</div>
+      <p>Brackets: $15 - 6 = 9$ &nbsp;→&nbsp; $9 \times 2 + 18 \div 3$</p>
+      <p>Multiply and Divide (left to right): $18, 6$ &nbsp;→&nbsp; $18 + 6$</p>
+      <p>$= \mathbf{24}$</p>
+      <div class="assess-row">
+        <button class="assess-btn assess-got"  onclick="mark('q2','got')">✓ Got It</button>
+        <button class="assess-btn assess-part" onclick="mark('q2','part')">~ Partial</button>
+        <button class="assess-btn assess-miss" onclick="mark('q2','miss')">✗ Missed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block" id="q3">
+    <div class="q-header">
+      <div class="q-num-badge">3</div>
+      <div class="q-text">Simplify: $\;100 - [50 - \{30 - (20 - 5)\}]$</div>
+    </div>
+    <button class="reveal-btn" onclick="revealAnswer('q3')"><i class="fas fa-eye"></i> Reveal Answer</button>
+    <div class="answer-panel" id="q3-ans">
+      <div class="answer-label"><i class="fas fa-check-circle"></i> Solution</div>
+      <p>Innermost $()\;$: $20 - 5 = 15$ &nbsp;→&nbsp; $100 - [50 - \{30 - 15\}]$</p>
+      <p>Curly $\{\}\;$: $30 - 15 = 15$ &nbsp;→&nbsp; $100 - [50 - 15]$</p>
+      <p>Square $[]\;$: $50 - 15 = 35$ &nbsp;→&nbsp; $100 - 35$</p>
+      <p>$= \mathbf{65}$</p>
+      <div class="assess-row">
+        <button class="assess-btn assess-got"  onclick="mark('q3','got')">✓ Got It</button>
+        <button class="assess-btn assess-part" onclick="mark('q3','part')">~ Partial</button>
+        <button class="assess-btn assess-miss" onclick="mark('q3','miss')">✗ Missed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block" id="q4">
+    <div class="q-header">
+      <div class="q-num-badge">4</div>
+      <div class="q-text">Place $+$ or $\times$ in the blank to make the statement true: $\;5 \;\square\; 4 \;\square\; 3 = 17$</div>
+    </div>
+    <button class="reveal-btn" onclick="revealAnswer('q4')"><i class="fas fa-eye"></i> Reveal Answer</button>
+    <div class="answer-panel" id="q4-ans">
+      <div class="answer-label"><i class="fas fa-check-circle"></i> Solution</div>
+      <p>Try $5 + 4 \times 3 = 5 + 12 = 17$ ✓</p>
+      <p>Answer: $5 \;+\; 4 \;\times\; 3 = \mathbf{17}$</p>
+      <div class="assess-row">
+        <button class="assess-btn assess-got"  onclick="mark('q4','got')">✓ Got It</button>
+        <button class="assess-btn assess-part" onclick="mark('q4','part')">~ Partial</button>
+        <button class="assess-btn assess-miss" onclick="mark('q4','miss')">✗ Missed</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-divider"><div class="sec-divider-line"></div><span class="sec-divider-label">Figure It Out — Set 2 (Comparing Expressions)</span><div class="sec-divider-line"></div></div>
+
+  <!-- Q5 -->
+  <div class="q-block" id="q5">
+    <div class="q-header">
+      <div class="q-num-badge">5</div>
+      <div class="q-text">Without calculating, which is greater: $\;73 - 15\;$ or $\;73 - 9$?</div>
+    </div>
+    <button class="reveal-btn" onclick="revealAnswer('q5')"><i class="fas fa-eye"></i> Reveal Answer</button>
+    <div class="answer-panel" id="q5-ans">
+      <div class="answer-label"><i class="fas fa-check-circle"></i> Solution</div>
+      <p>Same base $73$. We subtract $15$ in A and $9$ in B.</p>
+      <p>Subtracting <em>less</em> gives a larger result.</p>
+      <p>Since $9 < 15$, subtracting $9$ gives more: $\;\mathbf{73 - 9 > 73 - 15}$</p>
+      <div class="assess-row">
+        <button class="assess-btn assess-got"  onclick="mark('q5','got')">✓ Got It</button>
+        <button class="assess-btn assess-part" onclick="mark('q5','part')">~ Partial</button>
+        <button class="assess-btn assess-miss" onclick="mark('q5','miss')">✗ Missed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-block" id="q6">
+    <div class="q-header">
+      <div class="q-num-badge">6</div>
+      <div class="q-text">Without calculating, state $>, <,$ or $=$: $\;8 \times (5 + 3)\;$ vs $\;8 \times 5 + 8 \times 3$</div>
+    </div>
+    <button class="reveal-btn" onclick="revealAnswer('q6')"><i class="fas fa-eye"></i> Reveal Answer</button>
+    <div class="answer-panel" id="q6-ans">
+      <div class="answer-label"><i class="fas fa-check-circle"></i> Solution</div>
+      <p>$8 \times (5+3) = 8 \times 8 = 64$</p>
+      <p>$8 \times 5 + 8 \times 3 = 40 + 24 = 64$</p>
+      <p>This is just the <strong>Distributive Property</strong>! They are always equal.</p>
+      <p>$\;\mathbf{8 \times (5+3) = 8 \times 5 + 8 \times 3}$</p>
+      <div class="assess-row">
+        <button class="assess-btn assess-got"  onclick="mark('q6','got')">✓ Got It</button>
+        <button class="assess-btn assess-part" onclick="mark('q6','part')">~ Partial</button>
+        <button class="assess-btn assess-miss" onclick="mark('q6','miss')">✗ Missed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block" id="q7">
+    <div class="q-header">
+      <div class="q-num-badge">7</div>
+      <div class="q-text">Fill in: $\;12 \times 97 = 12 \times (\_\_\_ - \_\_\_) = 12 \times \_\_\_ - 12 \times \_\_\_$</div>
+    </div>
+    <button class="reveal-btn" onclick="revealAnswer('q7')"><i class="fas fa-eye"></i> Reveal Answer</button>
+    <div class="answer-panel" id="q7-ans">
+      <div class="answer-label"><i class="fas fa-check-circle"></i> Solution</div>
+      <p>$97 = 100 - 3$</p>
+      <p>$12 \times 97 = 12 \times (100 - 3) = 12 \times 100 - 12 \times 3 = 1200 - 36 = \mathbf{1164}$</p>
+      <div class="assess-row">
+        <button class="assess-btn assess-got"  onclick="mark('q7','got')">✓ Got It</button>
+        <button class="assess-btn assess-part" onclick="mark('q7','part')">~ Partial</button>
+        <button class="assess-btn assess-miss" onclick="mark('q7','miss')">✗ Missed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-block" id="q8">
+    <div class="q-header">
+      <div class="q-num-badge">8</div>
+      <div class="q-text">A shopkeeper bought 25 pens at ₹12 each and 25 pencils at ₹3 each. Write one expression (without calculating separately) to find total cost.</div>
+    </div>
+    <button class="reveal-btn" onclick="revealAnswer('q8')"><i class="fas fa-eye"></i> Reveal Answer</button>
+    <div class="answer-panel" id="q8-ans">
+      <div class="answer-label"><i class="fas fa-check-circle"></i> Solution</div>
+      <p>Total $= 25 \times 12 + 25 \times 3 = 25 \times (12 + 3) = 25 \times 15 = ₹\mathbf{375}$</p>
+      <p style="color:var(--text-muted); font-size:0.85rem;">This uses the distributive property in reverse (factoring out 25).</p>
+      <div class="assess-row">
+        <button class="assess-btn assess-got"  onclick="mark('q8','got')">✓ Got It</button>
+        <button class="assess-btn assess-part" onclick="mark('q8','part')">~ Partial</button>
+        <button class="assess-btn assess-miss" onclick="mark('q8','miss')">✗ Missed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-block" id="q9">
+    <div class="q-header">
+      <div class="q-num-badge">9</div>
+      <div class="q-text">Simplify: $\;50 - (13 - 7) + 4 \times 3$</div>
+    </div>
+    <button class="reveal-btn" onclick="revealAnswer('q9')"><i class="fas fa-eye"></i> Reveal Answer</button>
+    <div class="answer-panel" id="q9-ans">
+      <div class="answer-label"><i class="fas fa-check-circle"></i> Solution</div>
+      <p>Brackets: $13 - 7 = 6$ &nbsp;→&nbsp; $50 - 6 + 4 \times 3$</p>
+      <p>Multiply: $4 \times 3 = 12$ &nbsp;→&nbsp; $50 - 6 + 12$</p>
+      <p>Left to right: $44 + 12 = \mathbf{56}$</p>
+      <div class="assess-row">
+        <button class="assess-btn assess-got"  onclick="mark('q9','got')">✓ Got It</button>
+        <button class="assess-btn assess-part" onclick="mark('q9','part')">~ Partial</button>
+        <button class="assess-btn assess-miss" onclick="mark('q9','miss')">✗ Missed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-block" id="q10">
+    <div class="q-header">
+      <div class="q-num-badge">10</div>
+      <div class="q-text">Find the value of $\;[5 + \{4 \times (12 - 3 \times 4)\} \div 4]$</div>
+    </div>
+    <button class="reveal-btn" onclick="revealAnswer('q10')"><i class="fas fa-eye"></i> Reveal Answer</button>
+    <div class="answer-panel" id="q10-ans">
+      <div class="answer-label"><i class="fas fa-check-circle"></i> Solution</div>
+      <p>Innermost $()$: $3 \times 4 = 12$, then $12 - 12 = 0$ &nbsp;→&nbsp; $[5 + \{4 \times 0\} \div 4]$</p>
+      <p>Curly $\{\}$: $4 \times 0 = 0$ &nbsp;→&nbsp; $[5 + 0 \div 4]$</p>
+      <p>Division: $0 \div 4 = 0$ &nbsp;→&nbsp; $[5 + 0]$</p>
+      <p>$= \mathbf{5}$</p>
+      <div class="assess-row">
+        <button class="assess-btn assess-got"  onclick="mark('q10','got')">✓ Got It</button>
+        <button class="assess-btn assess-part" onclick="mark('q10','part')">~ Partial</button>
+        <button class="assess-btn assess-miss" onclick="mark('q10','miss')">✗ Missed</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §4 CLAUDE EXTRAS ═══════════════════════════════════ -->
+<section class="section" id="extras">
+  <div class="section-header">
+    <div class="section-icon icon-cyan"><i class="fas fa-brain"></i></div>
+    <div>
+      <div class="section-title">Claude's Extras</div>
+      <div class="section-subtitle">Mental math tricks, deeper patterns, and bonus problems</div>
+    </div>
+  </div>
+
+  <!-- Trick 1: Vedic-style -->
+  <div class="trick-card">
+    <div class="trick-h"><i class="fas fa-wand-magic-sparkles"></i> Mental Math: The Compensation Method</div>
+    <p>Round one number up to a "friendly" number, multiply, then compensate:</p>
+    <div class="formula-box formula-purple">
+      <span class="label">$198 \times 6$</span>
+      <p>$= (200 - 2) \times 6 = 1200 - 12 = \mathbf{1188}$</p>
+    </div>
+    <div class="formula-box formula-purple">
+      <span class="label">$37 \times 4$</span>
+      <p>$= (40 - 3) \times 4 = 160 - 12 = \mathbf{148}$</p>
+    </div>
+  </div>
+
+  <!-- Trick 2: BODMAS vs PEMDAS -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-globe"></i> BODMAS vs PEMDAS — Same Rule, Different Names</div>
+    <div class="compare-grid">
+      <div class="compare-card green-card">
+        <div class="cc-h">🇮🇳 BODMAS (India/UK)</div>
+        <p style="font-size:0.85rem;"><strong>B</strong>rackets · <strong>O</strong>f · <strong>D</strong>ivision · <strong>M</strong>ultiplication · <strong>A</strong>ddition · <strong>S</strong>ubtraction</p>
+      </div>
+      <div class="compare-card purple-card">
+        <div class="cc-h">🇺🇸 PEMDAS (USA)</div>
+        <p style="font-size:0.85rem;"><strong>P</strong>arentheses · <strong>E</strong>xponents · <strong>M</strong>ultiplication · <strong>D</strong>ivision · <strong>A</strong>ddition · <strong>S</strong>ubtraction</p>
+      </div>
+    </div>
+    <div class="callout callout-tip">
+      <i class="fas fa-lightbulb callout-icon"></i>
+      <div>Both give the same result! The rules are identical — just different mnemonic words used in different countries.</div>
+    </div>
+  </div>
+
+  <!-- Trick 3: Four Fours Puzzle -->
+  <div class="trick-card">
+    <div class="trick-h"><i class="fas fa-puzzle-piece"></i> The Four Fours Puzzle</div>
+    <p>Can you make numbers 1–10 using exactly four 4s and any operations?</p>
+    <table class="styled-table">
+      <thead><tr><th>Target</th><th>Expression</th></tr></thead>
+      <tbody>
+        <tr><td>$1$</td><td>$44 \div 44$</td></tr>
+        <tr><td>$2$</td><td>$(4 \div 4) + (4 \div 4)$</td></tr>
+        <tr><td>$4$</td><td>$4 + 4 \times (4 - 4)$</td></tr>
+        <tr><td>$8$</td><td>$4 + 4 + 4 - 4$</td></tr>
+        <tr><td>$16$</td><td>$4 \times 4 \times (4 \div 4)$</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-tip">
+      <i class="fas fa-lightbulb callout-icon"></i>
+      <div>Try making $3, 5, 6, 7, 9, 10$ yourself! This puzzle builds deep BODMAS intuition.</div>
+    </div>
+  </div>
+
+  <!-- Trick 4: Bracket insertion -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-brackets-square"></i> Bracket Insertion — Change the Answer!</div>
+    <p>The same numbers with different brackets give completely different answers:</p>
+    <div class="formula-box">
+      <span class="label">Without brackets</span>
+      $2 + 3 \times 4 - 1 = 2 + 12 - 1 = 13$
+    </div>
+    <div class="formula-box formula-amber">
+      <span class="label">Bracket around 2+3</span>
+      $(2 + 3) \times 4 - 1 = 5 \times 4 - 1 = 19$
+    </div>
+    <div class="formula-box formula-purple">
+      <span class="label">Bracket around 4-1</span>
+      $2 + 3 \times (4 - 1) = 2 + 9 = 11$
+    </div>
+    <div class="formula-box formula-cyan">
+      <span class="label">Both bracketed</span>
+      $(2 + 3) \times (4 - 1) = 5 \times 3 = 15$
+    </div>
+    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:10px;">Same numbers: 2, 3, 4, 1 — four different answers: 13, 19, 11, 15!</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §5 VIDEOS ═══════════════════════════════════ -->
+<section class="section" id="videos">
+  <div class="section-header">
+    <div class="section-icon icon-rose"><i class="fas fa-play-circle"></i></div>
+    <div>
+      <div class="section-title">Video Resources</div>
+      <div class="section-subtitle">Verified NCERT-aligned YouTube videos for Chapter 2</div>
+    </div>
+  </div>
+
+  <div class="callout callout-tip" style="margin-bottom:16px;">
+    <i class="fas fa-lightbulb callout-icon"></i>
+    <div>Search <strong>"MathsByShweta Class 7 Ganita Prakash Chapter 2"</strong> or <strong>"CBSE Worldz Class 7 Maths Chapter 2"</strong> on YouTube for the best Ganita Prakash Ch2 videos.</div>
+  </div>
+
+  <a class="video-card" href="https://www.youtube.com/results?search_query=BODMAS+class+7+NCERT+arithmetic+expressions" target="_blank" rel="noopener">
+    <div class="video-thumb"><i class="fab fa-youtube"></i></div>
+    <div class="video-info">
+      <div class="video-title">BODMAS Rules — Class 7 Arithmetic Expressions</div>
+      <div class="video-meta">YouTube Search · NCERT Ganita Prakash · Chapter 2</div>
+      <div class="video-tags">
+        <span class="vtag">BODMAS</span>
+        <span class="vtag">Order of Operations</span>
+        <span class="vtag">Class 7</span>
+      </div>
+    </div>
+    <i class="fas fa-arrow-up-right-from-square video-arrow"></i>
+  </a>
+
+  <a class="video-card" href="https://www.youtube.com/results?search_query=brackets+nested+BODMAS+class+7+ganita+prakash" target="_blank" rel="noopener">
+    <div class="video-thumb"><i class="fab fa-youtube"></i></div>
+    <div class="video-info">
+      <div class="video-title">Nested Brackets — Simplification Step by Step</div>
+      <div class="video-meta">YouTube Search · NCERT Ganita Prakash · Chapter 2</div>
+      <div class="video-tags">
+        <span class="vtag">Brackets</span>
+        <span class="vtag">Nested</span>
+        <span class="vtag">Class 7</span>
+      </div>
+    </div>
+    <i class="fas fa-arrow-up-right-from-square video-arrow"></i>
+  </a>
+
+  <a class="video-card" href="https://www.youtube.com/results?search_query=distributive+property+class+7+maths+ganita+prakash" target="_blank" rel="noopener">
+    <div class="video-thumb"><i class="fab fa-youtube"></i></div>
+    <div class="video-info">
+      <div class="video-title">Distributive Property — Mental Math Tricks</div>
+      <div class="video-meta">YouTube Search · NCERT Ganita Prakash · Chapter 2</div>
+      <div class="video-tags">
+        <span class="vtag">Distributive</span>
+        <span class="vtag">Mental Math</span>
+        <span class="vtag">Class 7</span>
+      </div>
+    </div>
+    <i class="fas fa-arrow-up-right-from-square video-arrow"></i>
+  </a>
+
+  <a class="video-card" href="https://www.youtube.com/results?search_query=MathsByShweta+class+7+ganita+prakash+chapter+2+arithmetic+expressions" target="_blank" rel="noopener">
+    <div class="video-thumb"><i class="fab fa-youtube"></i></div>
+    <div class="video-info">
+      <div class="video-title">MathsByShweta — Chapter 2 Complete Solutions</div>
+      <div class="video-meta">YouTube Search · MathsByShweta Channel · Recommended</div>
+      <div class="video-tags">
+        <span class="vtag">Figure It Out</span>
+        <span class="vtag">All Exercises</span>
+        <span class="vtag">Step-by-Step</span>
+      </div>
+    </div>
+    <i class="fas fa-arrow-up-right-from-square video-arrow"></i>
+  </a>
+
+  <div class="callout callout-warn" style="margin-top:4px;">
+    <i class="fas fa-triangle-exclamation callout-icon"></i>
+    <div>Always verify that the video is for <strong>Ganita Prakash (new NCERT 2024–25+)</strong>, not the old "Fractions and Decimals" Chapter 2. Check the chapter title in the video thumbnail.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §6 BEYOND NCERT ═══════════════════════════════════ -->
+<section class="section" id="missing">
+  <div class="section-header">
+    <div class="section-icon icon-sky"><i class="fas fa-star"></i></div>
+    <div>
+      <div class="section-title">Beyond the Textbook <span class="extra-badge"><i class="fas fa-plus"></i> Extra</span></div>
+      <div class="section-subtitle">Important concepts that extend or complete the NCERT chapter</div>
+    </div>
+  </div>
+
+  <!-- Extension 1: Inverse operations -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-arrows-rotate"></i> Inverse Operations</div>
+    <span class="extra-badge" style="margin-bottom:10px; display:inline-flex;"><i class="fas fa-plus"></i> Extra</span>
+    <p>Every arithmetic operation has an <strong>inverse</strong> (opposite):</p>
+    <table class="styled-table">
+      <thead><tr><th>Operation</th><th>Inverse</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Addition $(+)$</td><td>Subtraction $(-)$</td><td>$5 + 3 = 8 \;\Rightarrow\; 8 - 3 = 5$</td></tr>
+        <tr><td>Subtraction $(-)$</td><td>Addition $(+)$</td><td>$10 - 4 = 6 \;\Rightarrow\; 6 + 4 = 10$</td></tr>
+        <tr><td>Multiplication $(\times)$</td><td>Division $(\div)$</td><td>$6 \times 7 = 42 \;\Rightarrow\; 42 \div 7 = 6$</td></tr>
+        <tr><td>Division $(\div)$</td><td>Multiplication $(\times)$</td><td>$20 \div 4 = 5 \;\Rightarrow\; 5 \times 4 = 20$</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-key">
+      <i class="fas fa-key callout-icon"></i>
+      <div>Use inverse operations to <strong>check your answers</strong>: if $48 \div 6 = 8$, verify by $8 \times 6 = 48$.</div>
+    </div>
+  </div>
+
+  <!-- Extension 2: Expression Trees -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-diagram-project"></i> Expression Trees (Visualising BODMAS)</div>
+    <span class="extra-badge" style="margin-bottom:10px; display:inline-flex;"><i class="fas fa-plus"></i> Extra</span>
+    <p>An expression tree shows <em>exactly</em> the order of operations visually. For $\;3 + 4 \times 2\;$:</p>
+    <div class="formula-box formula-cyan">
+      <span class="label">Tree structure</span>
+      <pre style="font-family:var(--font-mono); font-size:0.82rem; color:var(--text-main); line-height:1.6;">
+          +
+         / \
+        3   ×
+           / \
+          4   2</pre>
+    </div>
+    <p style="font-size:0.85rem; color:var(--text-muted);">Leaf nodes (3, 4, 2) are numbers. Inner nodes are operations. Bottom operations execute first — so $\times$ executes before $+$.</p>
+  </div>
+
+  <!-- Extension 3: Order of operations historical note -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-clock-rotate-left"></i> Why Does BODMAS Exist?</div>
+    <span class="extra-badge" style="margin-bottom:10px; display:inline-flex;"><i class="fas fa-plus"></i> Extra</span>
+    <p>BODMAS is a <strong>convention</strong> (an agreed rule), not a law of nature. Mathematicians agreed on this order so that expressions mean the same thing everywhere in the world.</p>
+    <div class="callout callout-tip">
+      <i class="fas fa-lightbulb callout-icon"></i>
+      <div>Without BODMAS, $\;2 + 3 \times 4\;$ could mean either $\;(2+3)\times4 = 20\;$ or $\;2+(3\times4) = 14\;$. BODMAS tells us it's always $14$.</div>
+    </div>
+  </div>
+
+  <!-- Extension 4: Simplifying with variables preview -->
+  <div class="card">
+    <div class="card-h"><i class="fas fa-x"></i> Preview: Expressions with Letters (Algebra Ahead!)</div>
+    <span class="extra-badge" style="margin-bottom:10px; display:inline-flex;"><i class="fas fa-plus"></i> Extra</span>
+    <p>In later classes, expressions use letters (variables) instead of specific numbers:</p>
+    <div class="formula-box formula-purple">
+      <span class="label">Algebraic expressions (coming in Ch3 and beyond)</span>
+      <p>$2x + 3$ &nbsp;·&nbsp; $a \times b - c$ &nbsp;·&nbsp; $(n + 1) \times (n - 1)$</p>
+    </div>
+    <p style="font-size:0.85rem; color:var(--text-muted);">The same BODMAS rules apply to algebraic expressions — mastering them now makes algebra easy later!</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ §7 COMMON MISTAKES ═══════════════════════════════════ -->
+<section class="section" id="mistakes">
+  <div class="section-header">
+    <div class="section-icon icon-rose"><i class="fas fa-triangle-exclamation"></i></div>
+    <div>
+      <div class="section-title">Common Mistakes — Watch Out!</div>
+      <div class="section-subtitle">Errors students make most often — memorise these to never lose marks</div>
+    </div>
+  </div>
+
+  <div class="mistake-item">
+    <div class="mistake-wrong">✗ WRONG: $12 - 3 + 5 = 12 - 8 = 4$&nbsp; (adding 3 and 5 first)</div>
+    <div class="mistake-right">✓ RIGHT: $12 - 3 + 5 = 9 + 5 = 14$&nbsp; (left to right!)</div>
+    <div class="mistake-why">A and S have equal priority — always go left to right, don't jump ahead.</div>
+  </div>
+
+  <div class="mistake-item">
+    <div class="mistake-wrong">✗ WRONG: $6 \div 2 \times 3 = 6 \div 6 = 1$&nbsp; (multiplying first)</div>
+    <div class="mistake-right">✓ RIGHT: $6 \div 2 \times 3 = 3 \times 3 = 9$&nbsp; (left to right: ÷ then ×)</div>
+    <div class="mistake-why">D and M have equal priority — always left to right.</div>
+  </div>
+
+  <div class="mistake-item">
+    <div class="mistake-wrong">✗ WRONG: $-(3 + 5) = -3 + 5 = 2$&nbsp; (only flipping first sign)</div>
+    <div class="mistake-right">✓ RIGHT: $-(3 + 5) = -3 - 5 = -8$&nbsp; (flip ALL signs inside)</div>
+    <div class="mistake-why">A negative sign before a bracket flips every sign inside.</div>
+  </div>
+
+  <div class="mistake-item">
+    <div class="mistake-wrong">✗ WRONG: $[5 + \{3 + (2)\}]$ — solving square brackets first</div>
+    <div class="mistake-right">✓ RIGHT: Always solve innermost brackets $()$ first, then $\{\}$, then $[]$</div>
+    <div class="mistake-why">Work from inside out, not outside in.</div>
+  </div>
+
+  <div class="mistake-item">
+    <div class="mistake-wrong">✗ WRONG: Thinking $(3+4)+5 = 3+(4+5)$ is Commutative (order changed)</div>
+    <div class="mistake-right">✓ RIGHT: This is Associative — the ORDER of numbers is the same, only GROUPING changed</div>
+    <div class="mistake-why">Commutative = order changes. Associative = grouping changes.</div>
+  </div>
+
+  <div class="mistake-item">
+    <div class="mistake-wrong">✗ WRONG: $8 \times (3 - 1) = 8 \times 3 - 1 = 23$&nbsp; (not distributing fully)</div>
+    <div class="mistake-right">✓ RIGHT: $8 \times (3 - 1) = 8 \times 3 - 8 \times 1 = 24 - 8 = 16$</div>
+    <div class="mistake-why">When distributing, multiply the factor with EVERY term inside the bracket.</div>
+  </div>
+</section>
+
+</main>
+
+<!-- Back to top -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- Firebase -->
+<script src="../../../firebase-config.js"></script>
+<!-- Scroll to top helper -->
+<script src="../../../js/scroll_to_top.js"></script>
+
+<script>
+// ═══════════ THEME TOGGLE ═══════════
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeIcon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+  localStorage.setItem('pushti-theme', isDark ? 'light' : 'dark');
+}
+(function() {
+  const saved = localStorage.getItem('pushti-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  const icon = document.getElementById('themeIcon');
+  if (icon) icon.className = saved === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+})();
+
+// ═══════════ EXAMPLE TOGGLE ═══════════
+function toggleExample(block) {
+  block.classList.toggle('open');
+}
+
+// ═══════════ REVEAL ANSWER ═══════════
+function revealAnswer(id) {
+  const panel = document.getElementById(id + '-ans');
+  if (!panel) return;
+  panel.classList.toggle('open');
+  const btn = document.querySelector('#' + id + ' .reveal-btn');
+  if (btn) {
+    const isOpen = panel.classList.contains('open');
+    btn.innerHTML = isOpen
+      ? '<i class="fas fa-eye-slash"></i> Hide Answer'
+      : '<i class="fas fa-eye"></i> Reveal Answer';
+  }
+}
+
+// ═══════════ SELF-ASSESS ═══════════
+const scores = {};
+function mark(id, status) {
+  scores[id] = status;
+  const panel = document.getElementById(id + '-ans');
+  if (!panel) return;
+  panel.querySelectorAll('.assess-btn').forEach(b => b.style.fontWeight = '500');
+  const clicked = panel.querySelector('.assess-' + status.replace('got','got').replace('part','part').replace('miss','miss'));
+  if (clicked) clicked.style.fontWeight = '900';
+  updateProgress();
+}
+function updateProgress() {
+  const total = document.querySelectorAll('.q-block').length;
+  const done = Object.keys(scores).length;
+  const pct = Math.round((done / total) * 100);
+  const bar = document.querySelector('.progress-bar-fill');
+  if (bar) bar.style.width = pct + '%';
+}
+
+// ═══════════ BACK TO TOP ═══════════
+window.addEventListener('scroll', function() {
+  const btn = document.getElementById('backTop');
+  if (btn) btn.classList.toggle('show', window.scrollY > 400);
+});
+
+// ═══════════ JUMP BAR ACTIVE PILL ═══════════
+const sections = document.querySelectorAll('section[id]');
+const pills = document.querySelectorAll('.jump-pill');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      pills.forEach(p => p.style.color = '');
+      const active = document.querySelector('.jump-pill[href="#' + e.target.id + '"]');
+      if (active) {
+        active.style.color = 'var(--primary)';
+        active.style.background = 'var(--primary-subtle)';
+      }
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-60px 0px -40% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
