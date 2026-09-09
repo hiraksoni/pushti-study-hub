@@ -188,97 +188,127 @@
             min-width: 140px;
             padding: 0.9rem 1rem;
         }
+        /* Cards on mobile: stack ch-actions below title area */
+        .chapter-card { flex-wrap: wrap; }
+        .ch-num { width: 48px; min-width: 48px; font-size: 1.4rem; }
+        .ch-title-link { padding: 14px 10px; }
+        .ch-actions {
+            flex-direction: row;
+            border-left: none;
+            border-top: 1px solid var(--border);
+            width: 100%;
+            padding: 10px 14px;
+            min-width: 0;
+        }
     }
     
     
-    .ch-actions {
-        display: flex; gap: 10px; margin-left: 20px;
-    }
-    .btn-link {
-        padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: 0.2s;
-    }
-    .btn-new {
-        background: var(--primary); color: #fff;
-    }
-    .btn-new:hover { background: var(--primary-hover); }
-    .btn-old {
-        background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid var(--border);
-    }
-    .btn-old:hover { background: rgba(255,255,255,0.15); }
-    
-    .btn-gemini {
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(99, 102, 241, 0.2));
-        border: 1px solid #8B5CF6;
-        color: #C4B5FD;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-    .btn-gemini:hover {
-        background: #8B5CF6;
-        color: #FFFFFF;
-        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
-        transform: translateY(-1px);
-    }
-    .btn-claude {
-        background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.15));
-        border: 1px solid #F59E0B;
-        color: #FCD34D;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-    .btn-claude:hover {
-        background: #D97706;
-        color: #FFFFFF;
-        box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
-        transform: translateY(-1px);
-    }
-    
+    /* ── CHAPTER CARD — unified sober redesign ── */
     .chapter-card {
         display: flex;
         align-items: center;
         background: var(--bg-main);
         border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 16px;
+        padding: 0;           /* padding moved inside parts */
+        margin-bottom: 14px;
         border: 1px solid var(--border);
+        overflow: hidden;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .chapter-card:has(.ch-title-link):hover {
+        border-color: rgba(255,255,255,0.18);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.25);
     }
 
-    
+    /* Big chapter number strip on the left */
     .ch-num {
-        font-size: 2.5rem;
-        font-weight: 800;
+        font-size: 2rem;
+        font-weight: 900;
         font-family: 'Outfit', sans-serif;
-        color: rgba(255,255,255,0.1);
-        width: 80px;
+        color: rgba(255,255,255,0.07);
+        width: 64px;
+        min-width: 64px;
+        text-align: center;
+        flex-shrink: 0;
+        padding: 20px 0;
+        align-self: stretch;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Clickable main body (title + desc + tags) */
+    .ch-title-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        flex-grow: 1;
+        padding: 18px 14px;
+        min-width: 0;
+    }
+    .ch-title-link:hover .ch-title { color: var(--primary); }
+    .ch-title-link:hover .ch-arrow-icon { opacity: 1; transform: translateX(2px); }
+
+    .ch-content { flex-grow: 1; }
+    .ch-title {
+        font-size: 1.1rem; font-weight: 700;
+        margin: 0 0 4px 0;
+        display: flex; align-items: center; gap: 8px;
+        transition: color 0.18s;
+    }
+    .ch-arrow-icon {
+        font-size: 0.75rem; color: var(--text-muted);
+        opacity: 0; transition: opacity 0.18s, transform 0.18s;
         flex-shrink: 0;
     }
-    .ch-content {
-        flex-grow: 1;
-    }
-    .ch-title {
-        font-size: 1.2rem; font-weight: 600; margin: 0 0 6px 0;
-    }
     .ch-desc {
-        font-size: 0.9rem; color: var(--text-muted); margin: 0 0 12px 0;
+        font-size: 0.85rem; color: var(--text-muted); margin: 0 0 10px 0; line-height: 1.5;
     }
     .ch-tags {
-        display: flex; gap: 8px; flex-wrap: wrap;
+        display: flex; gap: 6px; flex-wrap: wrap;
     }
     .tag {
         background: rgba(255,255,255,0.05);
-        color: var(--primary);
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 0.75rem;
+        padding: 3px 9px;
+        border-radius: 5px;
+        font-size: 0.7rem;
         font-weight: 600;
+        border: 1px solid rgba(255,255,255,0.07);
     }
-    .ch-arrow {
+
+    /* Secondary action buttons — sober, right side */
+    .ch-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 14px 16px;
+        align-self: stretch;
+        justify-content: center;
+        border-left: 1px solid var(--border);
+        min-width: 100px;
+        flex-shrink: 0;
+    }
+    .btn-link {
+        padding: 6px 12px; border-radius: 6px;
+        font-weight: 600; font-size: 0.75rem;
+        text-decoration: none; transition: 0.18s;
+        display: inline-flex; align-items: center; gap: 5px;
+        white-space: nowrap;
+        border: 1px solid var(--border);
+        background: rgba(255,255,255,0.04);
         color: var(--text-muted);
-        font-size: 1.5rem;
-        margin-left: 20px;
     }
+    .btn-link:hover {
+        background: rgba(255,255,255,0.09);
+        color: var(--text-main);
+        border-color: rgba(255,255,255,0.15);
+    }
+    /* Keep old class names working but sober them down */
+    .btn-gemini { /* secondary — interactive full version */ }
+    .btn-claude { /* secondary — notes page */ }
+    .btn-gemini:hover, .btn-claude:hover { /* inherit from .btn-link */ }
+
+    .ch-arrow { color: var(--text-muted); font-size: 1.5rem; margin-left: 20px; }
 </style>
 
 <style>
@@ -303,23 +333,22 @@
     -webkit-backdrop-filter: none !important;
 }
 [data-theme="light"] .icon-btn { color: #0f172a !important; }
-[data-theme="light"] .btn-gemini {
-    background: #f3e8ff !important;
-    border-color: #8b5cf6 !important;
-    color: #7c3aed !important;
+[data-theme="light"] .btn-gemini,
+[data-theme="light"] .btn-claude,
+[data-theme="light"] .btn-link {
+    background: rgba(0,0,0,0.04) !important;
+    border-color: #d1d5db !important;
+    color: #6b7280 !important;
 }
-[data-theme="light"] .btn-gemini:hover {
-    background: #7c3aed !important;
-    color: #ffffff !important;
+[data-theme="light"] .btn-gemini:hover,
+[data-theme="light"] .btn-claude:hover,
+[data-theme="light"] .btn-link:hover {
+    background: rgba(0,0,0,0.08) !important;
+    color: #374151 !important;
+    border-color: #9ca3af !important;
 }
-[data-theme="light"] .btn-claude {
-    background: #fef3c7 !important;
-    border-color: #f59e0b !important;
-    color: #b45309 !important;
-}
-[data-theme="light"] .btn-claude:hover {
-    background: #d97706 !important;
-    color: #ffffff !important;
+[data-theme="light"] .ch-title-link:hover .ch-title {
+    color: #0284c7 !important;
 }
 </style>
 </head>
@@ -456,40 +485,41 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div id="sec-num" class="category-section active">
                     <div class="chapter-card">
                         <div class="ch-num">01</div>
-                        <div class="ch-content">
-                            <h3 class="ch-title">Large Numbers Around Us</h3>
-                            <p class="ch-desc">Understanding place value, comparison, and estimation of large quantities.</p>
-                            <div class="ch-tags"><span class="tag" style="color:#F43F5E">Place Value</span><span class="tag" style="color:#F43F5E">Large Numbers</span><span class="tag" style="color:#F43F5E">Estimation</span></div>
-                        </div>
+                        <a href="source_materials/chapters/maths/claude_maths_ch1.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">Large Numbers Around Us <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <p class="ch-desc">Understanding place value, comparison, and estimation of large quantities.</p>
+                                <div class="ch-tags"><span class="tag" style="color:#F43F5E">Place Value</span><span class="tag" style="color:#F43F5E">Large Numbers</span><span class="tag" style="color:#F43F5E">Estimation</span></div>
+                            </div>
+                        </a>
                         <div class="ch-actions">
-                            <a href="chapters/maths/maths_ch1.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini.v1</a>
-                            <a href="source_materials/chapters/maths/claude_maths_ch1.html" class="btn-link btn-claude"><i class="fas fa-brain"></i> Claude</a>
-                            <button onclick="openChapterLog('maths_ch1')" class="btn-link" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); cursor:pointer; font-size:0.8rem; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:6px;" title="Revision Changelog & AI Model"><i class="fas fa-history"></i> Log</button>
+                            <a href="chapters/maths/maths_ch1.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
+                            <button onclick="openChapterLog('maths_ch1')" class="btn-link" title="Revision Changelog"><i class="fas fa-history"></i> Log</button>
                         </div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">02</div>
-                        <div class="ch-content">
-                            <h3 class="ch-title">Arithmetic Expressions</h3>
-                            <p class="ch-desc">Solving complex mathematical expressions, order of operations, and brackets.</p>
-                            <div class="ch-tags"><span class="tag" style="color:#10B981">BODMAS</span><span class="tag" style="color:#10B981">Operations</span><span class="tag" style="color:#10B981">Brackets</span></div>
-                        </div>
+                        <a href="source_materials/chapters/maths/maths_ch2_notes.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">Arithmetic Expressions <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <p class="ch-desc">Solving complex mathematical expressions, order of operations, and brackets.</p>
+                                <div class="ch-tags"><span class="tag" style="color:#10B981">BODMAS</span><span class="tag" style="color:#10B981">Operations</span><span class="tag" style="color:#10B981">Brackets</span></div>
+                            </div>
+                        </a>
                         <div class="ch-actions">
-                            <a href="chapters/maths/maths_ch2.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini.v2</a>
-                            <a href="source_materials/chapters/maths/maths_ch2_notes.html" class="btn-link btn-claude"><i class="fas fa-brain"></i> Claude Notes</a>
-                            <button onclick="openChapterLog('maths_ch2')" class="btn-link" style="background:rgba(255,255,255,0.06); border:1px solid var(--border); color:var(--text-main); cursor:pointer; font-size:0.8rem; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:6px;" title="Revision Changelog & AI Model"><i class="fas fa-history"></i> Log</button>
+                            <a href="chapters/maths/maths_ch2.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
+                            <button onclick="openChapterLog('maths_ch2')" class="btn-link" title="Revision Changelog"><i class="fas fa-history"></i> Log</button>
                         </div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">06</div>
-                        <div class="ch-content">
-                            <h3 class="ch-title">Number Play</h3>
-                            <p class="ch-desc">Factors, multiples, prime factorization, HCF, LCM, and divisibility rules.</p>
-                            <div class="ch-tags"><span class="tag" style="color:#F43F5E">Factors</span><span class="tag" style="color:#F43F5E">Multiples</span><span class="tag" style="color:#F43F5E">HCF & LCM</span></div>
-                        </div>
-                        <div class="ch-actions">
-                            <a href="source_materials/chapters/maths/claude_maths_hcf.html" class="btn-link btn-claude"><i class="fas fa-brain"></i> Claude</a>
-                        </div>
+                        <a href="source_materials/chapters/maths/claude_maths_hcf.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">Number Play <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <p class="ch-desc">Factors, multiples, prime factorization, HCF, LCM, and divisibility rules.</p>
+                                <div class="ch-tags"><span class="tag" style="color:#F43F5E">Factors</span><span class="tag" style="color:#F43F5E">Multiples</span><span class="tag" style="color:#F43F5E">HCF & LCM</span></div>
+                            </div>
+                        </a>
                     </div>
                     <div class="chapter-card" style="opacity: 0.6;">
                         <div class="ch-num">08</div>
@@ -544,26 +574,24 @@ document.addEventListener("DOMContentLoaded", function() {
                 <!-- Exam Practice Section -->
                 <div id="sec-prac" class="category-section">
                     <div class="chapter-card">
-                        <div class="ch-num">🎯</div>
-                        <div class="ch-content">
-                            <h3 class="ch-title">Mathematics Mid-Term Comprehensive Practice Module</h3>
-                            <p class="ch-desc">Interactive quiz, step-by-step problem solver, and practice drills covering all mid-term syllabus topics.</p>
-                            <div class="ch-tags"><span class="tag" style="color:#3B82F6">Full Syllabus</span><span class="tag" style="color:#3B82F6">Interactive Drills</span><span class="tag" style="color:#3B82F6">Self-Assessment</span></div>
-                        </div>
-                        <div class="ch-actions">
-                            <a href="source_materials/chapters/maths/claude_maths_practice.html" class="btn-link btn-claude"><i class="fas fa-brain"></i> Claude</a>
-                        </div>
+                        <div class="ch-num" style="font-size:1.5rem;">🎯</div>
+                        <a href="source_materials/chapters/maths/claude_maths_practice.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">Mathematics Mid-Term Comprehensive Practice Module <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <p class="ch-desc">Interactive quiz, step-by-step problem solver, and practice drills covering all mid-term syllabus topics.</p>
+                                <div class="ch-tags"><span class="tag" style="color:#3B82F6">Full Syllabus</span><span class="tag" style="color:#3B82F6">Interactive Drills</span><span class="tag" style="color:#3B82F6">Self-Assessment</span></div>
+                            </div>
+                        </a>
                     </div>
                     <div class="chapter-card">
-                        <div class="ch-num">📐</div>
-                        <div class="ch-content">
-                            <h3 class="ch-title">Perimeter & Area — Special Visual Guide</h3>
-                            <p class="ch-desc">Comprehensive visual study module on calculating 2D perimeter, area, irregular polygons, and real-world geometry.</p>
-                            <div class="ch-tags"><span class="tag" style="color:#3B82F6">Geometry</span><span class="tag" style="color:#3B82F6">Formulas</span><span class="tag" style="color:#3B82F6">Solved Examples</span></div>
-                        </div>
-                        <div class="ch-actions">
-                            <a href="source_materials/chapters/maths/claude_maths_area.html" class="btn-link btn-claude"><i class="fas fa-brain"></i> Claude</a>
-                        </div>
+                        <div class="ch-num" style="font-size:1.5rem;">📐</div>
+                        <a href="source_materials/chapters/maths/claude_maths_area.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">Perimeter &amp; Area — Special Visual Guide <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <p class="ch-desc">Comprehensive visual study module on calculating 2D perimeter, area, irregular polygons, and real-world geometry.</p>
+                                <div class="ch-tags"><span class="tag" style="color:#3B82F6">Geometry</span><span class="tag" style="color:#3B82F6">Formulas</span><span class="tag" style="color:#3B82F6">Solved Examples</span></div>
+                            </div>
+                        </a>
                     </div>
                 </div>
 
