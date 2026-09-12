@@ -1,4 +1,4 @@
-﻿# PUSHTI STUDY HUB — DESIGN SOP v1.0
+# PUSHTI STUDY HUB — DESIGN SOP v1.0
 *Standard Operating Procedure for AI-Assisted Page Generation*
 
 ---
@@ -172,7 +172,7 @@ repo_root/
 |---------|-------|---------|------------------|
 | Maths Ch 1 | Large Numbers | `#0284c7` sky blue | `#0c4a6e` |
 | Maths Ch 2 | Arithmetic Expressions | `#10b981` emerald | `#064e3b` |
-| Maths Ch 3 | TBD | `#8b5cf6` violet | `#3b0764` |
+| Maths Ch 3 | A Peek Beyond the Point | `#8b5cf6` violet | `#3b0764` |
 | Maths Ch 4 | TBD | `#f59e0b` amber | `#78350f` |
 | Maths Ch 5 | TBD | `#06b6d4` cyan | `#164e63` |
 | English Ch 1 | The Honeycomb | `#ec4899` pink | `#831843` |
@@ -403,8 +403,43 @@ Use this as starting point for every new notes page:
 
 ---
 
-## 14. CHANGELOG
+## 14. EXAM PATTERN & ASSESSMENT BLUEPRINT ARCHITECTURE
+
+When integrating assessment blueprints, mark distributions, or exam patterns in `midterm.html` or assessment dashboards:
+
+### 14.1 Main Table Standard
+* **Dedicated Column**: The `Exam Pattern` column is positioned as the 5th column. Pending subjects display a muted `—`.
+* **Subject Badges**: Compact buttons with subject icon, name, and total marks (e.g. `⚡ Physics [25M]`, `🧪 Chemistry [25M]`, `🧬 Biology [30M]`, `📊 Summary [80M]`).
+
+### 14.2 Pop-up Modal Zero-Scrollbar Architecture
+* **Do NOT embed tall question lists directly in table cells.** Open an interactive modal (`.exam-modal-overlay`).
+* **Direct Deep-Linking**: Clicking any badge opens the modal directly to that subject's pane.
+* **Tabs with Zero Horizontal Scrollbar**: `.modal-nav-tabs` must use `overflow: visible; flex-wrap: wrap; justify-content: center;` to avoid horizontal scrolling.
+* **The 3 × 2 Balanced Grid Layout**:
+  Arrange question types in a responsive 2-column grid (`.pattern-grid-2col`) yielding a compact 3-row × 2-column matrix:
+  * Row 1: `MCQ & Assertion-Reason` (Left) | `Very Short Answer (VSA)` (Right)
+  * Row 2: `Short Answer (SA)` (Left) | `Case Study` (Right)
+  * Row 3: `Long Answer (LA)` (Left) | `💡 Revision Priority Tip` (Right)
+  This limits vertical height to **~140px**, ensuring zero vertical scrollbars on all standard desktop and laptop screens.
+* **Asset Storage**: Save official infographic images to `source_materials/{subject}/` and `artifacts/` and commit to Git.
+
+---
+
+## 15. COMPANION SOPS
+
+* **`SOP.md`**: Master Standard Operating Procedure & Checkpoint verification rules.
+* **`PUSHTI_CONTENT_SOP.md`**: Content strategy, Two-AI workflow (Gemini legwork + Claude concept mastery), and chapter completeness rules.
+* **`GITA_Requirements.md`**: 5-Tab blue framework and UTF-8 encoding safety.
+
+All files work together as the architectural standard for Pushti's Study Hub.
+
+---
+
+## 16. CHANGELOG
 
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-09-08 | Initial SOP created by Antigravity (Claude) |
+| 1.1 | 2026-09-09 | Added companion PUSHTI_CONTENT_SOP.md reference |
+| 1.2 | 2026-09-12 | Added Section 14: Exam Pattern Pop-up Modal & Zero-Scrollbar Architecture; added Timetable & Assessment Maintenance standards |
+
