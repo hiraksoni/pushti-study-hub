@@ -299,6 +299,389 @@
 }
 [data-theme="light"] .icon-btn { color: #0f172a !important; }
 </style>
+
+    <!-- Science Exam Pattern Modal & Badges CSS -->
+    <style>
+        .exam-pattern-links {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 0;
+        }
+        .pattern-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 145px;
+            padding: 7px 11px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-main);
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .pattern-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .pattern-badge .badge-icon {
+            font-size: 0.95rem;
+            margin-right: 6px;
+        }
+        .pattern-badge .badge-title {
+            flex-grow: 1;
+        }
+        .pattern-badge .badge-mark {
+            font-size: 0.72rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+        }
+
+        .badge-phy { border-color: rgba(99, 102, 241, 0.4); }
+        .badge-phy:hover { background: rgba(99, 102, 241, 0.15); border-color: #6366F1; }
+        .badge-phy .badge-mark { background: rgba(99, 102, 241, 0.2); color: #818CF8; }
+
+        .badge-chem { border-color: rgba(245, 158, 11, 0.4); }
+        .badge-chem:hover { background: rgba(245, 158, 11, 0.15); border-color: #F59E0B; }
+        .badge-chem .badge-mark { background: rgba(245, 158, 11, 0.2); color: #FBBF24; }
+
+        .badge-bio { border-color: rgba(6, 182, 212, 0.4); }
+        .badge-bio:hover { background: rgba(6, 182, 212, 0.15); border-color: #06B6D4; }
+        .badge-bio .badge-mark { background: rgba(6, 182, 212, 0.2); color: #38BDF8; }
+
+        .badge-summary { border-color: rgba(16, 185, 129, 0.4); font-size: 0.76rem; padding: 5px 10px; opacity: 0.92; }
+        .badge-summary:hover { background: rgba(16, 185, 129, 0.15); border-color: #10B981; }
+        .badge-summary .badge-mark { background: rgba(16, 185, 129, 0.2); color: #34D399; }
+
+        [data-theme="light"] .badge-phy { background: #EEF2FF; color: #3730A3; border-color: #C7D2FE; }
+        [data-theme="light"] .badge-phy .badge-mark { background: #C7D2FE; color: #312E81; }
+        [data-theme="light"] .badge-chem { background: #FFFBEB; color: #92400E; border-color: #FDE68A; }
+        [data-theme="light"] .badge-chem .badge-mark { background: #FDE68A; color: #78350F; }
+        [data-theme="light"] .badge-bio { background: #ECFEFF; color: #155E75; border-color: #A5F3FC; }
+        [data-theme="light"] .badge-bio .badge-mark { background: #A5F3FC; color: #164E63; }
+        [data-theme="light"] .badge-summary { background: #F0FDF4; color: #166534; border-color: #BBF7D0; }
+        [data-theme="light"] .badge-summary .badge-mark { background: #BBF7D0; color: #14532D; }
+
+        /* Modal Overlay */
+        .exam-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .exam-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .exam-modal-card {
+            background: var(--surface);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 760px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.45);
+            animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        @keyframes modalSlideUp {
+            from { transform: translateY(24px) scale(0.96); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .modal-header-bar {
+            padding: 18px 24px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-color);
+        }
+        .modal-header-bar h2 {
+            margin: 0 0 4px 0;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .modal-eyebrow {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-close-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .modal-close-btn:hover {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #EF4444;
+            color: #EF4444;
+        }
+
+        /* Modal Nav Tabs */
+        .modal-nav-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+            flex-wrap: wrap;
+        }
+        .modal-tab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-color);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.86rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-tab-btn:hover {
+            color: var(--text-main);
+            border-color: var(--primary);
+        }
+        .modal-tab-btn.active {
+            background: var(--primary);
+            color: #FFFFFF !important;
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+        }
+
+        .modal-body {
+            padding: 20px 24px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .pattern-hero-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        .hero-bio { background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.35); color: #0284C7; }
+        .hero-chem { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.35); color: #D97706; }
+        .hero-phy { background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.35); color: #6366F1; }
+        .hero-overall { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); color: #10B981; }
+
+        [data-theme="dark"] .hero-bio { color: #38BDF8; }
+        [data-theme="dark"] .hero-chem { color: #FBBF24; }
+        [data-theme="dark"] .hero-phy { color: #818CF8; }
+        [data-theme="dark"] .hero-overall { color: #34D399; }
+
+        .pattern-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .pattern-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: var(--bg-color);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: all 0.15s ease;
+        }
+        .pattern-row:hover {
+            border-color: var(--primary);
+            transform: translateX(4px);
+        }
+        .p-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .p-icon {
+            font-size: 1.35rem;
+            width: 32px;
+            text-align: center;
+        }
+        .p-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .p-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .p-right {
+            text-align: right;
+        }
+        .p-marks {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .p-calc {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .pattern-chapters-box {
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: var(--surface);
+            border: 1px dashed var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+        .pattern-chapters-box strong {
+            color: var(--text-main);
+        }
+
+        /* Overall Blueprint Table */
+        .blueprint-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 0.88rem;
+        }
+        .blueprint-table th, .blueprint-table td {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .blueprint-table th {
+            background: var(--bg-color);
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+            color: var(--text-main);
+        }
+        .blueprint-table td.text-left {
+            text-align: left;
+            font-weight: 600;
+        }
+        .blueprint-table tr.total-row {
+            font-weight: 800;
+            background: rgba(16, 185, 129, 0.12);
+            color: #10B981;
+        }
+        [data-theme="light"] .blueprint-table tr.total-row {
+            background: #DCFCE7;
+            color: #15803D;
+        }
+
+        .formula-badge-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #10B981;
+        }
+        [data-theme="light"] .formula-badge-bar {
+            color: #15803D;
+            background: #F0FDF4;
+            border-color: #86EFAC;
+        }
+
+        .original-img-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: var(--bg-color);
+            border: 1px solid var(--border);
+            color: var(--primary);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 14px;
+            transition: all 0.2s;
+        }
+        .original-img-toggle:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.08);
+        }
+        .original-img-preview {
+            display: none;
+            margin-top: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px;
+            background: var(--bg-color);
+        }
+        .original-img-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+    </style>
+
 </head>
 <body>
 <header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--bg-main, #0F0F1A); position: sticky; top: 0; z-index: 1000;">
@@ -441,6 +824,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <th class="center-col" width="120">Date</th>
                     <th class="center-col" width="160">Subject</th>
                     <th>Syllabus</th>
+                    <th class="center-col" width="180">Exam Pattern</th>
                 </tr>
             </thead>
             <tbody>
@@ -461,6 +845,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             </ul>
                         </div>
                     </td>
+                    <td class="center-col" style="color:var(--text-muted); vertical-align:middle; font-size:1.1rem;">—</td>
                 </tr>
                 
                 <!-- Row 2: Maths -->
@@ -474,7 +859,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <ul class="syllabus-list">
                                 <li>Ch.1 Large Numbers Around Us <a href="chapters/maths/maths_ch1.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini.v1</a> <a href="source_materials/chapters/maths/claude_maths_ch1.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a></li>
                                 <li>Ch.2 Arithmetic Expressions <a href="source_materials/chapters/maths/claude_maths_ch2.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a></li>
-                                <li>Ch.3 A Peek Beyond the Point</li>
+                                <li>Ch.3 A Peek Beyond the Point <a href="source_materials/chapters/maths/maths_ch3_notes.html" class="pill-claude"><i class="fas fa-brain"></i> Notes</a></li>
                                 <li>Ch.4 Expressions using Letter-Numbers</li>
                                 <li>Ch.5 Parallel and Intersecting Lines</li>
                                 <li>Ch.6 Number Play (Factors, Multiples & HCF/LCM) <a href="source_materials/chapters/maths/claude_maths_hcf.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a></li>
@@ -484,6 +869,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             </ul>
                         </div>
                     </td>
+                    <td class="center-col" style="color:var(--text-muted); vertical-align:middle; font-size:1.1rem;">—</td>
                 </tr>
 
                 <!-- Row 3: Sanskrit -->
@@ -517,6 +903,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             </ul>
                         </div>
                     </td>
+                    <td class="center-col" style="color:var(--text-muted); vertical-align:middle; font-size:1.1rem;">—</td>
                 </tr>
 
                 <!-- Row 4: Social Science -->
@@ -545,6 +932,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             </ul>
                         </div>
                     </td>
+                    <td class="center-col" style="color:var(--text-muted); vertical-align:middle; font-size:1.1rem;">—</td>
                 </tr>
 
                 <!-- Row 5: Hindi -->
@@ -570,6 +958,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             </ul>
                         </div>
                     </td>
+                    <td class="center-col" style="color:var(--text-muted); vertical-align:middle; font-size:1.1rem;">—</td>
                 </tr>
 
                 <!-- Row 6: English -->
@@ -599,6 +988,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             </ul>
                         </div>
                     </td>
+                    <td class="center-col" style="color:var(--text-muted); vertical-align:middle; font-size:1.1rem;">—</td>
                 </tr>
 
                 <!-- Row 7: Science -->
@@ -624,6 +1014,30 @@ document.addEventListener("DOMContentLoaded", function() {
                                 <li>Ch.2 Heat Transfer <a href="chapters/science/science_phy_ch2.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini.v1</a> <a href="chapters/science/science_phy_ch2_notes.html" class="pill-gemini-n"><i class="fas fa-book-open"></i> Gemini-N</a></li>
                                 <li>Ch.3 Measurement of Time and Motion <a href="chapters/science/science_phy_ch3.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini.v1</a> <a href="source_materials/chapters/science/claude_phy_ch3.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a></li>
                             </ul>
+                        </div>
+                    </td>
+                    <td class="center-col" style="vertical-align:middle;">
+                        <div class="exam-pattern-links">
+                            <button type="button" class="pattern-badge badge-phy" onclick="openExamPatternModal('phy')" title="Click to view Physics Blueprint">
+                                <span class="badge-icon">⚡</span>
+                                <span class="badge-title">Physics</span>
+                                <span class="badge-mark">25M</span>
+                            </button>
+                            <button type="button" class="pattern-badge badge-chem" onclick="openExamPatternModal('chem')" title="Click to view Chemistry Blueprint">
+                                <span class="badge-icon">🧪</span>
+                                <span class="badge-title">Chemistry</span>
+                                <span class="badge-mark">25M</span>
+                            </button>
+                            <button type="button" class="pattern-badge badge-bio" onclick="openExamPatternModal('bio')" title="Click to view Biology Blueprint">
+                                <span class="badge-icon">🧬</span>
+                                <span class="badge-title">Biology</span>
+                                <span class="badge-mark">30M</span>
+                            </button>
+                            <button type="button" class="pattern-badge badge-summary" onclick="openExamPatternModal('overall')" title="Click to view Overall 80M Blueprint">
+                                <span class="badge-icon">📊</span>
+                                <span class="badge-title">Summary</span>
+                                <span class="badge-mark">80M</span>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -786,6 +1200,475 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 })();
 </script>
+
+
+    <!-- Science Exam Pattern Pop-up Modal -->
+    <div id="exam-pattern-modal" class="exam-modal-overlay" aria-modal="true" role="dialog" aria-label="Science Exam Pattern Modal">
+        <div class="exam-modal-card">
+            <div class="modal-header-bar">
+                <div>
+                    <h2>🔬 Science Mid-Term Assessment 2026–27</h2>
+                    <div class="modal-eyebrow">
+                        <span>Class 7 CBSE</span>
+                        <span>•</span>
+                        <span>Max. Marks: <strong>80</strong></span>
+                        <span>•</span>
+                        <span>39 Total Questions</span>
+                    </div>
+                </div>
+                <button type="button" class="modal-close-btn" onclick="closeExamPatternModal()" aria-label="Close modal">✕</button>
+            </div>
+
+            <div class="modal-nav-tabs">
+                <button type="button" id="modal-tab-btn-phy" class="modal-tab-btn" onclick="switchModalTab('phy')">
+                    <span>⚡</span> Physics (25M)
+                </button>
+                <button type="button" id="modal-tab-btn-chem" class="modal-tab-btn" onclick="switchModalTab('chem')">
+                    <span>🧪</span> Chemistry (25M)
+                </button>
+                <button type="button" id="modal-tab-btn-bio" class="modal-tab-btn" onclick="switchModalTab('bio')">
+                    <span>🧬</span> Biology (30M)
+                </button>
+                <button type="button" id="modal-tab-btn-overall" class="modal-tab-btn" onclick="switchModalTab('overall')">
+                    <span>📊</span> Overall Breakdown (80M)
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!-- PANE 1: PHYSICS (25 Marks) -->
+                <div id="modal-pane-phy" style="display:none;">
+                    <div class="pattern-hero-banner hero-phy">
+                        <div>
+                            <span style="font-size:1.15rem;">⚡ Section C: Physics</span>
+                            <div style="font-size:0.8rem; font-weight:500; opacity:0.85; margin-top:2px;">Target: 25 Marks across 10 Questions</div>
+                        </div>
+                        <div style="font-family:'Space Mono', monospace; font-size:1.4rem;">25 Marks</div>
+                    </div>
+
+                    <div class="pattern-chapters-box">
+                        <strong>📖 Covered Chapters:</strong> Ch.1 Electricity &bull; Ch.2 Heat Transfer &bull; Ch.3 Measurement of Time and Motion
+                    </div>
+
+                    <div class="pattern-grid">
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">⚡</div>
+                                <div>
+                                    <div class="p-title">MCQ &amp; Assertion-Reason</div>
+                                    <div class="p-sub">Concept checks, symbols &amp; units</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">3 Marks</div>
+                                <div class="p-calc">3 Qs × 1 Mark</div>
+                            </div>
+                        </div>
+
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">🔌</div>
+                                <div>
+                                    <div class="p-title">Very Short Answer (VSA)</div>
+                                    <div class="p-sub">Definitions, circuit laws, formulas</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">4 Marks</div>
+                                <div class="p-calc">2 Qs × 2 Marks</div>
+                            </div>
+                        </div>
+
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">📡</div>
+                                <div>
+                                    <div class="p-title">Short Answer (SA)</div>
+                                    <div class="p-sub">High weightage: numericals &amp; reasoning</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">9 Marks</div>
+                                <div class="p-calc">3 Qs × 3 Marks</div>
+                            </div>
+                        </div>
+
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">🔬</div>
+                                <div>
+                                    <div class="p-title">Case Study</div>
+                                    <div class="p-sub">Real-life application passage / diagram</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">4 Marks</div>
+                                <div class="p-calc">1 Q × 4 Marks</div>
+                            </div>
+                        </div>
+
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">⚛️</div>
+                                <div>
+                                    <div class="p-title">Long Answer (LA)</div>
+                                    <div class="p-sub">Comprehensive derivation, diagram &amp; numerical</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">5 Marks</div>
+                                <div class="p-calc">1 Q × 5 Marks</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background:var(--bg-color); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:0.84rem; color:var(--text-muted); display:flex; justify-content:space-between; align-items:center;">
+                        <span>💡 <strong>Study Tip:</strong> Focus heavily on 3-mark questions (9M = 36% of Physics). Practice Speed numericals &amp; Circuit diagrams!</span>
+                    </div>
+                </div>
+
+                <!-- PANE 2: CHEMISTRY (25 Marks) -->
+                <div id="modal-pane-chem" style="display:none;">
+                    <div class="pattern-hero-banner hero-chem">
+                        <div>
+                            <span style="font-size:1.15rem;">🧪 Section B: Chemistry</span>
+                            <div style="font-size:0.8rem; font-weight:500; opacity:0.85; margin-top:2px;">Target: 25 Marks across 13 Questions</div>
+                        </div>
+                        <div style="font-family:'Space Mono', monospace; font-size:1.4rem;">25 Marks</div>
+                    </div>
+
+                    <div class="pattern-chapters-box">
+                        <strong>📖 Covered Chapters:</strong> Ch.1 Exploring Substances: Acids, Bases and Neutral &bull; Ch.2 The World of Metals and Non-Metals
+                    </div>
+
+                    <div class="pattern-grid">
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">🧪</div>
+                                <div>
+                                    <div class="p-title">MCQ &amp; Assertion-Reason (A-R)</div>
+                                    <div class="p-sub">High MCQ volume: indicator colors &amp; properties</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">8 Marks</div>
+                                <div class="p-calc">8 Qs × 1 Mark</div>
+                            </div>
+                        </div>
+
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">✔️✔️</div>
+                                <div>
+                                    <div class="p-title">Very Short Answer (VSA)</div>
+                                    <div class="p-sub">Chemical names, common uses</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">2 Marks</div>
+                                <div class="p-calc">1 Q × 2 Marks</div>
+                            </div>
+                        </div>
+
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">⚗️</div>
+                                <div>
+                                    <div class="p-title">Short Answer (SA)</div>
+                                    <div class="p-sub">Reaction equations, litmus tests &amp; comparisons</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">6 Marks</div>
+                                <div class="p-calc">2 Qs × 3 Marks</div>
+                            </div>
+                        </div>
+
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">🔍</div>
+                                <div>
+                                    <div class="p-title">Case Study</div>
+                                    <div class="p-sub">Experimental setup analysis / neutralization case</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">4 Marks</div>
+                                <div class="p-calc">1 Q × 4 Marks</div>
+                            </div>
+                        </div>
+
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">📜</div>
+                                <div>
+                                    <div class="p-title">Long Answer (LA)</div>
+                                    <div class="p-sub">Metals vs Non-metals properties &amp; reactivity series</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">5 Marks</div>
+                                <div class="p-calc">1 Q × 5 Marks</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background:var(--bg-color); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:0.84rem; color:var(--text-muted); display:flex; justify-content:space-between; align-items:center;">
+                        <span>💡 <strong>Study Tip:</strong> 8 MCQs (32% of section)! Master indicator color changes (Litmus, Phenolphthalein, Turmeric) and physical properties.</span>
+                    </div>
+                </div>
+
+                <!-- PANE 3: BIOLOGY (30 Marks) -->
+                <div id="modal-pane-bio" style="display:none;">
+                    <div class="pattern-hero-banner hero-bio">
+                        <div>
+                            <span style="font-size:1.15rem;">🧬 Section A: Biology</span>
+                            <div style="font-size:0.8rem; font-weight:500; opacity:0.85; margin-top:2px;">Highest Weightage: 30 Marks across 16 Questions</div>
+                        </div>
+                        <div style="font-family:'Space Mono', monospace; font-size:1.4rem;">30 Marks</div>
+                    </div>
+
+                    <div class="pattern-chapters-box">
+                        <strong>📖 Covered Chapters:</strong> Ch.2 Adolescence: A Stage of Growth and Change &bull; Ch.3 Life Processes in Animals
+                    </div>
+
+                    <div class="pattern-grid">
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">💡</div>
+                                <div>
+                                    <div class="p-title">MCQ &amp; Assertion-Reason</div>
+                                    <div class="p-sub">Hormones, glands, nutrition types &amp; enzymes</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">9 Marks</div>
+                                <div class="p-calc">9 Qs × 1 Mark</div>
+                            </div>
+                        </div>
+
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">✔️✔️</div>
+                                <div>
+                                    <div class="p-title">Very Short Answer (VSA 2-mark)</div>
+                                    <div class="p-sub">Definitions (rumination, peristalsis, puberty)</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">6 Marks</div>
+                                <div class="p-calc">3 Qs × 2 Marks</div>
+                            </div>
+                        </div>
+
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">📊</div>
+                                <div>
+                                    <div class="p-title">Short Answer (SA 3-mark)</div>
+                                    <div class="p-sub">Digestive tract steps, secondary sexual traits</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">6 Marks</div>
+                                <div class="p-calc">2 Qs × 3 Marks</div>
+                            </div>
+                        </div>
+
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">📖</div>
+                                <div>
+                                    <div class="p-title">Case Study</div>
+                                    <div class="p-sub">Diet chart analysis / adolescent health case</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">4 Marks</div>
+                                <div class="p-calc">1 Q × 4 Marks</div>
+                            </div>
+                        </div>
+
+                        <div class="pattern-row">
+                            <div class="p-left">
+                                <div class="p-icon">🪶</div>
+                                <div>
+                                    <div class="p-title">Long Answer (LA)</div>
+                                    <div class="p-sub">Human digestive system diagram &amp; explanation</div>
+                                </div>
+                            </div>
+                            <div class="p-right">
+                                <div class="p-marks">5 Marks</div>
+                                <div class="p-calc">1 Q × 5 Marks</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background:var(--bg-color); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:0.84rem; color:var(--text-muted); display:flex; justify-content:space-between; align-items:center;">
+                        <span>💡 <strong>Study Tip:</strong> Biology is 37.5% of total marks! Revise the human digestive system, stomach acids, and puberty changes.</span>
+                    </div>
+                </div>
+
+                <!-- PANE 4: OVERALL BREAKDOWN (80 Marks) -->
+                <div id="modal-pane-overall" style="display:none;">
+                    <div class="pattern-hero-banner hero-overall">
+                        <div>
+                            <span style="font-size:1.15rem;">📊 Complete Science Paper Blueprint</span>
+                            <div style="font-size:0.8rem; font-weight:500; opacity:0.85; margin-top:2px;">Science Mid-Term Assessment 2026–27</div>
+                        </div>
+                        <div style="font-family:'Space Mono', monospace; font-size:1.4rem;">80 Marks</div>
+                    </div>
+
+                    <div class="formula-badge-bar">
+                        <span>20 × 1M</span> + 
+                        <span>6 × 2M</span> + 
+                        <span>7 × 3M</span> + 
+                        <span>3 × 4M</span> + 
+                        <span>3 × 5M</span> = 
+                        <span style="color:#10B981; font-weight:900;">80 Marks</span>
+                    </div>
+
+                    <table class="blueprint-table">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Question Type</th>
+                                <th>Mark / Q</th>
+                                <th style="color:#0284C7;">Bio (Sec A)</th>
+                                <th style="color:#D97706;">Chem (Sec B)</th>
+                                <th style="color:#6366F1;">Phy (Sec C)</th>
+                                <th>Total Qs</th>
+                                <th>Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-left">MCQ &amp; Assertion-Reason</td>
+                                <td>1 Mark</td>
+                                <td>9 Q</td>
+                                <td>8 Q</td>
+                                <td>3 Q</td>
+                                <td><strong>20 Q</strong></td>
+                                <td><strong>20 M</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Very Short Answer (VSA)</td>
+                                <td>2 Marks</td>
+                                <td>3 Q</td>
+                                <td>1 Q</td>
+                                <td>2 Q</td>
+                                <td><strong>6 Q</strong></td>
+                                <td><strong>12 M</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Short Answer (SA)</td>
+                                <td>3 Marks</td>
+                                <td>2 Q</td>
+                                <td>2 Q</td>
+                                <td>3 Q</td>
+                                <td><strong>7 Q</strong></td>
+                                <td><strong>21 M</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Case Study</td>
+                                <td>4 Marks</td>
+                                <td>1 Q</td>
+                                <td>1 Q</td>
+                                <td>1 Q</td>
+                                <td><strong>3 Q</strong></td>
+                                <td><strong>12 M</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">Long Answer (LA)</td>
+                                <td>5 Marks</td>
+                                <td>1 Q</td>
+                                <td>1 Q</td>
+                                <td>1 Q</td>
+                                <td><strong>3 Q</strong></td>
+                                <td><strong>15 M</strong></td>
+                            </tr>
+                            <tr class="total-row">
+                                <td class="text-left">TOTAL SUMMARY</td>
+                                <td>—</td>
+                                <td>16 Q (30M)</td>
+                                <td>13 Q (25M)</td>
+                                <td>10 Q (25M)</td>
+                                <td>39 Q</td>
+                                <td>80 M</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top:14px; text-align:center;">
+                        <button type="button" class="original-img-toggle" onclick="toggleOriginalBlueprint()">
+                            <span>🖼️</span> View Original Blueprint Infographic
+                        </button>
+                        <div id="original-blueprint-box" class="original-img-preview">
+                            <img src="source_materials/science/science_midterm_pattern_2026.jpg" alt="Official Science Mid-term Assessment Blueprint 2026-27">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Science Exam Pattern Modal Scripts -->
+    <script>
+        function openExamPatternModal(section) {
+            const modal = document.getElementById('exam-pattern-modal');
+            if (!modal) return;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            switchModalTab(section || 'phy');
+        }
+
+        function closeExamPatternModal() {
+            const modal = document.getElementById('exam-pattern-modal');
+            if (!modal) return;
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function switchModalTab(tabId) {
+            const tabs = ['phy', 'chem', 'bio', 'overall'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('modal-tab-btn-' + t);
+                const pane = document.getElementById('modal-pane-' + t);
+                if (btn) {
+                    if (t === tabId) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                }
+                if (pane) {
+                    pane.style.display = (t === tabId) ? 'block' : 'none';
+                }
+            });
+        }
+
+        function toggleOriginalBlueprint() {
+            const box = document.getElementById('original-blueprint-box');
+            if (box) {
+                box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeExamPatternModal();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('exam-pattern-modal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closeExamPatternModal();
+                    }
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>
