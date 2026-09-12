@@ -153,6 +153,62 @@
         window.addEventListener('scroll', requestTick, { passive: true });
         window.addEventListener('resize', requestTick, { passive: true });
         document.addEventListener('scroll', requestTick, { passive: true });
+
+        // Universal Hash Tab Activator
+        activateTabFromHash();
+        setTimeout(activateTabFromHash, 150);
+        setTimeout(activateTabFromHash, 400);
+        window.addEventListener('hashchange', activateTabFromHash);
+    }
+
+    function activateTabFromHash() {
+        if (!window.location.hash) return;
+        var rawHash = window.location.hash.substring(1);
+        if (!rawHash) return;
+
+        // Try direct tab button by exact onclick argument or id
+        var selector = [
+            'button[onclick*="\'' + rawHash + '\'"]',
+            'button[onclick*=\'"' + rawHash + '"\']',
+            'button[onclick*="' + rawHash + '"]',
+            '.tab-btn[data-tab="' + rawHash + '"]',
+            '.tab-btn#' + rawHash + '-btn',
+            'a[href="#' + rawHash + '"]'
+        ].join(', ');
+
+        var btn = document.querySelector(selector);
+        if (btn) {
+            btn.click();
+            return;
+        }
+
+        // Check numeric tabs e.g. #tab1 matching showTab(1)
+        if (rawHash.startsWith('tab') && !isNaN(rawHash.replace('tab', ''))) {
+            var num = rawHash.replace('tab', '');
+            var numBtn = document.querySelector('button[onclick*="showTab(' + num + ')"]');
+            if (numBtn) {
+                numBtn.click();
+                return;
+            }
+        }
+
+        // Check if hash matches a tab container id
+        var target = document.getElementById(rawHash);
+        if (target && (target.classList.contains('tab-content') || target.classList.contains('tab-pane') || target.classList.contains('tab-panel'))) {
+            var tabBtn = document.querySelector('button[onclick*="' + target.id + '"]') ||
+                         document.querySelector('[data-tab="' + target.id + '"]') ||
+                         document.querySelector('[data-target="#' + target.id + '"]');
+            if (tabBtn) {
+                tabBtn.click();
+            } else {
+                document.querySelectorAll('.tab-content, .tab-pane, .tab-panel').forEach(function(el) {
+                    el.style.display = 'none';
+                    el.classList.remove('active');
+                });
+                target.style.display = 'block';
+                target.classList.add('active');
+            }
+        }
     }
 
     if (document.readyState === 'loading') {
