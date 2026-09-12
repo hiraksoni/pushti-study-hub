@@ -766,8 +766,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 <script>
-function  {}
-
 function openTab(evt, tabName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tab-content");
@@ -786,8 +784,11 @@ function openTab(evt, tabName) {
     }
     if (evt && evt.currentTarget) {
         evt.currentTarget.classList.add("active");
+    } else {
+        const btn = document.querySelector(`.tab-btn[onclick*="'${tabName}'"]`);
+        if (btn) btn.classList.add("active");
     }
-    }
+}
 
 function toggleTheme() {
     const current = document.body.getAttribute('data-theme') || document.documentElement.getAttribute('data-theme') || 'dark';
@@ -799,7 +800,7 @@ function toggleTheme() {
     if (window.parent && window.parent !== window) {
         window.parent.postMessage({ theme: next }, '*');
     }
-    }
+}
 
 function updateThemeIcon(theme) {
     const icon = document.querySelector('.theme-toggle i');
@@ -815,6 +816,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.setAttribute('data-theme', saved);
     updateThemeIcon(saved);
 
+    // Auto-open tab from URL hash if present (e.g. #tab-sandhi)
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+        const targetBtn = document.querySelector(`button[onclick*="'${hash}'"]`);
+        if (targetBtn) {
+            targetBtn.click();
+        }
+    }
+
     // Bind theme toggle buttons
     document.querySelectorAll('.theme-toggle').forEach(btn => {
         btn.onclick = (e) => {
@@ -822,8 +832,6 @@ document.addEventListener('DOMContentLoaded', () => {
             e.stopPropagation();
             toggleTheme();
         };
-    });
-
     });
 });
 </script>
