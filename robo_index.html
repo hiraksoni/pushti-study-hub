@@ -1,0 +1,2226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI & Robotics (Robotics, AR/VR & Coding AI) - Pushti Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    :root {
+        --bg-main: #0F0F1A !important;
+        --bg-color: #0F0F1A;
+        --surface: #16213E;
+        --surface-hover: #1F2E54;
+        --primary: #06B6D4;
+        --primary-hover: #0891B2;
+        --primary-glow: rgba(6, 182, 212, 0.25);
+        --accent: #38BDF8;
+        --text-main: #E8E8E8;
+        --text-muted: #94A3B8;
+        --border: #2A2A40;
+        --tag-bg: rgba(255, 255, 255, 0.06);
+    }
+    [data-theme="light"] {
+        --bg-main: #F8FAFC !important;
+        --bg-color: #F8FAFC;
+        --surface: #FFFFFF;
+        --surface-hover: #F1F5F9;
+        --primary: #0284C7;
+        --primary-hover: #0369A1;
+        --primary-glow: rgba(2, 132, 199, 0.2);
+        --accent: #0284C7;
+        --text-main: #0F172A;
+        --text-muted: #64748B;
+        --border: #E2E8F0;
+        --tag-bg: rgba(0, 0, 0, 0.05);
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0; padding: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        min-height: 100vh;
+        line-height: 1.6;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .site-header {
+        background-color: #0F0F1A !important;
+        background: #0F0F1A !important;
+        opacity: 1 !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    [data-theme="light"] .site-header {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        opacity: 1 !important;
+    }
+    .container {
+        max-width: 1260px;
+        margin: 20px auto 40px auto;
+        padding: 0 20px;
+    }
+
+    /* Badges & Status Pills */
+    .pill {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .pill-cyan {
+        background: rgba(6, 182, 212, 0.15);
+        color: #38BDF8;
+        border: 1px solid rgba(6, 182, 212, 0.35);
+    }
+    .pill-purple {
+        background: rgba(139, 92, 246, 0.15);
+        color: #C084FC;
+        border: 1px solid rgba(139, 92, 246, 0.35);
+    }
+    .pill-emerald {
+        background: rgba(16, 185, 129, 0.15);
+        color: #34D399;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .pill-amber {
+        background: rgba(245, 158, 11, 0.15);
+        color: #FBBF24;
+        border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    /* Book Switcher Header Bar */
+    .book-switcher-wrap {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 22px;
+        flex-wrap: wrap;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 6px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+    }
+    .book-switch-btn {
+        flex: 1;
+        min-width: 260px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 18px;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        color: var(--text-muted);
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.96rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.22s ease;
+    }
+    .book-switch-btn:hover {
+        color: var(--text-main);
+        background: rgba(255, 255, 255, 0.05);
+    }
+    .book-switch-btn.active {
+        background: var(--surface);
+        border-color: var(--primary);
+        color: #38BDF8;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), inset 0 0 0 1px var(--primary);
+    }
+
+    /* Vertical Branch Layout */
+    .subject-vertical-container {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 1.8rem;
+        align-items: start;
+    }
+    .branch-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        position: sticky;
+        top: 76px;
+    }
+    .sidebar-section-title {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-muted);
+        padding: 4px 8px 0 8px;
+        font-weight: 700;
+        font-family: 'Space Mono', monospace;
+    }
+    .branch-nav-btn {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.95rem 1.15rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        color: var(--text-muted);
+        cursor: pointer;
+        text-align: left;
+        transition: all 0.22s ease;
+        opacity: 0.8;
+        position: relative;
+        overflow: hidden;
+        user-select: none;
+        width: 100%;
+    }
+    .branch-nav-btn:hover {
+        opacity: 1;
+        transform: translateX(4px);
+        border-color: var(--branch-color, var(--primary));
+        color: var(--text-main);
+    }
+    .branch-nav-btn.active {
+        opacity: 1;
+        transform: translateX(5px);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+        border-color: var(--branch-color, var(--primary));
+        color: var(--text-main);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 1.5px var(--branch-color, var(--primary));
+    }
+    .branch-icon {
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .branch-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.12rem;
+    }
+    .branch-title {
+        font-size: 0.98rem;
+        font-weight: 700;
+        font-family: 'Outfit', sans-serif;
+        color: var(--text-main);
+    }
+    .branch-stats {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        font-family: 'Space Mono', monospace;
+    }
+
+    /* Content Area */
+    .branch-content-area {
+        min-width: 0;
+    }
+    .category-section {
+        display: none;
+    }
+    .category-section.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .section-headline {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 16px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 10px;
+    }
+    .section-headline h3 {
+        margin: 0;
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.3rem;
+        color: var(--text-main);
+    }
+    .section-headline p {
+        margin: 2px 0 0 0;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+    }
+
+    /* Project Cards */
+    .project-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        margin-bottom: 22px;
+        overflow: hidden;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    }
+    .project-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        background: rgba(255, 255, 255, 0.02);
+        border-bottom: 1px solid var(--border);
+    }
+    .card-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    .proj-num {
+        font-size: 1.7rem;
+        font-family: 'Space Mono', monospace;
+        font-weight: 700;
+        color: var(--primary);
+        line-height: 1;
+        min-width: 44px;
+    }
+    .proj-title-wrap h4 {
+        margin: 0;
+        font-size: 1.15rem;
+        font-family: 'Outfit', sans-serif;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .proj-desc {
+        margin: 3px 0 0 0;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+    }
+    .tag {
+        font-size: 0.72rem;
+        padding: 2px 8px;
+        background: var(--tag-bg);
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        color: var(--text-muted);
+        font-family: 'Space Mono', monospace;
+    }
+
+    /* Activity Tab Bar — Strict Zero-Horizontal-Scroll Standard */
+    .activity-tab-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 6px;
+        padding: 10px 18px;
+        background: rgba(11, 17, 32, 0.5);
+        border-bottom: 1px solid var(--border);
+        overflow-x: hidden;
+    }
+    .activity-tab-btn {
+        padding: 6px 13px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+        cursor: pointer;
+        white-space: nowrap;
+        user-select: none;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .activity-tab-btn:hover {
+        color: var(--text-main);
+        background: rgba(255, 255, 255, 0.09);
+        border-color: var(--primary);
+    }
+    .activity-tab-btn.active {
+        background: rgba(6, 182, 212, 0.15);
+        color: #38BDF8;
+        border-color: #06B6D4;
+        box-shadow: 0 0 10px rgba(6, 182, 212, 0.25);
+    }
+
+    /* Activity Content Pane */
+    .activity-pane {
+        display: none;
+        padding: 22px 24px;
+        animation: fadeIn 0.25s ease;
+    }
+    .activity-pane.active {
+        display: block;
+    }
+
+    .pane-title {
+        font-size: 1.15rem;
+        font-family: 'Outfit', sans-serif;
+        color: var(--accent);
+        margin: 0 0 12px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 16px;
+    }
+    .grid-4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+    @media (max-width: 768px) {
+        .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    }
+    .info-box {
+        background: rgba(11, 17, 32, 0.7);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px 18px;
+    }
+    .info-box h5 {
+        margin: 0 0 8px 0;
+        font-size: 0.95rem;
+        font-family: 'Outfit', sans-serif;
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .info-box ul, .info-box ol {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 0.86rem;
+        color: var(--text-main);
+    }
+    .info-box li {
+        margin-bottom: 5px;
+    }
+
+    /* Interactive Port Selector */
+    .port-btn-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin: 12px 0;
+    }
+    .port-btn {
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text-main);
+        font-family: 'Space Mono', monospace;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .port-btn:hover, .port-btn.active {
+        background: rgba(6, 182, 212, 0.2);
+        border-color: var(--primary);
+        color: #38BDF8;
+        box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
+    }
+    .comp-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+    }
+    .comp-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 12px;
+        transition: 0.2s;
+        font-size: 0.84rem;
+    }
+    .comp-card.compatible {
+        border-color: #10B981;
+        background: rgba(16, 185, 129, 0.08);
+    }
+    .comp-card.incompatible {
+        opacity: 0.35;
+    }
+
+    /* Code Block Simulation */
+    .code-block {
+        background: #0d1527;
+        border: 1px solid #1e293b;
+        border-radius: 10px;
+        padding: 16px;
+        font-family: 'Space Mono', monospace;
+        font-size: 0.84rem;
+        color: #38BDF8;
+        line-height: 1.6;
+        margin: 12px 0;
+        border-left: 4px solid var(--primary);
+        overflow-x: auto;
+    }
+    .block-event { color: #F59E0B; font-weight: 700; }
+    .block-func { color: #8B5CF6; }
+    .block-prop { color: #10B981; }
+    .block-param { color: #EC4899; }
+    .block-comment { color: #64748B; font-style: italic; }
+
+    /* Tables */
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.86rem;
+        margin-top: 10px;
+    }
+    .data-table th, .data-table td {
+        padding: 9px 12px;
+        border: 1px solid var(--border);
+        text-align: left;
+    }
+    .data-table th {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-main);
+        font-family: 'Outfit', sans-serif;
+    }
+    .data-table tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Alert Box */
+    .alert-box {
+        border-left: 4px solid var(--primary);
+        background: rgba(6, 182, 212, 0.08);
+        padding: 12px 16px;
+        border-radius: 6px;
+        margin: 14px 0;
+        font-size: 0.88rem;
+        color: var(--text-main);
+    }
+
+    /* Interactive Braille Tool */
+    .braille-cell {
+        display: inline-grid;
+        grid-template-columns: repeat(2, 22px);
+        grid-template-rows: repeat(3, 22px);
+        gap: 6px;
+        background: #0B1120;
+        padding: 10px;
+        border-radius: 10px;
+        border: 2px solid var(--primary);
+        width: max-content;
+        margin: 10px auto;
+    }
+    .braille-dot {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+        cursor: pointer;
+        transition: 0.15s;
+    }
+    .braille-dot.active {
+        background: #06B6D4;
+        box-shadow: 0 0 8px #06B6D4;
+    }
+
+    /* Interactive Live HTML Previewer */
+    .html-editor-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 12px;
+    }
+    @media (max-width: 768px) {
+        .html-editor-wrap { grid-template-columns: 1fr; }
+    }
+    .html-input-area {
+        width: 100%;
+        height: 180px;
+        background: #0d1527;
+        color: #38BDF8;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px;
+        font-family: 'Space Mono', monospace;
+        font-size: 0.84rem;
+        outline: none;
+        resize: vertical;
+    }
+    .html-preview-frame {
+        background: #ffffff;
+        color: #0f172a;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 14px;
+        min-height: 180px;
+        overflow-y: auto;
+    }
+
+    /* 4Ws Interactive Problem Canvas */
+    .canvas-4w-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-top: 14px;
+    }
+    .card-4w {
+        background: rgba(11, 17, 32, 0.75);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px;
+    }
+    .card-4w h5 {
+        margin: 0 0 6px 0;
+        font-size: 1rem;
+        font-family: 'Outfit', sans-serif;
+    }
+
+    /* Switch Slider */
+    .switch input:checked + .slider { background-color: var(--primary); }
+    .switch input:checked + .slider:before { transform: translateX(14px); }
+    .slider:before { position:absolute; content:""; height:14px; width:14px; left:3px; bottom:3px; background-color:white; transition:.4s; border-radius:50%; }
+
+    @media (max-width: 880px) {
+        .subject-vertical-container { grid-template-columns: 1fr; }
+        .branch-sidebar { position: static; flex-direction: row; flex-wrap: wrap; }
+        .branch-nav-btn { flex: 1 1 calc(50% - 10px); min-width: 140px; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- Standard Pushti Study Hub Top Bar -->
+    <header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid var(--border); background-color: #0F0F1A !important; opacity: 1 !important; position: sticky; top: 0; z-index: 1000;">
+        <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.05rem; font-weight: 500; color: var(--text-main);">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <a href="robo_index.html" style="text-decoration:none; color:inherit; font-weight:600;">AI & Robotics</a>
+        </div>
+        
+        <div class="header-right" style="display:flex; align-items:center; gap: 16px;">
+            <div class="search-container" style="position:relative; display:flex; align-items:center;">
+                <button id="global-search-btn" aria-label="Search" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; padding:5px; display:flex; align-items:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+                <input id="global-search-input" type="text" placeholder="Search robots, HTML, AI..." style="display:none; margin-left:8px; padding: 6px 14px; border-radius:20px; border:1px solid var(--border); background:rgba(0,0,0,0.25); color:white; width: 190px; font-size: 0.82rem; outline:none;">
+            </div>
+            
+            <nav class="header-nav" style="display:flex; align-items:center; gap: 12px;">
+                <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:var(--text-main); cursor:pointer; font-size:1.15rem; padding: 4px 8px;">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <a href="timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px; display:inline-flex; align-items:center; gap:6px;">📅 Time Table</a>
+                <a href="midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px; display:inline-flex; align-items:center; gap:6px;">🎯 Mid-Term Syllabus</a>
+
+                <div class="user-profile-wrapper" style="position:relative;">
+                    <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:38px; height:38px; border:2px solid var(--primary);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
+                        <img src="https://ui-avatars.com/api/?name=Pushti&background=06B6D4&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div id="global-dropdown" style="display:none; position:absolute; right:0; top:48px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:15px; width:220px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); flex-direction:column; gap:12px; z-index:1001;">
+                        <div style="text-align:center; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
+                            <div style="font-weight:700; font-size:1.1rem; color:var(--text-main);">Pushti</div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.9rem; font-weight:500;">Student</span>
+                            <label class="switch" style="position:relative; display:inline-block; width:34px; height:20px;">
+                                <input type="checkbox" id="global-role-checkbox" style="opacity:0; width:0; height:0;">
+                                <span class="slider" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--border); transition:.4s; border-radius:34px;"></span>
+                            </label>
+                            <span style="font-size:0.9rem; font-weight:500;">Parent</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Subject Hero Banner -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid var(--border);">
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <div style="width: 46px; height: 46px; border-radius: 12px; background: rgba(6, 182, 212, 0.15); color: #06B6D4; display: flex; align-items: center; justify-content: center; font-size: 1.45rem; border: 1px solid rgba(6, 182, 212, 0.35);">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <div>
+                    <h1 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.45rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
+                        AI & Robotics (Robotics, AR/VR & Coding AI)
+                    </h1>
+                    <p style="margin: 2px 0 0 0; font-size: 0.82rem; color: var(--text-muted);">
+                        Grade 7 CBSE Vocational & Emerging Tech Two-Book Master Hub &bull; Subject: AI / Robo (SBPS)
+                    </p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <span class="pill pill-cyan"><i class="fas fa-calendar-check"></i> Tue P7 & Wed P4 (VJ Sir)</span>
+                <span class="pill pill-purple"><i class="fas fa-book-bookmark"></i> 2 Textbooks (94 Pages)</span>
+                <span class="pill pill-emerald"><i class="fas fa-flask"></i> Practical Lab (Non-Exam)</span>
+            </div>
+        </div>
+
+        <!-- Master Two-Book Switcher Bar -->
+        <div class="book-switcher-wrap">
+            <button class="book-switch-btn active" id="book-btn-1" onclick="switchBookMode(1)">
+                <i class="fas fa-robot" style="color:#06B6D4;"></i> Book 1: Robotics, AR & VR (36 Pages)
+            </button>
+            <button class="book-switch-btn" id="book-btn-2" onclick="switchBookMode(2)">
+                <i class="fas fa-brain" style="color:#8B5CF6;"></i> Book 2: Coding & Artificial Intelligence (58 Pages)
+            </button>
+        </div>
+
+        <!-- =========================================================================
+             BOOK 1 VIEW: ROBOTICS, AR & VR
+             ========================================================================= -->
+        <div id="book-view-1" class="subject-vertical-container">
+
+            <!-- Left Branch Navigation Sidebar (Book 1) -->
+            <aside class="branch-sidebar">
+                <div class="sidebar-section-title">📘 Book 1 &bull; Hardware & XR</div>
+
+                <button class="branch-nav-btn active" id="btn-basics" style="--branch-color: #06B6D4;" onclick="showBranch('basics')">
+                    <div class="branch-icon">🤖</div>
+                    <div class="branch-details">
+                        <div class="branch-title">Robotics Basics</div>
+                        <div class="branch-stats">Ch 1 &bull; QBrik & Voice Door</div>
+                    </div>
+                </button>
+
+                <button class="branch-nav-btn" id="btn-motion" style="--branch-color: #10B981;" onclick="showBranch('motion')">
+                    <div class="branch-icon">🚗</div>
+                    <div class="branch-details">
+                        <div class="branch-title">Robot Movement</div>
+                        <div class="branch-stats">Ch 2 &bull; Sense-Think-Act & RC Car</div>
+                    </div>
+                </button>
+
+                <button class="branch-nav-btn" id="btn-xr" style="--branch-color: #8B5CF6;" onclick="showBranch('xr')">
+                    <div class="branch-icon">🥽</div>
+                    <div class="branch-details">
+                        <div class="branch-title">Extended Reality</div>
+                        <div class="branch-stats">Ch 3 &bull; AR, VR, MR & Rio Tour</div>
+                    </div>
+                </button>
+
+                <button class="branch-nav-btn" id="btn-cad" style="--branch-color: #F59E0B;" onclick="showBranch('cad')">
+                    <div class="branch-icon">🧊</div>
+                    <div class="branch-details">
+                        <div class="branch-title">3D & App Builder</div>
+                        <div class="branch-stats">Ch 4 &bull; Tinkercad -> VR App</div>
+                    </div>
+                </button>
+
+                <button class="branch-nav-btn" id="btn-lab" style="--branch-color: #EC4899;" onclick="showBranch('lab')">
+                    <div class="branch-icon">🧩</div>
+                    <div class="branch-details">
+                        <div class="branch-title">Logic & Brain Lab</div>
+                        <div class="branch-stats">Worksheets &bull; Braille & Puzzles</div>
+                    </div>
+                </button>
+            </aside>
+
+            <!-- Right Content Area (Book 1) -->
+            <div class="branch-content-area">
+
+                <!-- SECTION 1: BASICS & QBRIK -->
+                <div id="sec-basics" class="category-section active">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fas fa-robot" style="color:#06B6D4;"></i> Unit 1: What are Robots? & QBrik Architecture</h3>
+                            <p>Foundations of robotics, 5 core sub-systems, QBrik controller pinouts, and Voice-Controlled Door automation.</p>
+                        </div>
+                        <span class="tag">Chapter 1 &bull; 9 Pages</span>
+                    </div>
+
+                    <!-- Project Card: QBrik Architecture & Setup -->
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">01</div>
+                                <div class="proj-title-wrap">
+                                    <h4>QBrik Hardware & Code 2 Play Platform <span class="tag">Architecture</span></h4>
+                                    <p class="proj-desc">Master the 6 Sensor Ports (P1-P6), 3 Motor Ports (M1-M3), and the 5-Step Code 2 Play Bluetooth Setup.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('b1', 'guide', this)"><i class="fas fa-play-circle"></i> 5-Step Setup Guide</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b1', 'matrix', this)"><i class="fas fa-network-wired"></i> Interactive Port Matrix</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b1', 'bt', this)"><i class="fab fa-bluetooth-b"></i> Bluetooth Event Logic</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b1', 'fiveparts', this)"><i class="fas fa-cogs"></i> 5 Robot Subsystems</button>
+                        </div>
+
+                        <div id="pane-b1-guide" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-list-ol"></i> 5-Step Guide to Kickstart Code 2 Play (Section A)</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5><i class="fas fa-mobile-screen"></i> Step 1 & 2: Interface Components</h5>
+                                    <ul>
+                                        <li><strong>1. Add ListPicker</strong>: Palette &rarr; User Interface &rarr; drag <code>ListPicker</code> onto viewer. Rename to <code>Connect</code> or <code>Pick Car</code>.</li>
+                                        <li><strong>2. Add Notifier</strong>: Palette &rarr; User Interface &rarr; drag <code>Notifier</code> onto viewer (non-visible component at bottom).</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-microchip"></i> Step 3, 4 & 5: Connectivity & Hardware</h5>
+                                    <ul>
+                                        <li><strong>3. Add BluetoothClient</strong>: Palette &rarr; Connectivity &rarr; drag <code>BluetoothClient</code>.</li>
+                                        <li><strong>4. Add Hardware from QtPi Mega Blocks</strong>: Drag motors, LEDs, sensors. In Properties panel, assign <code>PortNumber</code> and associate with <code>BluetoothClient1</code>.</li>
+                                        <li><strong>5. Rename Everything</strong>: Give descriptive names to all components in the hierarchy tree for clean block coding.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pane-b1-matrix" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-plug"></i> Interactive QBrik Port Compatibility Matrix</h4>
+                            <p style="font-size:0.86rem; color:var(--text-muted);">
+                                Click any port on the QBrik below to see which sensors and actuators can be safely connected:
+                            </p>
+                            <div class="port-btn-row">
+                                <button class="port-btn active" onclick="selectPort('P1')">Port P1</button>
+                                <button class="port-btn" onclick="selectPort('P2')">Port P2</button>
+                                <button class="port-btn" onclick="selectPort('P3')">Port P3</button>
+                                <button class="port-btn" onclick="selectPort('P4')">Port P4</button>
+                                <button class="port-btn" onclick="selectPort('P5')">Port P5</button>
+                                <button class="port-btn" onclick="selectPort('P6')">Port P6</button>
+                                <button class="port-btn" onclick="selectPort('M1')">Motor M1</button>
+                                <button class="port-btn" onclick="selectPort('M2')">Motor M2</button>
+                                <button class="port-btn" onclick="selectPort('M3')">Motor M3 (Test)</button>
+                            </div>
+                            <div id="port-status-banner" class="alert-box" style="margin-top:10px;">
+                                <strong>Currently Inspecting: Port P1</strong> &bull; Supports Analog/Digital Sensors, RGB LEDs, and Servo Motors!
+                            </div>
+                            <div class="comp-grid" id="comp-grid-display"></div>
+                        </div>
+
+                        <div id="pane-b1-bt" class="activity-pane">
+                            <h4 class="pane-title"><i class="fab fa-bluetooth-b"></i> Bluetooth Handshake Logic (Blocks Editor)</h4>
+                            <div class="code-block">
+<span class="block-comment">// Event 1: Fetch list of paired devices before popup opens</span>
+<span class="block-event">when</span> ListPicker1.<span class="block-func">BeforePicking</span> <span class="block-event">do</span>
+    <span class="block-prop">set</span> ListPicker1.Elements <span class="block-prop">to</span> BluetoothClient1.AddressesAndNames
+
+<span class="block-comment">// Event 2: Attempt Bluetooth RFCOMM connection after user picks QBrik</span>
+<span class="block-event">when</span> ListPicker1.<span class="block-func">AfterPicking</span> <span class="block-event">do</span>
+    <span class="block-event">if</span> BluetoothClient1.<span class="block-func">Connect</span>(address: ListPicker1.Selection) <span class="block-event">then</span>
+        <span class="block-prop">set</span> ListPicker1.Text <span class="block-prop">to</span> <span class="block-param">"Connected! ✔"</span>
+        <span class="block-prop">set</span> ListPicker1.BackgroundColor <span class="block-prop">to</span> <span class="block-param">Green</span>
+        <span class="block-func">call</span> Notifier1.<span class="block-func">ShowAlert</span>(notice: <span class="block-param">"QBrik is Online!"</span>)
+    <span class="block-event">else</span>
+        <span class="block-prop">set</span> ListPicker1.Text <span class="block-prop">to</span> <span class="block-param">"Failed to Connect ✖"</span>
+        <span class="block-prop">set</span> ListPicker1.BackgroundColor <span class="block-prop">to</span> <span class="block-param">Red</span>
+                            </div>
+                        </div>
+
+                        <div id="pane-b1-fiveparts" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-sitemap"></i> The 5 Anatomy Subsystems of a Robot</h4>
+                            <div class="grid-3">
+                                <div class="info-box"><h5><i class="fas fa-eye"></i> 1. Sensors (Input)</h5><p style="font-size:0.84rem;">Eyes & ears that gather environmental data (IR, Ultrasonic, LDR, Temperature).</p></div>
+                                <div class="info-box"><h5><i class="fas fa-brain"></i> 2. Processor (Brain)</h5><p style="font-size:0.84rem;">Microcontroller (QBrik) that executes rules, calculates logic, and makes decisions.</p></div>
+                                <div class="info-box"><h5><i class="fas fa-bolt"></i> 3. Actuators (Muscles)</h5><p style="font-size:0.84rem;">Convert electrical signals into motion, sound, or light (DC Motors, Servos, Buzzers).</p></div>
+                                <div class="info-box"><h5><i class="fas fa-battery-full"></i> 4. Power Supply (Heart)</h5><p style="font-size:0.84rem;">Supplies steady current to all circuits (Rechargeable Li-ion packs, 9V batteries).</p></div>
+                                <div class="info-box"><h5><i class="fas fa-cubes"></i> 5. Structure (Skeleton)</h5><p style="font-size:0.84rem;">Qbits beams, chassis, and brackets providing physical rigidity and support.</p></div>
+                                <div class="info-box" style="border-color:#10B981;"><h5><i class="fas fa-check-circle" style="color:#10B981;"></i> Core Triad</h5><p style="font-size:0.84rem; color:#34D399;"><strong>Sense &rarr; Think &rarr; Act</strong>: If a machine lacks any of these three, it is not a true robot!</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card: Voice Controlled Door -->
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">02</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Project 1: Voice Controlled Smart Door <span class="tag">Hands-on Lab</span></h4>
+                                    <p class="proj-desc">Build an automated smart barrier that opens (90°) and closes (0°) on spoken voice commands.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('p1', 'schematic', this)"><i class="fas fa-diagram-project"></i> Wiring & Parts</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p1', 'code', this)"><i class="fas fa-code"></i> Block Code Logic</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p1', 'quiz', this)"><i class="fas fa-circle-question"></i> Unit 1 Quiz</button>
+                        </div>
+
+                        <div id="pane-p1-schematic" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-tools"></i> Hardware Setup & Pinout</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5><i class="fas fa-boxes-stacked"></i> Materials Required</h5>
+                                    <ul>
+                                        <li><strong>QBrik Controller</strong> + Li-ion battery</li>
+                                        <li><strong>Servo Motor</strong> connected to <strong>Port P1</strong></li>
+                                        <li><strong>Status LED / Buzzer</strong> connected to <strong>Port P2</strong></li>
+                                        <li><strong>Qbits</strong> structural beams for door frame</li>
+                                        <li><strong>Smartphone</strong> running Code 2 Play with SpeechRecognizer</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-gears"></i> Angular Calibration</h5>
+                                    <ul>
+                                        <li><strong>Rest Position (Closed)</strong>: Angle set to <code>0°</code></li>
+                                        <li><strong>Active Position (Open)</strong>: Angle rotated to <code>90°</code></li>
+                                        <li><strong>Buzzer Audio Alert</strong>: Beeps once upon command recognition</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pane-p1-code" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-laptop-code"></i> Code 2 Play Voice Recognition Blocks</h4>
+                            <div class="code-block">
+<span class="block-comment">// Step 1: User taps the microphone button</span>
+<span class="block-event">when</span> Button_Speak.<span class="block-func">Click</span> <span class="block-event">do</span>
+    <span class="block-func">call</span> SpeechRecognizer1.<span class="block-func">GetText</span>
+
+<span class="block-comment">// Step 2: Parse spoken text and actuate the servo door</span>
+<span class="block-event">when</span> SpeechRecognizer1.<span class="block-func">AfterGettingText</span>(result) <span class="block-event">do</span>
+    <span class="block-prop">set</span> Label_VoiceText.Text <span class="block-prop">to</span> <span class="block-func">get</span> result
+
+    <span class="block-event">if</span> (<span class="block-func">string_contains</span>(piece: <span class="block-param">"open"</span>, text: <span class="block-func">get</span> result.<span class="block-func">toLowerCase</span>)) <span class="block-event">then</span>
+        <span class="block-func">call</span> ServoMotor1.<span class="block-func">SetAngle</span>(angle: <span class="block-param">90</span>)
+        <span class="block-prop">set</span> Label_DoorStatus.Text <span class="block-prop">to</span> <span class="block-param">"Door OPEN (90°)"</span>
+        <span class="block-func">call</span> Buzzer1.<span class="block-func">Beep</span>(duration: <span class="block-param">200ms</span>)
+
+    <span class="block-event">else if</span> (<span class="block-func">string_contains</span>(piece: <span class="block-param">"close"</span>, text: <span class="block-func">get</span> result.<span class="block-func">toLowerCase</span>)) <span class="block-event">then</span>
+        <span class="block-func">call</span> ServoMotor1.<span class="block-func">SetAngle</span>(angle: <span class="block-param">0</span>)
+        <span class="block-prop">set</span> Label_DoorStatus.Text <span class="block-prop">to</span> <span class="block-param">"Door CLOSED (0°)"</span>
+        <span class="block-func">call</span> Buzzer1.<span class="block-func">Beep</span>(duration: <span class="block-param">400ms</span>)
+                            </div>
+                        </div>
+
+                        <div id="pane-p1-quiz" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-check-double"></i> Unit 1 Self-Check Assessment</h4>
+                            <div class="info-box" style="margin-bottom:12px;">
+                                <p><strong>Q1: Match the Following (Sensors, Actuators, Controller)</strong></p>
+                                <p style="font-size:0.86rem; color:var(--text-muted);">
+                                    • Sensors &rarr; <span style="color:#10B981;">Collect raw data from environment</span><br>
+                                    • Processor &rarr; <span style="color:#10B981;">Evaluates data and makes decisions</span><br>
+                                    • Actuator &rarr; <span style="color:#10B981;">Converts electricity to physical motion</span><br>
+                                    • Battery &rarr; <span style="color:#10B981;">Supplies energy</span>
+                                </p>
+                            </div>
+                            <div class="info-box">
+                                <p><strong>Q2: Why is Motor Port M3 special on the QBrik?</strong></p>
+                                <p style="font-size:0.86rem; color:#38BDF8;">
+                                    Port M3 is a <em>non-programmable testing port</em>. It supplies continuous power to motors for physical hardware checks without requiring uploaded code!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: MOTION & CONTROL -->
+                <div id="sec-motion" class="category-section">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fas fa-gears" style="color:#10B981;"></i> Unit 2: How Robots Move: Sensors & Processors</h3>
+                            <p>Sense-Think-Act computational loops, decision flowcharts, and Rishi's Indicator RC Car project.</p>
+                        </div>
+                        <span class="tag">Chapter 2 &bull; 5 Pages</span>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">03</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Project 2: Rishi's RC Car with Indicators <span class="tag">Automotive Robotics</span></h4>
+                                    <p class="proj-desc">Differential drive vehicle with dynamic left/right RGB LED turn signals integrated into touch remote controls.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('p2', 'cycle', this)"><i class="fas fa-arrows-spin"></i> Sense-Think-Act Loop</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p2', 'diffdrive', this)"><i class="fas fa-car-side"></i> Differential Drive</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p2', 'logic', this)"><i class="fas fa-traffic-light"></i> Indicator Logic Table</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p2', 'blocks', this)"><i class="fas fa-code-branch"></i> Remote App Blocks</button>
+                        </div>
+
+                        <div id="pane-p2-cycle" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-rotate"></i> The Autonomous Feedback Loop</h4>
+                            <div class="grid-3">
+                                <div class="info-box" style="border-top:3px solid #06B6D4;"><h5><i class="fas fa-satellite-dish"></i> 1. SENSE</h5><p style="font-size:0.84rem;">Ultrasonic sensor measures distance to wall: 15 cm.</p></div>
+                                <div class="info-box" style="border-top:3px solid #8B5CF6;"><h5><i class="fas fa-microchip"></i> 2. THINK</h5><p style="font-size:0.84rem;">QBrik evaluates: <code>Distance &lt; 20cm</code> &rarr; Stop and turn right.</p></div>
+                                <div class="info-box" style="border-top:3px solid #10B981;"><h5><i class="fas fa-angles-right"></i> 3. ACT</h5><p style="font-size:0.84rem;">Motors execute pivot rotation, steering clear of the obstacle.</p></div>
+                            </div>
+                        </div>
+
+                        <div id="pane-p2-diffdrive" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-car"></i> Differential Steering Matrix</h4>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Desired Motion</th><th>Left Motor (M1)</th><th>Right Motor (M2)</th><th>Kinematic Result</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Forward</strong></td><td><span style="color:#10B981;">Forward 100%</span></td><td><span style="color:#10B981;">Forward 100%</span></td><td>Both wheels advance equally.</td></tr>
+                                    <tr><td><strong>Reverse</strong></td><td><span style="color:#F59E0B;">Reverse 100%</span></td><td><span style="color:#F59E0B;">Reverse 100%</span></td><td>Both wheels reverse equally.</td></tr>
+                                    <tr><td><strong>Turn Left</strong></td><td><span style="color:#EF4444;">STOP (or Rev)</span></td><td><span style="color:#10B981;">Forward 100%</span></td><td>Right wheel pivots around left.</td></tr>
+                                    <tr><td><strong>Turn Right</strong></td><td><span style="color:#10B981;">Forward 100%</span></td><td><span style="color:#EF4444;">STOP (or Rev)</span></td><td>Left wheel pivots around right.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="pane-p2-logic" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-traffic-light"></i> Indicator State Truth Table</h4>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Button Action</th><th>Left LED (P1)</th><th>Right LED (P2)</th><th>Vehicle Motion</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Forward</strong></td><td>OFF</td><td>OFF</td><td>Moves straight ahead.</td></tr>
+                                    <tr><td><strong>Reverse</strong></td><td>OFF</td><td>OFF</td><td>Moves backward.</td></tr>
+                                    <tr><td><strong>Touch Left</strong></td><td><strong style="color:#34D399;">ON / FLASHING</strong></td><td>OFF</td><td>Left indicator flashes; car turns left.</td></tr>
+                                    <tr><td><strong>Touch Right</strong></td><td>OFF</td><td><strong style="color:#34D399;">ON / FLASHING</strong></td><td>Right indicator flashes; car turns right.</td></tr>
+                                    <tr><td><strong>Stop</strong></td><td>OFF</td><td>OFF</td><td>All motors halt.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="pane-p2-blocks" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-code"></i> Code 2 Play Touchdown / Touchup Events</h4>
+                            <div class="code-block">
+<span class="block-comment">// When Left Button is held down</span>
+<span class="block-event">when</span> Button_Left.<span class="block-func">TouchDown</span> <span class="block-event">do</span>
+    <span class="block-func">call</span> LeftMotor.<span class="block-func">Stop</span>
+    <span class="block-func">call</span> RightMotor.<span class="block-func">Forward</span>(speed: <span class="block-param">100</span>)
+    <span class="block-func">call</span> Left_RGB.<span class="block-func">SetColor</span>(red: <span class="block-param">0</span>, green: <span class="block-param">255</span>, blue: <span class="block-param">0</span>)
+
+<span class="block-comment">// When Left Button is released</span>
+<span class="block-event">when</span> Button_Left.<span class="block-func">TouchUp</span> <span class="block-event">do</span>
+    <span class="block-func">call</span> RightMotor.<span class="block-func">Stop</span>
+    <span class="block-func">call</span> Left_RGB.<span class="block-func">TurnOff</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 3: EXTENDED REALITY (XR) -->
+                <div id="sec-xr" class="category-section">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fas fa-vr-cardboard" style="color:#8B5CF6;"></i> Unit 3: Extended Reality (XR) Technologies</h3>
+                            <p>Virtual Reality (VR), Augmented Reality (AR), Mixed Reality (MR), spatial optics, and the Rio de Janeiro VR expedition.</p>
+                        </div>
+                        <span class="tag">Chapter 3 &bull; 5 Pages</span>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">04</div>
+                                <div class="proj-title-wrap">
+                                    <h4>The Immersive XR Spectrum <span class="tag">Theoretical & Applied</span></h4>
+                                    <p class="proj-desc">Deep comparative study across AR, VR, and MR hardware architectures, tracking systems, and field trips.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('p3', 'matrix', this)"><i class="fas fa-table-columns"></i> AR vs VR vs MR Matrix</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p3', 'hardware', this)"><i class="fas fa-microchip"></i> 5 Hardware Pillars</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p3', 'rio', this)"><i class="fas fa-globe-americas"></i> Rio VR Expedition</button>
+                        </div>
+
+                        <div id="pane-p3-matrix" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-layer-group"></i> Comparing the Three Realities</h4>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Feature</th><th>Augmented Reality (AR)</th><th>Virtual Reality (VR)</th><th>Mixed Reality (MR)</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Immersion</strong></td><td>Low &bull; Real world primary.</td><td><strong style="color:#C084FC;">100% Synthetic Immersion</strong></td><td><strong style="color:#38BDF8;">Hybrid Real-Time Blend</strong></td></tr>
+                                    <tr><td><strong>Display</strong></td><td>Transparent lenses or phone screen.</td><td>Opaque HMD blocks real room.</td><td>Spatial computer goggles (Vision Pro).</td></tr>
+                                    <tr><td><strong>Physics</strong></td><td>Floating 2D/3D overlay.</td><td>Entirely simulated digital physics.</td><td>Digital objects bounce off real tables!</td></tr>
+                                    <tr><td><strong>Examples</strong></td><td>Pokémon GO, Google Lens.</td><td>Flight Simulators, Beat Saber.</td><td>HoloLens surgery, NASA planetary CAD.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="pane-p3-hardware" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-microchip"></i> 5 Core Engineering Components of XR</h4>
+                            <div class="grid-2">
+                                <div class="info-box"><h5><i class="fas fa-glasses"></i> 1. Displays & Optics</h5><p style="font-size:0.84rem;">Micro-OLED screens with Fresnel or Pancake lenses focusing light at close range.</p></div>
+                                <div class="info-box"><h5><i class="fas fa-bolt"></i> 2. Low-Latency GPUs</h5><p style="font-size:0.84rem;">Motion-to-photon latency under 20ms at 90Hz+ to prevent vestibular motion sickness.</p></div>
+                                <div class="info-box"><h5><i class="fas fa-compass"></i> 3. Tracking: 3DoF vs 6DoF</h5><p style="font-size:0.84rem;">3DoF (orientation only) vs 6DoF (orientation + X, Y, Z translation via SLAM cameras).</p></div>
+                                <div class="info-box"><h5><i class="fas fa-headphones"></i> 4. 3D Spatial Audio</h5><p style="font-size:0.84rem;">Binaural sound algorithms dynamically calculating ear arrival delay and volume.</p></div>
+                            </div>
+                        </div>
+
+                        <div id="pane-p3-rio" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-monument"></i> Virtual Field Trip: Christ the Redeemer, Rio</h4>
+                            <div class="info-box">
+                                <p style="font-size:0.88rem;">
+                                    Students use WebVR to explore Mount Corcovado and the colossal statue in Rio de Janeiro with 360° gyroscopic controls, illustrating how immersive tech democratizes global education.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 4: 3D CODING & APP BUILDER -->
+                <div id="sec-cad" class="category-section">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fas fa-cubes" style="color:#F59E0B;"></i> Unit 4: Intro to 3D Block-Based Coding</h3>
+                            <p>Autodesk Tinkercad 3D Pond creation, OBJ export, Sketchfab WebVR hosting, and packaging via Median.co.</p>
+                        </div>
+                        <span class="tag">Chapter 4 &bull; 12 Pages</span>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">05</div>
+                                <div class="proj-title-wrap">
+                                    <h4>3D Modeling to Native VR App Pipeline <span class="tag">End-to-End Workflow</span></h4>
+                                    <p class="proj-desc">Design a 3D natural pond ecosystem in Tinkercad, export to Sketchfab, and package into a mobile VR application.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('p4', 'tinker', this)"><i class="fas fa-cube"></i> Step 1: Tinkercad 3D Pond</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p4', 'sketchfab', this)"><i class="fas fa-cloud-arrow-up"></i> Step 2: Sketchfab WebVR</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p4', 'median', this)"><i class="fas fa-mobile-screen-button"></i> Step 3: Median.co App Builder</button>
+                        </div>
+
+                        <div id="pane-p4-tinker" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-water"></i> Building the 3D Pond in Autodesk Tinkercad</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5><i class="fas fa-shapes"></i> 1. Pond Terrain & Basin</h5>
+                                    <ul>
+                                        <li>Cylinder base: <code>80mm &times; 60mm &times; 15mm</code>.</li>
+                                        <li>Hole cylinder: <code>70mm &times; 50mm &times; 12mm</code>.</li>
+                                        <li>Group (Ctrl+G) to hollow out the reservoir basin.</li>
+                                        <li>Place translucent blue cylinder inside for water.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-fish"></i> 2. Aquatic Life & Export</h5>
+                                    <ul>
+                                        <li>Import koi fish, frogs, rocks, and water lilies from Creatures & Characters library.</li>
+                                        <li>Verify 360° perspective using the ViewCube.</li>
+                                        <li>Click Export &rarr; <strong>.OBJ</strong> format (zipped geometry + textures).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pane-p4-sketchfab" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-vr-cardboard"></i> Publishing to Sketchfab for WebAR / WebVR</h4>
+                            <div class="info-box">
+                                <ul>
+                                    <li>Upload zipped OBJ to Sketchfab &rarr; Configure 3D HDRI lighting ("Park Sunset").</li>
+                                    <li>Click <strong>AR/VR Icon</strong> &rarr; Snap ground plane to floor level.</li>
+                                    <li>Preview through virtual headset goggles &rarr; Copy public WebVR link.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="pane-p4-median" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-mobile-screen"></i> Packaging into a Native Mobile APK via Median.co</h4>
+                            <div class="info-box">
+                                <ol style="font-size:0.86rem; padding-left:18px;">
+                                    <li>Paste public Sketchfab model URL into Median.co Website URL field.</li>
+                                    <li>Name app: <code>Pushti's Pond VR Explorer</code>.</li>
+                                    <li>Click <strong>Start Building My App!</strong> &rarr; Scan generated QR code on Android phone &rarr; Explore inside Google Cardboard!</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 5: BRAIN & LOGIC LAB -->
+                <div id="sec-lab" class="category-section">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fas fa-brain" style="color:#EC4899;"></i> Unit 5: Brain Enrichment & Logic Lab</h3>
+                            <p>Worksheets from Pages 32–36: Interactive Braille tactile decoder, spatial loops, rebus math, and Sudoku.</p>
+                        </div>
+                        <span class="tag">Worksheets &bull; 5 Pages</span>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">06</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Interactive Braille Decoder & Tactile Matrix <span class="tag">Cryptography & Accessibility</span></h4>
+                                    <p class="proj-desc">Explore the 6-dot matrix invented by Louis Braille (1824). Click dots to compose letters or decipher secret words!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('p5', 'interactive', this)"><i class="fas fa-hand-pointer"></i> Interactive 6-Dot Cell</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p5', 'decode', this)"><i class="fas fa-unlock-keyhole"></i> Decipher Tech Words</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p5', 'sudoku', this)"><i class="fas fa-puzzle-piece"></i> Sudoku & Puzzles</button>
+                        </div>
+
+                        <div id="pane-p5-interactive" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-braille"></i> Click Dots to Encode / Decode Letters</h4>
+                            <div style="text-align:center; margin:20px 0;">
+                                <div class="braille-cell">
+                                    <div class="braille-dot" id="dot-1" onclick="toggleDot(1)"></div>
+                                    <div class="braille-dot" id="dot-4" onclick="toggleDot(4)"></div>
+                                    <div class="braille-dot" id="dot-2" onclick="toggleDot(2)"></div>
+                                    <div class="braille-dot" id="dot-5" onclick="toggleDot(5)"></div>
+                                    <div class="braille-dot" id="dot-3" onclick="toggleDot(3)"></div>
+                                    <div class="braille-dot" id="dot-6" onclick="toggleDot(6)"></div>
+                                </div>
+                                <div style="margin-top:12px; font-size:1.1rem; font-weight:700;">
+                                    Active Dots: <span id="active-dots-label" style="color:#38BDF8; font-family:'Space Mono', monospace;">None</span>
+                                </div>
+                                <div style="font-size:2.4rem; font-weight:800; font-family:'Outfit', sans-serif; color:#10B981; margin-top:4px;">
+                                    Recognized Letter: <span id="recognized-letter">-</span>
+                                </div>
+                                <button onclick="resetDots()" class="port-btn" style="margin-top:10px; font-size:0.8rem;"><i class="fas fa-trash"></i> Reset Cell</button>
+                            </div>
+                        </div>
+
+                        <div id="pane-p5-decode" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-key"></i> Page 35 Decoding Challenge Solutions</h4>
+                            <div class="info-box" style="margin-bottom:12px;">
+                                <p style="font-family:'Space Mono', monospace; font-size:1.05rem;">
+                                    [1,4] + [1,3,5] + [1,4,5] + [1,5] + [1,2,3,5] &rarr; <strong style="color:#10B981;">C - O - D - E - R</strong>
+                                </p>
+                            </div>
+                            <div class="info-box" style="margin-bottom:12px;">
+                                <p style="font-family:'Space Mono', monospace; font-size:1.05rem;">
+                                    [1,2,3,5] + [1,3,5] + [1,2] + [1,3,5] + [2,3,4,5] &rarr; <strong style="color:#10B981;">R - O - B - O - T</strong>
+                                </p>
+                            </div>
+                            <div class="info-box">
+                                <p style="font-family:'Space Mono', monospace; font-size:1.05rem;">
+                                    [1,2,3,6] + [2,4] + [1,2,3,5] + [2,3,4,5] + [1,3,6] + [1] + [1,2,3] &rarr; <strong style="color:#10B981;">V - I - R - T - U - A - L</strong>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="pane-p5-sudoku" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-puzzle-piece"></i> Pages 32, 33 & 36 Puzzles</h4>
+                            <div class="grid-3">
+                                <div class="info-box"><h5><i class="fas fa-icons"></i> Page 32: Rebus Math</h5><p style="font-size:0.84rem;">Visual equation puzzle deciphering syllables from iconography into tech vocabulary.</p></div>
+                                <div class="info-box"><h5><i class="fas fa-link"></i> Page 33: Linked Loops</h5><p style="font-size:0.84rem;">Spatial topology: Discriminating 4 interconnected pairs of intertwined heart outlines out of 24 shapes.</p></div>
+                                <div class="info-box"><h5><i class="fas fa-table-cells-large"></i> Page 36: Classic Sudoku</h5><p style="font-size:0.84rem;">9&times;9 numeric constraint grid cultivating algorithmic elimination heuristics.</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             BOOK 2 VIEW: CODING & ARTIFICIAL INTELLIGENCE
+             ========================================================================= -->
+        <div id="book-view-2" class="subject-vertical-container" style="display:none;">
+
+            <!-- Left Branch Navigation Sidebar (Book 2) -->
+            <aside class="branch-sidebar">
+                <div class="sidebar-section-title">🧠 Book 2 &bull; Coding & AI</div>
+
+                <button class="branch-nav-btn active" id="btn-prog" style="--branch-color: #06B6D4;" onclick="showBranch('prog')">
+                    <div class="branch-icon">💻</div>
+                    <div class="branch-details">
+                        <div class="branch-title">Programming Basics</div>
+                        <div class="branch-stats">Ch 1 &bull; Logic & Flowcharts</div>
+                    </div>
+                </button>
+
+                <button class="branch-nav-btn" id="btn-html" style="--branch-color: #F59E0B;" onclick="showBranch('html')">
+                    <div class="branch-icon">🌐</div>
+                    <div class="branch-details">
+                        <div class="branch-title">HTML Masterclass</div>
+                        <div class="branch-stats">Ch 2 &bull; Tables, Forms & Sandbox</div>
+                    </div>
+                </button>
+
+                <button class="branch-nav-btn" id="btn-future" style="--branch-color: #8B5CF6;" onclick="showBranch('future')">
+                    <div class="branch-icon">🔮</div>
+                    <div class="branch-details">
+                        <div class="branch-title">AI & Future Tech</div>
+                        <div class="branch-stats">Ch 3 &bull; Sophia, Autopilot & Gaming</div>
+                    </div>
+                </button>
+
+                <button class="branch-nav-btn" id="btn-layers" style="--branch-color: #EC4899;" onclick="showBranch('layers')">
+                    <div class="branch-icon">🧬</div>
+                    <div class="branch-details">
+                        <div class="branch-title">AI, ML & Deep Learning</div>
+                        <div class="branch-stats">Ch 4 &bull; Neural Nets & Vision</div>
+                    </div>
+                </button>
+
+                <button class="branch-nav-btn" id="btn-data" style="--branch-color: #10B981;" onclick="showBranch('data')">
+                    <div class="branch-icon">📊</div>
+                    <div class="branch-details">
+                        <div class="branch-title">The Data Journey</div>
+                        <div class="branch-stats">Ch 5 &bull; Features & Orange ML</div>
+                    </div>
+                </button>
+
+                <button class="branch-nav-btn" id="btn-cycle" style="--branch-color: #3B82F6;" onclick="showBranch('cycle')">
+                    <div class="branch-icon">🔄</div>
+                    <div class="branch-details">
+                        <div class="branch-title">AI Project Cycle</div>
+                        <div class="branch-stats">Ch 6 &bull; 4Ws Canvas & Supervised ML</div>
+                    </div>
+                </button>
+
+                <button class="branch-nav-btn" id="btn-ethics" style="--branch-color: #E11D48;" onclick="showBranch('ethics')">
+                    <div class="branch-icon">⚖️</div>
+                    <div class="branch-details">
+                        <div class="branch-title">AI Ethics & SDGs</div>
+                        <div class="branch-stats">Ch 7 &bull; Bias, Safety & SDG 14</div>
+                    </div>
+                </button>
+
+                <button class="branch-nav-btn" id="btn-tools" style="--branch-color: #14B8A6;" onclick="showBranch('tools')">
+                    <div class="branch-icon">🛠️</div>
+                    <div class="branch-details">
+                        <div class="branch-title">AI Tools & Games</div>
+                        <div class="branch-stats">Ch 8 &bull; Data Dan & Breshna</div>
+                    </div>
+                </button>
+            </aside>
+
+            <!-- Right Content Area (Book 2) -->
+            <div class="branch-content-area">
+
+                <!-- CH 1: PROGRAMMING BASICS -->
+                <div id="sec-prog" class="category-section active">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fas fa-terminal" style="color:#06B6D4;"></i> Chapter 1: Introduction to Programming</h3>
+                            <p>Sequencing, algorithmic thinking, standardized flowchart symbols, memory variables, and conditionals.</p>
+                        </div>
+                        <span class="tag">Chapter 1 &bull; Pages 1–8</span>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">01</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Algorithmic Foundations & Age Gatekeeper <span class="tag">Core Logic</span></h4>
+                                    <p class="proj-desc">Master the building blocks of coding: sequencing, decision diamonds, and memory compartments.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('b2_c1', 'flow', this)"><i class="fas fa-diagram-project"></i> Flowchart Symbols</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c1', 'vars', this)"><i class="fas fa-box-archive"></i> Variables Analogy</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c1', 'gate', this)"><i class="fas fa-shield-halved"></i> Age Gatekeeper Code</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c1', 'quiz', this)"><i class="fas fa-circle-question"></i> Ch 1 Quiz</button>
+                        </div>
+
+                        <div id="pane-b2_c1-flow" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-shapes"></i> Standard Flowchart Symbols (ANSI Standard)</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5><i class="fas fa-circle-dot"></i> Terminal (Oval)</h5>
+                                    <p style="font-size:0.84rem;">Indicates the <strong>Start</strong> or <strong>End</strong> boundary of a program.</p>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-right-left"></i> Input/Output (Parallelogram)</h5>
+                                    <p style="font-size:0.84rem;">Receiving data from user (e.g. <code>Input Age</code>) or printing results to screen.</p>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-square"></i> Process (Rectangle)</h5>
+                                    <p style="font-size:0.84rem;">Computational operations and arithmetic assignments (e.g. <code>Score = Score + 10</code>).</p>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-gem"></i> Decision (Diamond)</h5>
+                                    <p style="font-size:0.84rem;">Evaluates a Boolean condition yielding True (Yes) or False (No) divergence.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c1-vars" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-boxes-packing"></i> Memory Cabinet Analogy for Variables</h4>
+                            <div class="info-box">
+                                <p style="font-size:0.88rem;">
+                                    Imagine a desk cabinet with labelled drawers:
+                                </p>
+                                <ul>
+                                    <li>Drawer labelled <code>playerScore</code> holds the integer <code>0</code>.</li>
+                                    <li>When you defeat an alien, the CPU opens the drawer, replaces <code>0</code> with <code>100</code>, and slides it back into RAM.</li>
+                                    <li><strong>Rules</strong>: No spaces in names, cannot start with a number, cannot use reserved words like <code>if</code>.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c1-gate" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-code"></i> Practical Project: Age Gatekeeper</h4>
+                            <div class="code-block">
+<span class="block-comment"># Ask user for age and make decisions</span>
+age = <span class="block-func">int</span>(<span class="block-func">input</span>(<span class="block-param">"Enter your age: "</span>))
+
+<span class="block-event">if</span> age &lt; <span class="block-param">5</span>:
+    <span class="block-func">print</span>(<span class="block-param">"Result: Too young! Entry not permitted."</span>)
+<span class="block-event">elif</span> <span class="block-param">5</span> &lt;= age &lt;= <span class="block-param">17</span>:
+    <span class="block-func">print</span>(<span class="block-param">"Result: Allowed with Adult Supervision."</span>)
+<span class="block-event">else</span>:
+    <span class="block-func">print</span>(<span class="block-param">"Result: Full Independent Entry Allowed."</span>)
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c1-quiz" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-list-check"></i> Chapter 1 Self-Check</h4>
+                            <div class="info-box" style="margin-bottom:12px;">
+                                <p><strong>Q1: What is an algorithm?</strong></p>
+                                <p style="color:#10B981; font-weight:600;">&rarr; A step-by-step set of written instructions to complete a task.</p>
+                            </div>
+                            <div class="info-box">
+                                <p><strong>Q2: True or False: In a computer program, sequencing order does not matter.</strong></p>
+                                <p style="color:#EF4444; font-weight:600;">&rarr; False! Instructions execute strictly in chronological sequence from top to bottom.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CH 2: HTML MASTERCLASS -->
+                <div id="sec-html" class="category-section">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fab fa-html5" style="color:#F59E0B;"></i> Chapter 2: HTML - From Basics to Advanced</h3>
+                            <p>Tags, lists, images, hyperlinks, data tables, marquee animations, interactive forms, and live sandbox.</p>
+                        </div>
+                        <span class="tag">Chapter 2 &bull; Pages 9–19</span>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">02</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Interactive Web Architect & HTML Sandbox <span class="tag">Web Dev</span></h4>
+                                    <p class="proj-desc">Explore semantic markup elements and experiment with our real-time interactive HTML sandbox.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('b2_c2', 'sandbox', this)"><i class="fas fa-laptop-code"></i> Live HTML Sandbox</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c2', 'forms', this)"><i class="fas fa-table-list"></i> Forms & Input Types</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c2', 'tables', this)"><i class="fas fa-table-cells"></i> Tables & Lists</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c2', 'google', this)"><i class="fab fa-google"></i> Google Clone Code</button>
+                        </div>
+
+                        <!-- Live HTML Sandbox -->
+                        <div id="pane-b2_c2-sandbox" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-play"></i> Real-Time Live HTML Code Editor</h4>
+                            <p style="font-size:0.86rem; color:var(--text-muted);">
+                                Edit the HTML below or type new tags. Notice how the live browser canvas renders immediately!
+                            </p>
+
+                            <div class="html-editor-wrap">
+                                <div>
+                                    <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); display:block; margin-bottom:4px;">HTML SOURCE CODE</label>
+                                    <textarea id="live-html-code" class="html-input-area" oninput="updateHtmlPreview()"><h3>Pushti's Robotics Club</h3>
+<marquee style="color:#0284C7; font-weight:bold;">Robo Lab Session: Wednesday Period 4!</marquee>
+<p>Choose your favorite sensor:</p>
+<select>
+  <option>Ultrasonic Distance Sensor</option>
+  <option>IR Line Tracker</option>
+  <option>LDR Light Sensor</option>
+</select>
+<br><br>
+<button style="background:#10B981; color:#fff; border:none; padding:6px 14px; border-radius:6px; cursor:pointer;">Enroll in Lab</button></textarea>
+                                </div>
+                                <div>
+                                    <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); display:block; margin-bottom:4px;">LIVE BROWSER RENDER</label>
+                                    <div id="live-html-preview" class="html-preview-frame"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c2-forms" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-keyboard"></i> HTML Form Elements & Attribute Matrix</h4>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Input Type</th><th>HTML Code Example</th><th>Functional Purpose</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Text Field</strong></td><td><code>&lt;input type="text" placeholder="Name"&gt;</code></td><td>Captures single-line alphanumeric text.</td></tr>
+                                    <tr><td><strong>Password</strong></td><td><code>&lt;input type="password"&gt;</code></td><td>Masks characters with privacy bullets.</td></tr>
+                                    <tr><td><strong>Radio Button</strong></td><td><code>&lt;input type="radio" name="g"&gt;</code></td><td>Allows selecting <strong>only ONE</strong> option in a group.</td></tr>
+                                    <tr><td><strong>Checkbox</strong></td><td><code>&lt;input type="checkbox"&gt;</code></td><td>Allows selecting <strong>multiple</strong> independent options.</td></tr>
+                                    <tr><td><strong>Dropdown Select</strong></td><td><code>&lt;select&gt;&lt;option&gt;Item&lt;/option&gt;&lt;/select&gt;</code></td><td>Space-saving collapsible picker menu.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="pane-b2_c2-tables" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-table"></i> Semantic Table & List Markup</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5><i class="fas fa-list"></i> Lists (Ordered & Unordered)</h5>
+                                    <ul>
+                                        <li><code>&lt;ul&gt;</code> &bull; Unordered bulleted list (disc marker by default).</li>
+                                        <li><code>&lt;ol&gt;</code> &bull; Ordered numbered list (1, 2, 3... or a, b, c).</li>
+                                        <li><code>&lt;li&gt;</code> &bull; List item container inside lists.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-border-all"></i> Tables (Rows & Cells)</h5>
+                                    <ul>
+                                        <li><code>&lt;table&gt;</code> &bull; Wrapper element.</li>
+                                        <li><code>&lt;tr&gt;</code> &bull; Table Row.</li>
+                                        <li><code>&lt;th&gt;</code> &bull; Table Header (bold, centered).</li>
+                                        <li><code>&lt;td&gt;</code> &bull; Table Data (regular cell).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c2-google" class="activity-pane">
+                            <h4 class="pane-title"><i class="fab fa-google"></i> Hands-on Project: Google Homepage Clone</h4>
+                            <div class="code-block">
+<span class="block-comment">&lt;!-- Google Homepage Clone (Page 17) --&gt;</span>
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Google&lt;/title&gt;&lt;/head&gt;
+&lt;body style="text-align:center; padding-top:100px;"&gt;
+    &lt;img src="google_logo.png" alt="Google Logo" width="270"&gt;
+    &lt;br&gt;&lt;br&gt;
+    &lt;input type="text" style="width:400px; padding:10px; border-radius:24px; border:1px solid #ccc;"&gt;
+    &lt;br&gt;&lt;br&gt;
+    &lt;input type="submit" value="Google Search"&gt;
+    &lt;input type="submit" value="I'm Feeling Lucky"&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CH 3: AI & FUTURE TECH -->
+                <div id="sec-future" class="category-section">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fas fa-brain" style="color:#8B5CF6;"></i> Chapter 3: AI and the Future</h3>
+                            <p>Real-world applications across search, autonomous vehicles, game NPCs, healthcare, and humanoid robotics.</p>
+                        </div>
+                        <span class="tag">Chapter 3 &bull; Pages 20–24</span>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">03</div>
+                                <div class="proj-title-wrap">
+                                    <h4>AI Impact Matrix: Industry & Society <span class="tag">Real-World Tech</span></h4>
+                                    <p class="proj-desc">Explore how intelligent algorithms revolutionize four foundational industries.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('b2_c3', 'apps', this)"><i class="fas fa-globe"></i> 4 Pillars of AI</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c3', 'sophia', this)"><i class="fas fa-robot"></i> Sophia the Humanoid</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c3', 'games', this)"><i class="fas fa-gamepad"></i> AI in Gaming</button>
+                        </div>
+
+                        <div id="pane-b2_c3-apps" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-cubes-stacked"></i> 4 Major Application Domains</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5><i class="fab fa-google"></i> 1. Search (Google RankBrain)</h5>
+                                    <p style="font-size:0.84rem;">Understands user conversational search queries, corrects typos, and returns relevant results from billions of web pages in milliseconds.</p>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-car-side"></i> 2. Autonomous Mobility (Tesla)</h5>
+                                    <p style="font-size:0.84rem;">8 neural vision cameras stream road geometry, recognizing pedestrians, lane dividers, and speed limit signs in real time.</p>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-heart-pulse"></i> 3. Healthcare Diagnostics</h5>
+                                    <p style="font-size:0.84rem;">Computer vision models scan X-rays and MRI scans, detecting early pneumonia and retinal diseases with human-level accuracy.</p>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-ghost"></i> 4. Game Non-Player Characters (NPCs)</h5>
+                                    <p style="font-size:0.84rem;">NPCs adapt to player fighting tactics, take cover, flank, and navigate procedural 3D game terrains realistically.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c3-sophia" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-user-astronaut"></i> Sophia the Humanoid Robot (Hanson Robotics)</h4>
+                            <div class="info-box">
+                                <ul>
+                                    <li><strong>Creator</strong>: Developed by Dr. David Hanson of Hanson Robotics.</li>
+                                    <li><strong>Unveiled</strong>: March 2016 at South by Southwest (SXSW).</li>
+                                    <li><strong>Capabilities</strong>: 60+ motorized facial expressions, computer vision face tracking, natural language speech generation, and Saudi Arabian citizenship status.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c3-games" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-headset"></i> How AI Powers Modern Video Games</h4>
+                            <div class="grid-3">
+                                <div class="info-box"><h5>Adaptive Difficulty</h5><p style="font-size:0.84rem;">Game dynamically scales boss health and speed to match player skill level.</p></div>
+                                <div class="info-box"><h5>Pathfinding (A* Algorithm)</h5><p style="font-size:0.84rem;">Characters find the fastest route around barriers without getting stuck in walls.</p></div>
+                                <div class="info-box"><h5>Procedural Worlds</h5><p style="font-size:0.84rem;">AI generates infinite planetary ecosystems and dungeons automatically.</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CH 4: LAYERS OF INTELLIGENCE -->
+                <div id="sec-layers" class="category-section">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fas fa-layer-group" style="color:#EC4899;"></i> Chapter 4: Layers of Intelligence: AI, ML & Deep Learning</h3>
+                            <p>Concentric relationship, object classification, MNIST digit recognition, and Rock-Paper-Scissors game.</p>
+                        </div>
+                        <span class="tag">Chapter 4 &bull; Pages 25–29</span>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">04</div>
+                                <div class="proj-title-wrap">
+                                    <h4>The Concentric Layers of Intelligence <span class="tag">Deep Theory</span></h4>
+                                    <p class="proj-desc">Understand how Machine Learning and Deep Learning nest inside Artificial Intelligence.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('b2_c4', 'rings', this)"><i class="fas fa-circle-nodes"></i> Concentric Layers</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c4', 'digits', this)"><i class="fas fa-font"></i> Digit Recognition</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c4', 'rps', this)"><i class="fas fa-hand-back-fist"></i> Rock-Paper-Scissors AI</button>
+                        </div>
+
+                        <div id="pane-b2_c4-rings" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-arrows-to-circle"></i> AI vs ML vs Deep Learning</h4>
+                            <div class="info-box" style="border-left:4px solid #06B6D4; margin-bottom:12px;">
+                                <h5>1. Artificial Intelligence (Broadest Ring)</h5>
+                                <p style="font-size:0.86rem;">Any machine technique that mimics human intellect, perception, or decision making.</p>
+                            </div>
+                            <div class="info-box" style="border-left:4px solid #8B5CF6; margin-bottom:12px; margin-left:20px;">
+                                <h5>2. Machine Learning (Subset of AI)</h5>
+                                <p style="font-size:0.86rem;">Algorithms that discover rules automatically from sample data without hardcoded rules.</p>
+                            </div>
+                            <div class="info-box" style="border-left:4px solid #EC4899; margin-left:40px;">
+                                <h5>3. Deep Learning (Subset of ML)</h5>
+                                <p style="font-size:0.86rem;">Multi-layered artificial neural networks inspired by biological brain neurons processing massive data.</p>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c4-digits" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-arrow-down-9-1"></i> Digit Recognition & Computer Vision</h4>
+                            <div class="info-box">
+                                <h5>How Computers Read Handwritten Numbers (MNIST):</h5>
+                                <p style="font-size:0.86rem;">
+                                    A 28&times;28 pixel grid converts each square into a grayscale brightness number (0 to 255). A convolutional neural network extracts loops, curves, and vertical strokes to deduce whether the digit is a 6, 8, or 3.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c4-rps" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-hand-scissors"></i> Hands-on Game: Rock-Paper-Scissors AI</h4>
+                            <div class="info-box">
+                                <p style="font-size:0.86rem;">
+                                    In this game, the AI records human move histories. When humans lose, they instinctively shift away from their previous move. By building a frequency transition table, the AI achieves a &gt;70% win rate against human players!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CH 5: THE DATA JOURNEY -->
+                <div id="sec-data" class="category-section">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fas fa-database" style="color:#10B981;"></i> Chapter 5: Understanding the Data Journey</h3>
+                            <p>What is data, features vs labels, dataset splitting (training vs testing), and Orange Data Mining lab.</p>
+                        </div>
+                        <span class="tag">Chapter 5 &bull; Pages 30–36</span>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">05</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Data as the Fuel of Machine Learning <span class="tag">Data Science</span></h4>
+                                    <p class="proj-desc">Understand how raw measurements transform into predictive intelligence.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('b2_c5', 'featlab', this)"><i class="fas fa-tags"></i> Features vs Labels</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c5', 'split', this)"><i class="fas fa-table-columns"></i> Train vs Test Split</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c5', 'orange', this)"><i class="fas fa-lemon"></i> Orange Data Mining</button>
+                        </div>
+
+                        <div id="pane-b2_c5-featlab" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-tag"></i> Features vs Labels: The Fruit Example</h4>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Sample</th><th>Feature 1: Color</th><th>Feature 2: Shape</th><th>Feature 3: Taste</th><th>LABEL (Ground Truth)</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Sample 1</strong></td><td>Yellow</td><td>Curved</td><td>Sweet</td><td><strong style="color:#F59E0B;">Banana</strong></td></tr>
+                                    <tr><td><strong>Sample 2</strong></td><td>Red</td><td>Round</td><td>Crisp</td><td><strong style="color:#EF4444;">Apple</strong></td></tr>
+                                    <tr><td><strong>Sample 3</strong></td><td>Orange</td><td>Spherical</td><td>Citrus</td><td><strong style="color:#F97316;">Orange</strong></td></tr>
+                                    <tr><td><strong>Sample 4</strong></td><td>Green</td><td>Oval</td><td>Sour</td><td><strong style="color:#10B981;">Lime</strong></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="pane-b2_c5-split" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-pie-chart"></i> Dataset Splitting (80% Train / 20% Test)</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5><i class="fas fa-book"></i> Training Data (80%)</h5>
+                                    <p style="font-size:0.84rem;">The textbook given to the student. The AI uses this data to learn patterns, tune weights, and build internal logic.</p>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-clipboard-question"></i> Testing Data (20%)</h5>
+                                    <p style="font-size:0.84rem;">The unseen final exam. The AI has never seen these exact samples; tests whether the model memorized or truly generalized.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c5-orange" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-network-wired"></i> Orange Data Mining Software Pipeline</h4>
+                            <div class="info-box">
+                                <h5>Visual Machine Learning Workflow (Pages 35–36):</h5>
+                                <ol style="font-size:0.86rem; padding-left:18px;">
+                                    <li><strong>File Widget</strong>: Ingest <code>Fruit.tab</code> dataset.</li>
+                                    <li><strong>Data Table Widget</strong>: Inspect feature column values (acidity, sugar content).</li>
+                                    <li><strong>Linear Regression Widget</strong>: Train predictive regression model on fruit sweetness.</li>
+                                    <li><strong>Test and Score Widget</strong>: Evaluate Mean Absolute Error (MAE) and accuracy.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CH 6: AI PROJECT CYCLE -->
+                <div id="sec-cycle" class="category-section">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fas fa-arrows-spin" style="color:#3B82F6;"></i> Chapter 6: Exploring the AI Project Cycle</h3>
+                            <p>5-stage engineering lifecycle, 4Ws Problem Scoping Canvas, and Supervised vs Unsupervised learning.</p>
+                        </div>
+                        <span class="tag">Chapter 6 &bull; Pages 37–48</span>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">06</div>
+                                <div class="proj-title-wrap">
+                                    <h4>The 5-Stage AI Lifecycle & 4Ws Canvas <span class="tag">Methodology</span></h4>
+                                    <p class="proj-desc">From Problem Scoping to Data Acquisition, Modelling, Evaluation, and Deployment.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('b2_c6', 'canvas4w', this)"><i class="fas fa-pen-ruler"></i> The 4Ws Canvas</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c6', 'mltax', this)"><i class="fas fa-sitemap"></i> Supervised vs Unsupervised</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c6', 'stages', this)"><i class="fas fa-timeline"></i> The 5 Stages</button>
+                        </div>
+
+                        <!-- 4Ws Canvas -->
+                        <div id="pane-b2_c6-canvas4w" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-table-cells-large"></i> The 4Ws Problem Scoping Canvas (Stage 1)</h4>
+                            <p style="font-size:0.86rem; color:var(--text-muted);">
+                                Before training an AI model, developers must clearly define the problem using the 4Ws:
+                            </p>
+                            <div class="canvas-4w-grid">
+                                <div class="card-4w" style="border-top:3px solid #06B6D4;">
+                                    <h5 style="color:#38BDF8;"><i class="fas fa-users"></i> 1. Who? (Stakeholders)</h5>
+                                    <p style="font-size:0.84rem;">Who is facing the problem? Who will use the solution? (e.g., School librarians, students who cannot find books).</p>
+                                </div>
+                                <div class="card-4w" style="border-top:3px solid #8B5CF6;">
+                                    <h5 style="color:#C084FC;"><i class="fas fa-circle-exclamation"></i> 2. What? (The Problem)</h5>
+                                    <p style="font-size:0.84rem;">What is the nature of the issue? (e.g., Students waste 20 minutes finding books matching their reading level).</p>
+                                </div>
+                                <div class="card-4w" style="border-top:3px solid #10B981;">
+                                    <h5 style="color:#34D399;"><i class="fas fa-location-dot"></i> 3. Where? (Context)</h5>
+                                    <p style="font-size:0.84rem;">Where does this occur? (e.g., School physical library catalogue terminals and online portal).</p>
+                                </div>
+                                <div class="card-4w" style="border-top:3px solid #F59E0B;">
+                                    <h5 style="color:#FBBF24;"><i class="fas fa-star"></i> 4. Why? (Value Proposition)</h5>
+                                    <p style="font-size:0.84rem;">Why solve this with AI? (e.g., Machine learning recommends personalized books based on past loans, increasing reading time by 40%).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ML Taxonomy -->
+                        <div id="pane-b2_c6-mltax" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-network-wired"></i> Machine Learning Taxonomy</h4>
+                            <div class="grid-2">
+                                <div class="info-box" style="border-left:4px solid #10B981;">
+                                    <h5><i class="fas fa-chalkboard-user"></i> Supervised Learning (Teacher Guided)</h5>
+                                    <ul>
+                                        <li><strong>Classification</strong>: Predicts discrete categorical labels (Dog vs Cat, Spam vs Not Spam).</li>
+                                        <li><strong>Regression</strong>: Predicts continuous numerical quantities (House prices, temperature forecasts).</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box" style="border-left:4px solid #8B5CF6;">
+                                    <h5><i class="fas fa-magnifying-glass"></i> Unsupervised Learning (Self Discovery)</h5>
+                                    <ul>
+                                        <li><strong>Clustering</strong>: Groups unlabelled items by mathematical proximity (Spotify user music taste clusters).</li>
+                                        <li><strong>Association Rules</strong>: Market basket rules ("Customers buying Bread also buy Butter 85% of the time").</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5 Stages -->
+                        <div id="pane-b2_c6-stages" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-diagram-project"></i> The 5 Full Stages of an AI Project</h4>
+                            <div class="grid-3">
+                                <div class="info-box"><h5>1. Problem Scoping</h5><p style="font-size:0.84rem;">Define goals using 4Ws Canvas.</p></div>
+                                <div class="info-box"><h5>2. Data Acquisition</h5><p style="font-size:0.84rem;">Gather raw data via sensors, surveys, or APIs.</p></div>
+                                <div class="info-box"><h5>3. Data Exploration</h5><p style="font-size:0.84rem;">Clean errors, remove outliers, inspect plots.</p></div>
+                                <div class="info-box"><h5>4. Modelling</h5><p style="font-size:0.84rem;">Train algorithm (Supervised or Unsupervised).</p></div>
+                                <div class="info-box"><h5>5. Evaluation</h5><p style="font-size:0.84rem;">Test accuracy with unseen 20% test data.</p></div>
+                                <div class="info-box" style="border-color:#10B981;"><h5>6. Deployment</h5><p style="font-size:0.84rem; color:#34D399;">Deploy to real world and monitor drift.</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CH 7: ETHICAL FRAMEWORK OF AI -->
+                <div id="sec-ethics" class="category-section">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fas fa-scale-balanced" style="color:#E11D48;"></i> Chapter 7: Ethical Framework of AI</h3>
+                            <p>Bias & fairness, transparency, privacy, accountability, and United Nations SDG 14 (Life Below Water).</p>
+                        </div>
+                        <span class="tag">Chapter 7 &bull; Pages 49–54</span>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">07</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Responsible AI & Sustainable Development Goals <span class="tag">Ethics</span></h4>
+                                    <p class="proj-desc">Learn how to build AI systems that are fair, transparent, privacy-respecting, and socially beneficial.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('b2_c7', 'pillars', this)"><i class="fas fa-shield"></i> 4 Ethical Pillars</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c7', 'sdg', this)"><i class="fas fa-water"></i> UN SDG 14 Life Below Water</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c7', 'foodmood', this)"><i class="fas fa-utensils"></i> Google Food Mood AI</button>
+                        </div>
+
+                        <div id="pane-b2_c7-pillars" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-scale-unbalanced"></i> The 4 Ethical Pillars of Responsible AI</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5><i class="fas fa-equals"></i> 1. Fairness & Non-Bias</h5>
+                                    <p style="font-size:0.84rem;">Training data must represent all demographic groups fairly to prevent AI from amplifying human prejudices.</p>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-eye"></i> 2. Transparency (No Black Box)</h5>
+                                    <p style="font-size:0.84rem;">Critical AI in healthcare or justice must provide human-understandable explanations for decisions.</p>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-lock"></i> 3. Privacy & Data Security</h5>
+                                    <p style="font-size:0.84rem;">Biometric scans, voices, and personal records must be strictly encrypted with informed user consent.</p>
+                                </div>
+                                <div class="info-box">
+                                    <h5><i class="fas fa-user-shield"></i> 4. Accountability & Safety</h5>
+                                    <p style="font-size:0.84rem;">When an autonomous machine fails, human creators and organizations must hold legal and moral responsibility.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c7-sdg" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-fish-fins"></i> AI for United Nations SDG 14: Life Below Water</h4>
+                            <div class="info-box">
+                                <ul>
+                                    <li><strong>Goal</strong>: Conserve and sustainably use the oceans, seas, and marine resources.</li>
+                                    <li><strong>AI Applications</strong>: Underwater computer vision drones count endangered coral species, satellite AI detects illegal fishing vessels, and acoustic sensors track whale migrations.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c7-foodmood" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-bowl-food"></i> Google's Food Mood AI Project</h4>
+                            <div class="info-box">
+                                <p style="font-size:0.86rem;">
+                                    Generative AI culinary experiment combining ingredients from two distinct world cultures to create novel recipes, reduce household food waste, and encourage sustainable eating habits!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CH 8: AI TOOLS & PROJECTS -->
+                <div id="sec-tools" class="category-section">
+                    <div class="section-headline">
+                        <div>
+                            <h3><i class="fas fa-toolbox" style="color:#14B8A6;"></i> Chapter 8: AI Tools & Practical Projects</h3>
+                            <p>AI Detective Data Dan, Breshna AI game creator ('Scramble City'), and career applications.</p>
+                        </div>
+                        <span class="tag">Chapter 8 &bull; Pages 55–58</span>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">08</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Creative AI Tools & Game Building <span class="tag">Applied AI</span></h4>
+                                    <p class="proj-desc">Case studies in synthetic intelligence, game design, and industry career applications.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('b2_c8', 'dan', this)"><i class="fas fa-user-secret"></i> AI Detective Data Dan</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c8', 'breshna', this)"><i class="fas fa-gamepad"></i> Breshna Game Engine</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('b2_c8', 'careers', this)"><i class="fas fa-briefcase"></i> Industry Careers</button>
+                        </div>
+
+                        <div id="pane-b2_c8-dan" class="activity-pane active">
+                            <h4 class="pane-title"><i class="fas fa-magnifying-glass"></i> Meet AI Detective Data Dan!</h4>
+                            <div class="info-box">
+                                <p style="font-size:0.86rem;">
+                                    A gamified investigation challenge teaching students how to formulate precise AI prompts, detect deepfake images, cross-reference machine output with peer-reviewed facts, and identify automated hallucination.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c8-breshna" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-dice"></i> Building 'Scramble City' with Breshna</h4>
+                            <div class="info-box">
+                                <ul>
+                                    <li><strong>Breshna</strong> is a no-code AI game maker.</li>
+                                    <li>Students design <em>"Scramble City"</em>: Players control an avatar collecting correct AI concepts (Sensors, Clean Data, Labels) while dodging Data Bias obstacles!</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="pane-b2_c8-careers" class="activity-pane">
+                            <h4 class="pane-title"><i class="fas fa-laptop-medical"></i> Real-World AI Career Toolsets</h4>
+                            <div class="grid-3">
+                                <div class="info-box"><h5>Software Engineering</h5><p style="font-size:0.84rem;">GitHub Copilot auto-completes code and discovers syntax bugs.</p></div>
+                                <div class="info-box"><h5>Creative Design</h5><p style="font-size:0.84rem;">Midjourney & Canva Magic Studio generate graphics from plain English prompts.</p></div>
+                                <div class="info-box"><h5>Medicine & Science</h5><p style="font-size:0.84rem;">AlphaFold deciphers 3D protein structures, accelerating drug discovery.</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Universal Master Scripts -->
+    <script>
+        // Master Book Mode Switcher
+        function switchBookMode(bookNum) {
+            document.querySelectorAll('.book-switch-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('book-btn-' + bookNum).classList.add('active');
+
+            if (bookNum === 1) {
+                document.getElementById('book-view-1').style.display = 'grid';
+                document.getElementById('book-view-2').style.display = 'none';
+                showBranch('basics');
+            } else {
+                document.getElementById('book-view-1').style.display = 'none';
+                document.getElementById('book-view-2').style.display = 'grid';
+                showBranch('prog');
+            }
+        }
+
+        // Branch Navigation Switcher
+        function showBranch(branchId) {
+            // Find active book view
+            const activeBookView = document.getElementById('book-view-1').style.display !== 'none' 
+                ? document.getElementById('book-view-1') 
+                : document.getElementById('book-view-2');
+
+            activeBookView.querySelectorAll('.branch-nav-btn').forEach(btn => btn.classList.remove('active'));
+            activeBookView.querySelectorAll('.category-section').forEach(sec => sec.classList.remove('active'));
+
+            const targetBtn = document.getElementById('btn-' + branchId);
+            if (targetBtn) targetBtn.classList.add('active');
+
+            const targetSec = document.getElementById('sec-' + branchId);
+            if (targetSec) targetSec.classList.add('active');
+        }
+
+        // Subtab Switcher for Project Activities
+        function switchActTab(projId, paneKey, btnElement) {
+            const card = btnElement.closest('.project-card');
+            if (!card) return;
+
+            card.querySelectorAll('.activity-tab-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            card.querySelectorAll('.activity-pane').forEach(pane => pane.classList.remove('active'));
+
+            const targetPane = card.querySelector('#pane-' + projId + '-' + paneKey);
+            if (targetPane) {
+                targetPane.classList.add('active');
+            }
+        }
+
+        // Book 1: Port Selector Logic
+        const componentsData = [
+            { name: "IR Sensor (Obstacle / Line)", ports: ["P1", "P2", "P3", "P4", "P5", "P6"], icon: "eye" },
+            { name: "Ultrasonic Distance Sensor", ports: ["P1", "P2", "P3", "P4", "P5", "P6"], icon: "ruler-horizontal" },
+            { name: "Limit Switch / Tactile", ports: ["P1", "P2", "P3", "P4", "P5", "P6"], icon: "toggle-on" },
+            { name: "Buzzer (Audio Alert)", ports: ["P1", "P2", "P3", "P4", "P5", "P6"], icon: "volume-high" },
+            { name: "Single LED (Indicator)", ports: ["P1", "P2", "P3", "P4", "P5", "P6"], icon: "lightbulb" },
+            { name: "LDR Light Sensor", ports: ["P1", "P2", "P3", "P4"], icon: "sun" },
+            { name: "Temperature Probe", ports: ["P1", "P2", "P3", "P4"], icon: "temperature-half" },
+            { name: "Gas / Smoke Sensor", ports: ["P1", "P2", "P3", "P4"], icon: "smog" },
+            { name: "RGB LED (Turn Signals)", ports: ["P1", "P2", "P3", "P4"], icon: "palette" },
+            { name: "Servo Motor (0°-180°)", ports: ["P1", "P2", "P3", "P4"], icon: "gauge-high" },
+            { name: "DC Motor (Drive Wheels)", ports: ["M1", "M2", "M3"], icon: "cog" },
+            { name: "Pump Motor (Liquids)", ports: ["M1", "M2", "M3"], icon: "faucet-drip" }
+        ];
+
+        function selectPort(portName) {
+            document.querySelectorAll('.port-btn').forEach(b => b.classList.remove('active'));
+            const clickedBtn = Array.from(document.querySelectorAll('.port-btn')).find(b => b.innerText.includes(portName));
+            if (clickedBtn) clickedBtn.classList.add('active');
+
+            const banner = document.getElementById('port-status-banner');
+            if (banner) {
+                banner.innerHTML = `<strong>Currently Inspecting: Port ${portName}</strong> &bull; Showing hardware compatibility:`;
+            }
+
+            const container = document.getElementById('comp-grid-display');
+            if (!container) return;
+            container.innerHTML = '';
+
+            componentsData.forEach(comp => {
+                const isComp = comp.ports.includes(portName);
+                const card = document.createElement('div');
+                card.className = `comp-card ${isComp ? 'compatible' : 'incompatible'}`;
+                card.innerHTML = `
+                    <div style="font-weight:600; display:flex; align-items:center; gap:6px; color:${isComp ? '#10B981' : 'var(--text-muted)'};">
+                        <i class="fas fa-${comp.icon}"></i> ${comp.name}
+                    </div>
+                    <div style="font-size:0.74rem; margin-top:4px; color:${isComp ? '#34D399' : 'var(--text-muted)'};">
+                        ${isComp ? '✔ Compatible on ' + portName : '✖ Not Supported'}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        selectPort('P1');
+
+        // Book 1: Braille Logic
+        const brailleMap = {
+            "1": "A", "1,2": "B", "1,4": "C", "1,4,5": "D", "1,5": "E",
+            "1,2,4": "F", "1,2,4,5": "G", "1,2,5": "H", "2,4": "I", "2,4,5": "J",
+            "1,3": "K", "1,2,3": "L", "1,3,4": "M", "1,3,4,5": "N", "1,3,5": "O",
+            "1,2,3,4": "P", "1,2,3,4,5": "Q", "1,2,3,5": "R", "2,3,4": "S", "2,3,4,5": "T",
+            "1,3,6": "U", "1,2,3,6": "V", "2,4,5,6": "W", "1,3,4,6": "X", "1,3,4,5,6": "Y", "1,3,5,6": "Z"
+        };
+        const activeDots = new Set();
+        function toggleDot(num) {
+            const el = document.getElementById('dot-' + num);
+            if (activeDots.has(num)) {
+                activeDots.delete(num);
+                if (el) el.classList.remove('active');
+            } else {
+                activeDots.add(num);
+                if (el) el.classList.add('active');
+            }
+            updateBrailleOutput();
+        }
+        function resetDots() {
+            activeDots.clear();
+            for (let i = 1; i <= 6; i++) {
+                const el = document.getElementById('dot-' + i);
+                if (el) el.classList.remove('active');
+            }
+            updateBrailleOutput();
+        }
+        function updateBrailleOutput() {
+            const sorted = Array.from(activeDots).sort((a, b) => a - b);
+            const key = sorted.join(',');
+            const dotsLabel = document.getElementById('active-dots-label');
+            const letterLabel = document.getElementById('recognized-letter');
+            if (dotsLabel) dotsLabel.innerText = sorted.length ? 'Dots ' + key : 'None';
+            if (letterLabel) letterLabel.innerText = brailleMap[key] || (sorted.length ? '?' : '-');
+        }
+
+        // Book 2: Live HTML Previewer
+        function updateHtmlPreview() {
+            const input = document.getElementById('live-html-code');
+            const preview = document.getElementById('live-html-preview');
+            if (input && preview) {
+                preview.innerHTML = input.value;
+            }
+        }
+        window.addEventListener('DOMContentLoaded', updateHtmlPreview);
+    </script>
+
+    <!-- Global Search & Theme Toggle Scripts -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchBtn = document.getElementById('global-search-btn');
+        const searchInput = document.getElementById('global-search-input');
+        
+        if(searchBtn && searchInput) {
+            searchBtn.addEventListener('click', function() {
+                if(searchInput.style.display === 'none' || searchInput.style.display === '') {
+                    searchInput.style.display = 'block';
+                    searchInput.focus();
+                } else {
+                    performSearch(searchInput.value.toLowerCase().trim());
+                }
+            });
+            
+            searchInput.addEventListener('input', function() {
+                performSearch(searchInput.value.toLowerCase().trim());
+            });
+
+            searchInput.addEventListener('keypress', function(e) {
+                if(e.key === 'Enter') {
+                    performSearch(searchInput.value.toLowerCase().trim());
+                }
+            });
+        }
+        
+        function performSearch(term) {
+            const cards = document.querySelectorAll('.project-card');
+            if (cards.length > 0) {
+                cards.forEach(card => {
+                    if(!term || card.innerText.toLowerCase().includes(term)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        }
+
+        // Theme Toggle
+        const themeBtn = document.querySelector('.theme-toggle');
+        if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
+            themeBtn.classList.add('handled-by-inline');
+            themeBtn.addEventListener('click', (e) => {
+                e.stopImmediatePropagation();
+                const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.body.setAttribute('data-theme', newTheme);
+                const icon = themeBtn.querySelector('i');
+                if(icon) {
+                    icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+                localStorage.setItem('pushti-theme', newTheme);
+                
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({ theme: newTheme }, '*');
+                }
+            });
+            const savedTheme = localStorage.getItem('pushti-theme');
+            if(savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+                const icon = themeBtn.querySelector('i');
+                if(icon) {
+                    icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+            }
+        }
+    });
+    </script>
+
+    <!-- Universal Jump to Top Button -->
+    <style>
+    .pushti-jump-to-top {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #06B6D4, #0891B2);
+        color: #ffffff;
+        border: none;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 18px rgba(6, 182, 212, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(16px) scale(0.9);
+        transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                    visibility 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 99999;
+    }
+    .pushti-jump-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+    }
+    .pushti-jump-to-top:hover {
+        background: linear-gradient(135deg, #0891B2, #0e7490);
+        transform: translateY(-3px) scale(1.06);
+    }
+    .pushti-jump-to-top svg {
+        width: 22px;
+        height: 22px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+    </style>
+    <button id="pushti-jump-to-top" class="pushti-jump-to-top" aria-label="Jump to top" title="Jump to Top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
+    </button>
+    <script>
+    (function() {
+        var btn = document.getElementById('pushti-jump-to-top');
+        if (!btn) return;
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                ticking = true;
+                window.requestAnimationFrame(function() {
+                    var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+                    if (scrollY > 100) {
+                        btn.classList.add('visible');
+                    } else {
+                        btn.classList.remove('visible');
+                    }
+                    ticking = false;
+                });
+            }
+        }, { passive: true });
+    })();
+    </script>
+</body>
+</html>

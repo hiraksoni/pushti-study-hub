@@ -1,8 +1,9 @@
-# PUSHTI STUDY HUB — CONTENT STRATEGY SOP v1.0
-*Companion to PUSHTI_DESIGN_SOP.md — covers WHAT goes into a chapter artifact, sourcing, and AI role division.*
+# PUSHTI STUDY HUB — CONTENT STRATEGY SOP (Consolidated into SOP.md v2.0)
+> **NOTE**: All content strategy rules, Two-AI workflow principles, and completeness checklists from this document have been consolidated into the master authoritative standard:
+> 👉 **[SOP.md](file:///d:/Users/expor/Downloads/Codes/SOP.md)** (Master Unified SOP v2.0)
+> Please refer directly to [SOP.md](file:///d:/Users/expor/Downloads/Codes/SOP.md) for the active rules and quality gates.
 
 ---
-
 ## 0. PHILOSOPHY
 
 > "Get knowledge from Claude, get Gemini to do the legwork."
@@ -322,11 +323,13 @@ Rules for the merge:
 - [ ] **SC-8 (Links):** Are all video/resource links valid (or clearly marked as search links)?
 - [ ] **SC-9 (Mistakes section):** At least 5 common errors shown?
 - [ ] **SC-10 (Beyond NCERT):** Is there something that excites curiosity beyond the syllabus?
+- [ ] **SC-11 (Topic Tag Mapping & Battery):** Are all prescribed syllabus topics represented as tags? Are covered topics highlighted (`.tag-covered`) and pending topics muted (`.tag-pending`), accurately determining chapter completeness % (see SOP §4.5)?
 
 ---
 
 ## 11. CHANGELOG
 
 | Version | Date | Change |
-|---------|------|--------|
+|---|---|---|
+| 1.1 | 2026-09-13 | Added SC-11 Syllabus Topic Tag Mapping & Completeness Calculation Standard (The Topic-to-Battery Rule from SOP §4.5) |
 | 1.0 | 2026-09-09 | Initial content strategy SOP — created by Antigravity (Claude) based on Hirak's vision |

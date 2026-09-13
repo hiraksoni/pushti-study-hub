@@ -309,6 +309,63 @@
     .btn-gemini:hover, .btn-claude:hover { /* inherit from .btn-link */ }
 
     .ch-arrow { color: var(--text-muted); font-size: 1.5rem; margin-left: 20px; }
+
+    /* Battery Meter & Notification Dot Styles */
+    .battery-meter {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        vertical-align: middle;
+    }
+    .battery-body {
+        width: 19px;
+        height: 10px;
+        border: 1.5px solid currentColor;
+        border-radius: 2px;
+        padding: 1px;
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+    }
+    .battery-fill {
+        height: 100%;
+        border-radius: 1px;
+        background: currentColor;
+    }
+    .battery-cap {
+        width: 2px;
+        height: 4px;
+        background: currentColor;
+        border-radius: 0 1px 1px 0;
+    }
+    .battery-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        border: 1px solid rgba(245, 158, 11, 0.35);
+        background: rgba(245, 158, 11, 0.1);
+        color: #F59E0B;
+        text-decoration: none;
+    }
+    .update-dot {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        background-color: #10B981;
+        border-radius: 50%;
+        box-shadow: 0 0 6px #10B981;
+        animation: pulse-dot 2s infinite;
+        vertical-align: middle;
+        margin-right: 4px;
+    }
+    @keyframes pulse-dot {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.35); opacity: 0.65; }
+    }
 </style>
 
 <style>
@@ -373,6 +430,13 @@
                 
                 <a href="timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
                 <a href="midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
+                <div class="battery-pill" style="color:#06B6D4; background:rgba(6,182,212,0.12); border-color:rgba(6,182,212,0.35);" title="Mid-Term Syllabus: 5 of 8 Chapters Ready (Ch 1, 2, 3, 4, 5)">
+                    <span class="battery-meter" style="color:#06B6D4;">
+                        <span class="battery-body"><span class="battery-fill" style="width:62.5%;"></span></span>
+                        <span class="battery-cap"></span>
+                    </span>
+                    <span>Mid-Term: <strong>5/8 Ch (62.5%)</strong></span>
+                </div>
 
                 <div class="user-profile-wrapper" style="position:relative;">
                     <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:40px; height:40px; border:2px solid var(--accent);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
@@ -485,11 +549,17 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div id="sec-num" class="category-section active">
                     <div class="chapter-card">
                         <div class="ch-num">01</div>
-                        <a href="source_materials/chapters/maths/claude_maths_ch1.html" class="ch-title-link">
+                        <a href="chapters/maths/maths_ch1.html" class="ch-title-link">
                             <div class="ch-content">
-                                <h3 class="ch-title">Large Numbers Around Us <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
-                                <p class="ch-desc">Understanding place value, comparison, and estimation of large quantities.</p>
-                                <div class="ch-tags"><span class="tag" style="color:#F43F5E">Place Value</span><span class="tag" style="color:#F43F5E">Large Numbers</span><span class="tag" style="color:#F43F5E">Estimation</span></div>
+                                <h3 class="ch-title"><span class="update-dot" title="Recently updated and verified"></span>Large Numbers Around Us <span style="font-size:0.7rem; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#10B981; padding:2px 7px; border-radius:4px; font-weight:600;">🔋 100% Ready</span> <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Verified: 13 Sep 2026</span> <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <p class="ch-desc">Indian &amp; International place value systems, powers of 10, estimation, arithmetic operations, 80 OMR practice questions, and interactive math simulators.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#0284c7">Place Value</span>
+                                    <span class="tag" style="color:#0284c7">Large Numbers</span>
+                                    <span class="tag" style="color:#0284c7">Estimation</span>
+                                    <span class="tag" style="color:#10B981">80 Practice Qs</span>
+                                    <span class="tag" style="color:#10B981">Verified</span>
+                                </div>
                             </div>
                         </a>
                         <div class="ch-actions">
@@ -533,12 +603,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 <!-- Geometry Section -->
                 <div id="sec-geo" class="category-section">
-                    <div class="chapter-card" style="opacity: 0.6;">
+                    <div class="chapter-card">
                         <div class="ch-num">05</div>
-                        <div class="ch-content">
-                            <h3 class="ch-title">Parallel and Intersecting Lines <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
-                            <p class="ch-desc">Geometry of lines, angles, transversals, alternate angles, and corresponding angles.</p>
-                            <div class="ch-tags"><span class="tag" style="color:#10B981">Lines</span><span class="tag" style="color:#10B981">Angles</span><span class="tag" style="color:#10B981">Transversals</span></div>
+                        <a href="chapters/maths/maths_ch5.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title"><span class="update-dot" title="Recently added and verified"></span>Parallel and Intersecting Lines <span style="font-size:0.7rem; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#10B981; padding:2px 7px; border-radius:4px; font-weight:600;">🔋 100% Ready</span> <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Verified: 13 Sep 2026</span> <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <p class="ch-desc">Geometry of intersecting lines, vertically opposite angles, parallel lines, transversals, F/Z/C angle rules, and complete proofs.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#10B981">Lines &amp; Angles</span>
+                                    <span class="tag" style="color:#10B981">Transversals</span>
+                                    <span class="tag" style="color:#10B981">F &amp; Z Rules</span>
+                                    <span class="tag" style="color:#8B5CF6">10 Submodules</span>
+                                    <span class="tag" style="color:#10B981">Verified</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="ch-actions">
+                            <a href="chapters/maths/maths_ch5.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
                         </div>
                     </div>
                     <div class="chapter-card" style="opacity: 0.6;">
@@ -557,22 +638,35 @@ document.addEventListener("DOMContentLoaded", function() {
                         <div class="ch-num">03</div>
                         <a href="chapters/maths/maths_ch3.html" class="ch-title-link">
                             <div class="ch-content">
-                                <h3 class="ch-title">A Peek Beyond the Point <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
-                                <p class="ch-desc">Decimal notation, place value, conversion from fractions, and arithmetic with decimals in daily life.</p>
+                                <h3 class="ch-title"><span class="update-dot" title="Recently updated and verified"></span>A Peek Beyond the Point <span style="font-size:0.7rem; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#10B981; padding:2px 7px; border-radius:4px; font-weight:600;">🔋 100% Ready</span> <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Verified: 13 Sep 2026</span> <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <p class="ch-desc">Decimal notation, place value, conversion from fractions, arithmetic with decimals in daily life, and 22 solved examples.</p>
                                 <div class="ch-tags">
                                     <span class="tag" style="color:#8B5CF6">Decimals</span>
                                     <span class="tag" style="color:#8B5CF6">Place Value</span>
                                     <span class="tag" style="color:#8B5CF6">Operations</span>
+                                    <span class="tag" style="color:#10B981">10 Submodules</span>
+                                    <span class="tag" style="color:#10B981">Verified</span>
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <div class="chapter-card" style="opacity: 0.6;">
+                    <div class="chapter-card">
                         <div class="ch-num">04</div>
-                        <div class="ch-content">
-                            <h3 class="ch-title">Expressions using Letter-Numbers <span style="font-size:0.7rem; background:#EF4444; color:white; padding:2px 6px; border-radius:4px; margin-left:8px; vertical-align:middle;">Pending</span></h3>
-                            <p class="ch-desc">Introduction to variables, algebraic expressions, forming and solving simple linear equations.</p>
-                            <div class="ch-tags"><span class="tag" style="color:#8B5CF6">Variables</span><span class="tag" style="color:#8B5CF6">Expressions</span><span class="tag" style="color:#8B5CF6">Equations</span></div>
+                        <a href="chapters/maths/maths_ch4.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title"><span class="update-dot" title="Recently added and verified"></span>Expressions using Letter-Numbers <span style="font-size:0.7rem; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#10B981; padding:2px 7px; border-radius:4px; font-weight:600;">🔋 100% Ready</span> <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Verified: 13 Sep 2026</span> <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <p class="ch-desc">Variables, algebraic expressions, terms, coefficients, arithmetic properties in algebra, and mathematical modeling of patterns.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#8B5CF6">Variables</span>
+                                    <span class="tag" style="color:#8B5CF6">Expressions</span>
+                                    <span class="tag" style="color:#8B5CF6">Like Terms</span>
+                                    <span class="tag" style="color:#10B981">10 Submodules</span>
+                                    <span class="tag" style="color:#10B981">Verified</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="ch-actions">
+                            <a href="chapters/maths/maths_ch4.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
                         </div>
                     </div>
                 </div>
@@ -718,6 +812,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: true });
 })();
+
+// Dismiss Chapter Card Update Dots if Chapter Visited >= 3s (SOP v2.0)
+document.addEventListener('DOMContentLoaded', function() {
+    ['maths_ch1', 'maths_ch3', 'maths_ch4', 'maths_ch5'].forEach(function(chId) {
+        if (localStorage.getItem('pushti_seen_chapter_' + chId) === 'true') {
+            var card = document.querySelector('.chapter-card a[href*="' + chId + '"]');
+            if (card) {
+                var dot = card.querySelector('.update-dot');
+                if (dot) dot.style.display = 'none';
+            }
+        }
+    });
+});
 </script>
 
 </body>

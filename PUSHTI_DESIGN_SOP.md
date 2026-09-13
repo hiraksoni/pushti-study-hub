@@ -1,8 +1,9 @@
-# PUSHTI STUDY HUB — DESIGN SOP v1.0
-*Standard Operating Procedure for AI-Assisted Page Generation*
+# PUSHTI STUDY HUB — DESIGN SOP (Consolidated into SOP.md v2.0)
+> **NOTE**: All guidelines from this document have been consolidated, enhanced, and standardized into the master authoritative standard:
+> 👉 **[SOP.md](file:///d:/Users/expor/Downloads/Codes/SOP.md)** (Master Unified SOP v2.0)
+> Please refer directly to [SOP.md](file:///d:/Users/expor/Downloads/Codes/SOP.md) for the active rules, subject-wise architectures, and QA verification gates.
 
 ---
-
 ## 0. WHO THIS IS FOR
 
 This SOP is given to any AI model (Claude, Gemini, GPT, etc.) to build pages for the **Pushti Study Hub** — a Class 7 CBSE study website built by Hirak Soni for his daughter Pushti.
@@ -221,6 +222,10 @@ Tier 3: .subnav       — sticky, top: 106px, z-index: 80, height: 46px
 - NO internal tabs hiding content
 - YES: sticky jump bar with anchor pills to sections
 
+### 7.6 Zero Horizontal Scroll Mandate on Tab & Pill Bars
+- FORBIDDEN: `overflow-x: auto` with `white-space: nowrap` on tab bars or subtab containers. It creates unsightly horizontal scrollbars across desktop screens.
+- REQUIRED: Always use `flex-wrap: wrap; gap: 8px 6px;` on all tab bars (`.activity-tab-bar`, `.modal-tabs`, `.subnav-pills`) with `overflow-x: hidden`. Pills must wrap cleanly onto 1–2 rows so all options remain immediately visible without horizontal scrolling.
+
 ---
 
 ## 8. CONTENT RULES
@@ -425,7 +430,177 @@ When integrating assessment blueprints, mark distributions, or exam patterns in 
 
 ---
 
-## 15. COMPANION SOPS
+## 17. COLLAPSIBLE VERTICAL DOCK RAIL ARCHITECTURE
+
+For lengthy multi-unit chapters with 8–10+ concept units (e.g. Mathematics and Science core chapters), horizontal tab strips create unwanted wrapping or horizontal scrollbars. We adopt the **Collapsible Vertical Dock Rail**:
+
+### 17.1 Width & Screen Space Reclamation
+* **Collapsed Width**: `width: 60px–64px` default rail width. Reclaims nearly **200px of horizontal space**, allowing formulas, tables, and answer cards to stretch wider, dramatically reducing overall vertical page scroll size.
+* **Expanded Width**: `width: 260px` floating frosted-glass dock (`backdrop-filter: blur(16px)`).
+* **Grid Layout**: `.chapter-vertical-layout` uses `grid-template-columns: 62px minmax(0, 1fr)` by default.
+
+### 17.2 Intentional Hover Delay (1.2s to 1.5s)
+* Casual cursor pass-throughs across the screen while reading or scrolling **must never trigger drawer expansion**.
+* CSS transition delay must be specified:
+  ```css
+  .chapter-tabs.vertical-tabs {
+    transition: width 0.32s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    transition-delay: 0.1s; /* rapid clean retraction on exit */
+  }
+  .chapter-tabs.vertical-tabs:hover {
+    width: 260px !important;
+    transition-delay: 1.2s !important; /* deliberate 1.2s hover threshold */
+  }
+  .chapter-tabs.vertical-tabs:hover .tab span {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 1.25s;
+  }
+  ```
+
+### 17.3 Persistent Selection Outline & Highlight
+* In both collapsed (icon-only) and expanded states, the active tab must be unmistakable:
+  ```css
+  .chapter-tabs.vertical-tabs .tab.active {
+    background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.32), rgba(var(--primary-rgb), 0.12)) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.65), 0 4px 16px rgba(var(--primary-rgb), 0.3) !important;
+  }
+  .chapter-tabs.vertical-tabs .tab.active i {
+    color: #ffffff !important;
+    filter: drop-shadow(0 0 8px var(--primary-glow)) !important;
+    transform: scale(1.15) !important;
+  }
+  ```
+
+### 17.4 Tooltip Titles & Pin Toggle
+* **Instant Native Tooltips**: Every tab button MUST have a descriptive `title="..."` attribute (e.g. `title="1. Place Value & Representation"`), giving instant hints without waiting for drawer expansion.
+* **Pin / Unpin Toggle**: Include `<button class="sidebar-dock-toggle" onclick="toggleSidebarPin()">` with `<i class="fas fa-thumbtack">` at the top of the dock header. Pin status is stored in `localStorage.setItem('pushti-sidebar-pinned', isPinned)`.
+
+---
+
+## 18. SUBMODULE TABBED PARTITIONING (AVOID ANCHOR-JUMP DUMPS)
+
+For dense content blocks with >15–20 problems (e.g., NCERT Solved Examples [22], Figure It Out Exercises [16], Practice Banks [150+]):
+* **NEVER jam all questions into one gigantic vertical scroll list.**
+* **NEVER rely on floating anchor jump bars (e.g., `#q1`, `#q5`) within the same page**, which clutter the screen and disorient students.
+* **Partition into Nested Submodule Vertical Tabs**:
+  - Example (Solved Examples): Subtab 1 (Ex 1–5), Subtab 2 (Ex 6–10), Subtab 3 (Ex 11–16), Subtab 4 (Ex 17–22).
+  - Example (Figure It Out): Subtab 1 (In-Text Activities), Subtab 2 (Exercises Part 1), Subtab 3 (Exercises Part 2).
+  - Example (Practice Bank): Subtabs for MCQs L1/L2/HOTS, Match, AR, Comprehension, Subjective, Integer, Case Studies.
+* **Isolation**: Submodule panes switch using `.submodule-pane.active` so only the currently studied subset is rendered.
+
+---
+
+## 19. SUBPARTS GRID & SOLUTION TILE ARCHITECTURE
+
+To optimize screen space and eliminate scroll within scrollbars:
+* **Multi-Part Questions**: Use `.subparts-grid`:
+  ```css
+  .subparts-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)) !important;
+    gap: 10px 14px !important;
+  }
+  ```
+  Distributes subparts (i), (ii), (iii) in a clean 2–4 column horizontal flow instead of a tall vertical bullet stack.
+* **Answer Cards**: Multi-part solutions render inside `.solution-grid`:
+  ```css
+  .solution-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+    gap: 12px !important;
+  }
+  ```
+  Each subpart answer gets a distinct `.solution-card` tile with a dedicated sub-badge (e.g. `(i)`, `(ii)`).
+
+---
+
+## 20. KATEX & LATEX STRING INTEGRITY RULES
+
+When building mathematical and scientific pages using Python compilation scripts:
+* **Raw Python Strings Rule**: In Python files using raw multi-line strings `r"""..."""`, **NEVER double the backslashes** (`\\frac`, `\\text`). Python raw strings preserve single backslashes literally.
+* **Double Backslash Disaster**: `\\frac` outputs literal `\\frac` to HTML. In KaTeX, `\\` evaluates to a newline, turning `\frac{1}{10}` into broken text `frac110` and `\text{cm}` into italic math `textcm`.
+* **Currency Formatting**: Inside math mode `$...$`, bare Indian Rupee signs (`₹`) crash or misrender. Always use `\text{₹}` (e.g. `$\text{₹}100$`). Outside math mode, plain `₹` in HTML is fine.
+* **Math Underscores**: Underscores `_` in KaTeX represent subscripts. Bare underscores (e.g. for fill-in blanks) crash KaTeX. Use `\_` or `\underline{\hspace{1.5cm}}`.
+
+---
+
+## 21. VERIFIED TIMESTAMPS, NOTIFICATION DOTS & SYLLABUS BATTERIES
+
+To track syllabus readiness and keep study progress transparent:
+* **Verified Date Badges**: Every tab and submodule header should indicate its last verification date:
+  `<span class="verified-badge"><i class="fas fa-calendar-check"></i> Verified: 13 Sep 2026</span>`
+* **Section Notification Dot**: Newly added or freshly verified sections feature an Android-style pulsing indicator dot (`.update-dot`), guiding the student immediately to updated material.
+* **Topic Tag Syllabus Mapping & Highlighting (The Topic-to-Battery Rule)**:
+  - **Purpose**: The tags and pills on chapter cards (`.ch-tags .tag`, `.subtopic-pills-row .topic-pill`) are **functional syllabus audit markers**, not decorative keywords. They must list the exact topics prescribed in the syllabus for that chapter/unit.
+  - **Covered Topics (`.tag-covered` / Highlighted)**: When a topic has been authored, verified, and integrated into the digital module, its tag must be visually highlighted (active theme accent color, bold text, illuminated border).
+  - **Pending Topics (`.tag-pending` / Dim)**: If a topic is in the syllabus but has not yet been authored inside the module, it must remain dim / un-highlighted (muted color, dashed/standard border).
+  - **Completeness Calculation**: Completeness percentage is strictly calculated from the covered-to-prescribed ratio:
+    $$\text{Topic Completeness \%} = \frac{\text{Syllabus Topics Covered (Highlighted)}}{\text{Total Syllabus Topics Prescribed in Syllabus}} \times 100$$
+  - A chapter card or subject may **never** be labeled `Ready` or `100%` if any prescribed syllabus topic remains pending.
+* **Syllabus Progress Battery**:
+  - A compact, colorful micro-battery widget showing completion vs. Mid-Term syllabus.
+  - Emerald Green (`#10b981`) for 100% / Completed.
+  - Cyan (`#06b6d4`) for 70%–99%.
+  - Amber (`#f59e0b`) for 30%–69%.
+  - Rose (`#f43f5e`) for <30% / Pending.
+  - Displayed on the Home Page (`index.html`), Subject Index (`maths_index.html`), and Chapter Headers as an unobtrusive status pill (e.g. `🔋 3/8 Chapters (38%)`).
+
+---
+
+## 22. MATHEMATICS CHAPTER THEME & GUI UNIFICATION STANDARD (v1.4)
+
+To guarantee an ultra-polished, distraction-free visual experience across all Mathematics chapters (demonstrated in Chapters 3 & 4), adhere to the following strict theme and interface conventions:
+
+### 22.1 Universal Button & Input Theme Reset (Zero "White Patches" Rule)
+* **The Problem**: Browsers default unstyled `<button>` and `<input>` elements to the OS `buttonface` appearance (stark `#ffffff` white or light grey background with black text). Any missing CSS rule immediately causes jarring white patches on dark themes.
+* **The Universal Reset**: Every chapter stylesheet must define:
+  ```css
+  button {
+    font-family: inherit;
+    color: var(--text-main);
+    background: transparent;
+    border: 1px solid var(--border);
+  }
+  ```
+* **Explicit Styling on All Interactive Elements**:
+  - `.tool-btn`: Styled as dark glass pills (`var(--surface)`) with glowing indigo hover effects for accordion toggles (e.g. `Show All`, `Hide All`).
+  - `.back-to-theory-btn`: Subtle badge-style buttons for cross-referencing theory sections, featuring `var(--surface)` background, border outline, and hover illumination.
+  - `.mcq-opt-btn`: Distinct card-style options with `.opt-label` tags; dynamically turning emerald on correct and rose on incorrect.
+  - `.overview-launch-btn`: Smooth action button with subtle elevation on hover.
+  - `.conf-btn`: Confidence tracker buttons styled with `.nailed` (`#10b981`), `.review` (`#f59e0b`), and `.stuck` (`#f43f5e`).
+
+### 22.2 Unified Header & Breadcrumb Hierarchy
+* Sticky 54px top header (`.site-header`) with high z-index (1000) and glassmorphic backdrop filter.
+* Standardized breadcrumb structure with FontAwesome icons:
+  `Home (fa-home) / Mathematics (fa-calculator) / Chapter N: Title`.
+* Right cluster includes:
+  - Micro-battery syllabus pill badge: `🔋 100% Mid-Term Ready` (emerald border & fill).
+  - Theme toggle button (`.theme-toggle-btn`) with synchronized `localStorage.getItem('pushti_theme')` persistence.
+
+### 22.3 Edge-Docked Collapsible Sidebar & Desktop Margin Push
+* Dock rail is pinned to `left: 0; top: 54px; bottom: 0; width: 62px;`.
+* Hover expansion: Expands to 280px with a **1.2-second delay** to eliminate jitter while reading.
+* Pin Lock: Clicking `#pin-btn` toggles `.pinned` state and updates `localStorage`.
+* **Desktop Content Margin Push**: When pinned on desktop (`@media (min-width: 861px)`), `.main-content` smoothly shifts `margin-left: 280px;` (with `transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1)`) so the dock never obscures reading text.
+* Active Tab Glow: 2px glowing outline (`box-shadow: 0 0 0 2px var(--primary)`) with green pulsing `.update-dot`.
+
+### 22.4 Interactive Floating Utilities & Telemetry
+* **Floating Scroll-To-Top**: Every chapter includes `#scrollTopBtn` (44px circle, `bottom: 24px; right: 24px; z-index: 999`), revealing when scroll depth exceeds 300px.
+* **Firebase Study Time Logging**: Background module logging study seconds every 60s to Firestore `user_stats` for active users (`pushti` / `hirak`).
+* **Custom Luminous Scrollbars**: Discrete 6px scrollbars (`::-webkit-scrollbar`) with `var(--border)` thumb and `var(--primary)` hover state.
+
+### 22.5 Zero Content Alteration Verification Gate
+* When upgrading GUI or layout templates, **zero mathematical content, equations, solutions, or descriptions may be altered or lost**.
+* Before approving any chapter file, run automated integrity checks:
+  1. HTML tag balance verification: `<div>` open == close (diff: 0), `<button>` open == close (diff: 0).
+  2. KaTeX delimiter parity: Even count of display math `$$` blocks.
+  3. Class coverage: 100% of custom classes must map to valid CSS rules with 0 unstyled elements.
+
+---
+
+## 23. COMPANION SOPS
 
 * **`SOP.md`**: Master Standard Operating Procedure & Checkpoint verification rules.
 * **`PUSHTI_CONTENT_SOP.md`**: Content strategy, Two-AI workflow (Gemini legwork + Claude concept mastery), and chapter completeness rules.
@@ -435,11 +610,13 @@ All files work together as the architectural standard for Pushti's Study Hub.
 
 ---
 
-## 16. CHANGELOG
+## 24. CHANGELOG
 
 | Version | Date | Change |
 |---------|------|--------|
 | 1.0 | 2026-09-08 | Initial SOP created by Antigravity (Claude) |
 | 1.1 | 2026-09-09 | Added companion PUSHTI_CONTENT_SOP.md reference |
 | 1.2 | 2026-09-12 | Added Section 14: Exam Pattern Pop-up Modal & Zero-Scrollbar Architecture; added Timetable & Assessment Maintenance standards |
+| 1.3 | 2026-09-13 | Added Sections 17–21: Collapsible Vertical Dock Rail Architecture (1.2s delay), Submodule Partitioning, Subparts Grid & Answer Tiles, KaTeX Single-Backslash Rules, and Verified Timestamps / Notification Dots / Syllabus Progress Batteries |
+| 1.4 | 2026-09-13 | Added Section 22: Mathematics Chapter Theme & GUI Unification Standard (Zero "White Patches" universal button reset, unified header breadcrumbs, desktop margin push, floating scroll-to-top, and 0-content-loss verification gate) |
 

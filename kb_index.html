@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaushal Bodh (KB) - Pushti Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    :root {
+        --bg-main: #0F0F1A !important;
+        --bg-color: #0F0F1A;
+        --surface: #16213E;
+        --surface-hover: #1F2E54;
+        --primary: #10B981;
+        --primary-glow: rgba(16, 185, 129, 0.25);
+        --accent: #34D399;
+        --text-main: #E8E8E8;
+        --text-muted: #94A3B8;
+        --border: #2A2A40;
+        --tag-bg: rgba(255, 255, 255, 0.06);
+    }
+    [data-theme="light"] {
+        --bg-main: #F8FAFC !important;
+        --bg-color: #F8FAFC;
+        --surface: #FFFFFF;
+        --surface-hover: #F1F5F9;
+        --text-main: #0F172A;
+        --text-muted: #64748B;
+        --border: #E2E8F0;
+        --tag-bg: rgba(0, 0, 0, 0.05);
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0; padding: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        min-height: 100vh;
+        line-height: 1.6;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .site-header {
+        background-color: #0F0F1A !important;
+        background: #0F0F1A !important;
+        opacity: 1 !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+    [data-theme="light"] .site-header {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+        opacity: 1 !important;
+    }
+    .pill {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.76rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .pill-green {
+        background: rgba(16, 185, 129, 0.15);
+        color: #34D399;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .pill-purple {
+        background: rgba(129, 140, 248, 0.15);
+        color: #A5B4FC;
+        border: 1px solid rgba(129, 140, 248, 0.3);
+    }
+    .container {
+        max-width: 1260px;
+        margin: 20px auto 40px auto;
+        padding: 0 20px;
+    }
+
+    /* Vertical Branch Layout */
+    .subject-vertical-container {
+        display: grid;
+        grid-template-columns: 270px 1fr;
+        gap: 1.8rem;
+        align-items: start;
+    }
+    .branch-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        position: sticky;
+        top: 76px;
+    }
+    .branch-nav-btn {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.2rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        color: var(--text-muted);
+        cursor: pointer;
+        text-align: left;
+        transition: all 0.22s ease;
+        opacity: 0.75;
+        position: relative;
+        overflow: hidden;
+        user-select: none;
+        width: 100%;
+    }
+    .branch-nav-btn:hover {
+        opacity: 0.95;
+        transform: translateX(4px);
+        border-color: var(--branch-color, var(--primary));
+        color: var(--text-main);
+    }
+    .branch-nav-btn.active {
+        opacity: 1;
+        transform: translateX(5px);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+        border-color: var(--branch-color, var(--primary));
+        color: var(--text-main);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 1.5px var(--branch-color, var(--primary));
+    }
+    .branch-icon {
+        font-size: 1.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .branch-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+    }
+    .branch-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        font-family: 'Outfit', sans-serif;
+        color: var(--text-main);
+    }
+    .branch-stats {
+        font-size: 0.76rem;
+        color: var(--text-muted);
+        font-family: 'Space Mono', monospace;
+    }
+
+    /* Content Area */
+    .branch-content-area {
+        min-width: 0;
+    }
+    .category-section {
+        display: none;
+    }
+    .category-section.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .section-headline {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 16px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 10px;
+    }
+    .section-headline h3 {
+        margin: 0;
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.3rem;
+        color: var(--text-main);
+    }
+    .section-headline p {
+        margin: 2px 0 0 0;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+    }
+
+    /* Project Card */
+    .project-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        margin-bottom: 22px;
+        overflow: hidden;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    }
+    .project-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        background: rgba(255, 255, 255, 0.02);
+        border-bottom: 1px solid var(--border);
+    }
+    .card-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    .proj-num {
+        font-size: 1.8rem;
+        font-family: 'Space Mono', monospace;
+        font-weight: 700;
+        color: var(--primary);
+        line-height: 1;
+        min-width: 44px;
+    }
+    .proj-title-wrap h4 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-family: 'Outfit', sans-serif;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .proj-desc {
+        margin: 3px 0 0 0;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+    }
+    .tag {
+        font-size: 0.72rem;
+        padding: 2px 8px;
+        background: var(--tag-bg);
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        color: var(--text-muted);
+        font-family: 'Space Mono', monospace;
+    }
+
+    /* Activity Tab Bar */
+    .activity-tab-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 6px;
+        padding: 10px 18px;
+        background: rgba(11, 17, 32, 0.5);
+        border-bottom: 1px solid var(--border);
+    }
+    .activity-tab-btn {
+        padding: 6px 14px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+        cursor: pointer;
+        white-space: nowrap;
+        user-select: none;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .activity-tab-btn:hover {
+        color: var(--text-main);
+        background: rgba(255, 255, 255, 0.09);
+        border-color: var(--primary);
+    }
+    .activity-tab-btn.active {
+        background: rgba(16, 185, 129, 0.15);
+        color: #34D399;
+        border-color: #10B981;
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
+    }
+
+    /* Activity Content Pane */
+    .activity-pane {
+        display: none;
+        padding: 22px 24px;
+        animation: fadeIn 0.25s ease;
+    }
+    .activity-pane.active {
+        display: block;
+    }
+
+    .pane-title {
+        font-size: 1.15rem;
+        font-family: 'Outfit', sans-serif;
+        color: #34D399;
+        margin: 0 0 12px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+    @media (max-width: 768px) {
+        .grid-2 { grid-template-columns: 1fr; }
+    }
+    .info-box {
+        background: rgba(11, 17, 32, 0.7);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px 18px;
+    }
+    .info-box h5 {
+        margin: 0 0 8px 0;
+        font-size: 0.95rem;
+        font-family: 'Outfit', sans-serif;
+        color: #34D399;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .info-box ul, .info-box ol {
+        margin: 0;
+        padding-left: 20px;
+        font-size: 0.88rem;
+        color: var(--text-main);
+    }
+    .info-box li {
+        margin-bottom: 6px;
+        line-height: 1.6;
+    }
+    .formula-box {
+        background: rgba(16, 185, 129, 0.08);
+        border: 1px dashed rgba(16, 185, 129, 0.4);
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin: 12px 0;
+        font-family: 'Space Mono', monospace;
+        font-size: 0.86rem;
+        color: #34D399;
+    }
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.86rem;
+        margin-top: 10px;
+    }
+    .data-table th, .data-table td {
+        padding: 9px 12px;
+        border: 1px solid var(--border);
+        text-align: left;
+    }
+    .data-table th {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-main);
+        font-family: 'Outfit', sans-serif;
+    }
+    .data-table tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+    }
+    .alert-box {
+        border-left: 4px solid var(--primary);
+        background: rgba(16, 185, 129, 0.08);
+        padding: 12px 16px;
+        border-radius: 6px;
+        margin: 14px 0;
+        font-size: 0.88rem;
+        color: var(--text-main);
+    }
+    .alert-warn {
+        border-left-color: #F59E0B;
+        background: rgba(245, 158, 11, 0.08);
+    }
+
+    @media (max-width: 880px) {
+        .subject-vertical-container { grid-template-columns: 1fr; }
+        .branch-sidebar { position: static; flex-direction: row; flex-wrap: wrap; }
+        .branch-nav-btn { flex: 1 1 calc(50% - 10px); min-width: 140px; }
+    }
+</style>
+</head>
+<body>
+
+    <!-- Standard Pushti Study Hub Top Bar -->
+    <header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid var(--border); background-color: #0F0F1A !important; opacity: 1 !important; position: sticky; top: 0; z-index: 1000;">
+        <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.05rem; font-weight: 500; color: var(--text-main);">
+            <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <a href="kb_index.html" style="text-decoration:none; color:inherit; font-weight:600;">Kaushal Bodh</a>
+        </div>
+        
+        <div class="header-right" style="display:flex; align-items:center; gap: 16px;">
+            <div class="search-container" style="position:relative; display:flex; align-items:center;">
+                <button id="global-search-btn" aria-label="Search" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; padding:5px; display:flex; align-items:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+                <input id="global-search-input" type="text" placeholder="Search activities, tools..." style="display:none; margin-left:8px; padding: 6px 14px; border-radius:20px; border:1px solid var(--border); background:rgba(0,0,0,0.25); color:white; width: 190px; font-size: 0.82rem; outline:none;">
+            </div>
+            
+            <nav class="header-nav" style="display:flex; align-items:center; gap: 12px;">
+                <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:var(--text-main); cursor:pointer; font-size:1.15rem; padding: 4px 8px;">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <a href="timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px; display:inline-flex; align-items:center; gap:6px;">📅 Time Table</a>
+                <a href="midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px; display:inline-flex; align-items:center; gap:6px;">🎯 Mid-Term Syllabus</a>
+
+                <div class="user-profile-wrapper" style="position:relative;">
+                    <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:38px; height:38px; border:2px solid var(--primary);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
+                        <img src="https://ui-avatars.com/api/?name=Pushti&background=10B981&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                    <div id="global-dropdown" style="display:none; position:absolute; right:0; top:48px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:15px; width:220px; box-shadow: 0 8px 24px rgba(0,0,0,0.35); flex-direction:column; gap:12px; z-index:1001;">
+                        <div style="text-align:center; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
+                            <div style="font-weight:700; font-size:1.1rem; color:var(--text-main);">Pushti</div>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.9rem; font-weight:500;">Student</span>
+                            <label class="switch" style="position:relative; display:inline-block; width:34px; height:20px;">
+                                <input type="checkbox" id="global-role-checkbox" style="opacity:0; width:0; height:0;">
+                                <span class="slider" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--border); transition:.4s; border-radius:34px;"></span>
+                            </label>
+                            <span style="font-size:0.9rem; font-weight:500;">Parent</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <style>
+    .switch input:checked + .slider { background-color: var(--primary, #10B981); }
+    .switch input:checked + .slider:before { transform: translateX(14px); }
+    .slider:before { position:absolute; content:""; height:14px; width:14px; left:3px; bottom:3px; background-color:white; transition:.4s; border-radius:50%; }
+    </style>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Subject Header Banner -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; flex-wrap: wrap; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid var(--border);">
+            <div style="display: flex; align-items: center; gap: 14px;">
+                <div style="width: 46px; height: 46px; border-radius: 12px; background: rgba(16, 185, 129, 0.15); color: #10B981; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; border: 1px solid rgba(16, 185, 129, 0.3);">
+                    <i class="fas fa-screwdriver-wrench"></i>
+                </div>
+                <div>
+                    <h1 style="margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.45rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 10px;">
+                        Kaushal Bodh (कौशल बोध)
+                    </h1>
+                    <p style="margin: 2px 0 0 0; font-size: 0.82rem; color: var(--text-muted);">
+                        Grade 7 NCERT NEP 2020 Vocational Education Activity Book &bull; Subject: KB
+                    </p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <span class="pill pill-green"><i class="fas fa-calendar-check"></i> Friday Period 8 (Roger Sir)</span>
+                <span class="pill pill-purple"><i class="fas fa-certificate"></i> Non-Exam Subject</span>
+            </div>
+        </div>
+
+        <div class="subject-vertical-container">
+
+            <!-- Left Branch Navigation Sidebar -->
+            <aside class="branch-sidebar">
+                <!-- Branch 1 -->
+                <button class="branch-nav-btn active" id="btn-life" style="--branch-color: #10B981;" onclick="showBranch('life')">
+                    <div class="branch-icon">🌱</div>
+                    <div class="branch-details">
+                        <div class="branch-title">Life Forms</div>
+                        <div class="branch-stats">Projects 1 & 2</div>
+                    </div>
+                </button>
+
+                <!-- Branch 2 -->
+                <button class="branch-nav-btn" id="btn-machines" style="--branch-color: #F59E0B;" onclick="showBranch('machines')">
+                    <div class="branch-icon">⚙️</div>
+                    <div class="branch-details">
+                        <div class="branch-title">Machines & Materials</div>
+                        <div class="branch-stats">Projects 3 & 4</div>
+                    </div>
+                </button>
+
+                <!-- Branch 3 -->
+                <button class="branch-nav-btn" id="btn-services" style="--branch-color: #818cf8;" onclick="showBranch('services')">
+                    <div class="branch-icon">🤝</div>
+                    <div class="branch-details">
+                        <div class="branch-title">Human Services</div>
+                        <div class="branch-stats">Projects 5 & 6</div>
+                    </div>
+                </button>
+
+                <!-- Branch 4 -->
+                <button class="branch-nav-btn" id="btn-mela" style="--branch-color: #EC4899;" onclick="showBranch('mela')">
+                    <div class="branch-icon">🎪</div>
+                    <div class="branch-details">
+                        <div class="branch-title">Mela & Annexures</div>
+                        <div class="branch-stats">Fair & 4 Guides</div>
+                    </div>
+                </button>
+            </aside>
+
+            <!-- Content Area -->
+            <div class="branch-content-area">
+
+                <!-- ==========================================================
+                     BRANCH 1: LIFE FORMS
+                     ========================================================== -->
+                <div class="category-section active" id="sec-life">
+                    <div class="section-headline">
+                        <div>
+                            <h3>Part 1: Work with Life Forms (जीवन रूप कार्य)</h3>
+                            <p>Projects on plant nursery propagation, seed testing, and school biodiversity habitat gardening.</p>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 1: PLANT NURSERY -->
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">P1</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Project 1: Plant Nursery (पौधशाला) <span class="tag" style="background:rgba(16,185,129,0.15); color:#34D399; border-color:rgba(16,185,129,0.3);">Pages 3–24</span></h4>
+                                    <p class="proj-desc">Setting up a school nursery, germination factors, rag-doll seed testing, potting soil, and stem cuttings.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activity Tab Bar for Project 1 -->
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('p1', 'overview', this)"><i class="fas fa-info-circle"></i> Overview & Goals</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p1', 'act1', this)"><i class="fas fa-eye"></i> Act 1: Nursery Visit</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p1', 'act23', this)"><i class="fas fa-compass-drafting"></i> Act 2 & 3: Layout & Shade-Net</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p1', 'act4', this)"><i class="fas fa-seedling"></i> Act 4: Rag-Doll Seed Test</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p1', 'act5', this)"><i class="fas fa-scissors"></i> Act 5: Stem Cuttings & Beds</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p1', 'act67', this)"><i class="fas fa-calculator"></i> Act 6 & 7: Growth & Costing</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p1', 'safety', this)"><i class="fas fa-shield-alt"></i> Safety Rules</button>
+                        </div>
+
+                        <!-- P1 Tab Panes -->
+                        <div class="activity-pane active" id="pane-p1-overview">
+                            <h4 class="pane-title"><i class="fas fa-lightbulb"></i> Objectives & Core Concepts</h4>
+                            <p>A plant nursery is a dedicated, protected space where young plants (saplings/seedlings) are propagated, nurtured, and conditioned until they are strong enough to be transplanted into open gardens or farms.</p>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Why Nurseries are Essential</h5>
+                                    <ul>
+                                        <li><strong>Species Preservation:</strong> Multiplying native and endangered varieties safely.</li>
+                                        <li><strong>Large Scale Production:</strong> Growing uniform, healthy seedlings simultaneously.</li>
+                                        <li><strong>Climate Protection:</strong> Shielding tender sprouts from intense sun, drying winds, or torrential rain.</li>
+                                        <li><strong>Pest Control:</strong> Managing nutrients and organic pests in a compact, controlled area.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Key Environmental Factors</h5>
+                                    <ul>
+                                        <li><strong>Optimal Temperature:</strong> Enzymes require a specific warmth range for embryo awakening.</li>
+                                        <li><strong>Humidity:</strong> High air moisture prevents seedling dehydration (like a water bowl placed near a winter heater/bukhari).</li>
+                                        <li><strong>Soil Moisture:</strong> Balanced water without standing puddles that cause fungal damping-off.</li>
+                                        <li><strong>Diffused Light:</strong> Direct midday sun scorches new shoots; agro shade-net provides soft light.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p1-act1">
+                            <h4 class="pane-title"><i class="fas fa-binoculars"></i> Activity 1: Field Visit to a Plant Nursery (Table 1.1)</h4>
+                            <p>Students visit a government or commercial horticulture nursery to study propagation structures and professional methods.</p>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Component Observed</th><th>Standard Nursery Practice</th><th>School Nursery Application</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Plant Varieties</strong></td><td>Ornamental, fruit-bearing, flowering, timber, medicinal</td><td>Tulsi, Marigold, Tomato, Chilli, Money Plant, Hibiscus</td></tr>
+                                    <tr><td><strong>Mother Beds</strong></td><td>Healthy parent plants dedicated for taking seeds and stem cuttings</td><td>Designate 2–3 mature school shrubs as donor mother plants</td></tr>
+                                    <tr><td><strong>Potting Soil Mixture</strong></td><td>1 Part Garden Soil : 1 Part River Sand : 1 Part Vermicompost (1:1:1)</td><td>Mix sieved campus soil with compost and coarse sand for aeration</td></tr>
+                                    <tr><td><strong>Watering Gear</strong></td><td>Overhead micro-misters and rose-head watering cans</td><td>Fine-rose water cans to avoid uprooting tiny germinating seeds</td></tr>
+                                    <tr><td><strong>Protective Structures</strong></td><td>Green agro shade-nets (50% or 75% light reduction)</td><td>Bamboo-supported 50% shade-net covering the school nursery bed</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p1-act23">
+                            <h4 class="pane-title"><i class="fas fa-ruler-combined"></i> Activities 2 & 3: Site Layout & Shade-Net Installation</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Activity 2: Site Selection & Zoning</h5>
+                                    <ul>
+                                        <li>Choose a flat, well-drained patch receiving 4–6 hours of morning sunlight.</li>
+                                        <li>Ensure close access to a functional water tap/hose.</li>
+                                        <li><strong>Zone A:</strong> Germination seedbeds & seedling trays.</li>
+                                        <li><strong>Zone B:</strong> Polybag potting and hardening area.</li>
+                                        <li><strong>Zone C:</strong> Tool shed and compost/sand storage.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Activity 3: Erecting the Shade-Net</h5>
+                                    <ul>
+                                        <li>Clear weeds, debris, and gravel with a garden rake and hoe.</li>
+                                        <li>Dig 4 corner holes (minimum 40 cm deep); insert 7-foot sturdy bamboo poles.</li>
+                                        <li>Stretch 50% green agro-net across the top and sides.</li>
+                                        <li>Bind firmly with coir rope or binding wire to withstand wind gusts.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p1-act4">
+                            <h4 class="pane-title"><i class="fas fa-vial"></i> Activity 4: Seed Viability Testing (Rag-Doll Method)</h4>
+                            <p>Before sowing seeds in bulk, testing viability ensures that only high-quality seed lots are planted:</p>
+                            <ol style="padding-left:22px; line-height:1.7;">
+                                <li>Cut a <strong>30 × 30 cm</strong> piece of porous cotton cloth or thick blotting sheet.</li>
+                                <li>Using a pencil, mark a grid with <strong>3 × 3 cm</strong> squares.</li>
+                                <li>Soak the cloth in water; allow all excess dripping water to drain.</li>
+                                <li>Count exactly <strong>100 seeds</strong> (e.g., moong, gram, methi, tomato) and place one seed per square.</li>
+                                <li>Roll the cloth into a loose cylinder ("rag doll"). Secure both ends with rubber bands.</li>
+                                <li>Keep in a warm, shaded spot for <strong>3–5 days</strong>, misting lightly daily to keep damp.</li>
+                                <li>Unroll carefully, count how many seeds have sprouted healthy radicles (roots), and calculate:</li>
+                            </ol>
+                            <div class="formula-box">
+                                Germination Percentage (%) = [ Number of Germinated Seeds / Total Seeds Tested (100) ] × 100
+                            </div>
+                            <p style="font-size:0.86rem; color:var(--text-muted);"><em>Example: If 88 seeds out of 100 sprouted healthy roots, germination rate is 88% (Excellent quality for nursery bed sowing).</em></p>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p1-act5">
+                            <h4 class="pane-title"><i class="fas fa-tree"></i> Activity 5: Plant Raising & Vegetative Stem Cuttings</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Method A: Raised Seedbeds & Polybags</h5>
+                                    <ul>
+                                        <li><strong>Raised Beds:</strong> Build bed 15 cm above ground level (width 1 m) for rapid gravity drainage during rains.</li>
+                                        <li>Draw furrows 5–10 cm apart, sow thinly, cover with fine sieved compost.</li>
+                                        <li><strong>Polybags:</strong> Punch 2–3 drainage holes at bottom of 4×6 inch bags. Fill with 1:1:1 potting mix.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Method B: Vegetative Stem Cuttings (4 Steps)</h5>
+                                    <ol>
+                                        <li>Select mature, pencil-thick semi-hardwood stem (Rose, Hibiscus, Bougainvillea, Money Plant).</li>
+                                        <li>Make a clean <strong>45° slanted cut</strong> just below a growth node using sharp secateurs.</li>
+                                        <li>Remove lower leaves; dip cut end in natural rooting promoter (aloe vera gel, honey, or cinnamon).</li>
+                                        <li>Insert 3–5 cm deep into potting mix; firm soil and keep under shade until new leaf buds emerge.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p1-act67">
+                            <h4 class="pane-title"><i class="fas fa-chart-line"></i> Activities 6 & 7: Growth Monitoring & Unit Economics</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Activity 6: Weekly Growth Record (Table 1.2)</h5>
+                                    <ul>
+                                        <li>Record date of sowing and date of first seedling emergence.</li>
+                                        <li>Measure stem height in cm weekly using a ruler.</li>
+                                        <li>Count total healthy leaves per plant.</li>
+                                        <li>Note pests (aphids, leaf miners) and apply organic neem oil spray.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Activity 7: Cost Calculation (Table 1.3)</h5>
+                                    <div class="formula-box">
+                                        Cost per Viable Sapling = Total Inputs (Seeds + Polybags + Soil + Shade-Net) / Healthy Saplings Produced
+                                    </div>
+                                    <p style="font-size:0.84rem; color:var(--text-muted);">Teaches resource budgeting, financial literacy, and valuing skilled horticultural labor.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p1-safety">
+                            <h4 class="pane-title"><i class="fas fa-shield-virus"></i> Nursery Safety Protocols</h4>
+                            <div class="alert-box">
+                                <ul>
+                                    <li><strong>Hand Hygiene:</strong> Wash hands thoroughly with soap after handling manure, fertilizers, or potting soil.</li>
+                                    <li><strong>Tool Handling:</strong> Always carry secateurs, trowels, and khurpis with sharp points facing downward. Never run with tools.</li>
+                                    <li><strong>Ergonomics:</strong> Bend knees when lifting heavy soil bags or water cans to avoid back strain.</li>
+                                    <li><strong>Gloves:</strong> Wear thick gardening gloves when pruning thorny stems (like rose bushes).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 2: HABITAT GARDEN -->
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">P2</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Project 2: School Habitat Garden (विद्यालय पर्यावास वाटिका) <span class="tag" style="background:rgba(16,185,129,0.15); color:#34D399; border-color:rgba(16,185,129,0.3);">Pages 25–48</span></h4>
+                                    <p class="proj-desc">Creating micro-habitats to feed, shelter, and invite birds, butterflies, bees, and soil organisms into school campuses.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activity Tab Bar for Project 2 -->
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('p2', 'overview', this)"><i class="fas fa-info-circle"></i> Ecological Concept</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p2', 'act12', this)"><i class="fas fa-search"></i> Act 1 & 2: Bio-Survey & Expert</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p2', 'act34', this)"><i class="fas fa-layer-group"></i> Act 3 & 4: Micro-Habitats & Needs</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p2', 'act56', this)"><i class="fas fa-hotel"></i> Act 5 & 6: Garden Zones & Bug Hotel</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p2', 'act789', this)"><i class="fas fa-clipboard-list"></i> Act 7, 8 & 9: Logs & Eco-Walks</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p2', 'safety', this)"><i class="fas fa-shield-alt"></i> Safety & Deterrents</button>
+                        </div>
+
+                        <!-- P2 Tab Panes -->
+                        <div class="activity-pane active" id="pane-p2-overview">
+                            <h4 class="pane-title"><i class="fas fa-dove"></i> Coexistence with Local Wildlife</h4>
+                            <p>Unlike ornamental gardens grown solely for visual flower arrangements, a <strong>Habitat Garden</strong> is planned to supply the 4 vital life needs for local fauna: <strong>Food, Water, Shelter, and Safe Space</strong>.</p>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Welcome Campus Visitors</h5>
+                                    <p>Purple Sunbirds, House Sparrows, Bulbuls, Lime Butterflies, Plain Tigers, Honeybees, Solitary Mason Bees, Earthworms, and Garden Calotes Lizards.</p>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Ecological Balance</h5>
+                                    <p>Birds and ladybugs eat harmful crop pests (aphids, caterpillars). Bees and butterflies pollinate school garden fruit trees and flowers.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p2-act12">
+                            <h4 class="pane-title"><i class="fas fa-binoculars"></i> Act 1 & 2: Biodiversity Survey & Expert Consultation</h4>
+                            <p>Students survey the campus and categorize local fauna:</p>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Animal Category</th><th>Examples</th><th>Habitat Provision Required</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Pollinators</strong></td><td>Butterflies, Moths, Honeybees</td><td>Nectar-rich flowers (Marigold, Zinnia, Cosmos) and host larval leaves (Citrus, Curry Leaf)</td></tr>
+                                    <tr><td><strong>Songbirds</strong></td><td>Sunbirds, Sparrows, Tailorbirds</td><td>Shallow freshwater bird baths, fruit bushes, dense thorny brambles for nesting</td></tr>
+                                    <tr><td><strong>Soil Decomposers</strong></td><td>Earthworms, Millipedes, Beetles</td><td>Moist leaf-litter layer, dead rotting log pile, organic compost heap</td></tr>
+                                    <tr><td><strong>Species to Deter</strong></td><td>Mosquitoes, Rats, Venomous Snakes</td><td>Empty stagnant water pockets, seal food scrap bins, keep paths clearly trimmed</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p2-act34">
+                            <h4 class="pane-title"><i class="fas fa-sitemap"></i> Act 3 & 4: 4 Ecological Layers & Animal Needs</h4>
+                            <div class="info-box">
+                                <ul>
+                                    <li><strong>Canopy Layer (Trees):</strong> Doves, squirrels, bats roosting and shade.</li>
+                                    <li><strong>Understory Shrub Layer:</strong> Babblers, praying mantises, and tailorbirds foraging and hiding.</li>
+                                    <li><strong>Herbaceous Layer (Flowers):</strong> Continuous nectar supply from spring to winter for bees.</li>
+                                    <li><strong>Ground & Litter Layer:</strong> Decomposing fallen leaves retaining earthworm moisture and soil fertility.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p2-act56">
+                            <h4 class="pane-title"><i class="fas fa-hammer"></i> Act 5 & 6: Garden Zones & Bug Hotel Construction</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Zone 1 & 2: Pollinator Patch & Water Dish</h5>
+                                    <ul>
+                                        <li>Plant native perennials with staggered blooming seasons.</li>
+                                        <li>Set shallow terracotta plates (2–3 cm deep). Add flat landing stones so bees can sip water without drowning. Change water daily!</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Zone 3 & 4: Bug Hotel & Mud-Puddle</h5>
+                                    <ul>
+                                        <li><strong>Insect Hotel:</strong> Repurpose a wooden crate; fill with hollow bamboo canes, dry pinecones, and drilled wood blocks for solitary bees.</li>
+                                        <li><strong>Mud Puddling:</strong> A small wet sand-and-salt patch where butterflies sip essential sodium minerals.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p2-act789">
+                            <h4 class="pane-title"><i class="fas fa-book-journal-whills"></i> Act 7, 8 & 9: Fauna Logbook, Maintenance & Eco-Walks</h4>
+                            <p>Maintain observation table: Date &bull; Species Spotted &bull; Count &bull; Activity (Feeding, Resting, Collecting Twigs) &bull; Weather Conditions.</p>
+                            <p>Conduct student-guided eco-walks for primary grade classes, explaining how each plant supports a specific bird or insect.</p>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p2-safety">
+                            <h4 class="pane-title"><i class="fas fa-shield-alt"></i> Safety & Non-Toxic Deterrence</h4>
+                            <div class="alert-box alert-warn">
+                                <ul>
+                                    <li><strong>Zero Pesticides:</strong> Chemical insect sprays kill beneficial pollinators and poison birds.</li>
+                                    <li><strong>Mosquito Prevention:</strong> Never allow water in bird baths to sit uncleaned for more than 24 hours.</li>
+                                    <li><strong>Bee Etiquette:</strong> Observe active hives from a calm distance; never throw stones or swat at bees.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                     BRANCH 2: MACHINES & MATERIALS
+                     ========================================================== -->
+                <div class="category-section" id="sec-machines">
+                    <div class="section-headline">
+                        <div>
+                            <h3>Part 2: Work with Machines & Materials (मशीन एवं पदार्थ कार्य)</h3>
+                            <p>Resist-dyeing textile crafts, natural dye recipes, prompt engineering, and training custom AI image classifiers.</p>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 3: TIE AND DYE -->
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">P3</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Project 3: Tie and Dye (बंधेज एवं रंगाई) <span class="tag" style="background:rgba(245,158,11,0.15); color:#FCD34D; border-color:rgba(245,158,11,0.3);">Pages 51–82</span></h4>
+                                    <p class="proj-desc">Indian Bandhani, Leheriya, Shibori, natural kitchen dyes (beetroot, turmeric), swatch portfolios, and product costing.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activity Tab Bar for Project 3 -->
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('p3', 'heritage', this)"><i class="fas fa-monument"></i> Heritage & Motifs</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p3', 'tying', this)"><i class="fas fa-circle-dot"></i> Act 3: Tying Techniques</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p3', 'dyes', this)"><i class="fas fa-flask"></i> Act 4: Natural Kitchen Dyes</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p3', 'cycle', this)"><i class="fas fa-rotate"></i> Act 5: 5-Step Dyeing Cycle</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p3', 'costing', this)"><i class="fas fa-coins"></i> Product Costing & Ornamentation</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p3', 'safety', this)"><i class="fas fa-shield-alt"></i> Safety & Troubleshooting</button>
+                        </div>
+
+                        <!-- P3 Tab Panes -->
+                        <div class="activity-pane active" id="pane-p3-heritage">
+                            <h4 class="pane-title"><i class="fas fa-scroll"></i> Indian Textile Heritage & Traditional Motifs</h4>
+                            <p>Tie and dye relies on <strong>resist-dyeing</strong>: sections of fabric are bound tightly so dye cannot penetrate, forming crisp patterns.</p>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Regional Traditions</h5>
+                                    <ul>
+                                        <li><strong>Bandhani / Bandhej (Gujarat & Rajasthan):</strong> Derived from Sanskrit <em>bandh</em> ("to bind"). Practiced in Kutch, Jamnagar, and Jodhpur.</li>
+                                        <li><strong>Leheriya (Rajasthan):</strong> Diagonal wave patterns celebrating monsoon and Teej.</li>
+                                        <li><strong>Sungudi (Madurai, Tamil Nadu):</strong> Fine dot patterns crafted by migrated Saurashtrian weavers.</li>
+                                        <li><strong>Shibori (Japan):</strong> Ancient stitch-resist and pleat-clamping methods.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Traditional Bandhani Motifs</h5>
+                                    <ul>
+                                        <li><strong>Ekdali:</strong> Single dot motif.</li>
+                                        <li><strong>Tikunthi:</strong> Triangular cluster of 3 dots.</li>
+                                        <li><strong>Chaubandi:</strong> Diamond arrangement of 4 dots.</li>
+                                        <li><strong>Satbandi:</strong> Auspicious cluster of 7 dots.</li>
+                                        <li><strong>Dungar Shahi:</strong> Mountain peak pyramid arrangements.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p3-tying">
+                            <h4 class="pane-title"><i class="fas fa-fingerprint"></i> Tying Techniques (Practice Swatches)</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Technique 1: Classic Bandhani (Seed Binding)</h5>
+                                    <ol>
+                                        <li>Draw dots on pure bleached cotton fabric with water-washable pencil.</li>
+                                        <li>Insert a mustard seed or pulse grain beneath the dot.</li>
+                                        <li>Pinch fabric into a sharp cone peak.</li>
+                                        <li>Wind strong cotton thread 10–15 times tightly around base without cutting; jump to next dot.</li>
+                                    </ol>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Technique 2: Shibori Stitch & Pleat</h5>
+                                    <ul>
+                                        <li><strong>Nui Shibori (Stitch-Resist):</strong> Make simple running stitches along lines with thick thread; pull tight into dense accordions; double knot firmly.</li>
+                                        <li><strong>Leheriya Folding:</strong> Accordion pleat fabric diagonally into a strip; bind tightly at 2 cm intervals with rubber bands or string.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p3-dyes">
+                            <h4 class="pane-title"><i class="fas fa-mortar-pestle"></i> Natural Kitchen Dye Recipes</h4>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Color Palette</th><th>Raw Kitchen Material</th><th>Preparation Protocol</th><th>Fixative / Mordant</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Beetroot Magenta</strong></td><td>2 Grated Fresh Red Beetroots</td><td>Boil in 1 L water for 30 minutes; strain liquor through muslin cloth.</td><td>2 tbsp Common Salt or White Vinegar</td></tr>
+                                    <tr><td><strong>Turmeric Golden-Yellow</strong></td><td>2 tbsp Pure Turmeric Powder</td><td>Make smooth cold water slurry; stir into 1 L warm water bath.</td><td>1 tbsp Alum (Phitkari) or Salt</td></tr>
+                                    <tr><td><strong>Amber / Golden Rust</strong></td><td>Outer Skins of 8–10 Yellow Onions</td><td>Boil skins in 1 L water for 25 minutes until amber; strain.</td><td>1 tbsp Common Salt</td></tr>
+                                    <tr><td><strong>Olive Brown</strong></td><td>Dry Pomegranate Rinds (Anaar Chilka)</td><td>Boil ground rinds; add a splash of iron rust water for deep olive.</td><td>Natural plant tannins act as mordant</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p3-cycle">
+                            <h4 class="pane-title"><i class="fas fa-spinner"></i> The 5-Step Professional Dyeing Cycle</h4>
+                            <ol style="padding-left:22px; line-height:1.8;">
+                                <li><strong>Pre-Soaking:</strong> Dip bound dry cloth in lukewarm water so dye solution penetrates uniformly up to the tight threads.</li>
+                                <li><strong>Warm Dye Bath:</strong> Immerse tied cloth into warm dye liquor (60°C–70°C) for 20–30 minutes, turning continuously with wooden tongs.</li>
+                                <li><strong>Cold Rinse:</strong> Remove, squeeze gently, and rinse under cold running water until rinse water runs clear.</li>
+                                <li><strong>Shade Drying:</strong> Dry completely in a breezy, shaded area (direct harsh sunlight fades natural dyes).</li>
+                                <li><strong>The Big Reveal (Untying):</strong> Once fully dry, cut threads carefully using blunt-end embroidery scissors (avoid cutting fabric). Unfurl cloth to reveal crisp white resist rings and vivid dyed fields!</li>
+                            </ol>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p3-costing">
+                            <h4 class="pane-title"><i class="fas fa-tags"></i> Product Costing & Surface Ornamentation</h4>
+                            <p>Students create a utility product: Cotton handkerchief, tote bag, table runner, or stole.</p>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Unit Economics (Table 3.9)</h5>
+                                    <div class="formula-box">
+                                        Total Cost = Plain Fabric + Dye Ingredients + Thread + Packaging<br>
+                                        Selling Price = Total Cost + 20% Artisan Craft Margin
+                                    </div>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Surface Ornamentation (Table 3.10)</h5>
+                                    <ul>
+                                        <li>Mirror work (*sheesha*) along borders.</li>
+                                        <li>Kantha decorative running stitches.</li>
+                                        <li>Handmade fabric and wooden bead tassels on corner hems.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p3-safety">
+                            <h4 class="pane-title"><i class="fas fa-shield-alt"></i> Safety & Troubleshooting Matrix (Table 3.7)</h4>
+                            <div class="alert-box alert-warn">
+                                <strong>Boiling Water Caution:</strong> Always heat dye pots with teacher supervision. Wear rubber gloves to protect hands from staining and heat.
+                            </div>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Problem Encountered</th><th>Probable Cause</th><th>Corrective Remedy</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Dye color is too faint</td><td>Not enough plant matter or insufficient immersion time</td><td>Add more grated beetroot/turmeric; soak for full 30 mins with mordant.</td></tr>
+                                    <tr><td>Dye leaked inside resist ring</td><td>Thread was wound too loosely</td><td>Wind thread with firm tension 10–15 times around peak without slack.</td></tr>
+                                    <tr><td>Fabric torn during untying</td><td>Sharp knife or razor blade used</td><td>Use only blunt-tipped embroidery scissors and carefully snip thread loops.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 4: AI ASSISTANT -->
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">P4</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Project 4: AI Assistant (कृत्रिम बुद्धिमत्ता सहायक) <span class="tag" style="background:rgba(245,158,11,0.15); color:#FCD34D; border-color:rgba(245,158,11,0.3);">Pages 83–106</span></h4>
+                                    <p class="proj-desc">Human vs Machine intelligence, multi-modal AI, prompt engineering, Google Teachable Machine, and Scratch AI gamification.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activity Tab Bar for Project 4 -->
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('p4', 'concept', this)"><i class="fas fa-brain"></i> Human vs Machine</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p4', 'prompt', this)"><i class="fas fa-terminal"></i> Act 3: Prompt Engineering</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p4', 'mango', this)"><i class="fas fa-database"></i> Act 4 & 5: Mango Dataset</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p4', 'train', this)"><i class="fas fa-laptop-code"></i> Act 6 & 7: Teachable Machine</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p4', 'scratch', this)"><i class="fas fa-gamepad"></i> Act 8 & 9: Scratch AI</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p4', 'ethics', this)"><i class="fas fa-shield-cat"></i> AI Ethics & Privacy</button>
+                        </div>
+
+                        <!-- P4 Tab Panes -->
+                        <div class="activity-pane active" id="pane-p4-concept">
+                            <h4 class="pane-title"><i class="fas fa-robot"></i> Activity 1 & 2: Human vs. Machine Intelligence</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Where Computers Excel</h5>
+                                    <ul>
+                                        <li>Executing millions of complex math calculations in microseconds.</li>
+                                        <li>Searching and indexing millions of database records flawlessly.</li>
+                                        <li>Operating tirelessly 24/7 without fatigue.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Where Humans Excel</h5>
+                                    <ul>
+                                        <li>True emotional empathy, kindness, and moral ethics.</li>
+                                        <li>Common sense and adapting quickly to unprogrammed situations.</li>
+                                        <li>Appreciating context, irony, humor, and creative storytelling.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p4-prompt">
+                            <h4 class="pane-title"><i class="fas fa-code"></i> Activity 3: Creative Prompt Engineering</h4>
+                            <p>AI does not think on its own; it calculates responses based on the <strong>prompts</strong> provided by humans.</p>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Weak Search-Word Prompt</h5>
+                                    <p><code>"crow water story"</code></p>
+                                    <p style="font-size:0.84rem; color:var(--text-muted);">Results in a generic, boring, standard 3-line fable with zero original flavor.</p>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Engineered Context Prompt</h5>
+                                    <p><code>"Act as a humorous storyteller. Write a 3-paragraph fable for Grade 7 students set in modern Ahmedabad about a clever crow who uses a solar water heater instead of pebbles. Include funny dialogues in Gujarati-English."</code></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p4-mango">
+                            <h4 class="pane-title"><i class="fas fa-lemon"></i> Act 4 & 5: Aisha's Mango Classifier (Dataset Collection)</h4>
+                            <p>Aisha builds an image classifier to help market visitors distinguish 4 mango varieties:</p>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Variety Class</th><th>Physical Identifying Features</th><th>Data Collection Protocol</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Alphonso (Hapus)</strong></td><td>Round-oval, golden saffron yellow, slight red blush on shoulders.</td><td>Collect 40 photos: whole mango, sliced cheeks, under sunlight & indoor bulb.</td></tr>
+                                    <tr><td><strong>Kesar</strong></td><td>Oblong shape with curved beak-like tip, intense orange pulp aroma.</td><td>Collect 40 photos: side profiles, close-up of curved tip, in crate and hand.</td></tr>
+                                    <tr><td><strong>Dasheri</strong></td><td>Long, slender, elongated shape, greenish-yellow sweet aromatic skin.</td><td>Collect 40 photos: slender top view, cross-section with thin seed.</td></tr>
+                                    <tr><td><strong>Langra</strong></td><td>Roundish-oval, stays bright grass-green even when completely ripe!</td><td>Collect 40 photos: green skin variations, with stem and leaves attached.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p4-train">
+                            <h4 class="pane-title"><i class="fas fa-network-wired"></i> Act 6 & 7: Training with Google Teachable Machine</h4>
+                            <ol style="padding-left:22px; line-height:1.8;">
+                                <li>Open <strong>Google Teachable Machine</strong> (<code>teachablemachine.withgoogle.com</code>).</li>
+                                <li>Select <strong>Image Project</strong> &rarr; <strong>Standard Image Model</strong>.</li>
+                                <li>Label 4 classes: <code>Alphonso</code>, <code>Kesar</code>, <code>Dasheri</code>, <code>Langra</code>.</li>
+                                <li>Upload the 40 photos into each respective class bucket.</li>
+                                <li>Click <strong>Train Model</strong>. Watch the machine calculate weights across training cycles (<em>epochs</em>).</li>
+                                <li><strong>Testing & Error Debugging:</strong> Test with unseen mango photos on live webcam. If Kesar is misclassified as Langra, add more distinct photos and retrain!</li>
+                            </ol>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p4-scratch">
+                            <h4 class="pane-title"><i class="fas fa-puzzle-piece"></i> Act 8 & 9: Gamification in Scratch / MIT RAISE</h4>
+                            <p>Export the trained model link (TensorFlow.js format) and load into <strong>Scratch AI RAISE Playground</strong>:</p>
+                            <div class="formula-box">
+                                When AI detects [Alphonso] with confidence > 85%:<br>
+                                &nbsp;&nbsp;&bull; Scratch Cat dances and speaks: "This is King Alphonso from Ratnagiri!"<br>
+                                &nbsp;&nbsp;&bull; Display nutritional info card and award +10 points to student!
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p4-ethics">
+                            <h4 class="pane-title"><i class="fas fa-user-shield"></i> Ethical AI & Digital Privacy</h4>
+                            <div class="alert-box">
+                                <ul>
+                                    <li><strong>Data Privacy:</strong> Never upload personal faces, addresses, or private photos without consent.</li>
+                                    <li><strong>Bias Elimination:</strong> If training a dog classifier with only white dogs, the AI will fail to recognize black dogs. Data must be balanced and diverse.</li>
+                                    <li><strong>Environmental Awareness:</strong> Training massive AI models requires heavy electricity and cooling water in server farms.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                     BRANCH 3: HUMAN SERVICES
+                     ========================================================== -->
+                <div class="category-section" id="sec-services">
+                    <div class="section-headline">
+                        <div>
+                            <h3>Part 3: Work in Human Services (मानव सेवा कार्य)</h3>
+                            <p>Cultural puppetry heritage, paper-mâché sculpting, stagecraft, home first-aid kits, and family wellness surveys.</p>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 5: STORYTIME WITH PUPPETS -->
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">P5</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Project 5: Storytime with Puppets (कठपुतली द्वारा कहानी प्रस्तुति) <span class="tag" style="background:rgba(129,140,248,0.15); color:#A5B4FC; border-color:rgba(129,140,248,0.3);">Pages 109–137</span></h4>
+                                    <p class="proj-desc">Indian puppetry traditions, 9-step paper-mâché sculpting, 5-column playwriting, stagecraft, and foley sound.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activity Tab Bar for Project 5 -->
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('p5', 'heritage', this)"><i class="fas fa-masks-theater"></i> Puppetry Heritage</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p5', 'script', this)"><i class="fas fa-pen-nib"></i> Act 3 & 4: 5-Column Script</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p5', 'sculpt', this)"><i class="fas fa-paint-brush"></i> Act 5: 9-Step Paper-Mâché</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p5', 'stage', this)"><i class="fas fa-volume-high"></i> Act 6 & 7: Stage & Foley Sound</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p5', 'roles', this)"><i class="fas fa-users"></i> Act 8: Cast Roles & Show</button>
+                        </div>
+
+                        <!-- P5 Tab Panes -->
+                        <div class="activity-pane active" id="pane-p5-heritage">
+                            <h4 class="pane-title"><i class="fas fa-landmark"></i> 2000 Years of Indian Puppetry Heritage</h4>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Traditional Form</th><th>Region</th><th>Mechanism</th><th>Key Artistic Feature</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Kathputli</strong></td><td>Rajasthan</td><td>String Puppet (Marionette)</td><td>Carved mango wood heads, flowing bright bandhani robes, manipulated with strings around fingers, accompanied by the high-pitched bamboo <em>boli</em> whistle.</td></tr>
+                                    <tr><td><strong>Kundhei</strong></td><td>Odisha</td><td>Glove & String</td><td>Lightwood jointed limbs, multiple string controls, accompanied by classical Odissi rhythm.</td></tr>
+                                    <tr><td><strong>Gombeyatta</strong></td><td>Karnataka</td><td>String Puppet</td><td>Elaborate costumes and crowns styled after traditional Yakshagana dance-drama.</td></tr>
+                                    <tr><td><strong>Bommalattam</strong></td><td>Tamil Nadu</td><td>Combined Rod & String</td><td>Heaviest Indian puppets; puppeteer wears an iron ring on head with strings attached to arms.</td></tr>
+                                    <tr><td><strong>Tholu Bommalata</strong></td><td>Andhra Pradesh</td><td>Shadow Puppets</td><td>Large translucent goatskin cutouts illuminated from behind onto a white cotton screen.</td></tr>
+                                </tbody>
+                            </table>
+                            <div class="alert-box" style="margin-top:14px;">
+                                <strong>Archaeological Fact:</strong> Terracotta toy bulls with movable string-operated heads unearthed at Mohenjo-Daro prove that puppetry existed in India over 4,000 years ago!
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p5-script">
+                            <h4 class="pane-title"><i class="fas fa-file-lines"></i> Act 3 & 4: The 5-Column Script Template (Table 5.3)</h4>
+                            <p>Adapted from NCERT's classic story: <em>"Gopal and the Hilsa Fish"</em>:</p>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>1. Scene & Setting</th><th>2. Characters on Stage</th><th>3. Movement Cues</th><th>4. Spoken Dialogue</th><th>5. Sound Effects (SFX)</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Scene 1: King's Palace Courtroom; morning</td><td>King, Gopal, Courtiers</td><td>[King paces restlessly; Gopal bows comically]</td><td><strong>King:</strong> "Not another word about Hilsa fish! Can anyone stop people from talking about it for five minutes?!"</td><td>[Trumpet fanfare &bull; Courtiers murmur]</td></tr>
+                                    <tr><td>Scene 2: Market Street</td><td>Fishmonger, Townsfolk, Gopal</td><td>[Gopal enters half-shaven with rags; townsfolk point]</td><td><strong>Townsperson:</strong> "Look at that man! He must be crazy!"</td><td>[Market chatter &bull; Sudden comedic trombone slide]</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p5-sculpt">
+                            <h4 class="pane-title"><i class="fas fa-shapes"></i> Act 5: 9-Step Paper-Mâché Head Sculpting</h4>
+                            <ol style="padding-left:22px; line-height:1.8;">
+                                <li>Crumple waste newspaper into a tight, firm sphere (size of a cricket ball).</li>
+                                <li>Wrap tightly with thread or masking tape to fix the round sphere.</li>
+                                <li>Insert a hollow cardboard cylinder or 1 cm PVC pipe into base for finger/rod control; glue firmly.</li>
+                                <li>Mix flour (*maida*) or PVA white glue with water to thin creamy consistency.</li>
+                                <li>Tear newspaper strips into 1×3 inch ribbons (torn feathered edges blend seamlessly).</li>
+                                <li>Dip strips into glue paste; smooth over sphere in 4–5 overlapping crisscross layers.</li>
+                                <li>Roll small wet paper pulp cones to sculpt 3D nose, chin, ear ridges, and brow; paste firmly.</li>
+                                <li>Allow head to dry in the sun for 24–48 hours until completely hard.</li>
+                                <li>Apply white primer coat; paint expressive eyes, brows, mustache with acrylic colors; seal with varnish!</li>
+                            </ol>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p5-stage">
+                            <h4 class="pane-title"><i class="fas fa-theater-masks"></i> Act 6 & 7: Stagecraft, Lighting & Acoustic Foley Sound</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Proscenium Stage & Lighting</h5>
+                                    <ul>
+                                        <li>Repurpose a large refrigerator carton. Cut a 3×2 foot viewing opening.</li>
+                                        <li>Drape interior with dark black velvet cloth; hang a split front curtain.</li>
+                                        <li>Use 2 desk lamps angled at 45°. Add colored cellophane gels (blue for night, amber for day).</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Live Physical Foley Sound Effects</h5>
+                                    <ul>
+                                        <li><strong>Horse Hooves:</strong> Knocking two halved dry coconut shells on wood.</li>
+                                        <li><strong>Rainstorm:</strong> Shaking dry uncooked rice in an aluminum foil canister.</li>
+                                        <li><strong>Thunder:</strong> Shaking a large thin sheet of sheet-metal.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p5-roles">
+                            <h4 class="pane-title"><i class="fas fa-users-gear"></i> Act 8: Theater Company Crew Roles (Table 5.6)</h4>
+                            <div class="info-box">
+                                <ul>
+                                    <li><strong>Stage Director:</strong> Manages rehearsals, scene transitions, and overall timing.</li>
+                                    <li><strong>Puppeteers (Manipulators):</strong> Operate puppet heads and arm rods behind the screen.</li>
+                                    <li><strong>Voice Actors:</strong> Speak expressive dialogues with character pitch modulation.</li>
+                                    <li><strong>Sound & Foley Operator:</strong> Manages background flute/drum music and live sound effects.</li>
+                                    <li><strong>Lighting Tech:</strong> Controls spotlight cues and colored mood filters.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT 6: FAMILY HEALTH HANDBOOK -->
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">P6</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Project 6: Family Health Handbook (पारिवारिक स्वास्थ्य संदर्शिका) <span class="tag" style="background:rgba(129,140,248,0.15); color:#A5B4FC; border-color:rgba(129,140,248,0.3);">Pages 138–160</span></h4>
+                                    <p class="proj-desc">First-aid kit assembly, emergency burn/cut algorithms, family lifestyle surveys, and e-Sanjeevani telemedicine.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activity Tab Bar for Project 6 -->
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('p6', 'pillars', this)"><i class="fas fa-heart-pulse"></i> 5 Pillars of Health</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p6', 'kit', this)"><i class="fas fa-kit-medical"></i> Act 4: First-Aid Kit</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p6', 'protocols', this)"><i class="fas fa-truck-medical"></i> Emergency Algorithms</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p6', 'survey', this)"><i class="fas fa-clipboard-question"></i> Act 5 & 6: Family Health Survey</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('p6', 'plan', this)"><i class="fas fa-hand-holding-medical"></i> Act 7 & 8: Preventive Plan & e-Sanjeevani</button>
+                        </div>
+
+                        <!-- P6 Tab Panes -->
+                        <div class="activity-pane active" id="pane-p6-pillars">
+                            <h4 class="pane-title"><i class="fas fa-spa"></i> The 5 Pillars of Family Health</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Physical & Mental Health</h5>
+                                    <ul>
+                                        <li><strong>Balanced Nutrition:</strong> Seasonal vegetables, pulses, whole grains; low processed sugars.</li>
+                                        <li><strong>Daily Physical Activity:</strong> 60 minutes of active play, cycling, walking, or yoga.</li>
+                                        <li><strong>Sleep Hygiene:</strong> 8–9 hours of restful sleep without screens in the bedroom.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Environmental & Emotional Well-being</h5>
+                                    <ul>
+                                        <li><strong>Clean Drinking Water:</strong> Filtered/boiled water; clean overhead storage tanks.</li>
+                                        <li><strong>Sanitation:</strong> Waste segregation (wet/dry); zero open mosquito breeding sites.</li>
+                                        <li><strong>Emotional Wellness:</strong> Calm family conversations, reading, and mutual care.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p6-kit">
+                            <h4 class="pane-title"><i class="fas fa-first-aid"></i> Act 4: Standardized First-Aid Kit Checklist</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Dressings & Antiseptics</h5>
+                                    <ul>
+                                        <li>Sterile 4×4 inch gauze pads & rolled gauze.</li>
+                                        <li>Assorted adhesive bandages (Band-Aids).</li>
+                                        <li>Micropore medical tape & cotton wool.</li>
+                                        <li>Antiseptic solution (Povidone-Iodine / Dettol).</li>
+                                        <li>Silver Sulfadiazine burn cream.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Instruments & Basic Relief</h5>
+                                    <ul>
+                                        <li>Digital clinical thermometer.</li>
+                                        <li>Blunt-ended surgical scissors & tweezers.</li>
+                                        <li>Crepe elastic bandage for sprains.</li>
+                                        <li>Oral Rehydration Salts (ORS) sachets.</li>
+                                        <li>Emergency contact card (108 Ambulance, Family Doctor).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p6-protocols">
+                            <h4 class="pane-title"><i class="fas fa-stethoscope"></i> Life-Saving First-Aid Emergency Algorithms</h4>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Emergency Situation</th><th>Standard First-Aid Protocol (What TO Do)</th><th>Dangerous Mistakes (What NOT To Do)</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Minor Thermal Burns</strong></td>
+                                        <td>Immediately hold or immerse burned skin under <strong>cool running tap water for 10–15 minutes</strong> to dissipate heat. Apply burn cream loosely.</td>
+                                        <td><strong>NEVER apply ice</strong> (freezes fragile tissue), butter, oil, or toothpaste! Do not pop blisters.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Bleeding Cuts & Abrasions</strong></td>
+                                        <td>Wash under clean running tap water. Press sterile gauze firmly directly on wound for 3–5 minutes until bleeding stops. Apply antiseptic and dress.</td>
+                                        <td>Do not apply dirty cloth, soil, or turmeric paste to fresh open cuts.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Nosebleeds (Epistaxis)</strong></td>
+                                        <td>Sit upright and lean head <strong>slightly forward</strong>. Pinch soft nostrils firmly for 10 minutes continuously. Breathe through mouth.</td>
+                                        <td><strong>NEVER tilt head backward</strong> (causes blood to flow down throat into stomach, triggering choking and vomiting).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Dehydration & Heat Faint</strong></td>
+                                        <td>Move person to a cool, shaded spot. Elevate legs slightly. Sip freshly prepared ORS solution slowly.</td>
+                                        <td>Do not give carbonated sugary sodas or ice-cold gulps.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p6-survey">
+                            <h4 class="pane-title"><i class="fas fa-chart-pie"></i> Act 5 & 6: Family Health Survey & Analysis (Tables 6.1–6.3)</h4>
+                            <p>Students survey family members across age groups (children, adults, elderly):</p>
+                            <div class="info-box">
+                                <ul>
+                                    <li>Water intake in liters per day &bull; Servings of green vegetables and fresh fruits.</li>
+                                    <li>Screen time hours &bull; Daily walking and movement steps.</li>
+                                    <li>Routine immunizations, blood pressure, eye tests, and dental checkups.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-p6-plan">
+                            <h4 class="pane-title"><i class="fas fa-mobile-screen-button"></i> Act 7 & 8: Preventive Action Plan & e-Sanjeevani</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Family Wellness Commitments (Table 6.4)</h5>
+                                    <ul>
+                                        <li>Add a fresh salad bowl to family dinner daily.</li>
+                                        <li>Establish a 1-hour "Screen-Free Zone" before bedtime.</li>
+                                        <li>Weekly inspection of desert coolers and pot trays to eliminate standing water.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Government e-Sanjeevani Portal</h5>
+                                    <p>Government of India's free national telemedicine service (<code>esanjeevani.mohfw.gov.in</code>). Allows families in any town or village to consult certified government doctors via video call from home.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================================
+                     BRANCH 4: MELA & ANNEXURES
+                     ========================================================== -->
+                <div class="category-section" id="sec-mela">
+                    <div class="section-headline">
+                        <div>
+                            <h3>Kaushal Mela & Annexures (मेला एवं संदर्भ संदर्शिका)</h3>
+                            <p>Vocational exhibition organizing, project design templates, NEP 2020 learning outcomes, and extension topics.</p>
+                        </div>
+                    </div>
+
+                    <!-- KAUSHAL MELA CARD -->
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">KM</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Planning for Kaushal Mela (कौशल मेला) <span class="tag" style="background:rgba(236,72,153,0.15); color:#F472B6; border-color:rgba(236,72,153,0.3);">Pages 161–163</span></h4>
+                                    <p class="proj-desc">14-point roadmap for school vocational fair pavilions, live process demonstrations, zero-waste protocols, and visitor reflection.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('km', 'pavilions', this)"><i class="fas fa-store"></i> 5 Demonstration Pavilions</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('km', 'roadmap', this)"><i class="fas fa-list-check"></i> 14-Point Organizing Roadmap</button>
+                        </div>
+
+                        <div class="activity-pane active" id="pane-km-pavilions">
+                            <h4 class="pane-title"><i class="fas fa-tents"></i> 5 Thematic Student-Led Demonstration Pavilions</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Green & Textile Pavilions</h5>
+                                    <ul>
+                                        <li><strong>Green Pavilion:</strong> Nursery saplings, potted herbs, live stem cutting demo, guided habitat garden tours.</li>
+                                        <li><strong>Textile Pavilion:</strong> Hand-dyed Bandhani stoles, Leheriya swatches, live mustard-seed tying station.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Tech, Theater & Health Pavilions</h5>
+                                    <ul>
+                                        <li><strong>Innovation Booth:</strong> Live testing of student-trained Teachable Machine models and Scratch games.</li>
+                                        <li><strong>Puppet Theater:</strong> Scheduled puppet plays with proscenium stage and live sound effects.</li>
+                                        <li><strong>Health Kiosk:</strong> First-aid demonstration, ORS preparation demo, emergency algorithms.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-km-roadmap">
+                            <h4 class="pane-title"><i class="fas fa-clipboard-list"></i> The 14-Point Fair Management Checklist</h4>
+                            <div class="info-box">
+                                <ol style="padding-left:22px; line-height:1.7;">
+                                    <li>Date, venue, and campus zoning approval.</li>
+                                    <li>Student organizing committees (Stalls, Anchors, Logistics, Safety).</li>
+                                    <li>Electrical safety checks for tech and lighting booths.</li>
+                                    <li>Signboards and clear visitor navigation pathways.</li>
+                                    <li>Eco-friendly invitations sent to parents, local artisans, and community elders.</li>
+                                    <li>First-aid post with certified teacher coordinator.</li>
+                                    <li>Cleanliness and <strong>strictly zero single-use plastic</strong> waste management.</li>
+                                    <li>Student anchoring scripts and welcome presentations.</li>
+                                    <li>Visitor feedback register and interactive reflection wall.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ANNEXURES CARD -->
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <div class="card-left">
+                                <div class="proj-num">AN</div>
+                                <div class="proj-title-wrap">
+                                    <h4>Annexures 1 to 4: Design Guides & Extensions <span class="tag" style="background:rgba(236,72,153,0.15); color:#F472B6; border-color:rgba(236,72,153,0.3);">Pages 164–194</span></h4>
+                                    <p class="proj-desc">Universal project template, NEP 2020 learning outcomes, 6 extension projects, and cross-curricular academic matrix.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-tab-bar">
+                            <button class="activity-tab-btn active" onclick="switchActTab('an', 'annex12', this)"><i class="fas fa-file-invoice"></i> Annexures 1 & 2: Templates & Goals</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('an', 'annex3', this)"><i class="fas fa-lightbulb"></i> Annexure 3: 6 Extension Projects</button>
+                            <button class="activity-tab-btn" onclick="switchActTab('an', 'annex4', this)"><i class="fas fa-diagram-project"></i> Annexure 4: Academic Mapping</button>
+                        </div>
+
+                        <div class="activity-pane active" id="pane-an-annex12">
+                            <h4 class="pane-title"><i class="fas fa-graduation-cap"></i> Annexure 1 & 2: Design Framework & NEP 2020 Goals</h4>
+                            <div class="grid-2">
+                                <div class="info-box">
+                                    <h5>Annexure 1: Universal Project Template</h5>
+                                    <ul>
+                                        <li>1. Clear Real-World Purpose & Community Value.</li>
+                                        <li>2. Low-Cost, Locally Available Materials Checklist.</li>
+                                        <li>3. Rigorous Safety & Hygiene Protocols.</li>
+                                        <li>4. Sequential Hands-on Action Procedure.</li>
+                                        <li>5. Quantitative/Qualitative Observation Logs.</li>
+                                        <li>6. Unit Cost Accounting & Reflection.</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h5>Annexure 2: NEP 2020 Curricular Goals</h5>
+                                    <ul>
+                                        <li><strong>CG-1 (Basic Skills):</strong> Use tools accurately and safely for gardening, crafts, and computing.</li>
+                                        <li><strong>CG-2 (Work Ethics):</strong> Maintain clean, hazard-free workstations and approach tasks systematically.</li>
+                                        <li><strong>CG-3 (Dignity of Labor):</strong> Respect manual work and appreciate traditional Indian artisans.</li>
+                                        <li><strong>CG-4 (Sustainability):</strong> Conserve water, upcycle scrap materials, and foster biodiversity.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-pane" id="pane-an-annex3">
+                            <h4 class="pane-title"><i class="fas fa-puzzle-piece"></i> Annexure 3: 6 Extension Projects</h4>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Extension Project</th><th>Domain</th><th>Hands-On Activity</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Hydroponics</strong></td><td>Urban Farming</td><td>Growing methi and spinach in nutrient water without soil using net pots and bubbler air pumps.</td></tr>
+                                    <tr><td><strong>Vermicomposting</strong></td><td>Waste Management</td><td>Setting up an earthworm compost bin (<em>Eisenia fetida</em>) using kitchen fruit peels to make odorless black gold fertilizer.</td></tr>
+                                    <tr><td><strong>Solar Cooker</strong></td><td>Clean Energy</td><td>Building an insulated box-type solar cooker with reflective mirrors to bake potatoes using pure sunlight.</td></tr>
+                                    <tr><td><strong>Electrical Maintenance</strong></td><td>Home Engineering</td><td>Learning wire stripping, 3-pin plug wiring (Live, Neutral, Earth color coding), and fuse safety.</td></tr>
+                                    <tr><td><strong>Herbal Apothecary</strong></td><td>Traditional Knowledge</td><td>Cultivating Tulsi, Aloe Vera, Mint, Lemongrass, and cataloging traditional home wellness remedies.</td></tr>
+                                    <tr><td><strong>Community Journalism</strong></td><td>Media & Services</td><td>Publishing a school newsletter, conducting student interviews, and desktop publishing.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="activity-pane" id="pane-an-annex4">
+                            <h4 class="pane-title"><i class="fas fa-arrows-split-up-and-left"></i> Annexure 4: Cross-Curricular Academic Connections</h4>
+                            <table class="data-table">
+                                <thead>
+                                    <tr><th>Academic Subject</th><th>Integrated Vocational Concept in Kaushal Bodh</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Science</strong></td><td>Plant reproduction, transpiration, optics, chemical mordants/pH, ecology, human physiology.</td></tr>
+                                    <tr><td><strong>Mathematics</strong></td><td>Germination percentages, ratios (1:1:1 potting mix), grid measurements, unit cost accounting.</td></tr>
+                                    <tr><td><strong>Social Science</strong></td><td>Traditional artisan history, trade routes, public health infrastructure (PHC/ASHA), geography of textiles.</td></tr>
+                                    <tr><td><strong>Languages (Eng/Hin/Sans)</strong></td><td>Playwriting, dialogue delivery, technical log keeping, vocabulary, expressive communication.</td></tr>
+                                    <tr><td><strong>Art & Design</strong></td><td>Color harmony, spatial stage composition, paper-mâché sculpting, textile aesthetics.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Script for Tab Switching & Subtab Switching -->
+    <script>
+        // Main Branch Switcher
+        function showBranch(branchId) {
+            document.querySelectorAll('.branch-nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.category-section').forEach(sec => sec.classList.remove('active'));
+
+            const targetBtn = document.getElementById('btn-' + branchId);
+            if (targetBtn) targetBtn.classList.add('active');
+
+            const targetSec = document.getElementById('sec-' + branchId);
+            if (targetSec) targetSec.classList.add('active');
+        }
+
+        // Subtab Switcher for Project Activities
+        function switchActTab(projId, paneKey, btnElement) {
+            // Find parent card
+            const card = btnElement.closest('.project-card');
+            if (!card) return;
+
+            // Remove active from sibling buttons
+            card.querySelectorAll('.activity-tab-btn').forEach(btn => btn.classList.remove('active'));
+            // Add active to clicked button
+            btnElement.classList.add('active');
+
+            // Hide all panes inside this card
+            card.querySelectorAll('.activity-pane').forEach(pane => pane.classList.remove('active'));
+
+            // Show target pane
+            const targetPane = card.querySelector('#pane-' + projId + '-' + paneKey);
+            if (targetPane) {
+                targetPane.classList.add('active');
+            }
+        }
+    </script>
+
+    <!-- Global Search & Theme Toggle Scripts -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchBtn = document.getElementById('global-search-btn');
+        const searchInput = document.getElementById('global-search-input');
+        
+        if(searchBtn && searchInput) {
+            searchBtn.addEventListener('click', function() {
+                if(searchInput.style.display === 'none' || searchInput.style.display === '') {
+                    searchInput.style.display = 'block';
+                    searchInput.focus();
+                } else {
+                    performSearch(searchInput.value.toLowerCase().trim());
+                }
+            });
+            
+            searchInput.addEventListener('input', function() {
+                performSearch(searchInput.value.toLowerCase().trim());
+            });
+
+            searchInput.addEventListener('keypress', function(e) {
+                if(e.key === 'Enter') {
+                    performSearch(searchInput.value.toLowerCase().trim());
+                }
+            });
+        }
+        
+        function performSearch(term) {
+            const cards = document.querySelectorAll('.project-card');
+            if (cards.length > 0) {
+                cards.forEach(card => {
+                    if(!term || card.innerText.toLowerCase().includes(term)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        }
+
+        // Theme Toggle
+        const themeBtn = document.querySelector('.theme-toggle');
+        if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
+            themeBtn.classList.add('handled-by-inline');
+            themeBtn.addEventListener('click', (e) => {
+                e.stopImmediatePropagation();
+                const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.body.setAttribute('data-theme', newTheme);
+                const icon = themeBtn.querySelector('i');
+                if(icon) {
+                    icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+                localStorage.setItem('pushti-theme', newTheme);
+                
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({ theme: newTheme }, '*');
+                }
+            });
+            const savedTheme = localStorage.getItem('pushti-theme');
+            if(savedTheme) {
+                document.body.setAttribute('data-theme', savedTheme);
+                const icon = themeBtn.querySelector('i');
+                if(icon) {
+                    icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+                }
+            }
+        }
+    });
+    </script>
+
+    <!-- Universal Jump to Top Button -->
+    <style>
+    .pushti-jump-to-top {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #10B981, #059669);
+        color: #ffffff;
+        border: none;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 18px rgba(16, 185, 129, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(16px) scale(0.9);
+        transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                    visibility 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 99999;
+    }
+    .pushti-jump-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+    }
+    .pushti-jump-to-top:hover {
+        background: linear-gradient(135deg, #059669, #047857);
+        transform: translateY(-3px) scale(1.06);
+    }
+    .pushti-jump-to-top svg {
+        width: 22px;
+        height: 22px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+    </style>
+    <button id="pushti-jump-to-top" class="pushti-jump-to-top" aria-label="Jump to top" title="Jump to Top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
+    </button>
+    <script>
+    (function() {
+        var btn = document.getElementById('pushti-jump-to-top');
+        if (!btn) return;
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                ticking = true;
+                window.requestAnimationFrame(function() {
+                    var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+                    if (scrollY > 100) {
+                        btn.classList.add('visible');
+                    } else {
+                        btn.classList.remove('visible');
+                    }
+                    ticking = false;
+                });
+            }
+        }, { passive: true });
+    })();
+    </script>
+</body>
+</html>
