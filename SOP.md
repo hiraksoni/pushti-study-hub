@@ -1,4 +1,4 @@
-# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v2.4)
+# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v2.5)
 *The Definitive Architectural, Design, Pedagogical & Verification Standard for AI-Assisted Generation*
 
 ---
@@ -80,7 +80,7 @@ Every HTML artifact must load the official font stack, FontAwesome icons, and Ka
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\[',right:'\]',display:true},{left:'$',right:'$',display:false},{left:'\(',right:'\)',display:false}],throwOnError:false});"></script>
 </head>
 ```
 * **Strictly Forbidden**: No external UI frameworks (Bootstrap, Tailwind, Material) or heavy JS libraries (jQuery, React, Vue). Write clean, fast, vanilla CSS and modern JavaScript.
@@ -296,10 +296,49 @@ Every chapter and subject page must present the standardized 54px glassmorphic s
 ### 3.1 Mathematics Architecture (High-Density Geometry & Algebra Model)
 *Exemplified in Chapters 1, 3, 4, and 5.*
 
-1. **Collapsible Vertical Dock Rail**:
+1. **Collapsible Vertical Dock Rail & The Zero-Peeking Text Mandate**:
    - Default width collapsed to `62px` pinned to the left edge (`left: 0; top: 54px; bottom: 0;`).
    - Reclaims ~200px of screen real estate for wide formulas, coordinate tables, and answer cards.
    - Snappy **0.72-second hover delay** (`transition-delay: 0.72s;`, reduced to 60% of original 1.2s) providing an effortless, non-awkward expansion while still protecting against accidental cursor pass-throughs.
+   - **The Zero-Peeking Text Mandate (Non-Negotiable)**:
+     - In the collapsed 62px state, **zero letters, words, or label fragments may ever peek out** into the main viewport.
+     - All button text labels and metadata must be enclosed within a dedicated `.tab-label-group` container:
+       ```css
+       .tab-btn {
+         display: flex;
+         align-items: center;
+         width: 100%;
+         height: 44px;
+         padding: 0 12px;
+         overflow: hidden;
+       }
+       .tab-icon-wrap {
+         width: 38px;
+         min-width: 38px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+       }
+       .tab-label-group {
+         display: flex;
+         flex-direction: column;
+         margin-left: 12px;
+         width: 0;
+         opacity: 0;
+         overflow: hidden;
+         pointer-events: none;
+         white-space: nowrap;
+         transition: opacity 0.2s ease, width 0.28s ease;
+       }
+       .sidebar:hover .tab-label-group,
+       .sidebar.pinned .tab-label-group {
+         width: auto;
+         opacity: 1;
+         pointer-events: auto;
+         transition-delay: 0.12s;
+       }
+       ```
+     - This guarantees that in collapsed mode, only perfectly centered, glowing icons with status dots appear.
    - Active tab highlighted by a glowing 2px outline (`box-shadow: 0 0 0 2px var(--primary)`), illuminated icon, and green pulsing `.update-dot`.
    - **3-Second Active Viewing Rule**: Section notification dots automatically fade out and dismiss when viewed for $\ge 3$ seconds (persisted in `localStorage`). Switching away under 3 seconds leaves the dot active.
    - Pin button (`#pin-btn`, `<i class="fas fa-thumbtack">`) locks sidebar expanded to `280px` and saves state in `localStorage`.
@@ -402,6 +441,87 @@ Every chapter and subject page must present the standardized 54px glassmorphic s
    - SVGs must always use a proportional `viewBox` (typical dimensions: `0 0 320 160`, `0 0 340 180`, or `0 0 360 200`) and declare `max-width: 100%`.
 
 
+
+### 3.1.2 Two-Tier Navigation Architecture (Submodule Tab Partitioning & Vertical Scroll Elimination)
+*Exemplified in Chapter 6 (Number Play) and mandatory across all comprehensive modules.*
+
+1. **The Cognitive Challenge of "Page Dumps"**:
+   - Dumping 15 solved examples, 5 multi-part drills, or 20 MCQs into a single continuous vertical tab creates an overwhelming wall of text, causes disorientation, and requires excessive scrolling.
+   - **The Two-Tier Mandate**: Every major subject module must use a structured **Two-Tier Navigation Architecture**:
+     - **Tier 1 (Left Collapsible Dock Rail)**: Organizes the high-level curriculum into major units (e.g. *Overview*, *Ordering*, *Parity*, *Magic Squares*, *Virāhaṅka Numbers*, *Cryptarithms*, *Solved Examples*, *Figure It Out Drills*, *MCQ Bank*, *Advanced Evaluation*).
+     - **Tier 2 (Horizontal Submodule Navigation `.submodule-nav`)**: Positioned at the top of each Tier 1 tab panel, presenting interactive pill buttons (`.submodule-btn`) that switch between focused, screen-sized sub-panes (`.submodule-pane`).
+
+2. **Standard Submodule Partitioning Rules**:
+   - **Solved Examples**: Never place >5 solved examples in a single view. Partition into logical batches (e.g., *Sub-tab 1: Examples 1–5*, *Sub-tab 2: Examples 6–10*, *Sub-tab 3: Examples 11–15*).
+   - **Exercises / Drills ("Figure It Out")**: Partition page-wise or drill-wise (e.g., *Drill 1 (p.128)*, *Drill 2 (p.131)*, *Drills 3–4 (pp.136–137)*, *Drill 5 (pp.143–144)*).
+   - **Practice Question Bank (MCQs)**: Partition by difficulty level (*Sub-tab 1: Level 1 Foundation*, *Sub-tab 2: Level 2 Application*, *Sub-tab 3: Level 3 HOTS / Exemplar*).
+   - **Advanced Evaluation & Interactive Labs**: Partition by assessment type (*Sub-tab 1: Match the Columns*, *Sub-tab 2: Assertion & Reasoning*, *Sub-tab 3: Case Study Drill*, *Sub-tab 4: Flashcards & Revision*).
+
+3. **Required Submodule Stylesheet Architecture (Zero-Horizontal-Scroll Enforced)**:
+   ```css
+   .submodule-nav {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 8px;
+     margin-bottom: 20px;
+     padding-bottom: 12px;
+     border-bottom: 1px solid var(--border);
+     overflow-x: hidden; /* Zero horizontal scrollbars */
+   }
+   .submodule-btn {
+     display: inline-flex;
+     align-items: center;
+     gap: 8px;
+     padding: 8px 16px;
+     border-radius: 20px;
+     font-size: 0.88rem;
+     font-weight: 600;
+     color: var(--text-muted);
+     background: var(--surface);
+     border: 1px solid var(--border);
+     cursor: pointer;
+     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+   }
+   .submodule-btn:hover {
+     color: var(--text-title);
+     border-color: var(--primary-glow);
+     background: var(--surface-hover);
+     transform: translateY(-1px);
+   }
+   .submodule-btn.active {
+     color: #ffffff;
+     background: var(--primary);
+     border-color: var(--primary);
+     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+   }
+   .submodule-pane {
+     display: none;
+     animation: fadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+   }
+   .submodule-pane.active {
+     display: block;
+   }
+   ```
+
+4. **Dynamic KaTeX Rendering Hook**:
+   - Switching between Tier 1 tabs or Tier 2 sub-panes reveals previously hidden elements (`display: none` -> `display: block`).
+   - The switching function MUST immediately re-trigger KaTeX rendering on the revealed container:
+     ```javascript
+     function renderMathOnElement(elem) {
+       if (window.renderMathInElement) {
+         renderMathInElement(elem || document.body, {
+           delimiters: [
+             { left: '$$', right: '$$', display: true },
+             { left: '\\[', right: '\\]', display: true },
+             { left: '$', right: '$', display: false },
+             { left: '\\(', right: '\\)', display: false }
+           ],
+           throwOnError: false
+         });
+       }
+     }
+     ```
+
 ### 3.2 Science & Social Science Architecture (The 5-Tab GITA Framework)
 All Science (Physics, Chemistry, Biology) and Social Science chapters follow the unified 5-Tab architecture:
 1. **Tab 1: Videos & Concept Map**:
@@ -492,11 +612,13 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 ### Checkpoint Suite 1: Theme & GUI Integrity
 - [ ] **CP-GUI-1 (Zero White Patches)**: Has the universal button reset (`button { font-family: inherit; color: var(--text-main); background: transparent; border: 1px solid var(--border); }`) been applied? Verify that 0 unstyled native `buttonface` elements appear in dark mode.
 - [ ] **CP-GUI-2 (Zero Horizontal Scroll)**: Do all pill rows, modal tabs, and activity headers wrap cleanly using flex-wrap with 0 horizontal scrollbars?
-- [ ] **CP-GUI-3 (Dock Rail & Margin Push)**: Does the collapsible vertical dock rail operate with a 1.2s hover delay? When pinned, does `.main-content` shift right by 280px without overlapping text?
+- [ ] **CP-GUI-3 (Dock Rail & Margin Push)**: Does the collapsible vertical dock rail operate with a 0.72s hover delay? When pinned, does `.main-content` shift right by 280px without overlapping text?
 - [ ] **CP-GUI-4 (Question Palette Wrap)**: Is `.palette-grid` styled as an auto-filling grid (`repeat(auto-fill, minmax(36px, 1fr))`) so numbers wrap cleanly instead of stacking vertically?
 - [ ] **CP-GUI-5 (MCQ Option Cards)**: Are MCQ options styled as structured card tiles (`.option-item` / `.options-grid`) with distinct letter badges (`A`, `B`, `C`, `D`), rather than cramped plain-text rows?
 - [ ] **CP-GUI-6 (Dark/Light Contrast)**: Do all text, badges, borders, and callouts maintain strong readability in both dark and light modes?
 - [ ] **CP-GUI-7 (Zero-Collision & Text Overwrite Prevention)**: Verify across all viewport sizes (1440px, 1200px, 992px, 768px, 375px) and with the sidebar pinned that NO card, subpart, or equation bleeds out of its container or overwrites neighboring text/borders.
+- [ ] **CP-GUI-9 (Zero Dock Rail Text Peeking)**: In collapsed mode (62px), verify that exactly ZERO letters, words, or label fragments peek out into the main content. Only centered icons with status dots are visible.
+- [ ] **CP-GUI-10 (Two-Tier Submodule Tab Partitioning & Vertical Scroll Reduction)**: Verify that dense sections (Solved Examples, Drills, MCQs) use horizontal `.submodule-nav` pills to eliminate excessive vertical scrollbar length, with zero horizontal scrollbars on desktop and laptop viewports.
 - [ ] **CP-GUI-8 (Laptop Viewport Verification at 1280px–1366px with Sidebar Pinned)**:
   Simulate Pushti's laptop display (1366×768 or 1280×800) with the 280px sidebar pinned:
   - Verify that ALL Solved Examples and Illustrations fit completely within their solution drawer without crossing borders or forcing page-level horizontal scrolling.
@@ -530,6 +652,9 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-TECH-3 (Class Coverage)**: 100% of custom HTML classes in the body must map to valid CSS declarations in the `<style>` block (0 unstyled classes).
 - [ ] **CP-TECH-4 (UTF-8 File Integrity)**: Files read and written using explicit UTF-8 encoding. Zero emoji corruption (`??`).
 - [ ] **CP-TECH-5 (Hub & Timetable Sync)**: Subject index cards, timetable links, and `midterm.html` entries properly updated with accurate links and battery percentages.
+- [ ] **CP-TECH-7 (Complete KaTeX Delimiter Suite & Dynamic Sub-Tab Re-render)**:
+  - Verify that `<head>` auto-render registers the complete delimiter suite: inline `$` and `\(`, display `$$` and `\[`.
+  - Verify that tab and sub-tab switching callbacks invoke `renderMathOnElement(targetPanel)` to ensure newly revealed mathematical content renders crisply without raw LaTeX markup.
 - [ ] **CP-TECH-6 (KaTeX List Isolation & Multi-Step Math Alignment)**:
   - 100% of comma-separated quantity/fraction lists formatted as individual math blocks (`$x$, $y$, $z$`), NEVER a single `$ ... $` block with `\quad`.
   - All multi-step derivations with 2+ equals signs or >40 characters inside cards broken cleanly using `\begin{aligned}` or line breaks.
@@ -550,4 +675,5 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 | **v2.1** | 2026-09-13 | **Syllabus Topic Tag Mapping & Completeness Standard (Topic-to-Battery Rule)**: Standardized that chapter card tags/tabs must directly reflect syllabus-prescribed topics, highlighted tags signify covered topics, dim tags indicate pending syllabus items, and the ratio directly determines the completeness percentage. |
 | **v2.2** | 2026-09-13 | **Zero-Collision & Text Overwrite Prevention Standard (Universal Math & Layout Containment)**: Added Section 2.5, CP-GUI-7, and CP-TECH-6 establishing mandatory rules to prevent matter from crossing over and overwriting cards: atomic KaTeX math lists, `\begin{aligned}` multi-step math, universal `min-width: 0` / `overflow: hidden` card containment, and `minmax(280px, 1fr)` grid track minimums. |
 | **v2.3** | 2026-09-13 | **Laptop Viewport Compatibility & Solved Examples Derivation Gate**: Established Section 2.5.1 and CP-GUI-8 ensuring full 1280px–1366px laptop compatibility with sidebar pinned/active: mandatory stacked `\begin{aligned}` formatting for all multi-step math in Solved Examples, `minmax(240px, 1fr)` responsive fallbacks, KaTeX display auto-scroll, and zero box overflow on Pushti's laptop screen. |
+| **v2.5** | 2026-09-13 | **Two-Tier Navigation Architecture, Dock Rail Zero-Peeking Containment & Complete KaTeX Delimiter Suite**: Codified Section 3.1.2, CP-GUI-9, CP-GUI-10, and CP-TECH-7 establishing the Two-Tier Navigation standard (`.submodule-nav` pills breaking dense sections into short, screen-sized views to eliminate long vertical scrolling), strict collapsed dock rail text isolation (`.tab-label-group` width: 0 / opacity: 0 preventing letter peeking at 62px), and universal KaTeX auto-rendering for all 4 standard delimiters (`$`, `\(`, `$$`, `\[`) with dynamic re-rendering on tab and sub-tab transitions. |
 | **v2.4** | 2026-09-13 | **Geometry Chapters Visual Standard (The Native Vector SVG Mandate)**: Codified Section 3.1.1 and Checkpoints CP-GEO-1 to CP-GEO-4 establishing the mandatory standard for all geometry chapters: complete replacement of scanned/pencil-scribbled textbook images with pristine native SVG vector graphics; 100% figure coverage across all illustrations, solved examples, drills, and practice questions; theme-adaptive color tokens; standard geometric symbols (parallel arrows, perpendicular squares, auxiliary dashed constructions); and strict laptop viewport containment. |
