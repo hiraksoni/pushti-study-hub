@@ -198,6 +198,60 @@ Horizontal scrollbars on desktop/laptop displays degrade readability and break r
   6. **Flex Sizing on Labeled Subparts**:
      `.subpart-item` must be `display: flex !important; align-items: flex-start !important; gap: 10px !important;` with `.subpart-label { flex-shrink: 0 !important; }` and `.subpart-text { flex: 1 1 0% !important; min-width: 0 !important; }`.
 
+### 2.5.1 Laptop Viewport Compatibility & Solved Examples Math Formatting Standard
+* **The Student Context**: Pushti actively studies and practices mathematics solutions directly on her laptop (standard 1366×768 or 1280×800 display).
+* **The Laptop Display Reality**:
+  - When the 280px vertical dock rail is pinned or hovering, the usable main content viewport drops to ~1000px.
+  - In chapters featuring submodule sidebars (220px–260px) or multi-column subpart/solution grids, the actual width available for a solution drawer or subpart card is often only **240px to 320px**!
+  - A single-line KaTeX equation containing 2+ equality steps or fractions (e.g. `$2\frac{6}{10} + 3\frac{5}{10} = (2+3) + \frac{6+5}{10} = 5 + \frac{11}{10} = \dots$`) has a native rendered width of **600px to 850px**.
+  - On desktop widescreen this may fit, but on a laptop display it violently **crosses over the card borders, overlaps adjacent text, or produces disruptive horizontal scrollbars**.
+* **Mandatory Laptop Prevention Standard (Zero-Overflow Gate)**:
+  1. **Strict Multi-Step Decomposition (`\begin{aligned}`)**:
+     - Any equation in Solved Examples or Exercise Solutions with **more than 1 equals sign (`=`)** or **length exceeding 40 characters** MUST be written as a vertically stacked `\begin{aligned}` block with line breaks at `&=`.
+     - *Maximum single-line width limit*: No line within an aligned environment may exceed 30–35 characters.
+  2. **Dedicated Laptop Media Query (`@media (max-width: 1366px)`)**:
+     Every chapter stylesheet must enforce laptop-specific grid and padding adjustments:
+     ```css
+     @media (max-width: 1366px) {
+       .main-content {
+         padding: 20px 24px 50px 24px !important;
+       }
+       .submodule-layout {
+         grid-template-columns: 220px 1fr !important;
+         gap: 14px !important;
+       }
+       .subparts-grid, .solution-grid, .grid-2, .grid-3 {
+         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+         gap: 10px !important;
+       }
+       .katex-display {
+         font-size: 0.95em !important;
+         margin: 0.5em 0 !important;
+       }
+     }
+     @media (max-width: 1050px) {
+       .submodule-layout {
+         grid-template-columns: 1fr !important;
+       }
+       .submodule-sidebar {
+         position: static !important;
+         flex-direction: row !important;
+         overflow-x: auto !important;
+       }
+     }
+     ```
+  3. **Defensive Solution Drawer & Step Containment**:
+     All `.solution-drawer`, `.solution-details`, `.solution-content`, and `.sol-step` elements must declare:
+     ```css
+     min-width: 0 !important;
+     max-width: 100% !important;
+     overflow-x: auto !important;
+     word-break: break-word !important;
+     box-sizing: border-box !important;
+     ```
+  4. **Strict Pre-Confirmation Laptop Audit**:
+     Before certifying any solved example or chapter module as complete, test and verify the layout within a 1280px–1366px viewport width with the sidebar pinned. Ensure zero text collision, zero border breach, and flawless visual elegance.
+
 ### 2.6 Unified Sticky Header (`.site-header`)
 Every chapter and subject page must present the standardized 54px glassmorphic sticky top bar:
 ```html
@@ -359,6 +413,11 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-GUI-5 (MCQ Option Cards)**: Are MCQ options styled as structured card tiles (`.option-item` / `.options-grid`) with distinct letter badges (`A`, `B`, `C`, `D`), rather than cramped plain-text rows?
 - [ ] **CP-GUI-6 (Dark/Light Contrast)**: Do all text, badges, borders, and callouts maintain strong readability in both dark and light modes?
 - [ ] **CP-GUI-7 (Zero-Collision & Text Overwrite Prevention)**: Verify across all viewport sizes (1440px, 1200px, 992px, 768px, 375px) and with the sidebar pinned that NO card, subpart, or equation bleeds out of its container or overwrites neighboring text/borders.
+- [ ] **CP-GUI-8 (Laptop Viewport Verification at 1280px–1366px with Sidebar Pinned)**:
+  Simulate Pushti's laptop display (1366×768 or 1280×800) with the 280px sidebar pinned:
+  - Verify that ALL Solved Examples and Illustrations fit completely within their solution drawer without crossing borders or forcing page-level horizontal scrolling.
+  - Verify that all multi-step math derivations are stacked cleanly using `\begin{aligned}`.
+  - Verify that `.subparts-grid` and `.solution-grid` cards wrap smoothly without squeezing math content below 240px.
 
 ### Checkpoint Suite 2: Content & Pedagogical Completeness
 - [ ] **CP-CON-1 (100% Textbook Fidelity)**: Are ALL solved examples and ALL *Figure It Out* exercise problems extracted and solved with full mathematical steps?
@@ -401,3 +460,4 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 | **v2.0** | 2026-09-13 | **Master Unified SOP Consolidation**: Consolidated all separate design, operational, content, and GITA guidelines into a single authoritative master reference with subject-wise architectures and 4 comprehensive QA checkpoint suites. |
 | **v2.1** | 2026-09-13 | **Syllabus Topic Tag Mapping & Completeness Standard (Topic-to-Battery Rule)**: Standardized that chapter card tags/tabs must directly reflect syllabus-prescribed topics, highlighted tags signify covered topics, dim tags indicate pending syllabus items, and the ratio directly determines the completeness percentage. |
 | **v2.2** | 2026-09-13 | **Zero-Collision & Text Overwrite Prevention Standard (Universal Math & Layout Containment)**: Added Section 2.5, CP-GUI-7, and CP-TECH-6 establishing mandatory rules to prevent matter from crossing over and overwriting cards: atomic KaTeX math lists, `\begin{aligned}` multi-step math, universal `min-width: 0` / `overflow: hidden` card containment, and `minmax(280px, 1fr)` grid track minimums. |
+| **v2.3** | 2026-09-13 | **Laptop Viewport Compatibility & Solved Examples Derivation Gate**: Established Section 2.5.1 and CP-GUI-8 ensuring full 1280px–1366px laptop compatibility with sidebar pinned/active: mandatory stacked `\begin{aligned}` formatting for all multi-step math in Solved Examples, `minmax(240px, 1fr)` responsive fallbacks, KaTeX display auto-scroll, and zero box overflow on Pushti's laptop screen. |
