@@ -1,4 +1,4 @@
-# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v2.5)
+# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v2.6)
 *The Definitive Architectural, Design, Pedagogical & Verification Standard for AI-Assisted Generation*
 
 ---
@@ -522,6 +522,27 @@ Every chapter and subject page must present the standardized 54px glassmorphic s
      }
      ```
 
+### 3.1.3 Strict Textbook Visual & Notation Fidelity Mandate (Zero Creative Alteration Rule)
+*Mandated by Lead Hirak Soni (13 Sep 2026) following rigorous Geometry Chapter 5 textbook audits.*
+
+1. **The Principle of Absolute Textbook Alignment**:
+   - In all geometry and mathematics chapters, **never invent, rotate, rename, or approximate** geometric elements from the textbook.
+   - When converting textbook figures to native SVGs, the diagram must match the official textbook PDF **100% in topology, orientation, and labeling**.
+   - Under no circumstances should an AI model invent arbitrary letter names ($A, B, C, D, O$) when the textbook presents unlabelled rays, nor should it substitute horizontal lines when the textbook depicts vertical or slanted lines.
+
+2. **Core Invariants for Geometric Reproduction**:
+   - **Line & Vertex Naming**: Use the EXACT vertex letters given in the textbook ($A, B, C, D, \dots$ or $l, m, t$).
+     - If the textbook labels a figure with rays meeting at a common vertex without letters ($45^\circ, 45^\circ, x, 200^\circ$), do NOT invent arbitrary letter names like $A, B, C, D, O$.
+     - If the textbook uses $IKBA \parallel GED$, keep precisely $IKBA \parallel GED$. Never simplify or re-letter.
+   - **Orientation & Slopes**: Never arbitrarily rotate vertical lines into horizontal lines or vice versa:
+     - If the textbook shows three **vertical** parallel lines ($AB \parallel CD \parallel EF$ with horizontal perpendicular $EA \perp AB$ as in p. 125 Q5), they **must** be rendered as vertical lines.
+     - If the textbook shows slanted parallel lines ($\nearrow l \parallel m$), render them slanted $\nearrow$, not horizontal.
+     - If the textbook shows a vertical zig-zag between lines $LM \parallel PQ$, render the vertical zig-zag exactly as printed.
+     - If the textbook presents an hourglass configuration ($AB$ and $CD$ vertical segments crossed by diagonals $AD$ and $BC$), never draw them horizontally.
+   - **Ray & Arrow Directions**: Arrowheads and ray vectors must point in the exact directions specified in the textbook. Single arrows ($\rightarrow$) and double arrows ($\twoheadrightarrow$) indicating parallel pairs must be faithfully preserved.
+   - **Question Alignment**: Every question and worked solution must correspond directly to the diagram as drawn. A student looking at the textbook and looking at the screen must see an identical geometric configuration.
+   - **Dual-Verification Step**: Every geometry SVG must be visually cross-referenced against high-resolution crops of the official textbook PDF before deployment.
+
 ### 3.2 Science & Social Science Architecture (The 5-Tab GITA Framework)
 All Science (Physics, Chemistry, Biology) and Social Science chapters follow the unified 5-Tab architecture:
 1. **Tab 1: Videos & Concept Map**:
@@ -636,6 +657,7 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-GEO-2 (Zero Pencil Scribble & Scan Noise Mandate)**: Are 100% of figures native SVG vector graphics with zero scanned raster images, zero pencil markings, and zero blur?
 - [ ] **CP-GEO-3 (Theme-Adaptive Vector Contrast)**: Do all lines, angle arcs, markers, and text labels maintain crisp legibility in both Dark Mode and Light Mode?
 - [ ] **CP-GEO-4 (Responsive Laptop Containment for Geometry)**: Do all SVGs scale fluidly without causing card border breaches or horizontal scrolling on a 1280px–1366px laptop viewport?
+- [ ] **CP-GEO-5 (Strict Visual & Notation Fidelity with Textbook PDF)**: In all geometry chapters, have all figures been cross-verified against high-resolution crops of the official textbook PDF? Are all line names, vertex letters, ray directions, orientations (vertical vs. horizontal vs. slanted), and question alignments 100% faithful with zero invented letters, zero arbitrary rotations, and zero altered notations?
 
 
 ### Checkpoint Suite 3: Intent & Student Experience
@@ -675,5 +697,6 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 | **v2.1** | 2026-09-13 | **Syllabus Topic Tag Mapping & Completeness Standard (Topic-to-Battery Rule)**: Standardized that chapter card tags/tabs must directly reflect syllabus-prescribed topics, highlighted tags signify covered topics, dim tags indicate pending syllabus items, and the ratio directly determines the completeness percentage. |
 | **v2.2** | 2026-09-13 | **Zero-Collision & Text Overwrite Prevention Standard (Universal Math & Layout Containment)**: Added Section 2.5, CP-GUI-7, and CP-TECH-6 establishing mandatory rules to prevent matter from crossing over and overwriting cards: atomic KaTeX math lists, `\begin{aligned}` multi-step math, universal `min-width: 0` / `overflow: hidden` card containment, and `minmax(280px, 1fr)` grid track minimums. |
 | **v2.3** | 2026-09-13 | **Laptop Viewport Compatibility & Solved Examples Derivation Gate**: Established Section 2.5.1 and CP-GUI-8 ensuring full 1280px–1366px laptop compatibility with sidebar pinned/active: mandatory stacked `\begin{aligned}` formatting for all multi-step math in Solved Examples, `minmax(240px, 1fr)` responsive fallbacks, KaTeX display auto-scroll, and zero box overflow on Pushti's laptop screen. |
+| **v2.6** | 2026-09-13 | **Strict Textbook Visual & Notation Fidelity Mandate (Section 3.1.3 & CP-GEO-5)**: Mandated absolute fidelity of all geometry figures against official textbook PDFs. Prohibits creative modification of line names, inventing unlabelled vertices, rotating line orientations (vertical vs. horizontal), reversing ray arrows, or altering textbook problem alignments across all geometry modules. |
 | **v2.5** | 2026-09-13 | **Two-Tier Navigation Architecture, Dock Rail Zero-Peeking Containment & Complete KaTeX Delimiter Suite**: Codified Section 3.1.2, CP-GUI-9, CP-GUI-10, and CP-TECH-7 establishing the Two-Tier Navigation standard (`.submodule-nav` pills breaking dense sections into short, screen-sized views to eliminate long vertical scrolling), strict collapsed dock rail text isolation (`.tab-label-group` width: 0 / opacity: 0 preventing letter peeking at 62px), and universal KaTeX auto-rendering for all 4 standard delimiters (`$`, `\(`, `$$`, `\[`) with dynamic re-rendering on tab and sub-tab transitions. |
 | **v2.4** | 2026-09-13 | **Geometry Chapters Visual Standard (The Native Vector SVG Mandate)**: Codified Section 3.1.1 and Checkpoints CP-GEO-1 to CP-GEO-4 establishing the mandatory standard for all geometry chapters: complete replacement of scanned/pencil-scribbled textbook images with pristine native SVG vector graphics; 100% figure coverage across all illustrations, solved examples, drills, and practice questions; theme-adaptive color tokens; standard geometric symbols (parallel arrows, perpendicular squares, auxiliary dashed constructions); and strict laptop viewport containment. |
