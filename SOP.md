@@ -1,4 +1,4 @@
-# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v2.0)
+# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v2.4)
 *The Definitive Architectural, Design, Pedagogical & Verification Standard for AI-Assisted Generation*
 
 ---
@@ -318,6 +318,90 @@ Every chapter and subject page must present the standardized 54px glassmorphic s
 6. **100% Textbook Extraction Fidelity**:
    - Every single NCERT Solved Example and *Figure It Out* exercise must be solved with full step-by-step mathematical reasoning. Never skip or truncate exercises.
 
+### 3.1.1 Geometry Chapters Visual Standard (The Native Vector SVG Mandate)
+*Exemplified in Class 7 Chapter 5 (Parallel and Intersecting Lines) and mandatory across all present and future Geometry modules.*
+
+1. **Pencil Scribble & Scan Noise Elimination**:
+   - **The Reality**: Uploaded textbook scans or photocopies (e.g. NCERT PDFs) frequently suffer from heavy student pencil markings, handwritten answers, teacher correction ticks, scanner skew, moiré patterns, and muddy raster compression.
+   - **Strict Prohibition**: Never crop, embed, or rely on raw scanned raster images containing pencil scribbles or artifact noise. Attempting to filter scanned bitmaps results in jagged edges, artifact halos, and unreadable text that clashes jarringly against dark themes.
+   - **The Native Vector Mandate**: Every geometric figure must be constructed from scratch as a **clean, mathematically exact native SVG vector graphic**.
+
+2. **100% Geometric Figure Coverage (Zero Missing Figures Policy)**:
+   - A geometry chapter can NEVER present purely textual problem statements when a diagram is conceptually needed or referenced in the textbook.
+   - Every single element across the entire chapter must have its own dedicated, crystal-clear diagram:
+     - All foundational concept definitions (Parallel, Perpendicular, Linear Pairs, Transversals, Alternate/Corresponding/Co-Interior Angles).
+     - All worked textbook illustrations (e.g. Illustrations 1 to 5).
+     - All NCERT solved examples (100% coverage, e.g. Examples 1 to 10).
+     - All *Figure It Out* drills and exercises (e.g. Drills 1 to 7).
+     - All practice questions, MCQs, and HOTS/Case studies that state *"In the given figure..."*.
+
+3. **Standard Component Anatomy & CSS Classes**:
+   Every geometric visual must be structured using the standardized three-tier component wrapper:
+   ```html
+   <div class="geo-figure-card">
+     <svg class="geo-svg" viewBox="0 0 340 180" width="340" height="180" xmlns="http://www.w3.org/2000/svg">
+       <defs>...</defs>
+       <!-- Geometry elements (lines, arcs, markers, text) -->
+     </svg>
+     <div class="geo-caption"><strong>Figure X.Y:</strong> Descriptive Geometric Caption</div>
+   </div>
+   ```
+   **Required Stylesheet Rules (Non-Negotiable)**:
+   ```css
+   .geo-figure-card {
+     background: var(--surface) !important;
+     border: 1px solid var(--border) !important;
+     border-radius: 12px !important;
+     padding: 16px !important;
+     margin: 14px 0 !important;
+     display: flex !important;
+     flex-direction: column !important;
+     align-items: center !important;
+     justify-content: center !important;
+     text-align: center !important;
+     overflow: hidden !important;
+     box-sizing: border-box !important;
+     min-width: 0 !important;
+   }
+   .geo-svg {
+     max-width: 100% !important;
+     height: auto !important;
+     display: block !important;
+     margin: 0 auto !important;
+     transition: transform 0.2s ease;
+   }
+   .geo-caption {
+     font-size: 0.82rem !important;
+     color: var(--text-muted) !important;
+     margin-top: 10px !important;
+     font-family: var(--font-mono) !important;
+     font-weight: 500 !important;
+   }
+   ```
+
+4. **Theme-Adaptive Geometric Color Palette & Annotation Tokens**:
+   Geometric elements must use standardized, high-contrast, theme-resilient colors:
+   | Element | Color Code | Role & Pedagogical Purpose |
+   | :--- | :--- | :--- |
+   | **Primary Lines & Rays** | `#818cf8` (Indigo) | Base geometric framework, ray lines, and main figure boundaries. |
+   | **Transversals & Stepped Lines** | `#f59e0b` (Amber) | Intersecting transversal lines, given reference angles. |
+   | **Auxiliary & Construction Lines** | `#10b981` (Emerald) | Dashed parallel/normal auxiliary lines through vertices (`stroke-dasharray="4,4"`). |
+   | **Corresponding & Normal Elements** | `#06b6d4` (Cyan) | F-Rule corresponding angles, perpendicular normals. |
+   | **Unknown Angles & Highlights** | `#ec4899` (Rose) | Target unknown variables ($x, y, z, a, b$) and callout badges. |
+   | **Vertex Points & Labels** | `#6366f1` / `#94a3b8` | Solid vertex dots (`r="3.5"`) with high-contrast label typography. |
+   | **Angle Sectors & Arcs** | `rgba(..., 0.15–0.20)` | Translucent arc fills bounded by 1.8px–2px stroked boundary paths. |
+
+5. **Geometric Symbols & Notation Standard**:
+   - **Arrowheads on Lines & Rays**: Defined once inside `<defs>` with `orient="auto-start-reverse"` markers (`#arr-p`, `#arr-amb`, `#arr-em`, `#arr-cyan`).
+   - **Parallel Line Identifiers**: Prominent single (`>`) or double (`>>`) directional arrowheads positioned along the line segments.
+   - **Perpendicular Indicators**: A crisp $90^\circ$ right-angle square symbol (`∟`) centered at intersection vertices.
+   - **Auxiliary Constructions**: Always drawn with dashed strokes (`stroke-dasharray="4,4"` or `"5,4"`) and explicit vertex markers (e.g. $N'$, $O'$, $E-M-F$).
+
+6. **Laptop Viewport & Zero-Overflow Containment (SOP v2.3 Strict Adherence)**:
+   - On standard laptop screens (1280px–1366px), SVG figures inside cards, drawers, or multi-column grids must **NEVER** induce horizontal scrolling or bleed outside container boundaries.
+   - SVGs must always use a proportional `viewBox` (typical dimensions: `0 0 320 160`, `0 0 340 180`, or `0 0 360 200`) and declare `max-width: 100%`.
+
+
 ### 3.2 Science & Social Science Architecture (The 5-Tab GITA Framework)
 All Science (Physics, Chemistry, Biology) and Social Science chapters follow the unified 5-Tab architecture:
 1. **Tab 1: Videos & Concept Map**:
@@ -426,6 +510,11 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-CON-4 (Common Traps & Mistakes)**: Are at least 5 common misconceptions or traps explicitly highlighted with wrong vs. right comparisons?
 - [ ] **CP-CON-5 (Beyond Textbook)**: Does the module include enrichment curiosities (historical origins, number tricks, high-school previews) to inspire wonder?
 - [ ] **CP-CON-6 (Syllabus Topic Tag Audit & Battery Derivation)**: Do all chapter card tags map 1:1 to official syllabus topics? Are all covered topics clearly highlighted, with pending topics remaining dim? Does the battery / completeness percentage strictly reflect this covered-to-prescribed ratio?
+- [ ] **CP-GEO-1 (100% Geometric Figure Coverage)**: In all geometry chapters, does every single concept, worked illustration, solved example, drill, and diagram-dependent question have a dedicated, mathematically accurate diagram?
+- [ ] **CP-GEO-2 (Zero Pencil Scribble & Scan Noise Mandate)**: Are 100% of figures native SVG vector graphics with zero scanned raster images, zero pencil markings, and zero blur?
+- [ ] **CP-GEO-3 (Theme-Adaptive Vector Contrast)**: Do all lines, angle arcs, markers, and text labels maintain crisp legibility in both Dark Mode and Light Mode?
+- [ ] **CP-GEO-4 (Responsive Laptop Containment for Geometry)**: Do all SVGs scale fluidly without causing card border breaches or horizontal scrolling on a 1280px–1366px laptop viewport?
+
 
 ### Checkpoint Suite 3: Intent & Student Experience
 - [ ] **CP-INT-1 (Self-Sufficiency)**: Can Pushti study this page and achieve 100% without opening the textbook or searching online?
@@ -461,3 +550,4 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 | **v2.1** | 2026-09-13 | **Syllabus Topic Tag Mapping & Completeness Standard (Topic-to-Battery Rule)**: Standardized that chapter card tags/tabs must directly reflect syllabus-prescribed topics, highlighted tags signify covered topics, dim tags indicate pending syllabus items, and the ratio directly determines the completeness percentage. |
 | **v2.2** | 2026-09-13 | **Zero-Collision & Text Overwrite Prevention Standard (Universal Math & Layout Containment)**: Added Section 2.5, CP-GUI-7, and CP-TECH-6 establishing mandatory rules to prevent matter from crossing over and overwriting cards: atomic KaTeX math lists, `\begin{aligned}` multi-step math, universal `min-width: 0` / `overflow: hidden` card containment, and `minmax(280px, 1fr)` grid track minimums. |
 | **v2.3** | 2026-09-13 | **Laptop Viewport Compatibility & Solved Examples Derivation Gate**: Established Section 2.5.1 and CP-GUI-8 ensuring full 1280px–1366px laptop compatibility with sidebar pinned/active: mandatory stacked `\begin{aligned}` formatting for all multi-step math in Solved Examples, `minmax(240px, 1fr)` responsive fallbacks, KaTeX display auto-scroll, and zero box overflow on Pushti's laptop screen. |
+| **v2.4** | 2026-09-13 | **Geometry Chapters Visual Standard (The Native Vector SVG Mandate)**: Codified Section 3.1.1 and Checkpoints CP-GEO-1 to CP-GEO-4 establishing the mandatory standard for all geometry chapters: complete replacement of scanned/pencil-scribbled textbook images with pristine native SVG vector graphics; 100% figure coverage across all illustrations, solved examples, drills, and practice questions; theme-adaptive color tokens; standard geometric symbols (parallel arrows, perpendicular squares, auxiliary dashed constructions); and strict laptop viewport containment. |
