@@ -156,7 +156,49 @@ Horizontal scrollbars on desktop/laptop displays degrade readability and break r
    ```
 3. Sidebars on mobile breakpoints (`@media (max-width: 860px)`) must flex-wrap cleanly (`flex-direction: row; flex-wrap: wrap;`).
 
-### 2.5 Unified Sticky Header (`.site-header`)
+### 2.5 The Zero-Collision & Text Overwrite Prevention Standard (Universal Math & Layout Containment)
+* **The Problem (Root Causes)**:
+  1. **Indivisible KaTeX Spans (`white-space: nowrap`)**: When lists of numbers, units, or values are grouped in a single `$ ... $` block with `\quad` (e.g. `$11.01,\quad 1.011,\quad 1.101$`), KaTeX renders an indivisible math span. The browser is forbidden from wrapping lines between values, causing the formula to expand to ~350px+ and smash into or overwrite neighboring cards.
+  2. **Missing Flex/Grid Child Shrink (`min-width: auto`)**: By CSS default, flex and grid items have `min-width: auto`. Wide contents prevent items from shrinking to their assigned column tracks, causing them to push outside card borders or overlap adjacent columns.
+  3. **Multi-Step Formulas on Single Lines (`A = B = C = D`)**: Display equations with multiple steps placed on a single line inside cards become wider than the card width (~240px–280px), bleeding through boundaries.
+* **Mandatory Coding Prevention Rules (Non-Negotiable)**:
+  1. **Isolate Every List Item into Its Own Math Tag**:
+     - ❌ **STRICTLY FORBIDDEN**: `$11.01,\quad 1.011,\quad 1.101,\quad 11.10,\quad 1.01$`
+     - ✅ **MANDATORY**: `$11.01$, $1.011$, $1.101$, $11.10$, $1.01$`
+     Standard HTML commas and spaces outside the math delimiter allow natural, responsive line wrapping across any container width.
+  2. **Multi-Step Calculations Must Use `\begin{aligned}` or Explicit Line Breaks**:
+     - ❌ **STRICTLY FORBIDDEN**: `$$8(100) + l(20) + 4(5) = 800 + 20l + 20 = \mathbf{\text{₹}(820 + 20l)}$$`
+     - ✅ **MANDATORY**:
+       ```latex
+       $$\begin{aligned}
+         &8(100) + l(20) + 4(5) \\
+         &= 800 + 20l + 20 \\
+         &= \mathbf{\text{₹}(820 + 20l)}
+       \end{aligned}$$
+       ```
+  3. **Universal Card Box-Sizing & Min-Width Reset**:
+     Every card container (`.subpart-card`, `.subpart-item`, `.solution-card`, `.sop-card`, `.mcq-card`, `.question-card`) must declare:
+     ```css
+     min-width: 0 !important;
+     overflow: hidden !important;
+     box-sizing: border-box !important;
+     ```
+  4. **Text & Math Body Overflow Containment**:
+     Every text/math container (`.subpart-body`, `.subpart-text`, `.solution-card-body`, `.solution-content`, `.problem-statement`, `.q-statement`) must declare:
+     ```css
+     min-width: 0 !important;
+     max-width: 100% !important;
+     overflow-x: auto !important;
+     overflow-y: hidden !important;
+     word-break: break-word !important;
+     -webkit-overflow-scrolling: touch;
+     ```
+  5. **Grid Track Minimum Widths**:
+     `.subparts-grid` and `.solution-grid` must use `minmax(280px, 1fr)` rather than `240px` to ensure subpart cards have adequate reading width before wrapping into fewer columns.
+  6. **Flex Sizing on Labeled Subparts**:
+     `.subpart-item` must be `display: flex !important; align-items: flex-start !important; gap: 10px !important;` with `.subpart-label { flex-shrink: 0 !important; }` and `.subpart-text { flex: 1 1 0% !important; min-width: 0 !important; }`.
+
+### 2.6 Unified Sticky Header (`.site-header`)
 Every chapter and subject page must present the standardized 54px glassmorphic sticky top bar:
 ```html
 <header class="site-header">
@@ -183,7 +225,7 @@ Every chapter and subject page must present the standardized 54px glassmorphic s
 </header>
 ```
 
-### 2.6 Floating Interactive Utilities & Telemetry
+### 2.7 Floating Interactive Utilities & Telemetry
 1. **Floating Jump-to-Top Button (`#scrollTopBtn`)**:
    - Circular 44px button fixed at `bottom: 24px; right: 24px; z-index: 999;`.
    - Reveals smoothly with `opacity: 1; pointer-events: auto;` when page scrolls beyond 300px.
@@ -316,6 +358,7 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-GUI-4 (Question Palette Wrap)**: Is `.palette-grid` styled as an auto-filling grid (`repeat(auto-fill, minmax(36px, 1fr))`) so numbers wrap cleanly instead of stacking vertically?
 - [ ] **CP-GUI-5 (MCQ Option Cards)**: Are MCQ options styled as structured card tiles (`.option-item` / `.options-grid`) with distinct letter badges (`A`, `B`, `C`, `D`), rather than cramped plain-text rows?
 - [ ] **CP-GUI-6 (Dark/Light Contrast)**: Do all text, badges, borders, and callouts maintain strong readability in both dark and light modes?
+- [ ] **CP-GUI-7 (Zero-Collision & Text Overwrite Prevention)**: Verify across all viewport sizes (1440px, 1200px, 992px, 768px, 375px) and with the sidebar pinned that NO card, subpart, or equation bleeds out of its container or overwrites neighboring text/borders.
 
 ### Checkpoint Suite 2: Content & Pedagogical Completeness
 - [ ] **CP-CON-1 (100% Textbook Fidelity)**: Are ALL solved examples and ALL *Figure It Out* exercise problems extracted and solved with full mathematical steps?
@@ -339,6 +382,10 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-TECH-3 (Class Coverage)**: 100% of custom HTML classes in the body must map to valid CSS declarations in the `<style>` block (0 unstyled classes).
 - [ ] **CP-TECH-4 (UTF-8 File Integrity)**: Files read and written using explicit UTF-8 encoding. Zero emoji corruption (`??`).
 - [ ] **CP-TECH-5 (Hub & Timetable Sync)**: Subject index cards, timetable links, and `midterm.html` entries properly updated with accurate links and battery percentages.
+- [ ] **CP-TECH-6 (KaTeX List Isolation & Multi-Step Math Alignment)**:
+  - 100% of comma-separated quantity/fraction lists formatted as individual math blocks (`$x$, $y$, $z$`), NEVER a single `$ ... $` block with `\quad`.
+  - All multi-step derivations with 2+ equals signs or >40 characters inside cards broken cleanly using `\begin{aligned}` or line breaks.
+  - Zero mismatched KaTeX delimiters (`$...$$` or `$$...$`).
 
 ---
 
@@ -353,3 +400,4 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 | **v1.4** | 2026-09-13 | Mathematics Theme & GUI unification (Zero White Patches universal button reset, desktop margin push, floating jump-to-top). |
 | **v2.0** | 2026-09-13 | **Master Unified SOP Consolidation**: Consolidated all separate design, operational, content, and GITA guidelines into a single authoritative master reference with subject-wise architectures and 4 comprehensive QA checkpoint suites. |
 | **v2.1** | 2026-09-13 | **Syllabus Topic Tag Mapping & Completeness Standard (Topic-to-Battery Rule)**: Standardized that chapter card tags/tabs must directly reflect syllabus-prescribed topics, highlighted tags signify covered topics, dim tags indicate pending syllabus items, and the ratio directly determines the completeness percentage. |
+| **v2.2** | 2026-09-13 | **Zero-Collision & Text Overwrite Prevention Standard (Universal Math & Layout Containment)**: Added Section 2.5, CP-GUI-7, and CP-TECH-6 establishing mandatory rules to prevent matter from crossing over and overwriting cards: atomic KaTeX math lists, `\begin{aligned}` multi-step math, universal `min-width: 0` / `overflow: hidden` card containment, and `minmax(280px, 1fr)` grid track minimums. |

@@ -496,15 +496,20 @@
     /* Subparts Grid */
     .subparts-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
       margin: 12px 0;
+      width: 100%;
+      box-sizing: border-box;
     }
     .subpart-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 12px 14px;
+      min-width: 0 !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
     }
     .subpart-title {
       font-size: 0.84rem;
@@ -516,6 +521,12 @@
       font-size: 0.88rem;
       color: var(--text-main);
       line-height: 1.6;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      word-break: break-word !important;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* Solution Details & Dropdown */
@@ -998,7 +1009,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Universal Math & Card Overflow Containment */
+    /* Universal Math & Card Overflow Containment (Zero-Collision Standard) */
     .katex-display {
       overflow-x: auto !important;
       overflow-y: hidden !important;
@@ -1009,16 +1020,18 @@
     .katex {
       max-width: 100% !important;
     }
-    .sop-card, .mcq-card, .subpart-card, .test-paper-pane {
+    .sop-card, .mcq-card, .subpart-card, .subpart-item, .solution-card, .question-card, .test-paper-pane, .concept-card, .rule-box {
       min-width: 0 !important;
       overflow: hidden !important;
       box-sizing: border-box !important;
     }
-    .sop-card-body, .problem-statement, .sol-step, .solution-content, .opt-text {
+    .sop-card-body, .problem-statement, .sol-step, .solution-content, .subpart-body, .subpart-text, .opt-text, .rule-box {
       min-width: 0 !important;
       max-width: 100% !important;
       overflow-x: auto !important;
       overflow-y: hidden !important;
+      word-break: break-word !important;
+      -webkit-overflow-scrolling: touch;
     }
   </style>
 </head>
@@ -1341,7 +1354,11 @@
             <div class="subpart-title">Horizontal Method</div>
             <div class="subpart-body">
               Write expressions side-by-side, group like terms using brackets, and combine:<br>
-              $$(3x + 4y) + (5x - 2y) = (3x + 5x) + (4y - 2y) = \mathbf{8x + 2y}$$
+              $$\begin{aligned}
+                &(3x + 4y) + (5x - 2y) \\
+                &= (3x + 5x) + (4y - 2y) \\
+                &= \mathbf{8x + 2y}
+              \end{aligned}$$
             </div>
           </div>
           <div class="subpart-card">
@@ -2266,15 +2283,32 @@ Combined length = $\mathbf{(20 + k)\text{ m}}$
             <div class='subparts-grid'>
   <div class='subpart-card'>
     <div class='subpart-title'>Row 1: Numerical Notes</div>
-    <div class='subpart-body'>$$6(100) + 4(20) + 3(5) = 600 + 80 + 15 = \mathbf{\text{₹}695}$$</div>
+    <div class='subpart-body'>
+      $$\begin{aligned}
+        &6(100) + 4(20) + 3(5) \\
+        &= 600 + 80 + 15 \\
+        &= \mathbf{\text{₹}695}
+      \end{aligned}$$
+    </div>
   </div>
   <div class='subpart-card'>
     <div class='subpart-title'>Row 2: Variable $l$ Notes</div>
-    <div class='subpart-body'>$$8(100) + l(20) + 4(5) = 800 + 20l + 20 = \mathbf{\text{₹}(820 + 20l)}$$</div>
+    <div class='subpart-body'>
+      $$\begin{aligned}
+        &8(100) + l(20) + 4(5) \\
+        &= 800 + 20l + 20 \\
+        &= \mathbf{\text{₹}(820 + 20l)}
+      \end{aligned}$$
+    </div>
   </div>
   <div class='subpart-card'>
     <div class='subpart-title'>Row 3: Variables $y$ and $z$</div>
-    <div class='subpart-body'>$$y(100) + 2(20) + z(5) = \mathbf{\text{₹}(100y + 40 + 5z)}$$</div>
+    <div class='subpart-body'>
+      $$\begin{aligned}
+        &y(100) + 2(20) + z(5) \\
+        &= \mathbf{\text{₹}(100y + 40 + 5z)}
+      \end{aligned}$$
+    </div>
   </div>
 </div>
             <div class="final-answer-box">
@@ -4728,8 +4762,8 @@ $-xy^2, -4yx^2, 8x^2, 2xy^2, 7y, -11x^2, -100x, -11yx, 20x^2y, -6x^2, y, 2xy, 3x
           <div class="solution-content">
             <div class="subparts-grid">
   <div class="subpart-card"><div class="subpart-title">(a) $21b - 32 + 7b - 20b$</div><div class="subpart-body">$(21 + 7 - 20)b - 32 = \mathbf{8b - 32}$</div></div>
-  <div class="subpart-card"><div class="subpart-title">(b) $-z^2 + 13z^2 - 5z + 7z^3 - 15z$</div><div class="subpart-body">Standard order: $7z^3 + (-1 + 13)z^2 + (-5 - 15)z = \mathbf{7z^3 + 12z^2 - 20z}$</div></div>
-  <div class="subpart-card"><div class="subpart-title">(c) $p - (p - q) - q - (q - p)$</div><div class="subpart-body">Expand: $p - p + q - q - q + p = (p - p + p) + (q - q - q) = \mathbf{p - q}$</div></div>
+  <div class="subpart-card"><div class="subpart-title">(b) $-z^2 + 13z^2 - 5z + 7z^3 - 15z$</div><div class="subpart-body">Standard order:<br>$$\begin{aligned} &7z^3 + (-1 + 13)z^2 + (-5 - 15)z \\ &= \mathbf{7z^3 + 12z^2 - 20z} \end{aligned}$$</div></div>
+  <div class="subpart-card"><div class="subpart-title">(c) $p - (p - q) - q - (q - p)$</div><div class="subpart-body">Expand:<br>$$\begin{aligned} &p - p + q - q - q + p \\ &= (p - p + p) + (q - q - q) \\ &= \mathbf{p - q} \end{aligned}$$</div></div>
   <div class="subpart-card"><div class="subpart-title">(d) $3a - 2b - ab - (a - b + ab) + 3ab + b - a$</div><div class="subpart-body">Expand brackets: $3a - 2b - ab - a + b - ab + 3ab + b - a$<br>&bull; $a$: $3a - a - a = a$<br>&bull; $b$: $-2b + b + b = 0$<br>&bull; $ab$: $-ab - ab + 3ab = ab$<br>Result: $\mathbf{a + ab}$</div></div>
 </div>
             <div class="final-answer-box">
@@ -4809,7 +4843,7 @@ $-xy^2, -4yx^2, 8x^2, 2xy^2, 7y, -11x^2, -100x, -11yx, 20x^2y, -6x^2, y, 2xy, 3x
   <div class="subpart-card"><div class="subpart-title">(a) $y^2 - (-5y^2)$</div><div class="subpart-body">$y^2 + 5y^2 = \mathbf{6y^2}$</div></div>
   <div class="subpart-card"><div class="subpart-title">(b) $-12xy - (6xy)$</div><div class="subpart-body">$-12xy - 6xy = \mathbf{-18xy}$</div></div>
   <div class="subpart-card"><div class="subpart-title">(c) $(a + b) - (a - b)$</div><div class="subpart-body">$a + b - a + b = \mathbf{2b}$</div></div>
-  <div class="subpart-card"><div class="subpart-title">(d) $b(5 - a) - a(b - 5)$</div><div class="subpart-body">$(5b - ab) - (ab - 5a) = 5b - ab - ab + 5a = \mathbf{5a + 5b - 2ab}$</div></div>
+  <div class="subpart-card"><div class="subpart-title">(d) $b(5 - a) - a(b - 5)$</div><div class="subpart-body">$$\begin{aligned} &(5b - ab) - (ab - 5a) \\ &= 5b - ab - ab + 5a \\ &= \mathbf{5a + 5b - 2ab} \end{aligned}$$</div></div>
   <div class="subpart-card"><div class="subpart-title">(e) $(4m^2 - 3mn + 8) - (-m^2 + 5mn)$</div><div class="subpart-body">$4m^2 - 3mn + 8 + m^2 - 5mn = \mathbf{5m^2 - 8mn + 8}$</div></div>
 </div>
             <div class="final-answer-box">
@@ -4916,8 +4950,8 @@ $-xy^2, -4yx^2, 8x^2, 2xy^2, 7y, -11x^2, -100x, -11yx, 20x^2y, -6x^2, y, 2xy, 3x
         <div class="solution-drawer" id="sol-tp1-q16" style="display:none;">
           <div class="solution-content">
             <div class="subparts-grid">
-  <div class="subpart-card"><div class="subpart-title">(a) First sum & subtract</div><div class="subpart-body">Sum: $(3x - y + 11) + (-y - 11) = 3x - 2y$<br>Subtract $(3x - y - 11)$:<br>$(3x - 2y) - (3x - y - 11) = 3x - 2y - 3x + y + 11 = \mathbf{-y + 11}$$</div></div>
-  <div class="subpart-card"><div class="subpart-title">(b) Difference of two sums</div><div class="subpart-body">Sum 1: $(4 + 3x) + (5 - 4x + 2x^2) = 2x^2 - x + 9$<br>Sum 2: $(3x^2 - 5x) + (-x^2 + 2x + 5) = 2x^2 - 3x + 5$<br>Subtract: $(2x^2 - x + 9) - (2x^2 - 3x + 5) = -x + 3x + 9 - 5 = \mathbf{2x + 4}$$</div></div>
+  <div class="subpart-card"><div class="subpart-title">(a) First sum & subtract</div><div class="subpart-body">Sum: $(3x - y + 11) + (-y - 11) = 3x - 2y$<br>Subtract $(3x - y - 11)$:<br>$$\begin{aligned} &(3x - 2y) - (3x - y - 11) \\ &= 3x - 2y - 3x + y + 11 \\ &= \mathbf{-y + 11} \end{aligned}$$</div></div>
+  <div class="subpart-card"><div class="subpart-title">(b) Difference of two sums</div><div class="subpart-body">Sum 1: $(4 + 3x) + (5 - 4x + 2x^2) = 2x^2 - x + 9$<br>Sum 2: $(3x^2 - 5x) + (-x^2 + 2x + 5) = 2x^2 - 3x + 5$<br>Subtract:<br>$$\begin{aligned} &(2x^2 - x + 9) - (2x^2 - 3x + 5) \\ &= -x + 3x + 9 - 5 \\ &= \mathbf{2x + 4} \end{aligned}$$</div></div>
 </div>
             <div class="final-answer-box">
               <span class="final-label"><i class="fas fa-check-double"></i> Answer:</span>
@@ -4989,8 +5023,11 @@ $-xy^2, -4yx^2, 8x^2, 2xy^2, 7y, -11x^2, -100x, -11yx, 20x^2y, -6x^2, y, 2xy, 3x
             <div class="subpart-card">
   <div class="subpart-title">Applying $P = 2(l + b)$</div>
   <div class="subpart-body">
-    $l + b = (3x^2 - 5y^2) + (7x^2 - xy) = 10x^2 - xy - 5y^2$<br>
-    $\text{Perimeter} = 2(l + b) = 2(10x^2 - xy - 5y^2) = \mathbf{20x^2 - 2xy - 10y^2}$$
+    $$\begin{aligned}
+      l + b &= (3x^2 - 5y^2) + (7x^2 - xy) = 10x^2 - xy - 5y^2 \\
+      \text{Perimeter} &= 2(l + b) = 2(10x^2 - xy - 5y^2) \\
+      &= \mathbf{20x^2 - 2xy - 10y^2}
+    \end{aligned}$$
   </div>
 </div>
             <div class="final-answer-box">
@@ -5075,8 +5112,8 @@ $-xy^2, -4yx^2, 8x^2, 2xy^2, 7y, -11x^2, -100x, -11yx, 20x^2y, -6x^2, y, 2xy, 3x
           <div class="solution-content">
             <div class="subparts-grid">
   <div class="subpart-card"><div class="subpart-title">(a) $4p + 7$</div><div class="subpart-body">$4(-2) + 7 = -8 + 7 = \mathbf{-1}$</div></div>
-  <div class="subpart-card"><div class="subpart-title">(b) $-3p^2 + 4p + 7$</div><div class="subpart-body">$-3(-2)^2 + 4(-2) + 7 = -3(4) - 8 + 7 = -12 - 8 + 7 = \mathbf{-13}$</div></div>
-  <div class="subpart-card"><div class="subpart-title">(c) $-2p^3 - 3p^2 + 4p + 7$</div><div class="subpart-body">$-2(-2)^3 - 3(-2)^2 + 4(-2) + 7 = -2(-8) - 3(4) - 8 + 7 = 16 - 12 - 8 + 7 = \mathbf{3}$</div></div>
+  <div class="subpart-card"><div class="subpart-title">(b) $-3p^2 + 4p + 7$</div><div class="subpart-body">$$\begin{aligned} &-3(-2)^2 + 4(-2) + 7 \\ &= -3(4) - 8 + 7 \\ &= -12 - 8 + 7 = \mathbf{-13} \end{aligned}$$</div></div>
+  <div class="subpart-card"><div class="subpart-title">(c) $-2p^3 - 3p^2 + 4p + 7$</div><div class="subpart-body">$$\begin{aligned} &-2(-2)^3 - 3(-2)^2 + 4(-2) + 7 \\ &= -2(-8) - 3(4) - 8 + 7 \\ &= 16 - 12 - 8 + 7 = \mathbf{3} \end{aligned}$$</div></div>
 </div>
             <div class="final-answer-box">
               <span class="final-label"><i class="fas fa-check-double"></i> Answer:</span>
@@ -5301,7 +5338,7 @@ $-xy^2, -4yx^2, 8x^2, 2xy^2, 7y, -11x^2, -100x, -11yx, 20x^2y, -6x^2, y, 2xy, 3x
             <div class="subparts-grid">
   <div class="subpart-card"><div class="subpart-title">(a) $z^3 - 3(z - 10)$ at $z = 10$</div><div class="subpart-body">$10^3 - 3(10 - 10) = 1000 - 3(0) = \mathbf{1000}$</div></div>
   <div class="subpart-card"><div class="subpart-title">(b) $p^2 - 2p - 100$ at $p = -10$</div><div class="subpart-body">$(-10)^2 - 2(-10) - 100 = 100 + 20 - 100 = \mathbf{20}$</div></div>
-  <div class="subpart-card"><div class="subpart-title">(c) Find $a$ when $2x^2 + x - a = 5$ at $x=0$</div><div class="subpart-body">Substitute $x=0$: $2(0)^2 + 0 - a = 5 \implies -a = 5 \implies \mathbf{a = -5}$</div></div>
+  <div class="subpart-card"><div class="subpart-title">(c) Find $a$ when $2x^2 + x - a = 5$ at $x=0$</div><div class="subpart-body">Substitute $x=0$:<br>$$\begin{aligned} 2(0)^2 + 0 - a &= 5 \\ \implies -a &= 5 \\ \implies \mathbf{a &= -5} \end{aligned}$$</div></div>
 </div>
             <div class="final-answer-box">
               <span class="final-label"><i class="fas fa-check-double"></i> Answer:</span>
@@ -5337,7 +5374,10 @@ $$2(a^2 + ab) + 3 - ab$$
   <div class="subpart-body">
     $2a^2 + 2ab + 3 - ab = \mathbf{2a^2 + ab + 3}$<br>
     Substitute $a = 5, b = -3$:<br>
-    $= 2(5^2) + (5)(-3) + 3 = 2(25) - 15 + 3 = 50 - 15 + 3 = \mathbf{38}$
+    $$\begin{aligned}
+      &= 2(5^2) + (5)(-3) + 3 \\
+      &= 2(25) - 15 + 3 = 50 - 15 + 3 = \mathbf{38}
+    \end{aligned}$$
   </div>
 </div>
             <div class="final-answer-box">
@@ -6158,15 +6198,15 @@ $$4x - [3y - \{2x - (y - 2x)\}]$$
             <div class="subparts-grid">
   <div class="subpart-card">
     <div class="subpart-title">Step 1: Innermost Parentheses $( )$</div>
-    <div class="subpart-body">Inside braces: $2x - (y - 2x) = 2x - y + 2x = \mathbf{4x - y}$</div>
+    <div class="subpart-body">Inside braces:<br>$$\begin{aligned} &2x - (y - 2x) \\ &= 2x - y + 2x = \mathbf{4x - y} \end{aligned}$$</div>
   </div>
   <div class="subpart-card">
     <div class="subpart-title">Step 2: Curly Braces $\{ \}$</div>
-    <div class="subpart-body">Inside brackets: $3y - \{4x - y\} = 3y - 4x + y = \mathbf{4y - 4x}$</div>
+    <div class="subpart-body">Inside brackets:<br>$$\begin{aligned} &3y - \{4x - y\} \\ &= 3y - 4x + y = \mathbf{4y - 4x} \end{aligned}$$</div>
   </div>
   <div class="subpart-card">
     <div class="subpart-title">Step 3: Square Brackets $[ ]$</div>
-    <div class="subpart-body">Full expression: $4x - [4y - 4x] = 4x - 4y + 4x = \mathbf{8x - 4y}$$</div>
+    <div class="subpart-body">Full expression:<br>$$\begin{aligned} &4x - [4y - 4x] \\ &= 4x - 4y + 4x = \mathbf{8x - 4y} \end{aligned}$$</div>
   </div>
 </div>
             <div class="final-answer-box">
@@ -6241,15 +6281,30 @@ $$4x - [3y - \{2x - (y - 2x)\}]$$
             <div class="subparts-grid">
   <div class="subpart-card">
     <div class="subpart-title">(a) Distance for quarter lap</div>
-    <div class="subpart-body">$\text{Distance} = \text{Speed} \times \text{Time} = 2x \times 3 = \mathbf{6x}\text{ meters}$$</div>
+    <div class="subpart-body">
+      $$\begin{aligned}
+        \text{Distance} &= \text{Speed} \times \text{Time} \\
+        &= 2x \times 3 = \mathbf{6x\text{ m}}
+      \end{aligned}$$
+    </div>
   </div>
   <div class="subpart-card">
     <div class="subpart-title">(b) Length of 1 complete lap</div>
-    <div class="subpart-body">$\text{Quarter lap} = 6x \implies \text{Full lap} = 4 \times 6x = \mathbf{24x}\text{ meters}$$</div>
+    <div class="subpart-body">
+      $$\begin{aligned}
+        \text{Quarter lap} &= 6x \\
+        \implies \text{Full lap} &= 4 \times 6x = \mathbf{24x\text{ m}}
+      \end{aligned}$$
+    </div>
   </div>
   <div class="subpart-card">
     <div class="subpart-title">(c) Distance for 3 full laps</div>
-    <div class="subpart-body">$\text{Total distance} = 3 \times 24x = \mathbf{72x}\text{ meters}$$</div>
+    <div class="subpart-body">
+      $$\begin{aligned}
+        \text{Total distance} &= 3 \times 24x \\
+        &= \mathbf{72x\text{ m}}
+      \end{aligned}$$
+    </div>
   </div>
 </div>
             <div class="final-answer-box">
