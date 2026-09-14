@@ -2148,8 +2148,10 @@
 
       if (isDark) {
         html.classList.remove('dark');
+        html.setAttribute('data-theme', 'light');
       } else {
         html.classList.add('dark');
+        html.setAttribute('data-theme', 'dark');
       }
 
       localStorage.setItem('pushti-theme', newTheme);
@@ -2174,9 +2176,11 @@
       const savedTheme = localStorage.getItem('pushti-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       if (savedTheme === 'light') {
         document.documentElement.classList.remove('dark');
+        document.documentElement.setAttribute('data-theme', 'light');
         updateThemeIcon('light');
       } else {
         document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
         updateThemeIcon('dark');
       }
 
@@ -2212,6 +2216,30 @@
         }
       }
     });
+  </script>
+
+  <!-- Universal Jump to Top Engine -->
+  <script src="../../js/scroll_to_top.js"></script>
+
+  <!-- Firebase Study Telemetry -->
+  <script type="module">
+    import { db, doc, getDoc, setDoc } from "../../firebase-config.js";
+    const activeUser = localStorage.getItem('pushti-active-user') || 'none';
+    if (activeUser !== 'none' && activeUser !== 'parent' && activeUser !== 'admin') {
+      setInterval(async () => {
+        try {
+          const docRef = doc(db, "user_stats", activeUser);
+          const docSnap = await getDoc(docRef);
+          let newTime = 1;
+          if (docSnap.exists()) {
+            newTime = (docSnap.data().total_time || 0) + 1;
+          }
+          await setDoc(docRef, { total_time: newTime }, { merge: true });
+        } catch(e) {
+          console.warn("Firebase telemetry update failed:", e);
+        }
+      }, 60000);
+    }
   </script>
 </body>
 </html>
