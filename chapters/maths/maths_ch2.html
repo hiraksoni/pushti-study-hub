@@ -1772,7 +1772,61 @@
       }
     }
   
-    </style>
+    
+        /* ==========================================================================
+           TWO-TIER SUBMODULE TAB ARCHITECTURE (SOP Section 3.1.2)
+           ========================================================================== */
+        .submodule-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+            overflow-x: hidden;
+        }
+        .submodule-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .submodule-btn:hover {
+            color: var(--text-title);
+            border-color: var(--primary);
+            background: var(--primary-subtle);
+        }
+        .submodule-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 3px 12px rgba(16, 185, 129, 0.35);
+        }
+        .submodule-pane {
+            display: none !important;
+        }
+        .submodule-pane.active {
+            display: block !important;
+            animation: paneFadeIn 0.25s ease-in-out;
+        }
+        @keyframes paneFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+</style>
+
+        
+
 </head>
 <body>
 
@@ -2438,24 +2492,23 @@
 
         <!-- ==================== TAB 6: NCERT SOLUTIONS ==================== -->
         <div id="tab-ncert" class="tab-panel">
-            <!-- Controls & Filter Toolbar (Sticky Tier 3) -->
-        <div class="controls-toolbar">
-            <div class="filter-group">
-                <span style="font-size:13px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Filter Section:</span>
-                <button class="filter-btn active" onclick="filterNCERT('all', this)">All Solutions</button>
-                <button class="filter-btn" onclick="filterNCERT('fig-out', this)">Figure It Out Activities</button>
-                <button class="filter-btn" onclick="filterNCERT('ex-2-1', this)">Exercise 2.1 (BODMAS)</button>
-                <button class="filter-btn" onclick="filterNCERT('ex-2-2', this)">Exercise 2.2 (Word Problems)</button>
-                <button class="filter-btn" onclick="filterNCERT('ex-2-3', this)">Exercise 2.3 (Nested Brackets)</button>
-                <button class="filter-btn" onclick="filterNCERT('ex-2-4', this)">Exercise 2.4 (HOTS & Puzzles)</button>
+            <!-- TIER 2 SUBMODULE TAB NAVIGATION (SOP Standard) -->
+            <div class="submodule-nav">
+                <button class="submodule-btn active" onclick="switchSubTab('ncert-all', this)"><i class="fas fa-list-check"></i> All Exercises</button>
+                <button class="submodule-btn" onclick="switchSubTab('fig-out', this)"><i class="fas fa-compass"></i> Figure It Out Activities</button>
+                <button class="submodule-btn" onclick="switchSubTab('ex-2-1', this)"><i class="fas fa-calculator"></i> Exercise 2.1 (BODMAS)</button>
+                <button class="submodule-btn" onclick="switchSubTab('ex-2-2', this)"><i class="fas fa-earth-americas"></i> Exercise 2.2 (Word Problems)</button>
+                <button class="submodule-btn" onclick="switchSubTab('ex-2-3', this)"><i class="fas fa-layer-group"></i> Exercise 2.3 (Nested Brackets)</button>
+                <button class="submodule-btn" onclick="switchSubTab('ex-2-4', this)"><i class="fas fa-puzzle-piece"></i> Exercise 2.4 (HOTS &amp; Puzzles)</button>
             </div>
-            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                <button class="tool-btn" onclick="expandAllNCERT()"><i class="fas fa-angles-down"></i> Expand Panels</button>
-                <button class="tool-btn" onclick="collapseAllNCERT()"><i class="fas fa-angles-up"></i> Collapse Panels</button>
-                <button class="tool-btn" onclick="revealAllSolutions()"><i class="fas fa-eye"></i> Show All Solutions</button>
-                <button class="tool-btn" onclick="hideAllSolutions()"><i class="fas fa-eye-slash"></i> Hide All Solutions</button>
+            <div class="controls-toolbar" style="margin-bottom:18px;">
+                <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                    <button class="tool-btn" onclick="expandAllNCERT()"><i class="fas fa-angles-down"></i> Expand Panels</button>
+                    <button class="tool-btn" onclick="collapseAllNCERT()"><i class="fas fa-angles-up"></i> Collapse Panels</button>
+                    <button class="tool-btn" onclick="revealAllSolutions()"><i class="fas fa-eye"></i> Show All Solutions</button>
+                    <button class="tool-btn" onclick="hideAllSolutions()"><i class="fas fa-eye-slash"></i> Hide All Solutions</button>
+                </div>
             </div>
-        </div>
 
         <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(5, 150, 105, 0.05)); border: 1px solid var(--primary-subtle); border-radius: 12px; padding: 16px 20px; margin-bottom: 22px;">
             <div style="display: flex; gap: 14px; align-items: flex-start;">
@@ -2470,7 +2523,7 @@
         </div>
 
         <!-- ==================== SECTION 1: NCERT FIGURE IT OUT ACTIVITIES ==================== -->
-        <div class="ncert-category-block" data-ncert-cat="fig-out">
+        <div class="ncert-category-block submodule-pane active" id="fig-out" data-ncert-cat="fig-out">
             <div class="subtopic-heading">
                 <i class="fas fa-compass" style="color:var(--primary);"></i> NCERT In-Text "Figure It Out" Discovery Activities
             </div>
@@ -2765,7 +2818,7 @@
         </div>
 
         <!-- ==================== SECTION 2: EXERCISE 2.1 ==================== -->
-        <div class="ncert-category-block" data-ncert-cat="ex-2-1">
+        <div class="ncert-category-block submodule-pane active" id="ex-2-1" data-ncert-cat="ex-2-1">
             <div class="subtopic-heading">
                 <i class="fas fa-calculator" style="color:var(--primary);"></i> Exercise 2.1: Numerical Evaluations & Order of Operations (BODMAS)
             </div>
@@ -2873,7 +2926,7 @@
         </div>
 
         <!-- ==================== SECTION 3: EXERCISE 2.2 ==================== -->
-        <div class="ncert-category-block" data-ncert-cat="ex-2-2">
+        <div class="ncert-category-block submodule-pane active" id="ex-2-2" data-ncert-cat="ex-2-2">
             <div class="subtopic-heading">
                 <i class="fas fa-book-open" style="color:var(--primary);"></i> Exercise 2.2: Word Problems & Real-World Modeling
             </div>
@@ -2947,7 +3000,7 @@
         </div>
 
         <!-- ==================== SECTION 4: EXERCISE 2.3 ==================== -->
-        <div class="ncert-category-block" data-ncert-cat="ex-2-3">
+        <div class="ncert-category-block submodule-pane active" id="ex-2-3" data-ncert-cat="ex-2-3">
             <div class="subtopic-heading">
                 <i class="fas fa-layer-group" style="color:var(--primary);"></i> Exercise 2.3: Nested Parentheses & Vinculum Simplification
             </div>
@@ -3022,7 +3075,7 @@
         </div>
 
         <!-- ==================== SECTION 5: EXERCISE 2.4 (HOTS & OLYMPIAD) ==================== -->
-        <div class="ncert-category-block" data-ncert-cat="ex-2-4">
+        <div class="ncert-category-block submodule-pane active" id="ex-2-4" data-ncert-cat="ex-2-4">
             <div class="subtopic-heading">
                 <i class="fas fa-brain" style="color:var(--primary);"></i> Exercise 2.4: HOTS, Multi-Step Olympiad Problems & Mathematical Puzzles
             </div>
@@ -3139,22 +3192,16 @@
 
         <!-- ==================== TAB 7: PRACTICE & OMR BANK ==================== -->
         <div id="tab-practice" class="tab-panel">
-            <!-- SUBTOPIC QUICK JUMP FOR TAB 2 -->
-        <div class="subtopic-nav-box">
-            <div class="subtopic-header">
-                <span><i class="fas fa-filter"></i> Jump to Question Section</span>
-                <span style="font-size:0.78rem; font-weight:normal;">60 Curated MCQs + 20 Objective Questions (80 Total)</span>
+            <!-- TIER 2 SUBMODULE TAB NAVIGATION (SOP Standard) -->
+            <div class="submodule-nav">
+                <button class="submodule-btn active" onclick="switchSubTab('prac-all', this)"><i class="fas fa-layer-group"></i> All 80 Questions</button>
+                <button class="submodule-btn" onclick="switchSubTab('sec1-mcq', this)"><i class="fas fa-pencil-alt"></i> 1. Expression Formation (15)</button>
+                <button class="submodule-btn" onclick="switchSubTab('sec2-mcq', this)"><i class="fas fa-calculator"></i> 2. BODMAS Mechanics (15)</button>
+                <button class="submodule-btn" onclick="switchSubTab('sec3-mcq', this)"><i class="fas fa-cube"></i> 3. Brackets &amp; Signs (15)</button>
+                <button class="submodule-btn" onclick="switchSubTab('sec4-mcq', this)"><i class="fas fa-lightbulb"></i> 4. Properties &amp; HOTS (15)</button>
+                <button class="submodule-btn" onclick="switchSubTab('sec5-fib', this)"><i class="fas fa-pen-fancy"></i> 5. Fill in Blanks (10)</button>
+                <button class="submodule-btn" onclick="switchSubTab('sec6-tf', this)"><i class="fas fa-check-double"></i> 6. True/False &amp; Assertion (10)</button>
             </div>
-            <div class="subtopic-pills-row">
-                <button class="sub-pill-btn active" onclick="filterPracticeSec('all', this)">All Sections (80)</button>
-                <button class="sub-pill-btn" onclick="filterPracticeSec('sec1-mcq', this)">1. Expression Formation (15)</button>
-                <button class="sub-pill-btn" onclick="filterPracticeSec('sec2-mcq', this)">2. BODMAS Mechanics (15)</button>
-                <button class="sub-pill-btn" onclick="filterPracticeSec('sec3-mcq', this)">3. Parentheses & Brackets (15)</button>
-                <button class="sub-pill-btn" onclick="filterPracticeSec('sec4-mcq', this)">4. Properties & HOTS (15)</button>
-                <button class="sub-pill-btn" onclick="filterPracticeSec('sec5-fib', this)">5. Fill in Blanks (10)</button>
-                <button class="sub-pill-btn" onclick="filterPracticeSec('sec6-tf', this)">6. True/False & Assertion (10)</button>
-            </div>
-        </div>
 
         <!-- CONTROLS TOOLBAR FOR TAB 2 -->
         <div class="controls-toolbar">
@@ -3209,7 +3256,7 @@
 
 
         <!-- SECTION 1: EXPRESSION FORMATION & REAL-LIFE MODELING -->
-        <div class="topic-section-wrapper expanded" id="sec1-mcq">
+        <div class="topic-section-wrapper expanded submodule-pane active" id="sec1-mcq">
             <div class="topic-section-header" onclick="toggleAccordion(this)">
                 <div class="topic-sec-left">
                     <span class="topic-sec-tag"><i class="fas fa-tag"></i> SECTION 01 • LEVEL 1 FOUNDATION</span>
@@ -3693,7 +3740,7 @@
 
 
         <!-- SECTION 2: ORDER OF OPERATIONS & BODMAS MECHANICS -->
-        <div class="topic-section-wrapper expanded" id="sec2-mcq">
+        <div class="topic-section-wrapper expanded submodule-pane active" id="sec2-mcq">
             <div class="topic-section-header" onclick="toggleAccordion(this)">
                 <div class="topic-sec-left">
                     <span class="topic-sec-tag"><i class="fas fa-tag"></i> SECTION 02 • LEVEL 2 APPLICATION</span>
@@ -4177,7 +4224,7 @@
 
 
         <!-- SECTION 3: PARENTHESES, NESTED GROUPING & SIGN PRECEDENCE -->
-        <div class="topic-section-wrapper expanded" id="sec3-mcq">
+        <div class="topic-section-wrapper expanded submodule-pane active" id="sec3-mcq">
             <div class="topic-section-header" onclick="toggleAccordion(this)">
                 <div class="topic-sec-left">
                     <span class="topic-sec-tag"><i class="fas fa-tag"></i> SECTION 03 • LEVEL 3 ADVANCED</span>
@@ -4661,7 +4708,7 @@
 
 
         <!-- SECTION 4: PROPERTIES OF OPERATIONS & MENTAL MATH STRATEGIES -->
-        <div class="topic-section-wrapper expanded" id="sec4-mcq">
+        <div class="topic-section-wrapper expanded submodule-pane active" id="sec4-mcq">
             <div class="topic-section-header" onclick="toggleAccordion(this)">
                 <div class="topic-sec-left">
                     <span class="topic-sec-tag"><i class="fas fa-tag"></i> SECTION 04 • OLYMPIAD & HOTS</span>
@@ -5145,7 +5192,7 @@
 
 
         <!-- SECTION 5: FILL IN THE BLANKS / NUMERICAL EVALUATIONS -->
-        <div class="topic-section-wrapper expanded" id="sec5-fib">
+        <div class="topic-section-wrapper expanded submodule-pane active" id="sec5-fib">
             <div class="topic-section-header" onclick="toggleAccordion(this)">
                 <div class="topic-sec-left">
                     <span class="topic-sec-tag"><i class="fas fa-tag"></i> SECTION 05 • NUMERICAL BLANKS</span>
@@ -5474,7 +5521,7 @@
 
 
         <!-- SECTION 6: TRUE / FALSE & MATHEMATICAL ASSERTION-REASON -->
-        <div class="topic-section-wrapper expanded" id="sec6-tf">
+        <div class="topic-section-wrapper expanded submodule-pane active" id="sec6-tf">
             <div class="topic-section-header" onclick="toggleAccordion(this)">
                 <div class="topic-sec-left">
                     <span class="topic-sec-tag"><i class="fas fa-tag"></i> SECTION 06 • REASONING & ASSERTION</span>
@@ -5808,19 +5855,13 @@
 
         <!-- ==================== TAB 8: INTERACTIVE DISCOVERY LAB ==================== -->
         <div id="tab-lab" class="tab-panel">
-            <!-- STICKY SIMULATOR QUICK-NAV -->
-        <div class="subtopic-nav-box" style="margin-bottom:14px;">
-            <div class="subtopic-header" style="margin-bottom:6px;">
-                <span><i class="fas fa-flask" style="color:var(--primary);"></i> Quick-Jump to Simulator</span>
-                <span style="font-size:0.78rem; font-weight:normal;">4 Dynamic Mathematical Explorers</span>
+            <!-- TIER 2 SUBMODULE TAB NAVIGATION (SOP Standard) -->
+            <div class="submodule-nav">
+                <button class="submodule-btn active" onclick="switchSubTab('sim1', this)"><i class="fas fa-tree"></i> Sim 1: BODMAS Step Engine</button>
+                <button class="submodule-btn" onclick="switchSubTab('sim2', this)"><i class="fas fa-bullseye"></i> Sim 2: Bracket Target Solver</button>
+                <button class="submodule-btn" onclick="switchSubTab('sim3', this)"><i class="fas fa-shuffle"></i> Sim 3: Terms &amp; Sign Mover</button>
+                <button class="submodule-btn" onclick="switchSubTab('sim4', this)"><i class="fas fa-vector-square"></i> Sim 4: Distributive Area Model</button>
             </div>
-            <div class="subtopic-pills-row">
-                <button class="sub-pill-btn active" onclick="jumpToSim('sim1', this)"><i class="fas fa-tree"></i> Sim 1: BODMAS Step Engine</button>
-                <button class="sub-pill-btn" onclick="jumpToSim('sim2', this)"><i class="fas fa-bullseye"></i> Sim 2: Bracket Target Solver</button>
-                <button class="sub-pill-btn" onclick="jumpToSim('sim3', this)"><i class="fas fa-shuffle"></i> Sim 3: Terms & Sign Mover</button>
-                <button class="sub-pill-btn" onclick="jumpToSim('sim4', this)"><i class="fas fa-vector-square"></i> Sim 4: Distributive Area Model</button>
-            </div>
-        </div>
 
         <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(168, 85, 247, 0.05)); border: 1px solid var(--primary-subtle); border-radius: 12px; padding: 16px 20px; margin-bottom: 22px;">
             <div style="display: flex; gap: 14px; align-items: flex-start;">
@@ -5835,7 +5876,7 @@
         </div>
 
         <!-- SIMULATOR 1: BODMAS STEP-BY-STEP EVALUATOR -->
-        <div class="sim-container" id="sim1">
+        <div class="sim-container submodule-pane active" id="sim1">
             <div class="sim-header">
                 <div>
                     <span class="sim-badge"><i class="fas fa-tree"></i> DISCOVERY SIMULATOR 01</span>
@@ -5873,7 +5914,7 @@
         </div>
 
         <!-- SIMULATOR 2: INTERACTIVE BRACKET TARGET SOLVER -->
-        <div class="sim-container" id="sim2">
+        <div class="sim-container submodule-pane" id="sim2">
             <div class="sim-header">
                 <div>
                     <span class="sim-badge"><i class="fas fa-bullseye"></i> DISCOVERY SIMULATOR 02</span>
@@ -5915,7 +5956,7 @@
         </div>
 
         <!-- SIMULATOR 3: TERMS & SIGN MOVER -->
-        <div class="sim-container" id="sim3">
+        <div class="sim-container submodule-pane" id="sim3">
             <div class="sim-header">
                 <div>
                     <span class="sim-badge"><i class="fas fa-shuffle"></i> DISCOVERY SIMULATOR 03</span>
@@ -5952,7 +5993,7 @@
         </div>
 
         <!-- SIMULATOR 4: DISTRIBUTIVE LAW AREA MODEL -->
-        <div class="sim-container" id="sim4">
+        <div class="sim-container submodule-pane" id="sim4">
             <div class="sim-header">
                 <div>
                     <span class="sim-badge"><i class="fas fa-vector-square"></i> DISCOVERY SIMULATOR 04</span>
@@ -6103,6 +6144,47 @@ function initTheme() {
 }
 
 // Simulator Quick Jump Bridge
+// --- Tier 2 Submodule Tab Switcher (SOP Section 3.1.2) ---
+function switchSubTab(targetId, btn) {
+    const parentPanel = btn.closest('.tab-panel');
+    if (!parentPanel) return;
+
+    parentPanel.querySelectorAll('.submodule-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Handle "all" view
+    if (targetId.endsWith('-all')) {
+        parentPanel.querySelectorAll('.submodule-pane').forEach(p => {
+            p.classList.add('active');
+        });
+    } else {
+        parentPanel.querySelectorAll('.submodule-pane').forEach(p => {
+            if (p.id === targetId || p.getAttribute('data-ncert-cat') === targetId) {
+                p.classList.add('active');
+            } else {
+                p.classList.remove('active');
+            }
+        });
+    }
+
+    // Dynamic KaTeX render on newly active pane
+    const activePane = document.getElementById(targetId) || parentPanel.querySelector('.submodule-pane.active');
+    if (window.renderMathInElement && activePane) {
+        renderMathInElement(activePane, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false},
+                {left: '\\[', right: '\\]', display: true},
+                {left: '\\(', right: '\\)', display: false}
+            ],
+            throwOnError: false
+        });
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Simulator Quick Jump Bridge (Direct Submodule Activation)
 function jumpToSim(simId, btn) {
     const labPanel = document.getElementById('tab-lab');
     const isLabActive = labPanel && labPanel.classList.contains('active');
@@ -6112,30 +6194,25 @@ function jumpToSim(simId, btn) {
         switchTab('tab-lab', labBtn);
     }
 
-    // Update active pill button inside tab-lab
-    document.querySelectorAll('#tab-lab .sub-pill-btn').forEach(b => b.classList.remove('active'));
-    const matchingBtn = document.querySelector(`#tab-lab .sub-pill-btn[onclick*="${simId}"]`);
-    if (matchingBtn) matchingBtn.classList.add('active');
+    const targetSubBtn = document.querySelector(`#tab-lab .submodule-btn[onclick*="${simId}"]`);
+    if (targetSubBtn) {
+        switchSubTab(simId, targetSubBtn);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-    setTimeout(() => {
-        const el = document.getElementById(simId);
-        if (el) {
-            const headerOffset = 130;
-            const elPosition = el.getBoundingClientRect().top + window.pageYOffset - headerOffset;
-            window.scrollTo({ top: Math.max(0, elPosition), behavior: 'smooth' });
+function filterPracticeSec(secId, btn) {
+    const subBtn = document.querySelector(`#tab-practice .submodule-btn[onclick*="${secId}"]`);
+    if (subBtn) {
+        switchSubTab(secId === 'all' ? 'prac-all' : secId, subBtn);
+    }
+}
 
-            // Visual highlight glow pulse
-            el.style.transition = 'box-shadow 0.3s ease, border-color 0.3s ease';
-            const origBorder = el.style.borderColor;
-            const origShadow = el.style.boxShadow;
-            el.style.borderColor = 'var(--primary)';
-            el.style.boxShadow = '0 0 0 3px var(--primary-glow)';
-            setTimeout(() => {
-                el.style.borderColor = origBorder;
-                el.style.boxShadow = origShadow;
-            }, 1200);
-        }
-    }, isLabActive ? 30 : 120);
+function filterNCERT(cat, btn) {
+    const subBtn = document.querySelector(`#tab-ncert .submodule-btn[onclick*="${cat}"]`);
+    if (subBtn) {
+        switchSubTab(cat === 'all' ? 'ncert-all' : cat, subBtn);
+    }
 }
 
 // Jump to question bridge for practice OMR palette
