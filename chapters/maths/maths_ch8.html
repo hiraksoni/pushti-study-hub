@@ -183,84 +183,130 @@ button {
   top: 60px;
   height: calc(100vh - 60px);
   width: var(--sidebar-collapsed-w);
+  min-width: var(--sidebar-collapsed-w);
+  max-width: var(--sidebar-collapsed-w);
   background: var(--bg-secondary);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  padding: 0.75rem 0.4rem;
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 8px 6px !important;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              min-width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              max-width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   overflow-y: auto;
   overflow-x: hidden;
-  z-index: 90;
+  z-index: 100;
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box !important;
 }
 
 .sidebar:hover, .sidebar.pinned {
   width: var(--sidebar-w);
-  padding: 0.75rem 0.6rem;
+  min-width: var(--sidebar-w);
+  max-width: var(--sidebar-w);
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.45);
 }
 
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .tab-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 0.65rem 0.75rem;
-  border-radius: var(--radius-md);
-  color: var(--text-muted);
-  font-weight: 500;
-  font-size: 0.9rem;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-  position: relative;
-}
-
-.tab-btn .tab-icon {
-  font-size: 1.15rem;
-  min-width: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-muted);
-  transition: color 0.2s ease;
-}
-
-.tab-btn .tab-label {
-  opacity: 0;
-  transform: translateX(-8px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
-  pointer-events: none;
-}
-
-.sidebar:hover .tab-btn .tab-label,
-.sidebar.pinned .tab-btn .tab-label {
-  opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  border-radius: 10px !important;
+  padding: 0 6px !important;
+  color: var(--text-muted) !important;
+  transition: all 0.2s ease !important;
+  position: relative !important;
+  user-select: none !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  cursor: pointer !important;
 }
 
 .tab-btn:hover {
-  background: var(--surface);
-  color: var(--text-title);
-}
-
-.tab-btn:hover .tab-icon {
-  color: var(--primary-glow);
+  background: var(--surface) !important;
+  color: var(--text-title) !important;
 }
 
 .tab-btn.active {
-  background: rgba(56, 189, 248, 0.12);
-  color: var(--primary-glow);
-  font-weight: 600;
-  border-left: 3px solid var(--primary-glow);
+  background: rgba(56, 189, 248, 0.15) !important;
+  color: var(--primary-glow) !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
 }
 
-.tab-btn.active .tab-icon {
-  color: var(--primary-glow);
+.tab-btn.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3.5px;
+  background: var(--primary-glow);
+  border-radius: 0 4px 4px 0;
+}
+
+.tab-icon-wrap {
+  width: 38px !important;
+  min-width: 38px !important;
+  max-width: 38px !important;
+  height: 38px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1.15rem !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+  color: inherit !important;
+}
+
+.tab-label-group {
+  display: flex !important;
+  flex-direction: column !important;
+  margin-left: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  pointer-events: none !important;
+  white-space: nowrap !important;
+  transition: opacity 0.2s ease, width 0.2s ease, margin-left 0.2s ease !important;
+}
+
+.sidebar:hover .tab-label-group,
+.sidebar.pinned .tab-label-group {
+  opacity: 1 !important;
+  width: auto !important;
+  max-width: 200px !important;
+  margin-left: 10px !important;
+  pointer-events: auto !important;
+}
+
+.tab-label {
+  font-size: 0.92rem !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  color: inherit !important;
+}
+
+.tab-verified-date {
+  font-size: 0.68rem !important;
+  color: var(--text-muted) !important;
+  font-family: 'Space Mono', monospace !important;
+  margin-top: 2px !important;
 }
 
 /* ==================== MAIN CONTENT CONTAINER ==================== */
@@ -690,37 +736,61 @@ svg.geom-svg {
   <!-- LEFT COLLAPSIBLE DOCK RAIL (TIER 1) -->
   <aside class="sidebar" id="sidebar">
     <nav class="sidebar-nav">
-      <button class="tab-btn active" data-tab="tab-overview" onclick="switchTab('tab-overview', this)">
-        <span class="tab-icon"><i class="fas fa-compass"></i></span>
-        <span class="tab-label">1. Overview & Map</span>
+      <button class="tab-btn active" data-tab="tab-overview" onclick="switchTab('tab-overview', this)" title="1. Overview & Concept Map" type="button">
+        <span class="tab-icon-wrap"><i class="fas fa-compass"></i></span>
+        <div class="tab-label-group">
+          <span class="tab-label">1. Overview &amp; Map</span>
+          <span class="tab-verified-date">Verified: 14 Sep 2026</span>
+        </div>
       </button>
-      <button class="tab-btn" data-tab="tab-multiplication" onclick="switchTab('tab-multiplication', this)">
-        <span class="tab-icon"><i class="fas fa-xmark"></i></span>
-        <span class="tab-label">2. Multiplication</span>
+      <button class="tab-btn" data-tab="tab-multiplication" onclick="switchTab('tab-multiplication', this)" title="2. Multiplication of Fractions" type="button">
+        <span class="tab-icon-wrap"><i class="fas fa-xmark"></i></span>
+        <div class="tab-label-group">
+          <span class="tab-label">2. Multiplication</span>
+          <span class="tab-verified-date">Verified: 14 Sep 2026</span>
+        </div>
       </button>
-      <button class="tab-btn" data-tab="tab-ancient-india" onclick="switchTab('tab-ancient-india', this)">
-        <span class="tab-icon"><i class="fas fa-scroll"></i></span>
-        <span class="tab-label">3. Ancient Mathematics</span>
+      <button class="tab-btn" data-tab="tab-ancient-india" onclick="switchTab('tab-ancient-india', this)" title="3. Ancient Indian Mathematics" type="button">
+        <span class="tab-icon-wrap"><i class="fas fa-scroll"></i></span>
+        <div class="tab-label-group">
+          <span class="tab-label">3. Ancient Mathematics</span>
+          <span class="tab-verified-date">Verified: 14 Sep 2026</span>
+        </div>
       </button>
-      <button class="tab-btn" data-tab="tab-comparisons" onclick="switchTab('tab-comparisons', this)">
-        <span class="tab-icon"><i class="fas fa-scale-balanced"></i></span>
-        <span class="tab-label">4. Products & Reciprocals</span>
+      <button class="tab-btn" data-tab="tab-comparisons" onclick="switchTab('tab-comparisons', this)" title="4. Products & Reciprocals" type="button">
+        <span class="tab-icon-wrap"><i class="fas fa-scale-balanced"></i></span>
+        <div class="tab-label-group">
+          <span class="tab-label">4. Products &amp; Reciprocals</span>
+          <span class="tab-verified-date">Verified: 14 Sep 2026</span>
+        </div>
       </button>
-      <button class="tab-btn" data-tab="tab-division" onclick="switchTab('tab-division', this)">
-        <span class="tab-icon"><i class="fas fa-divide"></i></span>
-        <span class="tab-label">5. Division of Fractions</span>
+      <button class="tab-btn" data-tab="tab-division" onclick="switchTab('tab-division', this)" title="5. Division of Fractions" type="button">
+        <span class="tab-icon-wrap"><i class="fas fa-divide"></i></span>
+        <div class="tab-label-group">
+          <span class="tab-label">5. Division of Fractions</span>
+          <span class="tab-verified-date">Verified: 14 Sep 2026</span>
+        </div>
       </button>
-      <button class="tab-btn" data-tab="tab-solved-examples" onclick="switchTab('tab-solved-examples', this)">
-        <span class="tab-icon"><i class="fas fa-bookmark"></i></span>
-        <span class="tab-label">6. Solved Examples</span>
+      <button class="tab-btn" data-tab="tab-solved-examples" onclick="switchTab('tab-solved-examples', this)" title="6. 15 NCERT Solved Examples" type="button">
+        <span class="tab-icon-wrap"><i class="fas fa-bookmark"></i></span>
+        <div class="tab-label-group">
+          <span class="tab-label">6. Solved Examples</span>
+          <span class="tab-verified-date">Verified: 14 Sep 2026</span>
+        </div>
       </button>
-      <button class="tab-btn" data-tab="tab-figure-it-out" onclick="switchTab('tab-figure-it-out', this)">
-        <span class="tab-icon"><i class="fas fa-puzzle-piece"></i></span>
-        <span class="tab-label">7. Figure It Out Drills</span>
+      <button class="tab-btn" data-tab="tab-figure-it-out" onclick="switchTab('tab-figure-it-out', this)" title="7. Figure It Out Drills & Ants" type="button">
+        <span class="tab-icon-wrap"><i class="fas fa-puzzle-piece"></i></span>
+        <div class="tab-label-group">
+          <span class="tab-label">7. Figure It Out Drills</span>
+          <span class="tab-verified-date">Verified: 14 Sep 2026</span>
+        </div>
       </button>
-      <button class="tab-btn" data-tab="tab-evaluation" onclick="switchTab('tab-evaluation', this)">
-        <span class="tab-icon"><i class="fas fa-flask"></i></span>
-        <span class="tab-label">8. Evaluation & Labs</span>
+      <button class="tab-btn" data-tab="tab-evaluation" onclick="switchTab('tab-evaluation', this)" title="8. Evaluation & Interactive Labs" type="button">
+        <span class="tab-icon-wrap"><i class="fas fa-flask"></i></span>
+        <div class="tab-label-group">
+          <span class="tab-label">8. Evaluation &amp; Labs</span>
+          <span class="tab-verified-date">Verified: 14 Sep 2026</span>
+        </div>
       </button>
     </nav>
   </aside>
