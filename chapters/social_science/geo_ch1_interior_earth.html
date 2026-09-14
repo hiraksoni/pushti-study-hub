@@ -643,21 +643,39 @@
 
         <!-- ==================== USER REFINEMENT 2: ROCK SPECIMEN IMAGES GALLERY ==================== -->
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4 mb-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4 mb-4">
             <div>
               <span class="text-xs font-mono uppercase text-emerald-400 font-bold">Visual Geological Specimen Herbarium</span>
               <h3 class="text-xl font-bold text-white font-heading">Rock Types & Specimen Gallery</h3>
             </div>
-            <div class="flex items-center gap-2">
-              <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-mono">8 Specimen Photos</span>
+            <!-- Category Filter Tabs -->
+            <div class="flex items-center gap-1.5 flex-wrap" id="galleryFilterButtons">
+              <button onclick="filterSpecimens('all', this)" id="filterBtn-all" data-filter="all" class="specimen-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer transition-all">
+                All (8)
+              </button>
+              <button onclick="filterSpecimens('igneous', this)" id="filterBtn-igneous" data-filter="igneous" class="specimen-filter-btn active px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 cursor-pointer transition-all">
+                🔥 Igneous (2)
+              </button>
+              <button onclick="filterSpecimens('sedimentary', this)" id="filterBtn-sedimentary" data-filter="sedimentary" class="specimen-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer transition-all">
+                🌊 Sedimentary (3)
+              </button>
+              <button onclick="filterSpecimens('metamorphic', this)" id="filterBtn-metamorphic" data-filter="metamorphic" class="specimen-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer transition-all">
+                💎 Metamorphic (3)
+              </button>
             </div>
           </div>
 
-          <!-- 4-Column Responsive Visual Cards Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Dynamic Sync Context Pill -->
+          <div id="gallerySyncNotice" class="mb-5 text-xs font-mono text-emerald-300 bg-emerald-950/40 border border-emerald-500/30 px-3.5 py-2 rounded-xl flex items-center justify-between gap-2">
+            <span id="gallerySyncText">🔄 Stage 1: Molten magma cools to form primary Igneous rocks.</span>
+            <span class="text-[10px] text-slate-400 hidden sm:inline-block">Click any filter above to view others</span>
+          </div>
+
+          <!-- 4-Column Responsive Visual Cards Grid with Category Data Attributes -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="specimenCardsGrid">
             
             <!-- 1. Granite -->
-            <div class="group bg-slate-950/70 border border-slate-800 hover:border-amber-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+            <div class="specimen-card group bg-slate-950/70 border border-slate-800 hover:border-amber-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between" data-category="igneous">
               <div>
                 <div class="relative h-36 w-full overflow-hidden bg-slate-900">
                   <img src="assets/granite.jpg" alt="Granite Specimen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
@@ -674,7 +692,7 @@
             </div>
 
             <!-- 2. Basalt -->
-            <div class="group bg-slate-950/70 border border-slate-800 hover:border-amber-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+            <div class="specimen-card group bg-slate-950/70 border border-slate-800 hover:border-amber-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between" data-category="igneous">
               <div>
                 <div class="relative h-36 w-full overflow-hidden bg-slate-900">
                   <img src="assets/basalt.jpg" alt="Basalt Specimen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
@@ -691,7 +709,7 @@
             </div>
 
             <!-- 3. Sandstone -->
-            <div class="group bg-slate-950/70 border border-slate-800 hover:border-emerald-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+            <div class="specimen-card group bg-slate-950/70 border border-slate-800 hover:border-emerald-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between" data-category="sedimentary">
               <div>
                 <div class="relative h-36 w-full overflow-hidden bg-slate-900">
                   <img src="assets/sandstone.jpg" alt="Sandstone Specimen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
@@ -708,7 +726,7 @@
             </div>
 
             <!-- 4. Limestone -->
-            <div class="group bg-slate-950/70 border border-slate-800 hover:border-emerald-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+            <div class="specimen-card group bg-slate-950/70 border border-slate-800 hover:border-emerald-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between" data-category="sedimentary">
               <div>
                 <div class="relative h-36 w-full overflow-hidden bg-slate-900">
                   <img src="assets/limestone.jpg" alt="Limestone Specimen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
@@ -725,7 +743,7 @@
             </div>
 
             <!-- 5. Marble -->
-            <div class="group bg-slate-950/70 border border-slate-800 hover:border-purple-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+            <div class="specimen-card group bg-slate-950/70 border border-slate-800 hover:border-purple-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between" data-category="metamorphic">
               <div>
                 <div class="relative h-36 w-full overflow-hidden bg-slate-900">
                   <img src="assets/marble.jpg" alt="Marble Specimen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
@@ -742,7 +760,7 @@
             </div>
 
             <!-- 6. Slate -->
-            <div class="group bg-slate-950/70 border border-slate-800 hover:border-purple-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+            <div class="specimen-card group bg-slate-950/70 border border-slate-800 hover:border-purple-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between" data-category="metamorphic">
               <div>
                 <div class="relative h-36 w-full overflow-hidden bg-slate-900">
                   <img src="assets/slate.jpg" alt="Slate Specimen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
@@ -759,7 +777,7 @@
             </div>
 
             <!-- 7. Red Fort Monument Connection -->
-            <div class="group bg-slate-950/70 border border-slate-800 hover:border-red-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+            <div class="specimen-card group bg-slate-950/70 border border-slate-800 hover:border-red-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between" data-category="sedimentary">
               <div>
                 <div class="relative h-36 w-full overflow-hidden bg-slate-900">
                   <img src="assets/red_fort.jpg" alt="Red Fort Delhi" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
@@ -776,7 +794,7 @@
             </div>
 
             <!-- 8. Taj Mahal Monument Connection -->
-            <div class="group bg-slate-950/70 border border-slate-800 hover:border-cyan-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+            <div class="specimen-card group bg-slate-950/70 border border-slate-800 hover:border-cyan-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between" data-category="metamorphic">
               <div>
                 <div class="relative h-36 w-full overflow-hidden bg-slate-900">
                   <img src="assets/taj_mahal.jpg" alt="Taj Mahal Agra" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
@@ -1429,13 +1447,17 @@
       }
     };
 
-    // --- 5-Stage Rock Cycle Stages ---
+    // --- 5-Stage Rock Cycle Stages with Stage-Specific Real Photos & Categories ---
     const rockCycleStages = [
       {
         stage: 1, title: "Stage 1: Molten Magma & Volcanic Eruption",
         process: "Melting & Ascending Liquid Rock",
         desc: "Deep in the lower crust and upper mantle, temperatures above 1,200°C liquefy rocks into red-hot, gas-charged magma. Tectonic pressures force this buoyant liquid magma toward the surface.",
-        visualEmoji: "🔥", accent: "text-amber-400 border-amber-500/30",
+        visualEmoji: "🌋", accent: "text-amber-400 border-amber-500/30",
+        image: "assets/magma_lava.jpg",
+        caption: "Active basaltic volcanic eruption & magma chamber",
+        category: "igneous",
+        categoryNotice: "Stage 1: Deep magma erupts & cools to form primary Igneous rocks.",
         indianAnchor: "Barren Island in the Andaman Sea is South Asia's only active volcano, actively erupting basaltic lava."
       },
       {
@@ -1443,6 +1465,10 @@
         process: "Thermal Crystallization",
         desc: "As magma cools underground or lava spills onto the exterior, minerals freeze into interlocking crystals, creating primary igneous rocks. Fast cooling creates fine grains (Basalt); slow cooling creates large crystals (Granite).",
         visualEmoji: "❄️", accent: "text-blue-400 border-blue-500/30",
+        image: "assets/granite.jpg",
+        caption: "Crystalline Granite (intrusive) & volcanic Basalt (extrusive)",
+        category: "igneous",
+        categoryNotice: "Stage 2 Specimen Focus: Granite (intrusive) & Basalt (extrusive).",
         indianAnchor: "The colossal Deccan Traps covering Maharashtra and Gujarat were formed by millions of years of volcanic basalt flows 66 million years ago."
       },
       {
@@ -1450,6 +1476,10 @@
         process: "Mechanical & Chemical Disintegration",
         desc: "Sunlight, rain, frost, and mountain rivers relentlessly fracture exposed igneous rocks into smaller debris, gravel, and silt particles known as sediments.",
         visualEmoji: "💨", accent: "text-emerald-400 border-emerald-500/30",
+        image: "assets/sediment_weathering.jpg",
+        caption: "River sediment plume transporting eroded mineral particles",
+        category: "sedimentary",
+        categoryNotice: "Stage 3: Weathered sediments form the raw material for Sedimentary rocks.",
         indianAnchor: "The mighty Ganga and Brahmaputra rivers carry millions of tons of Himalayan rock sediments every year to form the Sundarbans Delta."
       },
       {
@@ -1457,6 +1487,10 @@
         process: "Layering, Compaction & Fossil Trapping",
         desc: "Sediments settle in ancient lakes and seabeds. Over millions of years, the weight of accumulating mud squeezes out water, cementing sand and silt into stratified Sedimentary rock.",
         visualEmoji: "📚", accent: "text-cyan-400 border-cyan-500/30",
+        image: "assets/sandstone.jpg",
+        caption: "Stratified Sandstone & Red Fort Delhi architecture",
+        category: "sedimentary",
+        categoryNotice: "Stage 4 Specimen Focus: Sandstone, Limestone & Red Fort.",
         indianAnchor: "Red Fort of Delhi: Mughal emperors chose sturdy red sandstone from Rajasthan, a sedimentary rock composed of ancient sand dunes."
       },
       {
@@ -1464,6 +1498,10 @@
         process: "Tectonic Baking & Crystal Reorientation",
         desc: "When sedimentary or igneous rocks are dragged down into tectonic collision zones, scorching heat and crushing pressure reshape their crystalline texture without completely melting them into magma.",
         visualEmoji: "✨", accent: "text-purple-400 border-purple-500/30",
+        image: "assets/marble.jpg",
+        caption: "Crystalline Makrana Marble & Taj Mahal world heritage",
+        category: "metamorphic",
+        categoryNotice: "Stage 5 Specimen Focus: Marble, Slate & Taj Mahal.",
         indianAnchor: "The Taj Mahal in Agra was built using Makrana white marble, a metamorphic rock transformed from sedimentary limestone."
       }
     ];
@@ -1720,27 +1758,36 @@
       });
     }
 
-    // 6. Dynamic Rock Cycle Simulator Engine
-    function setRockCycleStage(stageIdx) {
+    // 6. Dynamic Rock Cycle Simulator Engine (Integrated Stage Photos & Herbarium Sync)
+    function setRockCycleStage(stageIdx, autoSyncGallery = true) {
       currentRockCycleStage = stageIdx;
       const stage = rockCycleStages[stageIdx];
       const display = document.getElementById('rockCycleStageDisplay');
 
       display.innerHTML = `
-        <div class="flex items-start gap-4">
-          <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 ${stage.accent} flex-shrink-0 text-3xl">
-            ${stage.visualEmoji}
-          </div>
-          <div class="flex-1">
-            <div class="flex items-center gap-2">
-              <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px] font-mono font-bold">Stage ${stage.stage} of 5</span>
-              <span class="text-xs font-mono text-amber-400 font-semibold">${stage.process}</span>
+        <div class="flex flex-col md:flex-row items-stretch gap-5">
+          <div class="flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-2.5 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px] font-mono font-bold">Stage ${stage.stage} of 5</span>
+                <span class="text-xs font-mono text-amber-400 font-semibold">${stage.process}</span>
+              </div>
+              <h3 class="text-xl font-bold text-white mt-2 font-heading flex items-center gap-2">
+                <span>${stage.visualEmoji}</span>
+                <span>${stage.title}</span>
+              </h3>
+              <p class="text-sm text-slate-300 mt-2 leading-relaxed">${stage.desc}</p>
             </div>
-            <h3 class="text-xl font-bold text-white mt-1 font-heading">${stage.title}</h3>
-            <p class="text-sm text-slate-300 mt-2 leading-relaxed">${stage.desc}</p>
             <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-xs text-slate-300 flex items-start gap-2">
-              <span class="text-amber-400 text-base">📍</span>
+              <span class="text-amber-400 text-base flex-shrink-0">📍</span>
               <div><strong>Indian Real-World Connection:</strong> ${stage.indianAnchor}</div>
+            </div>
+          </div>
+          <div class="w-full md:w-64 h-44 md:h-auto rounded-xl overflow-hidden border border-slate-800 relative flex-shrink-0 bg-slate-900 group">
+            <img src="${stage.image}" alt="${stage.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent pointer-events-none"></div>
+            <div class="absolute bottom-0 inset-x-0 p-2.5 text-[11px] font-mono text-amber-300 bg-slate-950/80 backdrop-blur-sm border-t border-slate-800/80">
+              ${stage.caption}
             </div>
           </div>
         </div>
@@ -1758,11 +1805,56 @@
           }
         }
       }
+
+      if (autoSyncGallery) {
+        filterSpecimens(stage.category, null, stage.categoryNotice);
+      }
     }
 
     function stepRockCycle(delta) {
       let nextStage = (currentRockCycleStage + delta + 5) % 5;
       setRockCycleStage(nextStage);
+    }
+
+    // 6b. Specimen Herbarium Filter Engine
+    function filterSpecimens(category, btnElement, syncNoticeText = null) {
+      const allCards = document.querySelectorAll('.specimen-card');
+      let visibleCount = 0;
+
+      allCards.forEach(card => {
+        const cardCat = card.getAttribute('data-category');
+        if (category === 'all' || cardCat === category) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      // Update filter button styling
+      const filterBtns = document.querySelectorAll('.specimen-filter-btn');
+      filterBtns.forEach(btn => {
+        const btnCat = btn.getAttribute('data-filter');
+        if (btnCat === category) {
+          btn.classList.add('active', 'bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/40');
+          btn.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        } else {
+          btn.classList.remove('active', 'bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/40');
+          btn.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        }
+      });
+
+      // Update sync notice pill
+      const noticeTextEl = document.getElementById('gallerySyncText');
+      if (noticeTextEl) {
+        if (syncNoticeText) {
+          noticeTextEl.textContent = `🔄 ${syncNoticeText}`;
+        } else if (category === 'all') {
+          noticeTextEl.textContent = `Showing all 8 verified geological specimens and architectural anchors.`;
+        } else {
+          noticeTextEl.textContent = `Showing ${visibleCount} specimens in the ${category.toUpperCase()} category.`;
+        }
+      }
     }
 
     // ==================== SOLUTIONS DIRECTORY ENGINES ====================
