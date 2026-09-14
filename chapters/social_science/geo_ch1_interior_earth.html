@@ -2055,7 +2055,7 @@
 
     // ==================== RENDERING ENGINES FOR SEPARATE DESIGNATED TABS ====================
 
-    // 1. Render Fill in the Blanks (tabFIB)
+    // 1. Render Fill in the Blanks (tabFIB) - Compact, Zero Redundant Badges
     function renderFIB() {
       const container = document.getElementById('fibCardsContainer');
       if (!container) return;
@@ -2064,21 +2064,18 @@
       let html = '';
       fibQuestions.forEach((q, idx) => {
         html += `
-          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500/40 transition-all shadow-sm">
-            <div class="flex items-center justify-between gap-2 mb-2">
-              <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[11px] font-mono font-bold">
-                ${q.badge}
-              </span>
-              <button onclick="revealFIBQuestion('${q.id}')" id="btnReveal-${q.id}" class="px-3 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold cursor-pointer transition-all flex items-center gap-1">
+          <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-emerald-500/40 transition-all shadow-sm">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="text-sm text-slate-100 font-medium leading-relaxed flex-1">
+                <span class="font-bold text-emerald-400 mr-2 font-mono text-base">${idx + 1}.</span>
+                ${q.qText}
+              </div>
+              <button onclick="revealFIBQuestion('${q.id}')" id="btnReveal-${q.id}" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold cursor-pointer transition-all flex items-center gap-1.5 self-end sm:self-center">
                 <span>👁️</span>
                 <span id="btnText-${q.id}">Reveal Answer</span>
               </button>
             </div>
-            <div class="text-sm text-slate-100 font-medium leading-relaxed">
-              <span class="font-bold text-emerald-400 mr-1.5">${idx + 1}.</span>
-              ${q.qText}
-            </div>
-            <div id="tip-${q.id}" class="hidden mt-3 p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-xs text-slate-300">
+            <div id="tip-${q.id}" class="hidden mt-3 p-2.5 rounded-lg bg-slate-950/90 border border-slate-800 text-xs text-slate-300">
               <strong class="text-emerald-400">💡 Geological Fact:</strong> ${q.tip}
             </div>
           </div>
@@ -2188,7 +2185,7 @@
       }
     }
 
-    // 3. Render True or False (tabTF)
+    // 3. Render True or False (tabTF) - Compact, Zero Redundant Badges
     function renderTF() {
       const container = document.getElementById('tfCardsContainer');
       if (!container) return;
@@ -2200,28 +2197,22 @@
         const statementText = q.statement || q.qText;
         const statusStr = isTrue ? 'TRUE' : 'FALSE';
         html += `
-          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-blue-500/40 transition-all shadow-sm">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2">
-              <div class="flex items-center gap-2">
-                <span class="px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[11px] font-mono font-bold">
-                  ${q.badge}
-                </span>
-                <span class="text-xs font-mono text-slate-400">Statement ${idx + 1}</span>
-              </div>
-              <div class="flex items-center gap-2">
+          <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-blue-500/40 transition-all shadow-sm">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <p class="text-sm font-medium text-slate-100 leading-relaxed flex-1">
+                <span class="text-blue-400 font-bold mr-2 font-mono text-base">${idx + 1}.</span>
+                "${statementText}"
+              </p>
+              <div class="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
                 <span id="badge-tf-${q.id}" class="hidden px-2.5 py-1 rounded-lg text-xs font-mono font-bold ${isTrue ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-rose-500/20 text-rose-300 border border-rose-500/40'}">
                   ${statusStr}
                 </span>
-                <button onclick="revealTFQuestion('${q.id}')" id="btnRevealTF-${q.id}" class="px-3 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-semibold cursor-pointer transition-all flex items-center gap-1">
+                <button onclick="revealTFQuestion('${q.id}')" id="btnRevealTF-${q.id}" class="px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-semibold cursor-pointer transition-all flex items-center gap-1">
                   <span>👁️</span>
                   <span id="btnTextTF-${q.id}">Reveal Answer</span>
                 </button>
               </div>
             </div>
-            <p class="text-sm font-medium text-slate-100 leading-relaxed mb-2">
-              <span class="text-blue-400 font-bold mr-1.5">${idx + 1}.</span>
-              "${statementText}"
-            </p>
             <div id="ans-tf-${q.id}" class="hidden mt-3 p-3 rounded-lg bg-slate-950/90 border border-slate-800 text-xs">
               <div class="flex items-center gap-2 mb-1">
                 <span class="font-bold ${isTrue ? 'text-emerald-400' : 'text-rose-400'}">
@@ -2268,7 +2259,7 @@
       });
     }
 
-    // 4. Render Multiple Choice (tabMCQ)
+    // 4. Render Multiple Choice (tabMCQ) - Compact, Zero Redundant Badges
     function renderMCQ() {
       const container = document.getElementById('mcqCardsContainer');
       if (!container) return;
@@ -2277,19 +2268,16 @@
       let html = '';
       mcqQuestions.forEach((q, idx) => {
         html += `
-          <div class="p-5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all shadow-sm">
-            <div class="flex items-center justify-between mb-2">
-              <span class="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[11px] font-mono font-bold">
-                ${q.badge}
-              </span>
-              <button onclick="revealMCQAnswer('${q.id}')" class="text-xs text-amber-400 hover:text-amber-300 font-semibold cursor-pointer">
+          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition-all shadow-sm">
+            <div class="flex items-start justify-between gap-3 mb-3">
+              <h4 class="text-sm font-semibold text-white leading-relaxed flex-1">
+                <span class="text-amber-400 font-bold mr-2 font-mono text-base">${idx + 1}.</span>
+                ${q.qText}
+              </h4>
+              <button onclick="revealMCQAnswer('${q.id}')" class="flex-shrink-0 text-xs text-amber-400 hover:text-amber-300 font-semibold cursor-pointer px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30">
                 Reveal Answer
               </button>
             </div>
-            <h4 class="text-sm font-semibold text-white mb-3 leading-relaxed">
-              <span class="text-amber-400 font-bold mr-1.5">${idx + 1}.</span>
-              ${q.qText}
-            </h4>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
               ${q.options.map((opt, optIdx) => `
                 <button onclick="handlePracticeMCQChoice('${q.id}', ${optIdx}, ${q.correctIdx})" id="opt-${q.id}-${optIdx}" class="p-2.5 rounded-lg bg-slate-950/70 border border-slate-800 hover:border-slate-700 text-xs text-left text-slate-300 transition-all cursor-pointer">
@@ -2329,7 +2317,7 @@
       if (q) handlePracticeMCQChoice(qId, q.correctIdx, q.correctIdx);
     }
 
-    // 5. Render Q&A Solutions Directory (tabQA)
+    // 5. Render Q&A Solutions Directory (tabQA) - Clean, Direct Layout
     let currentQACategory = 'all';
     let currentQASearch = '';
 
@@ -2361,20 +2349,17 @@
       let html = '';
       filtered.forEach((q, idx) => {
         html += `
-          <div class="qa-item p-5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-violet-500/40 transition-all shadow-sm">
-            <div class="flex items-center justify-between mb-2.5">
-              <span class="px-2.5 py-0.5 rounded-full bg-violet-500/10 text-violet-400 border border-violet-500/30 text-[11px] font-mono font-bold">
-                ${q.badge}
-              </span>
-              <button onclick="toggleQA('${q.id}')" id="qaBtn-${q.id}" class="px-3 py-1 rounded-lg bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 border border-violet-500/30 text-xs font-semibold cursor-pointer transition-all flex items-center gap-1">
+          <div class="qa-item p-4 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-violet-500/40 transition-all shadow-sm">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <h4 class="text-sm font-semibold text-white leading-relaxed flex-1">
+                <span class="text-violet-400 font-bold mr-2 font-mono text-base">${idx + 1}.</span>
+                ${q.qText}
+              </h4>
+              <button onclick="toggleQA('${q.id}')" id="qaBtn-${q.id}" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-violet-500/10 hover:bg-violet-500/20 text-violet-400 border border-violet-500/30 text-xs font-semibold cursor-pointer transition-all flex items-center gap-1">
                 <span>👁️</span>
                 <span id="qaBtnText-${q.id}">Reveal Solution</span>
               </button>
             </div>
-            <h4 class="text-sm font-semibold text-white leading-relaxed mb-3">
-              <span class="text-violet-400 font-bold mr-1.5">${idx + 1}.</span>
-              ${q.qText}
-            </h4>
             <div id="qaAnswer-${q.id}" class="hidden p-4 rounded-xl bg-slate-950 border border-slate-800/80 text-xs text-slate-200 leading-relaxed">
               <strong class="text-violet-400 font-mono text-[11px] uppercase tracking-wider block mb-1">Model Solution:</strong>
               <div>${q.ans}</div>
@@ -2428,7 +2413,7 @@
       renderQACards();
     }
 
-    // 6. Render HOTS & Competency Cards (tabHOTS)
+    // 6. Render HOTS & Competency Cards (tabHOTS) - Clean, Direct Layout
     function renderHOTSCards() {
       const container = document.getElementById('hotsCardsContainer');
       if (!container) return;
@@ -2437,20 +2422,17 @@
       let html = '';
       hotsQuestions.forEach((q, idx) => {
         html += `
-          <div class="p-5 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-pink-500/40 transition-all shadow-sm">
-            <div class="flex items-center justify-between mb-2.5">
-              <span class="px-2.5 py-0.5 rounded-full bg-pink-500/10 text-pink-400 border border-pink-500/30 text-[11px] font-mono font-bold">
-                ${q.badge}
-              </span>
-              <button onclick="toggleHOTS('${q.id}')" id="hotsBtn-${q.id}" class="px-3 py-1 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 text-pink-400 border border-pink-500/30 text-xs font-semibold cursor-pointer transition-all flex items-center gap-1">
+          <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-pink-500/40 transition-all shadow-sm">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <h4 class="text-sm font-semibold text-white leading-relaxed flex-1">
+                <span class="text-pink-400 font-bold mr-2 font-mono text-base">${idx + 1}.</span>
+                ${q.qText}
+              </h4>
+              <button onclick="toggleHOTS('${q.id}')" id="hotsBtn-${q.id}" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 text-pink-400 border border-pink-500/30 text-xs font-semibold cursor-pointer transition-all flex items-center gap-1">
                 <span>👁️</span>
                 <span id="hotsBtnText-${q.id}">Reveal Solution</span>
               </button>
             </div>
-            <h4 class="text-sm font-semibold text-white leading-relaxed mb-3">
-              <span class="text-pink-400 font-bold mr-1.5">${idx + 1}.</span>
-              ${q.qText}
-            </h4>
             <div id="hotsAnswer-${q.id}" class="hidden p-4 rounded-xl bg-slate-950 border border-slate-800/80 text-xs text-slate-300 leading-relaxed">
               <strong class="text-pink-400 font-mono text-[11px] uppercase tracking-wider block mb-1">Textbook Critical Reasoning:</strong>
               <div>${q.ans}</div>

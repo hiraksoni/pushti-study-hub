@@ -438,6 +438,73 @@ tr:hover td {
     display: block;
     margin-top: 2px;
 }
+
+/* Shabda Toggle Styles */
+.shabda-toggle-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.shabda-toggle-title {
+    margin: 0;
+    color: var(--accent);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.shabda-toggle-group {
+    display: inline-flex;
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 3px;
+    gap: 4px;
+}
+
+.shabda-toggle-btn {
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.shabda-toggle-btn:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.shabda-toggle-btn.active {
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.shabda-pane {
+    display: none;
+}
+
+.shabda-pane.active {
+    display: block;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(3px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 </style>
 </head>
 <body>
@@ -450,7 +517,7 @@ tr:hover td {
         <span style="color:var(--text-muted);">&gt;</span>
         <a href="../../../sanskrit_index.html" style="text-decoration:none; color:inherit;">Sanskrit</a>
         <span style="color:var(--text-muted);">&gt;</span>
-        <span style="color:var(--accent); font-weight:600;">अध्यायः १४ (शब्दरूपाणि)</span>
+        <span style="color:var(--accent); font-weight:600;">अध्यायः १४: शब्दरूपाणि (Noun Declensions)</span>
     </div>
     
     <div style="display:flex; align-items:center; gap:15px;">
@@ -463,29 +530,19 @@ tr:hover td {
     </div>
 </header>
 
-<div class="breadcrumb">
-    <a href="../../../index.html"><i class="fas fa-home"></i> Home</a>
-    <span>&gt;</span>
-    <a href="../../../sanskrit_index.html">संस्कृतम् (दीपकम्)</a>
-    <span>&gt;</span>
-    <a href="../../../sanskrit_index.html#sec-san_gram">व्याकरणम् (Grammar)</a>
-    <span>&gt;</span>
-    <span style="color:var(--text-main); font-weight:600;">अध्यायः १४: शब्दरूपाणि (Noun Declensions)</span>
-</div>
-
-<!-- STICKY TABS FOR CHAPTER 14 ONLY -->
+<!-- STICKY TABS FOR CHAPTER 14 -->
 <nav class="tabs-wrapper">
     <button class="tab-btn active" onclick="openTab(event, 'tab-masculine')">
-        <i class="fas fa-male"></i> पुंलिङ्ग-शब्दाः (राम, बालक, मुनि, कवि, हरि)
+        <i class="fas fa-male"></i> पुंलिङ्ग-शब्दाः (राम, देव, बालक, मुनि, गुरु...)
     </button>
     <button class="tab-btn" onclick="openTab(event, 'tab-feminine')">
-        <i class="fas fa-female"></i> स्त्रीलिङ्ग-शब्दाः (लता, बालिका, नदी)
+        <i class="fas fa-female"></i> स्त्रीलिङ्ग-शब्दाः (लता, बालिका, माला, नदी...)
     </button>
     <button class="tab-btn" onclick="openTab(event, 'tab-neuter')">
-        <i class="fas fa-cube"></i> नपुंसकलिङ्ग-शब्दाः (फलम्, पुस्तकम्)
+        <i class="fas fa-cube"></i> नपुंसकलिङ्ग-शब्दाः (फलम्, पुस्तकम्, मित्रम्)
     </button>
     <button class="tab-btn" onclick="openTab(event, 'tab-pronouns')">
-        <i class="fas fa-users"></i> सर्वनाम-शब्दाः (अस्मद्, युष्मद्, तद्)
+        <i class="fas fa-users"></i> सर्वनाम-शब्दाः (अस्मद्, युष्मद्, तद्, एतद्, किम्)
     </button>
     <button class="tab-btn" onclick="openTab(event, 'tab-practice')">
         <i class="fas fa-tasks"></i> विभक्ति-अभ्यासमाला (Interactive Drills)
@@ -503,7 +560,7 @@ tr:hover td {
                 <i class="fas fa-male" style="margin-right:8px;"></i>पुंलिङ्ग-शब्दाः &bull; Masculine Noun Declensions
             </h2>
             <div style="color:var(--text-muted); font-size:0.92rem; margin-top:4px;">
-                Understanding Vibhaktis (Cases) and declensions for अकारान्त (ending in 'a') and इकारान्त (ending in 'i') masculine nouns.
+                Understanding Vibhaktis (Cases) and declensions for अकारान्त, इकारान्त, उकारान्त, and ऋकारान्त masculine nouns. Toggle between model noun paradigms below.
             </div>
         </div>
 
@@ -587,442 +644,754 @@ tr:hover td {
         </div>
 
         <!-- RAMA TABLE -->
-        <div class="sop-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-                <h3 style="margin:0; color:var(--accent); font-size:1.2rem;">
-                    <i class="fas fa-book-reader"></i> १. राम (अकारान्त पुंलिङ्ग - Ending in 'a')
+
+        <!-- 1. AKARANTA MASCULINE TOGGLE (RAMA / DEVA / BALAKA) -->
+        <div class="sop-card" style="margin-bottom: 24px;">
+        <div class="shabda-toggle-wrapper">
+            <div>
+                <h3 class="shabda-toggle-title">
+                    <i class="fas fa-book-reader" style="color:var(--accent);"></i> १. अकारान्त पुंलिङ्ग-शब्दाः (Ending in 'a')
                 </h3>
-                <span class="card-badge badge-blue">Like: बालक, देव, छात्र, शिक्षक, नृप, अश्व</span>
+                <div style="color:var(--text-muted); font-size:0.88rem; margin-top:3px;">Masculine stems ending in short 'a' &bull; Examples: राम, देव, बालक, छात्र, शिक्षक, नृप, अश्व</div>
             </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>विभक्तिः (Vibhakti)</th>
-                            <th>एकवचनम् (Singular)</th>
-                            <th>द्विवचनम् (Dual)</th>
-                            <th>बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td><td>रामः</td><td>रामौ</td><td>रामाः</td></tr>
-                        <tr><td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td><td>रामम्</td><td>रामौ</td><td>रामान्</td></tr>
-                        <tr><td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td><td>रामेण</td><td>रामाभ्याम्</td><td>रामैः</td></tr>
-                        <tr><td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td><td>रामाय</td><td>रामाभ्याम्</td><td>रामेभ्यः</td></tr>
-                        <tr><td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td><td>रामात्</td><td>रामाभ्याम्</td><td>रामेभ्यः</td></tr>
-                        <tr><td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td><td>रामस्य</td><td>रामयोः</td><td>रामाणाम्</td></tr>
-                        <tr><td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td><td>रामे</td><td>रामयोः</td><td>रामेषु</td></tr>
-                        <tr><td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td><td>हे राम !</td><td>हे रामौ !</td><td>हे रामाः !</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px;">
-                <strong>💡 णत्व-विधान नियमः (Natva Rule):</strong> In words with <strong>र् (r)</strong> or <strong>ष् (sh)</strong> (like राम), the 'न' becomes 'ण' in तृतीया एकवचन (रामेण) and षष्ठी बहुवचन (रामाणाम्). But in बालक (which has no r/sh), it remains 'न': <em>बालकेन</em> and <em>बालकानाम्</em>.
+            <div class="shabda-toggle-group">
+                <button type="button" class="shabda-toggle-btn active" onclick="switchShabda(this, 'pane-m-ram')">राम (णत्वम्)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-m-dev')">देव (Standard)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-m-balak')">बालक (CBSE Model)</button>
             </div>
         </div>
+        <div id="pane-m-ram" class="shabda-pane active" style="display:block;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">राम = र् + आ + म् + अ (अन्तिमवर्णः 'अ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>रामः</td>
+                    <td>रामौ</td>
+                    <td>रामाः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>रामम्</td>
+                    <td>रामौ</td>
+                    <td>रामान्</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>रामेण</td>
+                    <td>रामाभ्याम्</td>
+                    <td>रामैः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>रामाय</td>
+                    <td>रामाभ्याम्</td>
+                    <td>रामेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>रामात्</td>
+                    <td>रामाभ्याम्</td>
+                    <td>रामेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>रामस्य</td>
+                    <td>रामयोः</td>
+                    <td>रामाणाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>रामे</td>
+                    <td>रामयोः</td>
+                    <td>रामेषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे राम !</td>
+                    <td>हे रामौ !</td>
+                    <td>हे रामाः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> In words with <strong>र् (r)</strong> (like राम), 'न' becomes 'ण' in तृतीया एकवचन (रामेण) and षष्ठी बहुवचन (रामाणाम्).
+        </div>
+        </div>
+        <div id="pane-m-dev" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">देव = द् + ए + व् + अ (अन्तिमवर्णः 'अ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>देवः</td>
+                    <td>देवौ</td>
+                    <td>देवाः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>देवम्</td>
+                    <td>देवौ</td>
+                    <td>देवान्</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>देवेन</td>
+                    <td>देवाभ्याम्</td>
+                    <td>देवैः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>देवाय</td>
+                    <td>देवाभ्याम्</td>
+                    <td>देवेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>देवात्</td>
+                    <td>देवाभ्याम्</td>
+                    <td>देवेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>देवस्य</td>
+                    <td>देवयोः</td>
+                    <td>देवानाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>देवे</td>
+                    <td>देवयोः</td>
+                    <td>देवेषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे देव !</td>
+                    <td>हे देवौ !</td>
+                    <td>हे देवाः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Standard अकारान्त pattern without 'r' or 'sh' (देवेन, देवानाम् with standard 'न').
+        </div>
+        </div>
+        <div id="pane-m-balak" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">बालक = ब् + आ + ल् + अ + क् + अ (अन्तिमवर्णः 'अ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>बालकः</td>
+                    <td>बालकौ</td>
+                    <td>बालकाः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>बालकम्</td>
+                    <td>बालकौ</td>
+                    <td>बालकान्</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>बालकेन</td>
+                    <td>बालकाभ्याम्</td>
+                    <td>बालकैः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>बालकाय</td>
+                    <td>बालकाभ्याम्</td>
+                    <td>बालकेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>बालकात्</td>
+                    <td>बालकाभ्याम्</td>
+                    <td>बालकेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>बालकस्य</td>
+                    <td>बालकयोः</td>
+                    <td>बालकानाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>बालके</td>
+                    <td>बालकयोः</td>
+                    <td>बालकेषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे बालक !</td>
+                    <td>हे बालकौ !</td>
+                    <td>हे बालकाः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Classic NCERT Deepakam model noun for Class 7 practice and exams.
+        </div>
+        </div>
+    </div>
 
-        <!-- BALAKA TABLE -->
-        <div class="sop-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-                <h3 style="margin:0; color:var(--accent-blue); font-size:1.2rem;">
-                    <i class="fas fa-child"></i> २. बालक (अकारान्त पुंलिङ्ग - Ending in 'a')
+        <!-- 2. IKARANTA MASCULINE TOGGLE (MUNI / KAVI / HARI) -->
+        <div class="sop-card" style="margin-bottom: 24px;">
+        <div class="shabda-toggle-wrapper">
+            <div>
+                <h3 class="shabda-toggle-title">
+                    <i class="fas fa-book-reader" style="color:var(--accent);"></i> २. इकारान्त पुंलिङ्ग-शब्दाः (Ending in Short 'i')
                 </h3>
-                <span class="card-badge badge-green">Standard CBSE Model Noun</span>
+                <div style="color:var(--text-muted); font-size:0.88rem; margin-top:3px;">Masculine stems ending in short 'i' &bull; Examples: मुनि, कवि, हरि, ऋषि, रवि, यति</div>
             </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>विभक्तिः (Vibhakti)</th>
-                            <th>एकवचनम् (Singular)</th>
-                            <th>द्विवचनम् (Dual)</th>
-                            <th>बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td><td>बालकः</td><td>बालकौ</td><td>बालकाः</td></tr>
-                        <tr><td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td><td>बालकम्</td><td>बालकौ</td><td>बालकान्</td></tr>
-                        <tr><td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td><td>बालकेन</td><td>बालकाभ्याम्</td><td>बालकैः</td></tr>
-                        <tr><td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td><td>बालकाय</td><td>बालकाभ्याम्</td><td>बालकेभ्यः</td></tr>
-                        <tr><td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td><td>बालकात्</td><td>बालकाभ्याम्</td><td>बालकेभ्यः</td></tr>
-                        <tr><td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td><td>बालकस्य</td><td>बालकयोः</td><td>बालकानाम्</td></tr>
-                        <tr><td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td><td>बालके</td><td>बालकयोः</td><td>बालकेषु</td></tr>
-                        <tr><td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td><td>हे बालक !</td><td>हे बालकौ !</td><td>हे बालकाः !</td></tr>
-                    </tbody>
-                </table>
+            <div class="shabda-toggle-group">
+                <button type="button" class="shabda-toggle-btn active" onclick="switchShabda(this, 'pane-m-muni')">मुनि (Sage)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-m-kavi')">कवि (Poet)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-m-hari')">हरि (णत्वम्)</button>
             </div>
         </div>
+        <div id="pane-m-muni" class="shabda-pane active" style="display:block;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">मुनि = म् + उ + न् + इ (अन्तिमवर्णः 'इ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>मुनिः</td>
+                    <td>मुनी</td>
+                    <td>मुनयः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>मुनिम्</td>
+                    <td>मुनी</td>
+                    <td>मुनीन्</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>मुनिना</td>
+                    <td>मुनिभ्याम्</td>
+                    <td>मुनिभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>मुनये</td>
+                    <td>मुनिभ्याम्</td>
+                    <td>मुनिभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>मुनेः</td>
+                    <td>मुनिभ्याम्</td>
+                    <td>मुनिभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>मुनेः</td>
+                    <td>मुन्योः</td>
+                    <td>मुनीनाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>मुनौ</td>
+                    <td>मुन्योः</td>
+                    <td>मुनिषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे मुने !</td>
+                    <td>हे मुनी !</td>
+                    <td>हे मुनयः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Standard इकारान्त ending without internal 'r' sound (मुनिना, मुनीनाम्).
+        </div>
+        </div>
+        <div id="pane-m-kavi" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">कवि = क् + अ + व् + इ (अन्तिमवर्णः 'इ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>कविः</td>
+                    <td>कवी</td>
+                    <td>कवयः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>कविम्</td>
+                    <td>कवी</td>
+                    <td>कवीन्</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>कविना</td>
+                    <td>कविभ्याम्</td>
+                    <td>कविभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>कवये</td>
+                    <td>कविभ्याम्</td>
+                    <td>कविभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>कवेः</td>
+                    <td>कविभ्याम्</td>
+                    <td>कविभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>कवेः</td>
+                    <td>कव्योः</td>
+                    <td>कवीनाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>कवौ</td>
+                    <td>कव्योः</td>
+                    <td>कविषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे कवे !</td>
+                    <td>हे कवी !</td>
+                    <td>हे कवयः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Standard इकारान्त poet declension (कविना, कवीनाम्).
+        </div>
+        </div>
+        <div id="pane-m-hari" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">हरि = ह् + अ + र् + इ (अन्तिमवर्णः 'इ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>हरिः</td>
+                    <td>हरी</td>
+                    <td>हरयः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>हरिम्</td>
+                    <td>हरी</td>
+                    <td>हरीन्</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>हरिणा</td>
+                    <td>हरिभ्याम्</td>
+                    <td>हरिभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>हरये</td>
+                    <td>हरिभ्याम्</td>
+                    <td>हरिभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>हरेः</td>
+                    <td>हरिभ्याम्</td>
+                    <td>हरिभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>हरेः</td>
+                    <td>हर्योः</td>
+                    <td>हरीणाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>हरौ</td>
+                    <td>हर्योः</td>
+                    <td>हरिषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे हरे !</td>
+                    <td>हे हरी !</td>
+                    <td>हे हरयः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Due to internal <strong>र् (r)</strong> in हरि, तृतीया एकवचन has 'हरिणा' and षष्ठी बहुवचन has 'हरीणाम्'.
+        </div>
+        </div>
+    </div>
 
-        <!-- MUNI / KAVI / HARI TABLE -->
-        <div class="sop-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-                <h3 style="margin:0; color:var(--accent-purple); font-size:1.2rem;">
-                    <i class="fas fa-feather-alt"></i> ३. कवि / मुनि (इकारान्त पुंलिङ्ग - Ending in Short 'i')
+        <!-- 3. UKARANTA MASCULINE TOGGLE (SHAMBHU / GURU) -->
+        <div class="sop-card" style="margin-bottom: 24px;">
+        <div class="shabda-toggle-wrapper">
+            <div>
+                <h3 class="shabda-toggle-title">
+                    <i class="fas fa-book-reader" style="color:var(--accent);"></i> ३. उकारान्त पुंलिङ्ग-शब्दाः (Ending in Short 'u')
                 </h3>
-                <span class="card-badge badge-purple">Sage / Poet Declension</span>
+                <div style="color:var(--text-muted); font-size:0.88rem; margin-top:3px;">Masculine stems ending in short 'u' &bull; Examples: शम्भु (Lord Shiva), गुरु (Teacher), भानु (Sun), साधु</div>
             </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>विभक्तिः (Vibhakti)</th>
-                            <th>एकवचनम् (Singular)</th>
-                            <th>द्विवचनम् (Dual)</th>
-                            <th>बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td><td>कविः (मुनिः)</td><td>कवी (मुनी)</td><td>कवयः (मुनयः)</td></tr>
-                        <tr><td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td><td>कविम् (मुनिम्)</td><td>कवी (मुनी)</td><td>कवीन् (मुनीन्)</td></tr>
-                        <tr><td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td><td>कविना (मुनिना)</td><td>कविभ्याम् (मुनिभ्याम्)</td><td>कविभिः (मुनिभिः)</td></tr>
-                        <tr><td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td><td>कवये (मुनये)</td><td>कविभ्याम् (मुनिभ्याम्)</td><td>कविभ्यः (मुनिभ्यः)</td></tr>
-                        <tr><td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td><td>कवेः (मुनेः)</td><td>कविभ्याम् (मुनिभ्याम्)</td><td>कविभ्यः (मुनिभ्यः)</td></tr>
-                        <tr><td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td><td>कवेः (मुनेः)</td><td>कव्योः (मुन्योः)</td><td>कवीनाम् (मुनीनाम्)</td></tr>
-                        <tr><td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td><td>कवौ (मुनौ)</td><td>कव्योः (मुन्योः)</td><td>कविषु (मुनिषु)</td></tr>
-                        <tr><td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td><td>हे कवे !</td><td>हे कवी !</td><td>हे कवयः !</td></tr>
-                    </tbody>
-                </table>
+            <div class="shabda-toggle-group">
+                <button type="button" class="shabda-toggle-btn active" onclick="switchShabda(this, 'pane-m-shambhu')">शम्भु (Shambhu)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-m-guru')">गुरु (णत्वम्)</button>
             </div>
         </div>
-
-        <!-- HARI TABLE -->
-        <div class="sop-card">
-            <h3 style="margin-top:0; color:var(--accent); font-size:1.15rem;">
-                <i class="fas fa-om"></i> ४. हरि (इकारान्त पुंलिङ्ग - Ending in Short 'i' with णत्व)
-            </h3>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>विभक्तिः</th><th>एकवचनम्</th><th>द्विवचनम्</th><th>बहुवचनम्</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong></td><td>हरिः</td><td>हरी</td><td>हरयः</td></tr>
-                        <tr><td><strong>द्वितीया</strong></td><td>हरिम्</td><td>हरी</td><td>हरीन्</td></tr>
-                        <tr><td><strong>तृतीया</strong></td><td>हरिणा</td><td>हरिभ्याम्</td><td>हरिभिः</td></tr>
-                        <tr><td><strong>चतुर्थी</strong></td><td>हरये</td><td>हरिभ्याम्</td><td>हरिभ्यः</td></tr>
-                        <tr><td><strong>पञ्चमी</strong></td><td>हरेः</td><td>हरिभ्याम्</td><td>हरिभ्यः</td></tr>
-                        <tr><td><strong>षष्ठी</strong></td><td>हरेः</td><td>हर्योः</td><td>हरीणाम्</td></tr>
-                        <tr><td><strong>सप्तमी</strong></td><td>हरौ</td><td>हर्योः</td><td>हरिषु</td></tr>
-                        <tr><td><strong>सम्बोधनम्</strong></td><td>हे हरे !</td><td>हे हरी !</td><td>हे हरयः !</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">४. शम्भु (उकारान्त पुंलिङ्ग - Ending in Short 'u')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Shambhu &bull; Lord Shiva (Base stem: शम्भु)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">उकारान्त पुंलिङ्ग</span>
-            </div>
+        <div id="pane-m-shambhu" class="shabda-pane active" style="display:block;">
             <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">शम्भु = श् + अ + म् + भ् + उ (अन्तिमवर्णः 'उ')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>शम्भुः</td>
-                            <td>शम्भू</td>
-                            <td>शम्भवः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>शम्भुम्</td>
-                            <td>शम्भू</td>
-                            <td>शम्भून्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>शम्भुना</td>
-                            <td>शम्भुभ्याम्</td>
-                            <td>शम्भुभिः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>शम्भवे</td>
-                            <td>शम्भुभ्याम्</td>
-                            <td>शम्भुभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>शम्भोः</td>
-                            <td>शम्भुभ्याम्</td>
-                            <td>शम्भुभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>शम्भोः</td>
-                            <td>शम्भ्वोः</td>
-                            <td>शम्भूनाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>शम्भौ</td>
-                            <td>शम्भ्वोः</td>
-                            <td>शम्भुषु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे शम्भो!</td>
-                            <td>हे शम्भू!</td>
-                            <td>हे शम्भवः!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> भानु, साधु, वायु, शत्रु शब्दाः अपि शम्भुवत् भवन्ति।
-            </div>
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">शम्भु = श् + अ + म् + भ् + उ (अन्तिमवर्णः 'उ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>शम्भुः</td>
+                    <td>शम्भू</td>
+                    <td>शम्भवः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>शम्भुम्</td>
+                    <td>शम्भू</td>
+                    <td>शम्भून्</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>शम्भुना</td>
+                    <td>शम्भुभ्याम्</td>
+                    <td>शम्भुभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>शम्भवे</td>
+                    <td>शम्भुभ्याम्</td>
+                    <td>शम्भुभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>शम्भोः</td>
+                    <td>शम्भुभ्याम्</td>
+                    <td>शम्भुभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>शम्भोः</td>
+                    <td>शम्भ्वोः</td>
+                    <td>शम्भूनाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>शम्भौ</td>
+                    <td>शम्भ्वोः</td>
+                    <td>शम्भुषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे शम्भो !</td>
+                    <td>हे शम्भू !</td>
+                    <td>हे शम्भवः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Standard उकारान्त pattern (शम्भुना, शम्भूनाम्).
         </div>
-
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">५. गुरु (उकारान्त पुंलिङ्ग - Ending in Short 'u')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Guru &bull; Teacher / Spiritual Preceptor (Base stem: गुरु)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">उकारान्त पुंलिङ्ग</span>
-            </div>
+        </div>
+        <div id="pane-m-guru" class="shabda-pane" style="display:none;">
             <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">गुरु = ग्‍ + उ + र् + उ (अन्तिमवर्णः 'उ')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>गुरुः</td>
-                            <td>गुरू</td>
-                            <td>गुरवः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>गुरुम्</td>
-                            <td>गुरू</td>
-                            <td>गुरून्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>गुरुणा</td>
-                            <td>गुरुभ्याम्</td>
-                            <td>गुरुभिः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>गुरवे</td>
-                            <td>गुरुभ्याम्</td>
-                            <td>गुरुभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>गुरोः</td>
-                            <td>गुरुभ्याम्</td>
-                            <td>गुरुभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>गुरोः</td>
-                            <td>गुर्वोः</td>
-                            <td>गुरूणाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>गुरौ</td>
-                            <td>गुर्वोः</td>
-                            <td>गुरुषु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे गुरो!</td>
-                            <td>हे गुरू!</td>
-                            <td>हे गुरवः!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> र-कारस्य प्रभावात् तृतीया-एकवचने 'गुरुणा' तथा षष्ठी-बहुवचने 'गुरूणाम्' (णत्व-विधानम्) भवति।
-            </div>
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">गुरु = ग्‍ + उ + र् + उ (अन्तिमवर्णः 'उ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>गुरुः</td>
+                    <td>गुरू</td>
+                    <td>गुरवः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>गुरुम्</td>
+                    <td>गुरू</td>
+                    <td>गुरून्</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>गुरुणा</td>
+                    <td>गुरुभ्याम्</td>
+                    <td>गुरुभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>गुरवे</td>
+                    <td>गुरुभ्याम्</td>
+                    <td>गुरुभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>गुरोः</td>
+                    <td>गुरुभ्याम्</td>
+                    <td>गुरुभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>गुरोः</td>
+                    <td>गुर्वोः</td>
+                    <td>गुरूणाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>गुरौ</td>
+                    <td>गुर्वोः</td>
+                    <td>गुरुषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे गुरो !</td>
+                    <td>हे गुरू !</td>
+                    <td>हे गुरवः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Due to <strong>र् (r)</strong>, note तृतीया एकवचन 'गुरुणा' and षष्ठी बहुवचन 'गुरूणाम्'.
         </div>
+        </div>
+    </div>
 
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">६. पितृ (ऋकारान्त पुंलिङ्ग - Ending in 'ṛ')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Pitri &bull; Father (Base stem: पितृ)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">ऋकारान्त पुंलिङ्ग</span>
+        <!-- 4. R-KARANTA MASCULINE TOGGLE (PITRI / NETRI) -->
+        <div class="sop-card" style="margin-bottom: 24px;">
+        <div class="shabda-toggle-wrapper">
+            <div>
+                <h3 class="shabda-toggle-title">
+                    <i class="fas fa-book-reader" style="color:var(--accent);"></i> ४. ऋकारान्त पुंलिङ्ग-शब्दाः (Ending in 'ṛ')
+                </h3>
+                <div style="color:var(--text-muted); font-size:0.88rem; margin-top:3px;">Masculine stems ending in 'ṛ' &bull; Kinship (पितृ, भ्रातृ) vs Agent nouns (नेतृ, दातृ, कर्तृ)</div>
             </div>
-            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">पितृ = प् + इ + त् + ऋ (अन्तिमवर्णः 'ऋ')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>पिता</td>
-                            <td>पितरौ</td>
-                            <td>पितरः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>पितरम्</td>
-                            <td>पितरौ</td>
-                            <td>पितॄन्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>पित्रा</td>
-                            <td>पितृभ्याम्</td>
-                            <td>पितृभिः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>पित्रे</td>
-                            <td>पितृभ्याम्</td>
-                            <td>पितृभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>पितुः</td>
-                            <td>पितृभ्याम्</td>
-                            <td>पितृभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>पितुः</td>
-                            <td>पित्रोः</td>
-                            <td>पितॄणाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>पितरि</td>
-                            <td>पित्रोः</td>
-                            <td>पितृषु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे पितः!</td>
-                            <td>हे पितरौ!</td>
-                            <td>हे पितरः!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> भ्रातृ (Brother), जामातृ (Son-in-law) शब्दाः अपि पितृवत् प्रचलन्ति। द्वितीया-बहुवचने दीर्घ 'ॄ' (पितॄन्) ध्येयम्।
+            <div class="shabda-toggle-group">
+                <button type="button" class="shabda-toggle-btn active" onclick="switchShabda(this, 'pane-m-pitr')">पितृ (पिता - Father)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-m-netr')">नेतृ (नेता - Leader)</button>
             </div>
         </div>
+        <div id="pane-m-pitr" class="shabda-pane active" style="display:block;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">पितृ = प् + इ + त् + ऋ (अन्तिमवर्णः 'ऋ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>पिता</td>
+                    <td>पितरौ</td>
+                    <td>पितरः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>पितरम्</td>
+                    <td>पितरौ</td>
+                    <td>पितॄन्</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>पित्रा</td>
+                    <td>पितृभ्याम्</td>
+                    <td>पितृभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>पित्रे</td>
+                    <td>पितृभ्याम्</td>
+                    <td>पितृभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>पितुः</td>
+                    <td>पितृभ्याम्</td>
+                    <td>पितृभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>पितुः</td>
+                    <td>पित्रोः</td>
+                    <td>पितॄणाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>पितरि</td>
+                    <td>पित्रोः</td>
+                    <td>पितृषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे पितः !</td>
+                    <td>हे पितरौ !</td>
+                    <td>हे पितरः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Note द्वितीया बहुवचन 'पितॄन्' (दीर्घ ॠ with न्) vs feminine मातृः.
+        </div>
+        </div>
+        <div id="pane-m-netr" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">नेतृ = न् + ए + त् + ऋ (अन्तिमवर्णः 'ऋ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>नेता</td>
+                    <td>नेतारौ</td>
+                    <td>नेतारः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>नेतारम्</td>
+                    <td>नेतारौ</td>
+                    <td>नेतॄन्</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>नेत्रा</td>
+                    <td>नेतृभ्याम्</td>
+                    <td>नेतृभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>नेत्रे</td>
+                    <td>नेतृभ्याम्</td>
+                    <td>नेतृभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>नेतुः</td>
+                    <td>नेतृभ्याम्</td>
+                    <td>नेतृभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>नेतुः</td>
+                    <td>नेत्रोः</td>
+                    <td>नेतॄणाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>नेतरि</td>
+                    <td>नेत्रोः</td>
+                    <td>नेतृषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे नेतः !</td>
+                    <td>हे नेतारौ !</td>
+                    <td>हे नेतारः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Agent noun pattern: नेतारम्, नेतारौ, नेतॄन्.
+        </div>
+        </div>
+    </div>
 
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">७. नेतृ (ऋकारान्त पुंलिङ्ग - Ending in 'ṛ')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Netri &bull; Leader / Guide (Base stem: नेतृ)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">ऋकारान्त पुंलिङ्ग</span>
-            </div>
-            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">नेतृ = न् + ए + त् + ऋ (अन्तिमवर्णः 'ऋ')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>नेता</td>
-                            <td>नेतारौ</td>
-                            <td>नेतारः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>नेतारम्</td>
-                            <td>नेतारौ</td>
-                            <td>नेतॄन्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>नेत्रा</td>
-                            <td>नेतृभ्याम्</td>
-                            <td>नेतृभिः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>नेत्रे</td>
-                            <td>नेतृभ्याम्</td>
-                            <td>नेतृभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>नेतुः</td>
-                            <td>नेतृभ्याम्</td>
-                            <td>नेतृभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>नेतुः</td>
-                            <td>नेत्रोः</td>
-                            <td>नेतॄणाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>नेतरि</td>
-                            <td>नेत्रोः</td>
-                            <td>नेतृषु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे नेतः!</td>
-                            <td>हे नेतारौ!</td>
-                            <td>हे नेतारः!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> धातृ, कर्तृ, वक्तृ, हर्तृ शब्दाः नेतृवत् भवन्ति।
-            </div>
-        </div>
-</div>
+    </div>
 
     <!-- ========================================================================= -->
     <!-- TAB 2: FEMININE NOUNS                                                     -->
@@ -1033,499 +1402,757 @@ tr:hover td {
                 <i class="fas fa-female" style="margin-right:8px;"></i>स्त्रीलिङ्ग-शब्दाः &bull; Feminine Noun Declensions
             </h2>
             <div style="color:var(--text-muted); font-size:0.92rem; margin-top:4px;">
-                Understanding declensions for आकारान्त (ending in long 'ā') and ईकारान्त (ending in long 'ī') feminine nouns.
+                Understanding declensions for आकारान्त, इकारान्त, ईकारान्त, उकारान्त, and ऋकारान्त feminine nouns. Toggle between model paradigms below.
             </div>
         </div>
 
-        <!-- LATA TABLE -->
-        <div class="sop-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-                <h3 style="margin:0; color:var(--accent); font-size:1.2rem;">
-                    <i class="fas fa-seedling"></i> १. लता (आकारान्त स्त्रीलिङ्ग - Creeper)
+        <!-- 1. AKARANTA FEMININE TOGGLE (LATA / BALIKA / MALA / RAMA) -->
+        <div class="sop-card" style="margin-bottom: 24px;">
+        <div class="shabda-toggle-wrapper">
+            <div>
+                <h3 class="shabda-toggle-title">
+                    <i class="fas fa-book-reader" style="color:var(--accent);"></i> १. आकारान्त स्त्रीलिङ्ग-शब्दाः (Ending in Long 'ā')
                 </h3>
-                <span class="card-badge badge-green">Like: बालिका, रमा, माला, सीता, विद्या, अध्यापिका</span>
+                <div style="color:var(--text-muted); font-size:0.88rem; margin-top:3px;">Feminine stems ending in long 'ā' &bull; Examples: लता (Creeper), बालिका (Girl), माला (Garland), रमा (Lakshmi)</div>
             </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>विभक्तिः (Vibhakti)</th>
-                            <th>एकवचनम् (Singular)</th>
-                            <th>द्विवचनम् (Dual)</th>
-                            <th>बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td><td>लता</td><td>लते</td><td>लताः</td></tr>
-                        <tr><td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td><td>लताम्</td><td>लते</td><td>लताः</td></tr>
-                        <tr><td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td><td>लतया</td><td>लताभ्याम्</td><td>लताभिः</td></tr>
-                        <tr><td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td><td>लतायै</td><td>लताभ्याम्</td><td>लताभ्यः</td></tr>
-                        <tr><td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td><td>लतायाः</td><td>लताभ्याम्</td><td>लताभ्यः</td></tr>
-                        <tr><td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td><td>लतायाः</td><td>लतयोः</td><td>लतानाम्</td></tr>
-                        <tr><td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td><td>लतायाम्</td><td>लतयोः</td><td>लतासु</td></tr>
-                        <tr><td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td><td>हे लते !</td><td>हे लते !</td><td>हे लताः !</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px;">
-                <strong>💡 Memory Tip:</strong> Notice that in लता, पञ्चमी and षष्ठी एकवचन are identical: <strong>लतायाः</strong>. Also, प्रथमा and द्वितीया द्विवचन are identical: <strong>लते</strong>.
+            <div class="shabda-toggle-group">
+                <button type="button" class="shabda-toggle-btn active" onclick="switchShabda(this, 'pane-f-lata')">लता (Creeper)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-f-balika')">बालिका (Girl)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-f-mala')">माला (Garland)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-f-rama')">रमा (णत्वम्)</button>
             </div>
         </div>
+        <div id="pane-f-lata" class="shabda-pane active" style="display:block;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">लता = ल् + अ + त् + आ (अन्तिमवर्णः 'आ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>लता</td>
+                    <td>लते</td>
+                    <td>लताः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>लताम्</td>
+                    <td>लते</td>
+                    <td>लताः</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>लतया</td>
+                    <td>लताभ्याम्</td>
+                    <td>लताभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>लतायै</td>
+                    <td>लताभ्याम्</td>
+                    <td>लताभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>लतायाः</td>
+                    <td>लताभ्याम्</td>
+                    <td>लताभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>लतायाः</td>
+                    <td>लतयोः</td>
+                    <td>लतानाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>लतायाम्</td>
+                    <td>लतयोः</td>
+                    <td>लतासु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे लते !</td>
+                    <td>हे लते !</td>
+                    <td>हे लताः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Standard आकारान्त feminine model noun (लता, लते, लताः).
+        </div>
+        </div>
+        <div id="pane-f-balika" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">बालिका = ब् + आ + ल् + इ + क् + आ (अन्तिमवर्णः 'आ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>बालिका</td>
+                    <td>बालिके</td>
+                    <td>बालिकाः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>बालिकाम्</td>
+                    <td>बालिके</td>
+                    <td>बालिकाः</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>बालिकया</td>
+                    <td>बालिकाभ्याम्</td>
+                    <td>बालिकाभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>बालिकायै</td>
+                    <td>बालिकाभ्याम्</td>
+                    <td>बालिकाभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>बालिकायाः</td>
+                    <td>बालिकाभ्याम्</td>
+                    <td>बालिकाभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>बालिकायाः</td>
+                    <td>बालिकयोः</td>
+                    <td>बालिकानाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>बालिकायाम्</td>
+                    <td>बालिकयोः</td>
+                    <td>बालिकासु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे बालिके !</td>
+                    <td>हे बालिके !</td>
+                    <td>हे बालिकाः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Most common CBSE examination noun for female students.
+        </div>
+        </div>
+        <div id="pane-f-mala" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">माला = म् + आ + ल् + आ (अन्तिमवर्णः 'आ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>माला</td>
+                    <td>माले</td>
+                    <td>मालाः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>मालाम्</td>
+                    <td>माले</td>
+                    <td>मालाः</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>मालया</td>
+                    <td>मालाभ्याम्</td>
+                    <td>मालाभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>मालायै</td>
+                    <td>मालाभ्याम्</td>
+                    <td>मालाभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>मालायाः</td>
+                    <td>मालाभ्याम्</td>
+                    <td>मालाभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>मालायाः</td>
+                    <td>मालयोः</td>
+                    <td>मालानाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>मालायाम्</td>
+                    <td>मालयोः</td>
+                    <td>मालासु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे माले !</td>
+                    <td>हे माले !</td>
+                    <td>हे मालाः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Direct NCERT दीपकम् textbook vocabulary model.
+        </div>
+        </div>
+        <div id="pane-f-rama" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">रमा = र् + अ + म् + आ (अन्तिमवर्णः 'आ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>रमा</td>
+                    <td>रमे</td>
+                    <td>रमाः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>रमाम्</td>
+                    <td>रमे</td>
+                    <td>रमाः</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>रमया</td>
+                    <td>रमाभ्याम्</td>
+                    <td>रमाभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>रमायै</td>
+                    <td>रमाभ्याम्</td>
+                    <td>रमाभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>रमायाः</td>
+                    <td>रमाभ्याम्</td>
+                    <td>रमाभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>रमायाः</td>
+                    <td>रमयोः</td>
+                    <td>रमाणाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>रमायाम्</td>
+                    <td>रमयोः</td>
+                    <td>रमासु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे रमे !</td>
+                    <td>हे रमे !</td>
+                    <td>हे रमाः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Due to initial <strong>र् (r)</strong>, note षष्ठी बहुवचन 'रमाणाम्' (णत्वम्) instead of रमानाम्.
+        </div>
+        </div>
+    </div>
 
-        <!-- BALIKA TABLE -->
-        <div class="sop-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-                <h3 style="margin:0; color:var(--accent-blue); font-size:1.2rem;">
-                    <i class="fas fa-female"></i> २. बालिका (आकारान्त स्त्रीलिङ्ग - Girl)
+        <!-- 2. IKARANTA FEMININE TOGGLE (MATI / KIRTI) -->
+        <div class="sop-card" style="margin-bottom: 24px;">
+        <div class="shabda-toggle-wrapper">
+            <div>
+                <h3 class="shabda-toggle-title">
+                    <i class="fas fa-book-reader" style="color:var(--accent);"></i> २. इकारान्त स्त्रीलिङ्ग-शब्दाः (Ending in Short 'i')
                 </h3>
-                <span class="card-badge badge-blue">Standard CBSE Model</span>
+                <div style="color:var(--text-muted); font-size:0.88rem; margin-top:3px;">Feminine stems ending in short 'i' &bull; Characteristic dual forms in चतुर्थी, पञ्चमी, षष्ठी, सप्तमी एकवचन</div>
             </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>विभक्तिः</th><th>एकवचनम्</th><th>द्विवचनम्</th><th>बहुवचनम्</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong></td><td>बालिका</td><td>बालिके</td><td>बालिकाः</td></tr>
-                        <tr><td><strong>द्वितीया</strong></td><td>बालिकाम्</td><td>बालिके</td><td>बालिकाः</td></tr>
-                        <tr><td><strong>तृतीया</strong></td><td>बालिकया</td><td>बालिकाभ्याम्</td><td>बालिकाभिः</td></tr>
-                        <tr><td><strong>चतुर्थी</strong></td><td>बालिकायै</td><td>बालिकाभ्याम्</td><td>बालिकाभ्यः</td></tr>
-                        <tr><td><strong>पञ्चमी</strong></td><td>बालिकायाः</td><td>बालिकाभ्याम्</td><td>बालिकाभ्यः</td></tr>
-                        <tr><td><strong>षष्ठी</strong></td><td>बालिकायाः</td><td>बालिकयोः</td><td>बालिकानाम्</td></tr>
-                        <tr><td><strong>सप्तमी</strong></td><td>बालिकायाम्</td><td>बालिकयोः</td><td>बालिकासु</td></tr>
-                        <tr><td><strong>सम्बोधनम्</strong></td><td>हे बालिके !</td><td>हे बालिके !</td><td>हे बालिकाः !</td></tr>
-                    </tbody>
-                </table>
+            <div class="shabda-toggle-group">
+                <button type="button" class="shabda-toggle-btn active" onclick="switchShabda(this, 'pane-f-mati')">मति (Mind)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-f-kirti')">कीर्ति (Fame)</button>
             </div>
         </div>
+        <div id="pane-f-mati" class="shabda-pane active" style="display:block;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">मति = म् + अ + त् + इ (अन्तिमवर्णः 'इ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>मतिः</td>
+                    <td>मती</td>
+                    <td>मतयः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>मतिम्</td>
+                    <td>मती</td>
+                    <td>मतीः</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>मत्या</td>
+                    <td>मतिभ्याम्</td>
+                    <td>मतिभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>मतये / मत्यै</td>
+                    <td>मतिभ्याम्</td>
+                    <td>मतिभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>मतेः / मत्याः</td>
+                    <td>मतिभ्याम्</td>
+                    <td>मतिभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>मतेः / मत्याः</td>
+                    <td>मत्योः</td>
+                    <td>मतीनाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>मतौ / मत्याम्</td>
+                    <td>मत्योः</td>
+                    <td>मतिषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे मते !</td>
+                    <td>हे मती !</td>
+                    <td>हे मतयः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Notice dual permitted forms: मतये / मत्यै (4th), मतेः / मत्याः (5th/6th), मतौ / मत्याम् (7th).
+        </div>
+        </div>
+        <div id="pane-f-kirti" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">कीर्ति = क् + ई + र् + त् + इ (अन्तिमवर्णः 'इ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>कीर्तिः</td>
+                    <td>कीर्ती</td>
+                    <td>कीर्तयः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>कीर्तिम्</td>
+                    <td>कीर्ती</td>
+                    <td>कीर्तीः</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>कीर्त्या</td>
+                    <td>कीर्तिभ्याम्</td>
+                    <td>कीर्तिभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>कीर्तये / कीर्त्यै</td>
+                    <td>कीर्तिभ्याम्</td>
+                    <td>कीर्तिभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>कीर्तेः / कीर्त्याः</td>
+                    <td>कीर्तिभ्याम्</td>
+                    <td>कीर्तिभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>कीर्तेः / कीर्त्याः</td>
+                    <td>कीर्त्योः</td>
+                    <td>कीर्तीनाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>कीर्तौ / कीर्त्याम्</td>
+                    <td>कीर्त्योः</td>
+                    <td>कीर्तिषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे कीर्ते !</td>
+                    <td>हे कीर्ती !</td>
+                    <td>हे कीर्तयः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Parallel to मति: कीर्तये/कीर्त्यै, कीर्तेः/कीर्त्याः, कीर्तौ/कीर्त्याम्.
+        </div>
+        </div>
+    </div>
 
-        <!-- NADI TABLE -->
-        <div class="sop-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-                <h3 style="margin:0; color:var(--accent-purple); font-size:1.2rem;">
-                    <i class="fas fa-water"></i> ३. नदी (ईकारान्त स्त्रीलिङ्ग - River)
+        <!-- 3. EE-KARANTA FEMININE TOGGLE (NADI / GAURI) -->
+        <div class="sop-card" style="margin-bottom: 24px;">
+        <div class="shabda-toggle-wrapper">
+            <div>
+                <h3 class="shabda-toggle-title">
+                    <i class="fas fa-book-reader" style="color:var(--accent);"></i> ३. ईकारान्त स्त्रीलिङ्ग-शब्दाः (Ending in Long 'ī')
                 </h3>
-                <span class="card-badge badge-purple">Like: जननी, भगिनी, पत्नी, नारी, देवी</span>
+                <div style="color:var(--text-muted); font-size:0.88rem; margin-top:3px;">Feminine stems ending in long 'ī' &bull; Examples: नदी (River), गौरी (Goddess), जननी (Mother), पत्नी</div>
             </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>विभक्तिः (Vibhakti)</th>
-                            <th>एकवचनम् (Singular)</th>
-                            <th>द्विवचनम् (Dual)</th>
-                            <th>बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td><td>नदी</td><td>नद्यौ</td><td>नद्यः</td></tr>
-                        <tr><td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td><td>नदीम्</td><td>नद्यौ</td><td>नदीः</td></tr>
-                        <tr><td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td><td>नद्या</td><td>नदीभ्याम्</td><td>नदीभिः</td></tr>
-                        <tr><td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td><td>नद्यै</td><td>नदीभ्याम्</td><td>नदीभ्यः</td></tr>
-                        <tr><td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td><td>नद्याः</td><td>नदीभ्याम्</td><td>नदीभ्यः</td></tr>
-                        <tr><td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td><td>नद्याः</td><td>नद्योः</td><td>नदीनाम्</td></tr>
-                        <tr><td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td><td>नद्याम्</td><td>नद्योः</td><td>नदीषु</td></tr>
-                        <tr><td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td><td>हे नदि !</td><td>हे नद्यौ !</td><td>हे नद्यः !</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px;">
-                <strong>⚠️ Caution in Vocative Singular:</strong> Notice that in सम्बोधनम् एकवचन, the long 'ई' becomes short 'इ': <strong>हे नदि !</strong> (not नदी).
+            <div class="shabda-toggle-group">
+                <button type="button" class="shabda-toggle-btn active" onclick="switchShabda(this, 'pane-f-nadi')">नदी (River)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-f-gauri')">गौरी (णत्वम्)</button>
             </div>
         </div>
-    
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">५. मति (इकारान्त स्त्रीलिङ्ग - Ending in Short 'i')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Mati &bull; Intellect / Mind (Base stem: मति)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">इकारान्त स्त्रीलिङ्ग</span>
-            </div>
+        <div id="pane-f-nadi" class="shabda-pane active" style="display:block;">
             <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">मति = म् + अ + त् + इ (अन्तिमवर्णः 'इ')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>मतिः</td>
-                            <td>मती</td>
-                            <td>मतयः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>मतिम्</td>
-                            <td>मती</td>
-                            <td>मतीः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>मत्या</td>
-                            <td>मतिभ्याम्</td>
-                            <td>मतिभिः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>मतये / मत्यै</td>
-                            <td>मतिभ्याम्</td>
-                            <td>मतिभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>मतेः / मत्याः</td>
-                            <td>मतिभ्याम्</td>
-                            <td>मतिभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>मतेः / मत्याः</td>
-                            <td>मत्योः</td>
-                            <td>मतीनाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>मतौ / मत्याम्</td>
-                            <td>मत्योः</td>
-                            <td>मतिषु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे मते!</td>
-                            <td>हे मती!</td>
-                            <td>हे मतयः!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> चतुर्थी, पञ्चमी, षष्ठी एवं सप्तमी-एकवचने द्विविधानि रूपाणि (वैकल्पिक-रूपाणि) प्राप्यन्ते।
-            </div>
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">नदी = न् + अ + द् + ई (अन्तिमवर्णः 'ई')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>नदी</td>
+                    <td>नद्यौ</td>
+                    <td>नद्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>नदीम्</td>
+                    <td>नद्यौ</td>
+                    <td>नदीः</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>नद्या</td>
+                    <td>नदीभ्याम्</td>
+                    <td>नदीभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>नद्यै</td>
+                    <td>नदीभ्याम्</td>
+                    <td>नदीभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>नद्याः</td>
+                    <td>नदीभ्याम्</td>
+                    <td>नदीभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>नद्याः</td>
+                    <td>नद्योः</td>
+                    <td>नदीनाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>नद्याम्</td>
+                    <td>नद्योः</td>
+                    <td>नदीषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे नदि !</td>
+                    <td>हे नद्यौ !</td>
+                    <td>हे नद्यः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Note सम्बोधनम् एकवचन is short 'हे नदि!' with ह्रस्व इ.
         </div>
+        </div>
+        <div id="pane-f-gauri" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">गौरी = ग्‍ + औ + र् + ई (अन्तिमवर्णः 'ई')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>गौरी</td>
+                    <td>गौर्यौ</td>
+                    <td>गौर्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>गौरीम्</td>
+                    <td>गौर्यौ</td>
+                    <td>गौरीः</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>गौर्या</td>
+                    <td>गौरीभ्याम्</td>
+                    <td>गौरीभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>गौर्यै</td>
+                    <td>गौरीभ्याम्</td>
+                    <td>गौरीभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>गौर्याः</td>
+                    <td>गौरीभ्याम्</td>
+                    <td>गौरीभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>गौर्याः</td>
+                    <td>गौर्योः</td>
+                    <td>गौरीणाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>गौर्याम्</td>
+                    <td>गौर्योः</td>
+                    <td>गौरीषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे गौरि !</td>
+                    <td>हे गौर्यौ !</td>
+                    <td>हे गौर्यः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Due to <strong>र् (r)</strong>, षष्ठी बहुवचन is 'गौरीणाम्' (णत्वम्). Vocative: 'हे गौरि!'.
+        </div>
+        </div>
+    </div>
 
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">६. कीर्ति (इकारान्त स्त्रीलिङ्ग - Ending in Short 'i')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Kīrti &bull; Fame / Glory (Base stem: कीर्ति)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">इकारान्त स्त्रीलिङ्ग</span>
+        <!-- 4. U-KARANTA & R-KARANTA FEMININE TOGGLE (DHENU / MATRI) -->
+        <div class="sop-card" style="margin-bottom: 24px;">
+        <div class="shabda-toggle-wrapper">
+            <div>
+                <h3 class="shabda-toggle-title">
+                    <i class="fas fa-book-reader" style="color:var(--accent);"></i> ४. उकारान्त एवं ऋकारान्त स्त्रीलिङ्ग-शब्दाः
+                </h3>
+                <div style="color:var(--text-muted); font-size:0.88rem; margin-top:3px;">Feminine stems in short 'u' (धेनु) & 'ṛ' (मातृ - Mother)</div>
             </div>
-            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">कीर्ति = कूर् + ई + र् + त् + इ (अन्तिमवर्णः 'इ')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>कीर्तिः</td>
-                            <td>कीर्ती</td>
-                            <td>कीर्तयः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>कीर्तिम्</td>
-                            <td>कीर्ती</td>
-                            <td>कीर्तीः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>कीर्त्या</td>
-                            <td>कीर्तिभ्याम्</td>
-                            <td>कीर्तिभिः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>कीर्तये / कीर्त्यै</td>
-                            <td>कीर्तिभ्याम्</td>
-                            <td>कीर्तिभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>कीर्तेः / कीर्त्याः</td>
-                            <td>कीर्तिभ्याम्</td>
-                            <td>कीर्तिभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>कीर्तेः / कीर्त्याः</td>
-                            <td>कीर्त्योः</td>
-                            <td>कीर्तीनाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>कीर्तौ / कीर्त्याम्</td>
-                            <td>कीर्त्योः</td>
-                            <td>कीर्तिषु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे कीर्ते!</td>
-                            <td>हे कीर्ती!</td>
-                            <td>हे कीर्तयः!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> बुद्धि, शक्ति, शान्ति, प्रीति शब्दाः कीर्तिवत् एव भवन्ति।
+            <div class="shabda-toggle-group">
+                <button type="button" class="shabda-toggle-btn active" onclick="switchShabda(this, 'pane-f-dhenu')">धेनु (उकारान्त - Cow)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-f-matr')">मातृ (ऋकारान्त - Mother)</button>
             </div>
         </div>
+        <div id="pane-f-dhenu" class="shabda-pane active" style="display:block;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">धेनु = ध् + ए + न् + उ (अन्तिमवर्णः 'उ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>धेनुः</td>
+                    <td>धेनू</td>
+                    <td>धेनवः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>धेनुम्</td>
+                    <td>धेनू</td>
+                    <td>धेनूः</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>धेन्वा</td>
+                    <td>धेनुभ्याम्</td>
+                    <td>धेनुभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>धेनवे / धेन्वै</td>
+                    <td>धेनुभ्याम्</td>
+                    <td>धेनुभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>धेनोः / धेन्वाः</td>
+                    <td>धेनुभ्याम्</td>
+                    <td>धेनुभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>धेनोः / धेन्वाः</td>
+                    <td>धेन्वोः</td>
+                    <td>धेनूनाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>धेनौ / धेन्वाम्</td>
+                    <td>धेन्वोः</td>
+                    <td>धेनुषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे धेनो !</td>
+                    <td>हे धेनू !</td>
+                    <td>हे धेनवः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Like मति, धेनु has optional dual forms in cases 4, 5, 6, 7 (धेनवे/धेन्वै, धेनोः/धेन्वाः).
+        </div>
+        </div>
+        <div id="pane-f-matr" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">मातृ = म् + आ + त् + ऋ (अन्तिमवर्णः 'ऋ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>माता</td>
+                    <td>मातरौ</td>
+                    <td>मातरः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>मातरम्</td>
+                    <td>मातरौ</td>
+                    <td>मातृः</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>मात्रा</td>
+                    <td>मातृभ्याम्</td>
+                    <td>मातृभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>मात्रे</td>
+                    <td>मातृभ्याम्</td>
+                    <td>मातृभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>मातुः</td>
+                    <td>मातृभ्याम्</td>
+                    <td>मातृभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>मातुः</td>
+                    <td>मात्रोः</td>
+                    <td>मातृणाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>मातरि</td>
+                    <td>मात्रोः</td>
+                    <td>मातृषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे मातः !</td>
+                    <td>हे मातरौ !</td>
+                    <td>हे मातरः !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Contrast with masculine पितॄन्: feminine द्वितीया बहुवचन is 'मातृः' with विसर्ग (not न्).
+        </div>
+        </div>
+    </div>
 
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">७. गौरी (ईकारान्त स्त्रीलिङ्ग - Ending in Long 'ī')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Gaurī &bull; Goddess Gauri / Fair-complexioned (Base stem: गौरी)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">ईकारान्त स्त्रीलिङ्ग</span>
-            </div>
-            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">गौरी = ग्‍ + औ + र् + ई (अन्तिमवर्णः 'ई')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>गौरी</td>
-                            <td>गौर्यौ</td>
-                            <td>गौर्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>गौरीम्</td>
-                            <td>गौर्यौ</td>
-                            <td>गौरीः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>गौर्या</td>
-                            <td>गौरीभ्याम्</td>
-                            <td>गौरीभिः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>गौर्यै</td>
-                            <td>गौरीभ्याम्</td>
-                            <td>गौरीभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>गौर्याः</td>
-                            <td>गौरीभ्याम्</td>
-                            <td>गौरीभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>गौर्याः</td>
-                            <td>गौर्योः</td>
-                            <td>गौरीणाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>गौर्याम्</td>
-                            <td>गौर्योः</td>
-                            <td>गौरीषु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे गौरि!</td>
-                            <td>हे गौर्यौ!</td>
-                            <td>हे गौर्यः!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> नदी-शब्दवत् रूपाणि भवन्ति। सम्बोधन-एकवचने ह्रस्व 'इ' (हे गौरि!) भवति।
-            </div>
-        </div>
-
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">८. धेनु (उकारान्त स्त्रीलिङ्ग - Ending in Short 'u')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Dhenu &bull; Cow (Base stem: धेनु)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">उकारान्त स्त्रीलिङ्ग</span>
-            </div>
-            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">धेनु = ध् + ए + न् + उ (अन्तिमवर्णः 'उ')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>धेनुः</td>
-                            <td>धेनू</td>
-                            <td>धेनवः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>धेनुम्</td>
-                            <td>धेनू</td>
-                            <td>धेनूः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>धेन्वा</td>
-                            <td>धेनुभ्याम्</td>
-                            <td>धेनुभिः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>धेनवे / धेन्वै</td>
-                            <td>धेनुभ्याम्</td>
-                            <td>धेनुभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>धेनोः / धेन्वाः</td>
-                            <td>धेनुभ्याम्</td>
-                            <td>धेनुभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>धेनोः / धेन्वाः</td>
-                            <td>धेन्वोः</td>
-                            <td>धेनूनाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>धेनौ / धेन्वाम्</td>
-                            <td>धेन्वोः</td>
-                            <td>धेनुषु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे धेनो!</td>
-                            <td>हे धेनू!</td>
-                            <td>हे धेनवः!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> तनु (body), रज्जु (rope) शब्दाः अपि धेनुवत् भवन्ति। चतुर्थी-पञ्चमी-षष्ठी-सप्तमी एकवचने द्विविधरूपाणि भवन्ति।
-            </div>
-        </div>
-
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">९. मातृ (ऋकारान्त स्त्रीलिङ्ग - Ending in 'ṛ')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Mātṛ &bull; Mother (Base stem: मातृ)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">ऋकारान्त स्त्रीलिङ्ग</span>
-            </div>
-            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">मातृ = म् + आ + त् + ऋ (अन्तिमवर्णः 'ऋ')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>माता</td>
-                            <td>मातरौ</td>
-                            <td>मातरः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>मातरम्</td>
-                            <td>मातरौ</td>
-                            <td>मातृः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>मात्रा</td>
-                            <td>मातृभ्याम्</td>
-                            <td>मातृभिः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>मात्रे</td>
-                            <td>मातृभ्याम्</td>
-                            <td>मातृभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>मातुः</td>
-                            <td>मातृभ्याम्</td>
-                            <td>मातृभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>मातुः</td>
-                            <td>मात्रोः</td>
-                            <td>मातृणाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>मातरि</td>
-                            <td>मात्रोः</td>
-                            <td>मातृषु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे मातः!</td>
-                            <td>हे मातरौ!</td>
-                            <td>हे मातरः!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> अति-महत्त्वपूर्णम्: द्वितीया-बहुवचने पुंलिङ्गे 'पितॄन्' भवति किन्तु स्त्रीलिङ्गे 'मातृः' (विसर्गयुक्तं ह्रस्व-ऋकारान्तम्) भवति!
-            </div>
-        </div>
-</div>
+    </div>
 
     <!-- ========================================================================= -->
     <!-- TAB 3: NEUTER NOUNS                                                       -->
@@ -1548,145 +2175,228 @@ tr:hover td {
             </p>
         </div>
 
-        <!-- PHALAM TABLE -->
-        <div class="sop-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-                <h3 style="margin:0; color:var(--accent); font-size:1.2rem;">
-                    <i class="fas fa-apple-alt"></i> १. फल (अकारान्त नपुंसकलिङ्ग - Fruit)
+        <!-- 1. AKARANTA NEUTER TOGGLE (PHALAM / PUSTAKAM / MITRAM) -->
+        <div class="sop-card" style="margin-bottom: 24px;">
+        <div class="shabda-toggle-wrapper">
+            <div>
+                <h3 class="shabda-toggle-title">
+                    <i class="fas fa-book-reader" style="color:var(--accent);"></i> १. अकारान्त नपुंसकलिङ्ग-शब्दाः (Ending in 'a')
                 </h3>
-                <span class="card-badge badge-amber">Standard CBSE Model</span>
+                <div style="color:var(--text-muted); font-size:0.88rem; margin-top:3px;">Neuter stems ending in short 'a' &bull; प्रथमा and द्वितीया are identical (-म्, -े, -ानि); 3rd to 7th are identical to masculine राम/बालक</div>
             </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>विभक्तिः (Vibhakti)</th>
-                            <th>एकवचनम् (Singular)</th>
-                            <th>द्विवचनम् (Dual)</th>
-                            <th>बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td><td>फलम्</td><td>फले</td><td>फलानि</td></tr>
-                        <tr><td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td><td>फलम्</td><td>फले</td><td>फलानि</td></tr>
-                        <tr><td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td><td>फलेन</td><td>फलाभ्याम्</td><td>फलैः</td></tr>
-                        <tr><td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td><td>फलाय</td><td>फलाभ्याम्</td><td>फलेभ्यः</td></tr>
-                        <tr><td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td><td>फलात्</td><td>फलाभ्याम्</td><td>फलेभ्यः</td></tr>
-                        <tr><td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td><td>फलस्य</td><td>फलयोः</td><td>फलानाम्</td></tr>
-                        <tr><td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td><td>फले</td><td>फलयोः</td><td>फलेषु</td></tr>
-                        <tr><td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td><td>हे फल !</td><td>हे फले !</td><td>हे फलानि !</td></tr>
-                    </tbody>
-                </table>
+            <div class="shabda-toggle-group">
+                <button type="button" class="shabda-toggle-btn active" onclick="switchShabda(this, 'pane-n-phalam')">फलम् (Fruit)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-n-pustakam')">पुस्तकम् (Book)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-n-mitram')">मित्रम् (णत्वम्)</button>
             </div>
         </div>
-
-        <!-- PUSTAKAM TABLE -->
-        <div class="sop-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
-                <h3 style="margin:0; color:var(--accent-blue); font-size:1.2rem;">
-                    <i class="fas fa-book"></i> २. पुस्तक (अकारान्त नपुंसकलिङ्ग - Book)
-                </h3>
-                <span class="card-badge badge-blue">Like: पत्र, नगर, उद्यान, कमल, मित्र</span>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>विभक्तिः</th><th>एकवचनम्</th><th>द्विवचनम्</th><th>बहुवचनम्</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong></td><td>पुस्तकम्</td><td>पुस्तके</td><td>पुस्तकानि</td></tr>
-                        <tr><td><strong>द्वितीया</strong></td><td>पुस्तकम्</td><td>पुस्तके</td><td>पुस्तकानि</td></tr>
-                        <tr><td><strong>तृतीया</strong></td><td>पुस्तकेन</td><td>पुस्तकाभ्याम्</td><td>पुस्तकैः</td></tr>
-                        <tr><td><strong>चतुर्थी</strong></td><td>पुस्तकाय</td><td>पुस्तकाभ्याम्</td><td>पुस्तकेभ्यः</td></tr>
-                        <tr><td><strong>पञ्चमी</strong></td><td>पुस्तकात्</td><td>पुस्तकाभ्याम्</td><td>पुस्तकेभ्यः</td></tr>
-                        <tr><td><strong>षष्ठी</strong></td><td>पुस्तकस्य</td><td>पुस्तकयोः</td><td>पुस्तकानाम्</td></tr>
-                        <tr><td><strong>सप्तमी</strong></td><td>पुस्तके</td><td>पुस्तकयोः</td><td>पुस्तकेषु</td></tr>
-                        <tr><td><strong>सम्बोधनम्</strong></td><td>हे पुस्तक !</td><td>हे पुस्तके !</td><td>हे पुस्तकानि !</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">३. मित्र (अकारान्त नपुंसकलिङ्ग - Ending in 'a')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Mitra &bull; Friend (Base stem: मित्र)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">अकारान्त नपुंसकलिङ्ग</span>
-            </div>
+        <div id="pane-n-phalam" class="shabda-pane active" style="display:block;">
             <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">मित्र = म् + इ + त् + र् + अ (अन्तिमवर्णः 'अ')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>मित्रम्</td>
-                            <td>मित्रे</td>
-                            <td>मित्राणि</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>मित्रम्</td>
-                            <td>मित्रे</td>
-                            <td>मित्राणि</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>मित्रेण</td>
-                            <td>मित्राभ्याम्</td>
-                            <td>मित्रैः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>मित्राय</td>
-                            <td>मित्राभ्याम्</td>
-                            <td>मित्रेभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>मित्रात्</td>
-                            <td>मित्राभ्याम्</td>
-                            <td>मित्रेभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>मित्रस्य</td>
-                            <td>मित्रयोः</td>
-                            <td>मित्राणाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>मित्रे</td>
-                            <td>मित्रयोः</td>
-                            <td>मित्रेषु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे मित्र!</td>
-                            <td>हे मित्रे!</td>
-                            <td>हे मित्राणि!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> फल-वत् एव रूपाणि भवन्ति। र-कारस्य कारणात् तृतीया-एकवचने 'मित्रेण' तथा प्रथमा-द्वितीया-बहुवचने 'मित्राणि' (णत्वम्) भवति।
-            </div>
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">फल = फ् + अ + ल् + अ (अन्तिमवर्णः 'अ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>फलम्</td>
+                    <td>फले</td>
+                    <td>फलानि</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>फलम्</td>
+                    <td>फले</td>
+                    <td>फलानि</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>फलेन</td>
+                    <td>फलाभ्याम्</td>
+                    <td>फलैः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>फलाय</td>
+                    <td>फलाभ्याम्</td>
+                    <td>फलेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>फलात्</td>
+                    <td>फलाभ्याम्</td>
+                    <td>फलेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>फलस्य</td>
+                    <td>फलयोः</td>
+                    <td>फलानाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>फले</td>
+                    <td>फलयोः</td>
+                    <td>फलेषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे फल !</td>
+                    <td>हे फले !</td>
+                    <td>हे फलानि !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Standard model neuter noun in Sanskrit grammar.
         </div>
-</div>
+        </div>
+        <div id="pane-n-pustakam" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">पुस्तक = प् + उ + स् + त् + अ + क् + अ (अन्तिमवर्णः 'अ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>पुस्तकम्</td>
+                    <td>पुस्तके</td>
+                    <td>पुस्तकानि</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>पुस्तकम्</td>
+                    <td>पुस्तके</td>
+                    <td>पुस्तकानि</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>पुस्तकेन</td>
+                    <td>पुस्तकाभ्याम्</td>
+                    <td>पुस्तकैः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>पुस्तकाय</td>
+                    <td>पुस्तकाभ्याम्</td>
+                    <td>पुस्तकेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>पुस्तकात्</td>
+                    <td>पुस्तकाभ्याम्</td>
+                    <td>पुस्तकेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>पुस्तकस्य</td>
+                    <td>पुस्तकयोः</td>
+                    <td>पुस्तकानाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>पुस्तके</td>
+                    <td>पुस्तकयोः</td>
+                    <td>पुस्तकेषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे पुस्तक !</td>
+                    <td>हे पुस्तके !</td>
+                    <td>हे पुस्तकानि !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Classic school item model: पुस्तकानि in plural.
+        </div>
+        </div>
+        <div id="pane-n-mitram" class="shabda-pane" style="display:none;">
+            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
+            <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">मित्र = म् + इ + त् + र् + अ (अन्तिमवर्णः 'अ')</code>
+        </div><div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>मित्रम्</td>
+                    <td>मित्रे</td>
+                    <td>मित्राणि</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>मित्रम्</td>
+                    <td>मित्रे</td>
+                    <td>मित्राणि</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>मित्रेण</td>
+                    <td>मित्राभ्याम्</td>
+                    <td>मित्रैः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>मित्राय</td>
+                    <td>मित्राभ्याम्</td>
+                    <td>मित्रेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>मित्रात्</td>
+                    <td>मित्राभ्याम्</td>
+                    <td>मित्रेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>मित्रस्य</td>
+                    <td>मित्रयोः</td>
+                    <td>मित्राणाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>मित्रे</td>
+                    <td>मित्रयोः</td>
+                    <td>मित्रेषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>हे मित्र !</td>
+                    <td>हे मित्रे !</td>
+                    <td>हे मित्राणि !</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Due to internal <strong>र् (r)</strong>: तृतीया 'मित्रेण', प्रथमा/द्वितीया बहुवचन 'मित्राणि', षष्ठी बहुवचन 'मित्राणाम्'.
+        </div>
+        </div>
+    </div>
+
+    </div>
 
     <!-- ========================================================================= -->
     <!-- TAB 4: PRONOUNS                                                           -->
@@ -1795,140 +2505,439 @@ tr:hover td {
         </div>
     
         <!-- एतद् Pronoun (This) in 3 Genders -->
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">४. एतद् सर्वनाम (This - पुंलिङ्ग, स्त्रीलिङ्ग, नपुंसकलिङ्ग)</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Demonstrative Pronoun 'Etad' (Near Demonstrative - 'This / These')</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">दकारान्त सर्वनाम</span>
-            </div>
-            
-            <h4 style="color:var(--accent); margin:14px 0 8px 0;">(क) पुंलिङ्गः 'एतद्' (एषः / एतौ / एते - This / These Two / These All)</h4>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr><th>विभक्तिः</th><th>एकवचनम्</th><th>द्विवचनम्</th><th>बहुवचनम्</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong></td><td>एषः</td><td>एतौ</td><td>एते</td></tr>
-                        <tr><td><strong>द्वितीया</strong></td><td>एतम् (एनम्)</td><td>एतौ (एनौ)</td><td>एतान् (एनान्)</td></tr>
-                        <tr><td><strong>तृतीया</strong></td><td>एतेन (एनेन)</td><td>एताभ्याम्</td><td>एतैः</td></tr>
-                        <tr><td><strong>चतुर्थी</strong></td><td>एतस्मै</td><td>एताभ्याम्</td><td>एतेभ्यः</td></tr>
-                        <tr><td><strong>पञ्चमी</strong></td><td>एतस्मात्</td><td>एताभ्याम्</td><td>एतेभ्यः</td></tr>
-                        <tr><td><strong>षष्ठी</strong></td><td>एतस्य</td><td>एतयोः (एनयोः)</td><td>एतेषाम्</td></tr>
-                        <tr><td><strong>सप्तमी</strong></td><td>एतस्मिन्</td><td>एतयोः (एनयोः)</td><td>एतेषु</td></tr>
-                    </tbody>
-                </table>
-            </div>
 
-            <h4 style="color:var(--accent); margin:18px 0 8px 0;">(ख) स्त्रीलिङ्गः 'एतद्' (एषा / एते / एताः - This / These Two / These All Female)</h4>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr><th>विभक्तिः</th><th>एकवचनम्</th><th>द्विवचनम्</th><th>बहुवचनम्</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong></td><td>एषा</td><td>एते</td><td>एताः</td></tr>
-                        <tr><td><strong>द्वितीया</strong></td><td>एताम् (एनाम्)</td><td>एते (एने)</td><td>एताः (एनाः)</td></tr>
-                        <tr><td><strong>तृतीया</strong></td><td>एतया (एनया)</td><td>एताभ्याम्</td><td>एताभिः</td></tr>
-                        <tr><td><strong>चतुर्थी</strong></td><td>एतस्यै</td><td>एताभ्याम्</td><td>एताभ्यः</td></tr>
-                        <tr><td><strong>पञ्चमी</strong></td><td>एतस्याः</td><td>एताभ्याम्</td><td>एताभ्यः</td></tr>
-                        <tr><td><strong>षष्ठी</strong></td><td>एतस्याः</td><td>एतयोः (एनयोः)</td><td>एतासाम्</td></tr>
-                        <tr><td><strong>सप्तमी</strong></td><td>एतस्याम्</td><td>एतयोः (एनयोः)</td><td>एतासु</td></tr>
-                    </tbody>
-                </table>
+        <!-- 4. ETAD PRONOUN TOGGLE (MASCULINE / FEMININE / NEUTER) -->
+        <div class="sop-card" style="margin-bottom: 24px;">
+        <div class="shabda-toggle-wrapper">
+            <div>
+                <h3 class="shabda-toggle-title">
+                    <i class="fas fa-book-reader" style="color:var(--accent);"></i> ४. एतद् सर्वनाम (This - त्रिषु लिङ्गेषु)
+                </h3>
+                <div style="color:var(--text-muted); font-size:0.88rem; margin-top:3px;">Demonstrative Pronoun 'This' (Proximate) across all 3 genders</div>
             </div>
-
-            <h4 style="color:var(--accent); margin:18px 0 8px 0;">(ग) नपुंसकलिङ्गः 'एतद्' (एतत् / एते / एतानि - This / These Two / These All Neuter)</h4>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr><th>विभक्तिः</th><th>एकवचनम्</th><th>द्विवचनम्</th><th>बहुवचनम्</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong></td><td>एतत्</td><td>एते</td><td>एतानि</td></tr>
-                        <tr><td><strong>द्वितीया</strong></td><td>एतत् (एनत्)</td><td>एते (एने)</td><td>एतानि (एनानि)</td></tr>
-                        <tr><td colspan="4" style="text-align:center; color:var(--text-muted); font-size:0.9rem; background:rgba(0,0,0,0.02);"><em>(तृतीयातः सप्तमीपर्यन्तं पुंलिङ्गवत् एव रूपाणि भवन्ति — एतेन, एताभ्याम्, एतैः इत्यादि)</em></td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 सर्वनाम-शब्दानां सम्बोधनं न भवति (Pronouns do not have Vocative case forms).
+            <div class="shabda-toggle-group">
+                <button type="button" class="shabda-toggle-btn active" onclick="switchShabda(this, 'pane-p-etad-m')">पुंलिङ्गम् (एषः, एतौ, एते)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-p-etad-f')">स्त्रीलिङ्गम् (एषा, एते, एताः)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-p-etad-n')">नपुंसकलिङ्गम् (एतत्, एते, एतानि)</button>
             </div>
         </div>
-
-
-        <!-- किम् Pronoun (Who / What) in 3 Genders -->
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">५. किम् सर्वनाम (Who / What / Which - पुंलिङ्ग, स्त्रीलिङ्ग, नपुंसकलिङ्ग)</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Interrogative Pronoun 'Kim' (Used for Question Framing &bull; प्रश्ननिर्माणम्)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">मकारान्त सर्वनाम</span>
-            </div>
-            
-            <h4 style="color:var(--accent); margin:14px 0 8px 0;">(क) पुंलिङ्गः 'किम्' (कः / कौ / के - Who / Which Male)</h4>
+        <div id="pane-p-etad-m" class="shabda-pane active" style="display:block;">
             <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr><th>विभक्तिः</th><th>एकवचनम्</th><th>द्विवचनम्</th><th>बहुवचनम्</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong></td><td>कः</td><td>कौ</td><td>के</td></tr>
-                        <tr><td><strong>द्वितीया</strong></td><td>कम्</td><td>कौ</td><td>कान्</td></tr>
-                        <tr><td><strong>तृतीया</strong></td><td>केन</td><td>काभ्याम्</td><td>कैः</td></tr>
-                        <tr><td><strong>चतुर्थी</strong></td><td>कस्मै</td><td>काभ्याम्</td><td>केभ्यः</td></tr>
-                        <tr><td><strong>पञ्चमी</strong></td><td>कस्मात्</td><td>काभ्याम्</td><td>केभ्यः</td></tr>
-                        <tr><td><strong>षष्ठी</strong></td><td>कस्य</td><td>कयोः</td><td>केषाम्</td></tr>
-                        <tr><td><strong>सप्तमी</strong></td><td>कस्मिन्</td><td>कयोः</td><td>केषु</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h4 style="color:var(--accent); margin:18px 0 8px 0;">(ख) स्त्रीलिङ्गः 'किम्' (का / के / काः - Who / Which Female)</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>एषः</td>
+                    <td>एतौ</td>
+                    <td>एते</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>एतम् / एनम्</td>
+                    <td>एतौ / एनौ</td>
+                    <td>एतान् / एनान्</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>एतेन / एनेन</td>
+                    <td>एताभ्याम्</td>
+                    <td>एतैः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>एतस्मै</td>
+                    <td>एताभ्याम्</td>
+                    <td>एतेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>एतस्मात्</td>
+                    <td>एताभ्याम्</td>
+                    <td>एतेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>एतस्य</td>
+                    <td>एतयोः / एनयोः</td>
+                    <td>एतेषाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>एतस्मिन्</td>
+                    <td>एतयोः / एनयोः</td>
+                    <td>एतेषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Note: Pronouns do not have सम्बोधनम् (Vocative).
+        </div>
+        </div>
+        <div id="pane-p-etad-f" class="shabda-pane" style="display:none;">
             <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr><th>विभक्तिः</th><th>एकवचनम्</th><th>द्विवचनम्</th><th>बहुवचनम्</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong></td><td>का</td><td>के</td><td>काः</td></tr>
-                        <tr><td><strong>द्वितीया</strong></td><td>काम्</td><td>के</td><td>काः</td></tr>
-                        <tr><td><strong>तृतीया</strong></td><td>कया</td><td>काभ्याम्</td><td>काभिः</td></tr>
-                        <tr><td><strong>चतुर्थी</strong></td><td>कस्यै</td><td>काभ्याम्</td><td>काभ्यः</td></tr>
-                        <tr><td><strong>पञ्चमी</strong></td><td>कस्याः</td><td>काभ्याम्</td><td>काभ्यः</td></tr>
-                        <tr><td><strong>षष्ठी</strong></td><td>कस्याः</td><td>कयोः</td><td>कासाम्</td></tr>
-                        <tr><td><strong>सप्तमी</strong></td><td>कस्याम्</td><td>कयोः</td><td>कासु</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h4 style="color:var(--accent); margin:18px 0 8px 0;">(ग) नपुंसकलिङ्गः 'किम्' (किम् / के / कानि - What / Which Neuter)</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>एषा</td>
+                    <td>एते</td>
+                    <td>एताः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>एताम् / एनाम्</td>
+                    <td>एते / एने</td>
+                    <td>एताः / एनाः</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>एतया / एनया</td>
+                    <td>एताभ्याम्</td>
+                    <td>एताभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>एतस्यै</td>
+                    <td>एताभ्याम्</td>
+                    <td>एताभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>एतस्याः</td>
+                    <td>एताभ्याम्</td>
+                    <td>एताभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>एतस्याः</td>
+                    <td>एतयोः / एनयोः</td>
+                    <td>एतासाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>एतस्याम्</td>
+                    <td>एतयोः / एनयोः</td>
+                    <td>एतासु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Feminine 'This': एषा बालिका, एते बालिके, एताः बालिकाः.
+        </div>
+        </div>
+        <div id="pane-p-etad-n" class="shabda-pane" style="display:none;">
             <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr><th>विभक्तिः</th><th>एकवचनम्</th><th>द्विवचनम्</th><th>बहुवचनम्</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><strong>प्रथमा</strong></td><td>किम्</td><td>के</td><td>कानि</td></tr>
-                        <tr><td><strong>द्वितीया</strong></td><td>किम्</td><td>के</td><td>कानि</td></tr>
-                        <tr><td colspan="4" style="text-align:center; color:var(--text-muted); font-size:0.9rem; background:rgba(0,0,0,0.02);"><em>(तृतीयातः सप्तमीपर्यन्तं पुंलिङ्गवत् एव रूपाणि भवन्ति — केन, काभ्याम्, कैः इत्यादि)</em></td></tr>
-                    </tbody>
-                </table>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>एतत् / एनत्</td>
+                    <td>एते / एने</td>
+                    <td>एतानि / एनानि</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>एतत् / एनत्</td>
+                    <td>एते / एने</td>
+                    <td>एतानि / एनानि</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>एतेन / एनेन</td>
+                    <td>एताभ्याम्</td>
+                    <td>एतैः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>एतस्मै</td>
+                    <td>एताभ्याम्</td>
+                    <td>एतेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>एतस्मात्</td>
+                    <td>एताभ्याम्</td>
+                    <td>एतेभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>एतस्य</td>
+                    <td>एतयोः / एनयोः</td>
+                    <td>एतेषाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>एतस्मिन्</td>
+                    <td>एतयोः / एनयोः</td>
+                    <td>एतेषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Neuter 'This': एतत् फलम्, एते फले, एतानि फलानि.
+        </div>
+        </div>
+    </div>
+
+        <!-- 5. KIM PRONOUN TOGGLE (MASCULINE / FEMININE / NEUTER) -->
+        <div class="sop-card" style="margin-bottom: 24px;">
+        <div class="shabda-toggle-wrapper">
+            <div>
+                <h3 class="shabda-toggle-title">
+                    <i class="fas fa-book-reader" style="color:var(--accent);"></i> ५. किम् सर्वनाम (Who / What / Which - त्रिषु लिङ्गेषु)
+                </h3>
+                <div style="color:var(--text-muted); font-size:0.88rem; margin-top:3px;">Interrogative Pronoun (Essential for प्रश्ननिर्माणम् Question Formation)</div>
             </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 प्रश्ननिर्माण-प्रश्नेषु (Question Framing) 'किम्' सर्वनामस्य रूपाणां ज्ञानम् अत्यावश्यकम् अस्ति।
+            <div class="shabda-toggle-group">
+                <button type="button" class="shabda-toggle-btn active" onclick="switchShabda(this, 'pane-p-kim-m')">पुंलिङ्गम् (कः, कौ, के)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-p-kim-f')">स्त्रीलिङ्गम् (का, के, काः)</button>
+                <button type="button" class="shabda-toggle-btn" onclick="switchShabda(this, 'pane-p-kim-n')">नपुंसकलिङ्गम् (किम्, के, कानि)</button>
             </div>
         </div>
+        <div id="pane-p-kim-m" class="shabda-pane active" style="display:block;">
+            <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>कः</td>
+                    <td>कौ</td>
+                    <td>के</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>कम्</td>
+                    <td>कौ</td>
+                    <td>कान्</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>केन</td>
+                    <td>काभ्याम्</td>
+                    <td>कैः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>कस्मै</td>
+                    <td>काभ्याम्</td>
+                    <td>केभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>कस्मात्</td>
+                    <td>काभ्याम्</td>
+                    <td>केभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>कस्य</td>
+                    <td>कयोः</td>
+                    <td>केषाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>कस्मिन्</td>
+                    <td>कयोः</td>
+                    <td>केषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Used for questions referring to male persons/things.
+        </div>
+        </div>
+        <div id="pane-p-kim-f" class="shabda-pane" style="display:none;">
+            <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>का</td>
+                    <td>के</td>
+                    <td>काः</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>काम्</td>
+                    <td>के</td>
+                    <td>काः</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>कया</td>
+                    <td>काभ्याम्</td>
+                    <td>काभिः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>कस्यै</td>
+                    <td>काभ्याम्</td>
+                    <td>काभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>कस्याः</td>
+                    <td>काभ्याम्</td>
+                    <td>काभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>कस्याः</td>
+                    <td>कयोः</td>
+                    <td>कासाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>कस्याम्</td>
+                    <td>कयोः</td>
+                    <td>कासु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Used for questions referring to female persons/things.
+        </div>
+        </div>
+        <div id="pane-p-kim-n" class="shabda-pane" style="display:none;">
+            <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:25%;">विभक्तिः (Vibhakti)</th>
+                    <th style="width:25%;">एकवचनम् (Singular)</th>
+                    <th style="width:25%;">द्विवचनम् (Dual)</th>
+                    <th style="width:25%;">बहुवचनम् (Plural)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>प्रथमा</strong> <span class="case-tag">Nominative</span></td>
+                    <td>किम्</td>
+                    <td>के</td>
+                    <td>कानि</td>
+                </tr>
+                <tr>
+                    <td><strong>द्वितीया</strong> <span class="case-tag">Accusative</span></td>
+                    <td>किम्</td>
+                    <td>के</td>
+                    <td>कानि</td>
+                </tr>
+                <tr>
+                    <td><strong>तृतीया</strong> <span class="case-tag">Instrumental</span></td>
+                    <td>केन</td>
+                    <td>काभ्याम्</td>
+                    <td>कैः</td>
+                </tr>
+                <tr>
+                    <td><strong>चतुर्थी</strong> <span class="case-tag">Dative</span></td>
+                    <td>कस्मै</td>
+                    <td>काभ्याम्</td>
+                    <td>केभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>पञ्चमी</strong> <span class="case-tag">Ablative</span></td>
+                    <td>कस्मात्</td>
+                    <td>काभ्याम्</td>
+                    <td>केभ्यः</td>
+                </tr>
+                <tr>
+                    <td><strong>षष्ठी</strong> <span class="case-tag">Genitive</span></td>
+                    <td>कस्य</td>
+                    <td>कयोः</td>
+                    <td>केषाम्</td>
+                </tr>
+                <tr>
+                    <td><strong>सप्तमी</strong> <span class="case-tag">Locative</span></td>
+                    <td>कस्मिन्</td>
+                    <td>कयोः</td>
+                    <td>केषु</td>
+                </tr>
+                <tr>
+                    <td><strong>सम्बोधनम्</strong> <span class="case-tag">Vocative</span></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div><div style="font-size:0.88rem; color:var(--text-muted); background:var(--surface-hover); padding:10px 14px; border-radius:8px; margin-top:10px; border-left:3px solid var(--accent);">
+            💡 <strong>विशेषः (Note):</strong> Used for questions referring to neuter objects.
+        </div>
+        </div>
+    </div>
 
-</div>
-
-    <!-- ========================================================================= -->
-    <!-- TAB 5: PRACTICE DRILLS                                                    -->
-    <!-- ========================================================================= -->
-    <div id="tab-practice" class="tab-content">
+    </div>
+<div id="tab-practice" class="tab-content">
         <div style="border-bottom:2px solid var(--border); padding-bottom:12px; margin-bottom:20px;">
             <h2 style="margin:0; color:var(--accent); font-size:1.5rem;">
                 <i class="fas fa-tasks" style="margin-right:8px;"></i>विभक्ति-अभ्यासमाला &bull; Practice Drills &amp; Exam Questions
@@ -2174,6 +3183,25 @@ function openTab(evt, tabName) {
     }
 }
 
+function switchShabda(btn, targetPaneId) {
+    const card = btn.closest('.sop-card');
+    if (!card) return;
+    const group = btn.closest('.shabda-toggle-group');
+    if (group) {
+        group.querySelectorAll('.shabda-toggle-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+    card.querySelectorAll('.shabda-pane').forEach(p => {
+        p.classList.remove('active');
+        p.style.display = 'none';
+    });
+    const targetPane = card.querySelector('#' + targetPaneId);
+    if (targetPane) {
+        targetPane.classList.add('active');
+        targetPane.style.display = 'block';
+    }
+}
+
 function toggleAns(btn) {
     const ans = btn.nextElementSibling;
     if (ans.style.display === 'inline' || ans.style.display === 'inline-block') {
@@ -2206,249 +3234,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Hash routing for tabs
-    if (window.location.hash) {
-        const hash = window.location.hash.replace('#', '');
-        const targetBtn = document.querySelector(`[onclick*="${hash}"]`);
-        if (targetBtn) {
-            targetBtn.click();
+    function handleUrlHash() {
+        if (window.location.hash) {
+            const hash = window.location.hash.replace('#', '');
+            const targetBtn = document.querySelector(`[onclick*="${hash}"]`);
+            if (targetBtn) {
+                targetBtn.click();
+            }
         }
     }
+    handleUrlHash();
+    window.addEventListener('hashchange', handleUrlHash);
 });
 </script>
 <script src="../../js/scroll_to_top.js"></script>
 </body>
 </html>
-        
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">१. माला (आकारान्त स्त्रीलिङ्ग - Ending in Long 'ā')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Mālā &bull; Garland / Necklace (Base stem: माला)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">आकारान्त स्त्रीलिङ्ग</span>
-            </div>
-            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">माला = म् + आ + ल् + आ (अन्तिमवर्णः 'आ')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>माला</td>
-                            <td>माले</td>
-                            <td>मालाः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>मालाम्</td>
-                            <td>माले</td>
-                            <td>मालाः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>मालया</td>
-                            <td>मालाभ्याम्</td>
-                            <td>मालाभिः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>मालायै</td>
-                            <td>मालाभ्याम्</td>
-                            <td>मालाभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>मालायाः</td>
-                            <td>मालाभ्याम्</td>
-                            <td>मालाभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>मालायाः</td>
-                            <td>मालयोः</td>
-                            <td>मालानाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>मालायाम्</td>
-                            <td>मालयोः</td>
-                            <td>मालासु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे माले!</td>
-                            <td>हे माले!</td>
-                            <td>हे मालाः!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> लता-शब्दवत् सर्वाणि रूपाणि समानानि भवन्ति।
-            </div>
-        </div>
-
-        <div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">२. रमा (आकारान्त स्त्रीलिङ्ग - Ending in Long 'ā')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Ramā &bull; Goddess Lakshmi (Base stem: रमा)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">आकारान्त स्त्रीलिङ्ग</span>
-            </div>
-            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">रमा = र् + अ + म् + आ (अन्तिमवर्णः 'आ')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>रमा</td>
-                            <td>रमे</td>
-                            <td>रमाः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>रमाम्</td>
-                            <td>रमे</td>
-                            <td>रमाः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>रमया</td>
-                            <td>रमाभ्याम्</td>
-                            <td>रमाभिः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>रमायै</td>
-                            <td>रमाभ्याम्</td>
-                            <td>रमाभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>रमायाः</td>
-                            <td>रमाभ्याम्</td>
-                            <td>रमाभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>रमायाः</td>
-                            <td>रमयोः</td>
-                            <td>रमाणाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>रमायाम्</td>
-                            <td>रमयोः</td>
-                            <td>रमासु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे रमे!</td>
-                            <td>हे रमे!</td>
-                            <td>हे रमाः!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> र-कारस्य सान्निध्यात् षष्ठी-बहुवचने 'रमाणाम्' (णत्वम्) भवति।
-            </div>
-        </div>
-<div class="card" style="margin-bottom: 24px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-                <div>
-                    <h3 style="margin:0; color:var(--text-main); font-size:1.25rem;">१. देव (अकारान्त पुंलिङ्ग - Ending in 'a')</h3>
-                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:2px;">Deva &bull; God / Deity (Base stem: देव)</div>
-                </div>
-                <span style="background:var(--tab-active-bg); color:var(--accent); border:1px solid var(--accent); padding:4px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">अकारान्त पुंलिङ्ग</span>
-            </div>
-            <div style="background:rgba(0,0,0,0.03); border:1px dashed var(--border); border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:0.92rem;">
-                <strong>वर्ण-विच्छेदः (Letter Breakdown):</strong> <code style="color:var(--accent); font-weight:600;">देव = द् + ए + व् + अ (अन्तिमवर्णः 'अ')</code>
-            </div>
-            <div class="table-container">
-                <table class="declension-table">
-                    <thead>
-                        <tr>
-                            <th style="width:25%;">विभक्तिः (Case)</th>
-                            <th style="width:25%;">एकवचनम् (Singular)</th>
-                            <th style="width:25%;">द्विवचनम् (Dual)</th>
-                            <th style="width:25%;">बहुवचनम् (Plural)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>प्रथमा (Nominative)</strong></td>
-                            <td>देवः</td>
-                            <td>देवौ</td>
-                            <td>देवाः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>द्वितीया (Accusative)</strong></td>
-                            <td>देवम्</td>
-                            <td>देवौ</td>
-                            <td>देवान्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>तृतीया (Instrumental)</strong></td>
-                            <td>देवेन</td>
-                            <td>देवाभ्याम्</td>
-                            <td>देवैः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>चतुर्थी (Dative)</strong></td>
-                            <td>देवाय</td>
-                            <td>देवाभ्याम्</td>
-                            <td>देवेभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>पञ्चमी (Ablative)</strong></td>
-                            <td>देवात्</td>
-                            <td>देवाभ्याम्</td>
-                            <td>देवेभ्यः</td>
-                        </tr>
-                        <tr>
-                            <td><strong>षष्ठी (Genitive)</strong></td>
-                            <td>देवस्य</td>
-                            <td>देवयोः</td>
-                            <td>देवानाम्</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सप्तमी (Locative)</strong></td>
-                            <td>देवे</td>
-                            <td>देवयोः</td>
-                            <td>देवेषु</td>
-                        </tr>
-                        <tr>
-                            <td><strong>सम्बोधनम् (Vocative)</strong></td>
-                            <td>हे देव!</td>
-                            <td>हे देवौ!</td>
-                            <td>हे देवाः!</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px; padding:6px 12px; background:rgba(245,158,11,0.08); border-left:3px solid var(--accent); border-radius:4px;">
-                💡 <strong>विशेषः (Note):</strong> राम-वत् एव रूपाणि भवन्ति। (Like Rama, but note देवेन with न vs रामेण with ण due to r-sound).
-            </div>
-        </div>
-
