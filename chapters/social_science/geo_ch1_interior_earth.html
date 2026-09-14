@@ -593,108 +593,182 @@
 
       <!-- ==================== TAB 2: ROCKS, CYCLE, GALLERY & MINERALS ==================== -->
       <section id="tabRocks" class="tab-content space-y-6">
-        
-        <!-- Unified Dynamic Geological Simulator & Specimen Herbarium Explorer -->
-        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
-          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-5">
-            <div>
-              <span class="text-xs font-semibold uppercase tracking-wider text-amber-400 font-mono">Dynamic Geological Simulator & Specimen Explorer</span>
-              <h2 class="text-xl font-bold text-white font-heading">The Continuous Rock Cycle</h2>
-            </div>
-            <div class="flex items-center gap-2 flex-wrap">
-              <button onclick="stepRockCycle(-1)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1 border border-slate-700 cursor-pointer">
-                <span>◀ Prev Stage</span>
-              </button>
-              <button onclick="stepRockCycle(1)" class="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold flex items-center gap-1 cursor-pointer">
-                <span>Next Stage ▶</span>
-              </button>
-              <button onclick="toggleAllSpecimensView()" id="btnAllSpecimens" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-emerald-500/40 text-xs font-semibold flex items-center gap-1 cursor-pointer transition-all">
-                <span>📚 All Specimens (8)</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Simulator Stage Steps Bar (5 Distinct Stages) -->
-          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-5" id="rockCycleStageTabs">
-            <button onclick="setRockCycleStage(0)" id="cycleStep0" class="cycle-step-btn active p-2.5 rounded-xl border border-amber-500/50 bg-amber-950/40 text-left transition-all cursor-pointer">
-              <span class="text-[10px] font-mono text-amber-400 block font-bold">STAGE 1</span>
-              <span class="text-xs font-semibold text-white truncate block">🌋 Magma / Lava</span>
-            </button>
-            <button onclick="setRockCycleStage(1)" id="cycleStep1" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all cursor-pointer">
-              <span class="text-[10px] font-mono text-slate-400 block font-bold">STAGE 2</span>
-              <span class="text-xs font-semibold text-white truncate block">❄️ Igneous Rocks</span>
-            </button>
-            <button onclick="setRockCycleStage(2)" id="cycleStep2" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all cursor-pointer">
-              <span class="text-[10px] font-mono text-slate-400 block font-bold">STAGE 3</span>
-              <span class="text-xs font-semibold text-white truncate block">💨 Sediments</span>
-            </button>
-            <button onclick="setRockCycleStage(3)" id="cycleStep3" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all cursor-pointer">
-              <span class="text-[10px] font-mono text-slate-400 block font-bold">STAGE 4</span>
-              <span class="text-xs font-semibold text-white truncate block">📚 Sedimentary</span>
-            </button>
-            <button onclick="setRockCycleStage(4)" id="cycleStep4" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all cursor-pointer">
-              <span class="text-[10px] font-mono text-slate-400 block font-bold">STAGE 5</span>
-              <span class="text-xs font-semibold text-white truncate block">✨ Metamorphic</span>
-            </button>
-          </div>
-
-          <!-- Dynamic Stage Details Viewport (Populated by JS) -->
-          <div id="rockCycleStageDisplay" class="bg-slate-950/70 border border-slate-800/80 rounded-xl p-5 relative overflow-hidden">
-            <!-- Rendered by JS -->
-          </div>
+        <!-- Section 2 Sub-Navigation Tabs (Partitioned to Eliminate Common Clutter & Excessive Scrolling) -->
+        <div class="flex items-center gap-2 flex-wrap bg-slate-900/90 border border-slate-800 p-2 rounded-2xl shadow-md">
+          <button onclick="switchRockSubView('cycle', this)" id="btnRockSubCycle" class="rock-sub-btn active px-4 py-2 rounded-xl border border-amber-500/50 bg-amber-950/40 text-amber-300 text-xs font-bold transition-all cursor-pointer flex items-center gap-2 shadow-sm">
+            <span>🔄</span>
+            <span>Rock Cycle Simulator (5 Stages)</span>
+          </button>
+          <button onclick="switchRockSubView('minerals', this)" id="btnRockSubMinerals" class="rock-sub-btn px-4 py-2 rounded-xl border border-slate-800 bg-slate-950/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all cursor-pointer flex items-center gap-2">
+            <span>💎</span>
+            <span>Minerals: Classification & Uses</span>
+          </button>
+          <button onclick="switchRockSubView('herbarium', this)" id="btnRockSubHerbarium" class="rock-sub-btn px-4 py-2 rounded-xl border border-slate-800 bg-slate-950/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all cursor-pointer flex items-center gap-2">
+            <span>📚</span>
+            <span>Specimen Herbarium (8 Types)</span>
+          </button>
         </div>
 
-        <!-- Minerals Classification Card (Gemini & Claude Merged) -->
-        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-lg">
-          <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
-            <div>
-              <span class="text-xs font-mono uppercase text-cyan-400 font-bold">Naturally Occurring Inorganic Compounds</span>
-              <h3 class="text-lg font-bold text-white font-heading">Minerals: Classification & Vital Applications</h3>
-            </div>
-            <span class="px-2.5 py-1 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-800/50 text-xs font-semibold">Gemini + Claude Merged</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <!-- Metallic Minerals -->
-            <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800">
-              <h4 class="font-bold text-emerald-400 text-sm flex items-center gap-2 mb-2">
-                <span>🛡️</span> Metallic Minerals
-              </h4>
-              <p class="text-xs text-slate-300 mb-3">Contain metals in chemical combination; malleable, ductile, lustrous, and conduct electricity.</p>
-              <div class="flex flex-wrap gap-2 text-xs">
-                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-200 border border-slate-700 font-medium">Iron (Fe)</span>
-                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-200 border border-slate-700 font-medium">Copper (Cu)</span>
-                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-200 border border-slate-700 font-medium">Tin (Sn)</span>
-                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-200 border border-slate-700 font-medium">Manganese (Mn)</span>
-                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-200 border border-slate-700 font-medium">Gold & Silver</span>
+        <!-- ==================== SUB-VIEW 1: ROCK CYCLE SIMULATOR ==================== -->
+        <div id="rockViewCycle" class="rock-sub-view space-y-5">
+          <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 md:p-6 shadow-xl">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-5">
+              <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-amber-400 font-mono">Dynamic Geological Simulator & Specimen Explorer</span>
+                <h2 class="text-xl font-bold text-white font-heading">The Continuous Rock Cycle</h2>
+              </div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <button onclick="stepRockCycle(-1)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1 border border-slate-700 cursor-pointer">
+                  <span>◀ Prev Stage</span>
+                </button>
+                <button onclick="stepRockCycle(1)" class="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold flex items-center gap-1 cursor-pointer">
+                  <span>Next Stage ▶</span>
+                </button>
+                <button onclick="switchRockSubView('herbarium')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-emerald-500/40 text-xs font-semibold flex items-center gap-1 cursor-pointer transition-all">
+                  <span>📚 All Specimens (8)</span>
+                </button>
+                <button onclick="switchRockSubView('minerals')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/40 text-xs font-semibold flex items-center gap-1 cursor-pointer transition-all">
+                  <span>💎 Minerals Guide</span>
+                </button>
               </div>
             </div>
 
-            <!-- Non-Metallic Minerals -->
-            <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800">
-              <h4 class="font-bold text-amber-400 text-sm flex items-center gap-2 mb-2">
-                <span>📦</span> Non-Metallic Minerals
-              </h4>
-              <p class="text-xs text-slate-300 mb-3">Do NOT contain metals; break or fracture under pressure; vital for plant growth, agriculture, and construction.</p>
-              <div class="flex flex-wrap gap-2 text-xs">
-                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-200 border border-slate-700 font-medium">Potash (Plant Fertilizer)</span>
-                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-200 border border-slate-700 font-medium">Gypsum (Plaster of Paris)</span>
-                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-200 border border-slate-700 font-medium">Limestone (Cement)</span>
-                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-200 border border-slate-700 font-medium">Mica (Electrical Insulator)</span>
-                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-slate-200 border border-slate-700 font-medium">Diamond (Hardest Mineral)</span>
-              </div>
+            <!-- Simulator Stage Steps Bar (5 Distinct Stages) -->
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-5" id="rockCycleStageTabs">
+              <button onclick="setRockCycleStage(0)" id="cycleStep0" class="cycle-step-btn active p-2.5 rounded-xl border border-amber-500/50 bg-amber-950/40 text-left transition-all cursor-pointer">
+                <span class="text-[10px] font-mono text-amber-400 block font-bold">STAGE 1</span>
+                <span class="text-xs font-semibold text-white truncate block">🌋 Magma / Lava</span>
+              </button>
+              <button onclick="setRockCycleStage(1)" id="cycleStep1" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all cursor-pointer">
+                <span class="text-[10px] font-mono text-slate-400 block font-bold">STAGE 2</span>
+                <span class="text-xs font-semibold text-white truncate block">❄️ Igneous Rocks</span>
+              </button>
+              <button onclick="setRockCycleStage(2)" id="cycleStep2" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all cursor-pointer">
+                <span class="text-[10px] font-mono text-slate-400 block font-bold">STAGE 3</span>
+                <span class="text-xs font-semibold text-white truncate block">💨 Sediments</span>
+              </button>
+              <button onclick="setRockCycleStage(3)" id="cycleStep3" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all cursor-pointer">
+                <span class="text-[10px] font-mono text-slate-400 block font-bold">STAGE 4</span>
+                <span class="text-xs font-semibold text-white truncate block">📚 Sedimentary</span>
+              </button>
+              <button onclick="setRockCycleStage(4)" id="cycleStep4" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all cursor-pointer">
+                <span class="text-[10px] font-mono text-slate-400 block font-bold">STAGE 5</span>
+                <span class="text-xs font-semibold text-white truncate block">✨ Metamorphic</span>
+              </button>
             </div>
-          </div>
 
-          <!-- Botanical Significance from Gemini Q5 -->
-          <div class="mt-4 p-3 rounded-xl bg-emerald-950/30 border border-emerald-800/40 flex items-center gap-3 text-xs text-slate-300">
-            <span class="text-emerald-400 text-lg">🌱</span>
-            <div>
-              <strong>Botanical Significance (Gemini Question B.5):</strong> Plants specifically utilize <strong>Potassium and Magnesium</strong> minerals from the soil to synthesize chlorophyll, build structural cell walls, and fuel photosynthesis!
+            <!-- Dynamic Stage Details Viewport (Populated by JS - Zero common info at bottom) -->
+            <div id="rockCycleStageDisplay" class="bg-slate-950/70 border border-slate-800/80 rounded-xl p-5 relative overflow-hidden">
+              <!-- Rendered dynamically by setRockCycleStage() -->
             </div>
           </div>
         </div>
-      </section>
+
+        <!-- ==================== SUB-VIEW 2: MINERALS CLASSIFICATION & APPLICATIONS ==================== -->
+        <div id="rockViewMinerals" class="rock-sub-view hidden space-y-5">
+          <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 border-b border-slate-800 pb-4">
+              <div>
+                <span class="text-xs font-mono uppercase text-cyan-400 font-bold">Naturally Occurring Inorganic Compounds</span>
+                <h3 class="text-xl font-bold text-white font-heading mt-1">Minerals: Classification & Vital Applications</h3>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-full bg-cyan-950/60 text-cyan-300 border border-cyan-800/50 text-xs font-semibold">Gemini + Claude Merged</span>
+                <button onclick="switchRockSubView('cycle')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1 cursor-pointer">
+                  <span>🔄 Rock Cycle</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+              <!-- Metallic Minerals -->
+              <div class="p-5 rounded-xl bg-slate-950/60 border border-slate-800">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="font-bold text-emerald-400 text-base flex items-center gap-2">
+                    <span>🛡️</span> Metallic Minerals
+                  </h4>
+                  <span class="px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-800/40 text-emerald-300 text-[11px] font-mono">Conductive & Malleable</span>
+                </div>
+                <p class="text-xs text-slate-300 mb-4 leading-relaxed">Contain pure or compounded metals. Malleable (hammered into sheets), ductile (drawn into wires), lustrous, and excellent electrical/thermal conductors.</p>
+                <div class="flex flex-wrap gap-2 text-xs">
+                  <span class="px-3 py-1.5 rounded-lg bg-slate-900 text-slate-200 border border-slate-800 font-medium">Iron (Fe) — Steel & Tools</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-slate-900 text-slate-200 border border-slate-800 font-medium">Copper (Cu) — Electric Wiring</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-slate-900 text-slate-200 border border-slate-800 font-medium">Tin (Sn) — Soldering & Alloys</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-slate-900 text-slate-200 border border-slate-800 font-medium">Manganese (Mn) — Steelmaking</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-slate-900 text-slate-200 border border-slate-800 font-medium">Gold & Silver — Jewellery & Currency</span>
+                </div>
+              </div>
+
+              <!-- Non-Metallic Minerals -->
+              <div class="p-5 rounded-xl bg-slate-950/60 border border-slate-800">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="font-bold text-amber-400 text-base flex items-center gap-2">
+                    <span>📦</span> Non-Metallic Minerals
+                  </h4>
+                  <span class="px-2 py-0.5 rounded bg-amber-950/60 border border-amber-800/40 text-amber-300 text-[11px] font-mono">Brittle & Insulating</span>
+                </div>
+                <p class="text-xs text-slate-300 mb-4 leading-relaxed">Do NOT contain extractable metals. Brittle and fracture under stress. Indispensable for plant growth, agriculture, architecture, and electrical insulation.</p>
+                <div class="flex flex-wrap gap-2 text-xs">
+                  <span class="px-3 py-1.5 rounded-lg bg-slate-900 text-slate-200 border border-slate-800 font-medium">Potash — Plant Fertilizer</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-slate-900 text-slate-200 border border-slate-800 font-medium">Gypsum — Plaster of Paris & Wallboard</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-slate-900 text-slate-200 border border-slate-800 font-medium">Limestone — Cement & Mortar</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-slate-900 text-slate-200 border border-slate-800 font-medium">Mica — Electrical & Thermal Insulator</span>
+                  <span class="px-3 py-1.5 rounded-lg bg-slate-900 text-slate-200 border border-slate-800 font-medium">Diamond — Hardest Natural Mineral</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botanical Significance & Energy Fuels Row -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Botanical Significance from Gemini Q5 -->
+              <div class="p-4 rounded-xl bg-emerald-950/30 border border-emerald-800/40 flex items-start gap-3 text-xs text-slate-300">
+                <span class="text-emerald-400 text-xl flex-shrink-0">🌱</span>
+                <div>
+                  <strong class="text-emerald-300 block mb-1 font-semibold">Botanical Significance (Gemini Question B.5):</strong>
+                  Plants actively absorb dissolved <strong>Potassium (K)</strong> and <strong>Magnesium (Mg)</strong> minerals through root systems to synthesize chlorophyll, reinforce structural cell walls, and fuel photosynthetic food production!
+                </div>
+              </div>
+
+              <!-- NCERT Mineral Fuels & Industrial Use -->
+              <div class="p-4 rounded-xl bg-amber-950/30 border border-amber-800/40 flex items-start gap-3 text-xs text-slate-300">
+                <span class="text-amber-400 text-xl flex-shrink-0">⚡</span>
+                <div>
+                  <strong class="text-amber-300 block mb-1 font-semibold">NCERT Energy Fuels & Humankind Utility:</strong>
+                  Certain mineral fuels power modern civilization: <strong>Coal</strong>, <strong>Natural Gas</strong>, and <strong>Petroleum</strong> provide electricity and vehicle fuel. Minerals like <strong>Aluminium</strong> (from Bauxite) and <strong>Uranium</strong> fuel transport and clean nuclear energy.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== SUB-VIEW 3: SPECIMEN HERBARIUM ==================== -->
+        <div id="rockViewHerbarium" class="rock-sub-view hidden space-y-5">
+          <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4 mb-5">
+              <div>
+                <span class="text-xs font-mono uppercase text-emerald-400 font-bold">Complete Geological Reference Collection</span>
+                <h3 class="text-xl font-bold text-white font-heading mt-1">All 8 Rock Specimens & Indian Monuments</h3>
+              </div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <div class="flex items-center gap-1 bg-slate-950/80 p-1 rounded-xl border border-slate-800">
+                  <button onclick="renderHerbariumCards('all')" data-cat="all" class="herbarium-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 cursor-pointer">All (8)</button>
+                  <button onclick="renderHerbariumCards('igneous')" data-cat="igneous" class="herbarium-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 cursor-pointer hover:text-white">🔥 Igneous (2)</button>
+                  <button onclick="renderHerbariumCards('sedimentary')" data-cat="sedimentary" class="herbarium-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 cursor-pointer hover:text-white">🌊 Sedimentary (3)</button>
+                  <button onclick="renderHerbariumCards('metamorphic')" data-cat="metamorphic" class="herbarium-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 cursor-pointer hover:text-white">💎 Metamorphic (3)</button>
+                </div>
+                <button onclick="switchRockSubView('cycle')" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1 cursor-pointer">
+                  <span>🔄 Rock Cycle</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Herbarium 8-Cards Grid -->
+            <div id="herbariumCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <!-- Rendered by renderHerbariumCards() -->
+            </div>
+          </div>
+        </div>
+</section>
 
       <!-- ==================== TAB 3: COMPLETE TEXTBOOK SOLUTIONS HUB ==================== -->
       <!-- User Refinements 4 & 5: Partitioned Dedicated Sub-Tabs & Space-Saving Reveal Pattern -->
@@ -1288,12 +1362,19 @@
         visualEmoji: "🌋",
         indianAnchor: "Barren Island in the Andaman Sea is South Asia's only active volcano, actively erupting basaltic lava.",
         specimenHeadline: "Stage 1 Primary Liquid Silicate Melt (1 Visual Phenomenon)",
+        mineralsHeadline: "Stage 1 Molten Silicate Melt & Volcanic Gas Chemistry",
+        mineralPills: [
+          "Molten Silica (SiO₂ 45–70%)",
+          "Liquid Iron (Fe)",
+          "Dissolved Magnesium (Mg)",
+          "Volcanic Gases (H₂O, CO₂, SO₂)"
+        ],
         specimens: [
           {
             name: "Molten Magma & Active Basaltic Lava",
             tag: "PRIMARY LIQUID ROCK",
-            tagClass: "bg-amber-950/80 border-amber-500/40 text-amber-300",
-            borderHover: "hover:border-amber-500/50",
+            tagClass: "bg-red-950/80 border-red-500/40 text-red-300",
+            borderHover: "hover:border-red-500/50",
             img: "assets/magma_lava.jpg",
             desc: "Red-hot liquid rock exceeding 1,200°C under tectonic compression. As it breaches the crust, it pours out as lava and cools into initial geological crust.",
             footer: "Active Landmark: Barren Island Volcano, Andaman Sea"
@@ -1308,6 +1389,13 @@
         visualEmoji: "❄️",
         indianAnchor: "The colossal Deccan Traps covering Maharashtra and Gujarat were formed by millions of years of volcanic basalt flows 66 million years ago.",
         specimenHeadline: "Stage 2 Verified Igneous Rock Specimens (2 Types)",
+        mineralsHeadline: "Stage 2 Interlocking Crystalline Igneous Minerals",
+        mineralPills: [
+          "Quartz Crystals (Silica SiO₂)",
+          "Potassium & Plagioclase Feldspar",
+          "Biotite & Muscovite Mica",
+          "Pyroxene & Olivine (Basaltic)"
+        ],
         specimens: [
           {
             name: "Granite",
@@ -1316,7 +1404,7 @@
             borderHover: "hover:border-amber-500/50",
             img: "assets/granite.jpg",
             desc: "Coarse-grained intrusive rock. Cools slowly deep inside the crust, allowing quartz, feldspar, and mica crystals to grow large.",
-            footer: "Uses: Grinding stones, luxury countertops, and building pillars."
+            footer: "Indian Utility: Heavy grinding stones, mortar bases, temple pillars."
           },
           {
             name: "Basalt",
@@ -1325,7 +1413,7 @@
             borderHover: "hover:border-amber-500/50",
             img: "assets/basalt.jpg",
             desc: "Fine-grained dark volcanic rock. Forms when molten lava pours out on Earth's surface and solidifies rapidly in the air.",
-            footer: "Indian Landmark: Deccan Plateau sheets (Maharashtra)!"
+            footer: "Geological Formation: Deccan Traps (Maharashtra, Gujarat, MP)."
           }
         ]
       },
@@ -1337,6 +1425,13 @@
         visualEmoji: "💨",
         indianAnchor: "The mighty Ganga and Brahmaputra rivers carry millions of tons of Himalayan rock sediments every year to form the Sundarbans Delta.",
         specimenHeadline: "Stage 3 Weathering & Sedimentation (1 Fluvial Phenomenon)",
+        mineralsHeadline: "Stage 3 Weathered & Transported Mineral Detritus",
+        mineralPills: [
+          "Resilient Quartz Sand Grains",
+          "Decomposed Feldspar Clay (Kaolinite)",
+          "Hydrated Iron Oxide Pigments",
+          "Fluvial Silt & Carbonaceous Matter"
+        ],
         specimens: [
           {
             name: "Fluvial Rock Sediments & Delta Plume",
@@ -1357,6 +1452,13 @@
         visualEmoji: "📚",
         indianAnchor: "Red Fort of Delhi: Mughal emperors chose sturdy red sandstone from Rajasthan, a sedimentary rock composed of ancient sand dunes.",
         specimenHeadline: "Stage 4 Verified Sedimentary Specimens & Historical Anchor (3 Items)",
+        mineralsHeadline: "Stage 4 Sedimentary Mineral Matrix & Calcite Cements",
+        mineralPills: [
+          "Calcite (Calcium Carbonate CaCO₃)",
+          "Silica & Iron Oxide Binding Cements",
+          "Stratified Quartz Grains",
+          "Hematite (Red Fe₂O₃ Pigment)"
+        ],
         specimens: [
           {
             name: "Sandstone",
@@ -1395,6 +1497,13 @@
         visualEmoji: "✨",
         indianAnchor: "The Taj Mahal in Agra was built using Makrana white marble, a metamorphic rock transformed from sedimentary limestone.",
         specimenHeadline: "Stage 5 Verified Metamorphic Specimens & World Heritage Anchor (3 Items)",
+        mineralsHeadline: "Stage 5 Metamorphic Recrystallized Mineral Mosaic",
+        mineralPills: [
+          "Recrystallized Interlocking Calcite",
+          "Foliated Muscovite & Biotite Mica",
+          "Chlorite & Quartz Granules",
+          "Dense Non-porous Crystalline Lattice"
+        ],
         specimens: [
           {
             name: "Marble",
@@ -1695,17 +1804,11 @@
 
     // 6. Dynamic Rock Cycle Simulator Engine (Isolated Stage Specimens & Library Explorer)
     function setRockCycleStage(stageIdx) {
-      isAllSpecimensMode = false;
       currentRockCycleStage = stageIdx;
       const stage = rockCycleStages[stageIdx];
       const display = document.getElementById('rockCycleStageDisplay');
-      const btnAll = document.getElementById('btnAllSpecimens');
-      if (btnAll) {
-        btnAll.classList.remove('bg-emerald-500/20', 'text-emerald-300');
-        btnAll.classList.add('bg-slate-800', 'text-emerald-400');
-      }
 
-      // Render Stage Overview + Dedicated Isolated Specimens
+      // Render Stage Overview + Dedicated Isolated Specimens + Stage-Specific Mineral Chemistry
       let specimenCardsHtml = '';
       const gridCols = stage.specimens.length === 1 ? 'grid-cols-1 md:grid-cols-2' : (stage.specimens.length === 2 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-3');
 
@@ -1729,8 +1832,12 @@
         `;
       });
 
+      const pillsHtml = stage.mineralPills.map(p => `
+        <span class="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-slate-200 font-mono text-xs">${p}</span>
+      `).join('');
+
       display.innerHTML = `
-        <div class="space-y-5">
+        <div class="space-y-4">
           <!-- Top Process Header & Indian Real-World Anchor -->
           <div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800/90 flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div>
@@ -1744,7 +1851,7 @@
               </h3>
               <p class="text-sm text-slate-300 mt-2 leading-relaxed">${stage.desc}</p>
             </div>
-            <div class="md:w-80 p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 flex-shrink-0">
+            <div class="md:w-80 p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 flex-shrink-0">
               <div class="font-bold text-amber-400 flex items-center gap-1 mb-1">
                 <span>📍</span> Indian Real-World Anchor
               </div>
@@ -1754,12 +1861,23 @@
 
           <!-- Isolated Specimen Cards Dedicated to this Specific Stage -->
           <div>
-            <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center justify-between mb-2.5">
               <h4 class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">${stage.specimenHeadline}</h4>
               <span class="text-[11px] font-mono text-slate-400">${stage.specimens.length} verified item${stage.specimens.length > 1 ? 's' : ''}</span>
             </div>
             <div class="grid ${gridCols} gap-4">
               ${specimenCardsHtml}
+            </div>
+          </div>
+
+          <!-- Stage-Specific Mineral Chemistry & Composition (Dynamic for this stage) -->
+          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800/90 flex flex-col md:flex-row md:items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2 flex-shrink-0">
+              <span class="text-amber-400 text-sm">🧪</span>
+              <span class="font-mono text-slate-300 font-bold">${stage.mineralsHeadline}:</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              ${pillsHtml}
             </div>
           </div>
         </div>
@@ -1785,29 +1903,54 @@
       setRockCycleStage(nextStage);
     }
 
-    // Toggle All 8 Specimens View Mode
-    function toggleAllSpecimensView() {
-      isAllSpecimensMode = true;
-      const display = document.getElementById('rockCycleStageDisplay');
-      const btnAll = document.getElementById('btnAllSpecimens');
-      if (btnAll) {
-        btnAll.classList.add('bg-emerald-500/20', 'text-emerald-300');
-        btnAll.classList.remove('bg-slate-800', 'text-emerald-400');
-      }
+    // Section 2 Sub-View Switcher (Cycle, Minerals, Herbarium)
+    function switchRockSubView(viewKey, btnElem) {
+      document.querySelectorAll('.rock-sub-view').forEach(v => v.classList.add('hidden'));
+      document.querySelectorAll('.rock-sub-btn').forEach(b => {
+        b.classList.remove('active', 'border-amber-500/50', 'bg-amber-950/40', 'text-amber-300', 'border-cyan-500/50', 'bg-cyan-950/40', 'text-cyan-300', 'border-emerald-500/50', 'bg-emerald-950/40', 'text-emerald-300');
+        b.classList.add('border-slate-800', 'bg-slate-950/60', 'text-slate-400');
+      });
 
-      // Deactivate stage buttons
-      for (let i = 0; i < 5; i++) {
-        const btn = document.getElementById(`cycleStep${i}`);
+      if (viewKey === 'cycle') {
+        document.getElementById('rockViewCycle').classList.remove('hidden');
+        const btn = btnElem || document.getElementById('btnRockSubCycle');
         if (btn) {
-          btn.classList.remove('active', 'border-amber-500/50', 'bg-amber-950/40');
-          btn.classList.add('border-slate-800', 'bg-slate-900/60');
+          btn.classList.remove('border-slate-800', 'bg-slate-950/60', 'text-slate-400');
+          btn.classList.add('active', 'border-amber-500/50', 'bg-amber-950/40', 'text-amber-300');
         }
+      } else if (viewKey === 'minerals') {
+        document.getElementById('rockViewMinerals').classList.remove('hidden');
+        const btn = btnElem || document.getElementById('btnRockSubMinerals');
+        if (btn) {
+          btn.classList.remove('border-slate-800', 'bg-slate-950/60', 'text-slate-400');
+          btn.classList.add('active', 'border-cyan-500/50', 'bg-cyan-950/40', 'text-cyan-300');
+        }
+      } else if (viewKey === 'herbarium') {
+        document.getElementById('rockViewHerbarium').classList.remove('hidden');
+        const btn = btnElem || document.getElementById('btnRockSubHerbarium');
+        if (btn) {
+          btn.classList.remove('border-slate-800', 'bg-slate-950/60', 'text-slate-400');
+          btn.classList.add('active', 'border-emerald-500/50', 'bg-emerald-950/40', 'text-emerald-300');
+        }
+        renderHerbariumCards('all');
       }
+    }
 
-      let cardsHtml = '';
-      allCoreSpecimens.forEach(sp => {
-        cardsHtml += `
-          <div class="specimen-lib-card group bg-slate-900/90 border border-slate-800 ${sp.borderHover} rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between" data-category="${sp.cat}">
+    function toggleAllSpecimensView() {
+      switchRockSubView('herbarium');
+    }
+
+    function renderHerbariumCards(cat) {
+      const container = document.getElementById('herbariumCardsGrid');
+      if (!container) return;
+      let filtered = allCoreSpecimens;
+      if (cat !== 'all') {
+        filtered = allCoreSpecimens.filter(s => s.cat === cat);
+      }
+      let html = '';
+      filtered.forEach(sp => {
+        html += `
+          <div class="specimen-lib-card group bg-slate-900/90 border border-slate-800 ${sp.borderHover} rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
             <div>
               <div class="relative h-36 w-full overflow-hidden bg-slate-900">
                 <img src="${sp.img}" alt="${sp.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
@@ -1824,45 +1967,18 @@
           </div>
         `;
       });
+      container.innerHTML = html;
 
-      display.innerHTML = `
-        <div class="space-y-4">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
-            <div>
-              <span class="text-xs font-mono uppercase text-emerald-400 font-bold">Complete Reference Library</span>
-              <h3 class="text-lg font-bold text-white font-heading">All 8 Rock Specimens & Historical Monuments</h3>
-            </div>
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <button onclick="filterLibrarySpecimens('all', this)" class="lib-filter-btn active px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 cursor-pointer">All (8)</button>
-              <button onclick="filterLibrarySpecimens('igneous', this)" class="lib-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer">🔥 Igneous (2)</button>
-              <button onclick="filterLibrarySpecimens('sedimentary', this)" class="lib-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer">🌊 Sedimentary (3)</button>
-              <button onclick="filterLibrarySpecimens('metamorphic', this)" class="lib-filter-btn px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer">💎 Metamorphic (3)</button>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="libCardsGrid">
-            ${cardsHtml}
-          </div>
-        </div>
-      `;
-    }
-
-    function filterLibrarySpecimens(cat, btn) {
-      const cards = document.querySelectorAll('.specimen-lib-card');
-      cards.forEach(c => {
-        if (cat === 'all' || c.getAttribute('data-category') === cat) {
-          c.classList.remove('hidden');
+      // Update filter pills active state
+      document.querySelectorAll('.herbarium-filter-btn').forEach(btn => {
+        if (btn.getAttribute('data-cat') === cat) {
+          btn.classList.add('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/40');
+          btn.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
         } else {
-          c.classList.add('hidden');
+          btn.classList.remove('bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/40');
+          btn.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
         }
       });
-      document.querySelectorAll('.lib-filter-btn').forEach(b => {
-        b.classList.remove('active', 'bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/40');
-        b.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
-      });
-      if (btn) {
-        btn.classList.add('active', 'bg-emerald-500/20', 'text-emerald-400', 'border-emerald-500/40');
-        btn.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
-      }
     }
 
     // ==================== SOLUTIONS DIRECTORY ENGINES ====================
