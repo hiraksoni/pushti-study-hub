@@ -41,8 +41,6 @@
     }
   </script>
 
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
   <!-- FontAwesome for breadcrumb icon compatibility -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -59,14 +57,6 @@
     .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
     .rotate-y-180 { transform: rotateY(180deg); }
     .flipped { transform: rotateY(180deg); }
-
-    /* Subtle Animated Pulse for Active Nodes */
-    @keyframes pulse-ring {
-      0% { transform: scale(0.95); opacity: 0.8; }
-      50% { transform: scale(1.1); opacity: 0.3; }
-      100% { transform: scale(0.95); opacity: 0.8; }
-    }
-    .animate-pulse-ring { animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
 
     /* Tab Transition */
     .tab-content { display: none; opacity: 0; transition: opacity 0.25s ease-in-out; }
@@ -127,6 +117,39 @@
       transition-delay: 0.12s;
     }
 
+    /* UNMISTAKABLE ACTIVE TAB HIGHLIGHT (User Refinement 1) */
+    .nav-tab-btn {
+      position: relative;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-tab-btn.active {
+      background: rgba(16, 185, 129, 0.22) !important;
+      border-color: rgba(16, 185, 129, 0.7) !important;
+      box-shadow: 0 0 18px rgba(16, 185, 129, 0.4), inset 0 0 12px rgba(16, 185, 129, 0.15) !important;
+    }
+    .nav-tab-btn.active svg {
+      color: #34d399 !important;
+      filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.9));
+      transform: scale(1.15);
+    }
+    .nav-tab-btn.active .tab-indicator-pill {
+      opacity: 1 !important;
+      transform: scaleY(1) !important;
+    }
+    .tab-indicator-pill {
+      position: absolute;
+      left: 0;
+      top: 15%;
+      height: 70%;
+      width: 4px;
+      background: #10b981;
+      border-radius: 0 4px 4px 0;
+      box-shadow: 0 0 12px #10b981;
+      opacity: 0;
+      transform: scaleY(0.4);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     /* Desktop Margin Push */
     @media (min-width: 861px) {
       .main-app-content {
@@ -157,11 +180,54 @@
         display: none !important;
       }
     }
+
+    /* Light Theme Parity */
+    html:not(.dark) body {
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    html:not(.dark) .sidebar-dock {
+      background: rgba(255, 255, 255, 0.96);
+      border-right-color: #e2e8f0;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.06);
+    }
+    html:not(.dark) .nav-tab-btn.active {
+      background: rgba(16, 185, 129, 0.22) !important;
+      border-color: rgba(5, 150, 105, 0.85) !important;
+      color: #064e3b !important;
+      box-shadow: 0 2px 12px rgba(16, 185, 129, 0.3) !important;
+    }
+    html:not(.dark) .nav-tab-btn.active svg {
+      color: #047857 !important;
+      filter: drop-shadow(0 0 6px rgba(5, 150, 105, 0.6));
+    }
+    html:not(.dark) header {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom-color: #e2e8f0;
+    }
+
+    /* FIB Blank Fill-in Animation */
+    .fib-blank {
+      display: inline-block;
+      min-width: 90px;
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+    .fib-blank.revealed {
+      border-color: #10b981 !important;
+      background: rgba(16, 185, 129, 0.18) !important;
+      color: #34d399 !important;
+      font-weight: 700 !important;
+      padding: 2px 8px !important;
+      border-radius: 6px !important;
+      border-style: solid !important;
+    }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col font-sans selection:bg-emerald-500 selection:text-white transition-colors duration-300">
 
   <!-- ==================== TOP SITE HEADER (54px) ==================== -->
+  <!-- User Refinement 3: Standard Header Button Order (Search -> Theme -> Time Table -> Mid-Term -> Battery) -->
   <header class="sticky top-0 z-50 bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-800 px-4 lg:px-8 py-2.5 h-[54px] flex items-center justify-between transition-colors duration-300">
     <!-- Left: Breadcrumbs -->
     <nav class="flex items-center gap-2 text-sm text-slate-400 overflow-x-auto whitespace-nowrap">
@@ -175,21 +241,42 @@
       </a>
       <span class="text-slate-600">/</span>
       <span class="text-emerald-400 font-semibold flex items-center gap-1.5">
-        <i data-lucide="globe" class="w-4 h-4 inline-block"></i>
+        <svg class="w-4 h-4 inline-block text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
         Geography: Ch 1
       </span>
     </nav>
 
-    <!-- Right: Battery & Theme Toggle -->
-    <div class="flex items-center gap-3">
-      <div class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold" title="Mid-Term Syllabus Coverage">
-        <i data-lucide="battery-charging" class="w-3.5 h-3.5 text-emerald-400"></i>
-        <span>🔋 100% Mid-Term Ready</span>
+    <!-- Right Cluster: Exactly matching standard hub pattern -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- 1. Search Button / Toggle Input -->
+      <div class="relative flex items-center">
+        <button id="globalSearchBtn" onclick="toggleGlobalSearch()" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer flex items-center justify-center" aria-label="Search" title="Search Questions">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        </button>
+        <div id="globalSearchDropdown" class="hidden absolute right-0 top-12 z-50 w-72 bg-slate-900 border border-slate-700 rounded-xl p-2 shadow-2xl">
+          <input type="text" id="quickNavSearchInput" placeholder="Quick search question topics..." oninput="handleQuickSearch(this.value)" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+        </div>
       </div>
 
-      <button onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer" aria-label="Toggle Theme" title="Toggle Theme">
-        <i data-lucide="moon" id="themeIcon" class="w-4 h-4"></i>
+      <!-- 2. Theme Toggle -->
+      <button onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer flex items-center justify-center" aria-label="Toggle Theme" title="Toggle Theme">
+        <svg id="themeIconSvg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
       </button>
+
+      <!-- 3. Time Table Link -->
+      <a href="../../timetable.html" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all shadow-sm">
+        <span>📅 Time Table</span>
+      </a>
+
+      <!-- 4. Mid-Term Syllabus Link -->
+      <a href="../../midterm.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all shadow-sm">
+        <span>🎯 Mid-Term Syllabus</span>
+      </a>
+
+      <!-- 5. 100% Mid-Term Ready Battery Pill -->
+      <div class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold" title="Mid-Term Syllabus Coverage">
+        <span>🔋 100% Mid-Term Ready</span>
+      </div>
     </div>
   </header>
 
@@ -197,14 +284,16 @@
   <div class="flex flex-1 relative min-h-[calc(100vh-54px)]">
 
     <!-- ==================== COLLAPSIBLE VERTICAL DOCK RAIL ==================== -->
+    <!-- User Refinement 1: Active button prominent highlight & glowing pill indicator -->
     <aside id="sidebarDock" class="sidebar-dock group" aria-label="Chapter Navigation">
       <div class="flex flex-col gap-1.5 p-2">
         
         <!-- Tab 1: Layers -->
-        <button onclick="switchMainTab('tabLayers', this)" data-target="tabLayers" class="nav-tab-btn active flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden" title="1. Earth's Interior Layers & Origin">
+        <button onclick="switchMainTab('tabLayers', this)" data-target="tabLayers" class="nav-tab-btn active flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="1. Earth's Interior Layers & Origin">
+          <div class="tab-indicator-pill"></div>
           <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-emerald-400">
-            <i data-lucide="globe" class="w-5 h-5"></i>
-            <span class="w-2 h-2 rounded-full bg-emerald-400 absolute top-0.5 right-0.5 ring-2 ring-slate-900"></span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 absolute top-0.5 right-0.5 ring-2 ring-slate-900 animate-pulse"></span>
           </div>
           <div class="tab-label-group">
             <span class="font-semibold text-xs tracking-wide uppercase text-emerald-400">Section 1</span>
@@ -212,21 +301,23 @@
           </div>
         </button>
 
-        <!-- Tab 2: Rocks & Cycle -->
-        <button onclick="switchMainTab('tabRocks', this)" data-target="tabRocks" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden" title="2. Rock Families & Cycle Simulator">
+        <!-- Tab 2: Rocks, Cycle & Gallery -->
+        <button onclick="switchMainTab('tabRocks', this)" data-target="tabRocks" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="2. Rock Families, Specimen Gallery & Cycle Simulator">
+          <div class="tab-indicator-pill"></div>
           <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-amber-400">
-            <i data-lucide="flame" class="w-5 h-5"></i>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
           </div>
           <div class="tab-label-group">
             <span class="font-semibold text-xs tracking-wide uppercase text-amber-400">Section 2</span>
-            <span class="font-medium text-sm text-slate-200">Rock Cycle</span>
+            <span class="font-medium text-sm text-slate-200">Rocks & Cycle</span>
           </div>
         </button>
 
         <!-- Tab 3: NCERT Solutions Hub -->
-        <button onclick="switchMainTab('tabSolutions', this)" data-target="tabSolutions" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden" title="3. Textbook Exercises & Solutions Directory">
+        <button onclick="switchMainTab('tabSolutions', this)" data-target="tabSolutions" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="3. Textbook Exercises & Solutions Directory">
+          <div class="tab-indicator-pill"></div>
           <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-cyan-400">
-            <i data-lucide="book-open-check" class="w-5 h-5"></i>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="m9 10 2 2 4-4"></path></svg>
           </div>
           <div class="tab-label-group">
             <span class="font-semibold text-xs tracking-wide uppercase text-cyan-400">Section 3</span>
@@ -235,9 +326,10 @@
         </button>
 
         <!-- Tab 4: Master Quiz -->
-        <button onclick="switchMainTab('tabQuiz', this)" data-target="tabQuiz" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden" title="4. Auto-Grading Interactive Quiz">
+        <button onclick="switchMainTab('tabQuiz', this)" data-target="tabQuiz" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="4. Auto-Grading Interactive Quiz">
+          <div class="tab-indicator-pill"></div>
           <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-purple-400">
-            <i data-lucide="help-circle" class="w-5 h-5"></i>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
           </div>
           <div class="tab-label-group">
             <span class="font-semibold text-xs tracking-wide uppercase text-purple-400">Section 4</span>
@@ -246,9 +338,10 @@
         </button>
 
         <!-- Tab 5: 3D Flashcards -->
-        <button onclick="switchMainTab('tabFlashcards', this)" data-target="tabFlashcards" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden" title="5. 3D Memory Recall Flashcards">
+        <button onclick="switchMainTab('tabFlashcards', this)" data-target="tabFlashcards" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="5. 3D Memory Recall Flashcards">
+          <div class="tab-indicator-pill"></div>
           <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-rose-400">
-            <i data-lucide="sparkles" class="w-5 h-5"></i>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
           </div>
           <div class="tab-label-group">
             <span class="font-semibold text-xs tracking-wide uppercase text-rose-400">Section 5</span>
@@ -260,7 +353,7 @@
       <!-- Dock Footer: Pin Toggle -->
       <div class="sidebar-footer p-2 border-t border-slate-800 flex items-center justify-between">
         <button id="pinToggleBtn" onclick="toggleSidebarPin()" class="w-10 h-10 rounded-xl bg-slate-800/60 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all cursor-pointer" title="Pin / Unpin Sidebar (Desktop)">
-          <i data-lucide="pin" class="w-4 h-4"></i>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="17" x2="12" y2="22"></line><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"></path></svg>
         </button>
         <span class="hidden group-hover:block sidebar-dock:pinned:block text-xs font-mono text-slate-500 pl-2">Pin Dock</span>
       </div>
@@ -275,14 +368,13 @@
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">
-              <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
               NCERT Class 7 Geography · Chapter 1
             </div>
             <h1 class="text-2xl md:text-3xl font-extrabold text-white font-heading tracking-tight">
               Interior of the Earth
             </h1>
             <p class="text-slate-400 text-sm mt-1 max-w-2xl">
-              Comprehensive homeschool-grade module: 4.6-billion-year nebula genesis, concentric layers (Crust, Mantle, Core), 3 rock families, dynamic Rock Cycle simulator, and 100% textbook solutions.
+              Comprehensive homeschool-grade module: 4.6-billion-year nebula genesis, concentric layers (Crust, Mantle, Core), 3 rock families with authentic specimen gallery, dynamic Rock Cycle simulator, and 100% textbook solutions.
             </p>
           </div>
 
@@ -299,208 +391,207 @@
       <!-- ==================== TAB 1: EARTH'S LAYERS & ORIGIN ==================== -->
       <section id="tabLayers" class="tab-content active space-y-6">
         
-        <!-- Claude's Nebula Origin Story Banner -->
-        <div class="bg-gradient-to-r from-blue-950/40 via-slate-900 to-slate-900 border border-blue-900/40 rounded-2xl p-5 relative overflow-hidden">
-          <div class="flex items-start gap-4">
-            <div class="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex-shrink-0">
-              <i data-lucide="orbit" class="w-6 h-6"></i>
+        <!-- 4.6 Billion Year Cosmic Genesis Banner -->
+        <div class="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+          <div class="absolute -right-8 -top-8 w-40 h-40 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              ✨
+            </span>
+            <span class="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">The Nebula Hypothesis · 4.6 Billion Years Ago</span>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-white font-heading">
+            Cosmic Origin: How Planetary Density Differentiation Created Earth's Layers
+          </h2>
+          <p class="text-slate-300 text-sm mt-2 leading-relaxed">
+            The Earth originated approximately <strong>4.6 billion years ago</strong> from the gravitational collapse of a giant swirling cosmic dust cloud called a <em>nebula</em>. In its primordial infancy, Earth was a completely molten, fiery ball bombarded by planetesimals. As gravitational energy converted to extreme heat, <strong>density differentiation</strong> occurred:
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+            <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800">
+              <div class="text-amber-400 text-xs font-mono font-bold uppercase mb-1">1. Heavy Core Sink</div>
+              <p class="text-xs text-slate-300 leading-relaxed">Dense metallic elements—chiefly <strong>Iron (Fe)</strong> and <strong>Nickel (Ni)</strong>—gravitationally sank to the very centre, creating the molten and solid core.</p>
             </div>
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-semibold uppercase tracking-wider text-blue-400 font-mono">Cosmic Genesis · 4.6 Billion Years Ago</span>
-                <span class="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-300 text-[11px] font-bold">Nebula Theory</span>
-              </div>
-              <h2 class="text-lg font-bold text-white mt-1">How Did the Earth's Layers Form?</h2>
-              <p class="text-slate-300 text-sm mt-1.5 leading-relaxed">
-                Over <strong>4.6 billion years ago</strong>, a giant rotating cloud of cosmic gas and dust called a <strong>'nebula'</strong> collapsed under its own gravity. As the newborn molten Earth cooled over millions of years, gravity performed a natural density separation: the heaviest metals (iron and nickel) sank to form the super-dense central <strong>Core</strong>, while the lighter silicate rocks floated upward to solidify into the outer <strong>Crust</strong>.
-              </p>
+            <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800">
+              <div class="text-emerald-400 text-xs font-mono font-bold uppercase mb-1">2. Silicate Mantle Slurry</div>
+              <p class="text-xs text-slate-300 leading-relaxed">Medium-density silicate rocks rich in iron and magnesium formed the <strong>2,900 km thick mantle</strong>, which still churns with convection currents.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800">
+              <div class="text-cyan-400 text-xs font-mono font-bold uppercase mb-1">3. Light Solid Crust</div>
+              <p class="text-xs text-slate-300 leading-relaxed">The lightest silicates (silicon, aluminum) floated to the surface like slag on molten steel, cooling and crystallizing into our paper-thin solid <strong>crust</strong>.</p>
             </div>
           </div>
         </div>
 
-        <!-- Interactive 3D Cutaway Diagram & Inspector -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Onion Analogy & Interactive Cross-Section Explorer -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          <!-- Left: Interactive Vector Cross-Section (7 Cols) -->
-          <div class="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center relative shadow-lg">
-            <div class="w-full flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
-              <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <h3 class="text-sm font-semibold uppercase tracking-wider text-slate-300 font-mono">Interactive Concentric Cutaway</h3>
+          <!-- Left: Onion Analogy & SVG Cross Section (7 Cols) -->
+          <div class="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                <div>
+                  <span class="text-xs font-mono text-emerald-400 font-bold uppercase">Concentric Shell Architecture</span>
+                  <h3 class="text-lg font-bold text-white font-heading">The "Onion" Analogy & Earth Layers</h3>
+                </div>
+                <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-mono">Radius: 6,371 km</span>
               </div>
-              <span class="text-xs text-slate-400 font-mono bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700">Click any layer to inspect</span>
+              <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                Just like an onion has multiple concentric layers, the Earth consists of several concentric spherical shells resting one inside another. Click any layer below or on the diagram to inspect its physical properties.
+              </p>
+
+              <!-- Interactive Scaled SVG Diagram of Concentric Layers -->
+              <div class="relative flex items-center justify-center p-4 rounded-xl bg-slate-950/80 border border-slate-800/80">
+                <svg viewBox="0 0 400 400" class="w-72 h-72 sm:w-80 sm:h-80 drop-shadow-2xl">
+                  <!-- Atmosphere Halo -->
+                  <circle cx="200" cy="200" r="192" fill="none" stroke="#0ea5e9" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.4" />
+                  
+                  <!-- Crust (0-35km) -->
+                  <circle id="svgCrust" cx="200" cy="200" r="185" fill="#10b981" fill-opacity="0.25" stroke="#10b981" stroke-width="4" class="cursor-pointer transition-all hover:fill-opacity-40" onclick="selectLayer('crust')" />
+                  
+                  <!-- Mantle (35-2900km) -->
+                  <circle id="svgMantle" cx="200" cy="200" r="155" fill="#f97316" fill-opacity="0.3" stroke="#ea580c" stroke-width="4" class="cursor-pointer transition-all hover:fill-opacity-50" onclick="selectLayer('mantle')" />
+                  
+                  <!-- Outer Core (2900-5150km) -->
+                  <circle id="svgOuterCore" cx="200" cy="200" r="95" fill="#eab308" fill-opacity="0.35" stroke="#ca8a04" stroke-width="4" class="cursor-pointer transition-all hover:fill-opacity-55" onclick="selectLayer('outerCore')" />
+                  
+                  <!-- Inner Core (5150-6371km) -->
+                  <circle id="svgInnerCore" cx="200" cy="200" r="45" fill="#fef08a" fill-opacity="0.9" stroke="#facc15" stroke-width="3" class="cursor-pointer transition-all hover:fill-opacity-100" onclick="selectLayer('innerCore')" />
+
+                  <!-- Text Labels inside SVG -->
+                  <text x="200" y="32" text-anchor="middle" fill="#34d399" font-size="11" font-family="Space Mono" font-weight="bold">CRUST (1% Vol · 35 km)</text>
+                  <text x="200" y="80" text-anchor="middle" fill="#fb923c" font-size="11" font-family="Space Mono" font-weight="bold">MANTLE (84% Vol · 2,900 km)</text>
+                  <text x="200" y="140" text-anchor="middle" fill="#fde047" font-size="10" font-family="Space Mono" font-weight="bold">OUTER CORE (Molten Fe+Ni)</text>
+                  <text x="200" y="204" text-anchor="middle" fill="#854d0e" font-size="9" font-family="Space Mono" font-weight="bold">INNER (Solid)</text>
+                </svg>
+              </div>
             </div>
 
-            <!-- SVG Cutaway Graphic -->
-            <div class="relative w-full max-w-[420px] aspect-square flex items-center justify-center py-2">
-              <svg viewBox="0 0 400 400" class="w-full h-full drop-shadow-2xl select-none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Outer Glow -->
-                <circle cx="200" cy="200" r="185" fill="none" stroke="rgba(16, 185, 129, 0.15)" stroke-width="8" class="animate-pulse-ring" />
-
-                <!-- 1. Crust Outer Ring -->
-                <circle id="svgCrust" cx="200" cy="200" r="175" fill="#047857" stroke="#10b981" stroke-width="4" class="cursor-pointer hover:brightness-125 transition-all duration-300" onclick="selectLayer('crust')" />
-
-                <!-- 2. Mantle Ring -->
-                <circle id="svgMantle" cx="200" cy="200" r="150" fill="#c2410c" stroke="#f97316" stroke-width="4" class="cursor-pointer hover:brightness-125 transition-all duration-300" onclick="selectLayer('mantle')" />
-
-                <!-- 3. Outer Core Ring -->
-                <circle id="svgOuterCore" cx="200" cy="200" r="95" fill="#ca8a04" stroke="#facc15" stroke-width="4" class="cursor-pointer hover:brightness-125 transition-all duration-300" onclick="selectLayer('outerCore')" />
-
-                <!-- 4. Inner Core Ring -->
-                <circle id="svgInnerCore" cx="200" cy="200" r="45" fill="#fef08a" stroke="#ffffff" stroke-width="3" class="cursor-pointer hover:brightness-125 transition-all duration-300" onclick="selectLayer('innerCore')" />
-
-                <!-- Wedge Cutout Lines for 3D Geological Realism -->
-                <path d="M 200 200 L 200 25 A 175 175 0 0 1 375 200 Z" fill="rgba(15, 23, 42, 0.4)" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1.5" stroke-dasharray="3,3" pointer-events="none" />
-                <path d="M 200 200 L 200 50 A 150 150 0 0 1 350 200 Z" fill="rgba(194, 65, 12, 0.25)" stroke="#ea580c" stroke-width="1.5" pointer-events="none" />
-                <path d="M 200 200 L 200 105 A 95 95 0 0 1 295 200 Z" fill="rgba(202, 138, 4, 0.3)" stroke="#eab308" stroke-width="1.5" pointer-events="none" />
-                <path d="M 200 200 L 200 155 A 45 45 0 0 1 245 200 Z" fill="rgba(254, 240, 138, 0.45)" stroke="#fef08a" stroke-width="1.5" pointer-events="none" />
-
-                <!-- Labels on Cutout Sector -->
-                <text x="210" y="45" fill="#34d399" font-size="11" font-weight="700" font-family="Inter">CRUST (0–35km)</text>
-                <text x="210" y="100" fill="#fdba74" font-size="11" font-weight="700" font-family="Inter">MANTLE (2900km)</text>
-                <text x="205" y="150" fill="#fde047" font-size="11" font-weight="700" font-family="Inter">OUTER CORE</text>
-                <text x="202" y="195" fill="#ffffff" font-size="10" font-weight="800" font-family="Inter">INNER CORE</text>
-              </svg>
-            </div>
-
-            <!-- Layer Selector Button Strip -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full mt-4">
-              <button onclick="selectLayer('crust')" id="btnLayerCrust" class="layer-selector-btn py-2 px-3 rounded-xl border border-emerald-500/40 bg-emerald-950/40 hover:bg-emerald-900/60 text-emerald-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Crust
+            <!-- Layer Selection Bar -->
+            <div class="grid grid-cols-4 gap-2 mt-4">
+              <button onclick="selectLayer('crust')" id="btnLayerCrust" class="layer-tab-btn py-2 px-2 rounded-xl border border-emerald-500/60 bg-emerald-950/60 text-emerald-300 text-xs font-semibold text-center transition-all cursor-pointer">
+                1. Crust
               </button>
-              <button onclick="selectLayer('mantle')" id="btnLayerMantle" class="layer-selector-btn py-2 px-3 rounded-xl border border-slate-700 bg-slate-800/60 hover:bg-slate-700/60 text-slate-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
-                <span class="w-2 h-2 rounded-full bg-orange-500"></span> Mantle
+              <button onclick="selectLayer('mantle')" id="btnLayerMantle" class="layer-tab-btn py-2 px-2 rounded-xl border border-slate-700 bg-slate-800/60 text-slate-300 text-xs font-semibold text-center transition-all cursor-pointer">
+                2. Mantle
               </button>
-              <button onclick="selectLayer('outerCore')" id="btnLayerOuterCore" class="layer-selector-btn py-2 px-3 rounded-xl border border-slate-700 bg-slate-800/60 hover:bg-slate-700/60 text-slate-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
-                <span class="w-2 h-2 rounded-full bg-yellow-400"></span> Outer Core
+              <button onclick="selectLayer('outerCore')" id="btnLayerOuterCore" class="layer-tab-btn py-2 px-2 rounded-xl border border-slate-700 bg-slate-800/60 text-slate-300 text-xs font-semibold text-center transition-all cursor-pointer">
+                3. Outer Core
               </button>
-              <button onclick="selectLayer('innerCore')" id="btnLayerInnerCore" class="layer-selector-btn py-2 px-3 rounded-xl border border-slate-700 bg-slate-800/60 hover:bg-slate-700/60 text-slate-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
-                <span class="w-2 h-2 rounded-full bg-yellow-100"></span> Inner Core
+              <button onclick="selectLayer('innerCore')" id="btnLayerInnerCore" class="layer-tab-btn py-2 px-2 rounded-xl border border-slate-700 bg-slate-800/60 text-slate-300 text-xs font-semibold text-center transition-all cursor-pointer">
+                4. Inner Core
               </button>
             </div>
           </div>
 
-          <!-- Right: Dynamic Layer Telemetry Card (5 Cols) -->
-          <div class="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-lg relative min-h-[420px] flex flex-col justify-between">
-            <div id="layerTelemetryCard">
-              <!-- Loaded dynamically via JS -->
+          <!-- Right: Dynamic Telemetry Inspector Card (5 Cols) -->
+          <div class="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between" id="layerTelemetryCard">
+            <!-- Dynamically populated by selectLayer(layerKey) -->
+          </div>
+        </div>
+
+        <!-- SIAL vs SIMA Detailed Deep-Dive -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-5">
+            <div>
+              <span class="text-xs font-mono uppercase text-cyan-400 font-bold">Crustal Composition Breakdown</span>
+              <h3 class="text-lg font-bold text-white font-heading">SIAL (Continental) vs. SIMA (Oceanic)</h3>
+            </div>
+            <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 text-xs font-mono">Total Volume: ~1%</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- SIAL Card -->
+            <div class="p-5 rounded-xl bg-slate-950/60 border border-cyan-500/30">
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-xs font-mono font-bold">Continental Crust</span>
+                <span class="text-xs font-mono text-slate-400">35 to 70 km Thick</span>
+              </div>
+              <h4 class="text-lg font-bold text-white font-heading">SIAL Layer</h4>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+                Forms the massive landmasses, mountain ranges, and continents. Composed predominantly of light, low-density granitic rocks.
+              </p>
+              <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-slate-800 space-y-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400">Main Elements:</span>
+                  <span class="font-bold text-cyan-300">Silica (Si) + Alumina (Al)</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400">Average Density:</span>
+                  <span class="font-bold text-slate-200">~2.7 g/cm³</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400">Dominant Rock:</span>
+                  <span class="font-bold text-slate-200">Granite</span>
+                </div>
+              </div>
             </div>
 
-            <!-- Deep Well Factlet -->
-            <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center gap-2.5 text-xs text-slate-400">
-              <i data-lucide="info" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
-              <span><strong>Kola Borehole (Russia):</strong> Deepest hole humans ever drilled is ~12 km deep — barely 0.2% into Earth's 6,371 km radius!</span>
+            <!-- SIMA Card -->
+            <div class="p-5 rounded-xl bg-slate-950/60 border border-emerald-500/30">
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-mono font-bold">Oceanic Crust</span>
+                <span class="text-xs font-mono text-slate-400">5 to 8 km Thick</span>
+              </div>
+              <h4 class="text-lg font-bold text-white font-heading">SIMA Layer</h4>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">
+                Forms the floor beneath the great oceans. Much thinner than continental crust, but significantly heavier and denser due to dark volcanic minerals.
+              </p>
+              <div class="mt-4 p-3 rounded-lg bg-slate-900/80 border border-slate-800 space-y-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400">Main Elements:</span>
+                  <span class="font-bold text-emerald-300">Silica (Si) + Magnesium (Ma)</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400">Average Density:</span>
+                  <span class="font-bold text-slate-200">~3.0 g/cm³ (Denser!)</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-400">Dominant Rock:</span>
+                  <span class="font-bold text-slate-200">Basalt</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Claude's Essential Key Terms Glossary Strip -->
-        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-lg">
-          <div class="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
-            <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-slate-300 font-mono">
-              <i data-lucide="bookmark" class="w-4 h-4 text-emerald-400"></i>
-              <span>Essential Key Terminology (From Claude Notes)</span>
-            </div>
-            <span class="text-xs text-slate-400">6 Core Definitions</span>
+        <!-- Claude's 6 Core Key Terms Glossary -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <div class="flex items-center gap-2 mb-4 border-b border-slate-800 pb-3">
+            <span class="text-emerald-400 font-bold">📖</span>
+            <h3 class="text-lg font-bold text-white font-heading">Key Geological Terminology Glossary</h3>
+            <span class="ml-auto px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-xs font-mono">Claude Integration</span>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-            <div class="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60">
-              <span class="text-xs font-bold text-emerald-400 uppercase font-mono">Gravity:</span>
-              <p class="text-xs text-slate-300 mt-1">A strong, invisible attractive force that pulls matter together into planets.</p>
-            </div>
-            <div class="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60">
-              <span class="text-xs font-bold text-amber-400 uppercase font-mono">Molten:</span>
-              <p class="text-xs text-slate-300 mt-1">Heated to an extremely high temperature until it turns into liquefied rock.</p>
-            </div>
-            <div class="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60">
-              <span class="text-xs font-bold text-cyan-400 uppercase font-mono">Texture:</span>
-              <p class="text-xs text-slate-300 mt-1">The size, shape, and arrangement of mineral crystals or grains in a rock.</p>
-            </div>
-            <div class="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60">
-              <span class="text-xs font-bold text-purple-400 uppercase font-mono">Solidifies:</span>
-              <p class="text-xs text-slate-300 mt-1">The physical change when liquid molten rock cools into hard solid rock.</p>
-            </div>
-            <div class="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60">
-              <span class="text-xs font-bold text-rose-400 uppercase font-mono">Fossils:</span>
-              <p class="text-xs text-slate-300 mt-1">Preserved petrified remains or impressions of prehistoric plants and animals.</p>
-            </div>
-            <div class="p-3 rounded-xl bg-slate-800/40 border border-slate-700/60">
-              <span class="text-xs font-bold text-yellow-400 uppercase font-mono">Cyclic:</span>
-              <p class="text-xs text-slate-300 mt-1">Recurring continuously in a continuous loop without a fixed start or finish.</p>
-            </div>
-          </div>
-        </div>
 
-        <!-- Comprehensive Layer Comparative Matrix -->
-        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-lg">
-          <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
-            <i data-lucide="table" class="w-4 h-4 text-emerald-400"></i>
-            Concentric Geological Layers Summary
-          </h3>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm border-collapse">
-              <thead>
-                <tr class="border-b border-slate-800 text-xs font-mono uppercase text-slate-400 bg-slate-950/50">
-                  <th class="py-3 px-4">Layer Name</th>
-                  <th class="py-3 px-4">Thickness / Depth</th>
-                  <th class="py-3 px-4">Primary Minerals</th>
-                  <th class="py-3 px-4">Temperature</th>
-                  <th class="py-3 px-4">Physical State</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-800/60 font-sans text-slate-300">
-                <tr class="hover:bg-slate-800/30 transition-colors">
-                  <td class="py-3.5 px-4 font-semibold text-emerald-400 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Continental Crust
-                  </td>
-                  <td class="py-3.5 px-4">35 km (up to 70 km under mountains)</td>
-                  <td class="py-3.5 px-4 font-mono font-medium text-emerald-300">SIAL (Silica + Alumina)</td>
-                  <td class="py-3.5 px-4">0°C to 700°C</td>
-                  <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 text-xs">Solid Rock</span></td>
-                </tr>
-                <tr class="hover:bg-slate-800/30 transition-colors">
-                  <td class="py-3.5 px-4 font-semibold text-teal-400 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-teal-400"></span> Oceanic Crust
-                  </td>
-                  <td class="py-3.5 px-4">5 to 8 km (ocean floor)</td>
-                  <td class="py-3.5 px-4 font-mono font-medium text-teal-300">SIMA (Silica + Magnesium)</td>
-                  <td class="py-3.5 px-4">0°C to 700°C</td>
-                  <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-teal-950 text-teal-300 border border-teal-800 text-xs">Solid & Denser</span></td>
-                </tr>
-                <tr class="hover:bg-slate-800/30 transition-colors">
-                  <td class="py-3.5 px-4 font-semibold text-orange-400 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-orange-400"></span> Mantle (Upper & Lower)
-                  </td>
-                  <td class="py-3.5 px-4">~2,900 km (Thickest Layer, ~84% vol)</td>
-                  <td class="py-3.5 px-4 font-mono font-medium text-orange-300">Silicon, Magnesium, Iron</td>
-                  <td class="py-3.5 px-4">870°C to 4,400°C</td>
-                  <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-orange-950 text-orange-300 border border-orange-800 text-xs">Semi-liquid / Molten</span></td>
-                </tr>
-                <tr class="hover:bg-slate-800/30 transition-colors">
-                  <td class="py-3.5 px-4 font-semibold text-yellow-400 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-yellow-400"></span> Outer Core
-                  </td>
-                  <td class="py-3.5 px-4">~2,300 km thick</td>
-                  <td class="py-3.5 px-4 font-mono font-medium text-yellow-300">NIFE (Nickel + Iron / Ferrum)</td>
-                  <td class="py-3.5 px-4">4,400°C to 6,100°C</td>
-                  <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-yellow-950 text-yellow-300 border border-yellow-800 text-xs">Liquid Metal</span></td>
-                </tr>
-                <tr class="hover:bg-slate-800/30 transition-colors">
-                  <td class="py-3.5 px-4 font-semibold text-amber-200 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-amber-200"></span> Inner Core
-                  </td>
-                  <td class="py-3.5 px-4">~1,200 km radius</td>
-                  <td class="py-3.5 px-4 font-mono font-medium text-amber-200">Solid Iron & Nickel</td>
-                  <td class="py-3.5 px-4">~6,000°C (Hot as Sun's surface)</td>
-                  <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-200 border border-amber-800 text-xs">Solid (High Pressure)</span></td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
+            <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="font-bold text-emerald-400 text-sm block">1. Gravity</span>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">A strong, invisible attractive force that pulls objects together and concentrated dense iron at Earth's core.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="font-bold text-amber-400 text-sm block">2. Molten</span>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">Heated to extreme temperatures until solid rock liquefies into subterranean magma or surface lava.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="font-bold text-cyan-400 text-sm block">3. Texture</span>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">The tactile size, shape, and arrangement of interlocking mineral crystals or grains across a rock specimen.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="font-bold text-purple-400 text-sm block">4. Solidifies</span>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">The thermal freezing process where liquid magma or lava cools and freezes into rigid crystalline igneous rock.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="font-bold text-rose-400 text-sm block">5. Fossils</span>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">Petrified remains, shells, carbonized imprints, or tracks of prehistoric plants and animals preserved in sedimentary strata.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800">
+              <span class="font-bold text-yellow-400 text-sm block">6. Cyclic</span>
+              <p class="text-xs text-slate-300 mt-1 leading-relaxed">A continuous circular process that repeats perpetually through geological time without a definitive beginning or end.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- ==================== TAB 2: ROCKS, CYCLE & MINERALS ==================== -->
+      <!-- ==================== TAB 2: ROCKS, CYCLE, GALLERY & MINERALS ==================== -->
       <section id="tabRocks" class="tab-content space-y-6">
         
         <!-- Interactive 5-Stage Rock Cycle Simulator -->
@@ -511,34 +602,34 @@
               <h2 class="text-xl font-bold text-white font-heading">The Continuous Rock Cycle</h2>
             </div>
             <div class="flex items-center gap-2">
-              <button onclick="stepRockCycle(-1)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1 border border-slate-700">
-                <i data-lucide="chevron-left" class="w-4 h-4"></i> Previous
+              <button onclick="stepRockCycle(-1)" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1 border border-slate-700 cursor-pointer">
+                <span>◀ Previous</span>
               </button>
-              <button onclick="stepRockCycle(1)" class="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold flex items-center gap-1">
-                Next Stage <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              <button onclick="stepRockCycle(1)" class="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold flex items-center gap-1 cursor-pointer">
+                <span>Next Stage ▶</span>
               </button>
             </div>
           </div>
 
           <!-- Simulator Stage Steps Bar -->
           <div class="grid grid-cols-5 gap-2 mb-6">
-            <button onclick="setRockCycleStage(0)" id="cycleStep0" class="cycle-step-btn active p-2.5 rounded-xl border border-amber-500/50 bg-amber-950/40 text-left transition-all">
+            <button onclick="setRockCycleStage(0)" id="cycleStep0" class="cycle-step-btn active p-2.5 rounded-xl border border-amber-500/50 bg-amber-950/40 text-left transition-all cursor-pointer">
               <span class="text-[10px] font-mono text-amber-400 block font-bold">STAGE 1</span>
               <span class="text-xs font-semibold text-white truncate block">Magma / Lava</span>
             </button>
-            <button onclick="setRockCycleStage(1)" id="cycleStep1" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all">
+            <button onclick="setRockCycleStage(1)" id="cycleStep1" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all cursor-pointer">
               <span class="text-[10px] font-mono text-slate-400 block font-bold">STAGE 2</span>
               <span class="text-xs font-semibold text-white truncate block">Igneous Rocks</span>
             </button>
-            <button onclick="setRockCycleStage(2)" id="cycleStep2" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all">
+            <button onclick="setRockCycleStage(2)" id="cycleStep2" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all cursor-pointer">
               <span class="text-[10px] font-mono text-slate-400 block font-bold">STAGE 3</span>
               <span class="text-xs font-semibold text-white truncate block">Sediments</span>
             </button>
-            <button onclick="setRockCycleStage(3)" id="cycleStep3" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all">
+            <button onclick="setRockCycleStage(3)" id="cycleStep3" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all cursor-pointer">
               <span class="text-[10px] font-mono text-slate-400 block font-bold">STAGE 4</span>
               <span class="text-xs font-semibold text-white truncate block">Sedimentary</span>
             </button>
-            <button onclick="setRockCycleStage(4)" id="cycleStep4" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all">
+            <button onclick="setRockCycleStage(4)" id="cycleStep4" class="cycle-step-btn p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-left transition-all cursor-pointer">
               <span class="text-[10px] font-mono text-slate-400 block font-bold">STAGE 5</span>
               <span class="text-xs font-semibold text-white truncate block">Metamorphic</span>
             </button>
@@ -550,90 +641,157 @@
           </div>
         </div>
 
-        <!-- 3 Rock Families Comparative Breakdown -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          <!-- 1. Igneous Rocks -->
-          <div class="bg-slate-900/90 border border-slate-800 hover:border-amber-500/50 transition-all rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+        <!-- ==================== USER REFINEMENT 2: ROCK SPECIMEN IMAGES GALLERY ==================== -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4 mb-5">
             <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs font-mono font-bold">Primary Rocks</span>
-                <i data-lucide="flame" class="w-5 h-5 text-amber-400"></i>
-              </div>
-              <h3 class="text-lg font-bold text-white font-heading">Igneous Rocks</h3>
-              <p class="text-slate-400 text-xs mt-1">Born directly from molten fiery rock (magma or lava) cooling and solidifying.</p>
-              
-              <div class="mt-4 space-y-2.5 text-xs text-slate-300">
-                <div class="p-2.5 rounded-lg bg-slate-800/50 border border-slate-700/50">
-                  <strong class="text-amber-300 block mb-0.5">Intrusive Igneous:</strong>
-                  Cools slowly deep inside the crust. Forms large crystals (e.g. <em>Granite, Diorite</em>).
-                </div>
-                <div class="p-2.5 rounded-lg bg-slate-800/50 border border-slate-700/50">
-                  <strong class="text-amber-300 block mb-0.5">Extrusive Igneous:</strong>
-                  Pours out as lava and cools rapidly on the surface. Fine, grainy texture with tiny crystals (e.g. <em>Basalt, Andesite</em>).
-                </div>
-              </div>
+              <span class="text-xs font-mono uppercase text-emerald-400 font-bold">Visual Geological Specimen Herbarium</span>
+              <h3 class="text-xl font-bold text-white font-heading">Rock Types & Specimen Gallery</h3>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center gap-1.5">
-              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-amber-400"></i>
-              <span><strong>Indian Context:</strong> Deccan Plateau (Maharashtra) is built of basalt sheets!</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-mono">8 Specimen Photos</span>
             </div>
           </div>
 
-          <!-- 2. Sedimentary Rocks -->
-          <div class="bg-slate-900/90 border border-slate-800 hover:border-emerald-500/50 transition-all rounded-2xl p-5 shadow-lg flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-mono font-bold">Layered Rocks</span>
-                <i data-lucide="layers" class="w-5 h-5 text-emerald-400"></i>
-              </div>
-              <h3 class="text-lg font-bold text-white font-heading">Sedimentary Rocks</h3>
-              <p class="text-slate-400 text-xs mt-1">Formed when weathered rock fragments (sediments) are transported, deposited in layers, and compacted.</p>
-              
-              <div class="mt-4 space-y-2.5 text-xs text-slate-300">
-                <div class="p-2.5 rounded-lg bg-slate-800/50 border border-slate-700/50">
-                  <strong class="text-emerald-300 block mb-0.5">Fossil Storage:</strong>
-                  The only rocks containing trapped fossils of prehistoric marine life, plants, and dinosaur bones.
+          <!-- 4-Column Responsive Visual Cards Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <!-- 1. Granite -->
+            <div class="group bg-slate-950/70 border border-slate-800 hover:border-amber-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+              <div>
+                <div class="relative h-36 w-full overflow-hidden bg-slate-900">
+                  <img src="assets/granite.jpg" alt="Granite Specimen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-950/80 border border-amber-500/40 text-amber-300 font-mono text-[10px] font-bold">INTRUSIVE IGNEOUS</span>
                 </div>
-                <div class="p-2.5 rounded-lg bg-slate-800/50 border border-slate-700/50">
-                  <strong class="text-emerald-300 block mb-0.5">Common Examples:</strong>
-                  <em>Sandstone</em> (compacted sand), <em>Shale</em> (compacted mud/clay), <em>Limestone</em>, and <em>Gypsum</em>.
+                <div class="p-3.5">
+                  <h4 class="font-bold text-white text-base">Granite</h4>
+                  <p class="text-xs text-slate-300 mt-1 leading-relaxed">Coarse-grained intrusive rock. Cools slowly deep inside the crust, allowing quartz, feldspar, and mica crystals to grow large.</p>
                 </div>
               </div>
+              <div class="p-3.5 pt-0 text-[11px] text-amber-300/90 font-medium">
+                Uses: Grinding stones, luxury countertops, and building pillars.
+              </div>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center gap-1.5">
-              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-400"></i>
-              <span><strong>Indian Monument:</strong> Delhi's famous Red Fort is built entirely of red sandstone!</span>
-            </div>
-          </div>
 
-          <!-- 3. Metamorphic Rocks -->
-          <div class="bg-slate-900/90 border border-slate-800 hover:border-purple-500/50 transition-all rounded-2xl p-5 shadow-lg flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/30 text-xs font-mono font-bold">Changed Rocks</span>
-                <i data-lucide="sparkles" class="w-5 h-5 text-purple-400"></i>
-              </div>
-              <h3 class="text-lg font-bold text-white font-heading">Metamorphic Rocks</h3>
-              <p class="text-slate-400 text-xs mt-1">From Greek <em>meta</em> (change) + <em>morphe</em> (form). Altered by extreme tectonic heat and crushing pressure.</p>
-              
-              <div class="mt-4 space-y-2.5 text-xs text-slate-300">
-                <div class="p-2.5 rounded-lg bg-slate-800/50 border border-slate-700/50">
-                  <strong class="text-purple-300 block mb-0.5">Metamorphic Transitions:</strong>
-                  • Limestone $\rightarrow$ <strong>Marble</strong><br>
-                  • Clay / Shale $\rightarrow$ <strong>Slate</strong><br>
-                  • Granite $\rightarrow$ <strong>Gneiss</strong>
+            <!-- 2. Basalt -->
+            <div class="group bg-slate-950/70 border border-slate-800 hover:border-amber-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+              <div>
+                <div class="relative h-36 w-full overflow-hidden bg-slate-900">
+                  <img src="assets/basalt.jpg" alt="Basalt Specimen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-950/80 border border-amber-500/40 text-amber-300 font-mono text-[10px] font-bold">EXTRUSIVE IGNEOUS</span>
                 </div>
-                <div class="p-2.5 rounded-lg bg-slate-800/50 border border-slate-700/50">
-                  <strong class="text-purple-300 block mb-0.5">Distinctive Features:</strong>
-                  Crystals re-align under directional pressure, creating banded foliage textures.
+                <div class="p-3.5">
+                  <h4 class="font-bold text-white text-base">Basalt</h4>
+                  <p class="text-xs text-slate-300 mt-1 leading-relaxed">Fine-grained dark volcanic rock. Forms when molten lava pours out on Earth's surface and solidifies rapidly in the air.</p>
                 </div>
               </div>
+              <div class="p-3.5 pt-0 text-[11px] text-amber-300/90 font-medium">
+                Indian Landmark: The vast Deccan Plateau (Maharashtra) is built of basalt sheets!
+              </div>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center gap-1.5">
-              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-purple-400"></i>
-              <span><strong>Indian Wonder:</strong> The Taj Mahal in Agra is carved from white Makrana marble!</span>
+
+            <!-- 3. Sandstone -->
+            <div class="group bg-slate-950/70 border border-slate-800 hover:border-emerald-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+              <div>
+                <div class="relative h-36 w-full overflow-hidden bg-slate-900">
+                  <img src="assets/sandstone.jpg" alt="Sandstone Specimen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-mono text-[10px] font-bold">SEDIMENTARY</span>
+                </div>
+                <div class="p-3.5">
+                  <h4 class="font-bold text-white text-base">Sandstone</h4>
+                  <p class="text-xs text-slate-300 mt-1 leading-relaxed">Composed of mineral particles and quartz sand grains compressed into stratified layers under geological pressure.</p>
+                </div>
+              </div>
+              <div class="p-3.5 pt-0 text-[11px] text-emerald-300/90 font-medium">
+                Historic Anchor: Red Fort of Delhi is built from durable red sandstone.
+              </div>
             </div>
+
+            <!-- 4. Limestone -->
+            <div class="group bg-slate-950/70 border border-slate-800 hover:border-emerald-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+              <div>
+                <div class="relative h-36 w-full overflow-hidden bg-slate-900">
+                  <img src="assets/limestone.jpg" alt="Limestone Specimen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-mono text-[10px] font-bold">ORGANIC SEDIMENTARY</span>
+                </div>
+                <div class="p-3.5">
+                  <h4 class="font-bold text-white text-base">Limestone</h4>
+                  <p class="text-xs text-slate-300 mt-1 leading-relaxed">Formed from accumulating shells, coral skeletons, and calcite mud in ancient shallow oceans. Frequently contains fossils.</p>
+                </div>
+              </div>
+              <div class="p-3.5 pt-0 text-[11px] text-emerald-300/90 font-medium">
+                Uses: Foundational ingredient in cement production and agricultural lime.
+              </div>
+            </div>
+
+            <!-- 5. Marble -->
+            <div class="group bg-slate-950/70 border border-slate-800 hover:border-purple-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+              <div>
+                <div class="relative h-36 w-full overflow-hidden bg-slate-900">
+                  <img src="assets/marble.jpg" alt="Marble Specimen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-purple-950/80 border border-purple-500/40 text-purple-300 font-mono text-[10px] font-bold">METAMORPHIC</span>
+                </div>
+                <div class="p-3.5">
+                  <h4 class="font-bold text-white text-base">Marble</h4>
+                  <p class="text-xs text-slate-300 mt-1 leading-relaxed">Metamorphosed limestone! Tectonic heat and crushing pressure recrystallize calcite into an elegant, dense crystalline stone.</p>
+                </div>
+              </div>
+              <div class="p-3.5 pt-0 text-[11px] text-purple-300/90 font-medium">
+                Indian Wonder: The Taj Mahal in Agra is carved from white Makrana marble.
+              </div>
+            </div>
+
+            <!-- 6. Slate -->
+            <div class="group bg-slate-950/70 border border-slate-800 hover:border-purple-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+              <div>
+                <div class="relative h-36 w-full overflow-hidden bg-slate-900">
+                  <img src="assets/slate.jpg" alt="Slate Specimen" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-purple-950/80 border border-purple-500/40 text-purple-300 font-mono text-[10px] font-bold">FOLIATED METAMORPHIC</span>
+                </div>
+                <div class="p-3.5">
+                  <h4 class="font-bold text-white text-base">Slate</h4>
+                  <p class="text-xs text-slate-300 mt-1 leading-relaxed">Formed when fine-grained clay or shale is baked and squeezed by tectonic forces, creating thin, flat splitting layers.</p>
+                </div>
+              </div>
+              <div class="p-3.5 pt-0 text-[11px] text-purple-300/90 font-medium">
+                Uses: Writing chalkboards, roofing tiles, and billiard tables.
+              </div>
+            </div>
+
+            <!-- 7. Red Fort Monument Connection -->
+            <div class="group bg-slate-950/70 border border-slate-800 hover:border-red-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+              <div>
+                <div class="relative h-36 w-full overflow-hidden bg-slate-900">
+                  <img src="assets/red_fort.jpg" alt="Red Fort Delhi" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-red-950/80 border border-red-500/40 text-red-300 font-mono text-[10px] font-bold">INDIAN ARCHITECTURE</span>
+                </div>
+                <div class="p-3.5">
+                  <h4 class="font-bold text-white text-base">Red Fort (Delhi)</h4>
+                  <p class="text-xs text-slate-300 mt-1 leading-relaxed">Mughal emperors chose sturdy red sandstone quarried from Rajasthan to construct the massive fort ramparts in 1638.</p>
+                </div>
+              </div>
+              <div class="p-3.5 pt-0 text-[11px] text-red-400 font-semibold">
+                Rock Source: Red Sandstone (Sedimentary)
+              </div>
+            </div>
+
+            <!-- 8. Taj Mahal Monument Connection -->
+            <div class="group bg-slate-950/70 border border-slate-800 hover:border-cyan-500/50 rounded-xl overflow-hidden transition-all shadow-md flex flex-col justify-between">
+              <div>
+                <div class="relative h-36 w-full overflow-hidden bg-slate-900">
+                  <img src="assets/taj_mahal.jpg" alt="Taj Mahal Agra" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-mono text-[10px] font-bold">WORLD HERITAGE</span>
+                </div>
+                <div class="p-3.5">
+                  <h4 class="font-bold text-white text-base">Taj Mahal (Agra)</h4>
+                  <p class="text-xs text-slate-300 mt-1 leading-relaxed">Completed in 1653 using pure white Makrana marble from Rajasthan, renowned for its translucent glow under moonlight.</p>
+                </div>
+              </div>
+              <div class="p-3.5 pt-0 text-[11px] text-cyan-400 font-semibold">
+                Rock Source: White Marble (Metamorphic)
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -651,7 +809,7 @@
             <!-- Metallic Minerals -->
             <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800">
               <h4 class="font-bold text-emerald-400 text-sm flex items-center gap-2 mb-2">
-                <i data-lucide="shield" class="w-4 h-4"></i> Metallic Minerals
+                <span>🛡️</span> Metallic Minerals
               </h4>
               <p class="text-xs text-slate-300 mb-3">Contain metals in chemical combination; malleable, ductile, lustrous, and conduct electricity.</p>
               <div class="flex flex-wrap gap-2 text-xs">
@@ -666,7 +824,7 @@
             <!-- Non-Metallic Minerals -->
             <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800">
               <h4 class="font-bold text-amber-400 text-sm flex items-center gap-2 mb-2">
-                <i data-lucide="box" class="w-4 h-4"></i> Non-Metallic Minerals
+                <span>📦</span> Non-Metallic Minerals
               </h4>
               <p class="text-xs text-slate-300 mb-3">Do NOT contain metals; break or fracture under pressure; vital for plant growth, agriculture, and construction.</p>
               <div class="flex flex-wrap gap-2 text-xs">
@@ -679,9 +837,9 @@
             </div>
           </div>
 
-          <!-- Vital Plant Mineral Connection from Gemini Q5 -->
+          <!-- Botanical Significance from Gemini Q5 -->
           <div class="mt-4 p-3 rounded-xl bg-emerald-950/30 border border-emerald-800/40 flex items-center gap-3 text-xs text-slate-300">
-            <i data-lucide="sprout" class="w-5 h-5 text-emerald-400 flex-shrink-0"></i>
+            <span class="text-emerald-400 text-lg">🌱</span>
             <div>
               <strong>Botanical Significance (Gemini Question B.5):</strong> Plants specifically utilize <strong>Potassium and Magnesium</strong> minerals from the soil to synthesize chlorophyll, build structural cell walls, and fuel photosynthesis!
             </div>
@@ -690,142 +848,278 @@
       </section>
 
       <!-- ==================== TAB 3: COMPLETE TEXTBOOK SOLUTIONS HUB ==================== -->
+      <!-- User Refinements 4 & 5: Partitioned Dedicated Sub-Tabs & Space-Saving Reveal Pattern -->
       <section id="tabSolutions" class="tab-content space-y-5">
         
-        <!-- Directory Header with Search & Statistics -->
+        <!-- Directory Header with Search & Tab Statistics -->
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-lg">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
             <div>
               <div class="flex items-center gap-2">
                 <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-xs font-mono font-bold">100% Comprehensive</span>
-                <span class="text-xs text-slate-400 font-mono">31 Questions & Problems Solved</span>
+                <span class="text-xs text-slate-400 font-mono">38 Questions & Exercises Solved</span>
               </div>
-              <h2 class="text-xl font-bold text-white font-heading mt-1">Textbook Solutions Directory</h2>
+              <h2 class="text-xl font-bold text-white font-heading mt-1">Solutions & Practice Directory</h2>
             </div>
 
-            <!-- Search Bar with Instant Debounce -->
+            <!-- Instant Search Input -->
             <div class="relative w-full md:w-80">
-              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">🔍</span>
               <input type="text" id="qaSearchInput" placeholder="Search questions (e.g. SIAL, Basalt)..." oninput="handleQASearch(this.value)" class="w-full pl-10 pr-9 py-2 rounded-xl bg-slate-950/80 border border-slate-700 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors">
-              <button onclick="clearSearchFilter()" id="qaClearSearchBtn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white" title="Clear Search">
-                <i data-lucide="x" class="w-4 h-4"></i>
+              <button onclick="clearSearchFilter()" id="qaClearSearchBtn" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white cursor-pointer" title="Clear Search">
+                ✕
               </button>
             </div>
           </div>
 
-          <!-- Two-Tier Submodule Navigation Pills (Minimal Vertical Scroll Mandate) -->
+          <!-- Dedicated Exercise Sub-Tabs Bar with Exact Count Badges (User Refinement 4) -->
           <div class="flex items-center gap-2 flex-wrap pt-3.5 overflow-x-hidden">
-            <button onclick="switchSubPane('paneAll', this)" class="submodule-pill active px-3.5 py-1.5 rounded-xl border border-cyan-500/50 bg-cyan-950/40 text-cyan-300 text-xs font-semibold transition-all">
-              All Questions <span class="ml-1 px-1.5 py-0.2 rounded-full bg-cyan-900/60 text-[10px]">31</span>
+            <button onclick="switchSubPane('paneFIB', this)" class="submodule-pill active px-3 py-1.5 rounded-xl border border-emerald-500/50 bg-emerald-950/40 text-emerald-300 text-xs font-semibold transition-all cursor-pointer">
+              Fill in the Blanks (FIB) <span class="ml-1 px-1.5 py-0.2 rounded-full bg-emerald-900/60 text-[10px]">8</span>
             </button>
-            <button onclick="switchSubPane('paneObj', this)" class="submodule-pill px-3.5 py-1.5 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all">
-              Sec A & B: Blanks & MCQs <span class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-800 text-[10px]">13</span>
+            <button onclick="switchSubPane('paneMTH', this)" class="submodule-pill px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all cursor-pointer">
+              Match Following (MTH) <span class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-800 text-[10px]">11</span>
             </button>
-            <button onclick="switchSubPane('paneTF', this)" class="submodule-pill px-3.5 py-1.5 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all">
-              Sec C & E: True/False & Brief <span class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-800 text-[10px]">10</span>
+            <button onclick="switchSubPane('paneTF', this)" class="submodule-pill px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all cursor-pointer">
+              True or False (TF) <span class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-800 text-[10px]">5</span>
             </button>
-            <button onclick="switchSubPane('paneDetail', this)" class="submodule-pill px-3.5 py-1.5 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all">
-              Sec F: In-Depth Detailed <span class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-800 text-[10px]">5</span>
+            <button onclick="switchSubPane('paneMCQ', this)" class="submodule-pill px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all cursor-pointer">
+              Multiple Choice (MCQ) <span class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-800 text-[10px]">5</span>
             </button>
-            <button onclick="switchSubPane('paneNCERT', this)" class="submodule-pill px-3.5 py-1.5 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all">
-              NCERT Textbook & Reasons <span class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-800 text-[10px]">3</span>
+            <button onclick="switchSubPane('paneSA', this)" class="submodule-pill px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all cursor-pointer">
+              Short Answers (VSA / SA) <span class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-800 text-[10px]">5</span>
+            </button>
+            <button onclick="switchSubPane('paneLA', this)" class="submodule-pill px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all cursor-pointer">
+              Detailed Answers (LA / DLA) <span class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-800 text-[10px]">5</span>
+            </button>
+            <button onclick="switchSubPane('paneNCERT', this)" class="submodule-pill px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all cursor-pointer">
+              NCERT Textbook & Reasons <span class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-800 text-[10px]">8</span>
+            </button>
+            <button onclick="switchSubPane('paneAll', this)" class="submodule-pill px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 text-xs font-semibold transition-all cursor-pointer">
+              Universal Directory / All <span class="ml-1 px-1.5 py-0.2 rounded-full bg-slate-800 text-[10px]">38</span>
             </button>
           </div>
         </div>
 
-        <!-- ==================== SUB-PANE 1: ALL QUESTIONS CONTAINER ==================== -->
-        <div id="paneAll" class="submodule-pane active space-y-4">
-          <!-- Populated with all question cards below -->
+        <!-- ==================== SUB-PANE 1: FILL IN THE BLANKS (FIB) ==================== -->
+        <!-- User Refinement 4 & 5: Single Tab & Space-Saving In-line Reveal Pattern -->
+        <div id="paneFIB" class="submodule-pane active space-y-3">
+          <div class="flex items-center justify-between bg-slate-900/60 border border-slate-800 rounded-xl px-4 py-2 text-xs">
+            <div class="text-slate-300">
+              <strong>Tip:</strong> Click on any blank <span class="text-emerald-400 font-mono font-bold px-1 bg-emerald-950/40 rounded">________</span> or click <strong>Reveal Answer</strong> to reveal solutions in place without pushing layout!
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="toggleAllFIB(true)" class="px-2.5 py-1 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold cursor-pointer">
+                Reveal All
+              </button>
+              <button onclick="toggleAllFIB(false)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-semibold cursor-pointer">
+                Hide All
+              </button>
+            </div>
+          </div>
+
+          <!-- FIB Cards Container -->
+          <div id="fibCardsContainer" class="space-y-2.5">
+            <!-- Dynamically populated by renderFIB() -->
+          </div>
         </div>
 
-        <!-- ==================== SUB-PANE 2: BLANKS & MCQS ==================== -->
-        <div id="paneObj" class="submodule-pane space-y-4"></div>
+        <!-- ==================== SUB-PANE 2: MATCH THE FOLLOWING (MTH) ==================== -->
+        <!-- User Refinement 4: Single Tab for Matching with Interactive Two-Column Engine -->
+        <div id="paneMTH" class="submodule-pane space-y-6">
+          
+          <!-- Set 1: NCERT Textbook Official Matching -->
+          <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-lg">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+              <div>
+                <span class="text-xs font-mono uppercase text-cyan-400 font-bold">Set 1 · NCERT Core Textbook</span>
+                <h3 class="text-base font-bold text-white font-heading">Match the Following: Earth Terms & Definitions</h3>
+              </div>
+              <button onclick="revealMatchSet(1)" class="px-3 py-1 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-xs font-semibold cursor-pointer">
+                <span>👁️ Reveal Matches</span>
+              </button>
+            </div>
 
-        <!-- ==================== SUB-PANE 3: TRUE/FALSE & BRIEF ==================== -->
-        <div id="paneTF" class="submodule-pane space-y-4"></div>
-
-        <!-- ==================== SUB-PANE 4: DETAILED QUESTIONS ==================== -->
-        <div id="paneDetail" class="submodule-pane space-y-4"></div>
-
-        <!-- ==================== SUB-PANE 5: NCERT TEXTBOOK & REASONS ==================== -->
-        <div id="paneNCERT" class="submodule-pane space-y-4"></div>
-
-        <!-- EMPTY STATE COMPONENT (Zero "Dead Screen" Mandate) -->
-        <div id="qaEmptyState" class="hidden bg-slate-900/90 border border-slate-800 rounded-2xl p-12 text-center shadow-lg">
-          <div class="w-16 h-16 rounded-full bg-slate-800/80 border border-slate-700 flex items-center justify-center mx-auto text-slate-400 mb-4">
-            <i data-lucide="search-x" class="w-8 h-8"></i>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="mthSet1Grid">
+              <!-- Rendered by JS -->
+            </div>
+            <div id="mthSet1Solution" class="hidden mt-4 p-3 rounded-xl bg-emerald-950/30 border border-emerald-800/40 text-xs text-slate-200">
+              <strong class="text-emerald-400 block mb-1">NCERT Model Solution:</strong>
+              • (i) Core → (e) Innermost layer of the Earth<br>
+              • (ii) Minerals → (d) Has definite chemical composition<br>
+              • (iii) Rocks → (b) Used for roads and buildings<br>
+              • (iv) Clay → (a) Changes into slate under heat & pressure<br>
+              • (v) Sial → (c) Made of silicon and alumina
+            </div>
           </div>
-          <h3 class="text-lg font-bold text-white mb-1">No Matching Questions Found</h3>
-          <p class="text-sm text-slate-400 max-w-md mx-auto mb-5">
-            We couldn't find any questions matching your search term. Try searching for broader terms like "crust", "igneous", or "core".
-          </p>
-          <button onclick="clearSearchFilter()" class="px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold transition-all shadow-lg">
-            Clear Search & Show All Questions
+
+          <!-- Set 2: Rock Types, Minerals & Monument Connection Matching -->
+          <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-lg">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+              <div>
+                <span class="text-xs font-mono uppercase text-amber-400 font-bold">Set 2 · Geological Specimens & Monuments</span>
+                <h3 class="text-base font-bold text-white font-heading">Match the Following: Rocks, Minerals & Monuments</h3>
+              </div>
+              <button onclick="revealMatchSet(2)" class="px-3 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-semibold cursor-pointer">
+                <span>👁️ Reveal Matches</span>
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="mthSet2Grid">
+              <!-- Rendered by JS -->
+            </div>
+            <div id="mthSet2Solution" class="hidden mt-4 p-3 rounded-xl bg-amber-950/30 border border-amber-800/40 text-xs text-slate-200">
+              <strong class="text-amber-400 block mb-1">Specimen Model Solution:</strong>
+              • (i) Basalt → (d) Deccan Plateau volcanic extrusive rock<br>
+              • (ii) Granite → (e) Coarse-grained intrusive rock for grinding stones<br>
+              • (iii) Red Sandstone → (a) Used to construct the historic Red Fort<br>
+              • (iv) White Marble → (b) Used to carve the magnificent Taj Mahal<br>
+              • (v) Potash & Magnesium → (f) Essential minerals used by plants to build cells<br>
+              • (vi) NIFE → (c) High-density nickel-iron alloy in the core
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ==================== SUB-PANE 3: TRUE OR FALSE (TF) ==================== -->
+        <!-- User Refinement 4 & 5: Compact 1-line cards with Instant Reveal Answer -->
+        <div id="paneTF" class="submodule-pane space-y-2.5">
+          <div class="flex items-center justify-between bg-slate-900/60 border border-slate-800 rounded-xl px-4 py-2 text-xs">
+            <div class="text-slate-300">
+              <strong>True or False:</strong> Test your geological concept mastery. Click <strong>Reveal Answer</strong> on each card or reveal all.
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="toggleAllTF(true)" class="px-2.5 py-1 rounded bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/30 text-xs font-semibold cursor-pointer">
+                Reveal All
+              </button>
+              <button onclick="toggleAllTF(false)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-semibold cursor-pointer">
+                Hide All
+              </button>
+            </div>
+          </div>
+
+          <div id="tfCardsContainer" class="space-y-2.5">
+            <!-- Dynamically populated by renderTF() -->
+          </div>
+        </div>
+
+        <!-- ==================== SUB-PANE 4: MULTIPLE CHOICE (MCQ) ==================== -->
+        <!-- User Refinement 4 & 5: Compact 2x2 grid with Instant Option Validation -->
+        <div id="paneMCQ" class="submodule-pane space-y-4">
+          <div class="bg-slate-900/60 border border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-300">
+            <strong>Choose the Correct Answer:</strong> Click any option to test your recall with immediate visual validation, or click <strong>Reveal Answer</strong>.
+          </div>
+
+          <div id="mcqCardsContainer" class="space-y-4">
+            <!-- Dynamically populated by renderMCQ() -->
+          </div>
+        </div>
+
+        <!-- ==================== SUB-PANE 5: SHORT ANSWERS (VSA / SA) ==================== -->
+        <div id="paneSA" class="submodule-pane space-y-3">
+          <div class="bg-slate-900/60 border border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-300">
+            <strong>Section E · Brief Answers:</strong> Concise answers with exam tips and core points highlighted.
+          </div>
+
+          <div id="saCardsContainer" class="space-y-3">
+            <!-- Dynamically populated by renderSA() -->
+          </div>
+        </div>
+
+        <!-- ==================== SUB-PANE 6: DETAILED ANSWERS (LA / DLA) ==================== -->
+        <div id="paneLA" class="submodule-pane space-y-4">
+          <div class="bg-slate-900/60 border border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-300">
+            <strong>Section F · In-Depth Long Answers:</strong> Comprehensive model answers with full conceptual breakdowns.
+          </div>
+
+          <div id="laCardsContainer" class="space-y-4">
+            <!-- Dynamically populated by renderLA() -->
+          </div>
+        </div>
+
+        <!-- ==================== SUB-PANE 7: NCERT TEXTBOOK EXERCISES & GIVE REASONS ==================== -->
+        <div id="paneNCERT" class="submodule-pane space-y-4">
+          <div class="bg-slate-900/60 border border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-300">
+            <strong>Official NCERT Textbook Solutions:</strong> Core NCERT questions, Give Reasons, and textbook exercises.
+          </div>
+
+          <div id="ncertCardsContainer" class="space-y-4">
+            <!-- Dynamically populated by renderNCERT() -->
+          </div>
+        </div>
+
+        <!-- ==================== SUB-PANE 8: UNIVERSAL DIRECTORY / ALL QUESTIONS ==================== -->
+        <div id="paneAll" class="submodule-pane space-y-3">
+          <div id="allQuestionsContainer" class="space-y-3">
+            <!-- Dynamically populated by renderAll() -->
+          </div>
+        </div>
+
+        <!-- Empty State for Live Search -->
+        <div id="qaEmptyState" class="hidden bg-slate-900/60 border border-slate-800 rounded-2xl p-10 text-center">
+          <div class="w-12 h-12 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-3 text-lg">
+            🔍
+          </div>
+          <h3 class="text-base font-bold text-white">No Matching Questions Found</h3>
+          <p class="text-xs text-slate-400 mt-1 max-w-sm mx-auto">Try searching for keywords like "mantle", "sial", "granite", "core", or "fossils".</p>
+          <button onclick="clearSearchFilter()" class="mt-4 px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold cursor-pointer">
+            Clear Search Filter
           </button>
         </div>
+
       </section>
 
       <!-- ==================== TAB 4: AUTO-GRADING MASTER QUIZ ==================== -->
       <section id="tabQuiz" class="tab-content space-y-6">
-        
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-6">
             <div>
-              <span class="text-xs font-semibold uppercase tracking-wider text-purple-400 font-mono">Real-Time Knowledge Assessment</span>
-              <h2 class="text-xl font-bold text-white font-heading">Interactive Self-Grading Quiz</h2>
-              <p class="text-xs text-slate-400 mt-1">Test your mastery of Earth's interior, rock classifications, and mineral properties with immediate answer rationales.</p>
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/30 text-xs font-mono font-bold">Self-Assessment</span>
+                <span class="text-xs text-slate-400 font-mono">10 Questions · Instant Grading</span>
+              </div>
+              <h2 class="text-xl font-bold text-white font-heading mt-1">Class 7 Interior of Earth Master Quiz</h2>
             </div>
 
-            <!-- Quiz Stats Pill -->
-            <div class="flex items-center gap-3 bg-slate-950/80 border border-slate-800 px-4 py-2 rounded-xl">
-              <div class="text-right">
-                <span class="text-[10px] uppercase font-mono text-slate-400 block">Score</span>
-                <span id="quizScoreText" class="text-sm font-bold text-emerald-400 font-mono">0 / 10</span>
+            <!-- Score & Reset Pill -->
+            <div class="flex items-center gap-3">
+              <div class="px-4 py-2 rounded-xl bg-purple-950/40 border border-purple-500/40 text-purple-300 font-mono text-sm font-bold flex items-center gap-2">
+                <span>🏆 Score: <span id="quizScoreDisplay">0</span> / 10</span>
               </div>
-              <div class="h-6 w-px bg-slate-800"></div>
-              <div class="text-right">
-                <span class="text-[10px] uppercase font-mono text-slate-400 block">Answered</span>
-                <span id="quizAnsweredText" class="text-sm font-bold text-cyan-400 font-mono">0</span>
-              </div>
+              <button onclick="resetQuiz()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold flex items-center gap-1.5 cursor-pointer" title="Reset Quiz">
+                <span>🔄 Reset</span>
+              </button>
             </div>
           </div>
 
-          <!-- Questions Container (Loaded via JS) -->
-          <div id="quizQuestionsContainer" class="space-y-4"></div>
-
-          <!-- Final Score Completion Card -->
-          <div id="quizCompletionCard" class="hidden mt-6 p-6 rounded-2xl bg-gradient-to-r from-emerald-950/50 via-slate-900 to-slate-900 border border-emerald-500/40 text-center">
-            <div class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-3">
-              <i data-lucide="trophy" class="w-6 h-6"></i>
-            </div>
-            <h3 class="text-xl font-extrabold text-white">Quiz Completed!</h3>
-            <p id="quizFinalScore" class="text-2xl font-bold text-emerald-400 font-mono mt-1"></p>
-            <p id="quizFinalMsg" class="text-sm text-slate-300 mt-2 max-w-lg mx-auto"></p>
-            <button onclick="resetQuiz()" class="mt-4 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-lg">
-              Retake Quiz
-            </button>
+          <!-- Quiz Questions Grid -->
+          <div id="quizContainer" class="space-y-4">
+            <!-- Dynamically populated by renderQuiz() -->
           </div>
         </div>
       </section>
 
-      <!-- ==================== TAB 5: 3D REVISION FLASHCARDS ==================== -->
+      <!-- ==================== TAB 5: 3D MEMORY RECALL FLASHCARDS ==================== -->
       <section id="tabFlashcards" class="tab-content space-y-6">
-        
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-6">
             <div>
-              <span class="text-xs font-semibold uppercase tracking-wider text-rose-400 font-mono">Active Recall Memory Gym</span>
-              <h2 class="text-xl font-bold text-white font-heading">3D Concept Revision Flashcards</h2>
-              <p class="text-xs text-slate-400 mt-1">Click any card to flip between the Core Question and the Model Answer with common exam traps.</p>
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/30 text-xs font-mono font-bold">Active Recall</span>
+                <span class="text-xs text-slate-400 font-mono">10 Memory Flipcards</span>
+              </div>
+              <h2 class="text-xl font-bold text-white font-heading mt-1">High-Yield Revision Flashcards</h2>
             </div>
-            <button onclick="flipAllFlashcards()" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold flex items-center gap-1.5 border border-slate-700">
-              <i data-lucide="rotate-cw" class="w-4 h-4"></i> Flip All Cards
-            </button>
+            <div class="flex items-center gap-2">
+              <button onclick="flipAllFlashcards()" class="px-3 py-1.5 rounded-lg bg-rose-600/80 hover:bg-rose-500 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
+                <span>🔄 Flip All</span>
+              </button>
+            </div>
           </div>
 
           <!-- Flashcards Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="flashcardGrid">
-            <!-- Rendered by JS -->
+          <div id="flashcardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- Dynamically populated by renderFlashcards() -->
           </div>
         </div>
       </section>
@@ -833,84 +1127,85 @@
     </main>
   </div>
 
-  <!-- ==================== JAVASCRIPT ENGINE ==================== -->
+  <!-- ==================== JAVASCRIPT LOGIC ENGINES ==================== -->
   <script>
-    // --- State Variables ---
-    let currentRockCycleStage = 0;
-    let userQuizAnswers = {};
-    let allCardsFlipped = false;
+    // --- Global State Variables ---
     let currentMainTab = 'tabLayers';
-    let currentSubPane = 'paneAll';
+    let currentSubPane = 'paneFIB';
+    let currentRockCycleStage = 0;
+    let quizUserAnswers = {};
 
-    // --- Master Questions Data (Gemini + Claude Complete Inventory) ---
+    // --- Complete Questions Data Bank (Gemini, Claude & NCERT Textbook) ---
     const allQuestionsData = [
-      // SECTION A: FILL IN THE BLANKS (Gemini 1-8)
+      // SECTION A: FILL IN THE BLANKS (8 Questions)
       {
-        id: "fb1", sec: "A", type: "Fill in the Blanks", pane: "paneObj",
+        id: "fb1", sec: "A", type: "Fill in the Blanks", pane: "paneFIB",
         q: "The earth's crust is divided into the ________ crust and the ________ crust.",
-        ans: "continental, oceanic",
+        blanks: ["continental", "oceanic"],
         tip: "Continental crust is composed of SIAL (35–70 km) while Oceanic crust is SIMA (5–8 km)."
       },
       {
-        id: "fb2", sec: "A", type: "Fill in the Blanks", pane: "paneObj",
+        id: "fb2", sec: "A", type: "Fill in the Blanks", pane: "paneFIB",
         q: "The outer core is mainly made up of ________ and ________.",
-        ans: "nickel, iron (nife)",
-        tip: "The outer core is 2,300 km thick and is liquid due to temperatures of 4400°C–6100°C."
+        blanks: ["nickel", "iron"],
+        tip: "The outer core is 2,300 km thick and is liquid due to temperatures of 4400°C–6100°C (NIFE)."
       },
       {
-        id: "fb3", sec: "A", type: "Fill in the Blanks", pane: "paneObj",
+        id: "fb3", sec: "A", type: "Fill in the Blanks", pane: "paneFIB",
         q: "Igneous rocks are also called ________ rocks.",
-        ans: "primary",
+        blanks: ["primary"],
         tip: "They were the first to form from molten planetary matter; all other rocks derive from them."
       },
       {
-        id: "fb4", sec: "A", type: "Fill in the Blanks", pane: "paneObj",
+        id: "fb4", sec: "A", type: "Fill in the Blanks", pane: "paneFIB",
         q: "________ rocks are formed when magma cools down and solidifies inside the earth.",
-        ans: "Intrusive igneous",
+        blanks: ["Intrusive igneous"],
         tip: "Because magma cools slowly deep underground, intrusive rocks have coarse, large crystals (e.g. Granite)."
       },
       {
-        id: "fb5", sec: "A", type: "Fill in the Blanks", pane: "paneObj",
+        id: "fb5", sec: "A", type: "Fill in the Blanks", pane: "paneFIB",
         q: "________ igneous rocks have a grainy texture with small crystals.",
-        ans: "Extrusive",
+        blanks: ["Extrusive"],
         tip: "Lava pouring out onto the surface cools rapidly in atmospheric air, preventing large crystal growth (e.g. Basalt)."
       },
       {
-        id: "fb6", sec: "A", type: "Fill in the Blanks", pane: "paneObj",
+        id: "fb6", sec: "A", type: "Fill in the Blanks", pane: "paneFIB",
         q: "The weight of the sediments compresses the bottom layers of the sediments to form ________ rocks.",
-        ans: "sedimentary",
+        blanks: ["sedimentary"],
         tip: "This process of pressure-compaction is known as lithification. Sedimentary rocks often contain fossils."
       },
       {
-        id: "fb7", sec: "A", type: "Fill in the Blanks", pane: "paneObj",
+        id: "fb7", sec: "A", type: "Fill in the Blanks", pane: "paneFIB",
         q: "The cyclic process in which rocks constantly transform from one type to another type under certain conditions is called the ________.",
-        ans: "rock cycle",
+        blanks: ["rock cycle"],
         tip: "Driven by tectonic heat, pressure, weathering, and magma melting."
       },
       {
-        id: "fb8", sec: "A", type: "Fill in the Blanks", pane: "paneObj",
+        id: "fb8", sec: "A", type: "Fill in the Blanks", pane: "paneFIB",
         q: "The minerals that do not contain metals are called ________ minerals.",
-        ans: "non-metallic",
+        blanks: ["non-metallic"],
         tip: "Examples include limestone, potash, gypsum, mica, and diamonds."
       },
 
-      // SECTION B: MULTIPLE CHOICE QUESTIONS (Gemini 1-5)
+      // SECTION B: MULTIPLE CHOICE QUESTIONS (5 Questions)
       {
-        id: "mcq1", sec: "B", type: "Multiple Choice", pane: "paneObj",
+        id: "mcq1", sec: "B", type: "Multiple Choice", pane: "paneMCQ",
         q: "Which is the thinnest layer of the earth?",
         opts: ["(a) Mantle", "(b) Crust", "(c) Inner core", "(d) Outer core"],
         ans: "(b) Crust",
+        correctIdx: 1,
         tip: "The crust accounts for only ~1% of the Earth's volume (5–35 km)."
       },
       {
-        id: "mcq2", sec: "B", type: "Multiple Choice", pane: "paneObj",
+        id: "mcq2", sec: "B", type: "Multiple Choice", pane: "paneMCQ",
         q: "Which of the following is not an example of metamorphic rocks?",
         opts: ["(a) Marble", "(b) Slate", "(c) Gneiss", "(d) Shale"],
         ans: "(d) Shale",
+        correctIdx: 3,
         tip: "Shale is a sedimentary rock made of compacted clay. When shale undergoes heat and pressure, it becomes slate."
       },
       {
-        id: "mcq3", sec: "B", type: "Multiple Choice", pane: "paneObj",
+        id: "mcq3", sec: "B", type: "Multiple Choice", pane: "paneMCQ",
         q: "When do metamorphic rocks become sedimentary rocks?",
         opts: [
           "(a) When sedimentary rocks are broken down by wind, water, or ice into sediments",
@@ -919,24 +1214,27 @@
           "(d) When magma or lava cools down"
         ],
         ans: "(c) When metamorphic rocks are broken down by wind, water, or ice into sediments",
+        correctIdx: 2,
         tip: "Weathering and erosion break down any exposed rock type into sediments, which then compact into sedimentary rock."
       },
       {
-        id: "mcq4", sec: "B", type: "Multiple Choice", pane: "paneObj",
+        id: "mcq4", sec: "B", type: "Multiple Choice", pane: "paneMCQ",
         q: "Which of the following is not an example of a metallic mineral?",
         opts: ["(a) Iron", "(b) Copper", "(c) Tin", "(d) Potash"],
         ans: "(d) Potash",
+        correctIdx: 3,
         tip: "Potash is a non-metallic potassium compound widely used in agricultural fertilizers."
       },
       {
-        id: "mcq5", sec: "B", type: "Multiple Choice", pane: "paneObj",
+        id: "mcq5", sec: "B", type: "Multiple Choice", pane: "paneMCQ",
         q: "Which of the following minerals are used by plants to grow and build their cells?",
         opts: ["(a) Potassium and granite", "(b) Diamond and magnesium", "(c) Potassium and magnesium", "(d) Feldspar and mica"],
         ans: "(c) Potassium and magnesium",
+        correctIdx: 2,
         tip: "Magnesium forms the core of the chlorophyll molecule, while potassium regulates stomatal water balance."
       },
 
-      // SECTION C: TRUE OR FALSE (Gemini 1-5)
+      // SECTION C: TRUE OR FALSE (5 Questions)
       {
         id: "tf1", sec: "C", type: "True or False", pane: "paneTF",
         q: "The inner core is the liquid part of the core.",
@@ -968,88 +1266,118 @@
         tip: "It scores 10 on the Mohs Hardness Scale and is also used on heavy industrial drill heads."
       },
 
-      // SECTION E: BRIEF QUESTIONS (Gemini 1-5)
+      // SECTION E: BRIEF QUESTIONS (5 Questions)
       {
-        id: "br1", sec: "E", type: "Short Answer", pane: "paneTF",
+        id: "br1", sec: "E", type: "Short Answer", pane: "paneSA",
         q: "List any three features of the mantle.",
         ans: "1. Thickness: It is the thickest layer of the Earth, extending about 2,900 km deep below the crust (84% of Earth's volume).\n2. Zones: Divided into the rigid upper mantle, the semi-molten asthenosphere, and the dense lower mantle.\n3. Composition: Made of semi-solid molten silicate rocks rich in silicon, magnesium, and iron at temperatures between 870°C and 4,400°C.",
         tip: "Convection currents in the mantle drive the movement of Earth's tectonic plates!"
       },
       {
-        id: "br2", sec: "E", type: "Short Answer", pane: "paneTF",
+        id: "br2", sec: "E", type: "Short Answer", pane: "paneSA",
         q: "Why is the inner core solid despite temperatures reaching 6,000°C?",
         ans: "The inner core remains solid because of the immense, crushing gravitational pressure exerted by all the overlying layers of the Earth. This extraordinary pressure forces iron and nickel atoms into a tightly locked crystalline lattice, raising the melting point well above 6,000°C.",
         tip: "Pressure suppresses melting!"
       },
       {
-        id: "br3", sec: "E", type: "Short Answer", pane: "paneTF",
+        id: "br3", sec: "E", type: "Short Answer", pane: "paneSA",
         q: "What are rocks? List three practical uses of rocks.",
         ans: "Rocks are natural aggregates of one or more minerals that form the solid outer crust of the Earth.\nThree Uses:\n1. Construction & Countertops: Granite is used for heavy-duty kitchen slabs and flooring.\n2. Pavements & Monuments: Basalt is crushed for road gravel, and sandstone/marble is used for historical monuments.\n3. Industrial Raw Material: Sedimentary limestone is the foundational ingredient for cement, bricks, and plaster.",
         tip: "Rocks do not have a fixed chemical formula, unlike pure minerals."
       },
       {
-        id: "br4", sec: "E", type: "Short Answer", pane: "paneTF",
+        id: "br4", sec: "E", type: "Short Answer", pane: "paneSA",
         q: "Why are igneous rocks called primary rocks?",
         ans: "Igneous rocks are called primary rocks because they were the very first rocks formed on the primitive Earth as molten magma and lava cooled 4.5 billion years ago. All other rocks (sedimentary and metamorphic) are formed directly or indirectly through the weathering or transformation of igneous rocks.",
         tip: "Derived from the Latin word 'Ignis', meaning fire."
       },
       {
-        id: "br5", sec: "E", type: "Short Answer", pane: "paneTF",
+        id: "br5", sec: "E", type: "Short Answer", pane: "paneSA",
         q: "What are minerals? How do they differ from rocks?",
         ans: "Minerals are naturally occurring inorganic substances possessing a definite chemical composition and characteristic crystalline atomic structure. While a mineral has a uniform chemical makeup (e.g. Quartz = SiO₂), a rock is an aggregate of several different minerals held together.",
         tip: "Minerals are the building blocks of rocks."
       },
 
-      // SECTION F: DETAILED QUESTIONS (Gemini 1-5)
+      // SECTION F: DETAILED QUESTIONS (5 Questions)
       {
-        id: "det1", sec: "F", type: "Detailed Answer", pane: "paneDetail",
+        id: "det1", sec: "F", type: "Detailed Answer", pane: "paneLA",
         q: "Differentiate between the following:\n(a) The Inner Core and the Outer Core\n(b) Intrusive Igneous Rocks and Extrusive Igneous Rocks",
         ans: "(a) Inner Core vs. Outer Core:\n• State: Inner core is solid metal; Outer core is molten liquid.\n• Thickness: Inner core has a radius of ~1,200 km; Outer core is ~2,300 km thick.\n• Temperature: Inner core reaches 6,000°C; Outer core is 4,400°C to 6,100°C.\n• Magnetic Field: Convection currents of liquid iron in the outer core generate Earth's geomagnetic field.\n\n(b) Intrusive vs. Extrusive Igneous Rocks:\n• Location: Intrusive rocks solidify deep inside the crust; Extrusive rocks solidify on the exterior surface.\n• Cooling Rate: Intrusive cools very slowly over millennia; Extrusive cools quickly in hours/days.\n• Texture: Intrusive develops large, visible crystals (e.g. Granite, Diorite); Extrusive has a fine-grained, glassy texture with microscopic crystals (e.g. Basalt, Andesite).",
         tip: "Exam Favorite: Make sure to mention crystal size differences!"
       },
       {
-        id: "det2", sec: "F", type: "Detailed Answer", pane: "paneDetail",
+        id: "det2", sec: "F", type: "Detailed Answer", pane: "paneLA",
         q: "Describe the concentric internal structure of the Earth with its three major layers.",
         ans: "The Earth is structured like an onion in three concentric spherical shells:\n1. Crust (0–35 km): The outermost and thinnest solid rocky skin (1% of volume). Divided into Continental Crust (rich in Silica & Alumina — SIAL, 35–70 km) and Oceanic Crust (rich in Silica & Magnesium — SIMA, 5–8 km).\n2. Mantle (35–2,900 km): The intermediate layer comprising 84% of Earth's volume. Formed of dense silicate rocks rich in iron and magnesium. Its upper plastic zone (Asthenosphere) flows like hot pitch, allowing tectonic plates to drift.\n3. Core (2,900–6,371 km): The central metallic ball comprising 15% of Earth's volume. Primarily made of Nickel and Iron (NIFE). Features a liquid outer core (2,300 km) and a solid inner core (1,200 km radius) with temperatures matching the Sun's surface.",
         tip: "Radius of Earth is 6,371 km."
       },
       {
-        id: "det3", sec: "F", type: "Detailed Answer", pane: "paneDetail",
+        id: "det3", sec: "F", type: "Detailed Answer", pane: "paneLA",
         q: "Explain the formation of igneous rocks and how volcanic activity causes them.",
         ans: "Underneath the Earth's crust, intense radioactive heat and friction melt rock into a hot, gas-charged molten slurry called magma. Because magma is hotter and less dense than surrounding solid rock, it rises upward through fractures in the crust.\n• If magma is trapped deep beneath the surface, it cools extremely slowly over millions of years, allowing minerals to separate and crystallize into coarse-grained Intrusive Igneous Rocks (such as granite).\n• If tectonic pressure erupts magma through a volcano onto the surface, it is termed lava. Exposed to cool air or seawater, the lava freezes rapidly into fine-grained Extrusive Igneous Rocks (such as basalt and pumice).",
         tip: "Remember: Magma is UNDERGROUND; Lava is ON THE SURFACE."
       },
       {
-        id: "det4", sec: "F", type: "Detailed Answer", pane: "paneDetail",
+        id: "det4", sec: "F", type: "Detailed Answer", pane: "paneLA",
         q: "Explain the complete Rock Cycle process and how rocks continuously transform.",
         ans: "The Rock Cycle is an unceasing, dynamic geological loop powered by solar energy (weathering) and subterranean heat (plate tectonics):\n1. Igneous Phase: Magma cools and crystallizes into primary igneous rock.\n2. Sedimentation: Exposed igneous rocks are mechanically weathered by rain, ice, and wind into fine gravel and sand (sediments). Rivers transport and deposit them in oceans.\n3. Lithification: Layers of accumulating sediment compress the lower strata, forming sedimentary rocks (sandstone, limestone).\n4. Metamorphism: When buried deep by subduction, intense heat and tectonic squeezing bake them into metamorphic rocks (marble, slate).\n5. Melting: Subducted metamorphic rocks melt back into liquid magma in the mantle, ready to erupt again as new igneous rock.",
         tip: "Notice that any rock can bypass stages: e.g. Metamorphic rocks can be weathered directly into sediments!"
       },
       {
-        id: "det5", sec: "F", type: "Detailed Answer", pane: "paneDetail",
+        id: "det5", sec: "F", type: "Detailed Answer", pane: "paneLA",
         q: "Define minerals and classify them into metallic and non-metallic types with examples.",
         ans: "Minerals are natural, homogeneous inorganic solids with a definite internal atomic arrangement and specific chemical composition.\n\nClassification:\n1. Metallic Minerals: Minerals containing metals in raw form. They exhibit metallic luster, are malleable, ductile, and conduct heat/electricity.\n• Examples: Hematite (Iron ore), Bauxite (Aluminum ore), Chalcopyrite (Copper ore), Cassiterite (Tin ore).\n\n2. Non-Metallic Minerals: Minerals that lack metallic elements. They do not conduct electricity and break or cleave irregularly.\n• Examples: Limestone, Gypsum, Mica, Potash, Sulfur, and Diamond.\n• Industrial Value: Limestone makes cement; Potash fertilizes crops; Mica insulates electronic components.",
         tip: "Ores are rocks from which metallic minerals can be profitably mined."
       },
 
-      // SECTION G: NCERT TEXTBOOK EXERCISES & GIVE REASONS
+      // SECTION G: NCERT TEXTBOOK EXERCISES & GIVE REASONS (8 Questions)
       {
-        id: "nc1", sec: "G", type: "Give Reasons", pane: "paneNCERT",
+        id: "nc1", sec: "NCERT", type: "Give Reasons", pane: "paneNCERT",
         q: "Give Reasons: (i) We cannot go to the centre of the Earth.",
-        ans: "Reason:\n1. Depth: The centre of the Earth lies at a depth of 6,371 km beneath the surface.\n2. Extreme Conditions: The temperature reaches an unbearable 6,000°C and pressures reach over 3.6 million atmospheres (crushing any known metal or submarine).\n3. Molten Barriers: One would have to drill through 2,900 km of viscous molten mantle and 2,300 km of churning liquid iron in the outer core, which instantly melts all drilling machinery.",
-        tip: "The deepest humans have drilled is 12 km (Kola Borehole)."
+        ans: "Reason:\n1. Tremendous Depth: The centre of the Earth lies at a depth of 6,371 km beneath the surface.\n2. Extreme Conditions: Temperatures reach an unbearable 6,000°C and pressures reach over 3.6 million atmospheres (crushing any known metal).\n3. Molten Barriers: One would have to drill through 2,900 km of viscous molten mantle and 2,300 km of churning liquid iron in the outer core, which instantly incinerates and melts all drilling machinery.",
+        tip: "The deepest human borehole reached only 12 km (Kola Superdeep Borehole, Russia)."
       },
       {
-        id: "nc2", sec: "G", type: "Give Reasons", pane: "paneNCERT",
+        id: "nc2", sec: "NCERT", type: "Give Reasons", pane: "paneNCERT",
         q: "Give Reasons: (ii) Sedimentary rocks are formed from sediments.",
-        ans: "Reason:\nRocks continuously roll down hills, crack, and collide into small fragments called sediments. Wind, rivers, and glaciers transport these loose sediments and deposit them in low-lying basins and ocean beds. Over millions of years, the immense weight of overlying layers compresses and cements these loose mineral particles into hard, stratified sedimentary rocks.",
+        ans: "Reason:\nRocks continuously roll down mountains, crack, and collide into small fragments called sediments. Wind, rivers, and glaciers transport these loose sediments and deposit them in low-lying basins and seabed strata. Over millions of years, the immense weight of overlying layers compresses and cements (lithification) these loose mineral particles into hard, stratified sedimentary rocks.",
         tip: "The process of turning loose sediments into rock is called lithification."
       },
       {
-        id: "nc3", sec: "G", type: "NCERT Match", pane: "paneNCERT",
-        q: "Match the following (NCERT Question 3):\n(i) Core\n(ii) Minerals\n(iii) Rocks\n(iv) Clay\n(v) Sial",
-        ans: "Correct Matches:\n• (i) Core $\\rightarrow$ (e) Innermost layer of the Earth\n• (ii) Minerals $\\rightarrow$ (d) Has definite chemical composition\n• (iii) Rocks $\\rightarrow$ (b) Used for roads and buildings\n• (iv) Clay $\\rightarrow$ (f) Changes into slate\n• (v) Sial $\\rightarrow$ (c) Made of silicon and alumina",
-        tip: "Notice that Clay is sedimentary mud that metamorphoses into Slate!"
+        id: "nc3", sec: "NCERT", type: "Give Reasons", pane: "paneNCERT",
+        q: "Give Reasons: (iii) Limestone is changed into marble.",
+        ans: "Reason:\nLimestone is a sedimentary rock made mainly of calcium carbonate from ancient marine shells. When limestone is buried deep underground near tectonic collision zones, it is subjected to immense heat from nearby magma chambers and crushing subterranean pressure. These extreme metamorphic conditions cause the calcite crystals to melt slightly and recrystallize into a dense, interlocking, crystalline rock called marble.",
+        tip: "Thermal metamorphism converts sedimentary limestone into metamorphic marble."
+      },
+      {
+        id: "nc4", sec: "NCERT", type: "Textbook Answer", pane: "paneNCERT",
+        q: "What are the three layers of the earth?",
+        ans: "The three layers of the Earth are:\n1. The Crust: The outermost, thinnest solid rocky layer (Continental SIAL 35 km, Oceanic SIMA 5 km).\n2. The Mantle: The thick intermediate layer extending 2,900 km deep (84% of Earth's volume).\n3. The Core: The innermost metallic layer with a radius of 3,500 km, composed of Nickel and Iron (NIFE) in outer liquid and inner solid states.",
+        tip: "Think of an egg: Shell = Crust, White = Mantle, Yolk = Core!"
+      },
+      {
+        id: "nc5", sec: "NCERT", type: "Textbook Answer", pane: "paneNCERT",
+        q: "What is a rock? Name the three major types of rocks.",
+        ans: "A rock is any natural mass of mineral matter that makes up the Earth's crust. Rocks can have different colours, sizes, and textures.\nThe three major types of rocks are:\n1. Igneous Rocks (formed from cooling magma/lava)\n2. Sedimentary Rocks (formed from compacted sediments)\n3. Metamorphic Rocks (formed from rocks altered by heat and pressure)",
+        tip: "All rocks on Earth are classified into these three families."
+      },
+      {
+        id: "nc6", sec: "NCERT", type: "Textbook Answer", pane: "paneNCERT",
+        q: "How are extrusive and intrusive rocks formed?",
+        ans: "• Intrusive Rocks: Formed when molten magma cools down slowly deep inside the Earth's crust. Because it cools slowly, it forms large, coarse crystals (e.g. Granite).\n• Extrusive Rocks: Formed when molten lava erupts onto the Earth's surface and cools down rapidly. Because it cools rapidly in cool air/water, it forms a fine-grained, glassy texture with microscopic crystals (e.g. Basalt).",
+        tip: "Intrusive = Inside (slow cooling); Extrusive = Exterior (fast cooling)."
+      },
+      {
+        id: "nc7", sec: "NCERT", type: "Textbook Answer", pane: "paneNCERT",
+        q: "What do you mean by a rock cycle?",
+        ans: "The rock cycle is the continuous, cyclical transformation of one rock type into another under specific conditions of heat, pressure, weathering, erosion, melting, and cooling. Under this cyclic process, igneous rocks break into sediments to form sedimentary rocks, which transform under heat and pressure into metamorphic rocks, which melt into magma to once again form igneous rocks.",
+        tip: "Rocks are constantly recycled; not a single grain of matter is ever lost."
+      },
+      {
+        id: "nc8", sec: "NCERT", type: "Textbook Answer", pane: "paneNCERT",
+        q: "What are the practical uses of rocks in daily human life?",
+        ans: "1. Construction: Hard rocks like granite, sandstone, and marble are used for building houses, monuments, and bridges.\n2. Infrastructure: Basalt and gravel are crushed for paving highways and railway tracks.\n3. Industrial Products: Limestone is used to manufacture cement; gypsum is used for plaster.\n4. Energy & Fuels: Coal and petroleum (fossil fuels) found in sedimentary rocks power vehicles and electricity grids.\n5. Recreation & Sports: Small stones and pebbles are used in games like hopscotch (stapoo), seven stones (pitthoo), and five stones (gitti).",
+        tip: "NCERT specifically highlights traditional childhood games using pebbles!"
       }
     ];
 
@@ -1101,160 +1429,140 @@
       }
     };
 
-    // --- Dynamic Rock Cycle Stages Data ---
+    // --- 5-Stage Rock Cycle Stages ---
     const rockCycleStages = [
       {
-        stage: 1,
-        title: "Stage 1: Molten Magma & Lava",
-        process: "Volcanic Melting & Solidification",
-        desc: "Deep inside the Earth, intense radioactive decay and mantle heat melt rock into incandescent liquid magma. During volcanic eruptions, magma vents upward to the surface as glowing lava.",
-        indianAnchor: "Deccan Traps: 66 million years ago, immense fissure eruptions in western India flooded 500,000 km² with basalt lava!",
-        visualIcon: "flame",
-        accent: "text-amber-400"
+        stage: 1, title: "Stage 1: Molten Magma & Volcanic Eruption",
+        process: "Melting & Ascending Liquid Rock",
+        desc: "Deep in the lower crust and upper mantle, temperatures above 1,200°C liquefy rocks into red-hot, gas-charged magma. Tectonic pressures force this buoyant liquid magma toward the surface.",
+        visualEmoji: "🔥", accent: "text-amber-400 border-amber-500/30",
+        indianAnchor: "Barren Island in the Andaman Sea is South Asia's only active volcano, actively erupting basaltic lava."
       },
       {
-        stage: 2,
-        title: "Stage 2: Formation of Igneous Rocks",
-        process: "Crystallization (Intrusive vs. Extrusive)",
-        desc: "As molten rock cools, mineral atoms lock into interlocking crystals. Slow cooling underground produces coarse Granite with large crystals; rapid cooling in air produces fine Basalt.",
-        indianAnchor: "Kitchen Grinding Stones: Traditional Indian sil-batta and idli-grinding stones are carved from rough granite because its hard crystals never wear smooth!",
-        visualIcon: "mountain",
-        accent: "text-orange-400"
+        stage: 2, title: "Stage 2: Cooling & Igneous Solidification",
+        process: "Thermal Crystallization",
+        desc: "As magma cools underground or lava spills onto the exterior, minerals freeze into interlocking crystals, creating primary igneous rocks. Fast cooling creates fine grains (Basalt); slow cooling creates large crystals (Granite).",
+        visualEmoji: "❄️", accent: "text-blue-400 border-blue-500/30",
+        indianAnchor: "The colossal Deccan Traps covering Maharashtra and Gujarat were formed by millions of years of volcanic basalt flows 66 million years ago."
       },
       {
-        stage: 3,
-        title: "Stage 3: Weathering into Sediments",
-        process: "Denudation, Erosion & Transportation",
-        desc: "Exposed igneous mountains are pounded by rain, frozen in winter frost, and scoured by desert winds. Rocks crack, tumble down river gorges, and shatter into fine gravel, sand, and silt.",
-        indianAnchor: "Ganga-Brahmaputra Delta: Northern Indian rivers transport millions of tons of eroded Himalayan silt down to the Bay of Bengal every monsoon.",
-        visualIcon: "wind",
-        accent: "text-cyan-400"
+        stage: 3, title: "Stage 3: Weathering, Erosion & Sediment Transport",
+        process: "Mechanical & Chemical Disintegration",
+        desc: "Sunlight, rain, frost, and mountain rivers relentlessly fracture exposed igneous rocks into smaller debris, gravel, and silt particles known as sediments.",
+        visualEmoji: "💨", accent: "text-emerald-400 border-emerald-500/30",
+        indianAnchor: "The mighty Ganga and Brahmaputra rivers carry millions of tons of Himalayan rock sediments every year to form the Sundarbans Delta."
       },
       {
-        stage: 4,
-        title: "Stage 4: Deposition & Sedimentary Rocks",
+        stage: 4, title: "Stage 4: Deposition & Sedimentary Lithification",
         process: "Layering, Compaction & Fossil Trapping",
-        desc: "Sediments settle in ancient lakes and seabeds. Over millions of years, the weight of accumulating mud squeezes out water and cements particles into layered Sedimentary rock.",
-        indianAnchor: "Red Fort of Delhi: Mughal emperors chose sturdy red sandstone from Rajasthan, a sedimentary rock made of quartz sand cemented by iron oxide.",
-        visualIcon: "layers",
-        accent: "text-emerald-400"
+        desc: "Sediments settle in ancient lakes and seabeds. Over millions of years, the weight of accumulating mud squeezes out water, cementing sand and silt into stratified Sedimentary rock.",
+        visualEmoji: "📚", accent: "text-cyan-400 border-cyan-500/30",
+        indianAnchor: "Red Fort of Delhi: Mughal emperors chose sturdy red sandstone from Rajasthan, a sedimentary rock composed of ancient sand dunes."
       },
       {
-        stage: 5,
-        title: "Stage 5: Metamorphic Transformation",
-        process: "Tectonic Baking (Recrystallization)",
-        desc: "When sedimentary or igneous rocks are caught in continental collisions, tectonic forces bake them without melting. Limestone metamorphoses into sparkling white Marble; clay turns to Slate.",
-        indianAnchor: "Taj Mahal in Agra: Built entirely with Makrana marble from Rajasthan, a metamorphic rock originally formed from compressed marine limestone!",
-        visualIcon: "sparkles",
-        accent: "text-purple-400"
+        stage: 5, title: "Stage 5: High Heat & Crushing Metamorphism",
+        process: "Tectonic Baking & Crystal Reorientation",
+        desc: "When sedimentary or igneous rocks are dragged down into tectonic collision zones, scorching heat and crushing pressure reshape their crystalline texture without completely melting them into magma.",
+        visualEmoji: "✨", accent: "text-purple-400 border-purple-500/30",
+        indianAnchor: "The Taj Mahal in Agra was built using Makrana white marble, a metamorphic rock transformed from sedimentary limestone."
       }
     ];
 
-    // --- Master Quiz Questions (10 Questions) ---
-    const quizQuestions = [
+    // --- 10 Master Quiz Questions ---
+    const quizQuestionsData = [
       {
-        q: "What is the primary mineral composition of the continental crust?",
-        opts: ["Silica and Magnesium (SIMA)", "Silica and Alumina (SIAL)", "Nickel and Iron (NIFE)", "Magnesium and Iron"],
-        correct: 1,
-        exp: "The continental crust is composed primarily of Silica and Alumina, commonly abbreviated as SIAL."
+        q: "What is the outermost and thinnest concentric layer of the Earth?",
+        opts: ["Mantle", "Crust", "Outer Core", "Asthenosphere"],
+        ansIdx: 1, explanation: "The crust forms less than 1% of the Earth's volume, varying from 5 km (oceanic) to 35 km (continental)."
       },
       {
-        q: "Why is the inner core solid despite temperatures reaching up to 6,000°C?",
-        opts: ["It lacks radioactive minerals", "Immense gravitational overburden pressure", "Constant cooling from ocean currents", "High concentration of gaseous hydrogen"],
-        correct: 1,
-        exp: "The immense pressure of the entire planet pushing down forces iron atoms into a solid crystal lattice, preventing melting."
+        q: "Continental crust is predominantly composed of which two minerals?",
+        opts: ["Silica and Magnesium (SIMA)", "Nickel and Iron (NIFE)", "Silica and Alumina (SIAL)", "Iron and Carbon"],
+        ansIdx: 2, explanation: "SIAL stands for Silicon (Si) and Aluminum (Al), which make up continental granite rocks."
       },
       {
-        q: "Which rock family is also known as 'Primary Rocks'?",
-        opts: ["Sedimentary Rocks", "Metamorphic Rocks", "Igneous Rocks", "Fossiliferous Rocks"],
-        correct: 2,
-        exp: "Igneous rocks were the first to form on early Earth directly from molten magma, and all other rocks originate from them."
+        q: "Which layer comprises approximately 84% of the Earth's total volume?",
+        opts: ["Crust", "Inner Core", "Mantle", "Lithosphere"],
+        ansIdx: 2, explanation: "The mantle extends from 35 km down to 2,900 km, comprising 84% of planetary volume."
       },
       {
-        q: "Granite cooling slowly deep underground is an example of which rock type?",
-        opts: ["Extrusive igneous rock", "Intrusive igneous rock", "Stratified sedimentary rock", "Foliated metamorphic rock"],
-        correct: 1,
-        exp: "Intrusive igneous rocks cool slowly deep inside the crust, allowing large, visible mineral crystals to develop."
+        q: "What keeps the Earth's inner core solid despite 6,000°C temperatures?",
+        opts: ["Extremely low density", "Rapid rotation speed", "Crushing gravitational overburden pressure", "Lack of oxygen"],
+        ansIdx: 2, explanation: "Massive overburden pressure locks iron and nickel atoms into a solid crystal lattice."
       },
       {
-        q: "Which historic Indian monument is built of white metamorphic rock transformed from limestone?",
-        opts: ["Red Fort (Delhi)", "Qutub Minar (Delhi)", "Taj Mahal (Agra)", "Hawa Mahal (Jaipur)"],
-        correct: 2,
-        exp: "The Taj Mahal is made of Makrana marble, which is metamorphosed limestone altered by heat and pressure."
+        q: "Earth's geomagnetic shield is generated by convection currents in which layer?",
+        opts: ["Continental Crust", "Solid Inner Core", "Liquid Outer Core", "Upper Asthenosphere"],
+        ansIdx: 2, explanation: "The dynamo effect of churning liquid iron in the outer core generates Earth's magnetic field."
       },
       {
-        q: "Which layer of the Earth accounts for roughly 84% of the planet's total volume?",
-        opts: ["Crust", "Mantle", "Outer Core", "Inner Core"],
-        correct: 1,
-        exp: "The mantle is the thickest layer, extending to a depth of 2,900 km and making up approximately 84% of Earth's volume."
+        q: "Granite is classified under which rock category?",
+        opts: ["Extrusive Igneous", "Intrusive Igneous", "Metamorphic", "Organic Sedimentary"],
+        ansIdx: 1, explanation: "Granite cools slowly deep underground, allowing visible quartz and feldspar crystals to form."
       },
       {
-        q: "What generates the Earth's vital geomagnetic field that deflects dangerous cosmic solar radiation?",
-        opts: ["Solid crystalline inner core", "Convection currents of liquid iron in the outer core", "Tectonic plate movements in the crust", "Volcanic eruptions in the mantle"],
-        correct: 1,
-        exp: "Thermal convection in the liquid outer core creates an electrical dynamo that produces Earth's protective magnetic field."
+        q: "The Deccan Plateau in western India is primarily made of which rock?",
+        opts: ["Granite", "Sandstone", "Basalt", "Marble"],
+        ansIdx: 2, explanation: "Basalt is an extrusive volcanic igneous rock formed from lava flows across the Deccan."
       },
       {
-        q: "Which of the following is an example of a non-metallic mineral vital for plant fertilizer?",
-        opts: ["Hematite", "Copper", "Potash", "Bauxite"],
-        correct: 2,
-        exp: "Potash is a non-metallic mineral rich in potassium that plants require to regulate water and grow healthy cells."
+        q: "Under intense tectonic heat and pressure, limestone metamorphoses into:",
+        opts: ["Slate", "Gneiss", "Marble", "Quartzite"],
+        ansIdx: 2, explanation: "Limestone recrystallizes under heat and pressure to form beautiful crystalline marble."
       },
       {
-        q: "In what type of rock are fossils (ancient plant and animal remains) exclusively preserved?",
-        opts: ["Igneous rocks", "Sedimentary rocks", "Intrusive rocks", "Volcanic basalt"],
-        correct: 1,
-        exp: "Fossils can only survive the gentle layering and compaction of sedimentary rocks; magma incinerates any organic material."
+        q: "Which of the following rocks is most likely to preserve fossils?",
+        opts: ["Basalt", "Sandstone", "Granite", "Pumice"],
+        ansIdx: 1, explanation: "Fossils are gently preserved in sedimentary rock strata like sandstone and limestone."
       },
       {
-        q: "What is the approximate maximum depth humans have ever drilled into the Earth?",
-        opts: ["~6,371 km (Centre of Earth)", "~2,900 km (Base of Mantle)", "~12 km (Kola Superdeep Borehole)", "~70 km (Base of Continental Crust)"],
-        correct: 2,
-        exp: "The deepest hole ever drilled is the Kola Superdeep Borehole in Russia, reaching only 12.2 km (0.2% of Earth's radius)."
+        q: "Which two minerals are critical for plant growth and cell building?",
+        opts: ["Iron and Copper", "Gold and Silver", "Potassium and Magnesium", "Diamond and Granite"],
+        ansIdx: 2, explanation: "Magnesium is vital for chlorophyll synthesis, and potassium regulates plant osmotic balance."
       }
     ];
 
-    // --- 3D Flashcards Data (10 Cards) ---
+    // --- 10 Revision Flashcards ---
     const flashcardsData = [
       {
-        front: "What is SIAL and where is it found?",
-        back: "SIAL stands for Silica (Si) and Alumina (Al). It forms the lighter, upper layer of the CONTINENTAL crust with an average thickness of 35 km to 70 km.",
-        badge: "Crust Composition"
+        front: "What is SIAL?",
+        back: "The continental crust composed mainly of Silica (Si) and Alumina (Al). Thickness: 35–70 km. Mean density: 2.7 g/cm³.",
+        badge: "Crust"
       },
       {
-        front: "What is SIMA and how does it compare to SIAL?",
-        back: "SIMA stands for Silica (Si) and Magnesium (Ma). It forms the OCEANIC crust (5-8 km). Although thinner than SIAL, SIMA is significantly denser because basalt contains heavy iron.",
-        badge: "Crust Contrast"
+        front: "What is SIMA?",
+        back: "The oceanic crust composed of Silica (Si) and Magnesium (Ma). Thickness: 5–8 km. Mean density: 3.0 g/cm³ (Denser than SIAL).",
+        badge: "Crust"
       },
       {
-        front: "Why is the Outer Core liquid while Inner Core is solid?",
-        back: "Both layers are made of NIFE (Nickel + Iron) at extreme temperatures (4,400°C–6,000°C). The outer core has enough room to melt into liquid, but the inner core is locked solid by the crushing overburden weight of the entire planet.",
-        badge: "Core Physics"
+        front: "What is NIFE?",
+        back: "The Earth's core, composed predominantly of Nickel (Ni) and Iron (Fe / Ferrum). Highly dense and magnetic.",
+        badge: "Core"
       },
       {
-        front: "What is the difference between Magma and Lava?",
-        back: "Magma is molten rock trapped UNDER the Earth's surface. Once magma vents out and flows ON the surface during an eruption, it is called Lava.",
-        badge: "Terminology"
+        front: "Why are igneous rocks called primary rocks?",
+        back: "Because they were the first rocks to solidify from molten planetary material. All other rocks are formed directly or indirectly from them.",
+        badge: "Igneous"
       },
       {
-        front: "How do Intrusive and Extrusive igneous rocks differ in crystal size?",
-        back: "Intrusive rocks (Granite) cool slowly underground, forming LARGE crystals. Extrusive rocks (Basalt) cool rapidly in air, forming microscopic, FINE crystals.",
-        badge: "Rock Texture"
+        front: "Difference: Magma vs. Lava",
+        back: "Magma is molten rock trapped UNDERGROUND inside the crust. Lava is molten rock that has ERUPTED onto the Earth's surface.",
+        badge: "Volcanism"
       },
       {
-        front: "Why do ONLY Sedimentary rocks contain fossils?",
-        back: "Sedimentary rocks form by gentle burial and compaction in lakebeds/oceans. In contrast, igneous and metamorphic rocks involve extreme volcanic heat (>1,000°C) that instantly incinerates all organic matter.",
-        badge: "Fossil Preservation"
+        front: "What rock is the Red Fort made of?",
+        back: "Red Sandstone—a layered sedimentary rock formed from compressed sand grains and iron oxides in ancient Rajasthan.",
+        badge: "Monuments"
       },
       {
-        front: "What rock does Limestone become when metamorphosed?",
-        back: "Limestone (sedimentary) recrystallizes under intense heat and pressure into MARBLE (metamorphic), famously seen in the white Makrana marble of the Taj Mahal.",
-        badge: "Metamorphism"
+        front: "What rock is the Taj Mahal carved from?",
+        back: "White Makrana Marble—a metamorphic rock transformed from sedimentary limestone under extreme heat and pressure.",
+        badge: "Monuments"
       },
       {
-        front: "What are Metallic vs Non-Metallic minerals?",
-        back: "Metallic minerals contain metals, are malleable, ductile, and conduct electricity (Iron, Copper, Tin). Non-metallic minerals lack metals (Potash, Gypsum, Limestone, Mica, Diamond).",
-        badge: "Minerals"
+        front: "What is Lithification?",
+        back: "The geological process where loose, accumulated sediments are compressed and cemented into solid sedimentary rock under overburden pressure.",
+        badge: "Sedimentary"
       },
       {
         front: "What causes Earth's geomagnetic field?",
@@ -1263,12 +1571,14 @@
       },
       {
         front: "Why can humans never travel to the center of the Earth?",
-        back: "The centre lies 6,371 km deep. At that depth, temperatures reach 6,000°C and pressures exceed 3.6 million atmospheres, which would instantly crush and vaporize any drilling apparatus.",
+        back: "The centre lies 6,371 km deep. Temperatures reach 6,000°C and pressures exceed 3.6 million atmospheres, which would instantly crush and vaporize any drilling apparatus.",
         badge: "Geological Limits"
       }
     ];
 
-    // --- Tab Switching Engine ---
+    // ==================== RENDERING & INTERACTION ENGINES ====================
+
+    // 1. Tab Switching Engine
     function switchMainTab(tabId, btnElem) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -1281,16 +1591,24 @@
 
       if (btnElem) {
         btnElem.classList.add('active');
+      } else {
+        const matchingBtn = document.querySelector(`[data-target="${tabId}"]`);
+        if (matchingBtn) matchingBtn.classList.add('active');
+      }
+
+      // Update URL hash without jumping
+      if (history.replaceState) {
+        history.replaceState(null, null, '#' + tabId);
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // --- Sub-Pane Switching Engine (Solutions Hub) ---
+    // 2. Sub-Pane Switching Engine (Solutions Hub)
     function switchSubPane(paneId, pillElem) {
       document.querySelectorAll('.submodule-pane').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.submodule-pill').forEach(pill => {
-        pill.classList.remove('active', 'border-cyan-500/50', 'bg-cyan-950/40', 'text-cyan-300');
+        pill.classList.remove('active', 'border-emerald-500/50', 'bg-emerald-950/40', 'text-emerald-300', 'border-cyan-500/50', 'bg-cyan-950/40', 'text-cyan-300');
         pill.classList.add('border-slate-800', 'bg-slate-900/60', 'text-slate-400');
       });
 
@@ -1302,11 +1620,11 @@
 
       if (pillElem) {
         pillElem.classList.remove('border-slate-800', 'bg-slate-900/60', 'text-slate-400');
-        pillElem.classList.add('active', 'border-cyan-500/50', 'bg-cyan-950/40', 'text-cyan-300');
+        pillElem.classList.add('active', 'border-emerald-500/50', 'bg-emerald-950/40', 'text-emerald-300');
       }
     }
 
-    // --- Sidebar Pin Toggle Engine ---
+    // 3. Sidebar Pin Toggle Engine
     function toggleSidebarPin() {
       const sidebar = document.getElementById('sidebarDock');
       const isPinned = sidebar.classList.toggle('pinned');
@@ -1327,12 +1645,29 @@
       }
     }
 
-    // --- Interactive Layer Selection Engine ---
+    // 4. Header Search Toggle
+    function toggleGlobalSearch() {
+      const box = document.getElementById('globalSearchDropdown');
+      box.classList.toggle('hidden');
+      if (!box.classList.contains('hidden')) {
+        document.getElementById('quickNavSearchInput').focus();
+      }
+    }
+
+    function handleQuickSearch(term) {
+      if (!term.trim()) return;
+      // Switch to Solutions hub tab and search
+      switchMainTab('tabSolutions', document.querySelector('[data-target="tabSolutions"]'));
+      switchSubPane('paneAll', document.querySelectorAll('.submodule-pill')[7]);
+      document.getElementById('qaSearchInput').value = term;
+      handleQASearch(term);
+    }
+
+    // 5. Interactive Layer Selection Engine
     function selectLayer(layerKey) {
       const data = layerData[layerKey];
       if (!data) return;
 
-      // Update Card
       const card = document.getElementById('layerTelemetryCard');
       card.innerHTML = `
         <div>
@@ -1371,7 +1706,6 @@
         </div>
       `;
 
-      // Highlight SVG & Buttons
       ['crust', 'mantle', 'outerCore', 'innerCore'].forEach(k => {
         const btn = document.getElementById(`btnLayer${k.charAt(0).toUpperCase() + k.slice(1)}`);
         if (btn) {
@@ -1386,7 +1720,7 @@
       });
     }
 
-    // --- Dynamic Rock Cycle Simulator Engine ---
+    // 6. Dynamic Rock Cycle Simulator Engine
     function setRockCycleStage(stageIdx) {
       currentRockCycleStage = stageIdx;
       const stage = rockCycleStages[stageIdx];
@@ -1394,8 +1728,8 @@
 
       display.innerHTML = `
         <div class="flex items-start gap-4">
-          <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 ${stage.accent} flex-shrink-0">
-            <i data-lucide="${stage.visualIcon}" class="w-8 h-8"></i>
+          <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 ${stage.accent} flex-shrink-0 text-3xl">
+            ${stage.visualEmoji}
           </div>
           <div class="flex-1">
             <div class="flex items-center gap-2">
@@ -1405,7 +1739,7 @@
             <h3 class="text-xl font-bold text-white mt-1 font-heading">${stage.title}</h3>
             <p class="text-sm text-slate-300 mt-2 leading-relaxed">${stage.desc}</p>
             <div class="mt-4 p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-xs text-slate-300 flex items-start gap-2">
-              <i data-lucide="map-pin" class="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5"></i>
+              <span class="text-amber-400 text-base">📍</span>
               <div><strong>Indian Real-World Connection:</strong> ${stage.indianAnchor}</div>
             </div>
           </div>
@@ -1424,8 +1758,6 @@
           }
         }
       }
-
-      lucide.createIcons();
     }
 
     function stepRockCycle(delta) {
@@ -1433,340 +1765,570 @@
       setRockCycleStage(nextStage);
     }
 
-    // --- Solutions Hub Directory Engine ---
-    function renderSolutionsDirectory() {
-      const paneAll = document.getElementById('paneAll');
-      const paneObj = document.getElementById('paneObj');
-      const paneTF = document.getElementById('paneTF');
-      const paneDetail = document.getElementById('paneDetail');
-      const paneNCERT = document.getElementById('paneNCERT');
+    // ==================== SOLUTIONS DIRECTORY ENGINES ====================
 
-      paneAll.innerHTML = '';
-      paneObj.innerHTML = '';
-      paneTF.innerHTML = '';
-      paneDetail.innerHTML = '';
-      paneNCERT.innerHTML = '';
+    // Render FIB Tab with Space-Saving Inline Reveal Pattern (User Refinements 4 & 5)
+    function renderFIB() {
+      const container = document.getElementById('fibCardsContainer');
+      container.innerHTML = '';
 
-      allQuestionsData.forEach((q, idx) => {
-        const cardHtml = createQuestionCardHtml(q, idx + 1);
+      const fibQuestions = allQuestionsData.filter(q => q.pane === 'paneFIB');
+      fibQuestions.forEach((q, idx) => {
+        let sentenceHtml = q.q;
+        let blankCount = 0;
         
-        // Add to paneAll
-        paneAll.insertAdjacentHTML('beforeend', cardHtml);
+        // Replace ________ with interactive clickable span
+        sentenceHtml = sentenceHtml.replace(/________/g, () => {
+          const ansWord = q.blanks[blankCount] || 'answer';
+          const blankId = `blank-${q.id}-${blankCount}`;
+          blankCount++;
+          return `<span id="${blankId}" onclick="revealSingleBlank('${blankId}', '${ansWord}')" class="fib-blank cursor-pointer px-2 py-0.5 rounded border-b-2 border-dashed border-emerald-400 text-emerald-400 font-bold bg-emerald-950/20 hover:bg-emerald-950/40" title="Click to reveal">________</span>`;
+        });
 
-        // Add to specific sub-pane
-        if (q.pane === 'paneObj') paneObj.insertAdjacentHTML('beforeend', cardHtml);
-        else if (q.pane === 'paneTF') paneTF.insertAdjacentHTML('beforeend', cardHtml);
-        else if (q.pane === 'paneDetail') paneDetail.insertAdjacentHTML('beforeend', cardHtml);
-        else if (q.pane === 'paneNCERT') paneNCERT.insertAdjacentHTML('beforeend', cardHtml);
+        const cardHtml = `
+          <div class="fib-card bg-slate-900/80 border border-slate-800 hover:border-slate-700/80 rounded-xl p-4 transition-all" id="card-${q.id}">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold flex items-center justify-center">
+                  ${idx + 1}
+                </span>
+                <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px] font-mono font-semibold">
+                  Section A · Fill in the Blanks
+                </span>
+              </div>
+              <button onclick="revealFIBQuestion('${q.id}')" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 transition-all flex items-center gap-1.5 cursor-pointer">
+                <span>👁️</span> <span id="btnText-${q.id}">Reveal Answer</span>
+              </button>
+            </div>
+            
+            <div class="text-sm font-medium text-slate-200 leading-relaxed">
+              ${sentenceHtml}
+            </div>
+
+            <div id="tip-${q.id}" class="hidden mt-2 pt-2 border-t border-slate-800/60 text-[11px] text-slate-400 flex items-center gap-1.5">
+              <span>💡</span>
+              <span><strong>Key Concept:</strong> ${q.tip}</span>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', cardHtml);
       });
-
-      lucide.createIcons();
     }
 
-    function createQuestionCardHtml(q, number) {
-      const optsHtml = q.opts ? `
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 my-3">
-          ${q.opts.map(opt => `<div class="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800 text-xs text-slate-300">${opt}</div>`).join('')}
+    function revealSingleBlank(blankId, word) {
+      const span = document.getElementById(blankId);
+      if (span) {
+        span.textContent = word;
+        span.classList.add('revealed');
+      }
+    }
+
+    function revealFIBQuestion(qId) {
+      const q = allQuestionsData.find(item => item.id === qId);
+      if (!q) return;
+
+      q.blanks.forEach((word, idx) => {
+        const blankElem = document.getElementById(`blank-${qId}-${idx}`);
+        if (blankElem) {
+          blankElem.textContent = word;
+          blankElem.classList.add('revealed');
+        }
+      });
+
+      const tip = document.getElementById(`tip-${qId}`);
+      if (tip) tip.classList.remove('hidden');
+
+      const btnText = document.getElementById(`btnText-${qId}`);
+      if (btnText) btnText.textContent = 'Revealed';
+    }
+
+    function toggleAllFIB(show) {
+      const fibQuestions = allQuestionsData.filter(q => q.pane === 'paneFIB');
+      fibQuestions.forEach(q => {
+        if (show) {
+          revealFIBQuestion(q.id);
+        } else {
+          q.blanks.forEach((word, idx) => {
+            const blankElem = document.getElementById(`blank-${q.id}-${idx}`);
+            if (blankElem) {
+              blankElem.textContent = '________';
+              blankElem.classList.remove('revealed');
+            }
+          });
+          const tip = document.getElementById(`tip-${q.id}`);
+          if (tip) tip.classList.add('hidden');
+          const btnText = document.getElementById(`btnText-${q.id}`);
+          if (btnText) btnText.textContent = 'Reveal Answer';
+        }
+      });
+    }
+
+    // Render Match the Following (MTH)
+    function renderMTH() {
+      // Set 1: NCERT Matching
+      const set1 = [
+        { id: "1a", left: "(i) Core", right: "(a) Changes into slate under heat & pressure", match: "e" },
+        { id: "1b", left: "(ii) Minerals", right: "(b) Used for roads and buildings", match: "d" },
+        { id: "1c", left: "(iii) Rocks", right: "(c) Made of silicon and alumina", match: "b" },
+        { id: "1d", left: "(iv) Clay", right: "(d) Has definite chemical composition", match: "a" },
+        { id: "1e", left: "(v) Sial", right: "(e) Innermost layer of the Earth", match: "c" }
+      ];
+
+      const grid1 = document.getElementById('mthSet1Grid');
+      grid1.innerHTML = `
+        <div class="space-y-2">
+          <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-1">Column A (Premise)</div>
+          ${set1.map(item => `
+            <div class="p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-sm font-semibold text-white flex items-center justify-between">
+              <span>${item.left}</span>
+              <span id="badge-m1-${item.id}" class="hidden px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-700 text-xs font-mono">→ ${item.match}</span>
+            </div>
+          `).join('')}
         </div>
-      ` : '';
-
-      return `
-        <div class="question-item bg-slate-900/90 border border-slate-800/90 rounded-xl p-5 transition-all shadow-md" data-question-id="${q.id}">
-          <div class="flex items-start justify-between gap-3 mb-2">
-            <div class="flex items-center gap-2">
-              <span class="w-6 h-6 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs font-bold flex items-center justify-center">
-                ${number}
-              </span>
-              <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px] font-mono font-semibold">
-                Section ${q.sec} · ${q.type}
-              </span>
+        <div class="space-y-2">
+          <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-1">Column B (Options)</div>
+          ${set1.map(item => `
+            <div class="p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-xs text-slate-300">
+              ${item.right}
             </div>
-            <button onclick="toggleAnswer('${q.id}')" class="text-xs text-cyan-400 hover:text-cyan-300 font-semibold flex items-center gap-1">
-              <span>Show Solution</span> <i data-lucide="chevron-down" id="icon-${q.id}" class="w-3.5 h-3.5 transition-transform"></i>
-            </button>
-          </div>
+          `).join('')}
+        </div>
+      `;
 
-          <h4 class="text-sm font-semibold text-white leading-relaxed mt-1">${q.q.replace(/\n/g, '<br>')}</h4>
-          ${optsHtml}
+      // Set 2: Specimen & Architecture Matching
+      const set2 = [
+        { id: "2a", left: "(i) Basalt", right: "(a) Used to construct the historic Red Fort", match: "d" },
+        { id: "2b", left: "(ii) Granite", right: "(b) Used to carve the magnificent Taj Mahal", match: "e" },
+        { id: "2c", left: "(iii) Red Sandstone", right: "(c) High-density nickel-iron alloy in core", match: "a" },
+        { id: "2d", left: "(iv) White Marble", right: "(d) Deccan Plateau volcanic extrusive rock", match: "b" },
+        { id: "2e", left: "(v) Potash & Magnesium", right: "(e) Coarse-grained intrusive grinding rock", match: "f" },
+        { id: "2f", left: "(vi) NIFE", right: "(f) Essential minerals used by plant cells", match: "c" }
+      ];
 
-          <!-- Answer Drawer -->
-          <div id="ans-${q.id}" class="hidden mt-4 pt-3.5 border-t border-slate-800/80">
-            <div class="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-800/40 text-xs text-slate-200 leading-relaxed whitespace-pre-line">
-              <strong class="text-emerald-400 block mb-1">Answer / Model Solution:</strong>
-              ${q.ans}
+      const grid2 = document.getElementById('mthSet2Grid');
+      grid2.innerHTML = `
+        <div class="space-y-2">
+          <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-1">Column A (Specimen / Concept)</div>
+          ${set2.map(item => `
+            <div class="p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-sm font-semibold text-white flex items-center justify-between">
+              <span>${item.left}</span>
+              <span id="badge-m2-${item.id}" class="hidden px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-700 text-xs font-mono">→ ${item.match}</span>
             </div>
-            ${q.tip ? `
-              <div class="mt-2 text-[11px] text-slate-400 flex items-center gap-1.5 pl-1">
-                <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-amber-400 flex-shrink-0"></i>
-                <span><strong>Exam Tip:</strong> ${q.tip}</span>
-              </div>
-            ` : ''}
-          </div>
+          `).join('')}
+        </div>
+        <div class="space-y-2">
+          <div class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-1">Column B (Geological Context)</div>
+          ${set2.map(item => `
+            <div class="p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-xs text-slate-300">
+              ${item.right}
+            </div>
+          `).join('')}
         </div>
       `;
     }
 
-    function toggleAnswer(qId) {
-      const drawer = document.getElementById(`ans-${qId}`);
+    function revealMatchSet(setNum) {
+      const sol = document.getElementById(`mthSet${setNum}Solution`);
+      if (sol) sol.classList.toggle('hidden');
+
+      const prefix = setNum === 1 ? 'm1' : 'm2';
+      document.querySelectorAll(`[id^="badge-${prefix}-"]`).forEach(el => el.classList.toggle('hidden'));
+    }
+
+    // Render True or False (TF)
+    function renderTF() {
+      const container = document.getElementById('tfCardsContainer');
+      container.innerHTML = '';
+
+      const tfQuestions = allQuestionsData.filter(q => q.pane === 'paneTF');
+      tfQuestions.forEach((q, idx) => {
+        const isTrue = q.ans.toLowerCase() === 'true';
+        const cardHtml = `
+          <div class="tf-card bg-slate-900/80 border border-slate-800 hover:border-slate-700 rounded-xl p-4 transition-all">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="flex items-start gap-2.5">
+                <span class="w-6 h-6 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono text-xs font-bold flex-shrink-0 flex items-center justify-center">
+                  ${idx + 1}
+                </span>
+                <span class="text-sm font-medium text-slate-200">${q.q}</span>
+              </div>
+              <div class="flex items-center gap-2 flex-shrink-0 self-end sm:self-auto">
+                <div id="ans-${q.id}" class="hidden px-2.5 py-1 rounded-lg text-xs font-bold font-mono ${isTrue ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-rose-500/20 text-rose-300 border border-rose-500/40'}">
+                  ${q.ans.toUpperCase()}
+                </div>
+                <button onclick="revealTFQuestion('${q.id}')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-slate-300 hover:text-white transition-all cursor-pointer">
+                  Reveal Answer
+                </button>
+              </div>
+            </div>
+            <div id="tip-${q.id}" class="hidden mt-2.5 pt-2 border-t border-slate-800/60 text-[11px] text-slate-400 flex items-center gap-1.5">
+              <span>💡</span>
+              <span>${q.tip}</span>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', cardHtml);
+      });
+    }
+
+    function revealTFQuestion(qId) {
+      const ansElem = document.getElementById(`ans-${qId}`);
+      const tipElem = document.getElementById(`tip-${qId}`);
+      if (ansElem) ansElem.classList.toggle('hidden');
+      if (tipElem) tipElem.classList.toggle('hidden');
+    }
+
+    function toggleAllTF(show) {
+      const tfQuestions = allQuestionsData.filter(q => q.pane === 'paneTF');
+      tfQuestions.forEach(q => {
+        const ansElem = document.getElementById(`ans-${q.id}`);
+        const tipElem = document.getElementById(`tip-${q.id}`);
+        if (show) {
+          if (ansElem) ansElem.classList.remove('hidden');
+          if (tipElem) tipElem.classList.remove('hidden');
+        } else {
+          if (ansElem) ansElem.classList.add('hidden');
+          if (tipElem) tipElem.classList.add('hidden');
+        }
+      });
+    }
+
+    // Render Multiple Choice (MCQ)
+    function renderMCQ() {
+      const container = document.getElementById('mcqCardsContainer');
+      container.innerHTML = '';
+
+      const mcqQuestions = allQuestionsData.filter(q => q.pane === 'paneMCQ');
+      mcqQuestions.forEach((q, idx) => {
+        const cardHtml = `
+          <div class="mcq-card bg-slate-900/80 border border-slate-800 rounded-xl p-4 transition-all" id="mcq-card-${q.id}">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs font-bold flex items-center justify-center">
+                  ${idx + 1}
+                </span>
+                <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px] font-mono font-semibold">
+                  Section B · Multiple Choice
+                </span>
+              </div>
+              <button onclick="revealMCQAnswer('${q.id}')" class="text-xs text-cyan-400 hover:text-cyan-300 font-semibold cursor-pointer">
+                Reveal Answer
+              </button>
+            </div>
+            
+            <h4 class="text-sm font-semibold text-white mt-1">${q.q}</h4>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3" id="opts-${q.id}">
+              ${q.opts.map((opt, optIdx) => `
+                <button onclick="checkMCQOption('${q.id}', ${optIdx}, ${q.correctIdx})" id="btn-opt-${q.id}-${optIdx}" class="p-2.5 rounded-lg bg-slate-950/60 border border-slate-800 hover:border-slate-700 text-xs text-slate-300 text-left transition-all cursor-pointer">
+                  ${opt}
+                </button>
+              `).join('')}
+            </div>
+
+            <div id="feedback-${q.id}" class="hidden mt-3 p-2.5 rounded-lg text-xs leading-relaxed"></div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', cardHtml);
+      });
+    }
+
+    function checkMCQOption(qId, selectedIdx, correctIdx) {
+      const feedback = document.getElementById(`feedback-${qId}`);
+      const isCorrect = selectedIdx === correctIdx;
+      
+      for (let i = 0; i < 4; i++) {
+        const optBtn = document.getElementById(`btn-opt-${qId}-${i}`);
+        if (optBtn) {
+          if (i === correctIdx) {
+            optBtn.classList.add('border-emerald-500', 'bg-emerald-950/40', 'text-emerald-300');
+          } else if (i === selectedIdx && !isCorrect) {
+            optBtn.classList.add('border-rose-500', 'bg-rose-950/40', 'text-rose-300');
+          }
+        }
+      }
+
+      const q = allQuestionsData.find(item => item.id === qId);
+      feedback.className = `mt-3 p-2.5 rounded-lg text-xs leading-relaxed border ${isCorrect ? 'bg-emerald-950/40 border-emerald-800 text-emerald-200' : 'bg-rose-950/40 border-rose-800 text-rose-200'}`;
+      feedback.innerHTML = `<strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect.'}</strong> ${q.tip}`;
+      feedback.classList.remove('hidden');
+    }
+
+    function revealMCQAnswer(qId) {
+      const q = allQuestionsData.find(item => item.id === qId);
+      if (q) checkMCQOption(qId, q.correctIdx, q.correctIdx);
+    }
+
+    // Render Generic Accordion Cards for SA, LA, NCERT, All
+    function renderGenericCards(paneTarget, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      let questions = [];
+      if (paneTarget === 'all') {
+        questions = allQuestionsData;
+      } else {
+        questions = allQuestionsData.filter(q => q.pane === paneTarget);
+      }
+
+      questions.forEach((q, idx) => {
+        const cardHtml = `
+          <div class="question-item bg-slate-900/80 border border-slate-800 rounded-xl p-4 transition-all" data-question-id="${q.id}">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-mono text-xs font-bold flex items-center justify-center">
+                  ${idx + 1}
+                </span>
+                <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px] font-mono font-semibold">
+                  Section ${q.sec} · ${q.type}
+                </span>
+              </div>
+              <button onclick="toggleGenericAnswer('${q.id}')" class="text-xs text-cyan-400 hover:text-cyan-300 font-semibold flex items-center gap-1 cursor-pointer">
+                <span id="btnLbl-${q.id}">Reveal Answer</span> <span id="icon-${q.id}" class="text-xs">▼</span>
+              </button>
+            </div>
+
+            <h4 class="text-sm font-semibold text-white leading-relaxed mt-1">${q.q.replace(/\n/g, '<br>')}</h4>
+
+            <!-- Answer Drawer -->
+            <div id="drawer-${q.id}" class="hidden mt-3 pt-3 border-t border-slate-800/80">
+              <div class="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-800/40 text-xs text-slate-200 leading-relaxed whitespace-pre-line">
+                <strong class="text-emerald-400 block mb-1">Answer / Model Solution:</strong>
+                ${q.ans || q.blanks?.join(', ')}
+              </div>
+              ${q.tip ? `
+                <div class="mt-2 text-[11px] text-slate-400 flex items-center gap-1.5 pl-1">
+                  <span>💡</span>
+                  <span><strong>Exam Tip:</strong> ${q.tip}</span>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', cardHtml);
+      });
+    }
+
+    function toggleGenericAnswer(qId) {
+      const drawer = document.getElementById(`drawer-${qId}`);
       const icon = document.getElementById(`icon-${qId}`);
+      const lbl = document.getElementById(`btnLbl-${qId}`);
       if (drawer) {
         const isClosed = drawer.classList.contains('hidden');
         if (isClosed) {
           drawer.classList.remove('hidden');
-          if (icon) icon.style.transform = 'rotate(180deg)';
+          if (icon) icon.textContent = '▲';
+          if (lbl) lbl.textContent = 'Hide Answer';
         } else {
           drawer.classList.add('hidden');
-          if (icon) icon.style.transform = 'rotate(0deg)';
+          if (icon) icon.textContent = '▼';
+          if (lbl) lbl.textContent = 'Reveal Answer';
         }
       }
     }
 
-    // --- Search Engine with Empty State ---
-    let searchDebounceTimer;
+    // Search Engine Across Questions
     function handleQASearch(term) {
-      clearTimeout(searchDebounceTimer);
-      searchDebounceTimer = setTimeout(() => {
-        performSearchFilter(term);
-      }, 180);
-    }
-
-    function performSearchFilter(term) {
-      const cleanTerm = term.trim().toLowerCase();
+      const query = term.toLowerCase().trim();
       const clearBtn = document.getElementById('qaClearSearchBtn');
-      const emptyState = document.getElementById('qaEmptyState');
-      
-      if (cleanTerm.length > 0) {
-        clearBtn.classList.remove('hidden');
-        // Automatically switch to paneAll when searching
-        switchSubPane('paneAll', document.querySelector('.submodule-pill'));
-      } else {
-        clearBtn.classList.add('hidden');
+      if (clearBtn) {
+        clearBtn.classList.toggle('hidden', query.length === 0);
       }
 
-      const activePane = document.getElementById(currentSubPane);
-      const questionCards = activePane.querySelectorAll('.question-item');
+      switchSubPane('paneAll', document.querySelectorAll('.submodule-pill')[7]);
+
+      const items = document.querySelectorAll('#allQuestionsContainer .question-item');
       let visibleCount = 0;
 
-      questionCards.forEach(card => {
-        const text = card.textContent.toLowerCase();
-        if (cleanTerm === '' || text.includes(cleanTerm)) {
-          card.classList.remove('hidden');
+      items.forEach(item => {
+        const text = item.innerText.toLowerCase();
+        if (text.includes(query)) {
+          item.style.display = 'block';
           visibleCount++;
         } else {
-          card.classList.add('hidden');
+          item.style.display = 'none';
         }
       });
 
-      if (visibleCount === 0) {
-        emptyState.classList.remove('hidden');
-      } else {
-        emptyState.classList.add('hidden');
+      const emptyState = document.getElementById('qaEmptyState');
+      if (emptyState) {
+        emptyState.classList.toggle('hidden', visibleCount > 0);
       }
     }
 
     function clearSearchFilter() {
       const input = document.getElementById('qaSearchInput');
-      input.value = '';
-      performSearchFilter('');
-      input.focus();
+      if (input) input.value = '';
+      handleQASearch('');
     }
 
-    // --- Master Quiz Engine ---
+    // 7. Auto-Grading Master Quiz Engine
     function renderQuiz() {
-      const container = document.getElementById('quizQuestionsContainer');
+      const container = document.getElementById('quizContainer');
       container.innerHTML = '';
 
-      quizQuestions.forEach((q, idx) => {
-        const qElem = document.createElement('div');
-        qElem.className = 'quiz-card p-5 rounded-2xl bg-slate-950/60 border border-slate-800 text-sm';
-        qElem.id = `quizQ-${idx}`;
+      quizQuestionsData.forEach((q, idx) => {
+        const cardHtml = `
+          <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800/90 transition-all" id="quizCard${idx}">
+            <div class="flex items-start justify-between gap-3 mb-2">
+              <span class="text-xs font-mono font-bold text-purple-400">QUESTION ${idx + 1} OF 10</span>
+              <span id="quizBadge${idx}" class="hidden text-[11px] font-mono font-bold px-2 py-0.5 rounded"></span>
+            </div>
+            <h4 class="text-sm font-semibold text-white">${q.q}</h4>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
+              ${q.opts.map((opt, optIdx) => `
+                <button onclick="handleQuizAnswer(${idx}, ${optIdx})" id="quizBtn_${idx}_${optIdx}" class="quiz-option-btn p-2.5 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs text-slate-300 text-left transition-all cursor-pointer">
+                  ${opt}
+                </button>
+              `).join('')}
+            </div>
 
-        qElem.innerHTML = `
-          <div class="flex items-center gap-2 mb-2">
-            <span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs font-mono font-bold">
-              Question ${idx + 1} of ${quizQuestions.length}
-            </span>
+            <div id="quizExplain${idx}" class="hidden mt-3 p-3 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 leading-relaxed">
+              <strong class="text-purple-300 block mb-0.5">Explanation:</strong>
+              ${q.explanation}
+            </div>
           </div>
-          <h4 class="font-semibold text-white mb-3 text-base">${q.q}</h4>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            ${q.opts.map((opt, optIdx) => `
-              <button onclick="handleQuizAnswer(${idx}, ${optIdx})" id="quizOpt-${idx}-${optIdx}" class="quiz-opt-btn p-3 rounded-xl border border-slate-800 bg-slate-900/60 hover:bg-slate-800/80 text-slate-300 hover:text-white text-left text-xs font-medium transition-all flex items-center justify-between">
-                <span>${opt}</span>
-                <span class="w-4 h-4 rounded-full border border-slate-700 flex items-center justify-center text-[10px] font-mono">
-                  ${['A','B','C','D'][optIdx]}
-                </span>
-              </button>
-            `).join('')}
-          </div>
-
-          <div id="quizFeedback-${idx}" class="hidden mt-3 p-3 rounded-xl text-xs"></div>
         `;
-
-        container.appendChild(qElem);
+        container.insertAdjacentHTML('beforeend', cardHtml);
       });
-
-      lucide.createIcons();
     }
 
     function handleQuizAnswer(qIdx, optIdx) {
-      if (userQuizAnswers[qIdx] !== undefined) return; // Prevent changing answer
-      userQuizAnswers[qIdx] = optIdx;
+      if (quizUserAnswers[qIdx] !== undefined) return;
+      quizUserAnswers[qIdx] = optIdx;
 
-      const question = quizQuestions[qIdx];
-      const isCorrect = optIdx === question.correct;
-      const feedback = document.getElementById(`quizFeedback-${qIdx}`);
+      const q = quizQuestionsData[qIdx];
+      const isCorrect = optIdx === q.ansIdx;
+      const card = document.getElementById(`quizCard${qIdx}`);
+      const badge = document.getElementById(`quizBadge${qIdx}`);
+      const explain = document.getElementById(`quizExplain${qIdx}`);
 
-      // Highlight options
       for (let i = 0; i < 4; i++) {
-        const btn = document.getElementById(`quizOpt-${qIdx}-${i}`);
-        if (i === question.correct) {
-          btn.classList.add('border-emerald-500', 'bg-emerald-950/60', 'text-emerald-300');
-          btn.classList.remove('border-slate-800', 'bg-slate-900/60');
-        } else if (i === optIdx && !isCorrect) {
-          btn.classList.add('border-rose-500', 'bg-rose-950/60', 'text-rose-300');
-          btn.classList.remove('border-slate-800', 'bg-slate-900/60');
+        const btn = document.getElementById(`quizBtn_${qIdx}_${i}`);
+        if (btn) {
+          if (i === q.ansIdx) {
+            btn.classList.add('border-emerald-500', 'bg-emerald-950/50', 'text-emerald-300');
+          } else if (i === optIdx && !isCorrect) {
+            btn.classList.add('border-rose-500', 'bg-rose-950/50', 'text-rose-300');
+          }
         }
-        btn.disabled = true;
       }
 
-      // Show Feedback
-      feedback.classList.remove('hidden');
+      badge.classList.remove('hidden');
       if (isCorrect) {
-        feedback.className = 'mt-3 p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/40 text-emerald-300 text-xs flex items-start gap-2';
-        feedback.innerHTML = `<i data-lucide="check-circle" class="w-4 h-4 flex-shrink-0 mt-0.5"></i> <div><strong>Correct!</strong> ${question.exp}</div>`;
+        badge.textContent = "CORRECT";
+        badge.className = "text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800";
+        card.classList.add('border-emerald-500/40');
       } else {
-        feedback.className = 'mt-3 p-3 rounded-xl bg-rose-950/40 border border-rose-500/40 text-rose-300 text-xs flex items-start gap-2';
-        feedback.innerHTML = `<i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0 mt-0.5"></i> <div><strong>Incorrect.</strong> ${question.exp}</div>`;
+        badge.textContent = "INCORRECT";
+        badge.className = "text-[11px] font-mono font-bold px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-800";
+        card.classList.add('border-rose-500/40');
       }
 
-      lucide.createIcons();
+      explain.classList.remove('hidden');
       updateQuizScore();
     }
 
     function updateQuizScore() {
-      let correct = 0;
-      let answered = 0;
-      quizQuestions.forEach((q, idx) => {
-        if (userQuizAnswers[idx] !== undefined) {
-          answered++;
-          if (userQuizAnswers[idx] === q.correct) correct++;
-        }
+      let score = 0;
+      quizQuestionsData.forEach((q, idx) => {
+        if (quizUserAnswers[idx] === q.ansIdx) score++;
       });
-
-      document.getElementById('quizScoreText').textContent = `${correct} / ${quizQuestions.length}`;
-      document.getElementById('quizAnsweredText').textContent = answered;
-
-      if (answered === quizQuestions.length) {
-        const card = document.getElementById('quizCompletionCard');
-        card.classList.remove('hidden');
-        document.getElementById('quizFinalScore').textContent = `${correct} / ${quizQuestions.length} (${Math.round((correct/quizQuestions.length)*100)}%)`;
-        let msg = "Phenomenal score! You have master-level command over Earth's interior and rock dynamics.";
-        if (correct < 6) msg = "Good start! Review the Layers Explorer and Flashcards to solidify concepts, then try again!";
-        else if (correct < 9) msg = "Solid grasp! Review a few nuanced distinctions (such as SIAL vs SIMA and mineral ores) to score 100%!";
-        document.getElementById('quizFinalMsg').textContent = msg;
-        card.scrollIntoView({ behavior: 'smooth' });
-      }
+      document.getElementById('quizScoreDisplay').textContent = score;
     }
 
     function resetQuiz() {
-      userQuizAnswers = {};
-      document.getElementById('quizCompletionCard').classList.add('hidden');
-      document.getElementById('quizScoreText').textContent = `0 / ${quizQuestions.length}`;
-      document.getElementById('quizAnsweredText').textContent = '0';
+      quizUserAnswers = {};
       renderQuiz();
+      updateQuizScore();
     }
 
-    // --- 3D Flashcards Engine ---
+    // 8. 3D Memory Recall Flashcards Engine
     function renderFlashcards() {
-      const grid = document.getElementById('flashcardGrid');
+      const grid = document.getElementById('flashcardsGrid');
       grid.innerHTML = '';
 
       flashcardsData.forEach((card, idx) => {
         const cardElem = document.createElement('div');
-        cardElem.className = 'flashcard-wrapper perspective-1000 h-52 cursor-pointer select-none';
+        cardElem.className = 'perspective-1000 h-52 cursor-pointer select-none';
         cardElem.onclick = function() {
-          this.querySelector('.flashcard-inner').classList.toggle('flipped');
+          const inner = this.querySelector('.flashcard-inner');
+          inner.classList.toggle('flipped');
         };
 
         cardElem.innerHTML = `
-          <div class="flashcard-inner w-full h-full relative transform-style-preserve-3d transition-transform duration-500 rounded-2xl shadow-lg">
+          <div class="flashcard-inner relative w-full h-full transform-style-preserve-3d transition-transform duration-500 rounded-2xl shadow-lg">
             <!-- Front Face -->
-            <div class="flashcard-front absolute inset-0 backface-hidden p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between hover:border-rose-500/40 transition-colors">
+            <div class="absolute inset-0 backface-hidden p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between hover:border-rose-500/50 transition-colors">
               <div>
-                <span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20 text-[10px] font-mono font-bold uppercase">
-                  ${card.badge}
-                </span>
-                <h4 class="text-sm font-bold text-white mt-3 leading-snug">${card.front}</h4>
+                <div class="flex items-center justify-between">
+                  <span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/30 text-[10px] font-mono font-bold">
+                    ${card.badge}
+                  </span>
+                  <span class="text-[10px] font-mono text-slate-500">#${idx + 1}</span>
+                </div>
+                <h4 class="text-base font-bold text-white mt-4 leading-snug font-heading">${card.front}</h4>
               </div>
-              <div class="flex items-center justify-between text-[11px] text-slate-500 border-t border-slate-800/80 pt-2 font-mono">
-                <span>Card ${idx + 1} of ${flashcardsData.length}</span>
-                <span class="text-rose-400 flex items-center gap-1">Click to flip <i data-lucide="rotate-cw" class="w-3 h-3"></i></span>
+              <div class="flex items-center justify-between text-[11px] text-slate-400">
+                <span>Click card to reveal</span>
+                <span>🔄</span>
               </div>
             </div>
 
             <!-- Back Face -->
-            <div class="flashcard-back absolute inset-0 backface-hidden rotate-y-180 p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-rose-500/40 flex flex-col justify-between">
+            <div class="absolute inset-0 backface-hidden rotate-y-180 p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-rose-950/30 to-slate-950 border border-rose-500/40 flex flex-col justify-between">
               <div>
-                <span class="text-[10px] font-mono uppercase text-emerald-400 font-bold">Answer & Key Fact</span>
-                <p class="text-xs text-slate-200 mt-2 leading-relaxed">${card.back}</p>
+                <span class="text-[10px] font-mono text-rose-400 font-bold uppercase tracking-wider block mb-1">Answer / Memory Key</span>
+                <p class="text-xs text-slate-200 leading-relaxed font-medium">${card.back}</p>
               </div>
-              <div class="text-[11px] text-slate-500 border-t border-slate-800/80 pt-2 flex items-center justify-between font-mono">
-                <span class="text-emerald-400">Mastered ✓</span>
-                <span class="text-slate-400 flex items-center gap-1">Flip back <i data-lucide="rotate-cw" class="w-3 h-3"></i></span>
+              <div class="text-[11px] text-rose-300/80 font-mono text-right">
+                ✓ Mastered Concept
               </div>
             </div>
           </div>
         `;
-
         grid.appendChild(cardElem);
       });
-
-      lucide.createIcons();
     }
 
     function flipAllFlashcards() {
-      allCardsFlipped = !allCardsFlipped;
-      document.querySelectorAll('.flashcard-inner').forEach(card => {
-        if (allCardsFlipped) card.classList.add('flipped');
-        else card.classList.remove('flipped');
+      document.querySelectorAll('.flashcard-inner').forEach(inner => {
+        inner.classList.toggle('flipped');
       });
     }
 
-    // --- Dynamic Theming Engine ---
+    // 9. Theme Toggle Engine
     function toggleTheme() {
-      const html = document.documentElement;
-      const isDark = html.classList.contains('dark');
-      const newTheme = isDark ? 'light' : 'dark';
-
+      const isDark = document.documentElement.classList.contains('dark');
       if (isDark) {
-        html.classList.remove('dark');
-        html.setAttribute('data-theme', 'light');
+        document.documentElement.classList.remove('dark');
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('pushti-theme', 'light');
+        updateThemeIcon('light');
       } else {
-        html.classList.add('dark');
-        html.setAttribute('data-theme', 'dark');
-      }
-
-      localStorage.setItem('pushti-theme', newTheme);
-      updateThemeIcon(newTheme);
-
-      if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ theme: newTheme }, '*');
+        document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('pushti-theme', 'dark');
+        updateThemeIcon('dark');
       }
     }
 
     function updateThemeIcon(theme) {
-      const icon = document.getElementById('themeIcon');
+      const icon = document.getElementById('themeIconSvg');
       if (icon) {
-        icon.setAttribute('data-lucide', theme === 'dark' ? 'moon' : 'sun');
-        lucide.createIcons();
+        if (theme === 'light') {
+          icon.innerHTML = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>';
+        } else {
+          icon.innerHTML = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>';
+        }
       }
     }
 
-    // --- Initialization on DOM Load ---
+    // ==================== INITIALIZATION ====================
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Theme initialization
-      const savedTheme = localStorage.getItem('pushti-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      // 1. Theme restoration
+      const savedTheme = localStorage.getItem('pushti-theme') || 'dark';
       if (savedTheme === 'light') {
         document.documentElement.classList.remove('dark');
         document.documentElement.setAttribute('data-theme', 'light');
@@ -1784,13 +2346,19 @@
         updatePinButtonUI(true);
       }
 
-      // 3. Render initial views
+      // 3. Render Views
       selectLayer('crust');
       setRockCycleStage(0);
-      renderSolutionsDirectory();
+      renderFIB();
+      renderMTH();
+      renderTF();
+      renderMCQ();
+      renderGenericCards('paneSA', 'saCardsContainer');
+      renderGenericCards('paneLA', 'laCardsContainer');
+      renderGenericCards('paneNCERT', 'ncertCardsContainer');
+      renderGenericCards('all', 'allQuestionsContainer');
       renderQuiz();
       renderFlashcards();
-      lucide.createIcons();
 
       // 4. URL Tab Deep Linking
       const urlParams = new URLSearchParams(window.location.search);
