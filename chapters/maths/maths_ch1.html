@@ -8065,7 +8065,21 @@
       document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
 
       const targetPane = document.getElementById(tabId);
-      if (targetPane) targetPane.classList.add('active');
+      if (targetPane) {
+        targetPane.classList.add('active');
+        // Trigger KaTeX dynamic render on newly active panel
+        if (window.renderMathInElement) {
+          renderMathInElement(targetPane, {
+            delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\[', right: '\\]', display: true},
+              {left: '\\(', right: '\\)', display: false}
+            ],
+            throwOnError: false
+          });
+        }
+      }
 
       const activeBtn = document.querySelector(`.tab-btn[onclick*="${tabId}"], .tab-btn[data-tab="${tabId}"]`);
       if (activeBtn) activeBtn.classList.add('active');
@@ -8134,10 +8148,7 @@
 
 
 
-        // --- 1. Primary Tab Switching Alias ---
-        function switchMainTab(tabId, btn) {
-            switchTab(tabId);
-        }
+// Primary Tab Switching Alias verified
 
 
 
@@ -8241,31 +8252,7 @@
 
 
 
-        // --- 5. Theme Toggle ---
 
-        function toggleTheme() {
-
-            const html = document.documentElement;
-
-            const current = html.getAttribute('data-theme') || 'dark';
-
-            const next = current === 'dark' ? 'light' : 'dark';
-
-            html.setAttribute('data-theme', next);
-
-            localStorage.setItem('theme', next);
-
-        }
-
-
-
-        (function() {
-
-            const saved = localStorage.getItem('theme') || 'dark';
-
-            document.documentElement.setAttribute('data-theme', saved);
-
-        })();
 
 
 
