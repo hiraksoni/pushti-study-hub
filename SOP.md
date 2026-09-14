@@ -1,4 +1,4 @@
-# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v2.6)
+# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.0)
 *The Definitive Architectural, Design, Pedagogical & Verification Standard for AI-Assisted Generation*
 
 ---
@@ -58,8 +58,11 @@ d:\Users\expor\Downloads\Codes\
 
 ## PART 2: UNIVERSAL UI/UX & DESIGN SYSTEM (ALL PAGES)
 
-### 2.1 Standard HTML Head & CDN Stack
-Every HTML artifact must load the official font stack, FontAwesome icons, and KaTeX math renderer:
+### 2.1 Standard Frontend Stacks & CDN Architecture
+Pushti Study Hub authorizes two complementary frontend stacks tailored to subject pedagogical requirements:
+
+#### Stack A: Pure Custom Properties + KaTeX Engine (High-Density Mathematical Modules)
+*Used for Class 7 Mathematics (Ganita Prakash), Algebra, Geometry, and heavy formula-driven modules.*
 ```html
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
@@ -80,54 +83,99 @@ Every HTML artifact must load the official font stack, FontAwesome icons, and Ka
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\[',right:'\]',display:true},{left:'$',right:'$',display:false},{left:'\(',right:'\)',display:false}],throwOnError:false});"></script>
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'$',right:'$',display:false},{left:'\\(',right:'\\)',display:false}],throwOnError:false});"></script>
 </head>
 ```
-* **Strictly Forbidden**: No external UI frameworks (Bootstrap, Tailwind, Material) or heavy JS libraries (jQuery, React, Vue). Write clean, fast, vanilla CSS and modern JavaScript.
 
-### 2.2 Global CSS Custom Properties & Dynamic Theming
-Every stylesheet must define the core color tokens supporting seamless Dark and Light mode switching:
-```css
-:root {
-  --primary: #6366f1;
-  --primary-glow: #818cf8;
-  --primary-subtle: rgba(99, 102, 241, 0.12);
-  --primary-deep: rgba(99, 102, 241, 0.08);
+#### Stack B: Modern Tailwind Utility + Lucide Vector Engine (Interactive Simulations & Visual Hubs)
+*Authorized and recommended for Social Science (Geography, History, Civics), Science (Physics, Chemistry, Biology), and rich visual media hubs requiring responsive card grids, live search engines, dynamic simulators, and fluid dark/light transitions.*
+```html
+<!DOCTYPE html>
+<html lang="en" class="dark" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[Chapter Title] — [Subject] | Pushti Study Hub</title>
   
-  /* Dark Mode Default */
-  --bg-main: #0a0e1a;
-  --bg-card: rgba(15, 23, 42, 0.85);
-  --surface: #131d31;
-  --surface-hover: #1c2a44;
-  --text-main: #e2e8f0;
-  --text-muted: #94a3b8;
-  --text-title: #ffffff;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(99, 102, 241, 0.4);
+  <!-- Inter & Outfit Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   
-  /* Status Accents */
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #f43f5e;
-  --cyan: #06b6d4;
-  
-  --font-body: 'Inter', sans-serif;
-  --font-head: 'Outfit', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-}
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+            mono: ['Space Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
 
-[data-theme="light"] {
-  --bg-main: #f8fafc;
-  --bg-card: #ffffff;
-  --surface: #f1f5f9;
-  --surface-hover: #e2e8f0;
-  --text-main: #1e293b;
-  --text-muted: #64748b;
-  --text-title: #0f172a;
-  --border: rgba(0, 0, 0, 0.08);
-  --border-hover: rgba(99, 102, 241, 0.5);
-}
+  <!-- Lucide Icons (SVG-native, razor sharp, zero font flicker) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
 ```
+* **Strict Rule on Heavy JS Frameworks**: Heavy single-page-app runtimes (React, Vue, Angular) and legacy libraries (jQuery) remain strictly prohibited across both stacks. All dynamic features (simulators, quiz engines, search filters, flipcards) must be authored in fast, zero-dependency vanilla JavaScript.
+
+### 2.2 Dynamic Theming & Dual Token Parity
+All pages must support flawless Dark and Light mode switching with state persistence in `localStorage.getItem('pushti-theme')`:
+
+* **Stack A (Pure CSS Custom Properties)**:
+  Uses `:root` for Dark mode defaults and `[data-theme="light"]` for Light mode overrides:
+  ```css
+  :root {
+    --primary: #6366f1;
+    --primary-glow: #818cf8;
+    --bg-main: #0a0e1a;
+    --bg-card: rgba(15, 23, 42, 0.85);
+    --surface: #131d31;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-title: #ffffff;
+    --border: rgba(255, 255, 255, 0.08);
+  }
+  [data-theme="light"] {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --surface: #f1f5f9;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --text-title: #0f172a;
+    --border: rgba(0, 0, 0, 0.08);
+  }
+  ```
+
+* **Stack B (Tailwind Dual Class & Attribute Synchronization)**:
+  To ensure 100% interoperability with iframe wrappers and parent dashboard listeners, Tailwind toggle handlers must update **both** the HTML class and the `data-theme` attribute:
+  ```javascript
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.classList.contains('dark');
+    const newTheme = isDark ? 'light' : 'dark';
+    
+    if (isDark) {
+      html.classList.remove('dark');
+      html.setAttribute('data-theme', 'light');
+    } else {
+      html.classList.add('dark');
+      html.setAttribute('data-theme', 'dark');
+    }
+    localStorage.setItem('pushti-theme', newTheme);
+    updateThemeIcon(newTheme);
+    
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ theme: newTheme }, '*');
+    }
+  }
+  ```
 
 ### 2.3 Universal Button & Input Reset (The Zero "White Patches" Mandate)
 * **The Root Cause**: Browsers render unstyled `<button>` and `<input>` elements using the operating system's native `buttonface` (stark `#ffffff` white with black text), causing bright jarring white patches on dark themes whenever an explicit CSS rule is missing.
@@ -280,14 +328,43 @@ Every chapter and subject page must present the standardized 54px glassmorphic s
 ```
 
 ### 2.7 Floating Interactive Utilities & Telemetry
-1. **Floating Jump-to-Top Button (`#scrollTopBtn`)**:
+1. **Floating Jump-to-Top Button (`#scrollTopBtn` or `scroll_to_top.js`)**:
    - Circular 44px button fixed at `bottom: 24px; right: 24px; z-index: 999;`.
-   - Reveals smoothly with `opacity: 1; pointer-events: auto;` when page scrolls beyond 300px.
+   - Reveals smoothly with `opacity: 1; pointer-events: auto;` when page scrolls beyond 300px (or 80px in `scroll_to_top.js`).
    - Smoothly scrolls to the top on click (`window.scrollTo({ top: 0, behavior: 'smooth' })`).
 2. **Firebase Study Telemetry**:
-   - Background heartbeat logging active study seconds every 60 seconds into Firestore `user_stats` for Pushti and Hirak.
+   - Background heartbeat logging active study seconds every 60 seconds into Firestore `user_stats` for Pushti and Hirak (`import { db, doc, getDoc, setDoc } from "../../firebase-config.js"`).
 3. **Custom Luminous Scrollbars**:
    - Discrete 6px scrollbars (`::-webkit-scrollbar { width: 6px; height: 6px; }`) matching theme tokens (`var(--surface)` track, `var(--border)` thumb, `var(--primary)` hover).
+
+### 2.8 Usability, UX & Modern Reactive Component Standards
+Every interactive chapter must adhere to modern web usability best practices:
+
+1. **Debounced Live Search (`debounce(fn, 180)`)**:
+   - Real-time search inputs (such as question banks, vocabulary directories, or theorem indexes) must be debounced by 150ms–250ms to prevent browser frame drops and layout jitter while typing.
+   - Search should match across question statements, sub-parts, options, and model answer text.
+
+2. **Mandatory Empty State Component (The Zero "Dead Screen" Rule)**:
+   - When a student applies a filter or types a search query that yields zero results, the page must **NEVER** present a blank, broken-looking screen.
+   - An explicit Empty State card must dynamically render with:
+     - A contextual vector icon (e.g. Lucide `search-x` or `filter-x`).
+     - A clear, friendly explanation (e.g. *"No matching textbook questions found"*).
+     - A prominent 1-click action button (e.g. `<button onclick="clearSearchFilter()">Clear Search / Reset</button>`) that instantly clears the input and restores full content visibility.
+
+3. **GPU-Accelerated 3D Transforms for Mental Flashcards**:
+   - Mental recall flashcards must utilize hardware-accelerated 3D flip mechanics:
+     ```css
+     .perspective-1000 { perspective: 1000px; }
+     .transform-style-preserve-3d { transform-style: preserve-3d; }
+     .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+     .rotate-y-180 { transform: rotateY(180deg); }
+     ```
+   - Clicking or keyboard-triggering flips the card between Front (Question / Concept Name) and Back (Textbook Definition + "Why It Matters / Common Exam Trap").
+
+4. **Micro-Interactions & State Transition Feedback**:
+   - Hover elevations: Clickable action pills and cards should lift smoothly on hover (`transform: translateY(-2px);` with `transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);`).
+   - Active click feedback: Instant visual scale reduction (`transform: scale(0.98);`) upon active mouse down.
+   - Dynamic badges: Active filter pills must display live counter badges (e.g. `Sections [All 28]`, `MCQs [4]`) reflecting matching item counts.
 
 ---
 
@@ -543,21 +620,47 @@ Every chapter and subject page must present the standardized 54px glassmorphic s
    - **Question Alignment**: Every question and worked solution must correspond directly to the diagram as drawn. A student looking at the textbook and looking at the screen must see an identical geometric configuration.
    - **Dual-Verification Step**: Every geometry SVG must be visually cross-referenced against high-resolution crops of the official textbook PDF before deployment.
 
-### 3.2 Science & Social Science Architecture (The 5-Tab GITA Framework)
-All Science (Physics, Chemistry, Biology) and Social Science chapters follow the unified 5-Tab architecture:
-1. **Tab 1: Videos & Concept Map**:
-   - Chapter-specific YouTube video cards with search deep-links.
-   - Pure CSS visual Concept Hierarchy Map (no Mermaid charts).
-2. **Tab 2: OMR Practice (1 Mark)**:
-   - Objective questions (MCQs, Fill-in-the-Blanks, True/False) with auto-grading arrays (`mcqBook`, `fillBook`, `tfBook`).
-   - Toggle switch between **Practice Mode** (immediate per-question feedback) and **Timed OMR Test Mode** (countdown timer, question navigator palette, deferred grading scorecard).
-   - Every question includes an explanation key (`exp`) detailing *why* the answer is correct.
-3. **Tab 3: 2/3 Marks (Short Answer)**:
-   - Mental Flashcard style using `<details>` and `<summary>` (no typing inputs). Student thinks through the answer, then reveals textbook-grade solution.
-4. **Tab 4: 4+ Marks (Long Answer & Case Studies)**:
-   - Comprehensive model answers. Case-based questions provide the complete reference passage above the question.
-5. **Tab 5: Extra Knowledge & Curiosities**:
-   - "Did you know?" trivia, historical discoveries, scientific breakthroughs beyond the textbook.
+### 3.2 Science & Social Science Architecture (The Modern Interactive Simulation & Searchable Solutions Hub Standard - v3.0)
+*Exemplified in Class 7 Geography Chapter 1 (Interior of the Earth) and Class 7 Science modules.*
+
+#### 3.2.1 Evolution Beyond Legacy GITA Mark-Split Tabs
+The legacy GITA format split textbook exercises artificially by mark count (Tab 3: 2/3 Marks vs. Tab 4: 4+ Marks). Student usability testing revealed that this fragmented textbook exercises and forced students to bounce between tabs just to check homework solutions.
+
+Under **v3.0**, all Science and Social Science modules adopt the **5-Module Interactive Simulation & Searchable Solutions Architecture**:
+
+1. **Module 1: Interactive Phenomenon / Structural Explorer**:
+   - Native vector SVG cutaway or apparatus inspector (e.g. Earth's Interior, Plant/Animal Cell Anatomy, Electric Circuit, Eye Model).
+   - Interactive element selection: Clicking any sub-component (e.g. Continental Crust, Oceanic Crust, Mantle, Outer Core, Inner Core) dynamically updates a synchronized **Telemetry & Composition Inspector Card** in real time.
+   - Comparative metric tables (e.g. SIAL vs. SIMA, thickness, temperature, mineral composition, physical state).
+
+2. **Module 2: Dynamic Process & Cycle Simulator**:
+   - Interactive multi-stage stepping animation (e.g. The 5-Stage Rock Cycle: Magma $\rightarrow$ Igneous $\rightarrow$ Sediments $\rightarrow$ Sedimentary $\rightarrow$ Metamorphic $\rightarrow$ Magma; Water Cycle; Photosynthesis; Nitrogen Cycle).
+   - Student can step sequentially through stages or click directly to inspect stage physics, transformations, and chemical conditions.
+   - **Real-Life Indian Anchors**: Every scientific process must connect directly to tangible Indian geological or environmental examples (e.g., Deccan Traps basalt in Maharashtra/Gujarat, Red Fort red sandstone in Delhi, Taj Mahal Makrana marble in Rajasthan, granite grinding stones in Indian kitchens).
+
+3. **Module 3: Universal Textbook Solutions Hub (Searchable & Categorized)**:
+   - **100% Textbook Coverage**: Unites ALL textbook exercise sections (Sections A through H: Multiple Choice, Fill in the Blanks, Match the Columns, Very Short Answer, Short Answer, Long Answer, Give Reasons, Fun Activities & Puzzles) in **ONE unified, cohesive directory**.
+   - **Live Debounced Keyword Search**: Students can search for any word, mineral, concept, or question number with instant 60fps filtering.
+   - **Quick-Category Pill Filters**: Category tabs (*All, MCQs, Blanks, Match, Short, Long, Give Reasons, Fun Drills*) with dynamic question count badges.
+   - **Self-Assessment Question Cards**: Numbered question badges, clean question statements, model step-by-step answers, and highlighted exam tips.
+   - **Mandatory Empty State**: Displays an illustrated empty state card with a 1-click `"Clear Filter"` button whenever a search returns 0 matches.
+
+4. **Module 4: Interactive Auto-Grading Quiz Engine**:
+   - 10–15 objective questions with instant visual feedback (emerald outline for correct, rose outline for incorrect).
+   - **Educational Explanation Keys (`exp`)**: Every question must display an explanation detailing *why* the answer is correct and warning against common student traps.
+   - Real-time progress bar, questions-answered counter, and a final score evaluation card with personalized revision guidance.
+
+5. **Module 5: 3D Revision Flashcards & Conceptual Traps**:
+   - 10+ hardware-accelerated 3D flipcards (Front: Concept Name / Question; Back: Verbatim Textbook Definition + "Why It Matters / Common Exam Misconception").
+   - Covers high-school curiosity previews (e.g. Kola Superdeep Borehole, South African gold mines, why the inner core remains solid despite $5000^\circ\text{C}$ temperatures).
+
+#### 3.2.2 Subject-Wise Navigation Layout Standard: Top Sticky Bar vs. Left Dock Rail
+To prevent visual crowding and optimize screen geometry:
+* **Mathematics & Heavy Algebra Modules**:
+  - Use the **62px Collapsible Left Dock Rail** (expanding to 280px on 0.72s hover or pin). Mathematics derivations are vertically deep and horizontally compact, making left docks ideal to reclaim horizontal margin.
+* **Science, Social Science & Visual Simulation Modules**:
+  - Use the **Top Sticky Glassmorphic Navigation Bar** with horizontal wrapping pill tabs (`flex-wrap: wrap; gap: 8px;`).
+  - **Reason**: Science and Geography require wide landscape canvas space for side-by-side SVG inspectors (450px cutaway + 400px telemetry card) and 4-column comparative matrices. A permanent left rail constricts these diagrams on 1366px laptop screens. The top sticky bar provides 100% viewport width while keeping navigation pinned and accessible at all times.
 
 ### 3.3 Vocational & Non-Exam Architecture (The Kaushal Bodh / KB Model)
 * Designed for vocational, craft, and co-curricular subjects (e.g. Kaushal Bodh • Class 7).
@@ -645,6 +748,8 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
   - Verify that ALL Solved Examples and Illustrations fit completely within their solution drawer without crossing borders or forcing page-level horizontal scrolling.
   - Verify that all multi-step math derivations are stacked cleanly using `\begin{aligned}`.
   - Verify that `.subparts-grid` and `.solution-grid` cards wrap smoothly without squeezing math content below 240px.
+- [ ] **CP-GUI-11 (Empty State & Search UX Gate)**: Does every search-enabled or filtered directory implement a dedicated empty state container with an illustrative vector icon, friendly message, and an actionable 1-click "Clear Filters" button when 0 results match?
+- [ ] **CP-GUI-12 (Dual-Theme Token Parity Gate)**: In Tailwind CSS modules, are both `class="dark"` and `data-theme="dark"` / `data-theme="light"` attributes synchronized on `<html>` to guarantee flawless parent dashboard and iframe interoperability?
 
 ### Checkpoint Suite 2: Content & Pedagogical Completeness
 - [ ] **CP-CON-1 (100% Textbook Fidelity)**: Are ALL solved examples and ALL *Figure It Out* exercise problems extracted and solved with full mathematical steps?
@@ -664,6 +769,7 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-INT-1 (Self-Sufficiency)**: Can Pushti study this page and achieve 100% without opening the textbook or searching online?
 - [ ] **CP-INT-2 (No Cluttered Anchor Jumps)**: Are dense sections partitioned into clean sub-panes rather than chaotic in-page jump links?
 - [ ] **CP-INT-3 (Mental Flashcards for Subjective)**: Are subjective questions formatted as revealable flashcards without requiring tedious typing?
+- [ ] **CP-INT-4 (Active Simulation & Exploratory Learning Gate)**: In Science and Social Science modules, do core physical, earth, or living systems feature interactive visual exploration (dynamic SVG cutaway/cycle inspector) rather than static textual paragraphs alone?
 
 ### Checkpoint Suite 4: Technical & Code Verification Gate
 - [ ] **CP-TECH-1 (HTML Tag Balance)**: Run automated verification ensuring:
@@ -688,15 +794,16 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 
 | Version | Date | Key Architectural Additions |
 | :---: | :---: | :--- |
-| **v1.0** | 2026-09-02 | Initial operational checklist and early GITA 5-Tab rules. |
-| **v1.1** | 2026-09-08 | Design SOP creation with KaTeX and CSS custom properties for notes pages. |
-| **v1.2** | 2026-09-12 | Exam Pattern Pop-up Modal, 3×2 balanced grid, and timetable synchronization. |
-| **v1.3** | 2026-09-13 | Collapsible vertical dock rail (1.2s delay), submodule partitioning, subparts grid, and syllabus batteries. |
-| **v1.4** | 2026-09-13 | Mathematics Theme & GUI unification (Zero White Patches universal button reset, desktop margin push, floating jump-to-top). |
-| **v2.0** | 2026-09-13 | **Master Unified SOP Consolidation**: Consolidated all separate design, operational, content, and GITA guidelines into a single authoritative master reference with subject-wise architectures and 4 comprehensive QA checkpoint suites. |
-| **v2.1** | 2026-09-13 | **Syllabus Topic Tag Mapping & Completeness Standard (Topic-to-Battery Rule)**: Standardized that chapter card tags/tabs must directly reflect syllabus-prescribed topics, highlighted tags signify covered topics, dim tags indicate pending syllabus items, and the ratio directly determines the completeness percentage. |
-| **v2.2** | 2026-09-13 | **Zero-Collision & Text Overwrite Prevention Standard (Universal Math & Layout Containment)**: Added Section 2.5, CP-GUI-7, and CP-TECH-6 establishing mandatory rules to prevent matter from crossing over and overwriting cards: atomic KaTeX math lists, `\begin{aligned}` multi-step math, universal `min-width: 0` / `overflow: hidden` card containment, and `minmax(280px, 1fr)` grid track minimums. |
-| **v2.3** | 2026-09-13 | **Laptop Viewport Compatibility & Solved Examples Derivation Gate**: Established Section 2.5.1 and CP-GUI-8 ensuring full 1280px–1366px laptop compatibility with sidebar pinned/active: mandatory stacked `\begin{aligned}` formatting for all multi-step math in Solved Examples, `minmax(240px, 1fr)` responsive fallbacks, KaTeX display auto-scroll, and zero box overflow on Pushti's laptop screen. |
+| **v3.0** | 2026-09-14 | **Modern Interactive Simulation, Tailwind/Lucide UI & Unified Searchable Solutions Hub Standard**: Authorized Stack B (Tailwind CSS + Lucide Icons) for Science and Social Science; superseded mark-based question splitting with the 5-Module Interactive Simulation & Searchable Solutions Hub Standard (Tab 1 SVG Cutaway Inspector, Tab 2 Cycle Simulator, Tab 3 Searchable NCERT Hub with live debounced search and empty states, Tab 4 Auto-Grading Quiz, Tab 5 3D Flipcards); codified Top Sticky Nav for visual landscape subjects vs. Left Dock Rail for dense math; added CP-GUI-11, CP-GUI-12, and CP-INT-4. |
 | **v2.6** | 2026-09-13 | **Strict Textbook Visual & Notation Fidelity Mandate (Section 3.1.3 & CP-GEO-5)**: Mandated absolute fidelity of all geometry figures against official textbook PDFs. Prohibits creative modification of line names, inventing unlabelled vertices, rotating line orientations (vertical vs. horizontal), reversing ray arrows, or altering textbook problem alignments across all geometry modules. |
 | **v2.5** | 2026-09-13 | **Two-Tier Navigation Architecture, Dock Rail Zero-Peeking Containment & Complete KaTeX Delimiter Suite**: Codified Section 3.1.2, CP-GUI-9, CP-GUI-10, and CP-TECH-7 establishing the Two-Tier Navigation standard (`.submodule-nav` pills breaking dense sections into short, screen-sized views to eliminate long vertical scrolling), strict collapsed dock rail text isolation (`.tab-label-group` width: 0 / opacity: 0 preventing letter peeking at 62px), and universal KaTeX auto-rendering for all 4 standard delimiters (`$`, `\(`, `$$`, `\[`) with dynamic re-rendering on tab and sub-tab transitions. |
 | **v2.4** | 2026-09-13 | **Geometry Chapters Visual Standard (The Native Vector SVG Mandate)**: Codified Section 3.1.1 and Checkpoints CP-GEO-1 to CP-GEO-4 establishing the mandatory standard for all geometry chapters: complete replacement of scanned/pencil-scribbled textbook images with pristine native SVG vector graphics; 100% figure coverage across all illustrations, solved examples, drills, and practice questions; theme-adaptive color tokens; standard geometric symbols (parallel arrows, perpendicular squares, auxiliary dashed constructions); and strict laptop viewport containment. |
+| **v2.3** | 2026-09-13 | **Laptop Viewport Compatibility & Solved Examples Derivation Gate**: Established Section 2.5.1 and CP-GUI-8 ensuring full 1280px–1366px laptop compatibility with sidebar pinned/active: mandatory stacked `\begin{aligned}` formatting for all multi-step math in Solved Examples, `minmax(240px, 1fr)` responsive fallbacks, KaTeX display auto-scroll, and zero box overflow on Pushti's laptop screen. |
+| **v2.2** | 2026-09-13 | **Zero-Collision & Text Overwrite Prevention Standard (Universal Math & Layout Containment)**: Added Section 2.5, CP-GUI-7, and CP-TECH-6 establishing mandatory rules to prevent matter from crossing over and overwriting cards: atomic KaTeX math lists, `\begin{aligned}` multi-step math, universal `min-width: 0` / `overflow: hidden` card containment, and `minmax(280px, 1fr)` grid track minimums. |
+| **v2.1** | 2026-09-13 | **Syllabus Topic Tag Mapping & Completeness Standard (Topic-to-Battery Rule)**: Standardized that chapter card tags/tabs must directly reflect syllabus-prescribed topics, highlighted tags signify covered topics, dim tags indicate pending syllabus items, and the ratio directly determines the completeness percentage. |
+| **v2.0** | 2026-09-13 | **Master Unified SOP Consolidation**: Consolidated all separate design, operational, content, and GITA guidelines into a single authoritative master reference with subject-wise architectures and 4 comprehensive QA checkpoint suites. |
+| **v1.4** | 2026-09-13 | Mathematics Theme & GUI unification (Zero White Patches universal button reset, desktop margin push, floating jump-to-top). |
+| **v1.3** | 2026-09-13 | Collapsible vertical dock rail (1.2s delay), submodule partitioning, subparts grid, and syllabus batteries. |
+| **v1.2** | 2026-09-12 | Exam Pattern Pop-up Modal, 3×2 balanced grid, and timetable synchronization. |
+| **v1.1** | 2026-09-08 | Design SOP creation with KaTeX and CSS custom properties for notes pages. |
+| **v1.0** | 2026-09-02 | Initial operational checklist and early GITA 5-Tab rules. |

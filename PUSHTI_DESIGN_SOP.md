@@ -1,6 +1,6 @@
-# PUSHTI STUDY HUB — DESIGN SOP (Consolidated into SOP.md v2.0)
+# PUSHTI STUDY HUB — DESIGN SOP (Consolidated into SOP.md v3.0)
 > **NOTE**: All guidelines from this document have been consolidated, enhanced, and standardized into the master authoritative standard:
-> 👉 **[SOP.md](file:///d:/Users/expor/Downloads/Codes/SOP.md)** (Master Unified SOP v2.0)
+> 👉 **[SOP.md](file:///d:/Users/expor/Downloads/Codes/SOP.md)** (Master Unified SOP v3.0)
 > Please refer directly to [SOP.md](file:///d:/Users/expor/Downloads/Codes/SOP.md) for the active rules, subject-wise architectures, and QA verification gates.
 
 ---
