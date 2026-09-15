@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="sa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G2: उपपद-विभक्तयः (Upapada Vibhakti & Case Rules) | संस्कृत-अध्ययन-केन्द्रम्</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --bg-main: #0B1120;
+    --bg-card: rgba(30, 41, 59, 0.7);
+    --surface: #1E293B;
+    --surface-hover: #334155;
+    --border: rgba(255, 255, 255, 0.1);
+    --border-hover: rgba(245, 158, 11, 0.4);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --accent: #F59E0B;
+    --accent-light: #FDE68A;
+    --accent-glow: rgba(245, 158, 11, 0.25);
+    --accent-green: #10B981;
+    --accent-blue: #3B82F6;
+    --accent-purple: #8B5CF6;
+    --card-radius: 16px;
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    --tab-active-bg: rgba(245, 158, 11, 0.15);
+}
+
+[data-theme="light"] {
+    --bg-main: #F8FAFC;
+    --bg-card: rgba(255, 255, 255, 0.9);
+    --surface: #FFFFFF;
+    --surface-hover: #F1F5F9;
+    --border: rgba(0, 0, 0, 0.08);
+    --border-hover: rgba(217, 119, 6, 0.4);
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --accent: #D97706;
+    --accent-light: #B45309;
+    --accent-glow: rgba(217, 119, 6, 0.15);
+    --accent-green: #059669;
+    --accent-blue: #2563EB;
+    --accent-purple: #7C3AED;
+    --card-radius: 16px;
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    --tab-active-bg: rgba(217, 119, 6, 0.12);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s, color 0.3s;
+    line-height: 1.6;
+}
+
+/* Header */
+.site-header {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.breadcrumb {
+    padding: 12px 28px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,0.05);
+}
+
+.breadcrumb a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Sticky Tabs Navigation Shelf (SOP Standard) */
+.tabs-wrapper {
+    position: sticky !important;
+    top: 57px !important;
+    z-index: 990 !important;
+    background-color: var(--bg-main) !important;
+    background: var(--bg-main) !important;
+    opacity: 1 !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid var(--border) !important;
+    padding: 10px 16px !important;
+    display: flex !important;
+    gap: 8px !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.tab-btn {
+    padding: 8px 18px !important;
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-muted) !important;
+    border-radius: 20px !important;
+    cursor: pointer !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    font-family: inherit !important;
+    white-space: nowrap !important;
+    user-select: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.tab-btn:hover {
+    color: var(--text-main) !important;
+    border-color: var(--accent) !important;
+    transform: translateY(-1px);
+}
+
+.tab-btn.active {
+    background: var(--tab-active-bg) !important;
+    color: var(--accent) !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 12px var(--accent-glow) !important;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 24px auto 60px auto;
+    padding: 0 20px;
+    width: 100%;
+    flex: 1;
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cards & Tables */
+.sop-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+}
+
+.sop-card:hover {
+    border-color: var(--border-hover);
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+th, td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background: rgba(0, 0, 0, 0.15);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+[data-theme="light"] th {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background: var(--surface-hover);
+}
+
+/* Badges */
+.card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+}
+
+.badge-amber {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-blue {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--accent-blue);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.badge-green {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--accent-green);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-purple {
+    background: rgba(139, 92, 246, 0.15);
+    color: var(--accent-purple);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.badge-red {
+    background: rgba(239, 68, 68, 0.15);
+    color: #EF4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Callout Box */
+.callout-box {
+    background: rgba(245, 158, 11, 0.08);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 0.95rem;
+}
+
+.callout-green {
+    background: rgba(16, 185, 129, 0.08);
+    border-left-color: var(--accent-green);
+}
+
+.callout-blue {
+    background: rgba(59, 130, 246, 0.08);
+    border-left-color: var(--accent-blue);
+}
+
+/* Interactive Practice Drills */
+.q-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    transition: all 0.2s ease;
+}
+
+.q-row:hover {
+    border-color: var(--accent);
+}
+
+.q-text {
+    font-size: 1rem;
+    font-weight: 500;
+    flex: 1;
+    min-width: 260px;
+}
+
+.reveal-btn {
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.reveal-btn:hover {
+    background: var(--accent);
+    color: #000;
+}
+
+.answer {
+    display: none;
+    color: var(--accent-green) !important;
+    font-weight: bold;
+    margin-left: 8px;
+    padding: 3px 10px;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 6px;
+}
+
+.q-hint {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Step-by-Step Flow Chart Cards */
+.flow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.flow-step-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    position: relative;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.flow-step-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+}
+
+.step-num {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.step-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.step-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Theme Button */
+.icon-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    padding: 7px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.icon-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.nav-back-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 7px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.nav-back-btn:hover {
+    color: var(--text-main);
+    border-color: var(--accent);
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+    <div style="display:flex; align-items:center; gap:10px; font-size:1.05rem;">
+        <a href="../../../index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+            <i class="fas fa-home"></i> Home
+        </a>
+        <span style="color:var(--text-muted);">&gt;</span>
+        <a href="../../../sanskrit_index.html" style="text-decoration:none; color:inherit;">Sanskrit</a>
+        <span style="color:var(--text-muted);">&gt;</span>
+        <span style="color:var(--accent); font-weight:600;">G2: उपपद-विभक्तयः एवं रिक्तस्थान-पूर्तिः</span>
+    </div>
+    
+    <div style="display:flex; align-items:center; gap:15px;">
+        <button class="icon-btn theme-toggle" onclick="toggleTheme()" title="Toggle Theme" style="padding:6px 12px !important;">
+            <i class="fas fa-moon"></i>
+        </button>
+        <a href="../../../sanskrit_index.html" class="nav-back-btn" style="text-decoration:none; padding:6px 14px !important;">
+            <i class="fas fa-arrow-left"></i> All Chapters
+        </a>
+    </div>
+</header>
+
+<!-- STICKY TABS NAVIGATION SHELF -->
+<nav class="tabs-wrapper">
+    <button class="tab-btn active" onclick="openTab(event, 'tab-concept')">
+        <i class="fas fa-lightbulb"></i> उपपद-परिचयः (Concept &amp; Distinction)
+    </button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-rules')">
+        <i class="fas fa-table-list"></i> विभक्ति-सारिणी (Trigger Words Matrix)
+    </button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-strategy')">
+        <i class="fas fa-route"></i> रिक्तस्थान-पूर्ति-विधिः (How to Solve Guide)
+    </button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-classwork')">
+        <i class="fas fa-book-open"></i> कक्षा-अभ्यासमाला (15 Notebook Questions)
+    </button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-exam')">
+        <i class="fas fa-medal"></i> परीक्षा-मॉडल-प्रश्नाः (20 Exam Drills)
+    </button>
+</nav>
+
+<div class="container">
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: CONCEPT & DISTINCTION                                              -->
+    <!-- ========================================================================= -->
+    <div id="tab-concept" class="tab-content active">
+        <div style="border-bottom:2px solid var(--border); padding-bottom:12px; margin-bottom:20px;">
+            <h2 style="margin:0; color:var(--accent); font-size:1.5rem;">
+                <i class="fas fa-lightbulb" style="margin-right:8px;"></i>उपपद-विभक्ति-परिचयः &bull; Concept of Upapada Vibhakti
+            </h2>
+            <div style="color:var(--text-muted); font-size:0.92rem; margin-top:4px;">
+                Understanding the critical difference between <strong>कारक-विभक्ति (Karaka Vibhakti)</strong> and <strong>उपपद-विभक्ति (Upapada Vibhakti)</strong> in Sanskrit grammar
+            </div>
+        </div>
+
+        <div class="sop-card">
+            <h3 style="margin-top:0; color:var(--accent); font-size:1.25rem; margin-bottom:12px;">
+                १. कारक-विभक्ति बनाम उपपद-विभक्ति (Karaka vs Upapada Vibhakti)
+            </h3>
+            <p style="font-size:0.98rem; line-height:1.75; color:var(--text-main); margin-bottom:14px;">
+                In Sanskrit syntax, noun case endings (विभक्तयः) are governed in two distinct ways:
+            </p>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:18px;">
+                <div style="background:var(--bg-main); border:1px solid var(--border); border-radius:12px; padding:18px;">
+                    <div class="card-badge badge-blue">१. कारक-विभक्तिः (Karaka Vibhakti)</div>
+                    <h4 style="margin:6px 0; color:var(--text-main); font-size:1.05rem;">Governed directly by the Verb (क्रिया)</h4>
+                    <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                        When a case ending is decided by the direct grammatical relationship between the noun and the sentence's <strong>action (क्रिया)</strong> (Subject, Object, Instrument, Recipient, Source, Location).
+                    </p>
+                    <div style="background:var(--surface); padding:10px 14px; border-radius:8px; margin-top:10px; font-size:0.92rem;">
+                        <strong>Example:</strong> <span style="color:var(--accent-blue); font-weight:600;">बालकः फलं खादति।</span><br>
+                        <small style="color:var(--text-muted);">(The boy eats fruit &bull; 'फलम्' is the direct object (कर्म) of the action 'खादति', taking 2nd case / द्वितीया।)</small>
+                    </div>
+                </div>
+
+                <div style="background:var(--bg-main); border:1px solid var(--accent); border-radius:12px; padding:18px;">
+                    <div class="card-badge badge-amber">२. उपपद-विभक्तिः (Upapada Vibhakti)</div>
+                    <h4 style="margin:6px 0; color:var(--accent); font-size:1.05rem;">Commanded by a Specific Companion Word</h4>
+                    <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+                        When a case ending is NOT decided by the verb, but is strictly commanded by a <strong>special companion word (उपपद) or indeclinable (अव्ययम्)</strong> appearing next to the noun (such as <em>सह, नमः, बहिः, उपरि</em>).
+                    </p>
+                    <div style="background:var(--surface); padding:10px 14px; border-radius:8px; margin-top:10px; font-size:0.92rem;">
+                        <strong>Example:</strong> <span style="color:var(--accent); font-weight:600;">सीता रामेण <u>सह</u> वनं गच्छति।</span><br>
+                        <small style="color:var(--text-muted);">(Because of the companion word 'सह' (with), 'राम' must take the 3rd case / तृतीया &rarr; 'रामेण'.)</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout-box callout-green" style="margin-top:20px;">
+                <div style="font-weight:700; color:var(--accent-green); font-size:1rem; margin-bottom:4px;">
+                    <i class="fas fa-balance-scale"></i> Classical Paninian Maxim (महासूत्रम्):
+                </div>
+                <div style="font-size:1.05rem; font-weight:700; color:var(--text-main); font-family:serif;">
+                    "उपपदविभक्तेः कारकविभक्तिर्बलीयसी।"
+                </div>
+                <div style="font-size:0.9rem; color:var(--text-muted); margin-top:4px;">
+                    <em>(When there is a direct conflict between a verb's action requirement and a companion word, the Karaka vibhakti is stronger. However, in CBSE Class 7 fill-in-the-blank questions, your primary task is to identify the special <strong>Upapada trigger keyword</strong> and supply the exact case ending it demands!)</em>
+                </div>
+            </div>
+        </div>
+
+        <div class="sop-card">
+            <h3 style="margin-top:0; color:var(--accent); font-size:1.25rem; margin-bottom:12px;">
+                २. Quick Concept Guide for Students
+            </h3>
+            <p style="font-size:0.95rem; line-height:1.75; color:var(--text-main);">
+                Whenever you encounter words like <strong>with (सह), salutation (नमः), outside (बहिः), or above (उपरि)</strong> in a sentence, the preceding noun must follow a fixed case rule regardless of the main action:
+            </p>
+            <ul style="margin:12px 0 0 20px; font-size:0.95rem; line-height:1.8; color:var(--text-main);">
+                <li>Whenever <span style="color:var(--accent-green); font-weight:700;">'सह' (with)</span> is present &rarr; Always use <strong>3rd Case (तृतीया विभक्तिः)</strong> (e.g. <em>रामेण सह, मित्रेण साकम्</em>).</li>
+                <li>Whenever <span style="color:var(--accent); font-weight:700;">'नमः' (salutations)</span> is present &rarr; Always use <strong>4th Case (चतुर्थी विभक्तिः)</strong> (e.g. <em>गणेशाय नमः, गुरवे नमः</em>).</li>
+                <li>Whenever <span style="color:#EF4444; font-weight:700;">'बहिः' (outside)</span> is present &rarr; Always use <strong>5th Case (पञ्चमी विभक्तिः)</strong> (e.g. <em>नगरात् बहिः, गृहात् बहिः</em>).</li>
+                <li>Whenever <span style="color:var(--accent-blue); font-weight:700;">'उपरि' (above)</span> or <span style="color:var(--accent-blue); font-weight:700;">'अधः' (below)</span> is present &rarr; Always use <strong>6th Case (षष्ठी विभक्तिः)</strong> (e.g. <em>वृक्षस्य उपरि, तरोः अधः</em>).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: VIBHAKTI TRIGGER WORDS MATRIX                                      -->
+    <!-- ========================================================================= -->
+    <div id="tab-rules" class="tab-content">
+        <div style="border-bottom:2px solid var(--border); padding-bottom:12px; margin-bottom:20px;">
+            <h2 style="margin:0; color:var(--accent); font-size:1.5rem;">
+                <i class="fas fa-table-list" style="margin-right:8px;"></i>उपपद-विभक्ति-सारिणी &bull; Master Trigger Words Matrix
+            </h2>
+            <div style="color:var(--text-muted); font-size:0.92rem; margin-top:4px;">
+                Complete list of all trigger keywords from 2nd to 6th case (द्वितीया to षष्ठी) from Pushti's classroom notebook &amp; CBSE syllabus
+            </div>
+        </div>
+
+        <!-- 2: DVITIYA -->
+        <div class="sop-card" style="border-left:4px solid var(--accent-blue);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+                <h3 style="margin:0; color:var(--accent-blue); font-size:1.25rem;">
+                    १. द्वितीया विभक्तिः (२) &bull; Accusative Case Rules (2nd Case)
+                </h3>
+                <span class="card-badge badge-blue">द्वितीया (२)</span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:20%;">उपपद-शब्दः (Trigger Word)</th>
+                            <th style="width:25%;">English Meaning</th>
+                            <th style="width:20%;">हिन्दी अर्थः</th>
+                            <th style="width:35%;">कक्षा-उदाहरणम् (Classroom Example)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color:var(--accent-blue);">उभयतः</strong></td>
+                            <td>On both sides of</td>
+                            <td>दोनों तरफ</td>
+                            <td><strong>मार्गम्</strong> उभयतः वृक्षाः सन्ति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent-blue);">परितः</strong></td>
+                            <td>All around / Surrounding</td>
+                            <td>चारों तरफ</td>
+                            <td><strong>नगरम् / ग्रामम्</strong> परितः उद्यानानि सन्ति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent-blue);">प्रति</strong></td>
+                            <td>Towards / In direction of</td>
+                            <td>की ओर</td>
+                            <td>छात्रः <strong>विद्यालयं</strong> प्रति गच्छति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent-blue);">विना</strong> <small style="color:var(--accent);">(2/3/5)</small></td>
+                            <td>Without</td>
+                            <td>के बिना</td>
+                            <td><strong>धनम्</strong> विना कथं चलति।</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3: TRITIYA -->
+        <div class="sop-card" style="border-left:4px solid var(--accent-green);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+                <h3 style="margin:0; color:var(--accent-green); font-size:1.25rem;">
+                    २. तृतीया विभक्तिः (३) &bull; Instrumental Case Rules (3rd Case)
+                </h3>
+                <span class="card-badge badge-green">तृतीया (३)</span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:20%;">उपपद-शब्दः (Trigger Word)</th>
+                            <th style="width:25%;">English Meaning</th>
+                            <th style="width:20%;">हिन्दी अर्थः</th>
+                            <th style="width:35%;">कक्षा-उदाहरणम् (Classroom Example)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color:var(--accent-green);">सह</strong></td>
+                            <td>Along with / With</td>
+                            <td>साथ में</td>
+                            <td>सीता <strong>रामेण</strong> सह वनं गच्छति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent-green);">साकम्</strong></td>
+                            <td>Together with</td>
+                            <td>साथ में</td>
+                            <td>अहं <strong>मित्रेण</strong> साकम् गमिष्यामि।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent-green);">सार्धम्</strong></td>
+                            <td>Along with</td>
+                            <td>साथ में</td>
+                            <td>बालकः <strong>रामेण</strong> सार्धं अपि गच्छति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent-green);">अलम्</strong> <small style="color:#EF4444;">(निषेधे)</small></td>
+                            <td>Stop / Enough of (Prohibition)</td>
+                            <td>रहने दो / मना करना</td>
+                            <td>अलं <strong>विवादेन</strong>। / अलं <strong>कोलाहलेन</strong>।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent-green);">विना</strong> <small style="color:var(--accent);">(2/3/5)</small></td>
+                            <td>Without</td>
+                            <td>के बिना</td>
+                            <td><strong>धनेन</strong> विना सुखं नास्ति।</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4: CHATURTHI -->
+        <div class="sop-card" style="border-left:4px solid var(--accent);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+                <h3 style="margin:0; color:var(--accent); font-size:1.25rem;">
+                    ३. चतुर्थी विभक्तिः (४) &bull; Dative Case Rules (4th Case)
+                </h3>
+                <span class="card-badge badge-amber">चतुर्थी (४)</span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:20%;">उपपद-शब्दः (Trigger Word)</th>
+                            <th style="width:25%;">English Meaning</th>
+                            <th style="width:20%;">हिन्दी अर्थः</th>
+                            <th style="width:35%;">कक्षा-उदाहरणम् (Classroom Example)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color:var(--accent);">नमः</strong></td>
+                            <td>Salutations / Bowing to</td>
+                            <td>नमस्कार / प्रणाम</td>
+                            <td><strong>गणेशाय</strong> नमः। / <strong>गुरवे</strong> नमः।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent);">दा (यच्छ्)</strong></td>
+                            <td>To give to (Recipient)</td>
+                            <td>देना (दान देना)</td>
+                            <td>नृपः <strong>निर्धनाय</strong> धनं यच्छति (ददाति)।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent);">अलम्</strong> <small style="color:var(--accent-green);">(सामर्थ्ये)</small></td>
+                            <td>Sufficient for / Match for</td>
+                            <td>समर्थ होना / पर्याप्त</td>
+                            <td>रामः <strong>रावणाय</strong> अलम्। (Rama is enough for Ravana)</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent);">स्वस्ति</strong></td>
+                            <td>Well-being / Auspiciousness to</td>
+                            <td>कल्याण हो</td>
+                            <td><strong>छात्रेभ्यः</strong> स्वस्ति। / <strong>प्रजाभ्यः</strong> स्वस्ति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent);">रुच् (रोचते)</strong></td>
+                            <td>Pleasing to / Liked by</td>
+                            <td>अच्छा लगना</td>
+                            <td><strong>बालकाय</strong> मोदकं रोचते।</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 5: PANCHAMI -->
+        <div class="sop-card" style="border-left:4px solid #EF4444;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+                <h3 style="margin:0; color:#EF4444; font-size:1.25rem;">
+                    ४. पञ्चमी विभक्तिः (५) &bull; Ablative Case Rules (5th Case)
+                </h3>
+                <span class="card-badge badge-red">पञ्चमी (५)</span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:20%;">उपपद-शब्दः (Trigger Word)</th>
+                            <th style="width:25%;">English Meaning</th>
+                            <th style="width:20%;">हिन्दी अर्थः</th>
+                            <th style="width:35%;">कक्षा-उदाहरणम् (Classroom Example)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color:#EF4444;">बहिः</strong></td>
+                            <td>Outside of</td>
+                            <td>बाहर</td>
+                            <td><strong>नगरात् / गृहात्</strong> बहिः कूपः अस्ति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:#EF4444;">प्रभृति</strong></td>
+                            <td>Starting from / Since</td>
+                            <td>तब से लेकर / आरम्भ करके</td>
+                            <td>सः <strong>शैशवात्</strong> प्रभृति परिश्रमी अस्ति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:#EF4444;">अनन्तरम्</strong></td>
+                            <td>After / Subsequent to</td>
+                            <td>बाद में</td>
+                            <td><strong>भोजनात्</strong> अनन्तरम् जलं पिब।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:#EF4444;">भी (बिभेति)</strong></td>
+                            <td>To fear / Afraid of</td>
+                            <td>डरना</td>
+                            <td>मृगः <strong>सिंहात्</strong> बिभेति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:#EF4444;">विना</strong> <small style="color:var(--accent);">(2/3/5)</small></td>
+                            <td>Without</td>
+                            <td>के बिना</td>
+                            <td><strong>ज्ञानात्</strong> विना मुक्तिः न भवति।</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 6: SHASHTHI -->
+        <div class="sop-card" style="border-left:4px solid var(--accent-purple);">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+                <h3 style="margin:0; color:var(--accent-purple); font-size:1.25rem;">
+                    ५. षष्ठी विभक्तिः (६) &bull; Genitive Case Rules (6th Case)
+                </h3>
+                <span class="card-badge badge-purple">षष्ठी (६)</span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:20%;">उपपद-शब्दः (Trigger Word)</th>
+                            <th style="width:25%;">English Meaning</th>
+                            <th style="width:20%;">हिन्दी अर्थः</th>
+                            <th style="width:35%;">कक्षा-उदाहरणम् (Classroom Example)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color:var(--accent-purple);">उपरि</strong></td>
+                            <td>Above / On top of</td>
+                            <td>ऊपर</td>
+                            <td><strong>वृक्षस्य</strong> उपरि वानराः कूर्दन्ति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent-purple);">अधः</strong></td>
+                            <td>Underneath / Below</td>
+                            <td>नीचे</td>
+                            <td><strong>तरोः (तरुस्य)</strong> अधः पथिकः विश्राम्यति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent-purple);">पुरतः</strong></td>
+                            <td>In front of / Ahead of</td>
+                            <td>आगे / सामने</td>
+                            <td><strong>विद्यालयस्य</strong> पुरतः उद्यानम् अस्ति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent-purple);">पृष्ठतः</strong></td>
+                            <td>Behind</td>
+                            <td>पीछे</td>
+                            <td><strong>गृहस्य</strong> पृष्ठतः नदी प्रवहति।</td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color:var(--accent-purple);">मध्ये</strong></td>
+                            <td>In the middle of / Among</td>
+                            <td>बीच में</td>
+                            <td><strong>जनानां</strong> मध्ये सः तिष्ठति।</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SPECIAL DUAL RULES -->
+        <div class="sop-card" style="background:rgba(245, 158, 11, 0.05); border:2px dashed var(--accent);">
+            <h3 style="margin-top:0; color:var(--accent); font-size:1.2rem; margin-bottom:10px;">
+                <i class="fas fa-exclamation-triangle"></i> Special Multi-Case Exam Traps
+            </h3>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
+                <div style="background:var(--surface); padding:16px; border-radius:10px;">
+                    <strong style="color:var(--accent); font-size:1.05rem;">१. The Rule for 'विना' (Without)</strong>
+                    <p style="font-size:0.9rem; color:var(--text-muted); margin-top:6px;">
+                        The word <strong>'विना'</strong> can take three different cases in Sanskrit: <strong>2nd (द्वितीया), 3rd (तृतीया), or 5th (पञ्चमी)</strong>:
+                    </p>
+                    <ul style="font-size:0.88rem; margin:8px 0 0 18px; color:var(--text-main);">
+                        <li><strong>धनम्</strong> विना जीवनं कठिनम् (2nd Case - द्वितीया)</li>
+                        <li><strong>धनेन</strong> विना जीवनं कठिनम् (3rd Case - तृतीया)</li>
+                        <li><strong>धनात्</strong> विना जीवनं कठिनम् (5th Case - पञ्चमी)</li>
+                    </ul>
+                    <small style="color:var(--accent-green); display:block; margin-top:6px;">&check; All 3 forms are grammatically valid in Sanskrit!</small>
+                </div>
+
+                <div style="background:var(--surface); padding:16px; border-radius:10px;">
+                    <strong style="color:var(--accent); font-size:1.05rem;">२. The Dual Usage of 'अलम्'</strong>
+                    <p style="font-size:0.9rem; color:var(--text-muted); margin-top:6px;">
+                        <strong>'अलम्'</strong> has two completely different meanings based on the context:
+                    </p>
+                    <ul style="font-size:0.88rem; margin:8px 0 0 18px; color:var(--text-main);">
+                        <li><strong>Prohibition (Stop / Do not):</strong> Takes <strong>3rd Case (तृतीया)</strong> &rarr; <em style="color:var(--accent-green);">अलं विवादेन</em> (Stop arguing), <em style="color:var(--accent-green);">अलं कोलाहलेन</em> (Stop making noise).</li>
+                        <li><strong>Capability / Match for:</strong> Takes <strong>4th Case (चतुर्थी)</strong> &rarr; <em style="color:var(--accent);">रामः रावणाय अलम्</em> (Rama is a match for Ravana), <em style="color:var(--accent);">मल्लः मल्लाय अलम्</em>.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: STEP-BY-STEP SOLVING GUIDE                                         -->
+    <!-- ========================================================================= -->
+    <div id="tab-strategy" class="tab-content">
+        <div style="border-bottom:2px solid var(--border); padding-bottom:12px; margin-bottom:20px;">
+            <h2 style="margin:0; color:var(--accent); font-size:1.5rem;">
+                <i class="fas fa-route" style="margin-right:8px;"></i>रिक्तस्थान-पूर्ति-विधिः &bull; Step-by-Step Solving Formula
+            </h2>
+            <div style="color:var(--text-muted); font-size:0.92rem; margin-top:4px;">
+                How to quickly solve any Upapada Vibhakti fill-in-the-blank question in 4 clear steps
+            </div>
+        </div>
+
+        <div class="flow-grid">
+            <div class="flow-step-card">
+                <div class="step-num"><i class="fas fa-search"></i> Step 1</div>
+                <div class="step-title">Identify the Trigger Keyword</div>
+                <div class="step-desc">
+                    Scan the sentence right next to the blank to spot the Upapada keyword (e.g. <strong>सह, नमः, बहिः, उपरि, उभयतः, परितः, अलम्, विना, अधः</strong>).
+                </div>
+            </div>
+
+            <div class="flow-step-card">
+                <div class="step-num"><i class="fas fa-brain"></i> Step 2</div>
+                <div class="step-title">Recall the Commanded Case</div>
+                <div class="step-desc">
+                    Determine which case ending (विभक्ति) that keyword strictly demands:<br>
+                    &bull; सह &rarr; <strong>3rd Case (तृतीया)</strong><br>
+                    &bull; नमः &rarr; <strong>4th Case (चतुर्थी)</strong><br>
+                    &bull; बहिः &rarr; <strong>5th Case (पञ्चमी)</strong><br>
+                    &bull; उपरि/अधः &rarr; <strong>6th Case (षष्ठी)</strong>
+                </div>
+            </div>
+
+            <div class="flow-step-card">
+                <div class="step-num"><i class="fas fa-shapes"></i> Step 3</div>
+                <div class="step-title">Check the Bracketed Root Noun</div>
+                <div class="step-desc">
+                    Examine the root noun provided inside brackets (e.g. <strong>राम, नगर, गुरु, वृक्ष, मित्र</strong>) and check its gender and ending sound (अकारान्त, उकारान्त, etc.).
+                </div>
+            </div>
+
+            <div class="flow-step-card">
+                <div class="step-num"><i class="fas fa-pen"></i> Step 4</div>
+                <div class="step-title">Write the Exact Case Ending</div>
+                <div class="step-desc">
+                    Formulate the exact singular case form using your Shabd Roop declension patterns:<br>
+                    &bull; राम + 3rd &rarr; <strong>रामेण</strong><br>
+                    &bull; गुरु + 4th &rarr; <strong>गुरवे</strong><br>
+                    &bull; नगर + 5th &rarr; <strong>नगरात्</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- SOLVED DEMONSTRATIONS -->
+        <div class="sop-card">
+            <h3 style="margin-top:0; color:var(--accent); font-size:1.25rem; margin-bottom:14px;">
+                <i class="fas fa-clipboard-check"></i> Live Model Demonstrations
+            </h3>
+
+            <div style="background:var(--bg-main); border:1px solid var(--border); border-radius:12px; padding:18px; margin-bottom:14px;">
+                <div style="font-size:1.05rem; font-weight:700; color:var(--text-main);">
+                    Question: <span style="color:var(--accent);">________ नमः। (गणेश)</span>
+                </div>
+                <div style="font-size:0.92rem; line-height:1.7; color:var(--text-muted); margin-top:8px;">
+                    1. <strong>Keyword Spotted:</strong> <strong style="color:var(--accent);">नमः</strong> (Salutations).<br>
+                    2. <strong>Rule:</strong> The word 'नमः' always commands <strong>4th Case (चतुर्थी विभक्तिः)</strong>.<br>
+                    3. <strong>Bracketed Noun:</strong> <strong>'गणेश'</strong> (Masculine ending in 'a', declined like 'राम').<br>
+                    4. <strong>Declension:</strong> Just like 'रामाय' in 4th case singular, 'गणेश' becomes <strong style="color:var(--accent-green); font-size:1.05rem;">गणेशाय</strong>.<br>
+                    &rArr; <strong>Final Answer:</strong> <span style="color:var(--accent-green); font-weight:700;">गणेशाय नमः।</span>
+                </div>
+            </div>
+
+            <div style="background:var(--bg-main); border:1px solid var(--border); border-radius:12px; padding:18px; margin-bottom:14px;">
+                <div style="font-size:1.05rem; font-weight:700; color:var(--text-main);">
+                    Question: <span style="color:var(--accent);">________ बहिः कूपः अस्ति। (नगर)</span>
+                </div>
+                <div style="font-size:0.92rem; line-height:1.7; color:var(--text-muted); margin-top:8px;">
+                    1. <strong>Keyword Spotted:</strong> <strong style="#EF4444;">बहिः</strong> (Outside).<br>
+                    2. <strong>Rule:</strong> The word 'बहिः' always commands <strong>5th Case (पञ्चमी विभक्तिः)</strong>.<br>
+                    3. <strong>Bracketed Noun:</strong> <strong>'नगर'</strong> (Neuter ending in 'a', declined like 'फल').<br>
+                    4. <strong>Declension:</strong> Just like 'फलात्' in 5th case singular, 'नगर' becomes <strong style="color:var(--accent-green); font-size:1.05rem;">नगरात्</strong>.<br>
+                    &rArr; <strong>Final Answer:</strong> <span style="color:var(--accent-green); font-weight:700;">नगरात् बहिः कूपः अस्ति।</span>
+                </div>
+            </div>
+
+            <div style="background:var(--bg-main); border:1px solid var(--border); border-radius:12px; padding:18px;">
+                <div style="font-size:1.05rem; font-weight:700; color:var(--text-main);">
+                    Question: <span style="color:var(--accent);">________ उपरि वानराः कूर्दन्ति। (वृक्ष)</span>
+                </div>
+                <div style="font-size:0.92rem; line-height:1.7; color:var(--text-muted); margin-top:8px;">
+                    1. <strong>Keyword Spotted:</strong> <strong style="color:var(--accent-purple);">उपरि</strong> (Above / On top of).<br>
+                    2. <strong>Rule:</strong> The word 'उपरि' always commands <strong>6th Case (षष्ठी विभक्तिः)</strong>.<br>
+                    3. <strong>Bracketed Noun:</strong> <strong>'वृक्ष'</strong> (Masculine ending in 'a', declined like 'बालक').<br>
+                    4. <strong>Declension:</strong> Just like 'बालकस्य' in 6th case singular, 'वृक्ष' becomes <strong style="color:var(--accent-green); font-size:1.05rem;">वृक्षस्य</strong>.<br>
+                    &rArr; <strong>Final Answer:</strong> <span style="color:var(--accent-green); font-weight:700;">वृक्षस्य उपरि वानराः कूर्दन्ति।</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: 15 OFFICIAL CLASSROOM NOTEBOOK DRILLS                              -->
+    <!-- ========================================================================= -->
+    <div id="tab-classwork" class="tab-content">
+        <div style="border-bottom:2px solid var(--border); padding-bottom:12px; margin-bottom:20px;">
+            <h2 style="margin:0; color:var(--accent); font-size:1.5rem;">
+                <i class="fas fa-book-open" style="margin-right:8px;"></i>कक्षा-कार्यपुस्तिका अभ्यासमाला &bull; 15 Official Notebook Drills
+            </h2>
+            <div style="color:var(--text-muted); font-size:0.92rem; margin-top:4px;">
+                Direct transcription of Pushti's school classroom notebook exercises with instant reveal buttons &amp; grammar rules
+            </div>
+        </div>
+
+        <div class="sop-card">
+            <h3 style="margin-top:0; color:var(--accent); font-size:1.2rem; margin-bottom:16px;">
+                Instructions: Fill in the blanks with the correct Upapada Vibhakti form of the bracketed noun:
+            </h3>
+
+            <!-- Q1 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१.</strong> ________ उभयतः वृक्षाः सन्ति। (मार्ग)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>उभयतः</strong> &rarr; 2nd Case (द्वितीया विभक्तिः)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">मार्गम्</span>
+                </div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>२.</strong> ________ परितः उद्यानानि सन्ति। (नगर)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>परितः</strong> &rarr; 2nd Case (द्वितीया विभक्तिः)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">नगरम्</span>
+                </div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>३.</strong> सीता ________ सह वनं गच्छति। (राम)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>सह</strong> &rarr; 3rd Case (तृतीया विभक्तिः)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">रामेण</span>
+                </div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>४.</strong> अहं ________ साकम् गमिष्यामि। (मित्र)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>साकम्</strong> &rarr; 3rd Case (तृतीया विभक्तिः)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">मित्रेण</span>
+                </div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>५.</strong> अलं ________। (विवाद)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>अलम् (निषेधार्थक - Stop)</strong> &rarr; 3rd Case (तृतीया विभक्तिः)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">विवादेन</span>
+                </div>
+            </div>
+
+            <!-- Q6 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>६.</strong> ________ सार्धं अपि गच्छति। (राम)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>सार्धम्</strong> &rarr; 3rd Case (तृतीया विभक्तिः)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">रामेण</span>
+                </div>
+            </div>
+
+            <!-- Q7 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>७.</strong> ________ नमः। (गणेश)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>नमः</strong> &rarr; 4th Case (चतुर्थी विभक्तिः)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">गणेशाय</span>
+                </div>
+            </div>
+
+            <!-- Q8 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>८.</strong> रामः ________ अलम्। (रावण)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>अलम् (सामर्थ्यार्थक - Match for)</strong> &rarr; 4th Case (चतुर्थी विभक्तिः)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">रावणाय</span>
+                </div>
+            </div>
+
+            <!-- Q9 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>९.</strong> ________ बहिः कूपः अस्ति। (नगर)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>बहिः</strong> &rarr; 5th Case (पञ्चमी विभक्तिः)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">नगरात्</span>
+                </div>
+            </div>
+
+            <!-- Q10 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१०.</strong> ________ उपरि वानराः कूर्दन्ति। (वृक्ष)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>उपरि</strong> &rarr; 6th Case (षष्ठी विभक्तिः)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">वृक्षस्य</span>
+                </div>
+            </div>
+
+            <!-- Q11 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>११.</strong> ________ अधः पथिकः विश्राम्यति। (तरु)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>अधः</strong> &rarr; 6th Case (षष्ठी विभक्तिः) (तरु - उकारान्त: तरोः / तरुस्य)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">तरोः (तरुस्य)</span>
+                </div>
+            </div>
+
+            <!-- Q12 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१२.</strong> ________ विना कथं चलति। (धन)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>विना</strong> &rarr; 2nd, 3rd, or 5th Case (All 3 valid)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">धनम् / धनेन / धनात्</span>
+                </div>
+            </div>
+
+            <!-- Q13 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१३.</strong> ________ नमः। (गुरु)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>नमः</strong> &rarr; 4th Case (चतुर्थी विभक्तिः) (गुरु उकारान्त: गुरवे)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">गुरवे</span>
+                </div>
+            </div>
+
+            <!-- Q14 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१४.</strong> ________ परितः उद्यानम् अस्ति। (ग्राम)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>परितः</strong> &rarr; 2nd Case (द्वितीया विभक्तिः)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">ग्रामम्</span>
+                </div>
+            </div>
+
+            <!-- Q15 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१५.</strong> ________ बहिः वृक्षः अस्ति। (गृह)
+                    <div class="q-hint"><i class="fas fa-info-circle"></i> Trigger: <strong>बहिः</strong> &rarr; 5th Case (पञ्चमी विभक्तिः)</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">गृहात्</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 5: 20 HIGH-YIELD EXAM DRILLS                                          -->
+    <!-- ========================================================================= -->
+    <div id="tab-exam" class="tab-content">
+        <div style="border-bottom:2px solid var(--border); padding-bottom:12px; margin-bottom:20px;">
+            <h2 style="margin:0; color:var(--accent); font-size:1.5rem;">
+                <i class="fas fa-medal" style="margin-right:8px;"></i>परीक्षा-मॉडल-प्रश्नाः &bull; 20 High-Yield Exam Drills
+            </h2>
+            <div style="color:var(--text-muted); font-size:0.92rem; margin-top:4px;">
+                Curated CBSE Class 7 exam-style fill-in-the-blanks covering all noun declension types and tricky Upapada words
+            </div>
+        </div>
+
+        <div class="sop-card">
+            <h3 style="margin-top:0; color:var(--accent); font-size:1.2rem; margin-bottom:16px;">
+                High-Yield Practice Questions with Explanations:
+            </h3>
+
+            <!-- E1 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१.</strong> ________ नमः। (सूर्य)
+                    <div class="q-hint">नमः takes 4th case &bull; 'सूर्य' masculine noun ending in 'a'</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">सूर्याय</span>
+                </div>
+            </div>
+
+            <!-- E2 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>२.</strong> ________ नमः। (शिव)
+                    <div class="q-hint">नमः takes 4th case &bull; 'शिव' masculine noun ending in 'a'</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">शिवाय</span>
+                </div>
+            </div>
+
+            <!-- E3 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>३.</strong> छात्रः ________ सह क्रीडति। (मित्र)
+                    <div class="q-hint">सह takes 3rd case &bull; 'मित्र' neuter noun</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">मित्रेण</span>
+                </div>
+            </div>
+
+            <!-- E4 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>४.</strong> शिष्यः ________ सह पठति। (आचार्य)
+                    <div class="q-hint">सह takes 3rd case &bull; 'आचार्य' masculine noun</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">आचार्येण</span>
+                </div>
+            </div>
+
+            <!-- E5 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>५.</strong> अलं ________। (कोलाहल)
+                    <div class="q-hint">अलम् (prohibition - stop noise) takes 3rd case</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">कोलाहलेन</span>
+                </div>
+            </div>
+
+            <!-- E6 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>६.</strong> अलं ________। (चिन्ता)
+                    <div class="q-hint">अलम् (prohibition - stop worrying) takes 3rd case &bull; 'चिन्ता' feminine noun</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">चिन्तया</span>
+                </div>
+            </div>
+
+            <!-- E7 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>७.</strong> मल्लः ________ अलम्। (मल्ल)
+                    <div class="q-hint">अलम् (capability - match for) takes 4th case</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">मल्लाय</span>
+                </div>
+            </div>
+
+            <!-- E8 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>८.</strong> नृपः ________ धनं यच्छति। (याचक)
+                    <div class="q-hint">दा (यच्छ् - to give to) takes 4th case for the receiver</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">याचकाय</span>
+                </div>
+            </div>
+
+            <!-- E9 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>९.</strong> ________ स्वस्ति। (प्रजा)
+                    <div class="q-hint">स्वस्ति takes 4th case plural &bull; well-being to the citizens</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">प्रजाभ्यः</span>
+                </div>
+            </div>
+
+            <!-- E10 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१०.</strong> बालः ________ बिभेति। (सिंह)
+                    <div class="q-hint">भी (बिभेति - to fear) takes 5th case for source of fear</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">सिंहात्</span>
+                </div>
+            </div>
+
+            <!-- E11 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>११.</strong> जनः ________ बिभेति। (सर्प)
+                    <div class="q-hint">भी (बिभेति - to fear) takes 5th case for snake</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">सर्पात्</span>
+                </div>
+            </div>
+
+            <!-- E12 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१२.</strong> छात्राः ________ बहिः गच्छन्ति। (कक्षा)
+                    <div class="q-hint">बहिः (outside) takes 5th case &bull; 'कक्षा' feminine noun</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">कक्षायाः</span>
+                </div>
+            </div>
+
+            <!-- E13 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१३.</strong> ________ अनन्तरम् सः क्रीडति। (पठन)
+                    <div class="q-hint">अनन्तरम् (after) takes 5th case &bull; after studying</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">पठनात्</span>
+                </div>
+            </div>
+
+            <!-- E14 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१४.</strong> ________ पुरतः देवालयः अस्ति। (गृह)
+                    <div class="q-hint">पुरतः (in front of) takes 6th case &bull; in front of the house</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">गृहस्य</span>
+                </div>
+            </div>
+
+            <!-- E15 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१५.</strong> ________ पृष्ठतः पर्वतः वर्तते। (विद्यालय)
+                    <div class="q-hint">पृष्ठतः (behind) takes 6th case &bull; behind the school</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">विद्यालयस्य</span>
+                </div>
+            </div>
+
+            <!-- E16 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१६.</strong> खगाः ________ उपरि तिष्ठन्ति। (शाखा)
+                    <div class="q-hint">उपरि (above / on top of) takes 6th case &bull; 'शाखा' feminine noun</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">शाखायाः</span>
+                </div>
+            </div>
+
+            <!-- E17 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१७.</strong> सेवकः ________ अधः शेते। (मञ्च)
+                    <div class="q-hint">अधः (underneath) takes 6th case &bull; below the cot</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">मञ्चस्य</span>
+                </div>
+            </div>
+
+            <!-- E18 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१८.</strong> ________ परितः भित्तिः अस्ति। (उद्यान)
+                    <div class="q-hint">परितः (all around) takes 2nd case &bull; around the garden</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">उद्यानम्</span>
+                </div>
+            </div>
+
+            <!-- E19 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>१९.</strong> नदी ________ उभयतः क्षेत्राणि सन्ति। (तट)
+                    <div class="q-hint">उभयतः (on both sides) takes 2nd case</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">तटम्</span>
+                </div>
+            </div>
+
+            <!-- E20 -->
+            <div class="q-row">
+                <div class="q-text">
+                    <strong>२०.</strong> ________ विना जीवनं व्यर्थम्। (विद्या)
+                    <div class="q-hint">विना takes 2nd, 3rd, or 5th case &bull; 'विद्या' feminine noun</div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAnswerInline(this)">Reveal Answer</button>
+                    <span class="answer">विद्याम् / विद्यया / विद्यायाः</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function openTab(evt, tabName) {
+    const tabcontent = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+        tabcontent[i].classList.remove("active");
+    }
+    const tablinks = document.getElementsByClassName("tab-btn");
+    for (let i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+    }
+    const target = document.getElementById(tabName);
+    if (target) {
+        target.style.display = "block";
+        target.classList.add("active");
+    }
+    if (evt && evt.currentTarget) {
+        evt.currentTarget.classList.add("active");
+    } else {
+        const btn = document.querySelector(`.tab-btn[onclick*="'${tabName}'"]`);
+        if (btn) btn.classList.add("active");
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleAnswerInline(btn) {
+    const parent = btn.parentElement;
+    const ans = parent ? parent.querySelector('.answer') : btn.nextElementSibling;
+    if (!ans) return;
+    const isHidden = (ans.style.display === 'none' || ans.style.display === '');
+    ans.style.display = isHidden ? 'inline-block' : 'none';
+    btn.textContent = isHidden ? 'Hide' : 'Reveal';
+    btn.style.background = isHidden ? 'rgba(16, 185, 129, 0.2)' : 'var(--surface)';
+    btn.style.borderColor = isHidden ? '#10B981' : 'var(--accent)';
+    btn.style.color = isHidden ? '#10B981' : 'var(--accent)';
+}
+
+function toggleTheme() {
+    const current = document.body.getAttribute('data-theme') || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', next);
+    localStorage.setItem('pushti-theme', next);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('pushti-theme') || 'dark';
+    document.body.setAttribute('data-theme', saved);
+
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+        const targetBtn = document.querySelector(`button[onclick*="'${hash}'"]`);
+        if (targetBtn) targetBtn.click();
+    }
+});
+</script>
+<script src="../../js/scroll_to_top.js"></script>
+</body>
+</html>

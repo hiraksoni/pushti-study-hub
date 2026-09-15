@@ -543,13 +543,15 @@ table.content-table tr:hover {
   background: rgba(255, 255, 255, 0.02);
 }
 
-/* SVG Vector Figure Containers */
+
+/* SVG Vector Figure Containers - Ergonomic & Balanced */
 .figure-container {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  padding: 1.2rem;
-  margin: 1.2rem 0;
+  padding: 1rem;
+  margin: 1rem auto;
+  max-width: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -557,7 +559,7 @@ table.content-table tr:hover {
 }
 
 .fig-caption {
-  margin-top: 0.8rem;
+  margin-top: 0.75rem;
   font-size: 0.85rem;
   color: var(--text-muted);
   text-align: center;
@@ -565,9 +567,65 @@ table.content-table tr:hover {
 
 svg.geom-svg {
   max-width: 100%;
+  max-height: 220px;
   height: auto;
   display: block;
 }
+
+.glossary-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.glossary-card:hover {
+  border-color: var(--primary-glow);
+  transform: translateY(-2px);
+}
+.term-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary-glow);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+}
+.sanskrit-tag {
+  font-size: 0.8rem;
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.15);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-family: inherit;
+}
+.knowledge-box {
+  background: rgba(99, 102, 241, 0.05);
+  border-left: 4px solid var(--primary-glow);
+  border-radius: 0 10px 10px 0;
+  padding: 1rem 1.2rem;
+  margin: 1.2rem 0;
+}
+.proof-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+.proof-table th {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+  color: var(--text-title);
+}
+.proof-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.6;
+}
+
 
 /* Solved Example Box */
 .example-box {
@@ -701,7 +759,93 @@ svg.geom-svg {
   transform: rotateY(180deg);
   border-color: var(--primary-glow);
 }
+
+/* Teacher Practice Papers Shared Components */
+.card-badge {
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+.sop-card {
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.sop-card:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+}
+.sop-card-header {
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.sop-card-body {
+  padding: 16px 18px;
+}
+.solution-drawer {
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  margin-top: 0.8rem;
+}
+.solution-drawer summary {
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  color: #34d399;
+}
+.scan-modal {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.scan-modal.active {
+  display: flex;
+}
+.scan-modal-content {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.scan-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 100000;
+}
+.scan-modal-title {
+  color: #cbd5e1;
+  font-size: 1rem;
+  margin-top: 10px;
+}
 </style>
+
 </head>
 <body>
 
@@ -792,6 +936,20 @@ svg.geom-svg {
           <span class="tab-verified-date">Verified: 14 Sep 2026</span>
         </div>
       </button>
+          <button class="tab-btn" data-tab="tab-teacher-practice" onclick="switchTab('tab-teacher-practice', this)" title="9. Teacher's Practice Paper (Fractions & Decimals)" type="button">
+        <span class="tab-icon-wrap"><i class="fas fa-file-signature"></i></span>
+        <div class="tab-label-group">
+          <span class="tab-label">9. Practice: Fractions</span>
+          <span class="tab-verified-date">Class Worksheet</span>
+        </div>
+      </button>
+      <button class="tab-btn" data-tab="tab-teacher-rational" onclick="switchTab('tab-teacher-rational', this)" title="10. Teacher's Practice Paper (Rational Numbers)" type="button">
+        <span class="tab-icon-wrap"><i class="fas fa-calculator"></i></span>
+        <div class="tab-label-group">
+          <span class="tab-label">10. Practice: Rationals</span>
+          <span class="tab-verified-date">Class Worksheet</span>
+        </div>
+      </button>
     </nav>
   </aside>
 
@@ -811,12 +969,14 @@ svg.geom-svg {
 </div>
 
 <!-- ==================== TAB 1: OVERVIEW, FOUNDATIONS & CONCEPT MAP ==================== -->
+
 <div id="tab-overview" class="tab-panel active">
   <div class="submodule-nav">
-    <button class="submodule-btn active" onclick="switchSubTab('tab1-sub1', this)"><i class="fas fa-list-check"></i> 1.1 Learning Outcomes</button>
-    <button class="submodule-btn" onclick="switchSubTab('tab1-sub2', this)"><i class="fas fa-shapes"></i> 1.2 Anatomy & Types of Fractions</button>
-    <button class="submodule-btn" onclick="switchSubTab('tab1-sub3', this)"><i class="fas fa-ruler-horizontal"></i> 1.3 Number Line & Visual Models</button>
-    <button class="submodule-btn" onclick="switchSubTab('tab1-sub4', this)"><i class="fas fa-sitemap"></i> 1.4 Chapter Concept Map</button>
+    <button class="submodule-btn active" onclick="switchSubTab('tab1-sub1', this)"><i class="fas fa-bullseye"></i> 1.1 Learning Outcomes</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab1-sub2', this)"><i class="fas fa-book"></i> 1.2 Master Vocabulary &amp; Etymology</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab1-sub3', this)"><i class="fas fa-shapes"></i> 1.3 Anatomy &amp; Fraction Types</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab1-sub4', this)"><i class="fas fa-ruler-horizontal"></i> 1.4 Visual Fraction Strips &amp; Number Line</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab1-sub5', this)"><i class="fas fa-landmark"></i> 1.5 Ancient Indian Heritage</button>
   </div>
 
   <!-- Submodule 1.1 -->
@@ -824,212 +984,248 @@ svg.geom-svg {
     <div class="card">
       <div class="section-title">
         <span class="icon">🎯</span>
-        <h2>1.1 Chapter Roadmap & Key Learning Outcomes (Textbook p. 189)</h2>
+        <h2>1.1 Chapter Roadmap &amp; Key Learning Outcomes (Textbook p. 189)</h2>
       </div>
-      <p>Fractions represent equal parts of a whole quantity or region. In this chapter, we advance from basic fraction representations to mastering multiplication and division of fractions conceptually and computationally.</p>
+      <p style="font-size:1.02rem; line-height:1.7;">
+        Welcome Pushti! Fractions are not merely numbers with a slash &mdash; they are ratios, operators, sharing mechanisms, and scaling factors. In Chapter 8, we build complete mastery over the mechanics and intuition of fractions:
+      </p>
 
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1.2rem;">
-        <div class="interactive-card callout-teal">
-          <h4 style="color:var(--accent-teal); margin-bottom:0.4rem;"><i class="fas fa-circle-check"></i> 1. Multiplication Operations</h4>
-          <p style="font-size:0.9rem;">Multiply fractions by whole numbers and by fractions using Brahmagupta's rule ($\frac{a}{b} \times \frac{c}{d} = \frac{ac}{bd}$) and visual area grid models.</p>
+      <div class="grid-2" style="margin-top:1.2rem;">
+        <div class="example-box">
+          <div class="ex-badge"><i class="fas fa-calculator"></i> Domain 1: Operations on Fractions</div>
+          <ul style="margin-left: 1.2rem; line-height: 1.8; font-size:0.93rem;">
+            <li><strong>Fraction &times; Whole Number:</strong> Understand multiplication as repeated addition and fractional scaling: $k \times \frac{a}{b} = \frac{k \times a}{b}$.</li>
+            <li><strong>Fraction &times; Fraction (Brahmagupta's Rule):</strong> Multiply numerators together and denominators together: $\frac{a}{b} \times \frac{c}{d} = \frac{a \times c}{b \times d}$. Prove via the 2D Area Grid model.</li>
+            <li><strong>Division of Fractions:</strong> Master the <em>invert and multiply</em> rule: $\frac{a}{b} \div \frac{c}{d} = \frac{a}{b} \times \frac{d}{c}$. Understand the measurement sharing model.</li>
+          </ul>
         </div>
-        <div class="interactive-card callout-amber">
-          <h4 style="color:var(--accent-amber); margin-bottom:0.4rem;"><i class="fas fa-landmark"></i> 2. Ancient Indian Mathematics</h4>
-          <p style="font-size:0.9rem;">Understand <em>Apavartana</em> (simplification to lowest terms, 150 CE) and Bhāskarāchārya’s 1150 CE <em>Līlāvatī</em> miser problem.</p>
-        </div>
-        <div class="interactive-card callout-coral">
-          <h4 style="color:var(--accent-coral); margin-bottom:0.4rem;"><i class="fas fa-scale-balanced"></i> 3. Product Comparisons & Reciprocals</h4>
-          <p style="font-size:0.9rem;">Analyze when products increase or decrease across 3 cases. Master reciprocal pairs whose product equals $1$.</p>
-        </div>
-        <div class="interactive-card">
-          <h4 style="color:var(--primary-glow); margin-bottom:0.4rem;"><i class="fas fa-divide"></i> 4. Division of Fractions</h4>
-          <p style="font-size:0.9rem;">Discover how division transforms into multiplication by the reciprocal ($\frac{a}{b} \div \frac{c}{d} = \frac{a}{b} \times \frac{d}{c}$).</p>
+        <div class="example-box">
+          <div class="ex-badge"><i class="fas fa-balance-scale"></i> Domain 2: Product &amp; Quotient Behavior</div>
+          <ul style="margin-left: 1.2rem; line-height: 1.8; font-size:0.93rem;">
+            <li><strong>The Three Cases of Multiplication:</strong> Debunk Riya's misconception! Prove why multiplying by a proper fraction ($< 1$) makes a number <em>smaller</em>, while multiplying by an improper fraction ($> 1$) makes it <em>larger</em>.</li>
+            <li><strong>Reciprocal / Multiplicative Inverse:</strong> The reciprocal of $\frac{a}{b}$ is $\frac{b}{a}$ ($a, b \neq 0$), with the universal identity $\frac{a}{b} \times \frac{b}{a} = 1$. Note: $0$ has no reciprocal!</li>
+            <li><strong>Ancient Indian Mathematics:</strong> Discover how 7th-century master Brahmagupta and 12th-century genius Bhāskarāchārya codified fraction operations in the <em>Līlāvatī</em> and <em>Brahmasphutasiddhanta</em>.</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Submodule 1.2 -->
+  <!-- Submodule 1.2: Master Vocabulary & Sanskrit Etymology (NEW RICH SECTION!) -->
   <div id="tab1-sub2" class="submodule-pane">
     <div class="card">
       <div class="section-title">
-        <span class="icon">📐</span>
-        <h2>1.2 Anatomy & Types of Fractions</h2>
+        <span class="icon">📖</span>
+        <h2>1.2 Master Vocabulary, Etymology &amp; Sanskrit Roots</h2>
       </div>
-      <p>A fraction is written in the form $\frac{a}{b}$, where $a$ is the <strong>numerator</strong> (number of parts taken), $b$ is the <strong>denominator</strong> (total equal parts into which the whole is divided), and $b \ne 0$.</p>
+      <p style="font-size:1rem; line-height:1.7;">
+        Deep mathematical clarity begins with knowing the exact meanings and origins of terms:
+      </p>
 
-      <div class="table-container">
-        <table class="content-table">
-          <thead>
-            <tr>
-              <th>Fraction Type</th>
-              <th>Mathematical Definition</th>
-              <th>Key Characteristic</th>
-              <th>Concrete Examples</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Proper Fraction</strong></td>
-              <td>$\text{Numerator} < \text{Denominator}$ ($a < b$)</td>
-              <td>Value is strictly less than $1$ ($0 < \frac{a}{b} < 1$)</td>
-              <td>$\frac{1}{2}, \frac{3}{4}, \frac{5}{9}, \frac{7}{12}$</td>
-            </tr>
-            <tr>
-              <td><strong>Improper Fraction</strong></td>
-              <td>$\text{Numerator} \ge \text{Denominator}$ ($a \ge b$)</td>
-              <td>Value is greater than or equal to $1$ ($\frac{a}{b} \ge 1$)</td>
-              <td>$\frac{5}{4}, \frac{7}{3}, \frac{11}{2}, \frac{4}{4}$</td>
-            </tr>
-            <tr>
-              <td><strong>Mixed Fraction</strong></td>
-              <td>$\text{Whole Number} + \text{Proper Fraction}$</td>
-              <td>Combination of an integer and a fractional part</td>
-              <td>$1\frac{1}{4} = \frac{5}{4}$, $3\frac{1}{2} = \frac{7}{2}$, $5\frac{1}{6} = \frac{31}{6}$</td>
-            </tr>
-            <tr>
-              <td><strong>Unit Fraction</strong></td>
-              <td>$\text{Numerator} = 1$</td>
-              <td>Fundamental building block of all fractional arithmetic</td>
-              <td>$\frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \frac{1}{10}, \frac{1}{1280}$</td>
-            </tr>
-            <tr>
-              <td><strong>Like vs Unlike</strong></td>
-              <td>Like: same $b$; Unlike: different $b$</td>
-              <td>Like fractions can be directly added/subtracted</td>
-              <td>Like: $(\frac{2}{7}, \frac{5}{7})$; Unlike: $(\frac{2}{3}, \frac{3}{4})$</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1rem; margin-top:1.2rem;">
+        
+        <div class="glossary-card">
+          <div class="term-title">
+            <span>Fraction</span>
+            <span class="sanskrit-tag">भिन्न (Bhinna)</span>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.6; margin:0;">
+            <strong>Etymology:</strong> Latin <em>fractio</em> (broken, from <em>frangere</em> to break); Sanskrit root <em>Bhid</em> (to break, split into parts).
+            <br><strong>Meaning:</strong> A number that represents an equal part or proportion of a whole unit or a collection.
+          </p>
+        </div>
 
-      <div class="interactive-card callout-amber">
-        <strong>Converting Mixed to Improper (Standard Step):</strong>
-        $$W\frac{a}{b} = \frac{(W \times b) + a}{b}$$
-        <em>Example:</em> $3\frac{1}{2} = \frac{(3 \times 2) + 1}{2} = \frac{7}{2}$. Always perform this conversion before multiplying or dividing!
+        <div class="glossary-card">
+          <div class="term-title">
+            <span>Numerator</span>
+            <span class="sanskrit-tag">अंश (Aṁśa)</span>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.6; margin:0;">
+            <strong>Etymology:</strong> Latin <em>numerator</em> (counter, one who numbers); Sanskrit <em>Aṁśa</em> (part, share, portion).
+            <br><strong>Meaning:</strong> The top number in $\frac{a}{b}$. It counts how many equal parts of the unit are being considered.
+          </p>
+        </div>
+
+        <div class="glossary-card">
+          <div class="term-title">
+            <span>Denominator</span>
+            <span class="sanskrit-tag">हर (Hara) / छेद (Cheda)</span>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.6; margin:0;">
+            <strong>Etymology:</strong> Latin <em>denominator</em> (namer, classifier); Sanskrit <em>Hara</em> (divisor) or <em>Cheda</em> (the cutter).
+            <br><strong>Meaning:</strong> The bottom number in $\frac{a}{b}$. It names the size of each part by specifying how many equal parts the whole unit is cut into ($b \neq 0$).
+          </p>
+        </div>
+
+        <div class="glossary-card">
+          <div class="term-title">
+            <span>Proper Fraction</span>
+            <span class="sanskrit-tag">उचित भिन्न (Ucitha Bhinna)</span>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.6; margin:0;">
+            <strong>Definition:</strong> A fraction $\frac{a}{b}$ where numerator is strictly smaller than denominator ($a < b$). Its numerical value is strictly between $0$ and $1$ ($0 < \frac{a}{b} < 1$). E.g., $\frac{2}{3}, \frac{5}{8}$.
+          </p>
+        </div>
+
+        <div class="glossary-card">
+          <div class="term-title">
+            <span>Improper Fraction</span>
+            <span class="sanskrit-tag">अनुचित भिन्न (Anucitha Bhinna)</span>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.6; margin:0;">
+            <strong>Definition:</strong> A fraction $\frac{a}{b}$ where numerator is greater than or equal to denominator ($a \ge b$). Its numerical value is always $\ge 1$. Represents more than one whole unit. E.g., $\frac{7}{4}, \frac{11}{5}$.
+          </p>
+        </div>
+
+        <div class="glossary-card">
+          <div class="term-title">
+            <span>Reciprocal</span>
+            <span class="sanskrit-tag">व्युत्क्रम (Vyutkrama)</span>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.6; margin:0;">
+            <strong>Etymology:</strong> Latin <em>reciprocus</em> (returning back, alternating); Sanskrit <em>Vyutkrama</em> (reversed order, inverted).
+            <br><strong>Definition:</strong> The multiplicative inverse. The reciprocal of $\frac{a}{b}$ is $\frac{b}{a}$. Their product is always $1$: $\frac{a}{b} \times \frac{b}{a} = 1$.
+          </p>
+        </div>
+
+        <div class="glossary-card">
+          <div class="term-title">
+            <span>Simplest Form</span>
+            <span class="sanskrit-tag">अपवर्तन (Apavartana)</span>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.6; margin:0;">
+            <strong>Definition:</strong> A fraction $\frac{a}{b}$ is in lowest / simplest form when $\gcd(a, b) = 1$ (coprime). The operation of dividing both terms by their common factor was named <em>Apavartana</em> by ancient Indian mathematicians.
+          </p>
+        </div>
+
+        <div class="glossary-card">
+          <div class="term-title">
+            <span>Fraction Division</span>
+            <span class="sanskrit-tag">भागहार (Bhāgahāra)</span>
+          </div>
+          <p style="font-size:0.9rem; line-height:1.6; margin:0;">
+            <strong>Definition:</strong> Dividing by a fraction is identical to multiplying by its reciprocal. Formulated in Sanskrit by Brahmagupta in 628 CE: <em>"Invert the numerator and denominator of the divisor, then multiply."</em>
+          </p>
+        </div>
+
       </div>
     </div>
   </div>
 
-  <!-- Submodule 1.3 -->
+  <!-- Submodule 1.3: Anatomy & Types -->
   <div id="tab1-sub3" class="submodule-pane">
     <div class="card">
       <div class="section-title">
-        <span class="icon">📏</span>
-        <h2>1.3 Visual Fraction Strips & Number Line Representation</h2>
+        <span class="icon">🔬</span>
+        <h2>1.3 Anatomy &amp; Classification Matrix of Fractions</h2>
       </div>
-      <p>Locating fractions on a number line requires dividing each whole unit into $b$ equal segments. Each step represents the unit fraction $\frac{1}{b}$.</p>
 
-      <div class="figure-container">
-        <svg viewBox="0 0 700 240" class="geom-svg">
-          <!-- Number line axis -->
-          <line x1="50" y1="90" x2="650" y2="90" stroke="var(--text-title)" stroke-width="2.5"/>
-          <polygon points="655,90 645,84 645,96" fill="var(--text-title)"/>
-          <polygon points="45,90 55,84 55,96" fill="var(--text-title)"/>
+      <div class="grid-3" style="margin-top:1rem;">
+        <div class="example-box" style="border-top:4px solid #38bdf8;">
+          <h4 style="color:#38bdf8; margin:0 0 0.4rem 0;"><i class="fas fa-pie-chart"></i> Proper Fractions ($a < b$)</h4>
+          <p style="font-size:0.9rem; line-height:1.6; margin:0;">
+            &bull; Represents a part of a single whole unit.<br>
+            &bull; Value is strictly less than 1 ($0 < f < 1$).<br>
+            &bull; <strong>Examples:</strong> $\frac{1}{2}, \frac{3}{4}, \frac{7}{10}$.<br>
+            &bull; Always located to the left of 1 on the number line.
+          </p>
+        </div>
 
-          <!-- Tick 0 -->
-          <line x1="70" y1="75" x2="70" y2="105" stroke="var(--text-title)" stroke-width="2.5"/>
-          <text x="65" y="130" font-size="16" font-weight="bold" fill="var(--text-title)">0</text>
+        <div class="example-box" style="border-top:4px solid #fbbf24;">
+          <h4 style="color:#fbbf24; margin:0 0 0.4rem 0;"><i class="fas fa-layer-group"></i> Improper Fractions ($a \ge b$)</h4>
+          <p style="font-size:0.9rem; line-height:1.6; margin:0;">
+            &bull; Represents one or more complete wholes plus parts.<br>
+            &bull; Value is greater than or equal to 1 ($f \ge 1$).<br>
+            &bull; <strong>Examples:</strong> $\frac{5}{3}, \frac{9}{4}, \frac{4}{4} = 1$.<br>
+            &bull; Can always be converted into a Mixed Fraction.
+          </p>
+        </div>
 
-          <!-- Tick 1/4 -->
-          <line x1="200" y1="80" x2="200" y2="100" stroke="var(--primary-glow)" stroke-width="2"/>
-          <circle cx="200" cy="90" r="4.5" fill="var(--primary-glow)"/>
-          <text x="190" y="65" font-size="14" font-weight="bold" fill="var(--primary-glow)">1/4</text>
-
-          <!-- Tick 2/4 = 1/2 -->
-          <line x1="330" y1="78" x2="330" y2="102" stroke="var(--accent-teal)" stroke-width="2"/>
-          <circle cx="330" cy="90" r="4.5" fill="var(--accent-teal)"/>
-          <text x="315" y="65" font-size="14" font-weight="bold" fill="var(--accent-teal)">2/4 = 1/2</text>
-
-          <!-- Tick 3/4 -->
-          <line x1="460" y1="80" x2="460" y2="100" stroke="var(--accent-amber)" stroke-width="2"/>
-          <circle cx="460" cy="90" r="4.5" fill="var(--accent-amber)"/>
-          <text x="450" y="65" font-size="14" font-weight="bold" fill="var(--accent-amber)">3/4</text>
-
-          <!-- Tick 1 = 4/4 -->
-          <line x1="590" y1="75" x2="590" y2="105" stroke="var(--text-title)" stroke-width="2.5"/>
-          <text x="580" y="130" font-size="16" font-weight="bold" fill="var(--text-title)">1 (4/4)</text>
-
-          <!-- Equal interval bracket -->
-          <path d="M 70 145 H 200" stroke="var(--text-muted)" stroke-width="1.5" stroke-dasharray="3,3"/>
-          <text x="120" y="165" font-size="12" fill="var(--text-muted)">1/4 unit</text>
-          <path d="M 200 145 H 330" stroke="var(--text-muted)" stroke-width="1.5" stroke-dasharray="3,3"/>
-          <text x="250" y="165" font-size="12" fill="var(--text-muted)">1/4 unit</text>
-          <path d="M 330 145 H 460" stroke="var(--text-muted)" stroke-width="1.5" stroke-dasharray="3,3"/>
-          <text x="380" y="165" font-size="12" fill="var(--text-muted)">1/4 unit</text>
-          <path d="M 460 145 H 590" stroke="var(--text-muted)" stroke-width="1.5" stroke-dasharray="3,3"/>
-          <text x="510" y="165" font-size="12" fill="var(--text-muted)">1/4 unit</text>
-
-          <!-- Highlight span -->
-          <rect x="70" y="190" width="520" height="24" rx="4" fill="none" stroke="var(--border)" stroke-width="1.5"/>
-          <rect x="70" y="190" width="390" height="24" rx="4" fill="rgba(56, 189, 248, 0.2)" stroke="var(--primary-glow)" stroke-width="1.5"/>
-          <text x="235" y="207" font-size="13" font-weight="bold" fill="var(--primary-glow)">Shaded: 3/4 of Whole Unit</text>
-        </svg>
-        <div class="fig-caption"><strong>Figure 1.1:</strong> Number line partitioning into four equal intervals of length $\frac{1}{4}$. The point $\frac{3}{4}$ represents 3 unit steps from $0$.</div>
+        <div class="example-box" style="border-top:4px solid #34d399;">
+          <h4 style="color:#34d399; margin:0 0 0.4rem 0;"><i class="fas fa-cubes"></i> Mixed Fractions ($W + \frac{a}{b}$)</h4>
+          <p style="font-size:0.9rem; line-height:1.6; margin:0;">
+            &bull; Explicit combination of a whole integer and proper fraction.<br>
+            &bull; $W\frac{a}{b} = W + \frac{a}{b} = \frac{W \times b + a}{b}$.<br>
+            &bull; <strong>Example:</strong> $2\frac{3}{4} = 2 + \frac{3}{4} = \frac{11}{4}$.<br>
+            &bull; Provides clear physical intuition for measurements!
+          </p>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Submodule 1.4 -->
+  <!-- Submodule 1.4: Visual Strips -->
   <div id="tab1-sub4" class="submodule-pane">
     <div class="card">
       <div class="section-title">
-        <span class="icon">🗺️</span>
-        <h2>1.4 Comprehensive Concept Map (Textbook p. 198)</h2>
+        <span class="icon">📏</span>
+        <h2>1.4 Visual Fraction Strips &amp; Number Line Placement</h2>
       </div>
-      <p>Direct from the NCERT textbook: the complete conceptual architecture connecting multiplication, reciprocal operations, and division.</p>
 
-      <div class="figure-container">
-        <svg viewBox="0 0 760 380" class="geom-svg">
-          <!-- Central Hub -->
-          <rect x="270" y="20" width="220" height="60" rx="30" fill="var(--primary-glow)" opacity="0.15"/>
-          <rect x="270" y="20" width="220" height="60" rx="30" fill="none" stroke="var(--primary-glow)" stroke-width="2.5"/>
-          <text x="380" y="47" font-size="16" font-weight="bold" text-anchor="middle" fill="var(--text-title)">WORKING WITH</text>
-          <text x="380" y="68" font-size="15" font-weight="bold" text-anchor="middle" fill="var(--primary-glow)">FRACTIONS</text>
+      <p style="font-size:0.95rem; line-height:1.6;">
+        Fractions become crystal clear when mapped onto the continuous real number line. Every unit interval $[0, 1], [1, 2], [2, 3]$ is subdivided into $d$ equal parts:
+      </p>
 
-          <!-- Branch 1: Multiplication (Left) -->
-          <path d="M 270 50 L 170 120" stroke="var(--accent-teal)" stroke-width="2.5" marker-end="url(#arrow)"/>
-          <rect x="40" y="110" width="260" height="42" rx="8" fill="rgba(20, 184, 166, 0.15)" stroke="var(--accent-teal)" stroke-width="2"/>
-          <text x="170" y="136" font-size="14" font-weight="bold" text-anchor="middle" fill="var(--accent-teal)">MULTIPLICATION OF FRACTIONS</text>
+      <div class="figure-container" style="max-width:440px;">
+        <svg viewBox="0 0 460 140" class="geom-svg">
+          <!-- Main line -->
+          <line x1="30" y1="70" x2="430" y2="70" stroke="var(--text-title)" stroke-width="2.5"/>
+          <polygon points="25,70 35,65 35,75" fill="var(--text-title)"/>
+          <polygon points="435,70 425,65 425,75" fill="var(--text-title)"/>
 
-          <!-- Sub-branches Left -->
-          <rect x="20" y="170" width="280" height="40" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/>
-          <text x="160" y="195" font-size="12" text-anchor="middle" fill="var(--text-primary)">Whole × Fraction: $k \times \frac{a}{b} = \frac{k \times a}{b}$</text>
+          <!-- Major Ticks -->
+          <line x1="60" y1="58" x2="60" y2="82" stroke="var(--text-title)" stroke-width="2.5"/>
+          <text x="60" y="102" font-size="14" font-weight="bold" fill="var(--text-title)" text-anchor="middle">0</text>
+          
+          <line x1="240" y1="58" x2="240" y2="82" stroke="var(--text-title)" stroke-width="2.5"/>
+          <text x="240" y="102" font-size="14" font-weight="bold" fill="var(--text-title)" text-anchor="middle">1</text>
+          
+          <line x1="420" y1="58" x2="420" y2="82" stroke="var(--text-title)" stroke-width="2.5"/>
+          <text x="420" y="102" font-size="14" font-weight="bold" fill="var(--text-title)" text-anchor="middle">2</text>
 
-          <rect x="20" y="220" width="280" height="40" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/>
-          <text x="160" y="245" font-size="12" text-anchor="middle" fill="var(--text-primary)">Fraction × Fraction: $\frac{a}{b} \times \frac{c}{d} = \frac{ac}{bd}$</text>
+          <!-- Quarters ticks -->
+          <line x1="105" y1="63" x2="105" y2="77" stroke="#38bdf8" stroke-width="2"/>
+          <text x="105" y="52" font-size="11" fill="#38bdf8" text-anchor="middle">1/4</text>
 
-          <rect x="20" y="270" width="280" height="40" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/>
-          <text x="160" y="295" font-size="12" text-anchor="middle" fill="var(--text-primary)">Visual Area Model (2D Grid Overlap)</text>
+          <line x1="150" y1="63" x2="150" y2="77" stroke="#38bdf8" stroke-width="2"/>
+          <text x="150" y="52" font-size="11" fill="#38bdf8" text-anchor="middle">2/4 (1/2)</text>
 
-          <rect x="20" y="320" width="280" height="40" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/>
-          <text x="160" y="345" font-size="12" text-anchor="middle" fill="var(--text-primary)">Operator "of": $\frac{1}{3} \text{ of } 4 = \frac{4}{3}$</text>
+          <line x1="195" y1="63" x2="195" y2="77" stroke="#38bdf8" stroke-width="2"/>
+          <text x="195" y="52" font-size="11" fill="#38bdf8" text-anchor="middle">3/4</text>
 
-          <!-- Branch 2: Division (Right) -->
-          <path d="M 490 50 L 590 120" stroke="var(--accent-coral)" stroke-width="2.5"/>
-          <rect x="460" y="110" width="260" height="42" rx="8" fill="rgba(244, 63, 94, 0.15)" stroke="var(--accent-coral)" stroke-width="2"/>
-          <text x="590" y="136" font-size="14" font-weight="bold" text-anchor="middle" fill="var(--accent-coral)">DIVISION OF FRACTIONS</text>
-
-          <!-- Sub-branches Right -->
-          <rect x="460" y="170" width="280" height="40" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/>
-          <text x="600" y="195" font-size="12" text-anchor="middle" fill="var(--text-primary)">Reciprocal: $\frac{a}{b} \times \frac{b}{a} = 1$ ($a,b \ne 0$)</text>
-
-          <rect x="460" y="220" width="280" height="40" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/>
-          <text x="600" y="245" font-size="12" text-anchor="middle" fill="var(--text-primary)">Whole ÷ Fraction: $k \div \frac{a}{b} = k \times \frac{b}{a}$</text>
-
-          <rect x="460" y="270" width="280" height="40" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/>
-          <text x="600" y="295" font-size="12" text-anchor="middle" fill="var(--text-primary)">Fraction ÷ Whole: $\frac{a}{b} \div k = \frac{a}{b \times k}$</text>
-
-          <rect x="460" y="320" width="280" height="40" rx="6" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/>
-          <text x="600" y="345" font-size="12" text-anchor="middle" fill="var(--text-primary)">Fraction ÷ Fraction: $\frac{a}{b} \div \frac{c}{d} = \frac{a \times d}{b \times c}$</text>
+          <!-- Mixed fraction 1 3/4 -->
+          <line x1="375" y1="63" x2="375" y2="77" stroke="#fbbf24" stroke-width="2"/>
+          <text x="375" y="52" font-size="11" fill="#fbbf24" text-anchor="middle">1 3/4 (7/4)</text>
+          <circle cx="375" cy="70" r="4.5" fill="#fbbf24"/>
         </svg>
-        <div class="fig-caption"><strong>Textbook Concept Map (p. 198):</strong> Complete architectural taxonomy of fraction multiplication, reciprocal inversion, and division.</div>
+        <div class="fig-caption">
+          <strong>Figure 8.1:</strong> Number line partitioning into fourths &mdash; proper fractions lie inside $[0, 1]$, improper fractions exceed $1$.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submodule 1.5: Ancient Indian Heritage -->
+  <div id="tab1-sub5" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">🏛️</span>
+        <h2>1.5 Ancient Indian Heritage: Bhāskara II &amp; Brahmagupta</h2>
+      </div>
+
+      <div class="knowledge-box">
+        <h4 style="color:#fbbf24; margin:0 0 0.5rem 0;"><i class="fas fa-scroll"></i> Brahmagupta's Brahmasphutasiddhanta (628 CE)</h4>
+        <p style="font-size:0.95rem; line-height:1.7; margin:0;">
+          Brahmagupta was the first mathematician in world history to provide a complete, systematic treatise on negative numbers, zero, and fractions in Chapter 12 of his masterwork <em>Brahmasphutasiddhanta</em>.
+          <br><br>
+          He wrote fractions exactly as we do today, placing the numerator directly above the denominator (though without the horizontal division bar, which was later introduced by Moroccan mathematician Al-Hassār in 1200 CE).
+          <br><br>
+          In 1150 CE, <strong>Bhāskarāchārya II</strong> composed the immortal mathematical classic <em>Līlāvatī</em>, addressed to his daughter Līlāvatī, formulating fraction operations in delightful Sanskrit verse!
+        </p>
       </div>
     </div>
   </div>
 </div>
-
-<!-- ==================== TAB 2: MULTIPLICATION OF FRACTIONS & AREA MODELS ==================== -->
 <div id="tab-multiplication" class="tab-panel">
   <div class="submodule-nav">
     <button class="submodule-btn active" onclick="switchSubTab('tab2-sub1', this)"><i class="fas fa-plus"></i> 2.1 Whole × Fraction</button>
@@ -1388,72 +1584,66 @@ svg.geom-svg {
   </div>
 
   <!-- Submodule 4.1 -->
+  
+  <!-- Submodule 4.1 -->
   <div id="tab4-sub1" class="submodule-pane active">
     <div class="card">
       <div class="section-title">
         <span class="icon">⚖️</span>
-        <h2>4.1 Three Cases of Product Magnitude (Textbook p. 193)</h2>
-      </div>
-      <p>Does multiplication always make numbers larger? In whole numbers, $3 \times 4 = 12 > 4$. But in fractions, the relationship between the product and its factors depends entirely on whether the factors are greater than, equal to, or less than $1$!</p>
-
-      <div class="table-container">
-        <table class="content-table">
-          <thead>
-            <tr>
-              <th>Case Category</th>
-              <th>Mathematical Condition</th>
-              <th>Relationship of Product to Factors</th>
-              <th>Textbook Example</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Case I: Both Numbers &gt; 1</strong></td>
-              <td>Both factors are improper fractions or whole numbers $> 1$</td>
-              <td><span style="color:#10b981; font-weight:bold;">Product is GREATER than both factors</span></td>
-              <td>$\frac{5}{4} \times \frac{3}{2} = \frac{15}{8}$<br>$\frac{15}{8} > \frac{5}{4}$ and $\frac{15}{8} > \frac{3}{2}$ ($1.875 > 1.25$ and $1.5$)</td>
-            </tr>
-            <tr>
-              <td><strong>Case II: Both Numbers between 0 and 1</strong></td>
-              <td>Both factors are proper fractions ($0 < x < 1$)</td>
-              <td><span style="color:var(--accent-coral); font-weight:bold;">Product is SMALLER than both factors</span></td>
-              <td>$\frac{1}{2} \times \frac{1}{3} = \frac{1}{6}$<br>$\frac{1}{6} < \frac{1}{2}$ and $\frac{1}{6} < \frac{1}{3}$</td>
-            </tr>
-            <tr>
-              <td><strong>Case III: One &lt; 1 and One &gt; 1</strong></td>
-              <td>One proper fraction ($< 1$) and one number $> 1$</td>
-              <td><span style="color:var(--accent-amber); font-weight:bold;">Product lies STRICTLY BETWEEN the two factors</span></td>
-              <td>$\frac{2}{5} \times 5 = 2$<br>$\frac{2}{5} < 2 < 5$</td>
-            </tr>
-          </tbody>
-        </table>
+        <h2>4.1 Three Cases of Product Magnitude: Why Multiplication Doesn't Always Increase!</h2>
       </div>
 
-      <div class="figure-container">
-        <svg viewBox="0 0 680 160" class="geom-svg">
-          <!-- Scale Bar -->
-          <line x1="40" y1="80" x2="640" y2="80" stroke="var(--text-title)" stroke-width="2.5"/>
-          <line x1="60" y1="65" x2="60" y2="95" stroke="var(--text-title)" stroke-width="2.5"/>
-          <text x="55" y="125" font-size="16" font-weight="bold" fill="var(--text-title)">0</text>
+      <div class="knowledge-box" style="border-left-color:#f43f5e;">
+        <h4 style="color:#f43f5e; margin:0 0 0.4rem 0;"><i class="fas fa-exclamation-triangle"></i> The Great Primary-School Trap: "Multiplication Always Makes Things Bigger"</h4>
+        <p style="font-size:0.95rem; line-height:1.6; margin:0;">
+          When young students learn multiplication with whole numbers ($3 \times 4 = 12 > 4$), they mistakenly form the rigid belief that multiplying always yields a larger product.
+          <br><strong>In fractions, this belief is FALSE!</strong> Multiplying by a number less than 1 scales the quantity DOWN.
+        </p>
+      </div>
 
-          <line x1="340" y1="60" x2="340" y2="100" stroke="var(--primary-glow)" stroke-width="3"/>
-          <text x="335" y="125" font-size="16" font-weight="bold" fill="var(--primary-glow)">1</text>
+      <p style="font-size:1rem; line-height:1.7;">
+        Consider the product of two positive fractions $f_1 \times f_2 = P$. The size of $P$ compared to $f_1$ and $f_2$ depends entirely on whether the factors are proper or improper:
+      </p>
 
-          <!-- Zone 1: 0 to 1 -->
-          <rect x="60" y="30" width="280" height="25" rx="4" fill="rgba(244, 63, 94, 0.15)" stroke="var(--accent-coral)" stroke-width="1"/>
-          <text x="200" y="47" font-size="12" font-weight="bold" fill="var(--accent-coral)" text-anchor="middle">Proper Fractions (0 to 1): Products Shrink!</text>
+      <div class="grid-3" style="margin-top:1.2rem;">
+        
+        <div class="example-box" style="border-color:#38bdf8;">
+          <h4 style="color:#38bdf8; margin:0 0 0.5rem 0;"><i class="fas fa-compress-alt"></i> Case I: Both Proper ($< 1$)</h4>
+          <p style="font-size:0.88rem; line-height:1.6; margin:0;">
+            When both fractions are proper ($f_1 < 1$ and $f_2 < 1$):
+            <br>$$\mathbf{P < f_1 \quad \text{and} \quad P < f_2}$$
+            The product is <strong>strictly smaller than both</strong> individual numbers!
+            <br><strong>Example:</strong> $\frac{1}{2} \times \frac{1}{3} = \frac{1}{6}$.
+            <br>Notice: $\frac{1}{6} < \frac{1}{2}$ and $\frac{1}{6} < \frac{1}{3}$. Taking half of a third shrinks it!
+          </p>
+        </div>
 
-          <!-- Zone 2: > 1 -->
-          <rect x="340" y="30" width="280" height="25" rx="4" fill="rgba(16, 185, 129, 0.15)" stroke="var(--accent-emerald)" stroke-width="1"/>
-          <text x="480" y="47" font-size="12" font-weight="bold" fill="var(--accent-emerald)" text-anchor="middle">Improper Fractions (&gt; 1): Products Grow!</text>
-        </svg>
-        <div class="fig-caption"><strong>Core Multiplicative Principle:</strong> Multiplying by a number less than $1$ scales down; multiplying by a number greater than $1$ scales up!</div>
+        <div class="example-box" style="border-color:#fbbf24;">
+          <h4 style="color:#fbbf24; margin:0 0 0.5rem 0;"><i class="fas fa-arrows-alt-h"></i> Case II: One Proper, One Improper</h4>
+          <p style="font-size:0.88rem; line-height:1.6; margin:0;">
+            When one fraction is proper ($< 1$) and one is improper ($> 1$):
+            <br>$$\mathbf{f_{\text{proper}} < P < f_{\text{improper}}}$$
+            The product is <strong>greater than the proper fraction</strong>, but <strong>smaller than the improper fraction</strong>!
+            <br><strong>Example:</strong> $\frac{2}{3} \times \frac{5}{2} = \frac{10}{6} = \frac{5}{3} \approx 1.67$.
+            <br>Notice: $\frac{2}{3} (0.67) < 1.67 < \frac{5}{2} (2.5)$.
+          </p>
+        </div>
+
+        <div class="example-box" style="border-color:#34d399;">
+          <h4 style="color:#34d399; margin:0 0 0.5rem 0;"><i class="fas fa-expand-alt"></i> Case III: Both Improper ($> 1$)</h4>
+          <p style="font-size:0.88rem; line-height:1.6; margin:0;">
+            When both fractions are improper ($f_1 > 1$ and $f_2 > 1$):
+            <br>$$\mathbf{P > f_1 \quad \text{and} \quad P > f_2}$$
+            The product is <strong>strictly greater than both</strong> individual numbers!
+            <br><strong>Example:</strong> $\frac{3}{2} (1.5) \times \frac{4}{3} (1.33) = 2$.
+            <br>Notice: $2 > 1.5$ and $2 > 1.33$.
+          </p>
+        </div>
+
       </div>
     </div>
   </div>
-
-  <!-- Submodule 4.2 -->
-  <div id="tab4-sub2" class="submodule-pane">
+<div id="tab4-sub2" class="submodule-pane">
     <div class="card">
       <div class="section-title">
         <span class="icon">💬</span>
@@ -1594,34 +1784,76 @@ svg.geom-svg {
   </div>
 
   <!-- Submodule 5.1 -->
+  
+  <!-- Submodule 5.1 -->
   <div id="tab5-sub1" class="submodule-pane active">
     <div class="card">
       <div class="section-title">
-        <span class="icon">📜</span>
-        <h2>5.1 Brahmagupta & Bhāskara II Division Theorem (Textbook p. 195)</h2>
-      </div>
-      <p>Division is the inverse operation of multiplication. In Indian mathematics, this operation was unified into multiplication by reciprocal:</p>
-
-      <div class="interactive-card callout-amber">
-        <h4 style="color:var(--accent-amber); margin-bottom:0.4rem;">Brahmagupta's Universal Statement (628 CE):</h4>
-        <p><em>"The division of fractions is performed by interchanging the numerator and denominator of the divisor; the numerator of the dividend is then multiplied by the new numerator, and the denominator by the new denominator."</em></p>
-        <p style="margin-top:0.4rem;">In 1150 CE in <em>Līlāvatī</em>, <strong>Bhāskara II</strong> termed this rule <strong>Bhāgahāra</strong> (division by multiplying by the inverted fraction):</p>
-        $$\frac{a}{b} \div \frac{c}{d} = \frac{a}{b} \times \left(\text{Reciprocal of } \frac{c}{d}\right) = \frac{a}{b} \times \frac{d}{c} = \frac{ad}{bc}$$
+        <span class="icon">➗</span>
+        <h2>5.1 Why Do We Invert and Multiply? (The Deep Mathematical Proof)</h2>
       </div>
 
-      <div class="interactive-card callout-teal">
-        <h4 style="color:var(--accent-teal); margin-bottom:0.4rem;">Three Golden Steps for Fraction Division:</h4>
-        <ol style="margin-left:1.3rem; line-height:1.8;">
-          <li>Keep the first fraction (the dividend) exactly as it is.</li>
-          <li>Change the division sign ($\div$) into a multiplication sign ($\times$).</li>
-          <li>Invert the second fraction (the divisor) to write its reciprocal. Then multiply and simplify using <em>Apavartana</em>!</li>
-        </ol>
+      <div class="knowledge-box">
+        <h4 style="color:#38bdf8; margin:0 0 0.4rem 0;"><i class="fas fa-lightbulb"></i> Understanding Division as Measurement Grouping</h4>
+        <p style="font-size:0.95rem; line-height:1.6; margin:0;">
+          In whole numbers, $12 \div 3 = 4$ means: <em>"How many groups of 3 fit inside 12?"</em>
+          <br>The exact same logic applies to fractions!
+          <br>&bull; What does $3 \div \frac{1}{2}$ mean? It asks: <em>"How many half-units fit inside 3 whole units?"</em>
+          <br>&bull; In 1 whole unit, there are 2 halves.
+          <br>&bull; Therefore, in 3 whole units, there are $3 \times 2 = \mathbf{6}$ halves!
+          <br>&bull; Notice: $3 \div \frac{1}{2} = 3 \times 2 = 6$. Dividing by $\frac{1}{2}$ doubles the answer!
+        </p>
+      </div>
+
+      <div style="margin-top:1.2rem;">
+        <h4 style="color:#fbbf24; margin:0 0 0.6rem 0;"><i class="fas fa-graduation-cap"></i> The Rigorous Algebraic Proof (Eliminating the Denominator)</h4>
+        <p style="font-size:0.95rem; line-height:1.7;">
+          Let us divide any fraction $\frac{a}{b}$ by another fraction $\frac{c}{d}$ (where $b, c, d \neq 0$):
+        </p>
+        
+        <table class="proof-table">
+          <thead>
+            <tr>
+              <th>Step</th>
+              <th>Mathematical Expression</th>
+              <th>Justification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Express as Compound Fraction</strong></td>
+              <td>$$\frac{a}{b} \div \frac{c}{d} = \frac{\frac{a}{b}}{\frac{c}{d}}$$</td>
+              <td>Definition of division as a fraction of fractions.</td>
+            </tr>
+            <tr>
+              <td><strong>2. Scale by Multiplicative Inverse</strong></td>
+              <td>$$= \frac{\frac{a}{b} \times \frac{d}{c}}{\frac{c}{d} \times \frac{d}{c}}$$</td>
+              <td>Multiply numerator and denominator by $\frac{d}{c}$ (multiplying by $\frac{k}{k} = 1$ leaves value unchanged).</td>
+            </tr>
+            <tr>
+              <td><strong>3. Simplify the Denominator</strong></td>
+              <td>$$\frac{c}{d} \times \frac{d}{c} = 1$$</td>
+              <td>Any fraction multiplied by its reciprocal equals $1$.</td>
+            </tr>
+            <tr>
+              <td><strong>4. Final Result</strong></td>
+              <td>$$= \frac{\frac{a}{b} \times \frac{d}{c}}{1} = \mathbf{\frac{a}{b} \times \frac{d}{c}}$$</td>
+              <td>Dividing by 1 leaves the numerator. <strong>Q.E.D.</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="background:rgba(16, 185, 129, 0.08); border:1px solid rgba(16, 185, 129, 0.3); border-radius:10px; padding:1rem; margin-top:1rem;">
+          <strong style="color:#34d399;"><i class="fas fa-check-circle"></i> Brahmagupta's Rule (628 CE):</strong>
+          <p style="margin:0.3rem 0 0 0; font-size:0.92rem; line-height:1.6;">
+            <em>"By reversing the numerator and denominator of the divisor, the operation becomes multiplication."</em>
+            <br>$$\frac{a}{b} \div \frac{c}{d} = \frac{a}{b} \times \frac{d}{c} = \frac{a \times d}{b \times c}$$
+          </p>
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- Submodule 5.2 -->
-  <div id="tab5-sub2" class="submodule-pane">
+<div id="tab5-sub2" class="submodule-pane">
     <div class="card">
       <div class="section-title">
         <span class="icon">🧱</span>
@@ -2334,7 +2566,1865 @@ svg.geom-svg {
   </div>
 </div>
 
-  </main>
+  
+<!-- ==================== TAB 9: CLASS TEACHER'S PRACTICE PAPER ==================== -->
+<div id="tab-teacher-practice" class="tab-panel">
+  
+  <!-- CHAPTER BANNER & TEACHER WORKSHEET HEADER -->
+  <div class="chapter-banner" style="background: linear-gradient(135deg, rgba(30, 27, 75, 0.95), rgba(49, 46, 129, 0.9)); border: 1px solid rgba(139, 92, 246, 0.4); box-shadow: 0 8px 32px rgba(99, 102, 241, 0.2);">
+    <div class="banner-badges">
+      <span class="badge" style="background: rgba(139, 92, 246, 0.2); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.4);"><i class="fas fa-school"></i> School Practice Paper</span>
+      <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);"><i class="fas fa-check-double"></i> 100% Solved</span>
+      <span class="badge" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4);"><i class="fas fa-book-open"></i> Chapter 2: Fractions &amp; Decimals</span>
+    </div>
+    <h1 class="banner-title" style="color: #f8fafc; font-size: clamp(1.6rem, 3.5vw, 2.3rem); margin-top: 0.5rem;">
+      <i class="fas fa-file-signature" style="color: #a78bfa; margin-right: 8px;"></i> Class Teacher's Concept Practice Paper
+    </h1>
+    <p class="banner-desc" style="color: #cbd5e1; max-width: 920px; font-size: 0.96rem; line-height: 1.6;">
+      Official classroom test paper assigned for <strong>Class 7 Mathematics (Fractions &amp; Decimals)</strong>. Contains complete, step-by-step verified solutions, KaTeX mathematical proofs, vector geometric diagrams, interactive MCQ checkers, and full scans of the original paper.
+    </p>
+
+    <!-- Toggle Original Worksheet Scans Button -->
+    <div style="margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+      <button type="button" class="tool-btn" style="padding: 9px 20px; font-size: 0.9rem; border-radius: 20px; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35); font-weight: 700; display: inline-flex; align-items: center; gap: 8px;" onclick="const b = document.getElementById('teacher-paper-scans'); b.style.display = (b.style.display === 'flex') ? 'none' : 'flex';">
+        <i class="fas fa-camera"></i> 📸 View Original Teacher Worksheet Scans (3 Pages)
+      </button>
+      <span style="font-size: 0.85rem; color: #94a3b8;"><i class="fas fa-info-circle"></i> Click to inspect high-resolution scans of the physical worksheet.</span>
+    </div>
+
+    <!-- Scans Container -->
+    <div id="teacher-paper-scans" style="display:none; justify-content:center; gap:20px; flex-wrap:wrap; margin-top:16px; padding:16px; background:var(--bg-secondary); border:1px solid var(--border); border-radius:12px;">
+      <div style="flex:1; min-width:280px; max-width:420px; text-align:center;">
+        <h4 style="margin:0 0 8px 0; color:var(--text-muted); font-size:0.9rem;"><i class="fas fa-file-image"></i> Page 4: Ex 2.1 &amp; Ex 2.2 (Q1–Q7)</h4>
+        <img src="practice_fractions_page1.jpg" alt="Practice Paper Page 1" style="width:100%; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); border:1px solid var(--border);">
+      </div>
+      <div style="flex:1; min-width:280px; max-width:420px; text-align:center;">
+        <h4 style="margin:0 0 8px 0; color:var(--text-muted); font-size:0.9rem;"><i class="fas fa-file-image"></i> Page 5: Ex 2.2 (Q8–10), Ex 2.3, Ex 2.4, MCQ 1</h4>
+        <img src="practice_fractions_page2.jpg" alt="Practice Paper Page 2" style="width:100%; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); border:1px solid var(--border);">
+      </div>
+      <div style="flex:1; min-width:280px; max-width:420px; text-align:center;">
+        <h4 style="margin:0 0 8px 0; color:var(--text-muted); font-size:0.9rem;"><i class="fas fa-file-image"></i> Page 6: Objective Q2–5, Fill Blanks, True/False, Thinking Cap</h4>
+        <img src="practice_fractions_page3.jpg" alt="Practice Paper Page 3" style="width:100%; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); border:1px solid var(--border);">
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMODULE NAVIGATION BAR (TIER 2) -->
+  <div class="submodule-nav">
+    <button class="submodule-btn active" onclick="switchSubTab('tab9-sub1', this)"><i class="fas fa-plus-minus"></i> Ex 2.1: Add &amp; Sub (6 Qs)</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab9-sub2', this)"><i class="fas fa-xmark"></i> Ex 2.2: Mult &amp; Div (10 Qs)</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab9-sub3', this)"><i class="fas fa-calculator"></i> Ex 2.3: Decimals (10 Qs)</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab9-sub4', this)"><i class="fas fa-layer-group"></i> Ex 2.4: Mixed Ops (8 Qs)</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab9-sub5', this)"><i class="fas fa-check-circle"></i> Objective &amp; Drills (15 Qs)</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab9-sub6', this)"><i class="fas fa-brain"></i> Thinking Cap! (3 HOTS)</button>
+  </div>
+
+  <!-- ==================== SUBMODULE 9.1: EXERCISE 2.1 ==================== -->
+  <div id="tab9-sub1" class="submodule-pane active">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">➕</span>
+        <h2>Exercise 2.1: Addition &amp; Subtraction of Fractions</h2>
+      </div>
+      <p style="color:var(--text-muted); margin-bottom:1.2rem;">Complete worked solutions for all 6 questions on fraction addition, subtraction, like-denominator conversions, ordering, and real-life word problems.</p>
+
+      <!-- Q1 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.1 • Question 1</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">1. Solve the following:</h4>
+
+        <!-- 1(a) -->
+        <div style="margin-bottom:1.2rem; padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+          <p><strong>(a)</strong> Evaluate: $\mathbf{\frac{1}{3} + \frac{2}{7} + \frac{5}{14}}$</p>
+          <details style="margin-top:0.6rem;">
+            <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+            <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+              <p><strong>Step 1: Find the LCM of denominators $3, 7, 14$:</strong><br>
+              Prime factorizations: $3 = 3$, $7 = 7$, $14 = 2 \times 7$.<br>
+              $$\text{LCM}(3, 7, 14) = 2 \times 3 \times 7 = \mathbf{42}$$</p>
+              <p><strong>Step 2: Convert fractions to equivalent fractions with denominator 42:</strong><br>
+              $$\frac{1}{3} = \frac{1 \times 14}{3 \times 14} = \frac{14}{42}$$
+              $$\frac{2}{7} = \frac{2 \times 6}{7 \times 6} = \frac{12}{42}$$
+              $$\frac{5}{14} = \frac{5 \times 3}{14 \times 3} = \frac{15}{42}$$</p>
+              <p><strong>Step 3: Add the numerators:</strong><br>
+              $$\frac{14 + 12 + 15}{42} = \mathbf{\frac{41}{42}}$$</p>
+              <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">✅ Final Answer: $\frac{41}{42}$</div>
+            </div>
+          </details>
+        </div>
+
+        <!-- 1(b) -->
+        <div style="margin-bottom:1.2rem; padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+          <p><strong>(b)</strong> Evaluate: $\mathbf{\frac{4}{9} + \frac{2}{3} + \frac{8}{15} + \frac{2}{18}}$</p>
+          <details style="margin-top:0.6rem;">
+            <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+            <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+              <p><strong>Method: Simplifying terms first:</strong><br>
+              Notice that $\frac{2}{18} = \frac{1}{9}$.<br>
+              Combine like fractions with denominator $9$:<br>
+              $$\frac{4}{9} + \frac{1}{9} = \frac{5}{9}$$
+              Now add $\frac{5}{9} + \frac{2}{3} + \frac{8}{15}$.<br>
+              $\text{LCM}(9, 3, 15) = 45$.<br>
+              $$\frac{5 \times 5}{45} + \frac{2 \times 15}{45} + \frac{8 \times 3}{45} = \frac{25 + 30 + 24}{45} = \mathbf{\frac{79}{45} = 1\frac{34}{45}}$$</p>
+              <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">✅ Final Answer: $\frac{79}{45}$ (or $1\frac{34}{45}$)</div>
+            </div>
+          </details>
+        </div>
+
+        <!-- 1(c) -->
+        <div style="margin-bottom:1.2rem; padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+          <p><strong>(c)</strong> Evaluate: $\mathbf{\frac{12}{19} - \frac{9}{38} - \frac{6}{11}}$</p>
+          <details style="margin-top:0.6rem;">
+            <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+            <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+              <p><strong>Step 1: Simplify the first two terms:</strong><br>
+              $\text{LCM}(19, 38) = 38$.<br>
+              $$\frac{12 \times 2}{38} - \frac{9}{38} = \frac{24 - 9}{38} = \frac{15}{38}$$</p>
+              <p><strong>Step 2: Subtract $\frac{6}{11}$:</strong><br>
+              Since $38$ and $11$ are co-prime, $\text{LCM}(38, 11) = 38 \times 11 = 418$.<br>
+              $$\frac{15 \times 11}{418} - \frac{6 \times 38}{418} = \frac{165 - 228}{418} = \mathbf{-\frac{63}{418}}$$</p>
+              <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">✅ Final Answer: $-\frac{63}{418}$</div>
+            </div>
+          </details>
+        </div>
+
+        <!-- 1(d) -->
+        <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+          <p><strong>(d)</strong> Evaluate: $\mathbf{4\frac{4}{5} - 3\frac{1}{10}}$</p>
+          <details style="margin-top:0.6rem;">
+            <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+            <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+              <p><strong>Method A (Improper fractions):</strong><br>
+              $$4\frac{4}{5} = \frac{4 \times 5 + 4}{5} = \frac{24}{5} = \frac{48}{10}$$
+              $$3\frac{1}{10} = \frac{3 \times 10 + 1}{10} = \frac{31}{10}$$
+              $$\frac{48}{10} - \frac{31}{10} = \mathbf{\frac{17}{10} = 1\frac{7}{10} = 1.7}$$</p>
+              <p><strong>Method B (Whole numbers and fractions separated):</strong><br>
+              $$(4 - 3) + \left(\frac{4}{5} - \frac{1}{10}\right) = 1 + \left(\frac{8}{10} - \frac{1}{10}\right) = 1 + \frac{7}{10} = \mathbf{1\frac{7}{10}}$$</p>
+              <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">✅ Final Answer: $1\frac{7}{10}$ (or $\frac{17}{10}$)</div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.1 • Question 2</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">2. Arrange the fractions in ascending order: $\mathbf{\frac{4}{15}, \frac{2}{9}, \frac{7}{18}, \frac{5}{6}}$</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p><strong>Step 1: Find the LCM of denominators $15, 9, 18, 6$:</strong><br>
+            $$\text{LCM}(15, 9, 18, 6) = \mathbf{90}$$</p>
+            <p><strong>Step 2: Convert to like fractions with denominator 90:</strong><br>
+            $$\frac{4}{15} = \frac{4 \times 6}{15 \times 6} = \frac{24}{90}$$
+            $$\frac{2}{9} = \frac{2 \times 10}{9 \times 10} = \frac{20}{90}$$
+            $$\frac{7}{18} = \frac{7 \times 5}{18 \times 5} = \frac{35}{90}$$
+            $$\frac{5}{6} = \frac{5 \times 15}{6 \times 15} = \frac{75}{90}$$</p>
+            <p><strong>Step 3: Order numerators in ascending order (smallest to largest):</strong><br>
+            $$20 < 24 < 35 < 75$$
+            $$\frac{20}{90} < \frac{24}{90} < \frac{35}{90} < \frac{75}{90}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Ascending Order: $\mathbf{\frac{2}{9} < \frac{4}{15} < \frac{7}{18} < \frac{5}{6}}$
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q3 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.1 • Question 3</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">3. Arrange the fractions in descending order: $\mathbf{\frac{2}{5}, \frac{7}{9}, \frac{13}{15}, \frac{2}{3}, \frac{7}{25}}$</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p><strong>Step 1: Find the LCM of denominators $5, 9, 15, 3, 25$:</strong><br>
+            $$\text{LCM}(5, 9, 15, 3, 25) = \mathbf{225}$$</p>
+            <p><strong>Step 2: Convert to like fractions with denominator 225:</strong><br>
+            $$\frac{2}{5} = \frac{2 \times 45}{225} = \frac{90}{225}$$
+            $$\frac{7}{9} = \frac{7 \times 25}{225} = \frac{175}{225}$$
+            $$\frac{13}{15} = \frac{13 \times 15}{225} = \frac{195}{225}$$
+            $$\frac{2}{3} = \frac{2 \times 75}{225} = \frac{150}{225}$$
+            $$\frac{7}{25} = \frac{7 \times 9}{225} = \frac{63}{225}$$</p>
+            <p><strong>Step 3: Order numerators in descending order (largest to smallest):</strong><br>
+            $$195 > 175 > 150 > 90 > 63$$
+            $$\frac{195}{225} > \frac{175}{225} > \frac{150}{225} > \frac{90}{225} > \frac{63}{225}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Descending Order: $\mathbf{\frac{13}{15} > \frac{7}{9} > \frac{2}{3} > \frac{2}{5} > \frac{7}{25}}$
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q4 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.1 • Question 4 (Word Problem)</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">4. While painting a wall, Rashid mixed $\frac{7}{12}\text{ L}$ of red paint and $\frac{5}{8}\text{ L}$ of yellow paint. How much paint did he mix altogether?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p><strong>Statement of quantities:</strong><br>
+            Quantity of red paint $= \frac{7}{12}\text{ litre}$<br>
+            Quantity of yellow paint $= \frac{5}{8}\text{ litre}$</p>
+            <p><strong>Total paint mixed:</strong><br>
+            $$\text{Total} = \frac{7}{12} + \frac{5}{8}$$
+            $\text{LCM}(12, 8) = 24$.<br>
+            $$\text{Total} = \frac{7 \times 2}{24} + \frac{5 \times 3}{24} = \frac{14 + 15}{24} = \mathbf{\frac{29}{24}\text{ litres} = 1\frac{5}{24}\text{ litres}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: Rashid mixed $\mathbf{1\frac{5}{24}\text{ litres}}$ (or $\mathbf{\frac{29}{24}\text{ litres}}$) of paint altogether.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q5 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.1 • Question 5 (Word Problem)</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">5. The weight of a baby is $3\frac{1}{5}\text{ kg}$ on birth. After three weeks, the baby's weight increases by $\frac{7}{10}\text{ kg}$. What is the baby's current weight?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p><strong>Statement:</strong><br>
+            Weight at birth $= 3\frac{1}{5}\text{ kg} = \frac{16}{5}\text{ kg}$<br>
+            Increase in weight $= \frac{7}{10}\text{ kg}$</p>
+            <p><strong>Calculation:</strong><br>
+            $$\text{Current weight} = 3\frac{1}{5} + \frac{7}{10} = \frac{16}{5} + \frac{7}{10}$$
+            $$\text{Current weight} = \frac{16 \times 2}{10} + \frac{7}{10} = \frac{32 + 7}{10} = \mathbf{\frac{39}{10}\text{ kg} = 3\frac{9}{10}\text{ kg} = 3.9\text{ kg}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: The baby's current weight is $\mathbf{3\frac{9}{10}\text{ kg}}$ (or $\mathbf{3.9\text{ kg}}$).
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q6 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.1 • Question 6 (Multi-Stage Cake Sharing)</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">6. Rashmi baked a cake. Ruhi ate $\frac{1}{3}$ of the cake. Rohit ate $\frac{1}{4}$ of the remaining cake. After that Ritika ate $\frac{1}{2}$ of the remaining cake. How much of the original cake was left?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>Let the whole original cake be represented by $1$.</p>
+            <p><strong>Stage 1 (Ruhi):</strong><br>
+            Ruhi eats $\frac{1}{3}$ of the cake.<br>
+            $$\text{Remaining cake} = 1 - \frac{1}{3} = \mathbf{\frac{2}{3}}$$</p>
+            <p><strong>Stage 2 (Rohit):</strong><br>
+            Rohit eats $\frac{1}{4}$ of the <em>remaining</em> cake:<br>
+            $$\text{Rohit's portion} = \frac{1}{4} \times \frac{2}{3} = \frac{2}{12} = \frac{1}{6}$$
+            $$\text{Remaining cake} = \frac{2}{3} - \frac{1}{6} = \frac{4 - 1}{6} = \frac{3}{6} = \mathbf{\frac{1}{2}}$$</p>
+            <p><strong>Stage 3 (Ritika):</strong><br>
+            Ritika eats $\frac{1}{2}$ of the <em>remaining</em> cake:<br>
+            $$\text{Ritika's portion} = \frac{1}{2} \times \frac{1}{2} = \frac{1}{4}$$
+            $$\text{Final cake left} = \frac{1}{2} - \frac{1}{4} = \mathbf{\frac{1}{4}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: Exactly $\mathbf{\frac{1}{4}}$ of the original cake was left.
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SUBMODULE 9.2: EXERCISE 2.2 ==================== -->
+  <div id="tab9-sub2" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">✖️</span>
+        <h2>Exercise 2.2: Multiplication &amp; Division of Fractions</h2>
+      </div>
+      <p style="color:var(--text-muted); margin-bottom:1.2rem;">Complete worked solutions for all 10 questions covering operator "of", division by reciprocal inversion, and multi-step real-world applications.</p>
+
+      <!-- Q1 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.2 • Question 1</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">1. Evaluate the following:</h4>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+          
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(a) $\mathbf{\frac{7}{20}}$ of a litre</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$1\text{ L} = 1000\text{ mL}$<br>
+            $=\frac{7}{20} \times 1000 = 7 \times 50$<br>
+            $= \mathbf{350\text{ mL}}$ (or $\mathbf{0.35\text{ L}}$)</p>
+          </div>
+
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(b) $\mathbf{\frac{5}{12}}$ of ₹$444$</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$=\frac{5}{12} \times 444 = 5 \times 37$<br>
+            $= \mathbf{\text{₹}185}$</p>
+          </div>
+
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(c) $\mathbf{\frac{3}{4}}$ of a day</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$1\text{ day} = 24\text{ hours}$<br>
+            $=\frac{3}{4} \times 24 = 3 \times 6$<br>
+            $= \mathbf{18\text{ hours}}$</p>
+          </div>
+
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(d) $\mathbf{\frac{6}{7}}$ of a week</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$1\text{ week} = 7\text{ days}$<br>
+            $=\frac{6}{7} \times 7$<br>
+            $= \mathbf{6\text{ days}}$</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.2 • Question 2</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">2. Divide the fractions:</h4>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(a) $\mathbf{\frac{1}{3}}$ by $\mathbf{\frac{7}{18}}$</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$$\frac{1}{3} \div \frac{7}{18} = \frac{1}{3} \times \frac{18}{7} = \mathbf{\frac{6}{7}}$$</p>
+          </div>
+
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(b) $\mathbf{3\frac{1}{4}}$ by $\mathbf{\frac{65}{16}}$</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$$3\frac{1}{4} = \frac{13}{4}$$
+            $$\frac{13}{4} \times \frac{16}{65} = \frac{1 \times 4}{1 \times 5} = \mathbf{\frac{4}{5}}$$</p>
+          </div>
+
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(c) $\mathbf{\frac{4}{7}}$ by $\mathbf{4\frac{1}{2}}$</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$$4\frac{1}{2} = \frac{9}{2}$$
+            $$\frac{4}{7} \div \frac{9}{2} = \frac{4}{7} \times \frac{2}{9} = \mathbf{\frac{8}{63}}$$</p>
+          </div>
+
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(d) $\mathbf{\frac{1}{12}}$ by $\mathbf{4}$</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$$\frac{1}{12} \div 4 = \frac{1}{12} \times \frac{1}{4} = \mathbf{\frac{1}{48}}$$</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.2 • Question 3</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">3. Find the reciprocal of $-\frac{1}{6}$</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Explanation</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>The reciprocal of any non-zero rational number $\frac{a}{b}$ is $\frac{b}{a}$, such that their product equals $1$.<br>
+            $$\left(-\frac{1}{6}\right) \times (-6) = 1$$
+            $$\text{Reciprocal of } -\frac{1}{6} = \mathbf{-6}$$</p>
+            <p style="font-size:0.85rem; color:var(--text-muted);"><em>Note: If printed without minus sign ($\frac{1}{6}$), the reciprocal is $\mathbf{6}$.</em></p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q4 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.2 • Question 4</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">4. By what number should $5\frac{2}{9}$ be multiplied to get $3\frac{4}{9}$?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>Let the required multiplier be $x$.<br>
+            $$5\frac{2}{9} \times x = 3\frac{4}{9}$$
+            Convert mixed numbers to improper fractions:<br>
+            $$5\frac{2}{9} = \frac{5 \times 9 + 2}{9} = \frac{47}{9}$$
+            $$3\frac{4}{9} = \frac{3 \times 9 + 4}{9} = \frac{31}{9}$$
+            Now solve for $x$ by division:<br>
+            $$x = \frac{31}{9} \div \frac{47}{9} = \frac{31}{\cancel{9}} \times \frac{\cancel{9}}{47} = \mathbf{\frac{31}{47}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: The required number is $\mathbf{\frac{31}{47}}$.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q5 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.2 • Question 5</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">5. A wire of length $12\frac{1}{2}\text{ m}$ is cut into $15$ pieces of equal length. Find the length of each piece.</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>Total length of wire $= 12\frac{1}{2}\text{ m} = \frac{25}{2}\text{ m}$<br>
+            Number of pieces $= 15$<br>
+            $$\text{Length of each piece} = \frac{25}{2} \div 15 = \frac{25}{2} \times \frac{1}{15} = \frac{\cancel{25}^5}{2 \times \cancel{15}_3} = \mathbf{\frac{5}{6}\text{ m}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: Each piece is $\mathbf{\frac{5}{6}\text{ metre}}$ long.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q6 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.2 • Question 6</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">6. If a rectangular garden measures $8\frac{4}{7}\text{ m}$ by $4\frac{5}{9}\text{ m}$, what is the area of the garden?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>$$\text{Length} = 8\frac{4}{7}\text{ m} = \frac{8 \times 7 + 4}{7} = \frac{60}{7}\text{ m}$$
+            $$\text{Breadth} = 4\frac{5}{9}\text{ m} = \frac{4 \times 9 + 5}{9} = \frac{41}{9}\text{ m}$$
+            $$\text{Area} = \text{Length} \times \text{Breadth} = \frac{60}{7} \times \frac{41}{9}$$
+            Simplify common factors between $60$ and $9$ (divide both by $3$):<br>
+            $$\text{Area} = \frac{\cancel{60}^{20}}{7} \times \frac{41}{\cancel{9}_3} = \frac{20 \times 41}{7 \times 3} = \frac{820}{21}\text{ m}^2 = \mathbf{39\frac{1}{21}\text{ m}^2}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: The area is $\mathbf{39\frac{1}{21}\text{ m}^2}$ (or $\mathbf{\frac{820}{21}\text{ m}^2}$).
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q7 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.2 • Question 7</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">7. A bus that seats $36$ people is $\frac{2}{3}$ full. How many people are seated in the bus?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>Total capacity $= 36\text{ seats}$<br>
+            $$\text{Seated passengers} = \frac{2}{3} \times 36 = 2 \times 12 = \mathbf{24\text{ people}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: $\mathbf{24\text{ people}}$ are seated in the bus.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q8 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.2 • Question 8</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">8. Deepti can cover $5\frac{1}{2}\text{ km}$ in one hour. How much distance will she cover in $8\frac{1}{4}\text{ hours}$?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>$$\text{Speed} = 5\frac{1}{2}\text{ km/h} = \frac{11}{2}\text{ km/h}$$
+            $$\text{Time} = 8\frac{1}{4}\text{ hours} = \frac{33}{4}\text{ hours}$$
+            $$\text{Distance} = \text{Speed} \times \text{Time} = \frac{11}{2} \times \frac{33}{4} = \frac{11 \times 33}{2 \times 4} = \mathbf{\frac{363}{8}\text{ km} = 45\frac{3}{8}\text{ km} = 45.375\text{ km}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: Deepti will cover $\mathbf{45\frac{3}{8}\text{ km}}$ (or $\mathbf{45.375\text{ km}}$).
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q9 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.2 • Question 9</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">9. In the midday meal scheme, $\frac{1}{5}\text{ L}$ of milk is given to each student at a primary school. If $60\text{ L}$ of milk are distributed every day in the school, how many students are there in the school?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>Total milk distributed $= 60\text{ litres}$<br>
+            Milk per student $= \frac{1}{5}\text{ litre}$<br>
+            $$\text{Number of students} = 60 \div \frac{1}{5} = 60 \times \frac{5}{1} = \mathbf{300\text{ students}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: There are $\mathbf{300\text{ students}}$ in the school.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q10 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.2 • Question 10</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">10. A bucket contains $26\frac{4}{5}\text{ L}$ of water. How many jugs each of capacity $\frac{2}{5}\text{ L}$ are required to empty the bucket?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>Capacity of bucket $= 26\frac{4}{5}\text{ L} = \frac{26 \times 5 + 4}{5} = \frac{134}{5}\text{ L}$<br>
+            Capacity of each jug $= \frac{2}{5}\text{ L}$<br>
+            $$\text{Number of jugs} = \frac{134}{5} \div \frac{2}{5} = \frac{134}{\cancel{5}} \times \frac{\cancel{5}}{2} = \frac{134}{2} = \mathbf{67\text{ jugs}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: Exactly $\mathbf{67\text{ jugs}}$ are required to empty the bucket.
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SUBMODULE 9.3: EXERCISE 2.3 ==================== -->
+  <div id="tab9-sub3" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">🔢</span>
+        <h2>Exercise 2.3: Decimals Operations &amp; Word Problems</h2>
+      </div>
+      <p style="color:var(--text-muted); margin-bottom:1.2rem;">Complete worked solutions for all 10 questions on decimal multiplication, division, powers of 10 rules, and geometric composite area calculation.</p>
+
+      <!-- Q1 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.3 • Question 1</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">1. Multiply the following:</h4>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(a) $3$ by $1.4$</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$3 \times 14 = 42$<br>1 decimal place $\implies \mathbf{4.2}$</p>
+          </div>
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(b) $0.21$ by $5$</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$21 \times 5 = 105$<br>2 decimal places $\implies \mathbf{1.05}$</p>
+          </div>
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(c) $4.75$ by $0.15$</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$475 \times 15 = 7125$<br>$2 + 2 = 4$ places $\implies \mathbf{0.7125}$</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.3 • Question 2</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">2. Divide the following:</h4>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(a) $15.8$ by $2$</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$15.8 \div 2 = \mathbf{7.9}$</p>
+          </div>
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(b) $255$ by $2.5$</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$255 \div 2.5 = \frac{2550}{25} = \mathbf{102}$</p>
+          </div>
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(c) $34.4$ by $0.4$</strong></p>
+            <p style="font-size:0.88rem; color:var(--text-muted);">$34.4 \div 0.4 = \frac{344}{4} = \mathbf{86}$</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.3 • Question 3</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">3. Find the missing numbers:</h4>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1rem;">
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(a)</strong> $4.567 \times 10 = \mathbf{45.67}$</p>
+          </div>
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(b)</strong> $23.45 \times 100 = \mathbf{2345}$</p>
+          </div>
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(c)</strong> $0.65 \times 1000 = \mathbf{650}$</p>
+          </div>
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(d)</strong> $15 \div \mathbf{1000} = 0.015$</p>
+          </div>
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(e)</strong> $4 \div \mathbf{10} = 0.4$</p>
+          </div>
+          <div style="padding:0.8rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            <p><strong>(f)</strong> $\mathbf{23050} \div 1000 = 23.05$</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.3 • Question 4</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">4. The height of Suhani's house is $10.2$ times the height of her tree house. If the height of Suhani's tree house is $4.05\text{ m}$, what is the height of Suhani's house?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>Height of tree house $= 4.05\text{ m}$<br>
+            $$\text{Height of house} = 10.2 \times 4.05$$
+            Compute $102 \times 405$:<br>
+            $$100 \times 405 = 40500$$
+            $$2 \times 405 = 810$$
+            $$40500 + 810 = 41310$$
+            Place $1 + 2 = 3$ decimal places: $\mathbf{41.310 = 41.31\text{ m}}$.</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: Suhani's house is $\mathbf{41.31\text{ metres}}$ tall.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q5 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.3 • Question 5</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">5. There are $8$ similar straws placed next to one another. If the total length of $8$ straws is $129.6\text{ cm}$, what is the length of each straw?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>Total length $= 129.6\text{ cm}$<br>
+            $$\text{Length of each straw} = 129.6 \div 8 = \mathbf{16.2\text{ cm}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: Each straw is $\mathbf{16.2\text{ cm}}$ long.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q6 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.3 • Question 6</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">6. If every morning John jogs for $3.6\text{ km}$, how many days would he take to jog a total of $39.6\text{ km}$?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>$$\text{Number of days} = 39.6 \div 3.6 = \frac{396}{36} = \mathbf{11\text{ days}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: John would take $\mathbf{11\text{ days}}$.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q7 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.3 • Question 7</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">7. Purvi has $13\text{ kg}$ of cotton wool for making cushions. Purvi uses $0.65\text{ kg}$ of cotton wool to make a cushion. How many cushions can she make with the total wool?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>$$\text{Number of cushions} = 13 \div 0.65 = \frac{13 \times 100}{0.65 \times 100} = \frac{1300}{65} = \mathbf{20\text{ cushions}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: Purvi can make $\mathbf{20\text{ cushions}}$.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q8 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.3 • Question 8</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">8. Jaya bought $33.75\text{ m}$ of cloth to make some cloth bags. She uses $2.25\text{ m}$ of cloth to make a bag. How many cloth bags can she make from the cloth?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>$$\text{Number of cloth bags} = 33.75 \div 2.25 = \frac{3375}{225}$$
+            Divide by $25$: $\frac{3375 \div 25}{225 \div 25} = \frac{135}{9} = \mathbf{15\text{ bags}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: Jaya can make $\mathbf{15\text{ cloth bags}}$.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q9 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.3 • Question 9</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">9. In a cinema hall, the cost of one ticket for a movie is ₹$191.50$. The total income of the hall on Monday by that show is ₹$28,725$. Find out how many tickets were sold?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p>$$\text{Tickets sold} = \frac{28725}{191.50} = \frac{287250}{1915}$$
+            Perform division:<br>
+            $1915 \times 1 = 1915$; $2872 - 1915 = 957$. Bring down $5 \implies 9575$.<br>
+            $1915 \times 5 = 9575$. Bring down $0 \implies 0$.<br>
+            $$\text{Tickets sold} = \mathbf{150\text{ tickets}}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: Exactly $\mathbf{150\text{ tickets}}$ were sold.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q10 -->
+      <div class="example-box">
+        <div class="ex-badge">Exercise 2.3 • Question 10 (Geometric L-Shape Area)</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">10. Find the area of the figure given alongside:</h4>
+        
+        <!-- SVG Diagram -->
+        <div class="figure-container" style="background:var(--bg-secondary); margin:1rem 0;">
+          <svg viewBox="0 0 320 220" style="max-width:280px; height:auto; display:block; margin:auto;">
+            <!-- Outer Polygon L-shape -->
+            <polygon points="40,20 140,20 140,120 270,120 270,200 40,200" fill="rgba(99, 102, 241, 0.15)" stroke="var(--primary-glow)" stroke-width="2.5"/>
+            <!-- Partition dashed line separating upper and lower rectangles -->
+            <line x1="40" y1="120" x2="140" y2="120" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,4"/>
+            
+            <!-- Dimension labels -->
+            <text x="90" y="15" text-anchor="middle" font-size="13" font-weight="bold" fill="var(--text-title)">2 cm</text>
+            <text x="25" y="115" text-anchor="middle" font-size="13" font-weight="bold" fill="var(--accent-coral)">5.2 cm</text>
+            <text x="155" y="215" text-anchor="middle" font-size="13" font-weight="bold" fill="var(--text-title)">4.6 cm</text>
+            <text x="285" y="165" text-anchor="middle" font-size="13" font-weight="bold" fill="var(--accent-teal)">3.2 cm</text>
+
+            <!-- Region tags -->
+            <text x="90" y="75" text-anchor="middle" font-size="13" font-weight="bold" fill="#818cf8">Part A</text>
+            <text x="155" y="165" text-anchor="middle" font-size="13" font-weight="bold" fill="#34d399">Part B</text>
+          </svg>
+          <div class="fig-caption"><strong>Worksheet Figure:</strong> Composite polygon partitioned into two non-overlapping rectangular regions.</div>
+        </div>
+
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Step-by-Step Working</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p><strong>Decomposition into two non-overlapping rectangles:</strong></p>
+            <p><strong>1. Upper Rectangle (Part A):</strong><br>
+            - $\text{Width} = 2\text{ cm}$<br>
+            - $\text{Height} = \text{Total height} - \text{Lower height} = 5.2\text{ cm} - 3.2\text{ cm} = \mathbf{2.0\text{ cm}}$<br>
+            $$\text{Area of Part A} = 2.0 \times 2.0 = \mathbf{4.0\text{ cm}^2}$$</p>
+            
+            <p><strong>2. Lower Rectangle (Part B):</strong><br>
+            - $\text{Length} = 4.6\text{ cm}$<br>
+            - $\text{Breadth} = 3.2\text{ cm}$<br>
+            $$\text{Area of Part B} = 4.6 \times 3.2 = \mathbf{14.72\text{ cm}^2}$$</p>
+
+            <p><strong>Total Area:</strong><br>
+            $$\text{Total Area} = \text{Area}(A) + \text{Area}(B) = 4.0 + 14.72 = \mathbf{18.72\text{ cm}^2}$$</p>
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: The area of the figure is $\mathbf{18.72\text{ cm}^2}$.
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SUBMODULE 9.4: EXERCISE 2.4 ==================== -->
+  <div id="tab9-sub4" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">⚖️</span>
+        <h2>Exercise 2.4: Mixed Operations &amp; BODMAS Hierarchy</h2>
+      </div>
+      <p style="color:var(--text-muted); margin-bottom:1.2rem;">Complete worked solutions for all 8 questions applying the strict mathematical order of operations (Brackets $\rightarrow$ Of $\rightarrow$ Division $\rightarrow$ Multiplication $\rightarrow$ Addition $\rightarrow$ Subtraction).</p>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:1.2rem;">
+
+        <!-- Q1 -->
+        <div class="example-box">
+          <div class="ex-badge">Exercise 2.4 • Q1</div>
+          <p><strong>Evaluate:</strong> $\mathbf{3.21 + 1.45 \times 1.8}$</p>
+          <div style="margin-top:0.6rem; font-size:0.9rem; line-height:1.7;">
+            1. Multiply first: $1.45 \times 1.8 = 2.61$<br>
+            2. Add: $3.21 + 2.61 = \mathbf{5.82}$
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.3rem;">Answer: 5.82</div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="example-box">
+          <div class="ex-badge">Exercise 2.4 • Q2</div>
+          <p><strong>Evaluate:</strong> $\mathbf{88.97 \div 3.1 + 0.74 \times 2.2}$</p>
+          <div style="margin-top:0.6rem; font-size:0.9rem; line-height:1.7;">
+            1. Divide: $88.97 \div 3.1 = 28.7$<br>
+            2. Multiply: $0.74 \times 2.2 = 1.628$<br>
+            3. Add: $28.7 + 1.628 = \mathbf{30.328}$
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.3rem;">Answer: 30.328</div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="example-box">
+          <div class="ex-badge">Exercise 2.4 • Q3</div>
+          <p><strong>Evaluate:</strong> $\mathbf{11.65 + (3.2 - 0.6) \times 2.4}$</p>
+          <div style="margin-top:0.6rem; font-size:0.9rem; line-height:1.7;">
+            1. Brackets: $3.2 - 0.6 = 2.6$<br>
+            2. Multiply: $2.6 \times 2.4 = 6.24$<br>
+            3. Add: $11.65 + 6.24 = \mathbf{17.89}$
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.3rem;">Answer: 17.89</div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="example-box">
+          <div class="ex-badge">Exercise 2.4 • Q4</div>
+          <p><strong>Evaluate:</strong> $\mathbf{1.9 \times 9.4 \div 2.5}$</p>
+          <div style="margin-top:0.6rem; font-size:0.9rem; line-height:1.7;">
+            1. Multiply: $1.9 \times 9.4 = 17.86$<br>
+            2. Divide: $17.86 \div 2.5 = \frac{17.86 \times 4}{10} = \mathbf{7.144}$
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.3rem;">Answer: 7.144</div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="example-box">
+          <div class="ex-badge">Exercise 2.4 • Q5</div>
+          <p><strong>Evaluate:</strong> $\mathbf{2.2 + 0.5 - 1.35 \times 1.4}$</p>
+          <div style="margin-top:0.6rem; font-size:0.9rem; line-height:1.7;">
+            1. Multiply: $1.35 \times 1.4 = 1.89$<br>
+            2. Add: $2.2 + 0.5 = 2.7$<br>
+            3. Subtract: $2.7 - 1.89 = \mathbf{0.81}$
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.3rem;">Answer: 0.81</div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="example-box">
+          <div class="ex-badge">Exercise 2.4 • Q6</div>
+          <p><strong>Evaluate:</strong> $\mathbf{\frac{1}{2}\text{ of }\frac{7}{4} + \frac{3}{4}\text{ of }\frac{12}{5}}$</p>
+          <div style="margin-top:0.6rem; font-size:0.9rem; line-height:1.7;">
+            1. Evaluate "of": $\frac{1}{2} \times \frac{7}{4} = \frac{7}{8}$ and $\frac{3}{4} \times \frac{12}{5} = \frac{9}{5}$<br>
+            2. Add: $\frac{7}{8} + \frac{9}{5} = \frac{35 + 72}{40} = \mathbf{\frac{107}{40} = 2\frac{27}{40}}$
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.3rem;">Answer: $2\frac{27}{40}$ (or 2.675)</div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="example-box">
+          <div class="ex-badge">Exercise 2.4 • Q7 (Nested Brackets)</div>
+          <p><strong>Evaluate:</strong> $\mathbf{3\frac{1}{2} - \left[ \frac{3}{5} \left\{ \frac{1}{3} + \left(2 - \frac{2}{3}\right) \right\} \right]}$</p>
+          <div style="margin-top:0.6rem; font-size:0.9rem; line-height:1.7;">
+            1. Innermost $(2 - \frac{2}{3}) = \frac{4}{3}$<br>
+            2. Curly braces $\{\frac{1}{3} + \frac{4}{3}\} = \frac{5}{3}$<br>
+            3. Square brackets $[\frac{3}{5} \times \frac{5}{3}] = 1$<br>
+            4. Outer subtraction: $3\frac{1}{2} - 1 = \mathbf{2\frac{1}{2} = \frac{5}{2}}$
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.3rem;">Answer: $2\frac{1}{2}$ (or 2.5)</div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="example-box">
+          <div class="ex-badge">Exercise 2.4 • Q8</div>
+          <p><strong>Evaluate:</strong> $\mathbf{\frac{1}{4}\text{ of }\frac{3}{5} + \frac{6}{7} \div \frac{1}{4}}$</p>
+          <div style="margin-top:0.6rem; font-size:0.9rem; line-height:1.7;">
+            1. "Of" first: $\frac{1}{4} \times \frac{3}{5} = \frac{3}{20}$<br>
+            2. Division next: $\frac{6}{7} \div \frac{1}{4} = \frac{6}{7} \times 4 = \frac{24}{7}$<br>
+            3. Add: $\frac{3}{20} + \frac{24}{7} = \frac{21 + 480}{140} = \mathbf{\frac{501}{140} = 3\frac{81}{140}}$
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.3rem;">Answer: $3\frac{81}{140}$</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SUBMODULE 9.5: OBJECTIVE & DRILLS ==================== -->
+  <div id="tab9-sub5" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">🎯</span>
+        <h2>Objective Questions, Fill in the Blanks &amp; True/False</h2>
+      </div>
+      <p style="color:var(--text-muted); margin-bottom:1.2rem;">Self-evaluating interactive MCQs, conceptual fill-in-the-blanks, and rigorous True/False validation.</p>
+
+      <!-- SECTION A: 5 MCQs -->
+      <h3 style="color:var(--primary-glow); margin:1.2rem 0 0.8rem;"><i class="fas fa-check-circle"></i> Part A: Multiple Choice Questions</h3>
+
+      <!-- MCQ 1 -->
+      <div class="mcq-box">
+        <p><strong>1. What is the value of the fraction that is equivalent to $275\%$?</strong></p>
+        <div class="mcq-options">
+          <div class="mcq-option" onclick="checkMCQ(this, false, '12/5 = 2.4 = 240%, not 275%.')">A. $\frac{12}{5}$</div>
+          <div class="mcq-option" onclick="checkMCQ(this, false, '12/4 = 3 = 300%.')">B. $\frac{12}{4}$</div>
+          <div class="mcq-option" onclick="checkMCQ(this, false, '11/5 = 2.2 = 220%.')">C. $\frac{11}{5}$</div>
+          <div class="mcq-option" onclick="checkMCQ(this, true, 'Correct! 275% = 275/100. Dividing numerator and denominator by 25 gives 11/4.')">D. $\frac{11}{4}$</div>
+        </div>
+        <div class="mcq-explanation"></div>
+      </div>
+
+      <!-- MCQ 2 -->
+      <div class="mcq-box">
+        <p><strong>2. What is the value of the fraction $x$ with a denominator of $5$ such that $\frac{4}{10} + x = 1$?</strong></p>
+        <div class="mcq-options">
+          <div class="mcq-option" onclick="checkMCQ(this, false, '4/10 + 1/5 = 2/5 + 1/5 = 3/5 != 1.')">A. $\frac{1}{5}$</div>
+          <div class="mcq-option" onclick="checkMCQ(this, false, '4/10 + 2/5 = 4/5 != 1.')">B. $\frac{2}{5}$</div>
+          <div class="mcq-option" onclick="checkMCQ(this, true, 'Correct! 4/10 simplifies to 2/5. Then 1 - 2/5 = 3/5.')">C. $\frac{3}{5}$</div>
+          <div class="mcq-option" onclick="checkMCQ(this, false, '4/10 + 4/5 = 6/5 > 1.')">D. $\frac{4}{5}$</div>
+        </div>
+        <div class="mcq-explanation"></div>
+      </div>
+
+      <!-- MCQ 3 -->
+      <div class="mcq-box">
+        <p><strong>3. In the given set, which of the images do NOT represent the fraction $\frac{2}{3}$?</strong></p>
+        
+        <!-- SVG Option Illustrations -->
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:10px; margin: 10px 0;">
+          <!-- (a) -->
+          <div style="text-align:center; padding:8px; background:var(--bg-secondary); border-radius:8px; border:1px solid var(--border);">
+            <svg viewBox="0 0 80 80" style="width:60px; height:60px; margin:auto;">
+              <rect x="10" y="10" width="60" height="20" fill="var(--primary-glow)"/>
+              <rect x="10" y="30" width="60" height="20" fill="var(--primary-glow)"/>
+              <rect x="10" y="50" width="60" height="20" fill="transparent" stroke="var(--text-muted)"/>
+              <rect x="10" y="10" width="60" height="60" fill="none" stroke="var(--text-title)" stroke-width="1.5"/>
+              <line x1="10" y1="30" x2="70" y2="30" stroke="var(--text-title)"/>
+              <line x1="10" y1="50" x2="70" y2="50" stroke="var(--text-title)"/>
+            </svg>
+            <div style="font-size:0.8rem; font-weight:bold; margin-top:4px;">(a) 2 of 3 bars</div>
+          </div>
+          <!-- (b) -->
+          <div style="text-align:center; padding:8px; background:var(--bg-secondary); border-radius:8px; border:1px solid var(--border);">
+            <svg viewBox="0 0 80 80" style="width:60px; height:60px; margin:auto;">
+              <rect x="10" y="10" width="60" height="60" fill="none" stroke="var(--text-title)" stroke-width="1.5"/>
+              <line x1="30" y1="10" x2="30" y2="70" stroke="var(--text-title)"/>
+              <line x1="50" y1="10" x2="50" y2="70" stroke="var(--text-title)"/>
+              <line x1="10" y1="30" x2="70" y2="30" stroke="var(--text-title)"/>
+              <line x1="10" y1="50" x2="70" y2="50" stroke="var(--text-title)"/>
+              <rect x="10" y="10" width="20" height="20" fill="var(--primary-glow)"/>
+              <rect x="30" y="10" width="20" height="20" fill="var(--primary-glow)"/>
+              <rect x="10" y="30" width="20" height="20" fill="var(--primary-glow)"/>
+              <rect x="30" y="30" width="20" height="20" fill="var(--primary-glow)"/>
+              <rect x="10" y="50" width="20" height="20" fill="var(--primary-glow)"/>
+              <rect x="30" y="50" width="20" height="20" fill="var(--primary-glow)"/>
+            </svg>
+            <div style="font-size:0.8rem; font-weight:bold; margin-top:4px;">(b) 6 of 9 squares</div>
+          </div>
+          <!-- (c) -->
+          <div style="text-align:center; padding:8px; background:var(--bg-secondary); border-radius:8px; border:1px solid var(--border);">
+            <svg viewBox="0 0 80 80" style="width:60px; height:60px; margin:auto;">
+              <circle cx="40" cy="40" r="30" fill="none" stroke="var(--text-title)" stroke-width="1.5"/>
+              <path d="M 40 40 L 40 10 A 30 30 0 0 1 65.98 55 Z" fill="var(--primary-glow)"/>
+              <path d="M 40 40 L 65.98 55 A 30 30 0 0 1 14.02 55 Z" fill="var(--primary-glow)"/>
+              <line x1="40" y1="40" x2="40" y2="10" stroke="var(--text-title)"/>
+              <line x1="40" y1="40" x2="65.98" y2="55" stroke="var(--text-title)"/>
+              <line x1="40" y1="40" x2="14.02" y2="55" stroke="var(--text-title)"/>
+            </svg>
+            <div style="font-size:0.8rem; font-weight:bold; margin-top:4px;">(c) 2 of 3 sectors</div>
+          </div>
+          <!-- (d) -->
+          <div style="text-align:center; padding:8px; background:var(--bg-secondary); border-radius:8px; border:1px solid var(--border);">
+            <svg viewBox="0 0 80 80" style="width:60px; height:60px; margin:auto;">
+              <polygon points="40,10 10,70 70,70" fill="none" stroke="var(--text-title)" stroke-width="1.5"/>
+              <line x1="40" y1="10" x2="40" y2="48" stroke="var(--text-title)"/>
+              <line x1="10" y1="70" x2="40" y2="48" stroke="var(--text-title)"/>
+              <line x1="70" y1="70" x2="40" y2="48" stroke="var(--text-title)"/>
+            </svg>
+            <div style="font-size:0.8rem; font-weight:bold; margin-top:4px; color:var(--accent-coral);">(d) Unequal partitions</div>
+          </div>
+        </div>
+
+        <div class="mcq-options">
+          <div class="mcq-option" onclick="checkMCQ(this, false, 'Figure (a) has 3 equal bars with 2 shaded, so it equals 2/3.')">A. Figure (a)</div>
+          <div class="mcq-option" onclick="checkMCQ(this, false, 'Figure (b) has 6 of 9 equal squares shaded: 6/9 = 2/3.')">B. Figure (b)</div>
+          <div class="mcq-option" onclick="checkMCQ(this, false, 'Figure (c) has 2 of 3 equal sectors (120 deg each) shaded: 2/3.')">C. Figure (c)</div>
+          <div class="mcq-option" onclick="checkMCQ(this, true, 'Correct! Figure (d) does NOT partition into equal parts or represent 2/3.')">D. Figure (d)</div>
+        </div>
+        <div class="mcq-explanation"></div>
+      </div>
+
+      <!-- MCQ 4 -->
+      <div class="mcq-box">
+        <p><strong>4. What is the value of $120\frac{37}{1000000}$?</strong></p>
+        <div class="mcq-options">
+          <div class="mcq-option" onclick="checkMCQ(this, true, 'Correct! 37/1000000 has 6 decimal places: 0.000037. Adding 120 gives 120.000037.')">A. $120.000037$</div>
+          <div class="mcq-option" onclick="checkMCQ(this, false, '120.00037 has only 5 decimal places (divided by 100,000).')">B. $120.00037$</div>
+          <div class="mcq-option" onclick="checkMCQ(this, false, '1200.0037 changes the whole number to 1200.')">C. $1200.0037$</div>
+          <div class="mcq-option" onclick="checkMCQ(this, false, 'Incorrect.')">D. $12000.037$</div>
+        </div>
+        <div class="mcq-explanation"></div>
+      </div>
+
+      <!-- MCQ 5 -->
+      <div class="mcq-box">
+        <p><strong>5. What is the value of $2 + 2.2 + 22.2 + 222.2$?</strong></p>
+        <div class="mcq-options">
+          <div class="mcq-option" onclick="checkMCQ(this, false, 'Incorrect.')">A. $2.486$</div>
+          <div class="mcq-option" onclick="checkMCQ(this, false, 'Incorrect.')">B. $24.86$</div>
+          <div class="mcq-option" onclick="checkMCQ(this, true, 'Correct! 2.0 + 2.2 + 22.2 + 222.2 = 248.6.')">C. $248.6$</div>
+          <div class="mcq-option" onclick="checkMCQ(this, false, 'Incorrect.')">D. $2486$</div>
+        </div>
+        <div class="mcq-explanation"></div>
+      </div>
+
+      <!-- SECTION B: Fill in the Blanks -->
+      <h3 style="color:var(--accent-amber); margin:2rem 0 0.8rem;"><i class="fas fa-pen-fancy"></i> Part B: Fill in the Blanks</h3>
+      <div style="display:flex; flex-direction:column; gap:0.9rem;">
+
+        <div style="padding:0.9rem 1.2rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div><strong>6.</strong> $\frac{14}{17} \div 1 = \underline{\hspace{2cm}}$</div>
+          <button type="button" class="tool-btn" style="font-size:0.8rem; padding:4px 10px;" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none';">Reveal</button>
+          <span style="display:none; color:var(--accent-emerald); font-weight:bold;">Answer: $\mathbf{\frac{14}{17}}$ (Any number divided by 1 remains unchanged)</span>
+        </div>
+
+        <div style="padding:0.9rem 1.2rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div><strong>7.</strong> $0 \div \frac{1}{5} = \underline{\hspace{2cm}}$</div>
+          <button type="button" class="tool-btn" style="font-size:0.8rem; padding:4px 10px;" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none';">Reveal</button>
+          <span style="display:none; color:var(--accent-emerald); font-weight:bold;">Answer: $\mathbf{0}$ ($0 \times 5 = 0$)</span>
+        </div>
+
+        <div style="padding:0.9rem 1.2rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div><strong>8.</strong> If an improper fraction is divided by a proper fraction, the result after division is $\underline{\hspace{2cm}}$ than the improper fraction.</div>
+          <button type="button" class="tool-btn" style="font-size:0.8rem; padding:4px 10px;" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none';">Reveal</button>
+          <span style="display:none; color:var(--accent-emerald); font-weight:bold;">Answer: $\mathbf{greater}$ (Dividing by proper fraction multiplies by reciprocal $> 1$)</span>
+        </div>
+
+        <div style="padding:0.9rem 1.2rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div><strong>9.</strong> The result of the division of a decimal by $0.95$ is $\underline{\hspace{2cm}}$ than the original decimal.</div>
+          <button type="button" class="tool-btn" style="font-size:0.8rem; padding:4px 10px;" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none';">Reveal</button>
+          <span style="display:none; color:var(--accent-emerald); font-weight:bold;">Answer: $\mathbf{greater}$ (Since divisor $0.95 < 1$)</span>
+        </div>
+
+        <div style="padding:0.9rem 1.2rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div><strong>10.</strong> There are $\underline{\hspace{2cm}}$ hours in $1.75\text{ days}$.</div>
+          <button type="button" class="tool-btn" style="font-size:0.8rem; padding:4px 10px;" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none';">Reveal</button>
+          <span style="display:none; color:var(--accent-emerald); font-weight:bold;">Answer: $\mathbf{42}$ ($1.75 \times 24 = 24 + 18 = 42\text{ hours}$)</span>
+        </div>
+
+        <div style="padding:0.9rem 1.2rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div><strong>11.</strong> In two equivalent fractions if the numerator of the first fraction is twice the numerator of the second fraction, the denominator of the second fraction is $\underline{\hspace{2cm}}$ of the denominator of the first fraction.</div>
+          <button type="button" class="tool-btn" style="font-size:0.8rem; padding:4px 10px;" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none';">Reveal</button>
+          <span style="display:none; color:var(--accent-emerald); font-weight:bold;">Answer: $\mathbf{half\text{ (or }\frac{1}{2}\text{)}}$ ($\frac{2N_2}{D_1} = \frac{N_2}{D_2} \implies D_2 = \frac{1}{2}D_1$)</span>
+        </div>
+
+      </div>
+
+      <!-- SECTION C: State True or False -->
+      <h3 style="color:var(--accent-teal); margin:2rem 0 0.8rem;"><i class="fas fa-toggle-on"></i> Part C: State True or False</h3>
+      <div style="display:flex; flex-direction:column; gap:0.9rem;">
+
+        <div style="padding:0.9rem 1.2rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div><strong>12.</strong> When a fractional number is divided by $1$, the quotient is the fraction itself.</div>
+          <button type="button" class="tool-btn" style="font-size:0.8rem; padding:4px 10px;" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none';">Check</button>
+          <span style="display:none; color:var(--accent-emerald); font-weight:bold;">✅ TRUE ($\frac{a}{b} \div 1 = \frac{a}{b}$)</span>
+        </div>
+
+        <div style="padding:0.9rem 1.2rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div><strong>13.</strong> When any fraction is divided by itself, the quotient is zero.</div>
+          <button type="button" class="tool-btn" style="font-size:0.8rem; padding:4px 10px;" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none';">Check</button>
+          <span style="display:none; color:var(--accent-coral); font-weight:bold;">❌ FALSE (The quotient is $1$, not $0$: $\frac{a}{b} \div \frac{a}{b} = 1$)</span>
+        </div>
+
+        <div style="padding:0.9rem 1.2rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div><strong>14.</strong> The reciprocal of zero does not exist.</div>
+          <button type="button" class="tool-btn" style="font-size:0.8rem; padding:4px 10px;" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none';">Check</button>
+          <span style="display:none; color:var(--accent-emerald); font-weight:bold;">✅ TRUE (Division by zero $\frac{1}{0}$ is undefined)</span>
+        </div>
+
+        <div style="padding:0.9rem 1.2rem; background:var(--bg-secondary); border-radius:var(--radius-sm); border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div><strong>15.</strong> Division of a decimal by $1.01$ is less than the value of the original decimal.</div>
+          <button type="button" class="tool-btn" style="font-size:0.8rem; padding:4px 10px;" onclick="this.nextElementSibling.style.display='inline'; this.style.display='none';">Check</button>
+          <span style="display:none; color:var(--accent-emerald); font-weight:bold;">✅ TRUE (Dividing any positive number by a quantity $> 1$ decreases its value)</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SUBMODULE 9.6: PUT ON YOUR THINKING CAP! ==================== -->
+  <div id="tab9-sub6" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">💡</span>
+        <h2>Put On Your Thinking Cap! (HOTS &amp; Mathematical Reasoning)</h2>
+      </div>
+      <p style="color:var(--text-muted); margin-bottom:1.2rem;">Higher Order Thinking Skills (HOTS) challenge questions from the teacher's worksheet, exploring alphabet fractions, quotient bounds, and proper fraction cardinality proofs.</p>
+
+      <!-- Thinking Cap Q1 -->
+      <div class="example-box">
+        <div class="ex-badge">Thinking Cap • Challenge 1</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">1. Which letter comes $\frac{3}{7}$ of the way among A and N?</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Complete Mathematical Deduction</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p><strong>Step 1: Identify the positions of letters A and N in the English alphabet:</strong><br>
+            $\text{A} = 1\text{st letter}$<br>
+            $\text{N} = 14\text{th letter}$<br>
+            Total count of letters in the set from A through N inclusive is $\mathbf{14\text{ letters}}$ (A, B, C, D, E, F, G, H, I, J, K, L, M, N).</p>
+            
+            <p><strong>Step 2: Calculate $\frac{3}{7}$ of the total count of 14:</strong><br>
+            $$\text{Target Position} = \frac{3}{7} \times 14 = 3 \times 2 = \mathbf{6\text{th letter}}$$</p>
+            
+            <p><strong>Step 3: Identify the 6th letter of the alphabet:</strong><br>
+            $1 = \text{A}, 2 = \text{B}, 3 = \text{C}, 4 = \text{D}, 5 = \text{E}, \mathbf{6 = F}$.</p>
+            
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: The letter is $\mathbf{F}$.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Thinking Cap Q2 -->
+      <div class="example-box">
+        <div class="ex-badge">Thinking Cap • Challenge 2</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">2. In the division sum $4,520 \div 12$, place the decimal point in the dividend and divisor so that the quotient is between $37$ and $38$.</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Complete Mathematical Deduction</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p><strong>Analysis of the original division:</strong><br>
+            $$4520 \div 12 = 376.666\dots$$
+            Notice that $376.666\dots$ is exactly $10$ times the target range ($37 < \text{Quotient} < 38$).</p>
+
+            <p><strong>Target Quotient:</strong><br>
+            $$37 < 37.666\dots < 38$$
+            To make the quotient $10$ times smaller ($\frac{376.666\dots}{10} = 37.666\dots$):</p>
+
+            <ul style="margin-left:1.3rem; line-height:1.8;">
+              <li><strong>Option 1 (Move dividend decimal 1 place left):</strong><br>
+              Dividend $= \mathbf{452.0}$ (or $452$), Divisor $= \mathbf{12}$<br>
+              $$452.0 \div 12 = \mathbf{37.666\dots}$$ (lies between 37 and 38 ✅)</li>
+              
+              <li><strong>Option 2 (Shift both dividend and divisor):</strong><br>
+              Dividend $= \mathbf{45.2}$, Divisor $= \mathbf{1.2}$<br>
+              $$45.2 \div 1.2 = \frac{452}{12} = \mathbf{37.666\dots}$$ ✅</li>
+
+              <li><strong>Option 3:</strong><br>
+              Dividend $= \mathbf{4.520}$, Divisor $= \mathbf{0.12}$<br>
+              $$4.520 \div 0.12 = \frac{452}{12} = \mathbf{37.666\dots}$$ ✅</li>
+            </ul>
+
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: Place the decimal points to create $\mathbf{452.0 \div 12}$ (or $\mathbf{45.2 \div 1.2}$), yielding quotient $\approx \mathbf{37.67}$.
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Thinking Cap Q3 -->
+      <div class="example-box">
+        <div class="ex-badge">Thinking Cap • Challenge 3</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">3. Tushar says that for any given denominator, the number of like fractions that are also proper fractions will always be one less than the value of the denominator. Is he correct? Justify your answer.</h4>
+        <details style="margin-top:0.6rem;">
+          <summary style="cursor:pointer; color:var(--primary-glow); font-weight:600;"><i class="fas fa-chevron-right"></i> View Complete Mathematical Proof</summary>
+          <div style="margin-top:0.6rem; line-height:1.8; padding-left:0.5rem;">
+            <p style="color:var(--accent-emerald); font-size:1.05rem; font-weight:bold;">
+              ✅ Yes, Tushar is completely correct!
+            </p>
+
+            <p><strong>Formal Mathematical Justification:</strong></p>
+            <ol style="margin-left:1.3rem; line-height:1.8;">
+              <li><strong>Definition of Proper Fraction:</strong><br>
+              A fraction $\frac{n}{d}$ is defined as a <em>proper fraction</em> if its numerator is strictly less than its denominator, with positive integer numerator ($1 \le n < d$).</li>
+
+              <li><strong>Definition of Like Fractions:</strong><br>
+              Like fractions are fractions sharing the exact same denominator $d$.</li>
+
+              <li><strong>Counting the valid numerators:</strong><br>
+              For a given positive integer denominator $d$ ($d \ge 2$), the possible positive whole number numerators that form a proper fraction are:
+              $$\{1, 2, 3, \dots, d - 1\}$$
+              The cardinality (count) of this set is strictly:
+              $$\mathbf{(d - 1)}$$
+              which is exactly <strong>one less than the value of the denominator</strong>.</li>
+            </ol>
+
+            <p><strong>Concrete Examples:</strong><br>
+            - If denominator $d = 4$, the like proper fractions are $\frac{1}{4}, \frac{2}{4}, \frac{3}{4} \implies 4 - 1 = \mathbf{3\text{ fractions}}$.<br>
+            - If denominator $d = 7$, the like proper fractions are $\frac{1}{7}, \frac{2}{7}, \frac{3}{7}, \frac{4}{7}, \frac{5}{7}, \frac{6}{7} \implies 7 - 1 = \mathbf{6\text{ fractions}}$.</p>
+
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:0.4rem;">
+              ✅ Conclusion: Tushar's statement is mathematically sound and universally true for all natural number denominators $d \ge 2$.
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ==================== TAB 10: TEACHER'S PRACTICE PAPER - RATIONAL NUMBERS ==================== -->
+<div id="tab-teacher-rational" class="tab-panel">
+  
+  <!-- CHAPTER BANNER & TEACHER WORKSHEET HEADER -->
+  <div class="chapter-banner" style="background: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(30, 58, 138, 0.9)); border: 1px solid rgba(59, 130, 246, 0.4); box-shadow: 0 8px 32px rgba(37, 99, 235, 0.2); margin-bottom: 2rem; border-radius: 16px; padding: 2rem;">
+    <div class="banner-badges" style="display:flex; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.8rem;">
+      <span class="badge" style="background:rgba(59, 130, 246, 0.2); color:#60a5fa; border:1px solid rgba(59, 130, 246, 0.4); padding:4px 10px; border-radius:20px; font-size:0.75rem; font-weight:700;"><i class="fas fa-chalkboard-teacher"></i> Class Teacher Assignment</span>
+      <span class="badge" style="background:rgba(16, 185, 129, 0.2); color:#34d399; border:1px solid rgba(16, 185, 129, 0.4); padding:4px 10px; border-radius:20px; font-size:0.75rem; font-weight:700;"><i class="fas fa-check-double"></i> 100% Solved &amp; Verified</span>
+      <span class="badge" style="background:rgba(245, 158, 11, 0.2); color:#fbbf24; border:1px solid rgba(245, 158, 11, 0.4); padding:4px 10px; border-radius:20px; font-size:0.75rem; font-weight:700;"><i class="fas fa-book-open"></i> Unit 3: Rational Numbers</span>
+    </div>
+    <h1 class="banner-title" style="font-size:2rem; font-weight:800; color:#fff; margin:0 0 0.5rem 0;">Class Practice Paper: Rational Numbers</h1>
+    <p class="banner-subtitle" style="font-size:1rem; color:#93c5fd; margin:0 0 1.2rem 0;">
+      Concept Practice Sheet 3 &bull; Exercises 3.1 &amp; 3.2, Number Lines, Standard Form, Equivalences, Objective &amp; Thinking Cap Drills.
+    </p>
+
+    <!-- ACTION BUTTONS: VIEW ORIGINAL SCANS TOGGLE -->
+    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+      <button class="action-btn" onclick="toggleScanViewer('rational-scans-tray')" style="background:linear-gradient(135deg, #2563eb, #1d4ed8); color:white; border:none; padding:10px 18px; border-radius:10px; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:8px; box-shadow:0 4px 12px rgba(37,99,235,0.35);">
+        <i class="fas fa-file-image"></i>
+        <span>Toggle Original Scans (Pages 7 &amp; 9)</span>
+      </button>
+      <button class="action-btn" onclick="expandAllSolutions('tab-teacher-rational')" style="background:rgba(255,255,255,0.08); color:var(--text-title); border:1px solid rgba(255,255,255,0.2); padding:10px 18px; border-radius:10px; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
+        <i class="fas fa-folder-open"></i>
+        <span>Expand All Solutions</span>
+      </button>
+      <button class="action-btn" onclick="collapseAllSolutions('tab-teacher-rational')" style="background:rgba(255,255,255,0.08); color:var(--text-title); border:1px solid rgba(255,255,255,0.2); padding:10px 18px; border-radius:10px; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:8px;">
+        <i class="fas fa-folder"></i>
+        <span>Collapse All</span>
+      </button>
+    </div>
+
+    <!-- EXPANDABLE ORIGINAL SCANS DRAWER -->
+    <div id="rational-scans-tray" style="display:none; margin-top:1.5rem; background:rgba(15, 23, 42, 0.85); border:1px solid rgba(59, 130, 246, 0.3); border-radius:12px; padding:1.2rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h4 style="margin:0; color:#93c5fd; font-size:1rem;"><i class="fas fa-images"></i> Original Teacher Practice Sheets (Click any page to enlarge)</h4>
+        <span style="font-size:0.8rem; color:#cbd5e1;">Pages 7 &amp; 9</span>
+      </div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:1rem;">
+        <div style="text-align:center; background:rgba(0,0,0,0.3); padding:0.8rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
+          <p style="margin:0 0 0.5rem 0; font-weight:600; font-size:0.85rem; color:#cbd5e1;">Page 7 &bull; Ex 3.1 &amp; Ex 3.2</p>
+          <img src="practice_rational_page1.jpg" alt="Practice Sheet Page 7" style="max-height:280px; width:auto; border-radius:6px; cursor:zoom-in; border:1px solid #334155; transition:transform 0.2s;" onclick="openImageModal(this.src, 'Page 7 - Ex 3.1 &amp; Ex 3.2')">
+        </div>
+        <div style="text-align:center; background:rgba(0,0,0,0.3); padding:0.8rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
+          <p style="margin:0 0 0.5rem 0; font-weight:600; font-size:0.85rem; color:#cbd5e1;">Page 9 &bull; Objective, Blanks, T/F &amp; Thinking Cap</p>
+          <img src="practice_rational_page2.jpg" alt="Practice Sheet Page 9" style="max-height:280px; width:auto; border-radius:6px; cursor:zoom-in; border:1px solid #334155; transition:transform 0.2s;" onclick="openImageModal(this.src, 'Page 9 - Objective, Blanks, True/False &amp; Thinking Cap')">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMODULE TABS FOR RATIONAL NUMBERS -->
+  <div class="submodule-nav" style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.5rem; border-bottom:1px solid var(--border-color); padding-bottom:0.8rem;">
+    <button class="submodule-btn active" onclick="switchSubTab('sec-r31', this)" style="padding:8px 16px; border-radius:8px; border:none; background:var(--surface); color:var(--text-title); font-weight:600; cursor:pointer;">
+      <i class="fas fa-list-ol"></i> Ex 3.1: Intro to Rationals
+    </button>
+    <button class="submodule-btn" onclick="switchSubTab('sec-r32', this)" style="padding:8px 16px; border-radius:8px; border:none; background:transparent; color:var(--text-muted); font-weight:600; cursor:pointer;">
+      <i class="fas fa-calculator"></i> Ex 3.2: Operations
+    </button>
+    <button class="submodule-btn" onclick="switchSubTab('sec-robj', this)" style="padding:8px 16px; border-radius:8px; border:none; background:transparent; color:var(--text-muted); font-weight:600; cursor:pointer;">
+      <i class="fas fa-check-circle"></i> Objective &amp; Blanks
+    </button>
+    <button class="submodule-btn" onclick="switchSubTab('sec-rtf', this)" style="padding:8px 16px; border-radius:8px; border:none; background:transparent; color:var(--text-muted); font-weight:600; cursor:pointer;">
+      <i class="fas fa-balance-scale"></i> True / False
+    </button>
+    <button class="submodule-btn" onclick="switchSubTab('sec-rthink', this)" style="padding:8px 16px; border-radius:8px; border:none; background:transparent; color:var(--text-muted); font-weight:600; cursor:pointer;">
+      <i class="fas fa-brain"></i> Thinking Cap (Challenging)
+    </button>
+  </div>
+
+  <!-- ==================== SUB-SECTION: EXERCISE 3.1 ==================== -->
+  <div id="sec-r31" class="submodule-pane active">
+    <div class="section-card" style="background:var(--surface); border:1px solid var(--border-color); border-radius:12px; padding:1.8rem; margin-bottom:1.5rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; border-bottom:1px solid var(--border-color); padding-bottom:0.8rem;">
+        <h2 style="margin:0; font-size:1.4rem; color:var(--text-title); display:flex; align-items:center; gap:0.5rem;">
+          <span style="background:rgba(37,99,235,0.2); color:#60a5fa; padding:4px 10px; border-radius:8px; font-size:0.9rem;">Ex 3.1</span>
+          Introduction to Rational Numbers
+        </h2>
+        <span style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-file-alt"></i> Page 7 &bull; Questions 1 to 8</span>
+      </div>
+
+      <!-- Q1 -->
+      <div class="problem-box" style="margin-bottom:1.5rem; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+        <div style="font-weight:700; color:var(--accent-cyan); margin-bottom:0.5rem;">
+          Q1. For each rational number, write two rational numbers that represent the same number:
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:0.8rem; margin-bottom:1rem; font-size:1.05rem;">
+          <div>(a) $\frac{-7}{15}$</div>
+          <div>(b) $\frac{5}{-2}$</div>
+          <div>(c) $-\frac{8}{11}$</div>
+          <div>(d) $\frac{9}{4}$</div>
+        </div>
+
+        <details class="solution-drawer" style="background:rgba(16, 185, 129, 0.05); border:1px solid rgba(16, 185, 129, 0.2); border-radius:8px; padding:0.8rem 1rem;">
+          <summary style="font-weight:600; color:#34d399; cursor:pointer; user-select:none;">
+            <i class="fas fa-lightbulb"></i> View Detailed Step-by-Step Solution
+          </summary>
+          <div style="margin-top:0.8rem; font-size:0.95rem; line-height:1.6;">
+            <p><strong>Rule:</strong> Multiplying or dividing both numerator and denominator of a rational number $\frac{p}{q}$ by the same non-zero integer $k$ yields an equivalent rational number: $\frac{p \times k}{q \times k} = \frac{p}{q}$.</p>
+            <ul>
+              <li><strong>(a) $\frac{-7}{15}$:</strong>
+                <br>&bull; Multiply numerator and denominator by $2$: $\frac{-7 \times 2}{15 \times 2} = \mathbf{\frac{-14}{30}}$.
+                <br>&bull; Multiply numerator and denominator by $3$: $\frac{-7 \times 3}{15 \times 3} = \mathbf{\frac{-21}{45}}$ (or $\frac{7}{-15}$).
+              </li>
+              <li><strong>(b) $\frac{5}{-2}$:</strong>
+                <br>&bull; Standard form ($k = -1$): $\frac{5 \times (-1)}{-2 \times (-1)} = \mathbf{\frac{-5}{2}}$.
+                <br>&bull; Multiply by $2$: $\frac{5 \times 2}{-2 \times 2} = \mathbf{\frac{10}{-4}}$ (or $\frac{-10}{4}$).
+              </li>
+              <li><strong>(c) $-\frac{8}{11} = \frac{-8}{11}$:</strong>
+                <br>&bull; Multiply by $2$: $\frac{-8 \times 2}{11 \times 2} = \mathbf{\frac{-16}{22}}$.
+                <br>&bull; Multiply by $3$: $\frac{-8 \times 3}{11 \times 3} = \mathbf{\frac{-24}{33}}$.
+              </li>
+              <li><strong>(d) $\frac{9}{4}$:</strong>
+                <br>&bull; Multiply by $2$: $\frac{9 \times 2}{4 \times 2} = \mathbf{\frac{18}{8}}$.
+                <br>&bull; Multiply by $3$: $\frac{9 \times 3}{4 \times 3} = \mathbf{\frac{27}{12}}$.
+              </li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q2 -->
+      <div class="problem-box" style="margin-bottom:1.5rem; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+        <div style="font-weight:700; color:var(--accent-cyan); margin-bottom:0.5rem;">
+          Q2. Which of the following pairs of rational numbers are equivalent?
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:0.8rem; margin-bottom:1rem; font-size:1.05rem;">
+          <div>(a) $\frac{21}{25}$ and $\frac{7}{5}$</div>
+          <div>(b) $\frac{-36}{42}$ and $\frac{-6}{7}$</div>
+          <div>(c) $\frac{-45}{-90}$ and $\frac{9}{18}$</div>
+        </div>
+
+        <details class="solution-drawer" style="background:rgba(16, 185, 129, 0.05); border:1px solid rgba(16, 185, 129, 0.2); border-radius:8px; padding:0.8rem 1rem;">
+          <summary style="font-weight:600; color:#34d399; cursor:pointer; user-select:none;">
+            <i class="fas fa-lightbulb"></i> View Detailed Step-by-Step Solution
+          </summary>
+          <div style="margin-top:0.8rem; font-size:0.95rem; line-height:1.6;">
+            <p><strong>Method (Cross-Product or Simplest Form):</strong> $\frac{a}{b} = \frac{c}{d} \iff a \times d = b \times c$.</p>
+            <ul>
+              <li><strong>(a) $\frac{21}{25}$ and $\frac{7}{5}$:</strong>
+                <br>Cross products: $21 \times 5 = 105$, but $25 \times 7 = 175$.
+                <br>Since $105 \neq 175$, they are <strong>NOT equivalent</strong>. (Notice $\frac{7}{5} = \frac{35}{25} \neq \frac{21}{25}$).
+              </li>
+              <li><strong>(b) $\frac{-36}{42}$ and $\frac{-6}{7}$:</strong>
+                <br>Simplify $\frac{-36}{42}$ by dividing both terms by $\gcd(36, 42) = 6$:
+                $$\frac{-36 \div 6}{42 \div 6} = \frac{-6}{7}$$
+                <br>Since both are identical, they are <strong>EQUIVALENT</strong>. (Cross-product: $-36 \times 7 = -252 = 42 \times (-6)$).
+              </li>
+              <li><strong>(c) $\frac{-45}{-90}$ and $\frac{9}{18}$:</strong>
+                <br>Simplify first fraction: $\frac{-45}{-90} = \frac{45}{90} = \frac{1}{2}$.
+                <br>Simplify second fraction: $\frac{9}{18} = \frac{1}{2}$.
+                <br>Both equal $\frac{1}{2}$, hence they are <strong>EQUIVALENT</strong>.
+              </li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q3 -->
+      <div class="problem-box" style="margin-bottom:1.5rem; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+        <div style="font-weight:700; color:var(--accent-cyan); margin-bottom:0.5rem;">
+          Q3. Is the rational number $-3\frac{1}{2}$ shown correctly on the given number line? If not, represent it on its correct position.
+        </div>
+        <div style="background:rgba(0,0,0,0.25); border:1px dashed #475569; border-radius:8px; padding:1rem; margin-bottom:0.8rem; text-align:center;">
+          <svg width="460" height="70" viewBox="0 0 460 70" style="max-width:100%;">
+            <!-- Line -->
+            <line x1="20" y1="35" x2="440" y2="35" stroke="#94a3b8" stroke-width="2.5" />
+            <polygon points="15,35 25,30 25,40" fill="#94a3b8" />
+            <polygon points="445,35 435,30 435,40" fill="#94a3b8" />
+            <!-- Ticks -->
+            <line x1="60" y1="27" x2="60" y2="43" stroke="#e2e8f0" stroke-width="2" />
+            <text x="60" y="58" fill="#e2e8f0" font-size="13" text-anchor="middle">-4</text>
+            <line x1="140" y1="27" x2="140" y2="43" stroke="#e2e8f0" stroke-width="2" />
+            <text x="140" y="58" fill="#e2e8f0" font-size="13" text-anchor="middle">-3</text>
+            <line x1="220" y1="27" x2="220" y2="43" stroke="#e2e8f0" stroke-width="2" />
+            <text x="220" y="58" fill="#e2e8f0" font-size="13" text-anchor="middle">-2</text>
+            <line x1="300" y1="27" x2="300" y2="43" stroke="#e2e8f0" stroke-width="2" />
+            <text x="300" y="58" fill="#e2e8f0" font-size="13" text-anchor="middle">-1</text>
+            <line x1="380" y1="27" x2="380" y2="43" stroke="#e2e8f0" stroke-width="2" />
+            <text x="380" y="58" fill="#e2e8f0" font-size="13" text-anchor="middle">0</text>
+            <!-- Incorrect plotted point in problem -->
+            <circle cx="180" cy="35" r="5" fill="#f87171" />
+            <text x="180" y="20" fill="#f87171" font-size="13" font-weight="bold" text-anchor="middle">$-3\frac{1}{2}$ (Shown here)</text>
+          </svg>
+        </div>
+
+        <details class="solution-drawer" style="background:rgba(16, 185, 129, 0.05); border:1px solid rgba(16, 185, 129, 0.2); border-radius:8px; padding:0.8rem 1rem;">
+          <summary style="font-weight:600; color:#34d399; cursor:pointer; user-select:none;">
+            <i class="fas fa-lightbulb"></i> View Detailed Step-by-Step Solution
+          </summary>
+          <div style="margin-top:0.8rem; font-size:0.95rem; line-height:1.6;">
+            <p><strong>Answer:</strong> <span style="color:#f87171; font-weight:bold;">NO, it is NOT shown correctly.</span></p>
+            <p><strong>Reason:</strong>
+              <br>&bull; The mixed number $-3\frac{1}{2} = -3.5$.
+              <br>&bull; Negative numbers decrease in value as we move to the left. Therefore, $-3.5$ lies strictly <strong>between $-3$ and $-4$</strong>, exactly at the midpoint of $-3$ and $-4$.
+              <br>&bull; In the diagram, the dot is placed at $-2.5$ (midpoint of $-2$ and $-3$). The author mistakenly counted from $0$ as if it were $2.5$.
+            </p>
+            <p><strong>Correct Position:</strong> The midpoint between $-3$ and $-4$ (at coordinate $x = -3.5$).</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q4 -->
+      <div class="problem-box" style="margin-bottom:1.5rem; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+        <div style="font-weight:700; color:var(--accent-cyan); margin-bottom:0.5rem;">
+          Q4. Which rational number in each pair is smaller?
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:0.8rem; margin-bottom:1rem; font-size:1.05rem;">
+          <div>(a) $\frac{2}{3}$ or $\frac{4}{7}$</div>
+          <div>(b) $-\frac{4}{3}$ or $-\frac{5}{3}$</div>
+          <div>(c) $-1\frac{3}{5}$ or $-1\frac{4}{5}$</div>
+          <div>(d) $\frac{-7}{9}$ or $\frac{-3}{4}$</div>
+        </div>
+
+        <details class="solution-drawer" style="background:rgba(16, 185, 129, 0.05); border:1px solid rgba(16, 185, 129, 0.2); border-radius:8px; padding:0.8rem 1rem;">
+          <summary style="font-weight:600; color:#34d399; cursor:pointer; user-select:none;">
+            <i class="fas fa-lightbulb"></i> View Detailed Step-by-Step Solution
+          </summary>
+          <div style="margin-top:0.8rem; font-size:0.95rem; line-height:1.6;">
+            <ul>
+              <li><strong>(a) $\frac{2}{3}$ or $\frac{4}{7}$:</strong>
+                <br>Convert to common denominator $\text{LCM}(3, 7) = 21$:
+                $$\frac{2}{3} = \frac{14}{21}, \quad \frac{4}{7} = \frac{12}{21}$$
+                Since $12 < 14$, $\mathbf{\frac{4}{7}}$ is smaller.
+              </li>
+              <li><strong>(b) $-\frac{4}{3}$ or $-\frac{5}{3}$:</strong>
+                <br>Both have denominator $3$. Compare numerators: $-5 < -4$.
+                <br>Therefore, $\mathbf{-\frac{5}{3}}$ is smaller (it is further left on the number line).
+              </li>
+              <li><strong>(c) $-1\frac{3}{5}$ or $-1\frac{4}{5}$:</strong>
+                <br>In improper fraction form: $-1\frac{3}{5} = -\frac{8}{5}$ and $-1\frac{4}{5} = -\frac{9}{5}$.
+                <br>Comparing numerators with positive common denominator $5$: $-9 < -8$.
+                <br>Therefore, $\mathbf{-1\frac{4}{5}}$ (or $-\frac{9}{5}$) is smaller.
+              </li>
+              <li><strong>(d) $\frac{-7}{9}$ or $\frac{-3}{4}$:</strong>
+                <br>Common denominator $\text{LCM}(9, 4) = 36$:
+                $$\frac{-7}{9} = \frac{-28}{36}, \quad \frac{-3}{4} = \frac{-27}{36}$$
+                Since $-28 < -27$, $\frac{-28}{36} < \frac{-27}{36}$.
+                <br>Therefore, $\mathbf{\frac{-7}{9}}$ is smaller.
+              </li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q5 -->
+      <div class="problem-box" style="margin-bottom:1.5rem; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+        <div style="font-weight:700; color:var(--accent-cyan); margin-bottom:0.5rem;">
+          Q5. Write the rational numbers represented by the letters C, D, J, and K on the number lines. Also identify the greater rational number on each number line.
+        </div>
+        <p style="margin:0 0 0.5rem 0; font-size:0.95rem;">
+          <strong>Line (a):</strong> Range between $-5$ and $-3$, divided into $3$ equal subdivisions between each integer. Points C and D are marked.
+          <br><strong>Line (b):</strong> Range between $-1$ and $0$, divided into $6$ equal parts. Points J and K are marked.
+        </p>
+
+        <details class="solution-drawer" style="background:rgba(16, 185, 129, 0.05); border:1px solid rgba(16, 185, 129, 0.2); border-radius:8px; padding:0.8rem 1rem;">
+          <summary style="font-weight:600; color:#34d399; cursor:pointer; user-select:none;">
+            <i class="fas fa-lightbulb"></i> View Detailed Step-by-Step Solution
+          </summary>
+          <div style="margin-top:0.8rem; font-size:0.95rem; line-height:1.6;">
+            <p><strong>Line (a):</strong>
+              <br>&bull; Each unit integer interval is split into $3$ equal sub-intervals of width $\frac{1}{3}$.
+              <br>&bull; <strong>Point C:</strong> Located between $-5$ and $-4$, exactly $1$ step to the right of $-5$ (or $2$ steps to the left of $-4$):
+              $$C = -5 + \frac{1}{3} = -\frac{14}{3} = -4\frac{2}{3}$$
+              <br>&bull; <strong>Point D:</strong> Located between $-4$ and $-3$, exactly $2$ steps to the right of $-4$ (or $1$ step to the left of $-3$):
+              $$D = -4 + \frac{2}{3} = -\frac{10}{3} = -3\frac{1}{3}$$
+              <br>&bull; <strong>Greater number:</strong> On a number line, values to the right are greater. Since $D$ is to the right of $C$ ($-3.33 > -4.67$), <strong>D is greater ($D > C$)</strong>.
+            </p>
+            <p><strong>Line (b):</strong>
+              <br>&bull; The interval from $-1$ to $0$ is divided into $6$ equal parts of width $\frac{1}{6}$.
+              <br>&bull; <strong>Point J:</strong> At the 2nd mark from $-1$ towards $0$:
+              $$J = -1 + \frac{2}{6} = -\frac{4}{6} = -\frac{2}{3}$$
+              <br>&bull; <strong>Point K:</strong> At the 5th mark from $-1$ towards $0$ (1 mark to the left of $0$):
+              $$K = 0 - \frac{1}{6} = -\frac{1}{6}$$
+              <br>&bull; <strong>Greater number:</strong> Point K is closer to $0$ and lies to the right of J. Hence, <strong>K is greater ($K > J$)</strong> since $-\frac{1}{6} > -\frac{4}{6}$.
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q6 -->
+      <div class="problem-box" style="margin-bottom:1.5rem; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+        <div style="font-weight:700; color:var(--accent-cyan); margin-bottom:0.5rem;">
+          Q6. Mark each rational number on a number line:
+        </div>
+        <div style="display:flex; gap:2rem; margin-bottom:1rem; font-size:1.1rem; flex-wrap:wrap;">
+          <div>$$\frac{-11}{8}$$</div>
+          <div>$$4\frac{1}{3}$$</div>
+          <div>$$-\frac{17}{4}$$</div>
+        </div>
+
+        <details class="solution-drawer" style="background:rgba(16, 185, 129, 0.05); border:1px solid rgba(16, 185, 129, 0.2); border-radius:8px; padding:0.8rem 1rem;">
+          <summary style="font-weight:600; color:#34d399; cursor:pointer; user-select:none;">
+            <i class="fas fa-lightbulb"></i> View Detailed Step-by-Step Solution
+          </summary>
+          <div style="margin-top:0.8rem; font-size:0.95rem; line-height:1.6;">
+            <ul>
+              <li><strong>1. $\frac{-11}{8} = -1\frac{3}{8} = -1.375$:</strong>
+                <br>&bull; Lies between $-1$ and $-2$.
+                <br>&bull; Divide the segment between $-1$ and $-2$ into $8$ equal parts.
+                <br>&bull; Count $3$ parts to the left of $-1$. Mark this point as $\mathbf{-\frac{11}{8}}$.
+              </li>
+              <li><strong>2. $4\frac{1}{3} = \frac{13}{3} \approx 4.333$:</strong>
+                <br>&bull; Lies between $4$ and $5$.
+                <br>&bull; Divide the segment between $4$ and $5$ into $3$ equal parts.
+                <br>&bull; The first mark to the right of $4$ represents $\mathbf{4\frac{1}{3}}$.
+              </li>
+              <li><strong>3. $-\frac{17}{4} = -4\frac{1}{4} = -4.25$:</strong>
+                <br>&bull; Lies between $-4$ and $-5$.
+                <br>&bull; Divide the segment between $-4$ and $-5$ into $4$ equal parts.
+                <br>&bull; The first mark to the left of $-4$ represents $\mathbf{-\frac{17}{4}}$.
+              </li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q7 -->
+      <div class="problem-box" style="margin-bottom:1.5rem; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+        <div style="font-weight:700; color:var(--accent-cyan); margin-bottom:0.5rem;">
+          Q7. Write six rational numbers between $\frac{-3}{5}$ and $\frac{5}{70}$ (or $\frac{5}{7}$).
+        </div>
+
+        <details class="solution-drawer" style="background:rgba(16, 185, 129, 0.05); border:1px solid rgba(16, 185, 129, 0.2); border-radius:8px; padding:0.8rem 1rem;">
+          <summary style="font-weight:600; color:#34d399; cursor:pointer; user-select:none;">
+            <i class="fas fa-lightbulb"></i> View Detailed Step-by-Step Solution
+          </summary>
+          <div style="margin-top:0.8rem; font-size:0.95rem; line-height:1.6;">
+            <p><strong>Case A (As printed $\frac{-3}{5}$ and $\frac{5}{70}$):</strong>
+              <br>1. Make denominators identical: LCM of $5$ and $70$ is $70$.
+              $$\frac{-3}{5} = \frac{-3 \times 14}{5 \times 14} = \frac{-42}{70}, \quad \frac{5}{70}$$
+              2. Any integer between $-42$ and $+5$ divided by $70$ is a valid rational number!
+              <br>Six rational numbers:
+              $$\mathbf{\frac{-30}{70}, \frac{-20}{70}, \frac{-10}{70}, 0, \frac{1}{70}, \frac{2}{70}}$$
+              (In simplified forms: $-\frac{3}{7}, -\frac{2}{7}, -\frac{1}{7}, 0, \frac{1}{70}, \frac{1}{35}$).
+            </p>
+            <p><strong>Case B (If the second fraction was intended as $\frac{5}{7}$):</strong>
+              <br>LCM of $5$ and $7$ is $35$:
+              $$\frac{-3}{5} = \frac{-21}{35}, \quad \frac{5}{7} = \frac{25}{35}$$
+              Six rational numbers: $\mathbf{-\frac{10}{35}, -\frac{5}{35}, 0, \frac{5}{35}, \frac{10}{35}, \frac{15}{35}}$.
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Q8 -->
+      <div class="problem-box" style="margin-bottom:0.5rem; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+        <div style="font-weight:700; color:var(--accent-cyan); margin-bottom:0.5rem;">
+          Q8. The weight of an empty box is $\frac{5}{9}\text{ kg}$. An object having a weight of $\frac{12}{18}\text{ kg}$ is placed in the box. Find the weight of the box with the object.
+        </div>
+
+        <details class="solution-drawer" style="background:rgba(16, 185, 129, 0.05); border:1px solid rgba(16, 185, 129, 0.2); border-radius:8px; padding:0.8rem 1rem;">
+          <summary style="font-weight:600; color:#34d399; cursor:pointer; user-select:none;">
+            <i class="fas fa-lightbulb"></i> View Detailed Step-by-Step Solution
+          </summary>
+          <div style="margin-top:0.8rem; font-size:0.95rem; line-height:1.6;">
+            <p><strong>Step 1: Write given values</strong>
+              <br>&bull; Weight of empty box $= \frac{5}{9}\text{ kg}$
+              <br>&bull; Weight of object $= \frac{12}{18}\text{ kg}$
+            </p>
+            <p><strong>Step 2: Simplify or convert to like denominators</strong>
+              <br>Dividing numerator and denominator of $\frac{12}{18}$ by $2$:
+              $$\frac{12}{18} = \frac{12 \div 2}{18 \div 2} = \frac{6}{9}\text{ kg}$$
+            </p>
+            <p><strong>Step 3: Add the two weights</strong>
+              $$\text{Total weight} = \frac{5}{9} + \frac{6}{9} = \frac{5 + 6}{9} = \mathbf{\frac{11}{9}\text{ kg}} = \mathbf{1\frac{2}{9}\text{ kg}} \approx 1.22\text{ kg}$$
+            </p>
+            <div style="color:#34d399; font-weight:bold; margin-top:0.4rem;">
+              ✅ Final Answer: The total weight of the box with the object is $\frac{11}{9}\text{ kg}$ (or $1\frac{2}{9}\text{ kg}$).
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SUB-SECTION: EXERCISE 3.2 ==================== -->
+  <div id="sec-r32" class="submodule-pane">
+    <div class="section-card" style="background:var(--surface); border:1px solid var(--border-color); border-radius:12px; padding:1.8rem; margin-bottom:1.5rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; border-bottom:1px solid var(--border-color); padding-bottom:0.8rem;">
+        <h2 style="margin:0; font-size:1.4rem; color:var(--text-title); display:flex; align-items:center; gap:0.5rem;">
+          <span style="background:rgba(37,99,235,0.2); color:#60a5fa; padding:4px 10px; border-radius:8px; font-size:0.9rem;">Ex 3.2</span>
+          Operations on Rational Numbers
+        </h2>
+        <span style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-file-alt"></i> Page 7 &bull; Question 1 (Parts a to h)</span>
+      </div>
+
+      <div class="problem-box" style="margin-bottom:1rem; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+        <div style="font-weight:700; color:var(--accent-cyan); margin-bottom:0.8rem;">
+          1. Solve each of the following arithmetic expressions involving rational numbers:
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1.2rem;">
+          
+          <!-- Part a -->
+          <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+            <div style="font-weight:700; color:#fbbf24; margin-bottom:0.4rem;">(a) $3\frac{5}{8} + \left(\frac{-1}{8}\right)$</div>
+            <details class="solution-drawer" style="margin-top:0.4rem;">
+              <summary style="font-size:0.85rem; color:#34d399; cursor:pointer;"><i class="fas fa-calculator"></i> View Solution</summary>
+              <div style="font-size:0.9rem; margin-top:0.4rem; line-height:1.5;">
+                $$3\frac{5}{8} = \frac{29}{8}$$
+                $$\frac{29}{8} + \left(\frac{-1}{8}\right) = \frac{29 - 1}{8} = \frac{28}{8} = \frac{7}{2} = \mathbf{3\frac{1}{2}}$$
+              </div>
+            </details>
+          </div>
+
+          <!-- Part b -->
+          <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+            <div style="font-weight:700; color:#fbbf24; margin-bottom:0.4rem;">(b) $\frac{3}{10} + \left(-\frac{9}{10}\right)$</div>
+            <details class="solution-drawer" style="margin-top:0.4rem;">
+              <summary style="font-size:0.85rem; color:#34d399; cursor:pointer;"><i class="fas fa-calculator"></i> View Solution</summary>
+              <div style="font-size:0.9rem; margin-top:0.4rem; line-height:1.5;">
+                $$\frac{3 + (-9)}{10} = \frac{-6}{10} = \mathbf{-\frac{3}{5}} = -0.6$$
+              </div>
+            </details>
+          </div>
+
+          <!-- Part c -->
+          <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+            <div style="font-weight:700; color:#fbbf24; margin-bottom:0.4rem;">(c) $\frac{1}{5} + \left(-8\frac{1}{2}\right)$</div>
+            <details class="solution-drawer" style="margin-top:0.4rem;">
+              <summary style="font-size:0.85rem; color:#34d399; cursor:pointer;"><i class="fas fa-calculator"></i> View Solution</summary>
+              <div style="font-size:0.9rem; margin-top:0.4rem; line-height:1.5;">
+                $$-8\frac{1}{2} = -\frac{17}{2}$$
+                $$\frac{1}{5} - \frac{17}{2} = \frac{2(1) - 5(17)}{10} = \frac{2 - 85}{10} = \mathbf{-\frac{83}{10}} = \mathbf{-8\frac{3}{10}} = -8.3$$
+              </div>
+            </details>
+          </div>
+
+          <!-- Part d -->
+          <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+            <div style="font-weight:700; color:#fbbf24; margin-bottom:0.4rem;">(d) $\frac{5}{8} + \left(\frac{-2}{3}\right)$</div>
+            <details class="solution-drawer" style="margin-top:0.4rem;">
+              <summary style="font-size:0.85rem; color:#34d399; cursor:pointer;"><i class="fas fa-calculator"></i> View Solution</summary>
+              <div style="font-size:0.9rem; margin-top:0.4rem; line-height:1.5;">
+                $$\text{LCM}(8, 3) = 24$$
+                $$\frac{5(3) - 2(8)}{24} = \frac{15 - 16}{24} = \mathbf{-\frac{1}{24}}$$
+              </div>
+            </details>
+          </div>
+
+          <!-- Part e -->
+          <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+            <div style="font-weight:700; color:#fbbf24; margin-bottom:0.4rem;">(e) $\frac{5}{6} - (-6)$</div>
+            <details class="solution-drawer" style="margin-top:0.4rem;">
+              <summary style="font-size:0.85rem; color:#34d399; cursor:pointer;"><i class="fas fa-calculator"></i> View Solution</summary>
+              <div style="font-size:0.9rem; margin-top:0.4rem; line-height:1.5;">
+                Subtracting a negative is adding positive:
+                $$\frac{5}{6} + 6 = \frac{5 + 36}{6} = \mathbf{\frac{41}{6}} = \mathbf{6\frac{5}{6}}$$
+              </div>
+            </details>
+          </div>
+
+          <!-- Part f -->
+          <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+            <div style="font-weight:700; color:#fbbf24; margin-bottom:0.4rem;">(f) $7 - \frac{2}{5}$</div>
+            <details class="solution-drawer" style="margin-top:0.4rem;">
+              <summary style="font-size:0.85rem; color:#34d399; cursor:pointer;"><i class="fas fa-calculator"></i> View Solution</summary>
+              <div style="font-size:0.9rem; margin-top:0.4rem; line-height:1.5;">
+                $$\frac{35}{5} - \frac{2}{5} = \mathbf{\frac{33}{5}} = \mathbf{6\frac{3}{5}} = 6.6$$
+              </div>
+            </details>
+          </div>
+
+          <!-- Part g -->
+          <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+            <div style="font-weight:700; color:#fbbf24; margin-bottom:0.4rem;">(g) $8\frac{3}{7} - \left(-6\frac{1}{2}\right)$</div>
+            <details class="solution-drawer" style="margin-top:0.4rem;">
+              <summary style="font-size:0.85rem; color:#34d399; cursor:pointer;"><i class="fas fa-calculator"></i> View Solution</summary>
+              <div style="font-size:0.9rem; margin-top:0.4rem; line-height:1.5;">
+                $$8\frac{3}{7} + 6\frac{1}{2} = \frac{59}{7} + \frac{13}{2}$$
+                $$\text{LCM}(7, 2) = 14$$
+                $$\frac{59(2) + 13(7)}{14} = \frac{118 + 91}{14} = \mathbf{\frac{209}{14}} = \mathbf{14\frac{13}{14}}$$
+              </div>
+            </details>
+          </div>
+
+          <!-- Part h -->
+          <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+            <div style="font-weight:700; color:#fbbf24; margin-bottom:0.4rem;">(h) $\frac{1}{3} - \left(-\frac{5}{6}\right)$</div>
+            <details class="solution-drawer" style="margin-top:0.4rem;">
+              <summary style="font-size:0.85rem; color:#34d399; cursor:pointer;"><i class="fas fa-calculator"></i> View Solution</summary>
+              <div style="font-size:0.9rem; margin-top:0.4rem; line-height:1.5;">
+                $$\frac{1}{3} + \frac{5}{6} = \frac{2}{6} + \frac{5}{6} = \frac{7}{6} = \mathbf{1\frac{1}{6}}$$
+              </div>
+            </details>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SUB-SECTION: OBJECTIVE & FILL IN BLANKS ==================== -->
+  <div id="sec-robj" class="submodule-pane">
+    <div class="section-card" style="background:var(--surface); border:1px solid var(--border-color); border-radius:12px; padding:1.8rem; margin-bottom:1.5rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; border-bottom:1px solid var(--border-color); padding-bottom:0.8rem;">
+        <h2 style="margin:0; font-size:1.4rem; color:var(--text-title); display:flex; align-items:center; gap:0.5rem;">
+          <span style="background:rgba(37,99,235,0.2); color:#60a5fa; padding:4px 10px; border-radius:8px; font-size:0.9rem;">Objective &amp; Blanks</span>
+          Concept Mastery Drills
+        </h2>
+        <span style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-file-alt"></i> Page 9 &bull; Questions 5 to 10</span>
+      </div>
+
+      <!-- MCQ Q5 -->
+      <div class="problem-box" style="margin-bottom:1.5rem; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+        <div style="font-weight:700; color:var(--accent-cyan); margin-bottom:0.6rem;">
+          5. If $\frac{3}{7} = \frac{x}{-14}$, then $x$ is equal to:
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:0.8rem; margin-bottom:1rem;">
+          <button class="mcq-option" onclick="checkMCQ(this, false)" style="padding:10px; border-radius:8px; border:1px solid var(--border-color); background:rgba(0,0,0,0.2); color:var(--text-title); cursor:pointer; text-align:left;">(a) $6$</button>
+          <button class="mcq-option" onclick="checkMCQ(this, true)" style="padding:10px; border-radius:8px; border:1px solid var(--border-color); background:rgba(0,0,0,0.2); color:var(--text-title); cursor:pointer; text-align:left;">(b) $-6$</button>
+          <button class="mcq-option" onclick="checkMCQ(this, false)" style="padding:10px; border-radius:8px; border:1px solid var(--border-color); background:rgba(0,0,0,0.2); color:var(--text-title); cursor:pointer; text-align:left;">(c) $5$</button>
+          <button class="mcq-option" onclick="checkMCQ(this, false)" style="padding:10px; border-radius:8px; border:1px solid var(--border-color); background:rgba(0,0,0,0.2); color:var(--text-title); cursor:pointer; text-align:left;">(d) $-5$</button>
+        </div>
+        <div class="mcq-feedback" style="font-size:0.9rem; line-height:1.5; color:var(--text-muted);">
+          <strong>Explanation:</strong> Cross multiply: $7 \times x = 3 \times (-14) = -42 \implies x = \frac{-42}{7} = \mathbf{-6}$. (Option b).
+        </div>
+      </div>
+
+      <!-- Fill in Blanks Q6-Q10 -->
+      <h3 style="color:#fbbf24; font-size:1.1rem; margin-bottom:1rem;"><i class="fas fa-pen-fancy"></i> Fill in the Blanks</h3>
+      
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        
+        <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+          <div style="font-weight:600; color:var(--text-title);">6. The standard form of $\frac{-78}{48}$ is <span style="display:inline-block; border-bottom:2px dashed #60a5fa; min-width:80px; text-align:center; color:#34d399; font-weight:bold;">$-\frac{13}{8}$</span>.</div>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin:0.3rem 0 0 0;">Divide numerator and denominator by $\gcd(78, 48) = 6$: $\frac{-78 \div 6}{48 \div 6} = -\frac{13}{8}$.</p>
+        </div>
+
+        <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+          <div style="font-weight:600; color:var(--text-title);">7. If $\frac{-4}{9} = \frac{x}{18}$, then $x =$ <span style="display:inline-block; border-bottom:2px dashed #60a5fa; min-width:80px; text-align:center; color:#34d399; font-weight:bold;">$-8$</span>.</div>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin:0.3rem 0 0 0;">$9 \times 2 = 18 \implies x = -4 \times 2 = -8$.</p>
+        </div>
+
+        <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+          <div style="font-weight:600; color:var(--text-title);">8. The reciprocal of the rational number $\frac{3}{-4}$ is <span style="display:inline-block; border-bottom:2px dashed #60a5fa; min-width:80px; text-align:center; color:#34d399; font-weight:bold;">$\frac{-4}{3}$</span>.</div>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin:0.3rem 0 0 0;">Invert numerator and denominator: $\frac{-4}{3} = -\frac{4}{3}$.</p>
+        </div>
+
+        <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+          <div style="font-weight:600; color:var(--text-title);">9. When three rational numbers $a$, $b$, and $c$ are represented on a number line, $c$ lies to the left of $a$ and $b$ lies to the right of $a$. The ascending order of $a, b,$ and $c$ is <span style="display:inline-block; border-bottom:2px dashed #60a5fa; min-width:120px; text-align:center; color:#34d399; font-weight:bold;">$c, a, b$ (or $c < a < b$)</span>.</div>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin:0.3rem 0 0 0;">On a horizontal number line, numbers increase strictly from left to right: $c < a < b$.</p>
+        </div>
+
+        <div style="background:rgba(0,0,0,0.2); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+          <div style="font-weight:600; color:var(--text-title);">10. If the rational numbers $\frac{-5}{-3}$ and $\frac{25}{x}$ represent a pair of equivalent rational numbers, then $x =$ <span style="display:inline-block; border-bottom:2px dashed #60a5fa; min-width:80px; text-align:center; color:#34d399; font-weight:bold;">$15$</span>.</div>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin:0.3rem 0 0 0;">$\frac{-5}{-3} = \frac{5}{3}$. Equivalent: $\frac{5 \times 5}{3 \times 5} = \frac{25}{15} \implies x = 15$.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SUB-SECTION: TRUE / FALSE ==================== -->
+  <div id="sec-rtf" class="submodule-pane">
+    <div class="section-card" style="background:var(--surface); border:1px solid var(--border-color); border-radius:12px; padding:1.8rem; margin-bottom:1.5rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; border-bottom:1px solid var(--border-color); padding-bottom:0.8rem;">
+        <h2 style="margin:0; font-size:1.4rem; color:var(--text-title); display:flex; align-items:center; gap:0.5rem;">
+          <span style="background:rgba(37,99,235,0.2); color:#60a5fa; padding:4px 10px; border-radius:8px; font-size:0.9rem;">True or False</span>
+          Conceptual Analysis
+        </h2>
+        <span style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-file-alt"></i> Page 9 &bull; Questions 11 to 15</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:1.2rem;">
+
+        <!-- Q11 -->
+        <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;">
+            <div style="font-weight:600; color:var(--text-title); font-size:1rem;">
+              11. If there are two rational numbers with a common denominator, the one with the smaller numerator is greater than the other.
+            </div>
+            <span style="background:rgba(239, 68, 68, 0.2); color:#f87171; border:1px solid rgba(239, 68, 68, 0.4); padding:3px 12px; border-radius:12px; font-weight:700; font-size:0.85rem;">FALSE</span>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin:0.6rem 0 0 0;">
+            <strong>Justification:</strong> For positive common denominators, the rational number with the <em>greater</em> numerator is greater. For example, between $\frac{3}{7}$ and $\frac{5}{7}$, $5 > 3$, so $\frac{5}{7} > \frac{3}{7}$. The one with the smaller numerator is smaller, not greater.
+          </p>
+        </div>
+
+        <!-- Q12 -->
+        <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;">
+            <div style="font-weight:600; color:var(--text-title); font-size:1rem;">
+              12. Every rational number is a natural number but every natural number need not be a rational number.
+            </div>
+            <span style="background:rgba(239, 68, 68, 0.2); color:#f87171; border:1px solid rgba(239, 68, 68, 0.4); padding:3px 12px; border-radius:12px; font-weight:700; font-size:0.85rem;">FALSE</span>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin:0.6rem 0 0 0;">
+            <strong>Justification:</strong> The exact reverse is true! Every natural number $n$ can be written as $\frac{n}{1}$, making it a rational number ($\mathbb{N} \subset \mathbb{Q}$). However, rational numbers like $\frac{1}{2}$ or $-5$ are NOT natural numbers.
+          </p>
+        </div>
+
+        <!-- Q13 -->
+        <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;">
+            <div style="font-weight:600; color:var(--text-title); font-size:1rem;">
+              13. There are countless rational numbers between two successive integers.
+            </div>
+            <span style="background:rgba(16, 185, 129, 0.2); color:#34d399; border:1px solid rgba(16, 185, 129, 0.4); padding:3px 12px; border-radius:12px; font-weight:700; font-size:0.85rem;">TRUE</span>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin:0.6rem 0 0 0;">
+            <strong>Justification:</strong> This is the <em>density property</em> of rational numbers. Between any two integers $a$ and $a+1$, there exist infinitely many rational numbers (e.g. between 1 and 2: $1.1, 1.01, 1.001, \dots$).
+          </p>
+        </div>
+
+        <!-- Q14 -->
+        <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;">
+            <div style="font-weight:600; color:var(--text-title); font-size:1rem;">
+              14. Zero is the smallest rational number.
+            </div>
+            <span style="background:rgba(239, 68, 68, 0.2); color:#f87171; border:1px solid rgba(239, 68, 68, 0.4); padding:3px 12px; border-radius:12px; font-weight:700; font-size:0.85rem;">FALSE</span>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin:0.6rem 0 0 0;">
+            <strong>Justification:</strong> There is no smallest rational number! All negative rational numbers (such as $-1, -100, -\frac{1}{2}$) are strictly less than $0$.
+          </p>
+        </div>
+
+        <!-- Q15 -->
+        <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;">
+            <div style="font-weight:600; color:var(--text-title); font-size:1rem;">
+              15. The rational numbers $\frac{-21}{5}$ and $\frac{7}{-31}$ are on opposite sides of $0$ on the number line.
+            </div>
+            <span style="background:rgba(239, 68, 68, 0.2); color:#f87171; border:1px solid rgba(239, 68, 68, 0.4); padding:3px 12px; border-radius:12px; font-weight:700; font-size:0.85rem;">FALSE</span>
+          </div>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin:0.6rem 0 0 0;">
+            <strong>Justification:</strong> Both rational numbers are <strong>negative</strong>! $\frac{-21}{5} = -4.2 < 0$, and $\frac{7}{-31} = -\frac{7}{31} < 0$. Since both are negative, they both lie on the <em>same</em> side of $0$ (the left side).
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SUB-SECTION: THINKING CAP ==================== -->
+  <div id="sec-rthink" class="submodule-pane">
+    <div class="section-card" style="background:var(--surface); border:1px solid var(--border-color); border-radius:12px; padding:1.8rem; margin-bottom:1.5rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; border-bottom:1px solid var(--border-color); padding-bottom:0.8rem;">
+        <h2 style="margin:0; font-size:1.4rem; color:var(--text-title); display:flex; align-items:center; gap:0.5rem;">
+          <span style="background:rgba(245,158,11,0.2); color:#fbbf24; padding:4px 10px; border-radius:8px; font-size:0.9rem;">Put on Your Thinking Cap!</span>
+          High-Order Thinking Skills (HOTS)
+        </h2>
+        <span style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-file-alt"></i> Page 9 &bull; Questions 1 &amp; 2</span>
+      </div>
+
+      <!-- HOTS 1 -->
+      <div class="problem-box" style="margin-bottom:1.5rem; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+        <div style="font-weight:700; color:#fbbf24; margin-bottom:0.6rem; font-size:1.05rem;">
+          1. Two positive improper fractions are multiplied. Is the product sometimes, always, or never less than $1$? Give examples to support your answer.
+        </div>
+
+        <details class="solution-drawer" open style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.2); border-radius:8px; padding:0.8rem 1rem;">
+          <summary style="font-weight:600; color:#fbbf24; cursor:pointer; user-select:none;">
+            <i class="fas fa-lightbulb"></i> View Detailed Mathematical Proof &amp; Analysis
+          </summary>
+          <div style="margin-top:0.8rem; font-size:0.95rem; line-height:1.6;">
+            <p><strong>Core Conclusion:</strong> The product is <span style="color:#f87171; font-weight:bold; font-size:1.05rem;">NEVER LESS THAN 1</span>.</p>
+            <p><strong>Mathematical Proof:</strong>
+              <br>&bull; By definition, a positive improper fraction $\frac{a}{b}$ has numerator greater than or equal to denominator: $a \ge b > 0$.
+              <br>&bull; Therefore, any positive improper fraction is $\ge 1$.
+              <br>&bull; Let the two fractions be $f_1 \ge 1$ and $f_2 \ge 1$.
+              <br>&bull; When multiplying two numbers that are both $\ge 1$:
+              $$f_1 \times f_2 \ge 1 \times 1 = 1$$
+              <br>&bull; The minimum possible value of the product occurs when both fractions equal $\frac{1}{1} = 1$, yielding a product of $1$. In all other cases where at least one fraction is strictly greater than $1$, the product is strictly greater than $1$ ($> 1$).
+              <br>&bull; It is mathematically impossible for the product to be strictly less than $1$.
+            </p>
+            <p><strong>Examples:</strong>
+              <br>&bull; <strong>Example 1:</strong> $\frac{3}{2} \times \frac{4}{3} = \frac{12}{6} = 2 > 1$.
+              <br>&bull; <strong>Example 2:</strong> $\frac{5}{4} \times \frac{7}{5} = \frac{7}{4} = 1.75 > 1$.
+              <br>&bull; <strong>Boundary Example:</strong> $\frac{1}{1} \times \frac{1}{1} = 1$, which is equal to $1$ (not less than $1$).
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <!-- HOTS 2 -->
+      <div class="problem-box" style="margin-bottom:0.5rem; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+        <div style="font-weight:700; color:#fbbf24; margin-bottom:0.6rem; font-size:1.05rem;">
+          2. A string is cut in halves. One of the halves is kept aside. One-fifth of the remaining half is cut away and the piece left is $8\text{ feet}$ long. How long was the string initially?
+        </div>
+
+        <details class="solution-drawer" open style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.2); border-radius:8px; padding:0.8rem 1rem;">
+          <summary style="font-weight:600; color:#fbbf24; cursor:pointer; user-select:none;">
+            <i class="fas fa-lightbulb"></i> View Detailed Step-by-Step Solution
+          </summary>
+          <div style="margin-top:0.8rem; font-size:0.95rem; line-height:1.6;">
+            <p><strong>Method 1: Algebraic Formulation</strong></p>
+            <ol>
+              <li>Let the initial length of the string be $L\text{ feet}$.</li>
+              <li>The string is cut into two equal halves, each measuring $\frac{1}{2}L\text{ feet}$.</li>
+              <li>One half is kept aside. The remaining half has length $\frac{1}{2}L$.</li>
+              <li>One-fifth ($\frac{1}{5}$) of this remaining half is cut away.
+                <br>Fraction of this half that remains:
+                $$1 - \frac{1}{5} = \frac{4}{5}$$
+              </li>
+              <li>Length of the final piece left:
+                $$\text{Length left} = \frac{4}{5} \times \left(\frac{1}{2}L\right) = \frac{4}{10}L = \frac{2}{5}L$$
+              </li>
+              <li>We are given that this final piece is $8\text{ feet}$:
+                $$\frac{2}{5}L = 8 \implies L = 8 \times \frac{5}{2} = \frac{40}{2} = \mathbf{20\text{ feet}}$$
+              </li>
+            </ol>
+
+            <p><strong>Method 2: Reverse Reasoning (Work Backwards)</strong></p>
+            <ul>
+              <li>The piece left is $8\text{ ft}$, which represents $\frac{4}{5}$ of the half.</li>
+              <li>Therefore, full length of that half $= 8 \div \frac{4}{5} = 8 \times \frac{5}{4} = 10\text{ feet}$.</li>
+              <li>Since this was half of the original string, the initial total length $= 10 \times 2 = \mathbf{20\text{ feet}}$.</li>
+            </ul>
+
+            <div style="color:#34d399; font-weight:bold; margin-top:0.5rem;">
+              ✅ Final Answer: The original length of the string was $\mathbf{20\text{ feet}}$.
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</main>
 </div><!-- /.app-layout -->
 
 <!-- ==================== UNIVERSAL JAVASCRIPT ENGINE ==================== -->
@@ -2505,6 +4595,53 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Teacher Practice Papers Interactive Utilities
+function toggleScanViewer(trayId) {
+  const el = document.getElementById(trayId);
+  if (!el) return;
+  const isHidden = (el.style.display === 'none' || !el.style.display);
+  el.style.display = isHidden ? 'block' : 'none';
+}
+function expandAllSolutions(tabId) {
+  const parent = document.getElementById(tabId);
+  if (!parent) return;
+  parent.querySelectorAll('details').forEach(d => d.open = true);
+  parent.querySelectorAll('.solution-drawer').forEach(d => d.style.display = 'block');
+}
+function collapseAllSolutions(tabId) {
+  const parent = document.getElementById(tabId);
+  if (!parent) return;
+  parent.querySelectorAll('details').forEach(d => d.open = false);
+}
+function openImageModal(src, title) {
+  let modal = document.getElementById('scanModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'scanModal';
+    modal.className = 'scan-modal';
+    modal.innerHTML = `
+      <span class="scan-modal-close" onclick="closeImageModal()">&times;</span>
+      <img id="scanModalImg" class="scan-modal-content" src="" alt="Worksheet Scan">
+      <div id="scanModalTitle" class="scan-modal-title"></div>
+    `;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeImageModal();
+    });
+  }
+  document.getElementById('scanModalImg').src = src;
+  document.getElementById('scanModalTitle').textContent = title || 'Worksheet Original Scan';
+  modal.classList.add('active');
+}
+function closeImageModal() {
+  const modal = document.getElementById('scanModal');
+  if (modal) modal.classList.remove('active');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeImageModal();
+});
 </script>
 </body>
+
 </html>
