@@ -51,8 +51,12 @@
         .countdown-chip i { font-size: 0.9rem; }
         .theme-toggle { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.3s; }
         .theme-toggle:hover { border-color: var(--accent-primary); box-shadow: var(--glow); }
-        .back-home-btn { text-decoration: none; display:flex; align-items:center; gap:6px; background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.35rem 0.7rem; border-radius: 8px; font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); cursor:pointer; transition: all 0.2s; }
-        .back-home-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+        .nav-breadcrumbs { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--text-muted); flex-wrap: wrap; }
+        .nav-breadcrumbs a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
+        .nav-breadcrumbs a:hover { color: var(--accent-primary); }
+        .nav-breadcrumbs .bc-sep { font-size: 0.55rem; color: var(--text-muted); opacity: 0.5; }
+        .nav-breadcrumbs .bc-current { color: var(--accent-primary); font-weight: 700; }
+        .nav-breadcrumbs .bc-home-icon { font-size: 0.8rem; }
 
         /* ═══════════════════════════════════════════ MAIN CONTAINER ═══════════════════════════════════════════ */
         .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
@@ -306,9 +310,13 @@
     <!-- ═══════════ HEADER ═══════════ -->
     <header class="header">
         <div class="header-left">
-            <a href="index.html" class="back-home-btn"><i class="fa-solid fa-arrow-left"></i> Home</a>
-            <div class="header-logo">🏆 GK Challenge</div>
-            <span class="header-badge">Practice Mode</span>
+            <nav class="nav-breadcrumbs" id="headerBreadcrumb">
+                <a href="index.html"><i class="fa-solid fa-house bc-home-icon"></i> Home</a>
+                <i class="fa-solid fa-chevron-right bc-sep"></i>
+                <a href="index.html" onclick="event.preventDefault(); goHome(); return false;">Social &amp; Others</a>
+                <i class="fa-solid fa-chevron-right bc-sep"></i>
+                <span class="bc-current">🏆 GK Challenge</span>
+            </nav>
         </div>
         <div class="header-right">
             <div class="countdown-chip">
@@ -1293,8 +1301,44 @@ function showScreen(screen) {
     document.getElementById('resultScreen').style.display = screen === 'result' ? 'block' : 'none';
     document.getElementById('learningMiniScreen').style.display = screen === 'learningMini' ? 'block' : 'none';
     document.getElementById('learningDashScreen').style.display = screen === 'learningDash' ? 'block' : 'none';
+    updateBreadcrumb(screen);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+function updateBreadcrumb(screen) {
+    const bc = document.getElementById('headerBreadcrumb');
+    const sep = '<i class="fa-solid fa-chevron-right bc-sep"></i>';
+    const homeLink = '<a href="index.html"><i class="fa-solid fa-house bc-home-icon"></i> Home</a>';
+    const gkLink = '<a href="#" onclick="event.preventDefault(); goHome(); return false;">🏆 GK Challenge</a>';
+
+    if (screen === 'home') {
+        bc.innerHTML = `${homeLink} ${sep} <a href="index.html">Social &amp; Others</a> ${sep} <span class="bc-current">🏆 GK Challenge</span>`;
+    } else if (screen === 'quiz') {
+        const cat = state.currentCat && typeof state.currentCat === 'string' ? CATEGORIES[state.currentCat] : null;
+        let modeName = 'Quiz';
+        if (state.mode === 'mock') modeName = '📋 Full Mock Test';
+        else if (state.mode === 'rapid') modeName = '⚡ Rapid Fire';
+        else if (state.mode === 'weak' || state.mode === 'drill_weak') modeName = '💪 Weak Areas';
+        else if (state.mode === 'learning_cat' && cat) modeName = '📘 ' + cat.emoji + ' ' + cat.name;
+        else if (state.mode === 'category' && cat) modeName = cat.emoji + ' ' + cat.name;
+        bc.innerHTML = `${homeLink} ${sep} ${gkLink} ${sep} <span class="bc-current">${modeName}</span>`;
+    } else if (screen === 'result') {
+        const cat = state.currentCat && typeof state.currentCat === 'string' ? CATEGORIES[state.currentCat] : null;
+        let modeName = 'Results';
+        if (state.mode === 'category' && cat) modeName = cat.emoji + ' ' + cat.name;
+        else if (state.mode === 'mock') modeName = '📋 Mock Test';
+        else if (state.mode === 'rapid') modeName = '⚡ Rapid Fire';
+        else if (state.mode === 'weak' || state.mode === 'drill_weak') modeName = '💪 Weak Areas';
+        bc.innerHTML = `${homeLink} ${sep} ${gkLink} ${sep} <a href="#" onclick="event.preventDefault(); goHome(); return false;">${modeName}</a> ${sep} <span class="bc-current">📊 Results</span>`;
+    } else if (screen === 'learningMini') {
+        const cat = state.currentCat ? CATEGORIES[state.currentCat] : null;
+        const catName = cat ? cat.emoji + ' ' + cat.name : 'Topic';
+        bc.innerHTML = `${homeLink} ${sep} ${gkLink} ${sep} <a href="#" onclick="event.preventDefault(); goHome(); return false;">📘 Learning Mode</a> ${sep} <span class="bc-current">${catName} — Report</span>`;
+    } else if (screen === 'learningDash') {
+        bc.innerHTML = `${homeLink} ${sep} ${gkLink} ${sep} <a href="#" onclick="event.preventDefault(); goHome(); return false;">📘 Learning Mode</a> ${sep} <span class="bc-current">📊 Weakness Analysis</span>`;
+    }
+}
+
 function goHome() {
     clearInterval(state.timerInterval);
     document.getElementById('scoreCircle').style.strokeDashoffset = 477.5;
