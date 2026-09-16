@@ -226,6 +226,10 @@ Tier 3: .subnav       — sticky, top: 106px, z-index: 80, height: 46px
 - FORBIDDEN: `overflow-x: auto` with `white-space: nowrap` on tab bars or subtab containers. It creates unsightly horizontal scrollbars across desktop screens.
 - REQUIRED: Always use `flex-wrap: wrap; gap: 8px 6px;` on all tab bars (`.activity-tab-bar`, `.modal-tabs`, `.subnav-pills`) with `overflow-x: hidden`. Pills must wrap cleanly onto 1–2 rows so all options remain immediately visible without horizontal scrolling.
 
+### 7.7 Universal Data & Table Alignment Standard (Left for Text, Right for Numbers)
+- **Left Alignment for Text (`text-align: left;`)**: All text columns (questions, topics, options, explanations, descriptions) and their corresponding headers must be left-aligned.
+- **Right Alignment for Numbers (`text-align: right;`)**: All numeric data (`Q#`, counts, scores, marks, percentages, quantities) and their corresponding headers must be right-aligned with `font-variant-numeric: tabular-nums;` so digits align vertically for easy scanning.
+
 ---
 
 ## 8. CONTENT RULES

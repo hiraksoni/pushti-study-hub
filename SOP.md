@@ -366,6 +366,44 @@ Every interactive chapter must adhere to modern web usability best practices:
    - Active click feedback: Instant visual scale reduction (`transform: scale(0.98);`) upon active mouse down.
    - Dynamic badges: Active filter pills must display live counter badges (e.g. `Sections [All 28]`, `MCQs [4]`) reflecting matching item counts.
 
+### 2.9 Universal Data & Table Alignment Standard (Left for Text, Right for Numbers)
+* **The Core Typographical & Cognitive Mandate**:
+  Proper alignment in tabular data and listings drastically lowers cognitive overhead, enabling Pushti to scan, compare, and comprehend data effortlessly:
+  1. **Left Alignment for Text (`text-align: left;`)**:
+     - All textual data—including subject titles, question statements, concept definitions, MCQ option text, explanations, descriptions, and statuses—**MUST be left-aligned**.
+     - Left-aligned text creates a uniform, predictable reading edge on the left margin, preventing ragged starting points and optimizing eye travel speed.
+     - Table column headers for textual columns (`<th>`) must also be left-aligned to visually anchor the column text.
+  2. **Right Alignment for Numbers (`text-align: right;`)**:
+     - All numeric values—including question numbers (`Q#`, `#`, `Sr. No.`), scores, marks, counts, percentages, dimensions, times/durations, page numbers, and statistical metrics—**MUST be right-aligned**.
+     - Right-alignment guarantees that units, tens, hundreds, and decimal points align vertically, providing instant visual cues regarding magnitude and scale.
+     - Table column headers for numeric columns (`<th>`) must likewise be right-aligned directly above the figures.
+     - **Tabular Numerals**: Numeric cells and columns should declare `font-variant-numeric: tabular-nums;` or utilize monospace fonts (`'Space Mono'`, `'JetBrains Mono'`) so all digits occupy identical horizontal widths.
+  3. **Table CSS Implementation Standard (Universal Specification)**:
+     ```css
+     /* Default table styles: text-align: left for all text cells & headers */
+     .key-table, .data-table {
+       width: 100%;
+       border-collapse: collapse;
+       font-size: 0.82rem;
+     }
+     .key-table th, .key-table td,
+     .data-table th, .data-table td {
+       padding: 8px 12px;
+       border: 1px solid var(--border);
+       text-align: left; /* Mandatory: Left alignment for text */
+     }
+     
+     /* Explicit numeric columns: text-align: right with tabular numerals */
+     .key-table th.col-num, .key-table td.col-num,
+     .data-table th.col-num, .data-table td.col-num,
+     .num-cell, .col-marks, .col-score, .col-count {
+       text-align: right !important; /* Mandatory: Right alignment for numbers */
+       font-variant-numeric: tabular-nums;
+       padding-right: 14px;
+       font-family: 'Space Mono', 'JetBrains Mono', monospace;
+     }
+     ```
+
 ---
 
 ## PART 3: SUBJECT-WISE CHAPTER ARCHITECTURES
