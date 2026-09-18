@@ -1,4 +1,4 @@
-# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.1)
+# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.2)
 *The Definitive Architectural, Design, Pedagogical & Verification Standard for AI-Assisted Generation*
 
 ---
@@ -11,6 +11,8 @@
 * **Student**: Pushti Soni, Class 7, CBSE Board (~12 years old)
 * **Goal**: Provide a fun, aesthetically inspiring, rigorous, and self-sufficient learning environment.
 * **Core Principle**: *"A child must NEVER need to open the textbook."* Every concept, solved example, exercise, diagram, formula, and enrichment context must exist in one cohesive, beautifully organized digital module.
+* **Implicit Grade Standard (Zero "Class 7" Redundancy)**:
+  Pushti Study Hub is built exclusively for Pushti Soni in Class 7 CBSE. Consequently, the entire portal's curriculum, difficulty level, and subject content are **implicitly and exclusively Class 7 CBSE**. AI models, developers, and documentation must **NEVER repeat or prepend "Class 7"** before chapter names, tab headers, document titles, or progress summaries unless explicitly contrasting two distinct academic standards (e.g. Class 6 prerequisite vs. Class 7 curriculum, or Class 7 vs. Class 8 Olympiad preview). In all other contexts, omitting "Class 7" is mandatory.
 
 ### 1.2 The Two-AI Workflow
 We leverage the unique cognitive strengths of two complementary AI systems:
@@ -62,7 +64,7 @@ d:\Users\expor\Downloads\Codes\
 Pushti Study Hub authorizes two complementary frontend stacks tailored to subject pedagogical requirements:
 
 #### Stack A: Pure Custom Properties + KaTeX Engine (High-Density Mathematical Modules)
-*Used for Class 7 Mathematics (Ganita Prakash), Algebra, Geometry, and heavy formula-driven modules.*
+*Used for Mathematics (Ganita Prakash), Algebra, Geometry, and heavy formula-driven modules.*
 ```html
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
@@ -474,6 +476,21 @@ Every interactive chapter must adhere to modern web usability best practices:
      }
      ```
 
+### 2.10 Clean Titling, Breadcrumb & Card Nomenclature (Elimination of Redundant Grade Prefixes)
+* **The Single-Audience Standard**:
+  Because Pushti Study Hub is built exclusively for Pushti in Class 7 CBSE, all grade-level context is implicit. Explicit grade tags add visual clutter without providing value.
+* **Mandatory Titling & Header Guidelines**:
+  1. **Page `<title>` & Site Header**:
+     - Format `<title>` tags cleanly: `[Chapter Title] | [Subject] | Pushti Study Hub` (e.g. `Arithmetic Expressions | Mathematics | Pushti Study Hub`).
+     - Breadcrumbs in `.site-header` follow: `Home > [Subject] > [Chapter Name]` (e.g. `Home > Mathematics > Chapter 2: Arithmetic Expressions`).
+     - **Never inject "Class 7"** into the title tag, breadcrumb trail, or chapter banner.
+  2. **Chapter Cards & Navigation Tabs**:
+     - Card headers on subject hubs (`maths_index.html`, etc.) must display the clean chapter title and number (e.g. `02. Arithmetic Expressions`).
+     - Dock rail tabs must use clean titles: `Tab 10: Practice Test Paper`, `Tab 9: Practice Test Paper (Cordova Ch 11 • 28 Qs)`.
+     - Test paper labels, modal titles, and action pills must remain clean without prefixing `"Class 7"`.
+* **The Sole Exception (Multi-Standard Comparison)**:
+  - Mentioning a class or grade standard is **strictly prohibited UNLESS** explicitly contrasting two different academic standards (e.g., comparing *"Class 6 Prerequisite: Fractions"* vs *"Class 7: Rational Numbers"*, or referencing a *"Class 8 Advanced Olympiad Preview"*). If no second standard is being compared, omission of `"Class 7"` is mandatory.
+
 ---
 
 ## PART 3: SUBJECT-WISE CHAPTER ARCHITECTURES
@@ -543,7 +560,7 @@ Every interactive chapter must adhere to modern web usability best practices:
    - Every single NCERT Solved Example and *Figure It Out* exercise must be solved with full step-by-step mathematical reasoning. Never skip or truncate exercises.
 
 ### 3.1.1 Geometry Chapters Visual Standard (The Native Vector SVG Mandate)
-*Exemplified in Class 7 Chapter 5 (Parallel and Intersecting Lines) and mandatory across all present and future Geometry modules.*
+*Exemplified in Chapter 5 (Parallel and Intersecting Lines) and mandatory across all present and future Geometry modules.*
 
 1. **Pencil Scribble & Scan Noise Elimination**:
    - **The Reality**: Uploaded textbook scans or photocopies (e.g. NCERT PDFs) frequently suffer from heavy student pencil markings, handwritten answers, teacher correction ticks, scanner skew, moiré patterns, and muddy raster compression.
@@ -743,7 +760,7 @@ Every interactive chapter must adhere to modern web usability best practices:
 
 
 ### 3.2 Science & Social Science Architecture (The Modern Interactive Simulation & Searchable Solutions Hub Standard - v3.0)
-*Exemplified in Class 7 Geography Chapter 1 (Interior of the Earth) and Class 7 Science modules.*
+*Exemplified in Geography Chapter 1 (Interior of the Earth) and Science modules.*
 
 #### 3.2.1 Evolution Beyond Legacy GITA Mark-Split Tabs
 The legacy GITA format split textbook exercises artificially by mark count (Tab 3: 2/3 Marks vs. Tab 4: 4+ Marks). Student usability testing revealed that this fragmented textbook exercises and forced students to bounce between tabs just to check homework solutions.
@@ -785,7 +802,7 @@ To prevent visual crowding and optimize screen geometry:
   - **Reason**: Science and Geography require wide landscape canvas space for side-by-side SVG inspectors (450px cutaway + 400px telemetry card) and 4-column comparative matrices. A permanent left rail constricts these diagrams on 1366px laptop screens. The top sticky bar provides 100% viewport width while keeping navigation pinned and accessible at all times.
 
 ### 3.3 Vocational & Non-Exam Architecture (The Kaushal Bodh / KB Model)
-* Designed for vocational, craft, and co-curricular subjects (e.g. Kaushal Bodh • Class 7).
+* Designed for vocational, craft, and co-curricular subjects (e.g. Kaushal Bodh).
 * **Two-Tier Navigation**:
   - Tier 1: Left category sidebar organizing units into thematic branches (*Life Forms*, *Machines & Tools*, *Materials & Arts*).
   - Tier 2: Project cards with inline activity subtabs switching between compact activity panes.
@@ -894,6 +911,8 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-INT-2 (No Cluttered Anchor Jumps)**: Are dense sections partitioned into clean sub-panes rather than chaotic in-page jump links?
 - [ ] **CP-INT-3 (Mental Flashcards for Subjective)**: Are subjective questions formatted as revealable flashcards without requiring tedious typing?
 - [ ] **CP-INT-4 (Active Simulation & Exploratory Learning Gate)**: In Science and Social Science modules, do core physical, earth, or living systems feature interactive visual exploration (dynamic SVG cutaway/cycle inspector) rather than static textual paragraphs alone?
+- [ ] **CP-TITLE-1 (Implicit Grade Scope Gate — Zero "Class 7" Clutter)**:
+  Verify that chapter titles, tab labels, breadcrumbs, card headings, and test paper names do NOT redundantly prepend `"Class 7"`. The Class 7 CBSE standard is implicit across Pushti Study Hub; grade numbers may only be stated when explicitly contrasting two different academic standards (e.g. Class 6 prerequisite vs. Class 7 curriculum, or Class 7 vs. Class 8 Olympiad preview).
 
 ### Checkpoint Suite 4: Technical & Code Verification Gate
 - [ ] **CP-TECH-1 (HTML Tag Balance)**: Run automated verification ensuring:
@@ -918,6 +937,7 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 
 | Version | Date | Key Architectural Additions |
 | :---: | :---: | :--- |
+| **v3.2** | 2026-09-18 | **Implicit Grade Scope & Zero "Class 7" Redundancy Standard (Section 1.1, Section 2.10, CP-TITLE-1)**: Codified that because Pushti Study Hub is built exclusively for Pushti in Class 7 CBSE, all grade context is implicit. Prepending or repeating "Class 7" before chapter names, tab headers, breadcrumbs, card headings, and test papers is strictly prohibited unless explicitly contrasting across two different academic standards (e.g. Class 6 prerequisite vs. Class 7 curriculum, or Class 7 vs. Class 8 Olympiad preview). |
 | **v3.1** | 2026-09-17 | **Master SOP Unification & Mathematical Typography Standard**: Archived and redirected legacy secondary SOP files (PUSHTI_CONTENT_SOP, PUSHTI_DESIGN_SOP) to ensure zero contradictions; established Section 2.5.2 (Fraction Legibility Mandate with \dfrac and .katex font amplification) and Section 2.5.3 (Adaptive Subparts: Atomic Chips minmax(140px, 1fr) vs. Verbose Grids minmax(280px, 1fr) eliminating orphaned 4th boxes on laptop viewports); added CP-MATH-2. |
 | **v3.0** | 2026-09-14 | **Modern Interactive Simulation, Tailwind/Lucide UI & Unified Searchable Solutions Hub Standard**: Authorized Stack B (Tailwind CSS + Lucide Icons) for Science and Social Science; superseded mark-based question splitting with the 5-Module Interactive Simulation & Searchable Solutions Hub Standard (Tab 1 SVG Cutaway Inspector, Tab 2 Cycle Simulator, Tab 3 Searchable NCERT Hub with live debounced search and empty states, Tab 4 Auto-Grading Quiz, Tab 5 3D Flipcards); codified Top Sticky Nav for visual landscape subjects vs. Left Dock Rail for dense math; added CP-GUI-11, CP-GUI-12, and CP-INT-4. |
 | **v2.6** | 2026-09-13 | **Strict Textbook Visual & Notation Fidelity Mandate (Section 3.1.3 & CP-GEO-5)**: Mandated absolute fidelity of all geometry figures against official textbook PDFs. Prohibits creative modification of line names, inventing unlabelled vertices, rotating line orientations (vertical vs. horizontal), reversing ray arrows, or altering textbook problem alignments across all geometry modules. |
