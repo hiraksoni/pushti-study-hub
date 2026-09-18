@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>चित्र वर्णन (Picture Description) - Class 7 Hindi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #0F0F1A;
+            --bg-card: rgba(22, 33, 62, 0.7);
+            --surface: #16213E;
+            --primary: #818CF8;
+            --accent: #8B5CF6;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border: #2A2A40;
+            --correct-bg: rgba(16, 185, 129, 0.15);
+            --correct-border: #10B981;
+        }
+
+        [data-theme="light"] {
+            --bg-main: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --surface: #F1F5F9;
+            --primary: #4F46E5;
+            --accent: #6366F1;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+            --border: #E2E8F0;
+            --correct-bg: #DCFCE7;
+            --correct-border: #15803D;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-main);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px 20px 60px;
+        }
+
+        .page-hero {
+            text-align: center;
+            padding: 24px 16px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 24px;
+        }
+
+        .page-hero h1 {
+            margin: 0 0 8px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.9rem;
+            color: #EC4899;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .page-hero p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .marks-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            background: rgba(236, 72, 153, 0.15);
+            border: 1px solid #EC4899;
+            color: #F472B6;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .tabs-wrapper {
+            position: sticky;
+            top: 61px;
+            z-index: 990;
+            background: var(--bg-main);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 0;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: #EC4899;
+            color: #FFFFFF;
+            border-color: #EC4899;
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 8px;
+        }
+
+        /* Scene Visual Container */
+        .scene-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+        [data-theme="light"] .scene-card { background: #FFFFFF; }
+
+        .scene-badge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .scene-visual-art {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border: 1px dashed var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .vocab-box {
+            background: rgba(236, 72, 153, 0.08);
+            border: 1px solid rgba(236, 72, 153, 0.25);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            margin-bottom: 12px;
+        }
+        .vocab-box strong { color: #EC4899; }
+
+        .model-paragraph {
+            background: rgba(0,0,0,0.2);
+            border-left: 4px solid #EC4899;
+            padding: 14px 18px;
+            border-radius: 6px;
+            line-height: 1.8;
+            font-size: 0.96rem;
+        }
+        [data-theme="light"] .model-paragraph { background: #F1F5F9; }
+
+        .reveal-btn {
+            background: transparent;
+            border: 1px solid #EC4899;
+            color: #EC4899;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .reveal-btn:hover {
+            background: #EC4899;
+            color: white;
+        }
+
+        .answer-box {
+            display: none;
+            margin-top: 12px;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .rule-card {
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+        }
+        [data-theme="light"] .rule-card { background: #FFFFFF; }
+        .rule-card strong { color: #EC4899; display: block; margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <div style="display:flex; align-items:center; gap: 8px; font-size: 1.05rem; font-weight: 500; color: var(--text-main);">
+        <a href="../../../index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+            <i class="fas fa-home"></i> Home
+        </a>
+        <span style="color: var(--text-muted);">&gt;</span>
+        <a href="../../../hindi_index.html" style="text-decoration:none; color:inherit;">Hindi</a>
+        <span style="color: var(--text-muted);">&gt;</span>
+        <span style="color:#EC4899; font-weight:600;">चित्र वर्णन (Chitra Varnan)</span>
+    </div>
+
+    <div style="display:flex; align-items:center; gap: 15px;">
+        <button class="theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:var(--text-main); cursor:pointer; font-size:1.15rem;" onclick="toggleTheme()">
+            <i class="fas fa-moon" id="theme-icon"></i>
+        </button>
+        <a href="../../../midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 5px 12px; background:var(--surface); border:1px solid var(--border); border-radius:18px;">
+            🎯 Mid-Term Pattern (80M)
+        </a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="page-hero">
+        <h1><i class="fas fa-image"></i> चित्र वर्णन (Picture Description)</h1>
+        <p>दिए गए दृश्य का सूक्ष्म अवलोकन कर क्रमबद्ध एवं प्रभावशाली वाक्यों में अभिव्यक्ति • खण्ड 'घ'</p>
+        <div class="marks-pill">
+            <i class="fas fa-award"></i> Mid-Term Exam Weightage: 4 Marks (Section D)
+        </div>
+    </div>
+
+    <div class="tabs-wrapper">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-rules')"><i class="fas fa-list-check"></i> नियम एवं चरण (Methodology)</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-solved')"><i class="fas fa-eye"></i> आदर्श उदाहरण (Solved Drills)</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-practice')"><i class="fas fa-pen-nib"></i> परीक्षा अभ्यास (Practice)</button>
+    </div>
+
+    <!-- TAB 1: RULES & METHODOLOGY -->
+    <div id="tab-rules" class="tab-content active">
+        <div class="card">
+            <div class="card-header"><i class="fas fa-lightbulb"></i> चित्र वर्णन कैसे करें? (४ अंक की संपूर्ण रणनीति)</div>
+            <p><strong>चित्र वर्णन की परिभाषा:</strong> किसी चित्र को देखकर उसमें घटित होने वाली घटनाओं, पात्रों और परिवेश का अपनी कल्पना एवं भाषा में क्रमबद्ध वर्णन करना 'चित्र वर्णन' कहलाता है।</p>
+            
+            <div class="rules-grid">
+                <div class="rule-card">
+                    <strong>१. समग्र अवलोकन (Observation)</strong>
+                    <span>चित्र को कम से कम २ मिनट तक ध्यानपूर्वक देखें— स्थान क्या है, कौन-कौन उपस्थित हैं और वे क्या कर रहे हैं।</span>
+                </div>
+                <div class="rule-card">
+                    <strong>२. प्रथम परिचयात्मक वाक्य (Opening)</strong>
+                    <span>पहले वाक्य में दृश्य का सामान्य परिचय दें, जैसे— <em>"प्रस्तुत चित्र एक सुंदर एवं हरे-भरे उद्यान का है।"</em></span>
+                </div>
+                <div class="rule-card">
+                    <strong>३. क्रियाओं का सजीव वर्णन (Actions)</strong>
+                    <span>वाक्यों में वर्तमान काल (रहा है / रहे हैं) का प्रयोग करें, जैसे— <em>"बच्चे मैदान में गेंद खेल रहे हैं।"</em></span>
+                </div>
+                <div class="rule-card">
+                    <strong>४. क्रमबद्धता व विराम चिह्न (Coherence)</strong>
+                    <span>वाक्य एक-दूसरे से जुड़े हों। एक ही बात को बार-बार न दोहराएँ और व्याकरण की शुद्धता रखें।</span>
+                </div>
+                <div class="rule-card">
+                    <strong>५. सार्थक निष्कर्ष/संदेश (Conclusion)</strong>
+                    <span>अंतिम वाक्य में चित्र का सार या संदेश लिखें, जैसे— <em>"सभी लोग प्रकृति के सान्निध्य में अत्यंत प्रसन्न हैं।"</em></span>
+                </div>
+                <div class="rule-card">
+                    <strong>६. शब्द सीमा एवं अंक विभाजन (4M)</strong>
+                    <span>शब्द सीमा: ४० से ५० शब्द (लगभग ४-५ शुद्ध वाक्य)। विषय-वस्तु (2M), भाषा व प्रस्तुति (2M)।</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: SOLVED EXAMPLES -->
+    <div id="tab-solved" class="tab-content">
+        
+        <!-- Example 1: Garden Scene -->
+        <div class="card">
+            <div class="scene-badge-header">
+                <span class="card-header" style="margin-bottom:0; border:none; padding:0;"><i class="fas fa-seedling" style="color:#10B981;"></i> दृश्य १: प्रातःकालीन उद्यान (Morning Park Scene)</span>
+                <span style="font-size:0.75rem; background:rgba(16,185,129,0.15); color:#10B981; border:1px solid #10B981; padding:2px 8px; border-radius:12px; font-weight:700;">Solved • 4 Marks</span>
+            </div>
+
+            <div class="scene-visual-art">
+                <span>🌳</span><span>🏃</span><span>🌸</span><span>🦋</span><span>👵</span><span>🤸</span>
+            </div>
+
+            <div class="vocab-box">
+                <strong>💡 सहायक शब्द भंडार (मंजूषा):</strong> सुंदर उद्यान, रंग-बिरंगे फूल, हरी घास, तितलियाँ, सैर कर रहे हैं, व्यायाम, प्रसन्नता, स्वच्छ वायु।
+            </div>
+
+            <div class="model-paragraph">
+                <strong>आदर्श चित्र वर्णन (Model Answer):</strong><br>
+                १. प्रस्तुत चित्र प्रातःकाल के एक अत्यंत रमणीय एवं हरे-भरे उद्यान (पार्क) का है।<br>
+                २. बगीचे में चारों ओर रंग-बिरंगे फूल खिले हैं जिन पर सुंदर तितलियाँ मँडरा रही हैं।<br>
+                ३. कुछ वृद्ध व्यक्ति पगडंडी पर प्रातःकालीन सैर कर रहे हैं तथा खुले वातावरण में ताज़ा हवा का आनंद ले रहे हैं।<br>
+                ४. घास के मैदान में छोटे बच्चे गेंद से खेल रहे हैं और कुछ युवक योगासन व व्यायाम कर रहे हैं।<br>
+                ५. इस चित्र से हमें यह प्रेरणा मिलती है कि स्वस्थ जीवन के लिए नित्य प्रातः भ्रमण एवं व्यायाम करना अत्यंत लाभकारी है।
+            </div>
+        </div>
+
+        <!-- Example 2: School Library -->
+        <div class="card">
+            <div class="scene-badge-header">
+                <span class="card-header" style="margin-bottom:0; border:none; padding:0;"><i class="fas fa-book-reader" style="color:#818CF8;"></i> दृश्य २: विद्यालय का पुस्तकालय (School Library)</span>
+                <span style="font-size:0.75rem; background:rgba(99,102,241,0.15); color:#818CF8; border:1px solid #818CF8; padding:2px 8px; border-radius:12px; font-weight:700;">Solved • 4 Marks</span>
+            </div>
+
+            <div class="scene-visual-art">
+                <span>📚</span><span>🪑</span><span>📖</span><span>👩‍🏫</span><span>👦</span><span>🤫</span>
+            </div>
+
+            <div class="vocab-box">
+                <strong>💡 सहायक शब्द भंडार:</strong> पुस्तकालय, अलमारियाँ, पुस्तकें, मेज़-कुर्सी, शांति, लाइब्रेरियन, ज्ञानार्जन, एकाग्रता।
+            </div>
+
+            <div class="model-paragraph">
+                <strong>आदर्श चित्र वर्णन (Model Answer):</strong><br>
+                १. यह चित्र हमारे विद्यालय के ज्ञानवर्धक पुस्तकालय (लाइब्रेरी) का है।<br>
+                २. कमरे की विशाल अलमारियों में विभिन्न विषयों, कहानियों और विज्ञान की ज्ञानवर्धक पुस्तकें सुव्यवस्थित ढंग से रखी हैं।<br>
+                ३. मेज़ के चारों ओर छात्र-छात्राएँ अत्यंत शांत भाव से बैठकर अपनी मनपसंद पुस्तकें व पत्रिकाएँ पढ़ रहे हैं।<br>
+                ४. पुस्तकालयाध्यक्षा (लाइब्रेरियन) अपने काउंटर पर बैठकर विद्यार्थियों को पुस्तकें जारी (इशू) कर रही हैं।<br>
+                ५. पुस्तकालय का शांत एवं अनुशासित वातावरण विद्यार्थियों में स्वाध्याय और ज्ञानार्जन की रुचि को बढ़ाता है।
+            </div>
+        </div>
+
+        <!-- Example 3: Rainy Day Scene -->
+        <div class="card">
+            <div class="scene-badge-header">
+                <span class="card-header" style="margin-bottom:0; border:none; padding:0;"><i class="fas fa-cloud-showers-heavy" style="color:#06B6D4;"></i> दृश्य ३: वर्षा ऋतु का दृश्य (Rainy Day Scene)</span>
+                <span style="font-size:0.75rem; background:rgba(6,182,212,0.15); color:#06B6D4; border:1px solid #06B6D4; padding:2px 8px; border-radius:12px; font-weight:700;">Solved • 4 Marks</span>
+            </div>
+
+            <div class="scene-visual-art">
+                <span>🌧️</span><span>🌂</span><span>⛵</span><span>👧</span><span>🌈</span><span>🐸</span>
+            </div>
+
+            <div class="vocab-box">
+                <strong>💡 सहायक शब्द भंडार:</strong> रिमझिम वर्षा, रंग-बिरंगी छतरी, कागज़ की नाव, जलभराव, बच्चे, आनंद, हरियाली।
+            </div>
+
+            <div class="model-paragraph">
+                <strong>आदर्श चित्र वर्णन (Model Answer):</strong><br>
+                १. यह चित्र वर्षा ऋतु के एक सुहावने और आनंददायक दिन का है।<br>
+                २. आकाश में काले-काले बादल छाए हुए हैं और रिमझिम फुहारें बरस रही हैं।<br>
+                ३. कुछ लोग रंग-बिरंगी छतरियाँ और रेनकोट पहनकर अपने गंतव्य की ओर जा रहे हैं।<br>
+                ४. नन्हें बच्चे वर्षा के पानी में कागज़ की नावें तैरा रहे हैं और उल्लास से उछल-कूद कर रहे हैं।<br>
+                ५. वर्षा के कारण पेड़-पौधे धुलकर बिल्कुल हरे-भरे हो गए हैं और वातावरण अत्यंत ताज़ा व मनमोहक प्रतीत हो रहा है।
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: PRACTICE DRILLS -->
+    <div id="tab-practice" class="tab-content">
+        <!-- Practice 1: Railway Station -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-pencil-alt"></i> अभ्यास दृश्य १: रेलवे स्टेशन का प्लेटफॉर्म
+            </div>
+            <div class="scene-visual-art">
+                <span>🚉</span><span>🚆</span><span>🧳</span><span>👨‍✈️</span><span>🍵</span><span>👨‍👩‍👧</span>
+            </div>
+            <p><strong>निर्देश:</strong> दिए गए दृश्य को देखकर लगभग ४०-५० शब्दों में चित्र वर्णन कीजिए। (मंजूषा: प्लेटफॉर्म, रेलगाड़ी, यात्री, कुली, चाय की दुकान, टिकट चेकर)।</p>
+            <button class="reveal-btn" onclick="toggleAnswer(this)"><i class="fas fa-eye"></i> आदर्श उत्तर देखें</button>
+            <div class="answer-box">
+                <div class="model-paragraph">
+                    १. यह चित्र एक व्यस्त रेलवे स्टेशन के प्लेटफॉर्म का है।<br>
+                    २. प्लेटफॉर्म की पटरी पर एक लंबी रेलगाड़ी आकर रुकी है और उसमें से यात्री उतर व चढ़ रहे हैं।<br>
+                    ३. लाल वर्दी पहने एक कुली यात्री का भारी सामान अपने सिर पर उठाकर आगे बढ़ रहा है।<br>
+                    ४. प्लेटफॉर्म पर एक चाय-नाश्ते की दुकान है जहाँ कुछ लोग गरमा-गरम चाय पी रहे हैं।<br>
+                    ५. लाउडस्पीकर पर ट्रेनों के आगमन की उद्घोषणा हो रही है और पूरा स्टेशन चहल-पहल से भरा दिखाई दे रहा है।
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice 2: Festival of Diwali -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-pencil-alt"></i> अभ्यास दृश्य २: दीपावली का पावन त्योहार
+            </div>
+            <div class="scene-visual-art">
+                <span>🪔</span><span>🎆</span><span>✨</span><span>🍬</span><span>Rangoli</span><span>👨‍👩‍👧‍👦</span>
+            </div>
+            <p><strong>निर्देश:</strong> दृश्य का अवलोकन कर ४-५ सार्थक वाक्यों में वर्णन कीजिए। (मंजूषा: दीये, रंगोली, नए वस्त्र, मिठाइयाँ, उल्लास, रोशनी)।</p>
+            <button class="reveal-btn" onclick="toggleAnswer(this)"><i class="fas fa-eye"></i> आदर्श उत्तर देखें</button>
+            <div class="answer-box">
+                <div class="model-paragraph">
+                    १. यह चित्र भारत के प्रमुख एवं प्रकाश पर्व 'दीपावली' के उत्सव का है।<br>
+                    २. घर के मुख्य द्वार पर सुंदर रंगोली बनाई गई है और कतारबद्ध मिट्टी के दीये जगमगा रहे हैं।<br>
+                    ३. परिवार के सभी सदस्य नए व सुंदर पारंपरिक वस्त्र पहनकर लक्ष्मी-गणेश जी की पूजा कर रहे हैं।<br>
+                    ४. बच्चे एक-दूसरे को स्वादिष्ट मिठाइयाँ खिला रहे हैं और बड़े-बुजुर्गों का आशीर्वाद ले रहे हैं।<br>
+                    ५. यह त्योहार हमें बुराई पर अच्छाई और अंधकार पर प्रकाश की विजय का पावन संदेश देता है।
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function switchTab(e, tabId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    e.currentTarget.classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+}
+
+function toggleAnswer(btn) {
+    const ans = btn.nextElementSibling;
+    if (ans.style.display === 'block') {
+        ans.style.display = 'none';
+        btn.innerHTML = '<i class="fas fa-eye"></i> आदर्श उत्तर देखें';
+    } else {
+        ans.style.display = 'block';
+        btn.innerHTML = '<i class="fas fa-eye-slash"></i> उत्तर छिपाएँ';
+    }
+}
+
+function toggleTheme() {
+    const current = document.body.getAttribute('data-theme') || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', next);
+    localStorage.setItem('pushti-theme', next);
+    document.getElementById('theme-icon').className = next === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('pushti-theme') || 'dark';
+    document.body.setAttribute('data-theme', saved);
+    const icon = document.getElementById('theme-icon');
+    if (icon) icon.className = saved === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+});
+</script>
+
+</body>
+</html>
