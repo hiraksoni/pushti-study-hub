@@ -844,7 +844,91 @@ svg.geom-svg {
   font-size: 1rem;
   margin-top: 10px;
 }
-</style>
+
+    /* ==================== PUBLICATION TRACK BAR & DUAL-METHOD STYLES ==================== */
+    .pub-track-container {
+      margin-bottom: 22px;
+    }
+    .pub-track-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid var(--border-focus, #334155);
+      padding: 10px 16px;
+      border-radius: 14px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+    .pub-track-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: 1px solid var(--border, #334155);
+      background: var(--surface, #1e293b);
+      color: var(--text-muted, #94a3b8);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .pub-track-btn:hover {
+      background: var(--surface-hover, #334155);
+      color: var(--text-title, #f8fafc);
+      border-color: var(--primary-glow, #818cf8);
+      transform: translateY(-1px);
+    }
+    .pub-track-btn.active {
+      background: rgba(99, 102, 241, 0.22);
+      color: var(--primary-glow, #818cf8);
+      border-color: var(--primary-glow, #818cf8);
+      box-shadow: 0 0 14px rgba(99, 102, 241, 0.3);
+    }
+    .pub-track-btn.track-cordova.active {
+      background: rgba(245, 158, 11, 0.22);
+      color: #fbbf24;
+      border-color: #f59e0b;
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.3);
+    }
+    .pub-track-btn.track-dual.active {
+      background: rgba(16, 185, 129, 0.22);
+      color: #34d399;
+      border-color: #10b981;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.3);
+    }
+    .reveal-btn {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--primary-glow, #818cf8);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .reveal-btn:hover {
+      background: rgba(99, 102, 241, 0.3);
+      color: #fff;
+    }
+    .pub-badge-cordova {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    
+  </style>
 
 </head>
 <body>
@@ -915,6 +999,14 @@ svg.geom-svg {
           <span class="tab-verified-date">Verified: 14 Sep 2026</span>
         </div>
       </button>
+
+      <button class="tab-btn" data-tab="tab-cordova-fractions" onclick="switchTab('tab-cordova-fractions', this)" title="Cordova Fractions (Cordova Ch 2)" type="button">
+        <span class="tab-icon-wrap"><i class="fas fa-divide"></i></span>
+        <div class="tab-label-group">
+          <span class="tab-label">Cordova Fractions</span>
+          <span class="tab-verified-date" style="color:#fbbf24;">Cordova Ch 2 Core</span>
+        </div>
+      </button>
       <button class="tab-btn" data-tab="tab-solved-examples" onclick="switchTab('tab-solved-examples', this)" title="6. 15 NCERT Solved Examples" type="button">
         <span class="tab-icon-wrap"><i class="fas fa-bookmark"></i></span>
         <div class="tab-label-group">
@@ -969,6 +1061,16 @@ svg.geom-svg {
 </div>
 
 <!-- ==================== TAB 1: OVERVIEW, FOUNDATIONS & CONCEPT MAP ==================== -->
+
+      <!-- Publication Track Selector Bar -->
+      <div class="pub-track-container">
+        <div class="pub-track-bar">
+          <button class="pub-track-btn active" data-track="all" onclick="filterPublicationTrack('all', this)"><i class="fas fa-globe"></i> All (NCERT + Cordova)</button>
+          <button class="pub-track-btn" data-track="ncert" onclick="filterPublicationTrack('ncert', this)"><i class="fas fa-book-open"></i> 📘 NCERT Foundation</button>
+          <button class="pub-track-btn track-cordova" data-track="cordova" onclick="filterPublicationTrack('cordova', this)"><i class="fas fa-graduation-cap"></i> 📙 Cordova Ch 2</button>
+          <button class="pub-track-btn track-dual" data-track="dual" onclick="filterPublicationTrack('dual', this)"><i class="fas fa-bolt"></i> ⚡ Dual-Method Solver</button>
+        </div>
+      </div>
 
 <div id="tab-overview" class="tab-panel active">
   <div class="submodule-nav">
@@ -1958,12 +2060,239 @@ svg.geom-svg {
   </div>
 </div>
 
+
+<!-- ==================== TAB: CORDOVA FRACTIONS CORE THEORY ==================== -->
+<div id="tab-cordova-fractions" class="tab-panel">
+  <div class="card" style="border-left: 4px solid #f59e0b; margin-bottom: 1.5rem;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <div>
+        <h2 style="color:var(--text-title); margin:0; display:flex; align-items:center; gap:8px;">
+          <i class="fas fa-divide" style="color: #fbbf24;"></i> Cordova Core Theory: Fractions (Chapter 2)
+        </h2>
+        <p style="color:var(--text-muted); margin:4px 0 0; font-size:0.92rem;">
+          Rigorous foundational taxonomy covering 8 fraction types, cross-multiplication comparison algorithms, arithmetic engines, and product size inequality laws.
+        </p>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span class="pub-badge-cordova"><i class="fas fa-graduation-cap"></i> Cordova Mathematics 7</span>
+        <span class="ncert-tag" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); padding:4px 10px; border-radius:6px; font-size:0.8rem; font-weight:700;">Chapter 2 Core</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="submodule-nav" style="margin-bottom: 1.5rem;">
+    <button class="submodule-btn active" onclick="switchSubTab('subtab-cord-frac-1', this)"><i class="fas fa-shapes"></i> 1. Anatomy &amp; 8 Classifications</button>
+    <button class="submodule-btn" onclick="switchSubTab('subtab-cord-frac-2', this)"><i class="fas fa-scale-balanced"></i> 2. Comparison Algorithms</button>
+    <button class="submodule-btn" onclick="switchSubTab('subtab-cord-frac-3', this)"><i class="fas fa-calculator"></i> 3. Arithmetic Engines &amp; Inverses</button>
+    <button class="submodule-btn" onclick="switchSubTab('subtab-cord-frac-4', this)"><i class="fas fa-bolt"></i> 4. Product Inequality Theorems</button>
+  </div>
+
+  <!-- SUBMODULE 1: Anatomy & Classifications -->
+  <div id="subtab-cord-frac-1" class="submodule-pane active">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">📐</span>
+        <h2>1. Fraction Anatomy &amp; The 8 Core Classifications</h2>
+      </div>
+      <p style="color:var(--text-primary); line-height:1.7;">
+        A <strong>fraction</strong> is a number of the form $\frac{a}{b}$, where $a$ and $b$ are whole numbers and $b \neq 0$. Here, $a$ is the <strong>numerator</strong> (representing the parts taken) and $b$ is the <strong>denominator</strong> (representing total equal parts into which the whole is divided).
+      </p>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin: 1.2rem 0;">
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px;">
+          <h4 style="color:#38bdf8; margin-bottom:6px;"><i class="fas fa-check"></i> 1. Proper Fraction</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted);">Numerator strictly less than denominator ($a < b$). Value is strictly $< 1$.</p>
+          <div style="font-family:var(--font-mono); color:#38bdf8;">$\frac{3}{5}, \quad \frac{7}{9}, \quad \frac{11}{17}$</div>
+        </div>
+
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px;">
+          <h4 style="color:#fbbf24; margin-bottom:6px;"><i class="fas fa-arrow-up"></i> 2. Improper Fraction</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted);">Numerator greater than or equal to denominator ($a \ge b$). Value is $\ge 1$.</p>
+          <div style="font-family:var(--font-mono); color:#fbbf24;">$\frac{5}{3}, \quad \frac{13}{7}, \quad \frac{8}{8} = 1$</div>
+        </div>
+
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px;">
+          <h4 style="color:#a855f7; margin-bottom:6px;"><i class="fas fa-cubes"></i> 3. Mixed Fraction</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted);">Combination of a non-zero whole number and a proper fraction ($q\frac{r}{d}$).</p>
+          <div style="font-family:var(--font-mono); color:#a855f7;">$3\frac{2}{5} = \frac{3 \times 5 + 2}{5} = \frac{17}{5}$</div>
+        </div>
+
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px;">
+          <h4 style="color:#34d399; margin-bottom:6px;"><i class="fas fa-equals"></i> 4. Equivalent Fractions</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted);">Fractions having identical simplest values formed by scaling numerator &amp; denominator by $k \neq 0$.</p>
+          <div style="font-family:var(--font-mono); color:#34d399;">$\frac{3}{7} = \frac{6}{14} = \frac{9}{21} = \frac{12}{28}$</div>
+        </div>
+
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px;">
+          <h4 style="color:#06b6d4; margin-bottom:6px;"><i class="fas fa-layer-group"></i> 5. Like Fractions</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted);">Fractions having identical denominators. Can be added/subtracted directly.</p>
+          <div style="font-family:var(--font-mono); color:#06b6d4;">$\frac{2}{9}, \quad \frac{5}{9}, \quad \frac{8}{9}$</div>
+        </div>
+
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px;">
+          <h4 style="color:#f43f5e; margin-bottom:6px;"><i class="fas fa-shuffle"></i> 6. Unlike Fractions</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted);">Fractions having different denominators. Must convert via LCM before operations.</p>
+          <div style="font-family:var(--font-mono); color:#f43f5e;">$\frac{3}{4}, \quad \frac{5}{6}, \quad \frac{7}{12}$</div>
+        </div>
+
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px;">
+          <h4 style="color:#f97316; margin-bottom:6px;"><i class="fas fa-1"></i> 7. Unit Fractions</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted);">Fractions whose numerator is strictly $1$. Fundamental Egyptian fraction building blocks.</p>
+          <div style="font-family:var(--font-mono); color:#f97316;">$\frac{1}{2}, \quad \frac{1}{5}, \quad \frac{1}{17}$</div>
+        </div>
+
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px;">
+          <h4 style="color:#ec4899; margin-bottom:6px;"><i class="fas fa-percent"></i> 8. Decimal Fractions</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted);">Fractions whose denominators are powers of $10$ ($10, 100, 1000, \dots$).</p>
+          <div style="font-family:var(--font-mono); color:#ec4899;">$\frac{7}{10} = 0.7, \quad \frac{3}{100} = 0.03$</div>
+        </div>
+      </div>
+
+      <!-- Reduction to Lowest Terms via HCF -->
+      <div class="interactive-card" style="margin-top:1.2rem;">
+        <h3 style="color:var(--primary-glow); margin-bottom:0.5rem;"><i class="fas fa-filter"></i> Reduction to Lowest Terms: The HCF Algorithm</h3>
+        <p style="color:var(--text-primary);">A fraction $\frac{a}{b}$ is in lowest terms (irreducible) if and only if $\gcd(a, b) = 1$.</p>
+        <div style="background:rgba(15,23,42,0.5); padding:12px; border-radius:8px; font-family:var(--font-mono); margin-top:8px;">
+          $$\text{To reduce } \frac{78}{338}: \quad \gcd(78, 338) = 26 \implies \frac{78 \div 26}{338 \div 26} = \mathbf{\frac{3}{13}}$$
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMODULE 2: Comparison Algorithms -->
+  <div id="subtab-cord-frac-2" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">⚖️</span>
+        <h2>2. Comparison Algorithms &amp; Ordering</h2>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:14px; margin: 1.2rem 0;">
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px;">
+          <h4 style="color:#fbbf24; margin-bottom:8px;"><i class="fas fa-arrows-cross"></i> Method 1: The Cross-Multiplication Rule (2 Fractions)</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:10px;">For comparing any two fractions $\frac{a}{b}$ and $\frac{c}{d}$:</p>
+          <ul style="margin-left:18px; line-height:1.8; font-size:0.92rem;">
+            <li>If $a \times d > b \times c \implies \mathbf{\frac{a}{b} > \frac{c}{d}}$</li>
+            <li>If $a \times d < b \times c \implies \mathbf{\frac{a}{b} < \frac{c}{d}}$</li>
+            <li>If $a \times d = b \times c \implies \mathbf{\frac{a}{b} = \frac{c}{d}}$</li>
+          </ul>
+          <div style="background:rgba(15,23,42,0.6); padding:10px; border-radius:6px; margin-top:10px; font-family:var(--font-mono); font-size:0.88rem;">
+            $$\text{Compare } \frac{4}{7} \text{ and } \frac{5}{9}: \quad 4 \times 9 = 36 < 7 \times 5 = 35 \implies \mathbf{\frac{4}{7} > \frac{5}{9}}$$
+          </div>
+        </div>
+
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px;">
+          <h4 style="color:#34d399; margin-bottom:8px;"><i class="fas fa-layer-group"></i> Method 2: LCM of Denominators (3+ Fractions)</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:10px;">For sorting $3$ or more fractions into ascending/descending order:</p>
+          <ol style="margin-left:18px; line-height:1.8; font-size:0.92rem;">
+            <li>Find $L = \text{LCM}(b_1, b_2, \dots, b_n)$.</li>
+            <li>Multiply numerator &amp; denominator of each fraction by $\frac{L}{b_i}$ to convert to like fractions.</li>
+            <li>Order by resulting numerators.</li>
+          </ol>
+          <div style="background:rgba(15,23,42,0.6); padding:10px; border-radius:6px; margin-top:10px; font-family:var(--font-mono); font-size:0.88rem;">
+            $$\text{Order } \frac{5}{12}, \frac{3}{4}, \frac{7}{8}, \frac{13}{24}: \; \text{LCM}=24 \rightarrow \frac{10}{24}, \frac{18}{24}, \frac{21}{24}, \frac{13}{24}$$
+            $$\therefore \mathbf{\frac{5}{12} < \frac{13}{24} < \frac{3}{4} < \frac{7}{8}}$$
+          </div>
+        </div>
+      </div>
+
+      <div class="callout-amber" style="padding:14px; border-radius:8px; margin-top:1rem;">
+        <h4 style="color:#fbbf24; margin-bottom:6px;"><i class="fas fa-lightbulb"></i> Rapid Heuristic: Same Numerator Theorem</h4>
+        <p style="font-size:0.92rem; line-height:1.6;">When fractions have the <strong>same numerator</strong>, the fraction with the <strong>larger denominator is smaller</strong>:</p>
+        $$\frac{7}{12} < \frac{7}{10} < \frac{7}{8} < \frac{7}{5}$$
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMODULE 3: Arithmetic Engines & Inverses -->
+  <div id="subtab-cord-frac-3" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">⚙️</span>
+        <h2>3. Arithmetic Engines: Addition, Subtraction, Multiplication &amp; Inverses</h2>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:14px; margin: 1.2rem 0;">
+        <!-- Addition & Subtraction -->
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px;">
+          <h4 style="color:#818cf8; margin-bottom:8px;"><i class="fas fa-plus-minus"></i> Add &amp; Subtract Engine</h4>
+          <p style="font-size:0.88rem; color:var(--text-muted);">For like fractions:</p>
+          $$\frac{a}{c} \pm \frac{b}{c} = \frac{a \pm b}{c}$$
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-top:8px;">For mixed numbers, add whole parts and fractional parts separately or convert to improper fractions:</p>
+          $$3\frac{1}{2} + 1\frac{5}{6} = (3 + 1) + \left(\frac{3}{6} + \frac{5}{6}\right) = 4 + \frac{8}{6} = 4 + 1\frac{1}{3} = \mathbf{5\frac{1}{3}}$$
+        </div>
+
+        <!-- Multiplication & "Of" -->
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px;">
+          <h4 style="color:#34d399; margin-bottom:8px;"><i class="fas fa-xmark"></i> Multiplication Engine</h4>
+          $$\frac{a}{b} \times \frac{c}{d} = \frac{a \times c}{b \times d}$$
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-top:8px;"><strong>The "Of" Operator:</strong> Represents multiplication of a quantity by a fraction:</p>
+          $$\frac{3}{4} \text{ of } 1\text{ hour} = \frac{3}{4} \times 60\text{ minutes} = \mathbf{45\text{ minutes}}$$
+          $$\frac{2}{5} \text{ of } \text{Rs. } 1 = \frac{2}{5} \times 100\text{ paise} = \mathbf{40\text{ paise}}$$
+        </div>
+
+        <!-- Inverses & Division -->
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px;">
+          <h4 style="color:#f43f5e; margin-bottom:8px;"><i class="fas fa-divide"></i> Multiplicative Inverse &amp; Division</h4>
+          <p style="font-size:0.88rem; color:var(--text-muted);">Two non-zero numbers are <strong>reciprocals</strong> if their product is $1$:</p>
+          $$\text{Reciprocal of } \frac{a}{b} = \frac{b}{a}, \quad \frac{a}{b} \times \frac{b}{a} = 1$$
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-top:8px;"><strong>Division Protocol:</strong> Multiply dividend by reciprocal of divisor:</p>
+          $$\frac{a}{b} \div \frac{c}{d} = \frac{a}{b} \times \frac{d}{c} = \frac{a \times d}{b \times c}$$
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBMODULE 4: Product Inequality Theorems & HOTS -->
+  <div id="subtab-cord-frac-4" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">⚡</span>
+        <h2>4. Product Inequality Theorems &amp; Olympiad Speed Traps</h2>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:14px; margin: 1.2rem 0;">
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; border-left:3px solid #38bdf8;">
+          <h4 style="color:#38bdf8; margin-bottom:8px;"><i class="fas fa-arrow-down"></i> Case I: Proper $\times$ Proper</h4>
+          <p style="font-size:0.9rem; line-height:1.6;">The product of two proper fractions is <strong>strictly less than each of the two fractions</strong>:</p>
+          $$\frac{2}{3} \times \frac{4}{5} = \frac{8}{15} \implies \frac{8}{15} < \frac{2}{3} \quad \text{and} \quad \frac{8}{15} < \frac{4}{5}$$
+        </div>
+
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; border-left:3px solid #fbbf24;">
+          <h4 style="color:#fbbf24; margin-bottom:8px;"><i class="fas fa-arrow-up"></i> Case II: Improper $\times$ Improper</h4>
+          <p style="font-size:0.9rem; line-height:1.6;">The product of two improper fractions ($> 1$) is <strong>strictly greater than each of the two fractions</strong>:</p>
+          $$\frac{3}{2} \times \frac{5}{4} = \frac{15}{8} \implies \frac{15}{8} > \frac{3}{2} \quad \text{and} \quad \frac{15}{8} > \frac{5}{4}$$
+        </div>
+
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; border-left:3px solid #34d399;">
+          <h4 style="color:#34d399; margin-bottom:8px;"><i class="fas fa-arrows-left-right"></i> Case III: Proper $\times$ Improper</h4>
+          <p style="font-size:0.9rem; line-height:1.6;">The product lies <strong>between</strong> the two factors (greater than proper, less than improper):</p>
+          $$\frac{2}{3} \times \frac{5}{2} = \frac{5}{3} \implies \frac{2}{3} < \mathbf{\frac{5}{3}} < \frac{5}{2}$$
+        </div>
+      </div>
+
+      <div class="interactive-card callout-coral" style="margin-top:1rem;">
+        <h4 style="color:#f43f5e; margin-bottom:8px;"><i class="fas fa-fire"></i> HOTS Problem Deconstruction: The Equal Midpoint Fraction</h4>
+        <p style="font-size:0.92rem; line-height:1.6;"><strong>Problem:</strong> Find a fraction which is as much greater than $\frac{5}{6}$ as it is less than $\frac{8}{9}$.</p>
+        <div style="background:rgba(15,23,42,0.6); padding:12px; border-radius:8px; font-family:var(--font-mono); margin-top:8px;">
+          $$\text{Let fraction be } x. \quad x - \frac{5}{6} = \frac{8}{9} - x \implies 2x = \frac{5}{6} + \frac{8}{9} = \frac{15 + 16}{18} = \frac{31}{18}$$
+          $$x = \frac{31}{18 \times 2} = \mathbf{\frac{31}{36}}$$
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- ==================== TAB 6: SOLVED EXAMPLES ==================== -->
 <div id="tab-solved-examples" class="tab-panel">
   <div class="submodule-nav">
     <button class="submodule-btn active" onclick="switchSubTab('tab6-sub1', this)"><i class="fas fa-coins"></i> 6.1 Real-World Units (pp. 191–192)</button>
     <button class="submodule-btn" onclick="switchSubTab('tab6-sub2', this)"><i class="fas fa-people-arrows"></i> 6.2 Multi-Stage Sharing (pp. 193–194)</button>
     <button class="submodule-btn" onclick="switchSubTab('tab6-sub3', this)"><i class="fas fa-futbol"></i> 6.3 Proportions & Carpets (pp. 194, 201)</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab6-sub-dualmatrix', this)" style="border-left: 2px solid #6366f1;"><i class="fas fa-bolt" style="color:#818cf8;"></i> Dual-Method Matrix</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab6-sub-cordova-1', this)" style="border-left: 2px solid #f59e0b;"><i class="fas fa-book-reader" style="color:#fbbf24;"></i> Cordova Ex 1–4</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab6-sub-cordova-2', this)" style="border-left: 2px solid #f59e0b;"><i class="fas fa-calculator" style="color:#fbbf24;"></i> Cordova Ex 5–7</button>
   </div>
 
   <!-- Submodule 6.1 -->
@@ -2129,6 +2458,179 @@ svg.geom-svg {
       </div>
     </div>
   </div>
+
+
+  <!-- ==================== SUBMODULE: DUAL-METHOD MATRIX ==================== -->
+  <div id="tab6-sub-dualmatrix" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">⚡</span>
+        <h2>Dual-Method Solver Matrix: NCERT vs Cordova Solutions</h2>
+      </div>
+      <p style="color:var(--text-muted); margin-bottom: 1.2rem;">
+        Side-by-side comparison of conceptual geometric models (NCERT) vs algorithmic computational shortcuts (Cordova).
+      </p>
+
+      <!-- Archetype 1: Comparing Fractions -->
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <h3 style="color:#fbbf24; font-size:1.05rem; margin:0;"><i class="fas fa-scale-balanced"></i> Archetype 1: Comparing Unlike Fractions ($\frac{4}{7}$ vs $\frac{5}{9}$)</h3>
+          <span class="pub-badge-cordova">Comparison</span>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+          <div style="background:rgba(15,23,42,0.5); padding:12px; border-radius:8px;">
+            <h4 style="color:#818cf8; font-size:0.9rem; margin-bottom:6px;"><i class="fas fa-book-open"></i> NCERT Common Denominator Method</h4>
+            $$\text{LCM}(7, 9) = 63$$
+            $$\frac{4}{7} = \frac{4 \times 9}{7 \times 9} = \frac{36}{63}, \quad \frac{5}{9} = \frac{5 \times 7}{9 \times 7} = \frac{35}{63}$$
+            $$\text{Since } 36 > 35 \implies \mathbf{\frac{4}{7} > \frac{5}{9}}$$
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:6px;">High conceptual clarity via like partitions.</p>
+          </div>
+          <div style="background:rgba(15,23,42,0.5); padding:12px; border-radius:8px;">
+            <h4 style="color:#fbbf24; font-size:0.9rem; margin-bottom:6px;"><i class="fas fa-bolt"></i> Cordova Cross-Product Rule</h4>
+            $$\text{Cross multiply: } 4 \times 9 = 36, \quad 7 \times 5 = 35$$
+            $$\text{Since } 36 > 35 \implies \mathbf{\frac{4}{7} > \frac{5}{9}}$$
+            <p style="font-size:0.8rem; color:var(--accent-emerald); margin-top:6px;"><strong>Speed:</strong> 3-second mental calculation without computing LCM!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Archetype 2: Fraction Division -->
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <h3 style="color:#34d399; font-size:1.05rem; margin:0;"><i class="fas fa-divide"></i> Archetype 2: Fraction Division ($14 \div \frac{7}{2}$)</h3>
+          <span class="pub-badge-cordova">Division</span>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px;">
+          <div style="background:rgba(15,23,42,0.5); padding:12px; border-radius:8px;">
+            <h4 style="color:#818cf8; font-size:0.9rem; margin-bottom:6px;"><i class="fas fa-book-open"></i> NCERT Visual Measurement Model</h4>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:6px;">How many lengths of $3\frac{1}{2} = \frac{7}{2}$ fit into $14$?</p>
+            $$14 \div \frac{7}{2} = 14 \times \frac{2}{7} = 2 \times 2 = \mathbf{4}$$
+          </div>
+          <div style="background:rgba(15,23,42,0.5); padding:12px; border-radius:8px;">
+            <h4 style="color:#fbbf24; font-size:0.9rem; margin-bottom:6px;"><i class="fas fa-bolt"></i> Cordova Reciprocal Inversion Rule</h4>
+            $$\text{Reciprocal of divisor } \frac{7}{2} \text{ is } \frac{2}{7}$$
+            $$\frac{14}{1} \times \frac{2}{7} = \frac{14 \div 7 \times 2}{1} = 2 \times 2 = \mathbf{4}$$
+            <p style="font-size:0.8rem; color:var(--accent-emerald); margin-top:6px;"><strong>Speed:</strong> Zero geometric scaffolding; direct arithmetic simplification.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SUBMODULE: CORDOVA EXAMPLES PART A ==================== -->
+  <div id="tab6-sub-cordova-1" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">📖</span>
+        <h2>Cordova Solved Examples: Part A (Classifications &amp; Basic Operations)</h2>
+      </div>
+
+      <!-- Ex 1 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Cordova Example 1 (Page 27) • Lowest Terms</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">Express $\dfrac{78}{338}$ in lowest terms.</h4>
+        <details class="solution-drawer" open>
+          <summary><i class="fas fa-chevron-down"></i> Step-by-Step Solution</summary>
+          <div class="drawer-content">
+            $$\text{HCF of } 78 \text{ and } 338: \quad 338 = 78 \times 4 + 26, \quad 78 = 26 \times 3 + 0 \implies \text{HCF} = 26$$
+            $$\frac{78}{338} = \frac{78 \div 26}{338 \div 26} = \mathbf{\frac{3}{13}}$$
+          </div>
+        </details>
+      </div>
+
+      <!-- Ex 2 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Cordova Example 2 (Page 27) • Ascending Order</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">Arrange in ascending order: $\dfrac{4}{9}, \; \dfrac{5}{12}, \; \dfrac{7}{24}, \; \dfrac{5}{27}$.</h4>
+        <details class="solution-drawer">
+          <summary><i class="fas fa-chevron-down"></i> Step-by-Step Solution</summary>
+          <div class="drawer-content">
+            $$\text{LCM}(9, 12, 24, 27) = 216$$
+            $$\frac{4}{9} = \frac{4 \times 24}{216} = \frac{96}{216}, \quad \frac{5}{12} = \frac{5 \times 18}{216} = \frac{90}{216}$$
+            $$\frac{7}{24} = \frac{7 \times 9}{216} = \frac{63}{216}, \quad \frac{5}{27} = \frac{5 \times 8}{216} = \frac{40}{216}$$
+            $$\text{Ascending order: } \frac{40}{216} < \frac{63}{216} < \frac{90}{216} < \frac{96}{216}$$
+            <div style="color:var(--accent-emerald); font-weight:bold; margin-top:8px;">✅ Final Order: $\mathbf{\frac{5}{27} < \frac{7}{24} < \frac{5}{12} < \frac{4}{9}}$</div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Ex 3 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Cordova Example 3 (Page 29) • Unlike Addition</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">Simplify: $\dfrac{8}{9} + \dfrac{7}{12}$.</h4>
+        <details class="solution-drawer">
+          <summary><i class="fas fa-chevron-down"></i> Step-by-Step Solution</summary>
+          <div class="drawer-content">
+            $$\text{LCM}(9, 12) = 36$$
+            $$\frac{8}{9} + \frac{7}{12} = \frac{8 \times 4 + 7 \times 3}{36} = \frac{32 + 21}{36} = \frac{53}{36} = \mathbf{1\frac{17}{36}}$$
+          </div>
+        </details>
+      </div>
+
+      <!-- Ex 4 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Cordova Example 4 (Page 29) • Subtraction</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">Find the difference: $\dfrac{8}{9} - \dfrac{7}{12}$.</h4>
+        <details class="solution-drawer">
+          <summary><i class="fas fa-chevron-down"></i> Step-by-Step Solution</summary>
+          <div class="drawer-content">
+            $$\frac{8}{9} - \frac{7}{12} = \frac{8 \times 4 - 7 \times 3}{36} = \frac{32 - 21}{36} = \mathbf{\frac{11}{36}}$$
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SUBMODULE: CORDOVA EXAMPLES PART B ==================== -->
+  <div id="tab6-sub-cordova-2" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">📐</span>
+        <h2>Cordova Solved Examples: Part B (Multiplication, Division &amp; Word Problems)</h2>
+      </div>
+
+      <!-- Ex 5 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Cordova Example (Page 36) • Distance Word Problem</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">Vinay covers $7\dfrac{1}{2}\text{ km}$ in $1$ hour. How much distance will he cover in $2\dfrac{4}{5}\text{ hours}$?</h4>
+        <details class="solution-drawer">
+          <summary><i class="fas fa-chevron-down"></i> Step-by-Step Solution</summary>
+          <div class="drawer-content">
+            $$\text{Distance in 1 hour} = 7\frac{1}{2}\text{ km} = \frac{15}{2}\text{ km}$$
+            $$\text{Time} = 2\frac{4}{5}\text{ hours} = \frac{14}{5}\text{ hours}$$
+            $$\text{Total distance} = \frac{15}{2} \times \frac{14}{5} = \frac{15 \times 14}{2 \times 5} = 3 \times 7 = \mathbf{21\text{ km}}$$
+          </div>
+        </details>
+      </div>
+
+      <!-- Ex 6 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Cordova Example (Page 40) • Unit Cost via Division</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">If the cost of $17\text{ m}$ of cloth is $\text{Rs. } 77\dfrac{5}{7}$, find its cost per metre.</h4>
+        <details class="solution-drawer">
+          <summary><i class="fas fa-chevron-down"></i> Step-by-Step Solution</summary>
+          <div class="drawer-content">
+            $$\text{Total cost} = \text{Rs. } 77\frac{5}{7} = \text{Rs. } \frac{77 \times 7 + 5}{7} = \text{Rs. } \frac{544}{7}$$
+            $$\text{Cost per metre} = \frac{544}{7} \div 17 = \frac{544}{7} \times \frac{1}{17} = \frac{32}{7} = \mathbf{\text{Rs. } 4\frac{4}{7}\text{ per metre}}$$
+          </div>
+        </details>
+      </div>
+
+      <!-- Ex 7 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Cordova Example (Page 40) • Unknown Multiplier</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">What number should be multiplied with $5\dfrac{5}{7}$ to get the product $15\dfrac{25}{32}$?</h4>
+        <details class="solution-drawer">
+          <summary><i class="fas fa-chevron-down"></i> Step-by-Step Solution</summary>
+          <div class="drawer-content">
+            $$\text{Let required number be } x. \quad 5\frac{5}{7} \times x = 15\frac{25}{32}$$
+            $$\frac{40}{7} \times x = \frac{505}{32} \implies x = \frac{505}{32} \div \frac{40}{7} = \frac{505}{32} \times \frac{7}{40} = \frac{101 \times 7}{32 \times 8} = \mathbf{\frac{707}{256}} = \mathbf{2\frac{195}{256}}$$
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- ==================== TAB 7: FIGURE IT OUT DRILLS & HOTS ==================== -->
@@ -2138,6 +2640,11 @@ svg.geom-svg {
     <button class="submodule-btn" onclick="switchSubTab('tab7-sub2', this)"><i class="fas fa-tree"></i> 7.2 Ant Colony Food Tree (p. 202)</button>
     <button class="submodule-btn" onclick="switchSubTab('tab7-sub3', this)"><i class="fas fa-infinity"></i> 7.3 Telescoping Patterns (p. 202)</button>
     <button class="submodule-btn" onclick="switchSubTab('tab7-sub4', this)"><i class="fas fa-vector-square"></i> 7.4 Geometric Fractions (p. 207)</button>
+      <button class="submodule-btn" onclick="switchSubTab('tab7-sub-cord-2_1', this)" style="border-left: 2px solid #f59e0b;"><i class="fas fa-list-check" style="color:#fbbf24;"></i> Cordova Ex 2.1</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab7-sub-cord-2_2', this)" style="border-left: 2px solid #f59e0b;"><i class="fas fa-plus-minus" style="color:#fbbf24;"></i> Cordova Ex 2.2</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab7-sub-cord-2_3', this)" style="border-left: 2px solid #f59e0b;"><i class="fas fa-xmark" style="color:#fbbf24;"></i> Cordova Ex 2.3</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab7-sub-cord-2_4', this)" style="border-left: 2px solid #f59e0b;"><i class="fas fa-divide" style="color:#fbbf24;"></i> Cordova Ex 2.4</button>
+    <button class="submodule-btn" onclick="switchSubTab('tab7-sub-cord-review', this)" style="border-left: 2px solid #f43f5e;"><i class="fas fa-trophy" style="color:#f43f5e;"></i> Review &amp; HOTS</button>
   </div>
 
   <!-- Submodule 7.1 -->
@@ -2323,6 +2830,409 @@ svg.geom-svg {
       </div>
     </div>
   </div>
+
+
+  <!-- ==================== SUBMODULE: CORDOVA EXERCISE 2.1 ==================== -->
+  <div id="tab7-sub-cord-2_1" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">📝</span>
+        <h2>Cordova Exercise 2.1: Types, Simplification &amp; Ordering</h2>
+      </div>
+
+      <!-- Q1 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Question 1 • Lowest Terms</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">Write each of the following fractions into lowest terms:</h4>
+        <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(i) $\frac{18}{48}$</strong>
+            $$\gcd(18, 48) = 6 \implies \frac{18 \div 6}{48 \div 6} = \mathbf{\frac{3}{8}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(ii) $\frac{120}{168}$</strong>
+            $$\gcd(120, 168) = 24 \implies \frac{120 \div 24}{168 \div 24} = \mathbf{\frac{5}{7}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(iii) $\frac{21}{35}$</strong>
+            $$\gcd(21, 35) = 7 \implies \frac{21 \div 7}{35 \div 7} = \mathbf{\frac{3}{5}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(iv) $\frac{84}{98}$</strong>
+            $$\gcd(84, 98) = 14 \implies \frac{84 \div 14}{98 \div 14} = \mathbf{\frac{6}{7}}$$
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Question 2 • Mixed Fractions</div>
+        <h4 style="margin: 0.4rem 0 0.6rem; color: var(--text-title);">Convert each of the following into mixed fractions:</h4>
+        <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(i) $\frac{16}{3}$</strong>
+            $$16 \div 3 = 5\text{ R } 1 \implies \mathbf{5\frac{1}{3}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(ii) $\frac{19}{4}$</strong>
+            $$19 \div 4 = 4\text{ R } 3 \implies \mathbf{4\frac{3}{4}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(iii) $\frac{37}{2}$</strong>
+            $$37 \div 2 = 18\text{ R } 1 \implies \mathbf{18\frac{1}{2}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(iv) $\frac{126}{5}$</strong>
+            $$126 \div 5 = 25\text{ R } 1 \implies \mathbf{25\frac{1}{5}}$$
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 & Q4 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Questions 3 &amp; 4 • Ascending &amp; Descending Order</div>
+        <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+          <div style="background:var(--surface); padding:12px; border-radius:8px;">
+            <strong>Q3(i) Ascending: $\frac{4}{9}, \frac{5}{12}, \frac{7}{24}, \frac{5}{27}$</strong>
+            $$\text{LCM} = 216 \rightarrow \mathbf{\frac{5}{27} < \frac{7}{24} < \frac{5}{12} < \frac{4}{9}}$$
+          </div>
+          <div style="background:var(--surface); padding:12px; border-radius:8px;">
+            <strong>Q4(i) Descending: $\frac{16}{15}, \frac{6}{20}, \frac{9}{10}, \frac{3}{5}$</strong>
+            $$\text{LCM} = 60 \rightarrow \mathbf{\frac{16}{15} > \frac{9}{10} > \frac{3}{5} > \frac{6}{20}}$$
+          </div>
+        </div>
+      </div>
+
+      <!-- Q5 & Q6 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Questions 5 &amp; 6 • Equivalent Fractions</div>
+        <p><strong>Q5: Four equivalent fractions of $\frac{3}{7}$:</strong></p>
+        $$\frac{3 \times 2}{7 \times 2} = \mathbf{\frac{6}{14}}, \quad \frac{3 \times 3}{7 \times 3} = \mathbf{\frac{9}{21}}, \quad \frac{3 \times 4}{7 \times 4} = \mathbf{\frac{12}{28}}, \quad \frac{3 \times 5}{7 \times 5} = \mathbf{\frac{15}{35}}$$
+        <p style="margin-top:8px;"><strong>Q6: Are the following pairs equivalent?</strong></p>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; font-size:0.9rem;">
+          <span class="pub-badge-cordova">(i) $\frac{3}{5}, \frac{18}{30}$: <strong>Yes</strong></span>
+          <span class="pub-badge-cordova">(ii) $\frac{7}{9}, \frac{28}{36}$: <strong>Yes</strong></span>
+          <span class="pub-badge-cordova">(iii) $\frac{4}{7}, \frac{16}{21}$: <strong>No</strong></span>
+          <span class="pub-badge-cordova">(iv) $\frac{5}{8}, \frac{15}{28}$: <strong>No</strong></span>
+          <span class="pub-badge-cordova">(v) $\frac{2}{3}, \frac{10}{15}$: <strong>Yes</strong></span>
+          <span class="pub-badge-cordova">(vi) $\frac{11}{13}, \frac{44}{52}$: <strong>Yes</strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SUBMODULE: CORDOVA EXERCISE 2.2 ==================== -->
+  <div id="tab7-sub-cord-2_2" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">➕</span>
+        <h2>Cordova Exercise 2.2: Addition, Subtraction &amp; Word Problems</h2>
+      </div>
+
+      <!-- Q1 & Q2 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Question 1 &amp; 2 • Fundamental Sums &amp; Differences</div>
+        <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q1(i) $\frac{5}{9} + \frac{7}{9}$</strong>
+            $$= \frac{12}{9} = \frac{4}{3} = \mathbf{1\frac{1}{3}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q1(ii) $\frac{5}{8} + \frac{3}{4}$</strong>
+            $$= \frac{5 + 6}{8} = \frac{11}{8} = \mathbf{1\frac{3}{8}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q1(iii) $\frac{2}{5} + \frac{3}{8}$</strong>
+            $$= \frac{16 + 15}{40} = \mathbf{\frac{31}{40}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q2(i) $\frac{5}{7} - \frac{2}{7}$</strong>
+            $$= \mathbf{\frac{3}{7}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q2(ii) $\frac{7}{16} - \frac{2}{12}$</strong>
+            $$= \frac{21 - 8}{48} = \mathbf{\frac{13}{48}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q2(iii) $\frac{5}{8} - \frac{1}{6}$</strong>
+            $$= \frac{15 - 4}{24} = \mathbf{\frac{11}{24}}$$
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 & Q4 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Question 3 &amp; 4 • Mixed Fractions &amp; Multi-Term Simplification</div>
+        <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q3(i) $3\frac{1}{2} + 1\frac{5}{6}$</strong>
+            $$= \frac{7}{2} + \frac{11}{6} = \frac{21 + 11}{6} = \frac{32}{6} = \mathbf{5\frac{1}{3}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q4(i) $\frac{5}{12} - \frac{3}{20} + \frac{7}{15}$</strong>
+            $$\text{LCM}=60 \implies \frac{25 - 9 + 28}{60} = \frac{44}{60} = \mathbf{\frac{11}{15}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q4(ii) $4\frac{1}{2} - 2\frac{1}{4} + 1\frac{1}{8}$</strong>
+            $$= \frac{9}{2} - \frac{9}{4} + \frac{9}{8} = \frac{36 - 18 + 9}{8} = \mathbf{3\frac{3}{8}}$$
+          </div>
+        </div>
+      </div>
+
+      <!-- Q5 to Q8 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Questions 5 to 8 • Word Problems</div>
+        <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q5: What should be added to $\frac{2}{3}$ to get $\frac{7}{9}$?</strong>
+            $$\frac{7}{9} - \frac{2}{3} = \frac{7 - 6}{9} = \mathbf{\frac{1}{9}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q6: Of $\frac{11}{48}$ and $\frac{13}{16}$, which is greater &amp; by how much?</strong>
+            $$\frac{13}{16} = \frac{39}{48} > \frac{11}{48} \implies \frac{39 - 11}{48} = \frac{28}{48} = \mathbf{\frac{7}{12}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q7: What should be added to $3\frac{2}{5}$ to get $8$?</strong>
+            $$8 - \frac{17}{5} = \frac{40 - 17}{5} = \frac{23}{5} = \mathbf{4\frac{3}{5}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q8: Perimeter of Field ($l=15\frac{2}{3}\text{ m}, b=12\frac{1}{2}\text{ m}$)</strong>
+            $$P = 2\left(\frac{47}{3} + \frac{25}{2}\right) = 2\left(\frac{94 + 75}{6}\right) = \frac{169}{3} = \mathbf{56\frac{1}{3}\text{ m}}$$
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SUBMODULE: CORDOVA EXERCISE 2.3 ==================== -->
+  <div id="tab7-sub-cord-2_3" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">✖️</span>
+        <h2>Cordova Exercise 2.3: Multiplication &amp; Practical Applications</h2>
+      </div>
+
+      <!-- Q1 & Q2 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Questions 1 &amp; 2 • Multiplication Products</div>
+        <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q1(i) $9 \times \frac{3}{5}$</strong>
+            $$= \frac{27}{5} = \mathbf{5\frac{2}{5}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q1(iv) $16 \times \frac{3}{4}$</strong>
+            $$= 4 \times 3 = \mathbf{12}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q2(i) $6 \times 2\frac{1}{9}$</strong>
+            $$= 6 \times \frac{19}{9} = \frac{38}{3} = \mathbf{12\frac{2}{3}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q2(ii) $5 \times 6\frac{1}{4}$</strong>
+            $$= 5 \times \frac{25}{4} = \frac{125}{4} = \mathbf{31\frac{1}{4}}$$
+          </div>
+        </div>
+      </div>
+
+      <!-- Q6: Unit Conversions -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Question 6 • "Of" Operator with Real-World Units</div>
+        <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(i) $\frac{3}{4}$ of a year</strong>
+            $$= \frac{3}{4} \times 12 = \mathbf{9\text{ months}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(ii) $\frac{2}{5}$ of a rupee</strong>
+            $$= \frac{2}{5} \times 100 = \mathbf{40\text{ paise}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(iii) $\frac{1}{3}$ of a day</strong>
+            $$= \frac{1}{3} \times 24 = \mathbf{8\text{ hours}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(iv) $\frac{1}{4}$ of an hour</strong>
+            $$= \frac{1}{4} \times 60 = \mathbf{15\text{ minutes}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(v) $\frac{11}{25}$ of a litre</strong>
+            $$= \frac{11}{25} \times 1000 = \mathbf{440\text{ ml}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>(vi) $\frac{3}{8}$ of a kg</strong>
+            $$= \frac{3}{8} \times 1000 = \mathbf{375\text{ g}}$$
+          </div>
+        </div>
+      </div>
+
+      <!-- Q7 to Q15 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Questions 7 to 15 • Word Problems Suite</div>
+        <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q7: Rotten Apples</strong>
+            $$24 \times \frac{3}{4} = \mathbf{18\text{ rotten apples}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q8: Area of Rectangular Park</strong>
+            $$21\frac{3}{7} \times 12\frac{3}{5} = \frac{150}{7} \times \frac{63}{5} = \mathbf{270\text{ sq. m}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q9: Cost of $6\frac{1}{2}\text{ kg}$ Apples</strong>
+            $$\text{Rs. } 15\frac{3}{4} \times 6\frac{1}{2} = \frac{63}{4} \times \frac{13}{2} = \mathbf{\text{Rs. } 102\frac{3}{8}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q10: Distance by Rohit</strong>
+            $$2\frac{1}{2} \times 3\frac{1}{5} = \frac{5}{2} \times \frac{16}{5} = \mathbf{8\text{ km}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q11: Girls in Class ($48$ total, $\frac{2}{3}$ boys)</strong>
+            $$\text{Girls} = 48 \times \left(1 - \frac{2}{3}\right) = 48 \times \frac{1}{3} = \mathbf{16\text{ girls}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q12: Distance Covered by Car</strong>
+            $$18 \times 3\frac{1}{3} = 18 \times \frac{10}{3} = \mathbf{60\text{ km}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q14: Pages Left to Read ($320$ total)</strong>
+            $$\text{Pages left} = 320 \times \left(1 - \frac{3}{5}\right) = 320 \times \frac{2}{5} = \mathbf{128\text{ pages}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q15: Sugar Left in Tin ($21\text{ kg}$)</strong>
+            $$\text{Left} = 21 \times \left(1 - \frac{2}{3}\right) = 21 \times \frac{1}{3} = \mathbf{7\text{ kg}}$$
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SUBMODULE: CORDOVA EXERCISE 2.4 ==================== -->
+  <div id="tab7-sub-cord-2_4" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">➗</span>
+        <h2>Cordova Exercise 2.4: Division Operations &amp; Commercial Math</h2>
+      </div>
+
+      <!-- Q1 & Q2 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Questions 1 to 3 • Division Calculations</div>
+        <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q1(i) $14 \div \frac{7}{2}$</strong>
+            $$= 14 \times \frac{2}{7} = \mathbf{4}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q1(ii) $15 \div \frac{5}{3}$</strong>
+            $$= 15 \times \frac{3}{5} = \mathbf{9}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q1(iv) $\frac{48}{39} \div 8$</strong>
+            $$= \frac{48}{39 \times 8} = \frac{6}{39} = \mathbf{\frac{2}{13}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q2(i) $3\frac{1}{2} \div 2\frac{2}{3}$</strong>
+            $$= \frac{7}{2} \times \frac{3}{8} = \mathbf{1\frac{5}{16}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q3(i) $5\frac{1}{4} \div 2\frac{1}{3}$</strong>
+            $$= \frac{21}{4} \times \frac{3}{7} = \mathbf{2\frac{1}{4}}$$
+          </div>
+        </div>
+      </div>
+
+      <!-- Q5 to Q13 -->
+      <div class="example-box" style="margin-bottom:1.2rem;">
+        <div class="ex-badge">Questions 5 to 13 • Division Word Problems</div>
+        <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q5: Cost of $1\text{ kg}$ Sugar ($4\frac{1}{4}\text{ kg} = \text{Rs. } 68$)</strong>
+            $$\text{Cost} = 68 \div \frac{17}{4} = 68 \times \frac{4}{17} = \mathbf{\text{Rs. } 16}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q6: Unknown Fraction from Sum</strong>
+            $$\text{Sum} = 2\frac{2}{3} + 3\frac{1}{2} = \frac{37}{6}$$
+            $$\text{Fraction} = 5 \div \frac{37}{6} = \mathbf{\frac{30}{37}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q7: Number whose $\frac{2}{5}$ is $12$</strong>
+            $$12 \div \frac{2}{5} = 12 \times \frac{5}{2} = \mathbf{30}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q8: Other Number (Product $= 16\frac{1}{2}$)</strong>
+            $$16\frac{1}{2} \div 5\frac{1}{2} = \frac{33}{2} \times \frac{2}{11} = \mathbf{3}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q9: Length of $6$ Equal Rope Pieces</strong>
+            $$3\frac{3}{5} \div 6 = \frac{18}{5} \times \frac{1}{6} = \mathbf{\frac{3}{5}\text{ m}}$$
+          </div>
+          <div style="background:var(--surface); padding:10px; border-radius:8px;">
+            <strong>Q10: Number of Notebooks</strong>
+            $$126\frac{2}{3} \div 6\frac{1}{3} = \frac{380}{3} \times \frac{3}{19} = \mathbf{20\text{ notebooks}}$$
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SUBMODULE: CORDOVA REVIEW & HOTS ==================== -->
+  <div id="tab7-sub-cord-review" class="submodule-pane">
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">🏆</span>
+        <h2>Cordova Review Exercise (14 Qs) &amp; HOTS (2 Qs)</h2>
+      </div>
+
+      <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-bottom:1.5rem;">
+        <div style="background:var(--surface); padding:12px; border-radius:8px;">
+          <strong>Review Q3: Ascending Order</strong>
+          <p>$\frac{5}{12}, \; \frac{3}{4}, \; \frac{7}{8}, \; \frac{13}{24}$</p>
+          <div style="color:var(--accent-emerald); font-weight:bold;">✅ $\mathbf{\frac{5}{12} < \frac{13}{24} < \frac{3}{4} < \frac{7}{8}}$</div>
+        </div>
+        <div style="background:var(--surface); padding:12px; border-radius:8px;">
+          <strong>Review Q8: Chain Product</strong>
+          $$\frac{10}{12} \times \frac{25}{18} \times \frac{15}{58} = \mathbf{\frac{125}{4176}}$$
+        </div>
+        <div style="background:var(--surface); padding:12px; border-radius:8px;">
+          <strong>Review Q11: Sum Divided by Difference</strong>
+          $$\text{Sum} = \frac{3}{2} + \frac{5}{7} = \frac{31}{14}, \quad \text{Diff} = \frac{3}{2} - \frac{5}{7} = \frac{11}{14}$$
+          $$\frac{31}{14} \div \frac{11}{14} = \mathbf{\frac{31}{11}} = \mathbf{2\frac{9}{11}}$$
+        </div>
+        <div style="background:var(--surface); padding:12px; border-radius:8px;">
+          <strong>Review Q14: Rajni's Savings ($21000$ income)</strong>
+          $$\text{Expenses} = \frac{6}{7} \times 21000 = 18000$$
+          $$\text{Savings} = 21000 - 18000 = \mathbf{\text{Rs. } 3000}$$
+        </div>
+      </div>
+
+      <h3 style="color:#f43f5e; margin: 1.2rem 0 0.8rem;"><i class="fas fa-fire"></i> HOTS Questions</h3>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:14px;">
+        <!-- HOTS 1 -->
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px;">
+          <h4 style="color:#fbbf24; margin-bottom:8px;">HOTS 1: Perimeter &amp; Rectangle Area</h4>
+          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6;">
+            Perimeter of the composite shape is $18\frac{1}{2}\text{ m}$ and area of rectangular part $ACEF$ is $8\frac{1}{2}\text{ m}^2$. Find length and breadth.
+          </p>
+          <div style="background:rgba(15,23,42,0.6); padding:10px; border-radius:6px; margin-top:8px; font-family:var(--font-mono); font-size:0.88rem;">
+            $$\text{Length} = \mathbf{5.5\text{ m}}, \quad \text{Breadth} = \mathbf{1\frac{2}{5}\text{ m}} \; (1.54\text{ m})$$
+          </div>
+        </div>
+
+        <!-- HOTS 2 -->
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px;">
+          <h4 style="color:#f43f5e; margin-bottom:8px;">HOTS 2: Equal Difference Midpoint Fraction</h4>
+          <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6;">
+            Find a fraction which is as much greater than $\frac{5}{6}$ as it is less than $\frac{8}{9}$.
+          </p>
+          <div style="background:rgba(15,23,42,0.6); padding:10px; border-radius:6px; margin-top:8px; font-family:var(--font-mono); font-size:0.88rem;">
+            $$x = \frac{1}{2}\left(\frac{5}{6} + \frac{8}{9}\right) = \frac{1}{2}\left(\frac{15 + 16}{18}\right) = \mathbf{\frac{31}{36}}$$
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- ==================== TAB 8: MULTI-LEVEL EVALUATION & LABS ==================== -->
@@ -4353,7 +5263,7 @@ svg.geom-svg {
           1. Two positive improper fractions are multiplied. Is the product sometimes, always, or never less than $1$? Give examples to support your answer.
         </div>
 
-        <details class="solution-drawer" open style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.2); border-radius:8px; padding:0.8rem 1rem;">
+        <details class="solution-drawer" style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.2); border-radius:8px; padding:0.8rem 1rem;">
           <summary style="font-weight:600; color:#fbbf24; cursor:pointer; user-select:none;">
             <i class="fas fa-lightbulb"></i> View Detailed Mathematical Proof &amp; Analysis
           </summary>
@@ -4383,7 +5293,7 @@ svg.geom-svg {
           2. A string is cut in halves. One of the halves is kept aside. One-fifth of the remaining half is cut away and the piece left is $8\text{ feet}$ long. How long was the string initially?
         </div>
 
-        <details class="solution-drawer" open style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.2); border-radius:8px; padding:0.8rem 1rem;">
+        <details class="solution-drawer" style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.2); border-radius:8px; padding:0.8rem 1rem;">
           <summary style="font-weight:600; color:#fbbf24; cursor:pointer; user-select:none;">
             <i class="fas fa-lightbulb"></i> View Detailed Step-by-Step Solution
           </summary>
@@ -4423,6 +5333,255 @@ svg.geom-svg {
   </div>
 
 </div>
+
+
+  <!-- ==================== SUBMODULE: CORDOVA PRACTICE & ASSESSMENTS ==================== -->
+  <div id="tab-cordova-practice" class="tab-panel">
+    <div class="card" style="border-left: 4px solid #f59e0b; margin-bottom: 1.5rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <div>
+          <h2 style="color:var(--text-title); margin:0; display:flex; align-items:center; gap:8px;">
+            <i class="fas fa-brain" style="color: #fbbf24;"></i> Cordova Practice: Mental Maths &amp; MCQs
+          </h2>
+          <p style="color:var(--text-muted); margin:4px 0 0; font-size:0.92rem;">
+            Interactive rapid-response assessments and conceptual objective questions with immediate feedback.
+          </p>
+        </div>
+        <span class="pub-badge-cordova"><i class="fas fa-check-double"></i> 14 Mental + 6 MCQs</span>
+      </div>
+    </div>
+
+    <!-- Mental Maths Corner -->
+    <div class="card">
+      <div class="section-title">
+        <span class="icon">⚡</span>
+        <h2>Mental Maths Corner (14 Rapid Items)</h2>
+      </div>
+
+      <div class="solution-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+        <!-- Q1 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q1: Reciprocal of $\frac{4}{9}$</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-1" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="Answer...">
+            <button class="reveal-btn" onclick="checkMentalFrac('1', '9/4', ['2 1/4', '2.25'])">Check</button>
+          </div>
+          <div id="mental-frac-1-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q2 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q2: $\frac{2}{3}$ of $15$ litres is:</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-2" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="e.g. 10">
+            <button class="reveal-btn" onclick="checkMentalFrac('2', '10 litres', ['10', '10l'])">Check</button>
+          </div>
+          <div id="mental-frac-2-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q3 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q3: $3\frac{9}{8}$ as improper fraction:</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-3" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="Answer...">
+            <button class="reveal-btn" onclick="checkMentalFrac('3', '33/8')">Check</button>
+          </div>
+          <div id="mental-frac-3-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q4 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q4: $\frac{103}{6}$ as mixed fraction:</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-4" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="e.g. 17 1/6">
+            <button class="reveal-btn" onclick="checkMentalFrac('4', '17 1/6')">Check</button>
+          </div>
+          <div id="mental-frac-4-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q5 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q5: $\frac{4}{15}$ of $\frac{27}{8}$ is:</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-5" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="Answer...">
+            <button class="reveal-btn" onclick="checkMentalFrac('5', '9/10')">Check</button>
+          </div>
+          <div id="mental-frac-5-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q6 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q6: $\frac{5}{7} \div 35 =$</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-6" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="Answer...">
+            <button class="reveal-btn" onclick="checkMentalFrac('6', '1/49')">Check</button>
+          </div>
+          <div id="mental-frac-6-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q7 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q7: Product is $1$, one is $2\frac{1}{4}$:</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-7" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="Answer...">
+            <button class="reveal-btn" onclick="checkMentalFrac('7', '4/9')">Check</button>
+          </div>
+          <div id="mental-frac-7-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q8 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q8: $\frac{5}{8}$ of a kilogram is:</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-8" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="e.g. 625 g">
+            <button class="reveal-btn" onclick="checkMentalFrac('8', '625 g', ['625', '625g', '625 grams'])">Check</button>
+          </div>
+          <div id="mental-frac-8-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q9 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q9: $5\frac{1}{2} \times \underline{\hspace{0.8cm}} = 11$</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-9" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="Answer...">
+            <button class="reveal-btn" onclick="checkMentalFrac('9', '2')">Check</button>
+          </div>
+          <div id="mental-frac-9-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q10 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q10: $\frac{2}{3} \times \frac{4}{5} \times 0 \times \frac{1}{9} =$</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-10" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="Answer...">
+            <button class="reveal-btn" onclick="checkMentalFrac('10', '0')">Check</button>
+          </div>
+          <div id="mental-frac-10-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q11 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q11: Numbers whose product is $1$ are:</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-11" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="Term...">
+            <button class="reveal-btn" onclick="checkMentalFrac('11', 'reciprocals', ['reciprocal of each other', 'reciprocal'])">Check</button>
+          </div>
+          <div id="mental-frac-11-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q12 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q12: $\frac{1}{3} \div 3 =$</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-12" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="Answer...">
+            <button class="reveal-btn" onclick="checkMentalFrac('12', '1/9')">Check</button>
+          </div>
+          <div id="mental-frac-12-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q13 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q13: Product of 2 improper fractions is:</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-13" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="greater / less">
+            <button class="reveal-btn" onclick="checkMentalFrac('13', 'greater')">Check</button>
+          </div>
+          <div id="mental-frac-13-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+
+        <!-- Q14 -->
+        <div style="background:var(--surface); padding:12px; border-radius:8px; border:1px solid var(--border);">
+          <strong>Q14: $4 \text{ times } \frac{1}{4} =$</strong>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="mental-frac-14" class="search-input" style="padding:4px 8px; max-width:120px;" placeholder="Answer...">
+            <button class="reveal-btn" onclick="checkMentalFrac('14', '1')">Check</button>
+          </div>
+          <div id="mental-frac-14-feedback" style="margin-top:4px; font-weight:600; font-size:0.82rem;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Multiple Choice Questions -->
+    <div class="card" style="margin-top:1.5rem;">
+      <div class="section-title">
+        <span class="icon">🎯</span>
+        <h2>Multiple Choice Questions (6 MCQs)</h2>
+      </div>
+
+      <!-- MCQ 1 -->
+      <div class="mcq-box" style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:14px;">
+        <h4 style="color:var(--text-title); margin-bottom:10px;">1. Which of the following is a reducible fraction?</h4>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, '79 and 26 share no common factors > 1.')">(a) $\frac{79}{26}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, '41 and 17 are coprime prime numbers.')">(b) $\frac{41}{17}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, true, 'Both 105 and 112 are divisible by 7: 105/112 = 15/16.')">(c) $\frac{105}{112}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, '91 and 15 are coprime.')">(d) $\frac{91}{15}$</button>
+        </div>
+        <div class="mcq-explanation" style="display:none; margin-top:10px; padding:8px 12px; border-radius:6px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); font-size:0.88rem;"></div>
+      </div>
+
+      <!-- MCQ 2 -->
+      <div class="mcq-box" style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:14px;">
+        <h4 style="color:var(--text-title); margin-bottom:10px;">2. Which of the following is an improper fraction?</h4>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'Numerator 3 < Denominator 5 (Proper).')">(a) $\frac{3}{5}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'Numerator 19 < Denominator 21 (Proper).')">(b) $\frac{19}{21}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, true, 'Numerator 25 >= Denominator 11 (Improper).')">(c) $\frac{25}{11}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'Numerator 11 < Denominator 13 (Proper).')">(d) $\frac{11}{13}$</button>
+        </div>
+        <div class="mcq-explanation" style="display:none; margin-top:10px; padding:8px 12px; border-radius:6px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); font-size:0.88rem;"></div>
+      </div>
+
+      <!-- MCQ 3 -->
+      <div class="mcq-box" style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:14px;">
+        <h4 style="color:var(--text-title); margin-bottom:10px;">3. Reciprocal of $2\frac{2}{5}$ is:</h4>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, true, '2 2/5 = 12/5. Its reciprocal is 5/12.')">(a) $\frac{5}{12}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'Incorrect.')">(b) $\frac{3}{5}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'Incorrect.')">(c) $2\frac{5}{2}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, '12/5 is the fraction itself, not its reciprocal.')">(d) $\frac{12}{5}$</button>
+        </div>
+        <div class="mcq-explanation" style="display:none; margin-top:10px; padding:8px 12px; border-radius:6px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); font-size:0.88rem;"></div>
+      </div>
+
+      <!-- MCQ 4 -->
+      <div class="mcq-box" style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:14px;">
+        <h4 style="color:var(--text-title); margin-bottom:10px;">4. $\frac{2}{5} + \frac{1}{5} - \frac{3}{5} = ?$</h4>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'Incorrect.')">(a) $5$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, true, '(2 + 1 - 3) / 5 = 0 / 5 = 0.')">(b) $0$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'Incorrect.')">(c) $\frac{1}{5}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'Incorrect.')">(d) $\frac{2}{5}$</button>
+        </div>
+        <div class="mcq-explanation" style="display:none; margin-top:10px; padding:8px 12px; border-radius:6px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); font-size:0.88rem;"></div>
+      </div>
+
+      <!-- MCQ 5 -->
+      <div class="mcq-box" style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:14px;">
+        <h4 style="color:var(--text-title); margin-bottom:10px;">5. Which of the following statements is true?</h4>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, '29/6 != 43/12 (58 != 43).')">(a) $\frac{29}{6} = \frac{43}{12}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, true, '29/26 > 1 while 43/72 < 1, so 29/26 > 43/72 is strictly TRUE.')">(b) $\frac{29}{26} > \frac{43}{72}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'False.')">(c) $\frac{29}{26} < \frac{43}{72}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'False.')">(d) $\frac{29}{26} = \frac{52}{12}$</button>
+        </div>
+        <div class="mcq-explanation" style="display:none; margin-top:10px; padding:8px 12px; border-radius:6px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); font-size:0.88rem;"></div>
+      </div>
+
+      <!-- MCQ 6 -->
+      <div class="mcq-box" style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:14px;">
+        <h4 style="color:var(--text-title); margin-bottom:10px;">6. To get $40$, $6\frac{2}{3}$ should be multiplied with:</h4>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'Incorrect.')">(a) $7\frac{1}{2}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'Incorrect.')">(b) $6\frac{2}{3}$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, true, '40 / (20/3) = 40 * 3/20 = 2 * 3 = 6.')">(c) $6$</button>
+          <button type="button" class="mcq-option" onclick="checkMCQ(this, false, 'Incorrect.')">(d) $6\frac{1}{2}$</button>
+        </div>
+        <div class="mcq-explanation" style="display:none; margin-top:10px; padding:8px 12px; border-radius:6px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); font-size:0.88rem;"></div>
+      </div>
+    </div>
+  </div>
+
 
 </main>
 </div><!-- /.app-layout -->
@@ -4499,6 +5658,15 @@ function switchTab(tabId, btnEl) {
 
 // Two-Tier Submodule Tab Switcher (Tier 2)
 function switchSubTab(subId, btnEl) {
+    if (!btnEl) {
+        const targetSub = document.getElementById(subId);
+        if (targetSub) {
+            const parentPanel = targetSub.closest('.tab-panel');
+            if (parentPanel) {
+                btnEl = parentPanel.querySelector(`.submodule-btn[onclick*="${subId}"]`);
+            }
+        }
+    }
     if (!btnEl) return;
     const parentPanel = btnEl.closest('.tab-panel');
     if (!parentPanel) return;

@@ -1,4 +1,4 @@
-# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.0)
+# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.1)
 *The Definitive Architectural, Design, Pedagogical & Verification Standard for AI-Assisted Generation*
 
 ---
@@ -299,6 +299,76 @@ Horizontal scrollbars on desktop/laptop displays degrade readability and break r
      ```
   4. **Strict Pre-Confirmation Laptop Audit**:
      Before certifying any solved example or chapter module as complete, test and verify the layout within a 1280px–1366px viewport width with the sidebar pinned. Ensure zero text collision, zero border breach, and flawless visual elegance.
+
+### 2.5.2 Mathematical Typography & Fraction Legibility Standard
+* **The Class 7 Ergonomics Principle**: Mathematical expressions and fractions must be instantly readable without eye strain. In standard KaTeX, inline $\frac{a}{b}$ defaults to \textstyle, which automatically compresses numerators and denominators into script size (\scriptstyle ~10px on standard displays). This makes fractions appear as tiny, illegible specks—especially inside spacious cards.
+* **Mandatory KaTeX Fraction Standards**:
+  1. **Display Fractions (\dfrac) for Subparts & Prompts**:
+     - Whenever a standalone fraction, conversion prompt, or subpart item is presented (e.g. (i) 5/100, (ii) 16/1000), always write \dfrac (e.g., $\dfrac{5}{100}$, $\dfrac{16}{1000}$, $\dfrac{254}{1000}$) instead of \frac.
+     - \dfrac forces full display-style typography, ensuring numerator and denominator numbers are rendered at full regular text height (16px–18px+).
+  2. **KaTeX Font Size Amplification**:
+     - Every mathematical stylesheet must include base font magnification for math elements:
+       `css
+       .katex {
+         font-size: 1.12em; /* Elevates base KaTeX math readability */
+       }
+       .subpart-item .katex, .subpart-chip .katex, .fraction-box .katex {
+         font-size: 1.25em; /* Guarantees standalone fractions and subparts are bold and legible */
+       }
+       `
+
+### 2.5.3 Adaptive Subpart Layouts (Atomic Chips vs. Verbose Grids)
+* **The Screen Real-Estate Reality**:
+  - The previous rule specifying minmax(280px, 1fr) was designed specifically for **verbose descriptive subparts** (multi-sentence word problems or worked derivations).
+  - When applied indiscriminately to **atomic mathematical subparts** (<=25 characters, e.g. (i) 5/100, (a) 0.34, (i) 49 paise), minmax(280px, 1fr) creates bloated 280px-wide boxes that wrap into 3 + 1 on laptops, leaving the 4th item awkwardly stranded on the second line with 66% empty void.
+* **Adaptive Subpart Classification Standard**:
+  1. **Atomic Mathematical Subparts** (Single fractions, decimals, simple equations, terms <=25 characters):
+     - **MUST USE** .subparts-chips (flex-wrap) or .subparts-grid.compact (grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); or 
+epeat(4, 1fr) on laptop/desktop viewports).
+     - Standard styling:
+       `css
+       .subparts-grid.compact {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+         gap: 10px;
+         margin: 10px 0;
+         width: 100%;
+       }
+       .subparts-chips {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 10px;
+         margin: 10px 0;
+       }
+       .subpart-chip {
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         gap: 8px;
+         padding: 8px 14px;
+         background: var(--surface);
+         border: 1px solid var(--border);
+         border-radius: 8px;
+         font-size: 1.05rem;
+         font-weight: 600;
+         transition: all 0.2s ease;
+         min-width: 0;
+         box-sizing: border-box;
+       }
+       .subpart-chip:hover {
+         border-color: var(--primary);
+         background: var(--primary-deep);
+       }
+       .subpart-chip .subpart-num {
+         color: var(--primary-glow);
+         font-family: var(--font-mono);
+         font-weight: 700;
+         font-size: 0.92rem;
+       }
+       `
+     - **Result**: All 4 subparts (i), (ii), (iii), (iv) sit side-by-side in **one single, compact row** on laptop and desktop displays. Zero stranded boxes, and question card vertical height is reduced by over 50%!
+  2. **Verbose Descriptive Subparts** (Full-sentence word problems, multi-line questions):
+     - Continue to use .subparts-grid (minmax(280px, 1fr)) with flex-labeled rows (.subpart-label + .subpart-text).
 
 ### 2.6 Unified Sticky Header (`.site-header`)
 Every chapter and subject page must present the standardized 54px glassmorphic sticky top bar:
@@ -658,6 +728,20 @@ Every interactive chapter must adhere to modern web usability best practices:
    - **Question Alignment**: Every question and worked solution must correspond directly to the diagram as drawn. A student looking at the textbook and looking at the screen must see an identical geometric configuration.
    - **Dual-Verification Step**: Every geometry SVG must be visually cross-referenced against high-resolution crops of the official textbook PDF before deployment.
 
+### 3.1.4 Universal Mathematics Solution Visibility Standard (All Solutions Hidden by Default)
+* **The Active Practice Pedagogical Principle**:
+  - In Mathematics, passive reading of solutions inhibits deep cognitive retention. Pushti must encounter the problem statement first, challenge herself to solve it mentally or in her notebook, and only reveal worked steps when needed to check answers or overcome obstacles.
+* **Non-Negotiable Rules**:
+  1. **100% of Solutions Closed on Page Load**:
+     - Every single solution drawer, worked derivation, exercise answer, and explanation container in all Mathematics modules MUST be **hidden (collapsed) by default**.
+     - The `open` attribute on `<details class="solution-drawer">`, `<details class="solution-details">`, or any answer accordion is **strictly prohibited on initial load**.
+     - Only the prompt, question number, subpart chips/cards, and `<summary><i class="fas fa-chevron-down"></i> Step-by-Step Mathematical Working</summary>` (or equivalent button) should be visible initially.
+  2. **Zero Auto-Reveal on Tab Transitions**:
+     - Navigating between tabs, sub-tabs, or drills must NEVER programmatically expand solution drawers. All drawers must remain closed until the student explicitly clicks `<summary>` to reveal.
+  3. **Self-Assessment & Reveal Consistency**:
+     - When revealed, the solution accordion displays complete step-by-step working, common pitfall warnings, and self-assessment buttons (`Got It`, `Needs Review`), keeping the student in full control of her learning pace.
+
+
 ### 3.2 Science & Social Science Architecture (The Modern Interactive Simulation & Searchable Solutions Hub Standard - v3.0)
 *Exemplified in Class 7 Geography Chapter 1 (Interior of the Earth) and Class 7 Science modules.*
 
@@ -786,6 +870,8 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
   - Verify that ALL Solved Examples and Illustrations fit completely within their solution drawer without crossing borders or forcing page-level horizontal scrolling.
   - Verify that all multi-step math derivations are stacked cleanly using `\begin{aligned}`.
   - Verify that `.subparts-grid` and `.solution-grid` cards wrap smoothly without squeezing math content below 240px.
+- [ ] **CP-MATH-3 (Zero Default-Open Solutions Gate)**: In all Mathematics chapters, verify that 100% of solution drawers, worked step accordions, and exercise answers are collapsed by default. The `open` attribute on `<details>` is strictly forbidden on initial load (open count == 0 across all solution drawers).
+- [ ] **CP-MATH-2 (Fraction Readability & Subpart Compactness Gate)**: Are all standalone fractions formatted with \dfrac or font-amplified KaTeX (>=1.15em)? Do atomic mathematical subparts (<=25 chars) use compact chips/grids (minmax(140px, 1fr) or flex chips) fitting 4 subparts in a single row on laptop viewports without stranding an orphaned box on a second row?
 - [ ] **CP-GUI-11 (Empty State & Search UX Gate)**: Does every search-enabled or filtered directory implement a dedicated empty state container with an illustrative vector icon, friendly message, and an actionable 1-click "Clear Filters" button when 0 results match?
 - [ ] **CP-GUI-12 (Dual-Theme Token Parity Gate)**: In Tailwind CSS modules, are both `class="dark"` and `data-theme="dark"` / `data-theme="light"` attributes synchronized on `<html>` to guarantee flawless parent dashboard and iframe interoperability?
 
@@ -832,6 +918,7 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 
 | Version | Date | Key Architectural Additions |
 | :---: | :---: | :--- |
+| **v3.1** | 2026-09-17 | **Master SOP Unification & Mathematical Typography Standard**: Archived and redirected legacy secondary SOP files (PUSHTI_CONTENT_SOP, PUSHTI_DESIGN_SOP) to ensure zero contradictions; established Section 2.5.2 (Fraction Legibility Mandate with \dfrac and .katex font amplification) and Section 2.5.3 (Adaptive Subparts: Atomic Chips minmax(140px, 1fr) vs. Verbose Grids minmax(280px, 1fr) eliminating orphaned 4th boxes on laptop viewports); added CP-MATH-2. |
 | **v3.0** | 2026-09-14 | **Modern Interactive Simulation, Tailwind/Lucide UI & Unified Searchable Solutions Hub Standard**: Authorized Stack B (Tailwind CSS + Lucide Icons) for Science and Social Science; superseded mark-based question splitting with the 5-Module Interactive Simulation & Searchable Solutions Hub Standard (Tab 1 SVG Cutaway Inspector, Tab 2 Cycle Simulator, Tab 3 Searchable NCERT Hub with live debounced search and empty states, Tab 4 Auto-Grading Quiz, Tab 5 3D Flipcards); codified Top Sticky Nav for visual landscape subjects vs. Left Dock Rail for dense math; added CP-GUI-11, CP-GUI-12, and CP-INT-4. |
 | **v2.6** | 2026-09-13 | **Strict Textbook Visual & Notation Fidelity Mandate (Section 3.1.3 & CP-GEO-5)**: Mandated absolute fidelity of all geometry figures against official textbook PDFs. Prohibits creative modification of line names, inventing unlabelled vertices, rotating line orientations (vertical vs. horizontal), reversing ray arrows, or altering textbook problem alignments across all geometry modules. |
 | **v2.5** | 2026-09-13 | **Two-Tier Navigation Architecture, Dock Rail Zero-Peeking Containment & Complete KaTeX Delimiter Suite**: Codified Section 3.1.2, CP-GUI-9, CP-GUI-10, and CP-TECH-7 establishing the Two-Tier Navigation standard (`.submodule-nav` pills breaking dense sections into short, screen-sized views to eliminate long vertical scrolling), strict collapsed dock rail text isolation (`.tab-label-group` width: 0 / opacity: 0 preventing letter peeking at 62px), and universal KaTeX auto-rendering for all 4 standard delimiters (`$`, `\(`, `$$`, `\[`) with dynamic re-rendering on tab and sub-tab transitions. |
