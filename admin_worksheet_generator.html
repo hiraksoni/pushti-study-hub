@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Worksheet &amp; Exam Generator &bull; Pushti Study Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    :root {
+        --bg-main: #0B0F19;
+        --bg-surface: #111827;
+        --bg-card: #1F2937;
+        --border: #374151;
+        --primary: #6366F1;
+        --primary-hover: #4F46E5;
+        --accent: #10B981;
+        --danger: #EF4444;
+        --warning: #F59E0B;
+        --text-main: #F9FAFB;
+        --text-muted: #9CA3AF;
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-head: 'Outfit', sans-serif;
+        --font-mono: 'Space Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+        font-family: var(--font-sans);
+        background-color: var(--bg-main);
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Nav Header */
+    .top-nav {
+        background: var(--bg-surface);
+        border-bottom: 1px solid var(--border);
+        padding: 12px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: var(--text-main);
+    }
+
+    .nav-brand .logo-badge {
+        background: linear-gradient(135deg, #6366F1, #8B5CF6);
+        color: white;
+        font-family: var(--font-head);
+        font-weight: 800;
+        font-size: 1.1rem;
+        padding: 6px 12px;
+        border-radius: 8px;
+    }
+
+    .nav-brand .title-wrap h1 {
+        font-family: var(--font-head);
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+    }
+
+    .nav-brand .title-wrap p {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .btn {
+        font-family: var(--font-sans);
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+
+    .btn-secondary {
+        background: rgba(255,255,255,0.05);
+        border-color: var(--border);
+        color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255,255,255,0.1);
+        border-color: #4B5563;
+    }
+
+    .btn-primary {
+        background: var(--primary);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+    }
+
+    .btn-success {
+        background: #059669;
+        color: white;
+    }
+
+    .btn-success:hover {
+        background: #047857;
+    }
+
+    .btn-lock {
+        background: rgba(239, 68, 68, 0.15);
+        color: #F87171;
+        border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    /* Auth Gate Modal */
+    #auth-gate {
+        position: fixed;
+        inset: 0;
+        background: rgba(11, 15, 25, 0.95);
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    .pin-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 36px;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .pin-card .icon-lock {
+        width: 60px;
+        height: 60px;
+        background: rgba(99, 102, 241, 0.15);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .pin-card h2 {
+        font-family: var(--font-head);
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+    }
+
+    .pin-card p {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+    }
+
+    .pin-input {
+        width: 100%;
+        background: var(--bg-card);
+        border: 2px solid var(--border);
+        color: var(--text-main);
+        font-size: 1.8rem;
+        font-family: var(--font-mono);
+        letter-spacing: 0.5rem;
+        text-align: center;
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 16px;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    .pin-input:focus {
+        border-color: var(--primary);
+    }
+
+    .pin-error {
+        color: var(--danger);
+        font-size: 0.8rem;
+        margin-top: 8px;
+        display: none;
+    }
+
+    /* Main Workspace Layout */
+    .app-workspace {
+        display: grid;
+        grid-template-columns: 360px 1fr;
+        flex: 1;
+        overflow: hidden;
+    }
+
+    @media (max-width: 1024px) {
+        .app-workspace {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Control Sidebar */
+    .control-sidebar {
+        background: var(--bg-surface);
+        border-right: 1px solid var(--border);
+        padding: 24px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        height: calc(100vh - 65px);
+    }
+
+    .panel-section {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .section-label {
+        font-family: var(--font-head);
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #94A3B8;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .section-label span.badge-num {
+        background: rgba(99, 102, 241, 0.2);
+        color: var(--primary);
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+
+    /* Selection Pills & Toggles */
+    .select-dropdown {
+        width: 100%;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        color: var(--text-main);
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-family: var(--font-sans);
+        font-size: 0.9rem;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .chapter-checkbox-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .custom-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        padding: 10px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        user-select: none;
+    }
+
+    .custom-check:hover {
+        border-color: #4B5563;
+        background: #283548;
+    }
+
+    .custom-check input[type="checkbox"] {
+        margin-top: 3px;
+        accent-color: var(--primary);
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+
+    .custom-check .check-info {
+        flex: 1;
+    }
+
+    .custom-check .check-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: block;
+    }
+
+    .custom-check .check-meta {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        display: block;
+        margin-top: 2px;
+    }
+
+    /* Source Material Filters */
+    .source-tag-pills {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .source-pill-check {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.82rem;
+    }
+
+    .source-pill-check input {
+        accent-color: var(--primary);
+        margin-right: 8px;
+    }
+
+    .source-badge {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+
+    .badge-tb { background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-notes { background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .badge-enrich { background: rgba(139, 92, 246, 0.15); color: #A78BFA; border: 1px solid rgba(139, 92, 246, 0.3); }
+    .badge-trap { background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    /* Quick Preset Source Buttons */
+    .preset-source-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        margin-top: 4px;
+    }
+
+    .btn-preset {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        font-size: 0.72rem;
+        padding: 6px 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .btn-preset:hover {
+        background: rgba(255,255,255,0.08);
+        color: var(--text-main);
+    }
+
+    /* Difficulty Radio Group */
+    .diff-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 6px;
+    }
+
+    .diff-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        padding: 10px 8px;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .diff-card:hover {
+        border-color: #4B5563;
+    }
+
+    .diff-card.active {
+        border-color: var(--primary);
+        background: rgba(99, 102, 241, 0.15);
+    }
+
+    .diff-card .diff-icon {
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+    }
+
+    .diff-card .diff-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        display: block;
+    }
+
+    /* Blueprint Preset Selector */
+    .blueprint-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .blueprint-btn {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        padding: 10px;
+        border-radius: 8px;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .blueprint-btn:hover {
+        border-color: #4B5563;
+    }
+
+    .blueprint-btn.active {
+        border-color: var(--primary);
+        background: rgba(99, 102, 241, 0.15);
+    }
+
+    .blueprint-btn .bp-marks {
+        font-family: var(--font-mono);
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--primary);
+    }
+
+    .blueprint-btn .bp-title {
+        font-size: 0.78rem;
+        font-weight: 600;
+        display: block;
+        color: var(--text-main);
+        margin-top: 2px;
+    }
+
+    .blueprint-btn .bp-sub {
+        font-size: 0.68rem;
+        color: var(--text-muted);
+    }
+
+    /* Generate Action Row */
+    .generate-dock {
+        margin-top: auto;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Preview Canvas Area */
+    .preview-canvas {
+        background: #0D1117;
+        overflow-y: auto;
+        padding: 32px 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: calc(100vh - 65px);
+    }
+
+    .canvas-toolbar {
+        width: 100%;
+        max-width: 860px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        padding: 12px 20px;
+        border-radius: 12px;
+        margin-bottom: 24px;
+    }
+
+    .mode-switch {
+        display: flex;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 3px;
+    }
+
+    .mode-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        padding: 6px 14px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.15s ease;
+    }
+
+    .mode-btn.active {
+        background: var(--primary);
+        color: white;
+    }
+
+    /* A4 Printed Sheet Simulator */
+    .sheet-paper {
+        width: 100%;
+        max-width: 860px;
+        background: #FFFFFF;
+        color: #1E293B;
+        padding: 48px;
+        border-radius: 4px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        min-height: 1050px;
+        font-family: 'Inter', serif;
+        position: relative;
+    }
+
+    /* Exam Paper Header */
+    .exam-header {
+        border-bottom: 2px solid #0F172A;
+        padding-bottom: 16px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .school-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        color: #0F172A;
+        margin-bottom: 4px;
+    }
+
+    .exam-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 6px;
+    }
+
+    .exam-meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        font-size: 0.82rem;
+        color: #475569;
+        font-weight: 600;
+        margin-top: 10px;
+        border-top: 1px dashed #CBD5E1;
+        padding-top: 8px;
+    }
+
+    .candidate-info-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 16px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-top: 12px;
+        padding-bottom: 8px;
+    }
+
+    .candidate-field {
+        border-bottom: 1px solid #94A3B8;
+        padding-bottom: 2px;
+    }
+
+    .instructions-box {
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        padding: 10px 14px;
+        border-radius: 6px;
+        font-size: 0.78rem;
+        color: #475569;
+        margin-bottom: 24px;
+        line-height: 1.5;
+    }
+
+    .instructions-box strong {
+        color: #0F172A;
+    }
+
+    /* Section Styling */
+    .exam-section {
+        margin-bottom: 28px;
+    }
+
+    .section-banner {
+        background: #F1F5F9;
+        border-left: 4px solid #0F172A;
+        padding: 6px 12px;
+        font-family: 'Outfit', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #0F172A;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+    }
+
+    .section-banner .sec-marks {
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        color: #475569;
+    }
+
+    /* Question Item */
+    .question-row {
+        margin-bottom: 20px;
+        page-break-inside: avoid;
+    }
+
+    .q-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: #0F172A;
+        line-height: 1.45;
+    }
+
+    .q-num {
+        font-weight: 800;
+        min-width: 32px;
+    }
+
+    .q-text {
+        flex: 1;
+    }
+
+    .q-marks {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #475569;
+        white-space: nowrap;
+    }
+
+    /* Options for MCQ */
+    .q-options-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 16px;
+        margin: 10px 0 10px 32px;
+        font-size: 0.86rem;
+        color: #334155;
+    }
+
+    .q-option-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .q-option-bubble {
+        width: 14px;
+        height: 14px;
+        border: 1.5px solid #64748B;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    /* Student Handwriting Ruled Lines */
+    .student-writing-space {
+        margin: 10px 0 14px 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .ruled-line {
+        border-bottom: 1px dashed #CBD5E1;
+        height: 1px;
+    }
+
+    /* Source Citation Pill (Hidden during student exam, subtle in teacher view) */
+    .source-tag-inline {
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        padding: 1px 6px;
+        border-radius: 4px;
+        background: #F1F5F9;
+        color: #64748B;
+        border: 1px solid #E2E8F0;
+        margin-left: 6px;
+        vertical-align: middle;
+    }
+
+    /* Teacher Answer Key Card */
+    .teacher-sol-box {
+        margin: 10px 0 14px 32px;
+        background: #F0FDF4;
+        border: 1px solid #86EFAC;
+        border-radius: 6px;
+        padding: 10px 14px;
+        font-size: 0.84rem;
+        color: #14532D;
+        display: none;
+    }
+
+    .teacher-mode .teacher-sol-box {
+        display: block;
+    }
+
+    .teacher-mode .student-writing-space {
+        display: none;
+    }
+
+    .sol-header {
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+        color: #166534;
+    }
+
+    .sol-text {
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .sol-explanation {
+        font-size: 0.78rem;
+        color: #15803D;
+        line-height: 1.4;
+    }
+
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #64748B;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 16px;
+        color: #94A3B8;
+    }
+
+    /* Print Styles */
+    @media print {
+        body {
+            background: #FFFFFF !important;
+            color: #000000 !important;
+        }
+        .top-nav, .control-sidebar, .canvas-toolbar, #auth-gate {
+            display: none !important;
+        }
+        .app-workspace {
+            display: block !important;
+            overflow: visible !important;
+        }
+        .preview-canvas {
+            padding: 0 !important;
+            background: #FFFFFF !important;
+            height: auto !important;
+            overflow: visible !important;
+        }
+        .sheet-paper {
+            box-shadow: none !important;
+            padding: 0 !important;
+            max-width: 100% !important;
+            color: #000000 !important;
+        }
+        .source-tag-inline {
+            display: none !important; /* Hide source tags from printed paper */
+        }
+        .teacher-mode .source-tag-inline {
+            display: inline-block !important; /* Print tags if teacher key is printed */
+        }
+    }
+</style>
+</head>
+<body>
+
+    <!-- PIN Authentication Gate -->
+    <div id="auth-gate">
+        <div class="pin-card">
+            <div class="icon-lock"><i class="fas fa-user-shield"></i></div>
+            <h2>Admin Worksheet Generator</h2>
+            <p>Enter Master Admin PIN to access question banks and exam blueprints.</p>
+            <input type="password" id="admin-pin-input" class="pin-input" maxlength="4" placeholder="••••" autofocus>
+            <div id="pin-error-msg" class="pin-error">Incorrect PIN. Please enter Master Admin PIN.</div>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center; padding: 12px;" onclick="verifyPin()">
+                <i class="fas fa-unlock"></i> Unlock Generator
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="top-nav">
+        <div class="nav-brand">
+            <div class="logo-badge">PSH</div>
+            <div class="title-wrap">
+                <h1>Worksheet &amp; Exam Generator</h1>
+                <p>Knowledge Base Engine &bull; Zero Token Cost &bull; Instant Local Blueprinting</p>
+            </div>
+        </div>
+
+        <div class="nav-actions">
+            <span id="kb-stats-pill" style="font-family: var(--font-mono); font-size: 0.75rem; background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px 10px; border-radius: 6px;">
+                <i class="fas fa-database"></i> 47 Items Indexed
+            </span>
+            <a href="parent_dashboard.html" class="btn btn-secondary">
+                <i class="fas fa-columns"></i> Admin Dashboard
+            </a>
+            <a href="ict_index.html" class="btn btn-secondary">
+                <i class="fas fa-desktop"></i> ICT Hub
+            </a>
+            <button class="btn btn-lock" onclick="lockAdmin()" title="Lock Admin Mode">
+                <i class="fas fa-lock"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="app-workspace">
+        
+        <!-- Controls Sidebar -->
+        <aside class="control-sidebar">
+            
+            <!-- Subject Selection -->
+            <div class="panel-section">
+                <label class="section-label">1. Subject</label>
+                <select id="subject-select" class="select-dropdown" onchange="onSubjectChange()">
+                    <option value="ict" selected>ICT (Computer Science)</option>
+                    <option value="maths" disabled>Mathematics (In Preparation)</option>
+                    <option value="science" disabled>Science (In Preparation)</option>
+                </select>
+            </div>
+
+            <!-- Chapter Selection -->
+            <div class="panel-section">
+                <div class="section-label">
+                    <span>2. Chapters Covered</span>
+                    <span style="font-size: 0.72rem; cursor: pointer; color: var(--primary);" onclick="toggleAllChapters()">Select All</span>
+                </div>
+                <div class="chapter-checkbox-list" id="chapter-list">
+                    <label class="custom-check">
+                        <input type="checkbox" name="chapter" value="1" checked onchange="updateItemStats()">
+                        <div class="check-info">
+                            <span class="check-title">Ch 1: Number System</span>
+                            <span class="check-meta">Conversions, Radix, Binary Math &bull; 18 Items</span>
+                        </div>
+                    </label>
+                    <label class="custom-check">
+                        <input type="checkbox" name="chapter" value="2" checked onchange="updateItemStats()">
+                        <div class="check-info">
+                            <span class="check-title">Ch 2: Advanced Features of Excel</span>
+                            <span class="check-meta">Formulas, References, Charts, Sort &bull; 15 Items</span>
+                        </div>
+                    </label>
+                    <label class="custom-check">
+                        <input type="checkbox" name="chapter" value="3" checked onchange="updateItemStats()">
+                        <div class="check-info">
+                            <span class="check-title">Ch 3: Artificial Intelligence</span>
+                            <span class="check-meta">ANI/AGI/ASI, CV, NLP, Robotics &bull; 14 Items</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Source Material Filter -->
+            <div class="panel-section">
+                <div class="section-label">
+                    <span>3. Source Material</span>
+                    <span class="badge-num" id="active-sources-count">4 Active</span>
+                </div>
+                <div class="source-tag-pills">
+                    <label class="source-pill-check">
+                        <div>
+                            <input type="checkbox" id="src-tb" name="src" value="textbook_exercise" checked onchange="updateItemStats()">
+                            <span>Textbook Exercises</span>
+                        </div>
+                        <span class="source-badge badge-tb">Textbook</span>
+                    </label>
+                    <label class="source-pill-check">
+                        <div>
+                            <input type="checkbox" id="src-notes" name="src" value="chapter_notes" checked onchange="updateItemStats()">
+                            <span>Chapter Notes &amp; Theory</span>
+                        </div>
+                        <span class="source-badge badge-notes">Notes</span>
+                    </label>
+                    <label class="source-pill-check">
+                        <div>
+                            <input type="checkbox" id="src-enrich" name="src" value="researched_enrichment" checked onchange="updateItemStats()">
+                            <span>Researched Enrichment</span>
+                        </div>
+                        <span class="source-badge badge-enrich">Enrichment</span>
+                    </label>
+                    <label class="source-pill-check">
+                        <div>
+                            <input type="checkbox" id="src-trap" name="src" value="exam_trap" checked onchange="updateItemStats()">
+                            <span>Exam Traps &amp; Common Pitfalls</span>
+                        </div>
+                        <span class="source-badge badge-trap">Traps</span>
+                    </label>
+                </div>
+                <div class="preset-source-row">
+                    <button class="btn-preset" onclick="applySourcePreset('textbook_only')">Strict Textbook</button>
+                    <button class="btn-preset" onclick="applySourcePreset('all')">All Sources</button>
+                    <button class="btn-preset" onclick="applySourcePreset('enrich_only')">Enrichment Only</button>
+                    <button class="btn-preset" onclick="applySourcePreset('notes_only')">Notes Only</button>
+                </div>
+            </div>
+
+            <!-- Challenge Level Dial -->
+            <div class="panel-section">
+                <label class="section-label">4. Challenge Level</label>
+                <div class="diff-grid">
+                    <div class="diff-card" id="diff-easy" onclick="setDifficulty('easy')">
+                        <div class="diff-icon">🌱</div>
+                        <span class="diff-label">Easy</span>
+                        <span style="font-size: 0.65rem; color: var(--text-muted);">Confidence</span>
+                    </div>
+                    <div class="diff-card active" id="diff-medium" onclick="setDifficulty('medium')">
+                        <div class="diff-icon">🎯</div>
+                        <span class="diff-label">Standard</span>
+                        <span style="font-size: 0.65rem; color: var(--text-muted);">CBSE Level</span>
+                    </div>
+                    <div class="diff-card" id="diff-hard_hots" onclick="setDifficulty('hard_hots')">
+                        <div class="diff-icon">🔥</div>
+                        <span class="diff-label">HOTS</span>
+                        <span style="font-size: 0.65rem; color: var(--text-muted);">Advanced</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exam Blueprint Preset -->
+            <div class="panel-section">
+                <label class="section-label">5. Blueprint / Marks Preset</label>
+                <div class="blueprint-grid">
+                    <div class="blueprint-btn" id="bp-10m" onclick="setBlueprint(10)">
+                        <div class="bp-marks">10 Marks</div>
+                        <span class="bp-title">Diagnostic Quiz</span>
+                        <span class="bp-sub">~15 Mins &bull; 8-10 Qs</span>
+                    </div>
+                    <div class="blueprint-btn active" id="bp-20m" onclick="setBlueprint(20)">
+                        <div class="bp-marks">20 Marks</div>
+                        <span class="bp-title">Periodic Test</span>
+                        <span class="bp-sub">~40 Mins &bull; 12-14 Qs</span>
+                    </div>
+                    <div class="blueprint-btn" id="bp-40m" onclick="setBlueprint(40)">
+                        <div class="bp-marks">40 Marks</div>
+                        <span class="bp-title">Mid-Term Blueprint</span>
+                        <span class="bp-sub">~90 Mins &bull; 20-22 Qs</span>
+                    </div>
+                    <div class="blueprint-btn" id="bp-all" onclick="setBlueprint(0)">
+                        <div class="bp-marks">All Items</div>
+                        <span class="bp-title">Master Item Bank</span>
+                        <span class="bp-sub">Comprehensive Drill</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Dock -->
+            <div class="generate-dock">
+                <button class="btn btn-primary" style="justify-content: center; padding: 12px;" onclick="generateWorksheet()">
+                    <i class="fas fa-wand-magic-sparkles"></i> Generate Worksheet
+                </button>
+                <button class="btn btn-secondary" style="justify-content: center;" onclick="reshuffleWorksheet()">
+                    <i class="fas fa-shuffle"></i> Re-Shuffle Questions
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- Preview Canvas -->
+        <section class="preview-canvas">
+            
+            <!-- Toolbar -->
+            <div class="canvas-toolbar">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="mode-switch">
+                        <button class="mode-btn active" id="btn-view-student" onclick="setViewMode('student')">
+                            <i class="fas fa-user-graduate"></i> Student Question Paper
+                        </button>
+                        <button class="mode-btn" id="btn-view-teacher" onclick="setViewMode('teacher')">
+                            <i class="fas fa-chalkboard-teacher"></i> Teacher Answer Key
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span id="paper-summary-badge" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">
+                        Total: <strong>0 Qs</strong> &bull; <strong>0 Marks</strong>
+                    </span>
+                    <button class="btn btn-success" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print / Save as PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Paper Sheet Simulator -->
+            <div class="sheet-paper" id="printable-paper">
+                <div class="empty-state" id="empty-state-notice">
+                    <i class="fas fa-file-signature"></i>
+                    <h3 style="font-family: var(--font-head); font-size: 1.2rem; color: #334155; margin-bottom: 8px;">No Worksheet Generated Yet</h3>
+                    <p style="font-size: 0.85rem; max-width: 420px; margin: 0 auto;">Select your target chapters, source filter, and difficulty level on the left sidebar, then click <strong>"Generate Worksheet"</strong>.</p>
+                </div>
+
+                <!-- Live Generated Paper Content -->
+                <div id="live-paper-content" style="display: none;">
+                    
+                    <!-- Paper Header -->
+                    <div class="exam-header">
+                        <div class="school-title">PUSHTI STUDY HUB</div>
+                        <div class="exam-title" id="paper-title-text">ICT PERIODIC TEST &bull; WORKSHEET</div>
+                        
+                        <div class="exam-meta-grid">
+                            <div><strong>Subject:</strong> ICT</div>
+                            <div id="paper-chapters-meta"><strong>Chapters:</strong> Ch 1, 2, 3</div>
+                            <div id="paper-marks-time-meta"><strong>Max Marks:</strong> 20 &bull; <strong>Time:</strong> 40 Mins</div>
+                        </div>
+
+                        <div class="candidate-info-row">
+                            <div class="candidate-field">Student Name: ___________________________</div>
+                            <div class="candidate-field">Date: ____________</div>
+                            <div class="candidate-field">Roll No: ______</div>
+                        </div>
+                    </div>
+
+                    <!-- General Instructions -->
+                    <div class="instructions-box">
+                        <strong>General Instructions:</strong>
+                        <ol style="margin: 4px 0 0 16px; padding: 0;">
+                            <li>All questions are compulsory unless specified otherwise.</li>
+                            <li>Write all answers clearly in the designated spaces. Rough calculations may be done in the margins.</li>
+                            <li>Marks for each question are indicated against it.</li>
+                        </ol>
+                    </div>
+
+                    <!-- Question Container -->
+                    <div id="sections-render-container">
+                        <!-- Sections injected dynamically via JS -->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Raw Data Store -->
+    <script>
+        const RAW_KNOWLEDGE_BASE = {"ict": [{"subject": "ICT", "chapter_num": 1, "chapter_title": "Number System", "summary": "Covers positional and non-positional number systems, radix bases (Decimal, Binary, Octal, Hexadecimal), positional weight expansion, number conversions, and binary arithmetic (addition with carry and subtraction with borrow).", "theory_summary": [{"topic": "Types of Number Systems", "content": "Non-positional (tally marks, Roman numerals) had fixed symbol values and lacked zero. Positional systems (Decimal, Binary, Octal, Hexadecimal) determine value by digit, base (radix), and position (weights increasing right-to-left as powers of base).", "source": "chapter_notes"}, {"topic": "Four Modern Positional Systems", "content": "Decimal: Base 10, digits 0-9 (human daily usage). Binary: Base 2, digits 0,1 (digital computer circuits, switches ON/OFF). Octal: Base 8, digits 0-7 (compact binary grouping into 3-bit clusters). Hexadecimal: Base 16, symbols 0-9 and A-F where A=10, B=11, C=12, D=13, E=14, F=15 (used in memory addressing, byte representation, web hex color codes).", "source": "chapter_notes"}, {"topic": "Binary Addition Rules", "content": "0 + 0 = 0; 0 + 1 = 1; 1 + 0 = 1; 1 + 1 = 10 (0 with carry 1 to next higher column); 1 + 1 + 1 = 11 (1 with carry 1).", "source": "chapter_notes"}, {"topic": "Binary Subtraction Rules", "content": "0 - 0 = 0; 1 - 0 = 1; 1 - 1 = 0; 0 - 1 = 1 with a borrow of 1 from the next higher column (a borrow in binary brings value 2).", "source": "chapter_notes"}, {"topic": "Conversion Algorithms", "content": "Decimal to Binary: Repeated division by 2, recording remainders from bottom to top (MSB to LSB). Binary to Decimal: Multiply each bit by 2 raised to its position power (2^0, 2^1, 2^2, ...) and sum the products.", "source": "chapter_notes"}], "questions": [{"id": "ict_ch1_tb_mcq1", "source": "textbook_exercise", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "Radix Definition", "question": "The base of a number system is also called its ________.", "options": ["(a) Exponent", "(b) Radix", "(c) Mantissa", "(d) Quotient"], "answer": "(b) Radix", "explanation": "The base of any number system denotes the total number of unique digits or symbols it uses, and is formally termed the 'Radix'."}, {"id": "ict_ch1_tb_mcq2", "source": "textbook_exercise", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "Hexadecimal Symbols", "question": "In the Hexadecimal number system, the letter 'D' represents the decimal value ________.", "options": ["(a) 11", "(b) 12", "(c) 13", "(d) 14"], "answer": "(c) 13", "explanation": "In Hexadecimal: A=10, B=11, C=12, D=13, E=14, F=15."}, {"id": "ict_ch1_tb_mcq3", "source": "textbook_exercise", "type": "mcq", "difficulty": "medium", "marks": 1, "topic": "Binary Arithmetic", "question": "In binary addition, what is 1 + 1?", "options": ["(a) 2", "(b) 1", "(c) 10", "(d) 11"], "answer": "(c) 10", "explanation": "1 + 1 equals decimal 2, which is represented in binary as 10 (sum 0 with carry 1)."}, {"id": "ict_ch1_tb_mcq4", "source": "textbook_exercise", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "Octal System", "question": "Which of the following digits cannot be part of an Octal number?", "options": ["(a) 0", "(b) 5", "(c) 7", "(d) 8"], "answer": "(d) 8", "explanation": "Octal (base 8) uses only digits from 0 to 7. The digit 8 is not a valid octal digit."}, {"id": "ict_ch1_tb_fib1", "source": "textbook_exercise", "type": "fib", "difficulty": "easy", "marks": 1, "topic": "Binary System", "question": "The binary number system consists of only two digits: ________ and ________.", "answer": "0, 1", "explanation": "Binary is base 2 and operates exclusively using the bits 0 and 1."}, {"id": "ict_ch1_tb_fib2", "source": "textbook_exercise", "type": "fib", "difficulty": "easy", "marks": 1, "topic": "Decimal System", "question": "The base of the Decimal number system is ________.", "answer": "10", "explanation": "Decimal system uses ten symbols (0 through 9), so its base/radix is 10."}, {"id": "ict_ch1_tb_tf1", "source": "textbook_exercise", "type": "tf", "difficulty": "easy", "marks": 1, "topic": "Hexadecimal Base", "question": "The Hexadecimal number system has 16 digits/symbols.", "answer": true, "explanation": "True. Hexadecimal uses digits 0–9 and letters A–F, totaling 16 symbols."}, {"id": "ict_ch1_tb_tf2", "source": "textbook_exercise", "type": "tf", "difficulty": "easy", "marks": 1, "topic": "Binary Subtraction", "question": "In binary subtraction, 1 - 0 = 0.", "answer": false, "explanation": "False. 1 - 0 = 1 in binary subtraction."}, {"id": "ict_ch1_tb_short1", "source": "textbook_exercise", "type": "short_answer", "difficulty": "medium", "marks": 2, "topic": "Positional System", "question": "State the three factors that determine the value of each digit in a positional number system.", "answer": "1. The digit itself (face value)\n2. The base or radix of the number system\n3. The position of the digit within the number (place value as powers of base).", "explanation": "Formula: Value = Digit × Base^(Position)."}, {"id": "ict_ch1_tb_conv1", "source": "textbook_exercise", "type": "conversion", "difficulty": "medium", "marks": 2, "topic": "Decimal to Binary Conversion", "question": "Convert the decimal number (45)₁₀ into its binary equivalent.", "answer": "(101101)₂", "explanation": "45 ÷ 2 = 22 R 1\n22 ÷ 2 = 11 R 0\n11 ÷ 2 = 5 R 1\n5 ÷ 2 = 2 R 1\n2 ÷ 2 = 1 R 0\n1 ÷ 2 = 0 R 1\nReading remainders from bottom to top gives: 101101₂."}, {"id": "ict_ch1_tb_conv2", "source": "textbook_exercise", "type": "conversion", "difficulty": "medium", "marks": 2, "topic": "Binary to Decimal Conversion", "question": "Convert the binary number (11010)₂ into its decimal equivalent.", "answer": "(26)₁₀", "explanation": "1×2⁴ + 1×2³ + 0×2² + 1×2¹ + 0×2⁰ = 16 + 8 + 0 + 2 + 0 = 26₁₀."}, {"id": "ict_ch1_tb_add1", "source": "textbook_exercise", "type": "conversion", "difficulty": "medium", "marks": 2, "topic": "Binary Addition", "question": "Add the binary numbers: (1011)₂ + (1101)₂.", "answer": "(11000)₂", "explanation": "Col 0: 1+1=0 (carry 1)\nCol 1: 1+0+1=0 (carry 1)\nCol 2: 0+1+1=0 (carry 1)\nCol 3: 1+1+1=11 (write 1, carry 1)\nResult: 11000₂. (Decimal check: 11 + 13 = 24)."}, {"id": "ict_ch1_tb_sub1", "source": "textbook_exercise", "type": "conversion", "difficulty": "hard_hots", "marks": 3, "topic": "Binary Subtraction with Borrow", "question": "Perform binary subtraction: (1100)₂ - (1001)₂.", "answer": "(0011)₂ or (11)₂", "explanation": "Col 0: 0 - 1 needs borrow. Borrows from Col 2 across Col 1. Becomes 2 - 1 = 1.\nCol 1: 1 - 0 = 1.\nCol 2: 0 - 0 = 0.\nCol 3: 1 - 1 = 0.\nResult: 0011₂ = 3₁₀. (Decimal check: 12 - 9 = 3)."}, {"id": "ict_ch1_notes_short1", "source": "chapter_notes", "type": "short_answer", "difficulty": "medium", "marks": 3, "topic": "Non-Positional vs Positional", "question": "Differentiate between non-positional and positional number systems with examples.", "answer": "In non-positional systems (e.g. Roman numerals, tally marks), each symbol represents a fixed value regardless of its place, and there is no symbol for zero. In positional systems (e.g. Decimal, Binary), the value of each symbol depends on its position and powers of the base, allowing complex arithmetic.", "explanation": "Positional systems enable place-value arithmetic, which revolutionized science and commerce."}, {"id": "ict_ch1_notes_mcq1", "source": "chapter_notes", "type": "mcq", "difficulty": "medium", "marks": 1, "topic": "Radix Applications", "question": "Why do computers use the Binary number system internally instead of the Decimal system?", "options": ["(a) Binary numbers are easier for humans to read", "(b) Computer electronic circuits operate via two discrete voltage states (ON/OFF)", "(c) Binary system has 10 digits", "(d) Decimal numbers cannot be converted"], "answer": "(b) Computer electronic circuits operate via two discrete voltage states (ON/OFF)", "explanation": "Transistors inside microprocessors act as high/low voltage switches, making binary (0/1) the natural, reliable physical representation."}, {"id": "ict_ch1_trap_mcq", "source": "exam_trap", "type": "mcq", "difficulty": "hard_hots", "marks": 1, "topic": "Hexadecimal Alpha Representation", "question": "What is the decimal equivalent of the Hexadecimal number (1A)₁₆?", "options": ["(a) 110", "(b) 26", "(c) 16", "(d) 32"], "answer": "(b) 26", "explanation": "Trap: '1A' is NOT '1 followed by 10' = 110! Calculation: (1 × 16¹) + (A × 16⁰) = 16 + 10 = 26₁₀."}, {"id": "ict_ch1_enrich_mcq1", "source": "researched_enrichment", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "Data Units", "question": "A collection of 4 binary bits is technically known as a ________.", "options": ["(a) Byte", "(b) Nibble", "(c) Word", "(d) Pixel"], "answer": "(b) Nibble", "explanation": "1 Bit = single 0 or 1; 1 Nibble = 4 bits (e.g., 1010); 1 Byte = 8 bits (2 nibbles); 1 Word = 16/32/64 bits."}, {"id": "ict_ch1_enrich_short1", "source": "researched_enrichment", "type": "short_answer", "difficulty": "medium", "marks": 2, "topic": "Real-World Hex Codes", "question": "Where is the Hexadecimal number system commonly used in real-world computer technology?", "answer": "1. Web Color Codes: HTML/CSS 6-digit hex codes (e.g., #FFFFFF for white, #000000 for black, #FF0000 for red).\n2. Hardware MAC Addresses & Memory Dumps: Displaying large binary addresses compactly (each hex digit represents exactly 4 binary bits).", "explanation": "Hexadecimal compresses long binary strings (e.g. 11111111 becomes just FF)."}]}, {"subject": "ICT", "chapter_num": 2, "chapter_title": "Advanced Features of Excel", "summary": "Mastering Excel formulas, functions (SUM, AVERAGE, COUNT, MAX, MIN), cell referencing (Relative, Absolute, Mixed), charts (Column, Bar, Line, Pie, Doughnut), chart components, sorting data, and filtering rows.", "theory_summary": [{"topic": "Formulas & Syntax", "content": "Every formula in Excel must begin with an equal sign (=). Operands are values or cell references; operators include +, -, *, /, ^. Order of operations follows PEMDAS / BODMAS.", "source": "chapter_notes"}, {"topic": "Types of Cell Referencing", "content": "1. Relative: Reference changes automatically when copied (e.g., A1 becomes A2). 2. Absolute: Reference remains fixed with dollar signs (e.g., $A$1). 3. Mixed: One coordinate is fixed, the other relative (e.g., $A1 or A$1).", "source": "chapter_notes"}, {"topic": "Excel Functions", "content": "Predefined built-in formulas: SUM(range) adds all numbers, AVERAGE(range) calculates mean, MAX(range) finds highest value, MIN(range) finds lowest value, COUNT(range) counts numeric cells.", "source": "chapter_notes"}, {"topic": "Charts & Visual Components", "content": "Chart Area (entire boundary), Plot Area (region holding data graphics and axes), Data Series (set of related data points), Data Markers (bars, slices, points representing individual values), Legend (key identifying series by colors/patterns), Category Axis (X-axis, horizontal), Value Axis (Y-axis, vertical).", "source": "chapter_notes"}, {"topic": "Sorting & Filtering", "content": "Sorting arranges data in a specific order (A-Z ascending, Z-A descending, or multi-level via Add Level). Filtering displays only rows that meet defined criteria and temporarily hides non-matching rows without deleting them.", "source": "chapter_notes"}], "questions": [{"id": "ict_ch2_tb_mcq1", "source": "textbook_exercise", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "Chart Types", "question": "A ________ chart is used to show changes in values over a period of time.", "options": ["(a) Bar", "(b) Column", "(c) Line", "(d) Pie"], "answer": "(c) Line", "explanation": "Line charts connect individual data points with continuous lines, making them ideal for displaying trends over regular intervals."}, {"id": "ict_ch2_tb_mcq2", "source": "textbook_exercise", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "Proportion Charts", "question": "Which chart type is best suited to show proportions of a whole?", "options": ["(a) Pie", "(b) Line", "(c) Bar", "(d) Radar"], "answer": "(a) Pie", "explanation": "A Pie chart displays a single data series divided into slices proportional to each value's contribution to the whole (100%)."}, {"id": "ict_ch2_tb_mcq3", "source": "textbook_exercise", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "Filtering Concept", "question": "Which feature in Excel allows you to display only the rows that meet certain criteria?", "options": ["(a) Sorting", "(b) Filtering", "(c) Charting", "(d) Conditional Formatting"], "answer": "(b) Filtering", "explanation": "Filtering extracts matching records and hides non-matching rows."}, {"id": "ict_ch2_tb_mcq4", "source": "textbook_exercise", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "Chart Elements", "question": "Which chart element identifies the colours or patterns used for each data series?", "options": ["(a) Gridlines", "(b) Legend", "(c) Plot Area", "(d) Axis Title"], "answer": "(b) Legend", "explanation": "The Legend is the key that pairs colors/patterns with their corresponding data series names."}, {"id": "ict_ch2_tb_fib1", "source": "textbook_exercise", "type": "fib", "difficulty": "easy", "marks": 1, "topic": "Axes", "question": "The horizontal axis of a chart is also called the ________ axis.", "answer": "category", "explanation": "The X-axis displays categories and is called the Category axis. The Y-axis is the Value axis."}, {"id": "ict_ch2_tb_fib2", "source": "textbook_exercise", "type": "fib", "difficulty": "easy", "marks": 1, "topic": "Filtering Behavior", "question": "Filtering changes the ________ of rows rather than deleting them.", "answer": "visibility", "explanation": "Filtered-out rows are merely hidden from view; their data remains intact."}, {"id": "ict_ch2_tb_tf1", "source": "textbook_exercise", "type": "tf", "difficulty": "medium", "marks": 1, "topic": "Pie Chart Series", "question": "A pie chart can display multiple data series simultaneously.", "answer": false, "explanation": "False. A Pie chart can only display a single data series. To display multiple series as concentric rings, use a Doughnut chart."}, {"id": "ict_ch2_tb_tf2", "source": "textbook_exercise", "type": "tf", "difficulty": "easy", "marks": 1, "topic": "Sorting vs Filtering", "question": "Sorting hides rows that do not meet a criterion.", "answer": false, "explanation": "False. Sorting rearranges the order of all rows. Filtering hides non-matching rows."}, {"id": "ict_ch2_tb_short1", "source": "textbook_exercise", "type": "short_answer", "difficulty": "medium", "marks": 2, "topic": "Sorting Types", "question": "Differentiate between Ascending and Descending sort.", "answer": "Ascending sort arranges data from A to Z, smallest to largest (0 to 9), or oldest to newest. Descending sort arranges data from Z to A, largest to smallest, or newest to oldest.", "explanation": "Both sort options are located on the Data tab under Sort & Filter."}, {"id": "ict_ch2_tb_short2", "source": "textbook_exercise", "type": "short_answer", "difficulty": "medium", "marks": 2, "topic": "Chart Components", "question": "What is the difference between a Data Marker and a Data Label?", "answer": "A Data Marker is the physical graphical symbol (bar, column, point, slice) that represents a data value. A Data Label is the text or numeric value displayed directly beside the marker to show its exact numerical reading.", "explanation": "Data labels eliminate guessing values against gridlines."}, {"id": "ict_ch2_notes_mcq1", "source": "chapter_notes", "type": "mcq", "difficulty": "medium", "marks": 1, "topic": "Cell Referencing", "question": "Which cell reference format indicates an Absolute reference where both column and row remain fixed when copied?", "options": ["(a) A1", "(b) $A1", "(c) A$1", "(d) $A$1"], "answer": "(d) $A$1", "explanation": "The dollar sign ($) locks the coordinate that immediately follows it. $A$1 locks column A and row 1."}, {"id": "ict_ch2_notes_short1", "source": "chapter_notes", "type": "short_answer", "difficulty": "hard_hots", "marks": 3, "topic": "Referencing Behavior", "question": "If formula '=B$2 * 5' in cell C2 is copied to cell C5, what will the formula become?", "answer": "'=B$2 * 5'", "explanation": "The row coordinate is locked with '$2', so it will not change when copied vertically. The column remains B because copying is within column C (same relative horizontal offset)."}, {"id": "ict_ch2_notes_long1", "source": "chapter_notes", "type": "long_answer", "difficulty": "medium", "marks": 4, "topic": "Main Chart Components", "question": "Explain the major components of an Excel chart.", "answer": "1. Chart Area: The total area containing the chart and all its elements.\n2. Plot Area: The bounded rectangular region where actual data series graphics are drawn.\n3. Data Series: The group of related data points plotted.\n4. Axes: Category Axis (X, horizontal) and Value Axis (Y, vertical).\n5. Legend: Identifier pairing series colors with names.\n6. Gridlines: Horizontal/vertical lines aiding visual measurement.", "explanation": "All elements can be customized using Chart Tools (Design & Format tabs)."}, {"id": "ict_ch2_enrich_mcq1", "source": "researched_enrichment", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "Grid Capacity", "question": "How many total rows does a modern Microsoft Excel worksheet contain?", "options": ["(a) 65,536", "(b) 1,048,576", "(c) 500,000", "(d) 16,384"], "answer": "(b) 1,048,576", "explanation": "Modern Excel sheets have 1,048,576 rows and 16,384 columns (from column A to XFD), providing over 17 billion cells!"}, {"id": "ict_ch2_enrich_short1", "source": "researched_enrichment", "type": "short_answer", "difficulty": "easy", "marks": 2, "topic": "Spreadsheet History", "question": "What was the name of the first electronic spreadsheet program, and when was it launched?", "answer": "VisiCalc was the first electronic spreadsheet program, released in 1979 for the Apple II computer. It transformed personal computers from hobbyist toys into serious business tools.", "explanation": "Invented by Dan Bricklin and Bob Frankston."}]}, {"subject": "ICT", "chapter_num": 3, "chapter_title": "Artificial Intelligence", "summary": "Introduction to AI history (John McCarthy, Turing Test), capability-based stages (ANI, AGI, ASI), functionality-based types (Reactive Machines, Limited Memory, Theory of Mind, Self-Awareness), core domains (Data Science, Computer Vision, NLP), smart devices, self-driving car synergies, and AI ethics.", "theory_summary": [{"topic": "Definition & History", "content": "AI is the branch of computer science that creates systems capable of performing tasks that normally require human intelligence (learning, reasoning, pattern recognition). Term coined by John McCarthy in 1956 at the Dartmouth Conference. Alan Turing proposed the Turing Test in 1950.", "source": "chapter_notes"}, {"topic": "Stages of AI by Capability", "content": "1. Artificial Narrow Intelligence (ANI / Weak AI): Designed for a single specific task within fixed boundaries (Siri, chess engines, spam filters). Only form of AI currently in existence. 2. Artificial General Intelligence (AGI / Strong AI): Theoretical AI that equals human cognitive abilities across all tasks. 3. Artificial Super Intelligence (ASI): Theoretical AI that surpasses human intelligence across every domain.", "source": "chapter_notes"}, {"topic": "Types of AI by Functionality", "content": "1. Reactive Machines: Only respond to current inputs with no past memory (IBM Deep Blue). 2. Limited Memory: Uses recent historical data to make immediate decisions (Tesla self-driving cars, chatbots). 3. Theory of Mind: Proposed AI that understands human emotions, beliefs, and social interactions (in research). 4. Self-Awareness: Hypothetical conscious machines with their own emotions (purely speculative).", "source": "chapter_notes"}, {"topic": "Three Core Domains of AI", "content": "1. Data Science: Analyzes numerical and structured data for pattern finding, weather forecasting, financial modeling. 2. Computer Vision (CV): Enables computers to interpret digital images and video (face unlock, medical scan analysis, self-driving perception). 3. Natural Language Processing (NLP): Enables computers to comprehend, analyze, and generate human spoken/written languages (speech recognition, Google Translate, chatbots).", "source": "chapter_notes"}, {"topic": "Autonomous Driving Synergy", "content": "A self-driving car combines all three domains: Computer Vision processes camera feeds for lanes/pedestrians, Data Science analyzes vehicle speed/GPS data to plot optimal path, NLP listens to user destination commands.", "source": "chapter_notes"}], "questions": [{"id": "ict_ch3_tb_mcq1", "source": "textbook_exercise", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "History of AI", "question": "Who coined the term 'Artificial Intelligence' in 1956?", "options": ["(a) Alan Turing", "(b) John McCarthy", "(c) Marvin Minsky", "(d) Elon Musk"], "answer": "(b) John McCarthy", "explanation": "John McCarthy coined the term in 1956 at the historic Dartmouth Conference, earning him the title 'Father of Artificial Intelligence'."}, {"id": "ict_ch3_tb_mcq2", "source": "textbook_exercise", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "Reactive Machines", "question": "Which type of AI machine reacts only to current situations and has no memory of past experiences?", "options": ["(a) Limited Memory", "(b) Reactive Machines", "(c) Theory of Mind", "(d) Self-Awareness"], "answer": "(b) Reactive Machines", "explanation": "Reactive machines cannot store memories or use past experiences to guide future decisions. IBM's Deep Blue is a classic example."}, {"id": "ict_ch3_tb_mcq3", "source": "textbook_exercise", "type": "mcq", "difficulty": "medium", "marks": 1, "topic": "AI Classification", "question": "IBM's Watson and Apple's Siri are examples of which stage of AI?", "options": ["(a) Artificial Narrow Intelligence (ANI)", "(b) Artificial General Intelligence (AGI)", "(c) Artificial Super Intelligence (ASI)", "(d) Self-Aware AI"], "answer": "(a) Artificial Narrow Intelligence (ANI)", "explanation": "All currently existing AI systems are classified as ANI (Weak AI) because they excel strictly within defined problem domains."}, {"id": "ict_ch3_tb_mcq4", "source": "textbook_exercise", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "AI Domains", "question": "Which domain of Artificial Intelligence enables machines to recognize faces and read street signs?", "options": ["(a) Data Science", "(b) Computer Vision (CV)", "(c) Natural Language Processing", "(d) Robotics"], "answer": "(b) Computer Vision (CV)", "explanation": "Computer Vision processes visual inputs (images and video streams) to recognize patterns, objects, and people."}, {"id": "ict_ch3_tb_fib1", "source": "textbook_exercise", "type": "fib", "difficulty": "easy", "marks": 1, "topic": "Domain Definition", "question": "The AI domain that understands and processes human spoken and written languages is ________.", "answer": "Natural Language Processing", "explanation": "NLP combines computational linguistics and machine learning to understand language."}, {"id": "ict_ch3_tb_fib2", "source": "textbook_exercise", "type": "fib", "difficulty": "easy", "marks": 1, "topic": "Limited Memory", "question": "A self-driving car is an example of ________ Memory AI.", "answer": "Limited", "explanation": "Limited Memory AI can retain data observed over recent moments (e.g. speed of surrounding vehicles, pedestrian positions)."}, {"id": "ict_ch3_tb_tf1", "source": "textbook_exercise", "type": "tf", "difficulty": "easy", "marks": 1, "topic": "AGI State", "question": "Artificial General Intelligence (AGI) currently exists as a fully deployed technology.", "answer": false, "explanation": "False. AGI remains theoretical. No machine possesses universal human-level general intellect across all domains."}, {"id": "ict_ch3_tb_tf2", "source": "textbook_exercise", "type": "tf", "difficulty": "easy", "marks": 1, "topic": "Deep Blue", "question": "IBM's Deep Blue supercomputer is an example of a Reactive Machine.", "answer": true, "explanation": "True. Deep Blue evaluated potential chess moves on the board in real time without storing a long-term memory bank of prior games."}, {"id": "ict_ch3_tb_short1", "source": "textbook_exercise", "type": "short_answer", "difficulty": "medium", "marks": 2, "topic": "Weak vs Strong AI", "question": "What is the primary difference between Weak AI and Strong AI?", "answer": "Weak AI (Narrow AI) is designed and trained to perform a single designated task (e.g. face detection, spam filtering). Strong AI (General AI) would possess human-level general intellect and the ability to transfer knowledge across any unfamiliar task.", "explanation": "Today's state-of-the-art AI is entirely Narrow/Weak AI."}, {"id": "ict_ch3_tb_short2", "source": "textbook_exercise", "type": "short_answer", "difficulty": "medium", "marks": 3, "topic": "Three AI Domains", "question": "Name the three major domains of Artificial Intelligence and give one practical application of each.", "answer": "1. Data Science: Weather forecasting and stock market trend prediction.\n2. Computer Vision (CV): Smartphone facial unlock and autonomous vehicle road hazard detection.\n3. Natural Language Processing (NLP): Virtual voice assistants (Alexa, Siri) and real-time language translation.", "explanation": "These three domains frequently operate together in complex autonomous systems."}, {"id": "ict_ch3_notes_long1", "source": "chapter_notes", "type": "long_answer", "difficulty": "hard_hots", "marks": 4, "topic": "Autonomous Vehicle Synergy", "question": "Explain how all three domains of AI collaborate inside an autonomous self-driving car.", "answer": "1. Computer Vision (CV): Processes continuous video streams from onboard cameras to detect lane boundaries, traffic lights, cyclists, and pedestrians.\n2. Data Science: Aggregates radar, lidar, speed telemetry, and GPS data to calculate braking distance and plan optimal routes.\n3. Natural Language Processing (NLP): Allows passengers to give vocal instructions ('Take me to the nearest hospital') and announces audio alerts.", "explanation": "Without all three domains working in unison, an autonomous vehicle cannot perceive, compute, and interact safely."}, {"id": "ict_ch3_notes_short1", "source": "chapter_notes", "type": "short_answer", "difficulty": "medium", "marks": 3, "topic": "Theory of Mind vs Self-Awareness", "question": "Differentiate between 'Theory of Mind' AI and 'Self-Aware' AI.", "answer": "Theory of Mind AI represents machines that could understand human thoughts, emotions, and intentions to interact socially (currently under active research). Self-Aware AI is purely speculative and describes machines that would have their own consciousness, self-identity, and feelings.", "explanation": "Neither Theory of Mind nor Self-Awareness currently exists in commercial technology."}, {"id": "ict_ch3_enrich_mcq1", "source": "researched_enrichment", "type": "mcq", "difficulty": "easy", "marks": 1, "topic": "Historical Milestones", "question": "In 1997, which reigning World Chess Champion was defeated by IBM's Deep Blue?", "options": ["(a) Magnus Carlsen", "(b) Garry Kasparov", "(c) Bobby Fischer", "(d) Viswanathan Anand"], "answer": "(b) Garry Kasparov", "explanation": "IBM Deep Blue's victory against Garry Kasparov in May 1997 was a watershed milestone demonstrating AI's computational power."}, {"id": "ict_ch3_enrich_short1", "source": "researched_enrichment", "type": "short_answer", "difficulty": "medium", "marks": 2, "topic": "Turing Test", "question": "What is the Turing Test and what was its original purpose?", "answer": "Proposed by British mathematician Alan Turing in 1950, the Turing Test evaluates whether a computer's conversational ability is indistinguishable from a human being. If a human interrogator cannot reliably tell the machine apart from a human respondent, the machine passes the test.", "explanation": "Published in his foundational paper 'Computing Machinery and Intelligence'."}]}]};
+
+        // State variables
+        let selectedChapters = [1, 2, 3];
+        let selectedSources = ['textbook_exercise', 'chapter_notes', 'researched_enrichment', 'exam_trap'];
+        let selectedDifficulty = 'medium';
+        let targetMarks = 20;
+        let viewMode = 'student'; // 'student' or 'teacher'
+        let currentGeneratedQuestions = [];
+
+        // PIN Verification
+        function checkInitialAuth() {
+            const activeUser = localStorage.getItem('pushti-active-user');
+            const sessionUnlocked = sessionStorage.getItem('admin_worksheet_unlocked');
+            if (activeUser === 'parent' || sessionUnlocked === 'true') {
+                document.getElementById('auth-gate').style.display = 'none';
+            } else {
+                document.getElementById('auth-gate').style.display = 'flex';
+                document.getElementById('admin-pin-input').focus();
+            }
+        }
+
+        function verifyPin() {
+            const pinInput = document.getElementById('admin-pin-input');
+            const errorMsg = document.getElementById('pin-error-msg');
+            if (pinInput.value === '1985') {
+                sessionStorage.setItem('admin_worksheet_unlocked', 'true');
+                document.getElementById('auth-gate').style.display = 'none';
+                errorMsg.style.display = 'none';
+            } else {
+                errorMsg.style.display = 'block';
+                pinInput.value = '';
+                pinInput.focus();
+            }
+        }
+
+        // Allow Enter key to submit PIN
+        document.getElementById('admin-pin-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') verifyPin();
+        });
+
+        function lockAdmin() {
+            sessionStorage.removeItem('admin_worksheet_unlocked');
+            document.getElementById('auth-gate').style.display = 'flex';
+            document.getElementById('admin-pin-input').value = '';
+            document.getElementById('admin-pin-input').focus();
+        }
+
+        // Controls Handling
+        function toggleAllChapters() {
+            const chBoxes = document.querySelectorAll('input[name="chapter"]');
+            const allChecked = Array.from(chBoxes).every(cb => cb.checked);
+            chBoxes.forEach(cb => cb.checked = !allChecked);
+            updateItemStats();
+        }
+
+        function applySourcePreset(preset) {
+            const srcBoxes = document.querySelectorAll('input[name="src"]');
+            if (preset === 'textbook_only') {
+                srcBoxes.forEach(cb => cb.checked = (cb.value === 'textbook_exercise'));
+            } else if (preset === 'all') {
+                srcBoxes.forEach(cb => cb.checked = true);
+            } else if (preset === 'enrich_only') {
+                srcBoxes.forEach(cb => cb.checked = (cb.value === 'researched_enrichment' || cb.value === 'exam_trap'));
+            } else if (preset === 'notes_only') {
+                srcBoxes.forEach(cb => cb.checked = (cb.value === 'chapter_notes'));
+            }
+            updateItemStats();
+        }
+
+        function setDifficulty(diff) {
+            selectedDifficulty = diff;
+            document.querySelectorAll('.diff-card').forEach(c => c.classList.remove('active'));
+            const card = document.getElementById('diff-' + diff);
+            if (card) card.classList.add('active');
+        }
+
+        function setBlueprint(marks) {
+            targetMarks = marks;
+            document.querySelectorAll('.blueprint-btn').forEach(b => b.classList.remove('active'));
+            if (marks === 10) document.getElementById('bp-10m').classList.add('active');
+            else if (marks === 20) document.getElementById('bp-20m').classList.add('active');
+            else if (marks === 40) document.getElementById('bp-40m').classList.add('active');
+            else document.getElementById('bp-all').classList.add('active');
+        }
+
+        function updateItemStats() {
+            const checkedChs = Array.from(document.querySelectorAll('input[name="chapter"]:checked')).map(cb => parseInt(cb.value));
+            const checkedSrcs = Array.from(document.querySelectorAll('input[name="src"]:checked')).map(cb => cb.value);
+            
+            selectedChapters = checkedChs;
+            selectedSources = checkedSrcs;
+            document.getElementById('active-sources-count').innerText = checkedSrcs.length + ' Active';
+
+            // Count eligible items
+            let eligibleCount = 0;
+            RAW_KNOWLEDGE_BASE.ict.forEach(ch => {
+                if (checkedChs.includes(ch.chapter_num)) {
+                    ch.questions.forEach(q => {
+                        if (checkedSrcs.includes(q.source)) {
+                            eligibleCount++;
+                        }
+                    });
+                }
+            });
+
+            document.getElementById('kb-stats-pill').innerHTML = `<i class="fas fa-filter"></i> ${eligibleCount} Eligible Items`;
+        }
+
+        function setViewMode(mode) {
+            viewMode = mode;
+            const paper = document.getElementById('printable-paper');
+            const studentBtn = document.getElementById('btn-view-student');
+            const teacherBtn = document.getElementById('btn-view-teacher');
+
+            if (mode === 'teacher') {
+                paper.classList.add('teacher-mode');
+                studentBtn.classList.remove('active');
+                teacherBtn.classList.add('active');
+            } else {
+                paper.classList.remove('teacher-mode');
+                studentBtn.classList.add('active');
+                teacherBtn.classList.remove('active');
+            }
+        }
+
+        // Helper: Shuffle Array
+        function shuffle(arr) {
+            const res = [...arr];
+            for (let i = res.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [res[i], res[j]] = [res[j], res[i]];
+            }
+            return res;
+        }
+
+        // Core Generator Logic
+        function generateWorksheet() {
+            updateItemStats();
+
+            if (selectedChapters.length === 0) {
+                alert('Please select at least one chapter.');
+                return;
+            }
+            if (selectedSources.length === 0) {
+                alert('Please select at least one source material category.');
+                return;
+            }
+
+            // 1. Gather all matching pool questions
+            let pool = [];
+            RAW_KNOWLEDGE_BASE.ict.forEach(ch => {
+                if (selectedChapters.includes(ch.chapter_num)) {
+                    ch.questions.forEach(q => {
+                        if (selectedSources.includes(q.source)) {
+                            pool.push({ ...q, chapter_num: ch.chapter_num, chapter_title: ch.chapter_title });
+                        }
+                    });
+                }
+            });
+
+            if (pool.length === 0) {
+                alert('No questions match the selected filters. Please expand your chapter or source selection.');
+                return;
+            }
+
+            // 2. Filter / Weight by Difficulty
+            // If Easy: prioritize easy, exclude hard_hots if possible
+            // If HOTS: prioritize hard_hots and medium
+            // If Standard: balanced mix
+            let filteredPool = pool;
+            if (selectedDifficulty === 'easy') {
+                const easy = pool.filter(q => q.difficulty === 'easy');
+                const medium = pool.filter(q => q.difficulty === 'medium');
+                filteredPool = [...easy, ...medium];
+                if (filteredPool.length < 5) filteredPool = pool;
+            } else if (selectedDifficulty === 'hard_hots') {
+                const hots = pool.filter(q => q.difficulty === 'hard_hots');
+                const medium = pool.filter(q => q.difficulty === 'medium');
+                filteredPool = [...hots, ...medium];
+                if (filteredPool.length < 5) filteredPool = pool;
+            }
+
+            // 3. Select questions based on Target Marks
+            let chosen = [];
+            let currentTotalMarks = 0;
+            const shuffledPool = shuffle(filteredPool);
+
+            if (targetMarks === 0) {
+                // All matching
+                chosen = shuffledPool;
+                currentTotalMarks = chosen.reduce((sum, q) => sum + q.marks, 0);
+            } else {
+                // Aim for exact targetMarks with good question type distribution
+                // Segregate by question types: MCQs (1M), Short (2M), Long/Application (3-4M)
+                const ones = shuffledPool.filter(q => q.marks === 1);
+                const twos = shuffledPool.filter(q => q.marks === 2);
+                const higher = shuffledPool.filter(q => q.marks >= 3);
+
+                let targetOnes = 0;
+                let targetTwos = 0;
+                let targetHigher = 0;
+
+                if (targetMarks === 10) {
+                    // 10M: 4 MCQs (4M), 3 Short (6M)
+                    targetOnes = 4; targetTwos = 3; targetHigher = 0;
+                } else if (targetMarks === 20) {
+                    // 20M: 6 MCQs/FIB (6M), 4 Short/Conversions (8M), 2 Long/HOTS (6M)
+                    targetOnes = 6; targetTwos = 4; targetHigher = 2;
+                } else if (targetMarks === 40) {
+                    // 40M: 10 MCQs/FIB (10M), 7 Short/Conversions (14M), 4-5 Long (16M)
+                    targetOnes = 10; targetTwos = 7; targetHigher = 5;
+                }
+
+                // Pick from buckets
+                const pickOnes = ones.slice(0, targetOnes);
+                const pickTwos = twos.slice(0, targetTwos);
+                const pickHigher = higher.slice(0, targetHigher);
+
+                chosen = [...pickOnes, ...pickTwos, ...pickHigher];
+                currentTotalMarks = chosen.reduce((sum, q) => sum + q.marks, 0);
+
+                // If shortfall remains, top up with remaining pool items
+                if (currentTotalMarks < targetMarks) {
+                    for (let q of shuffledPool) {
+                        if (!chosen.includes(q) && (currentTotalMarks + q.marks <= targetMarks + 2)) {
+                            chosen.push(q);
+                            currentTotalMarks += q.marks;
+                            if (currentTotalMarks >= targetMarks) break;
+                        }
+                    }
+                }
+            }
+
+            currentGeneratedQuestions = chosen;
+            renderWorksheetPaper(chosen, currentTotalMarks);
+        }
+
+        function reshuffleWorksheet() {
+            generateWorksheet();
+        }
+
+        // Render Paper Sheet
+        function renderWorksheetPaper(questions, totalMarks) {
+            const emptyNotice = document.getElementById('empty-state-notice');
+            const liveContent = document.getElementById('live-paper-content');
+            const sectionsContainer = document.getElementById('sections-render-container');
+            const summaryBadge = document.getElementById('paper-summary-badge');
+
+            emptyNotice.style.display = 'none';
+            liveContent.style.display = 'block';
+
+            // Meta Details
+            const chTitleList = selectedChapters.map(c => 'Ch ' + c).join(', ');
+            document.getElementById('paper-chapters-meta').innerHTML = `<strong>Chapters:</strong> ${chTitleList}`;
+            
+            let timeAllowed = totalMarks <= 10 ? '20 Mins' : (totalMarks <= 20 ? '45 Mins' : '90 Mins');
+            document.getElementById('paper-marks-time-meta').innerHTML = `<strong>Max Marks:</strong> ${totalMarks} &bull; <strong>Time:</strong> ${timeAllowed}`;
+            
+            let titlePrefix = totalMarks <= 10 ? 'DIAGNOSTIC WORKSHEET' : (totalMarks <= 20 ? 'PERIODIC TEST &bull; WORKSHEET' : 'MID-TERM EXAMINATION BLUEPRINT');
+            document.getElementById('paper-title-text').innerText = `ICT &bull; ${titlePrefix}`;
+
+            summaryBadge.innerHTML = `Total: <strong>${questions.length} Qs</strong> &bull; <strong>${totalMarks} Marks</strong>`;
+
+            // Group into Sections:
+            // Section A: 1 Mark (MCQ, FIB, T/F)
+            // Section B: 2 Marks (Short Answer, Step Conversion, Syntax)
+            // Section C: 3-5 Marks (Long Answer, Practical Calculation, Case Study/HOTS)
+            const secA = questions.filter(q => q.marks === 1);
+            const secB = questions.filter(q => q.marks === 2);
+            const secC = questions.filter(q => q.marks >= 3);
+
+            let html = '';
+            let qCounter = 1;
+
+            function renderSourceBadge(src) {
+                if (src === 'textbook_exercise') return '<span class="source-tag-inline" title="From Prescribed Textbook">Textbook Ex</span>';
+                if (src === 'chapter_notes') return '<span class="source-tag-inline" title="From Chapter Notes">Theory Notes</span>';
+                if (src === 'researched_enrichment') return '<span class="source-tag-inline" title="Researched Practical Application">Enrichment</span>';
+                if (src === 'exam_trap') return '<span class="source-tag-inline" title="Exam Trap / Common Error">Exam Trap</span>';
+                return '';
+            }
+
+            function renderQuestionHtml(q, num) {
+                let optHtml = '';
+                if (q.options && q.options.length > 0) {
+                    optHtml = '<div class="q-options-grid">';
+                    q.options.forEach(opt => {
+                        optHtml += `<div class="q-option-item"><span class="q-option-bubble"></span> <span>${opt}</span></div>`;
+                    });
+                    optHtml += '</div>';
+                }
+
+                // Writing space based on marks
+                let linesHtml = '';
+                if (q.marks === 1 && (!q.options || q.options.length === 0)) {
+                    linesHtml = '<div class="student-writing-space"><div class="ruled-line"></div></div>';
+                } else if (q.marks === 2) {
+                    linesHtml = '<div class="student-writing-space"><div class="ruled-line"></div><div class="ruled-line"></div></div>';
+                } else if (q.marks >= 3) {
+                    linesHtml = '<div class="student-writing-space"><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div></div>';
+                }
+
+                // Teacher Answer Box
+                let teacherBox = `
+                    <div class="teacher-sol-box">
+                        <div class="sol-header"><i class="fas fa-check-circle"></i> Correct Answer / Solution:</div>
+                        <div class="sol-text">${q.answer}</div>
+                        <div class="sol-explanation"><strong>Marking Rubric &amp; Logic:</strong> ${q.explanation}</div>
+                    </div>
+                `;
+
+                return `
+                    <div class="question-row">
+                        <div class="q-main">
+                            <span class="q-num">Q${num}.</span>
+                            <div class="q-text">
+                                ${q.question}
+                                ${renderSourceBadge(q.source)}
+                            </div>
+                            <span class="q-marks">[${q.marks}M]</span>
+                        </div>
+                        ${optHtml}
+                        ${linesHtml}
+                        ${teacherBox}
+                    </div>
+                `;
+            }
+
+            // Render Section A
+            if (secA.length > 0) {
+                const secAMarks = secA.reduce((s, q) => s + q.marks, 0);
+                html += `
+                    <div class="exam-section">
+                        <div class="section-banner">
+                            <span>SECTION A &bull; OBJECTIVE TYPE QUESTIONS</span>
+                            <span class="sec-marks">${secA.length} Questions &bull; ${secAMarks} Marks</span>
+                        </div>
+                `;
+                secA.forEach(q => {
+                    html += renderQuestionHtml(q, qCounter++);
+                });
+                html += `</div>`;
+            }
+
+            // Render Section B
+            if (secB.length > 0) {
+                const secBMarks = secB.reduce((s, q) => s + q.marks, 0);
+                html += `
+                    <div class="exam-section">
+                        <div class="section-banner">
+                            <span>SECTION B &bull; SHORT ANSWER &amp; APPLICATION DRILLS</span>
+                            <span class="sec-marks">${secB.length} Questions &bull; ${secBMarks} Marks</span>
+                        </div>
+                `;
+                secB.forEach(q => {
+                    html += renderQuestionHtml(q, qCounter++);
+                });
+                html += `</div>`;
+            }
+
+            // Render Section C
+            if (secC.length > 0) {
+                const secCMarks = secC.reduce((s, q) => s + q.marks, 0);
+                html += `
+                    <div class="exam-section">
+                        <div class="section-banner">
+                            <span>SECTION C &bull; LONG ANSWER, HOTS &amp; CASE STUDIES</span>
+                            <span class="sec-marks">${secC.length} Questions &bull; ${secCMarks} Marks</span>
+                        </div>
+                `;
+                secC.forEach(q => {
+                    html += renderQuestionHtml(q, qCounter++);
+                });
+                html += `</div>`;
+            }
+
+            sectionsContainer.innerHTML = html;
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            checkInitialAuth();
+            updateItemStats();
+            // Automatically generate a 20M default sample
+            generateWorksheet();
+        });
+    </script>
+</body>
+</html>
