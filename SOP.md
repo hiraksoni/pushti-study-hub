@@ -1,4 +1,4 @@
-# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.2)
+# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.3)
 *The Definitive Architectural, Design, Pedagogical & Verification Standard for AI-Assisted Generation*
 
 ---
@@ -55,6 +55,57 @@ d:\Users\expor\Downloads\Codes\
 ### 1.5 System Safety & Encoding (Mandatory Python UTF-8)
 * **CRITICAL ENCODING RULE**: Never use Windows PowerShell redirectors (`>`, `>>`, `Set-Content`) to edit or generate HTML, JSON, or Python files. PowerShell defaults to Windows-1252 or UTF-16, permanently corrupting emojis (`🎯`, `🔋`, `✨`, `📐`, `₹`) into broken characters (`??` or `dY"s`).
 * **MANDATORY**: Always read, modify, and write files using Python with explicit `open(filepath, 'w', encoding='utf-8')`.
+
+### 1.6 Publication Anonymization & Code-Name Standard
+* **STRICT WEBSITE RULE**: Commercial publication, publisher, and private vendor names (e.g., **MTG**, **Cordova**, **Ratna Sagar**, **Goyal Brothers**, **Pearson**, **Selina**, **NCERT**, etc.) must **NEVER be displayed directly on the student-facing website UI** (badges, tags, headers, chapter titles, card descriptions, syllabus tables, or modal views).
+* **Internal Documentation vs. Public UI Mapping**:
+  | Internal Source / Documentation | Standard Website Display Label | Description / Role |
+  | :--- | :--- | :--- |
+  | **Primary / Prescribed Textbook** (e.g. MTG Foundation in Maths, prescribed reader) | **`Main`** / **`Main Course`** | Primary core curriculum foundation track |
+  | **Secondary Textbook 1** (e.g. Cordova in Maths / Science) | **`Ref 1`** | Primary parallel reference track (exercises, drills, HOTS) |
+  | **Secondary Textbook 2** (e.g. Ratna Sagar / Goyal) | **`Ref 2`** | Secondary parallel reference track |
+  | **Secondary Textbook 3** | **`Ref 3`** | Tertiary reference track |
+  | **Olympiad / Competitive Workbooks** | **`Advanced Track`** / **`Olympiad Prep`** | Advanced conceptual drills & high-order thinking problems |
+* **Example Replacements**:
+  - ❌ `"Dual Track: NCERT + Cordova Ch 1"` &rarr; ✅ `"Dual Track: Main + Ref 1 Ch 1"`
+  - ❌ `"📙 Dual: MTG + Cordova Ch 11"` &rarr; ✅ `"📙 Dual: Main + Ref 1 Ch 11"`
+  - ❌ `"Cordova Exercises 1.1–1.4"` &rarr; ✅ `"Ref 1 Exercises 1.1–1.4"`
+  - ❌ `"MTG Aligned"` &rarr; ✅ `"Main Aligned"`
+* Exact publication names may be recorded in developer notes, internal metadata, and SOP documentation, but the public UI must exclusively use the standardized code-names.
+
+### 1.7 School Anonymization Standard (Zero Direct School Mentions & Admin-Only Profile Storage)
+* **PRIVACY & SECURITY MANDATE**: The student's specific school name (e.g., **Silver Bells Public School**, or any specific private institution name) must **NEVER appear directly anywhere on the website UI**, page titles, banners, or syllabus tables.
+* **Approved Generic Terminology**:
+  - ❌ `"Silver Bells Public School Mid-Term Worksheet"` &rarr; ✅ `"School Curriculum Mid-Term Assessment Worksheet"`
+  - ❌ `"Silver Bells Exam Pattern"` &rarr; ✅ `"Internal School Exam Pattern"`
+  - ❌ `"Silver Bells Timetable"` &rarr; ✅ `"School Term Schedule & Timetable"`
+* **Admin-Only Confidential Storage**:
+  - In student profiles (`profile.html` and registration modals), **only the Student's Name and Parent's Name are visible** to regular viewers.
+  - The **School Name is strictly confidential and reserved for the Admin only**. It is masked by default (`•••••••••••••••• [Admin Only]`) and guarded by Admin PIN verification.
+
+### 1.8 Localhost Direct Navigation Protocol
+* **MANDATORY HTTPS / LOCALHOST LINK**: At the conclusion of every chapter module (in the footer metadata / quick jump bar) and in all AI generation summaries, **always provide the direct local development link using HTTPS**:
+  ```text
+  https://localhost:8443/chapters/[subject]/[chapter_filename].html
+  ```
+  *(or the active local development port, e.g., `https://localhost:8443/...` or `https://127.0.0.1:8443/...`)*
+* This ensures that during development, review, and verification, the user can instantly click to inspect the live running chapter module without searching the directory tree.
+
+### 1.9 Student Authentication & Detailed Profile Architecture
+* **Profile Data Schema & Visibility Hierarchy**:
+  - **Visible Student Identity (Student & Parent View)**:
+    - **Student's Full Name** (e.g., `Pushti Soni`)
+    - **Father's / Guardian's Full Name** (e.g., `Hirak Soni`)
+    - **Standard / Grade & Board** (e.g., `Class 7 CBSE`)
+    - **Contact Credentials** (Student/Parent Phone & Email)
+    - **Student Roll No. / ID**
+  - **Confidential Identity (Admin Only)**:
+    - **School's Name**: Restricted strictly to the **Admin only**. Never displayed publicly; masked in UI as `🔒 Admin Protected` with PIN verification required for inspection or editing.
+* **Dedicated Profile Portal (`profile.html`)**:
+  - Accessible via the user avatar across all site headers.
+  - Features glassmorphism card layout with personal academic details, contact credentials, real-time study stats, and editable profile modal.
+  - Integrated Admin School Name unlock mechanism (guarded by Admin security passkey).
+  - Future-proof placeholder for enhanced password security, session timeout, and multi-factor authorization.
 
 ---
 
@@ -205,6 +256,20 @@ Horizontal scrollbars on desktop/laptop displays degrade readability and break r
    }
    ```
 3. Sidebars on mobile breakpoints (`@media (max-width: 860px)`) must flex-wrap cleanly (`flex-direction: row; flex-wrap: wrap;`).
+
+### 2.4.1 Maximum Horizontal Real-Estate Utilization Standard (Wide Desktop & Laptop Viewports)
+* **The Problem (Wasted Horizontal Space)**:
+  Restricting main content containers to narrow arbitrary widths (e.g. `max-width: 1000px` or `1200px`) on modern 1366px, 1440px, and 1920px widescreen displays wastes significant horizontal real estate, leaving empty voids on the right and forcing unnecessarily long vertical page scrolling. Stacking MCQ options, True/False items, or question cards in single vertical columns further inflates page height.
+* **Mandatory Horizontal Utilization Rules**:
+  1. **Generous Main Content Max-Width**: Main content wrappers (`.main-content`) must set `max-width: 1600px;` (or `width: calc(100% - var(--sidebar-width)); max-width: 1650px; box-sizing: border-box;`) so that content utilizes the available desktop and laptop monitor width effectively.
+  2. **Responsive Multi-Column Question Grids**:
+     In exercise modules, exam papers, and worksheet sections, questions (MCQs, FIBs, True/False, Short Q&A) must utilize responsive 2-column grids on desktop/laptop viewports (`@media (min-width: 1024px) { grid-template-columns: repeat(2, 1fr); gap: 18px; }`), cutting vertical scroll depth by nearly 50%.
+  3. **2x2 MCQ Option Layout**:
+     Inside MCQ cards, the four options (a, b, c, d) must be arranged in a responsive 2-column grid (`grid-template-columns: repeat(2, 1fr); gap: 10px;` falling back to `1fr` on mobile screens `< 640px`), eliminating tall single-column stacks.
+  4. **Multi-Column Concept & Enrichment Grids**:
+     Formula cards, flashcards, subtraction drills, and trivia cards must use auto-fit grids (`grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));` or `repeat(2, 1fr)`), actively populating screen width with rich learning components.
+  5. **Defensive Containment (`min-width: 0 !important;`)**:
+     To avoid horizontal overflow or card collisions, all grid items and question cards must declare `min-width: 0 !important; box-sizing: border-box !important;`.
 
 ### 2.5 The Zero-Collision & Text Overwrite Prevention Standard (Universal Math & Layout Containment)
 * **The Problem (Root Causes)**:
@@ -659,14 +724,21 @@ Every interactive chapter must adhere to modern web usability best practices:
    - **Practice Question Bank (MCQs)**: Partition by difficulty level (*Sub-tab 1: Level 1 Foundation*, *Sub-tab 2: Level 2 Application*, *Sub-tab 3: Level 3 HOTS / Exemplar*).
    - **Advanced Evaluation & Interactive Labs**: Partition by assessment type (*Sub-tab 1: Match the Columns*, *Sub-tab 2: Assertion & Reasoning*, *Sub-tab 3: Case Study Drill*, *Sub-tab 4: Flashcards & Revision*).
 
-3. **Required Submodule Stylesheet Architecture (Zero-Horizontal-Scroll Enforced)**:
+3. **Required Submodule Stylesheet Architecture (Zero-Horizontal-Scroll & Sticky Docking Mandate)**:
+   - **Sticky Top-Docking Rule**: To maintain navigation context and prevent students from losing their place during deep problem sets or multi-section exercises, Tier 2 navigation pills (`.submodule-nav`), exam control bars (`.exam-control-bar`), and interactive filter bars (`.sticky-search-bar`) must stick to the top of the viewport when scrolling, anchored precisely beneath the sticky `.site-header` (`top: var(--header-height); z-index: 900; background: var(--bg-sticky); backdrop-filter: blur(12px);`).
    ```css
    .submodule-nav {
+     position: sticky;
+     top: var(--header-height);
+     z-index: 900;
+     background: var(--bg-sticky);
+     backdrop-filter: blur(12px);
+     -webkit-backdrop-filter: blur(12px);
      display: flex;
      flex-wrap: wrap;
      gap: 8px;
+     padding: 10px 0;
      margin-bottom: 20px;
-     padding-bottom: 12px;
      border-bottom: 1px solid var(--border);
      overflow-x: hidden; /* Zero horizontal scrollbars */
    }
@@ -837,7 +909,35 @@ To prevent visual crowding and optimize screen geometry:
     - **Row 3**: `Long Answer (LA)` (Left) | `💡 Revision Priority Tip` (Right)
   - Limits question breakdown height to ~140px, ensuring zero vertical scrollbars on standard laptop displays.
 
-### 4.4 Verified Badges, Notification Dots & Syllabus Batteries
+### 4.4 Subject Hub Centralized Test & Exam Prep Architecture (`#tab-tests` & `#sec-tests`)
+* **The Centralization & Decoupling Mandate**:
+  All school test papers, terminal examination blueprints, revision worksheets, practice test modules, and diagnostic drills must be collected and presented in a dedicated **"Tests & Exam Prep"** tab (`#tab-tests` -> `#sec-tests`) on each subject hub (`maths_index.html`, `hindi_index.html`, `science_index.html`, `sanskrit_index.html`, `english_index.html`, `social_science_index.html`, `ict_index.html`).
+* **Zero Scattering Rule**:
+  Tests, worksheets, and exam prep modules must **NEVER be buried or scattered inside individual chapter modules**. They are preserved in this dedicated subject tab to provide a single, organized assessment portal for rapid exam preparation.
+* **Mandatory Administration & Exam Context Metadata**:
+  Every test paper card in `#sec-tests` must explicitly record:
+  1. **Administration Timing & Date**: Exactly when the test was administered (e.g. `Given: Sep 2026`).
+  2. **Target Examination Role**: The specific exam it prepares the student for (e.g. `🎯 Mid-Term (80M)`, `🎯 Half-Yearly Exam Blueprint`).
+  3. **Curricular & Section Scope**: Clear breakdown of sections, chapters, or questions covered (e.g. `खण्ड 'क' अपठित बोध (14M)`, `खण्ड 'ख' व्याकरण (16M)`, `Ch 1–8 Literature (30M)`, `रचनात्मक लेखन (20M)`).
+  4. **Multi-Source Action Triggers**: Direct launch links to interactive practice modules (`.btn-gemini`, `.btn-claude`) and high-resolution PDF scans of the original school test papers whenever available.
+* **Deep-Link Protocol & Hash State Switcher**:
+  Every subject hub must support direct deep-linking via URL hash:
+  ```javascript
+  document.addEventListener('DOMContentLoaded', () => {
+      if (window.location.hash === '#tests') {
+          showCategory('tests');
+      }
+  });
+  ```
+  This allows portals (`index.html`, `midterm.html`, `timetable.html`) to link straight into the subject's test bank (e.g. `hindi_index.html#tests`).
+* **Standalone Practice Test Layout Standards**:
+  When authoring or updating standalone test modules (e.g. `practice_hindi_midterm_worksheet.html`):
+  1. **Strict Left Dock Rail**: Use the standard SOP collapsible sidebar rail (`.sidebar` 64px collapsed, 280px pinned with `#pin-btn`, zero text peeking). Top horizontal tabs are strictly forbidden.
+  2. **High-Density 4-Column Single-Line MCQ Layout**: Use `.mcq-grid` with `grid-template-columns: repeat(4, 1fr)` (switching to 2 columns on tablet, 1 column on mobile) so that short, concise options sit cleanly on a single row without bulky 2-row wrapping.
+  3. **Subject-Appropriate Typography**: Enhance visual appeal and focus with rich typography (e.g. `Rozha One`, `Yatra One`, `Poppins`, `Outfit`, `Space Mono`).
+  4. **Hidden Solutions**: 100% of solutions collapsed by default (`open details = 0`).
+
+### 4.5 Verified Badges, Notification Dots & Syllabus Batteries
 * **Verified Badges**: `<span class="verified-badge">Verified: 13 Sep 2026</span>` on audited sections.
 * **Android-Style Notification Dot (.update-dot) & The 3-Second Active Viewing Rule**:
   - Pulsing green dot guiding the student immediately to updated or unread material.
@@ -850,7 +950,7 @@ To prevent visual crowding and optimize screen geometry:
   - Amber (`#f59e0b`) = 30%–59% Progress
   - Rose (`#f43f5e`) = <30% / Pending
 
-### 4.5 Syllabus Topic Tag Mapping & Completeness Calculation Standard (The Topic-to-Battery Rule)
+### 4.6 Syllabus Topic Tag Mapping & Completeness Calculation Standard (The Topic-to-Battery Rule)
 * **Functional Purpose of Chapter Tags/Pills**:
   - The tags and pill tabs on subject chapter cards (`.ch-tags .tag`, `.subtopic-pills-row .topic-pill`) are **functional syllabus audit markers**, NOT decorative or arbitrary keywords.
   - Every tag must represent a specific, verifiable topic or component prescribed by the official school/CBSE syllabus (e.g. *पत्रलेखनम्*, *चित्रवर्णनम्*, *मञ्जूषा*, *संवादपूर्तिः*, *कथापूर्तिः*).
@@ -913,6 +1013,15 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-INT-4 (Active Simulation & Exploratory Learning Gate)**: In Science and Social Science modules, do core physical, earth, or living systems feature interactive visual exploration (dynamic SVG cutaway/cycle inspector) rather than static textual paragraphs alone?
 - [ ] **CP-TITLE-1 (Implicit Grade Scope Gate — Zero "Class 7" Clutter)**:
   Verify that chapter titles, tab labels, breadcrumbs, card headings, and test paper names do NOT redundantly prepend `"Class 7"`. The Class 7 CBSE standard is implicit across Pushti Study Hub; grade numbers may only be stated when explicitly contrasting two different academic standards (e.g. Class 6 prerequisite vs. Class 7 curriculum, or Class 7 vs. Class 8 Olympiad preview).
+- [ ] **CP-TEST-1 (Centralized Test & Exam Prep Hub & Standalone Test Architecture Gate)**:
+  - Verify that every subject hub (`*_index.html`) features a functional `#tab-tests` on the branch sidebar and a rich `#sec-tests` section with deep-link hash listener (`#tests`).
+  - Verify that tests and practice papers are decoupled from chapter interiors and centralized in the subject hub with complete administration metadata (administration date, target exam role, section marks distribution, and original scan links).
+  - In standalone test modules (e.g. `practice_hindi_midterm_worksheet.html`):
+    - **Tab Location**: Strict SOP Left Dock Rail (`.sidebar` 64px collapsed, 280px pinned with `#pin-btn`, zero peeking) replacing top horizontal tabs.
+    - **MCQ Option Compactness**: High-density 4-column responsive grid (`grid-template-columns: repeat(4, 1fr)`) preventing bulky 2-row multi-line wrapping on desktop viewports.
+    - **Typography**: Enhanced subject-appropriate fonts (e.g., `Rozha One`, `Yatra One`, `Poppins`, `Outfit`, `Space Mono`).
+    - **Initial State**: 100% of solutions hidden by default (`open details = 0`).
+    - **Omission of Redundant Grade Prefixes**: Zero `"Class 7"` prefixes across titles, tabs, breadcrumbs, and question cards.
 
 ### Checkpoint Suite 4: Technical & Code Verification Gate
 - [ ] **CP-TECH-1 (HTML Tag Balance)**: Run automated verification ensuring:
@@ -937,6 +1046,8 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 
 | Version | Date | Key Architectural Additions |
 | :---: | :---: | :--- |
+| **v3.4** | 2026-09-20 | **Maximum Horizontal Real-Estate Utilization & Sticky Tier-2 Submodule Nav Standard (Section 2.4.1 & 3.1.2)**: Mandated generous 1600px+ content max-width, responsive multi-column question grids (2-column on desktop/laptop), 2x2 MCQ option layout, and multi-column concept/enrichment grids, eliminating wasteful whitespace voids and reducing vertical page scrolling by ~50% on wide desktop and laptop viewports. Standardized sticky top-docking (`top: var(--header-height); z-index: 900; background: var(--bg-sticky); backdrop-filter: blur(12px)`) for submodule navigation pills (`.submodule-nav`), exam control bars (`.exam-control-bar`), and search bars (`.sticky-search-bar`). |
+| **v3.3** | 2026-09-19 | **Centralized Test & Exam Prep Hub Architecture & High-Density Test Standards (Section 4.4, CP-TEST-1)**: Standardized dedicated "#tab-tests" / "#sec-tests" across all 7 subject hubs with deep-link hash listener, decoupling tests from chapter interiors and aggregating them in a centralized subject test bank with complete administration metadata (date given, target 80M exam, syllabus scope, interactive links, original scans); codified strict Left Dock Rail and high-density 4-column single-line MCQ layout for standalone test papers. |
 | **v3.2** | 2026-09-18 | **Implicit Grade Scope & Zero "Class 7" Redundancy Standard (Section 1.1, Section 2.10, CP-TITLE-1)**: Codified that because Pushti Study Hub is built exclusively for Pushti in Class 7 CBSE, all grade context is implicit. Prepending or repeating "Class 7" before chapter names, tab headers, breadcrumbs, card headings, and test papers is strictly prohibited unless explicitly contrasting across two different academic standards (e.g. Class 6 prerequisite vs. Class 7 curriculum, or Class 7 vs. Class 8 Olympiad preview). |
 | **v3.1** | 2026-09-17 | **Master SOP Unification & Mathematical Typography Standard**: Archived and redirected legacy secondary SOP files (PUSHTI_CONTENT_SOP, PUSHTI_DESIGN_SOP) to ensure zero contradictions; established Section 2.5.2 (Fraction Legibility Mandate with \dfrac and .katex font amplification) and Section 2.5.3 (Adaptive Subparts: Atomic Chips minmax(140px, 1fr) vs. Verbose Grids minmax(280px, 1fr) eliminating orphaned 4th boxes on laptop viewports); added CP-MATH-2. |
 | **v3.0** | 2026-09-14 | **Modern Interactive Simulation, Tailwind/Lucide UI & Unified Searchable Solutions Hub Standard**: Authorized Stack B (Tailwind CSS + Lucide Icons) for Science and Social Science; superseded mark-based question splitting with the 5-Module Interactive Simulation & Searchable Solutions Hub Standard (Tab 1 SVG Cutaway Inspector, Tab 2 Cycle Simulator, Tab 3 Searchable NCERT Hub with live debounced search and empty states, Tab 4 Auto-Grading Quiz, Tab 5 3D Flipcards); codified Top Sticky Nav for visual landscape subjects vs. Left Dock Rail for dense math; added CP-GUI-11, CP-GUI-12, and CP-INT-4. |

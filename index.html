@@ -485,9 +485,12 @@
             </a>
         </div>
 
-        <div class="header-right">
+        <div class="header-right" style="display:flex; align-items:center; gap:10px;">
+            <a href="profile.html" style="text-decoration:none; padding:8px 12px; background:var(--bg-main); border:1px solid var(--border); border-radius:8px; color:var(--text-main); font-weight:600; font-size:0.78rem; display:flex; align-items:center; gap:6px;">
+                <i class="fas fa-user-graduate" style="color:var(--primary);"></i> Student Profile
+            </a>
             <button id="switch-user-btn" onclick="openLoginModal()" style="padding:8px 12px; background:var(--bg-main); border:1px solid var(--border); border-radius:8px; color:var(--text-main); font-weight:600; font-size:0.78rem; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
-                <i class="fas fa-user-friends"></i> Switch Account
+                <i class="fas fa-user-friends"></i> Switch User
             </button>
         </div>
     </header>
@@ -763,7 +766,7 @@
                                 <h4 class="ch-title">🏅 International English Olympiad (SOF IEO)</h4>
                                 <span class="tag" style="background: rgba(236, 72, 153, 0.15); color: #F472B6; border: 1px solid rgba(236, 72, 153, 0.35); font-size: 0.72rem; padding: 2px 8px; border-radius: 6px; font-weight: 700;">OLYMPIAD WORKBOOK • 475 QUESTIONS</span>
                             </div>
-                            <p class="ch-desc">Official MTG SOF Grade 7 English Olympiad Master Practice Book: 13 Chapters spanning Synonyms, Antonyms, Spellings, Idioms, Grammar, Conditionals, Voice, Narration & Comprehension + 2025 Official Mock Paper with 100% verified answer keys and HOTS Achievers Section.</p>
+                            <p class="ch-desc">Official Foundation English Olympiad Master Practice Book: 13 Chapters spanning Synonyms, Antonyms, Spellings, Idioms, Grammar, Conditionals, Voice, Narration & Comprehension + 2025 Official Mock Paper with 100% verified answer keys and HOTS Achievers Section.</p>
                             <div class="ch-tags">
                                 <span class="tag"><i class="fas fa-book-open"></i> 13 Chapters</span>
                                 <span class="tag"><i class="fas fa-list-ol"></i> 475 Questions</span>
@@ -780,27 +783,111 @@
         </div>
     </div>
 
-    <!-- Switch User Modal -->
-    <div class="login-modal-overlay" id="login-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); align-items:center; justify-content:center; z-index:9999;">
-        <div class="login-modal-content" style="background:var(--surface); border:1px solid var(--border); padding:24px; border-radius:16px; width:90%; max-width:350px; box-shadow:0 10px 30px rgba(0,0,0,0.4);">
-            <h2 style="margin-top:0; margin-bottom:16px; color:var(--text-main); font-family:'Outfit', sans-serif;">Switch User</h2>
-            <div style="margin-bottom:14px;">
-                <label style="display:block; margin-bottom:5px; font-size:0.85rem; color:var(--text-muted);">Select Account:</label>
-                <select id="login-user-select" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-family:inherit; outline:none;">
-                    <option value="pushti">Pushti (Student)</option>
-                    <option value="hirak">Hirak (Parent)</option>
-                    <option value="admin">Admin</option>
-                </select>
+    <!-- Switch User & Profile Modal -->
+    <div class="login-modal-overlay" id="login-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); backdrop-filter:blur(6px); align-items:center; justify-content:center; z-index:9999; padding:20px;">
+        <div class="login-modal-content" style="background:var(--surface); border:1px solid var(--border); padding:24px; border-radius:18px; width:100%; max-width:440px; box-shadow:0 16px 40px rgba(0,0,0,0.45); max-height:90vh; overflow-y:auto;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <h2 style="margin:0; font-size:1.3rem; color:var(--text-main); font-family:'Outfit', sans-serif;">
+                    <i class="fas fa-user-lock" style="color:var(--primary);"></i> Student Login & Switch
+                </h2>
+                <button onclick="closeLoginModal()" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem;">✕</button>
             </div>
-            <div style="margin-bottom:18px;">
-                <label style="display:block; margin-bottom:5px; font-size:0.85rem; color:var(--text-muted);">Password:</label>
-                <input type="password" id="login-password" placeholder="Enter password" autocomplete="new-password" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-family:inherit; outline:none;">
+
+            <!-- Tab Switch inside Modal: Quick Switch vs Detailed Registration -->
+            <div style="display:flex; gap:8px; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:8px;">
+                <button type="button" id="modal-tab-login" onclick="toggleModalView('login')" style="background:transparent; border:none; color:var(--primary); font-weight:700; font-size:0.88rem; cursor:pointer; padding:4px 8px; border-bottom:2px solid var(--primary);">Quick Login</button>
+                <button type="button" id="modal-tab-details" onclick="toggleModalView('details')" style="background:transparent; border:none; color:var(--text-muted); font-weight:600; font-size:0.88rem; cursor:pointer; padding:4px 8px;">Detailed Student Profile</button>
             </div>
-            <div id="login-error" style="color:#EF4444; font-size:0.85rem; margin-bottom:12px; display:none;">Invalid password.</div>
-            <div style="display:flex; justify-content:flex-end; gap:10px;">
-                <button onclick="closeLoginModal()" style="padding:8px 16px; background:transparent; border:1px solid var(--border); border-radius:8px; color:var(--text-muted); cursor:pointer;">Cancel</button>
-                <button onclick="attemptLogin()" style="padding:8px 16px; background:var(--primary); border:none; border-radius:8px; color:#fff; font-weight:600; cursor:pointer;">Login</button>
+
+            <!-- View 1: Quick Account Login -->
+            <div id="modal-view-login">
+                <div style="margin-bottom:14px;">
+                    <label style="display:block; margin-bottom:5px; font-size:0.85rem; color:var(--text-muted);">Select Account:</label>
+                    <select id="login-user-select" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-family:inherit; outline:none;">
+                        <option value="pushti">Pushti (Student)</option>
+                        <option value="hirak">Hirak (Parent)</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:18px;">
+                    <label style="display:block; margin-bottom:5px; font-size:0.85rem; color:var(--text-muted);">Password / PIN:</label>
+                    <input type="password" id="login-password" placeholder="Enter password" autocomplete="new-password" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-family:inherit; outline:none;">
+                </div>
+                <div id="login-error" style="color:#EF4444; font-size:0.85rem; margin-bottom:12px; display:none;">Invalid password.</div>
+                
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                    <a href="profile.html" style="font-size:0.82rem; color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:5px; font-weight:600;">
+                        <i class="fas fa-id-badge"></i> Open Full Profile Page
+                    </a>
+                    <div style="display:flex; gap:8px;">
+                        <button onclick="closeLoginModal()" style="padding:8px 14px; background:transparent; border:1px solid var(--border); border-radius:8px; color:var(--text-muted); cursor:pointer;">Cancel</button>
+                        <button onclick="attemptLogin()" style="padding:8px 18px; background:var(--primary); border:none; border-radius:8px; color:#fff; font-weight:600; cursor:pointer;">Login</button>
+                    </div>
+                </div>
             </div>
+
+            <!-- View 2: Detailed Student Profile Form -->
+            <div id="modal-view-details" style="display:none;">
+                <p style="font-size:0.8rem; color:var(--text-muted); margin:0 0 12px;">
+                    Student registration & contact information (stored securely in profile):
+                </p>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <div>
+                        <label style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:3px;">Student's Full Name *</label>
+                        <input type="text" id="reg-student-name" value="Pushti Soni" style="width:100%; padding:8px 10px; border-radius:6px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-size:0.88rem; outline:none;">
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:3px;">Father's Name *</label>
+                        <input type="text" id="reg-father-name" value="Hirak Soni" style="width:100%; padding:8px 10px; border-radius:6px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-size:0.88rem; outline:none;">
+                    </div>
+                    <div style="background:rgba(245,158,11,0.06); border:1px dashed rgba(245,158,11,0.3); padding:8px 10px; border-radius:6px;">
+                        <label style="display:flex; justify-content:space-between; font-size:0.78rem; color:#fbbf24; margin-bottom:3px; font-weight:600;">
+                            <span><i class="fas fa-lock"></i> School's Name</span>
+                            <span style="font-size:0.7rem; color:var(--text-muted); font-weight:normal;">Confidential &bull; Admin Only</span>
+                        </label>
+                        <input type="text" id="reg-school-name" value="Silver Bells Public School" placeholder="School Name (Admin Only)" style="width:100%; padding:8px 10px; border-radius:6px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-size:0.88rem; outline:none;">
+                        <div style="font-size:0.7rem; color:var(--text-muted); margin-top:3px;">
+                            Only Student &amp; Parent names appear on the profile. School name remains private for Admin only.
+                        </div>
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                        <div>
+                            <label style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:3px;">Std / Grade *</label>
+                            <input type="text" id="reg-grade" value="Class 7" style="width:100%; padding:8px 10px; border-radius:6px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-size:0.88rem; outline:none;">
+                        </div>
+                        <div>
+                            <label style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:3px;">Board *</label>
+                            <input type="text" id="reg-board" value="CBSE" style="width:100%; padding:8px 10px; border-radius:6px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-size:0.88rem; outline:none;">
+                        </div>
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                        <div>
+                            <label style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:3px;">Student Mobile No.</label>
+                            <input type="tel" id="reg-student-phone" value="+91 98765 43210" style="width:100%; padding:8px 10px; border-radius:6px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-size:0.88rem; outline:none;">
+                        </div>
+                        <div>
+                            <label style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:3px;">Student Email</label>
+                            <input type="email" id="reg-student-email" value="pushti.soni@studyhub.local" style="width:100%; padding:8px 10px; border-radius:6px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-size:0.88rem; outline:none;">
+                        </div>
+                    </div>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                        <div>
+                            <label style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:3px;">Parent Mobile No. *</label>
+                            <input type="tel" id="reg-parent-phone" value="+91 98252 00000" style="width:100%; padding:8px 10px; border-radius:6px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-size:0.88rem; outline:none;">
+                        </div>
+                        <div>
+                            <label style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:3px;">Parent Email *</label>
+                            <input type="email" id="reg-parent-email" value="hirak@pcppl.com" style="width:100%; padding:8px 10px; border-radius:6px; border:1px solid var(--border); background:var(--bg-main); color:var(--text-main); font-size:0.88rem; outline:none;">
+                        </div>
+                    </div>
+                    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:10px;">
+                        <button type="button" onclick="saveQuickDetails()" style="padding:8px 18px; background:var(--primary); border:none; border-radius:8px; color:#fff; font-weight:600; cursor:pointer;">
+                            <i class="fas fa-save"></i> Save Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -913,6 +1000,61 @@
             const roleDisp = document.getElementById('dropdown-user-role');
             if (roleDisp) roleDisp.textContent = user.role || 'Student';
         }
+
+        window.toggleModalView = function(view) {
+            const loginView = document.getElementById('modal-view-login');
+            const detailsView = document.getElementById('modal-view-details');
+            const tabLogin = document.getElementById('modal-tab-login');
+            const tabDetails = document.getElementById('modal-tab-details');
+
+            if (view === 'details') {
+                loginView.style.display = 'none';
+                detailsView.style.display = 'block';
+                tabLogin.style.color = 'var(--text-muted)';
+                tabLogin.style.borderBottom = 'none';
+                tabDetails.style.color = 'var(--primary)';
+                tabDetails.style.borderBottom = '2px solid var(--primary)';
+                // Load existing profile if saved
+                try {
+                    const saved = JSON.parse(localStorage.getItem('pushti-student-profile') || '{}');
+                    if (saved.student_name) document.getElementById('reg-student-name').value = saved.student_name;
+                    if (saved.father_name) document.getElementById('reg-father-name').value = saved.father_name;
+                    if (saved.school_name) document.getElementById('reg-school-name').value = saved.school_name;
+                    if (saved.grade) document.getElementById('reg-grade').value = saved.grade;
+                    if (saved.board) document.getElementById('reg-board').value = saved.board;
+                    if (saved.student_phone) document.getElementById('reg-student-phone').value = saved.student_phone;
+                    if (saved.student_email) document.getElementById('reg-student-email').value = saved.student_email;
+                    if (saved.parent_phone) document.getElementById('reg-parent-phone').value = saved.parent_phone;
+                    if (saved.parent_email) document.getElementById('reg-parent-email').value = saved.parent_email;
+                } catch(e){}
+            } else {
+                loginView.style.display = 'block';
+                detailsView.style.display = 'none';
+                tabLogin.style.color = 'var(--primary)';
+                tabLogin.style.borderBottom = '2px solid var(--primary)';
+                tabDetails.style.color = 'var(--text-muted)';
+                tabDetails.style.borderBottom = 'none';
+            }
+        };
+
+        window.saveQuickDetails = function() {
+            const profile = {
+                student_name: document.getElementById('reg-student-name').value.trim(),
+                father_name: document.getElementById('reg-father-name').value.trim(),
+                school_name: document.getElementById('reg-school-name').value.trim(),
+                grade: document.getElementById('reg-grade').value.trim(),
+                board: document.getElementById('reg-board').value.trim(),
+                student_phone: document.getElementById('reg-student-phone').value.trim(),
+                student_email: document.getElementById('reg-student-email').value.trim(),
+                parent_phone: document.getElementById('reg-parent-phone').value.trim(),
+                parent_email: document.getElementById('reg-parent-email').value.trim(),
+                roll: '7-A-24',
+                city: 'Bhavnagar, Gujarat'
+            };
+            localStorage.setItem('pushti-student-profile', JSON.stringify(profile));
+            alert('✅ Student details saved successfully!');
+            window.toggleModalView('login');
+        };
 
         window.applyActiveUser = applyActiveUser;
         applyActiveUser();

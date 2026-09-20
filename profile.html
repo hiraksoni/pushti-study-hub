@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile — Pushti Soni | Pushti Study Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #0F0F1A;
+            --bg-card: rgba(22, 33, 62, 0.7);
+            --surface: #16213E;
+            --primary: #818CF8;
+            --primary-hover: #6366F1;
+            --accent: #8B5CF6;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border: #2A2A40;
+            --success: #10B981;
+        }
+
+        [data-theme="light"] {
+            --bg-main: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --surface: #FFFFFF;
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --accent: #6366F1;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+            --border: #E2E8F0;
+            --success: #15803D;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 24px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-main);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto 80px;
+            padding: 0 20px;
+        }
+
+        /* Profile Hero Card */
+        .profile-hero-card {
+            background: linear-gradient(135deg, rgba(129, 140, 248, 0.12), rgba(139, 92, 246, 0.1));
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .profile-hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #818CF8, #8B5CF6, #10B981);
+        }
+
+        .profile-avatar-wrapper {
+            position: relative;
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .profile-avatar-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-details h1 {
+            margin: 0 0 6px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.9rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .role-pill {
+            font-size: 0.8rem;
+            padding: 3px 12px;
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 20px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+        }
+        .hero-meta {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .btn-action {
+            padding: 9px 18px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #FFFFFF;
+            border: 1px solid var(--primary);
+            box-shadow: 0 4px 12px rgba(129, 140, 248, 0.3);
+        }
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+        .btn-outline {
+            background: var(--surface);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Profile Details Grid */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .section-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .section-card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            color: var(--primary);
+            margin: 0 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.92rem;
+        }
+        [data-theme="light"] .info-row { border-bottom-color: #F1F5F9; }
+        .info-row:last-child { border-bottom: none; }
+        .info-label {
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        .info-val {
+            font-weight: 600;
+            color: var(--text-main);
+            text-align: right;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+        .modal-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            width: 100%;
+            max-width: 580px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 14px;
+        }
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        .form-group label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .form-group input, .form-group select {
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-main);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+    <div style="display:flex; align-items:center; gap: 8px; font-size: 1.05rem; font-weight: 500; color: var(--text-main);">
+        <a href="index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
+            <i class="fas fa-home"></i> Home
+        </a>
+        <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> 
+        <span style="color:var(--accent); font-weight:600;">Student Profile</span>
+    </div>
+    
+    <div style="display:flex; align-items:center; gap: 16px;">
+        <button class="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()" style="background:transparent; border:none; color:var(--text-main); cursor:pointer; font-size:1.15rem;">
+            <i class="fas fa-moon" id="theme-icon"></i>
+        </button>
+        <a href="timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">
+            📅 Schedule
+        </a>
+        <a href="midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">
+            🎯 Mid-Term Hub
+        </a>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Hero Card -->
+    <div class="profile-hero-card">
+        <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+            <div class="profile-avatar-wrapper">
+                <img id="profile-avatar-img" src="https://ui-avatars.com/api/?name=Pushti+Soni&background=8B5CF6&color=ffffff&rounded=true&bold=true&font-size=0.4" alt="Pushti Soni">
+            </div>
+            <div class="hero-details">
+                <h1 id="disp-student-name">
+                    Pushti Soni
+                    <span class="role-pill" id="disp-grade-badge">Grade 7 CBSE</span>
+                </h1>
+                <div class="hero-meta">
+                    <span><i class="fas fa-user-graduate" style="color:var(--primary);"></i> Student: <strong id="disp-student-hero">Pushti Soni</strong></span>
+                    <span><i class="fas fa-user-shield" style="color:#10B981;"></i> Parent: <strong id="disp-parent-name">Hirak Soni</strong></span>
+                    <span><i class="fas fa-lock" style="color:#F59E0B;"></i> School: <strong id="disp-school-short" style="color:#FBBF24;">Admin Protected 🔒</strong></span>
+                    <span><i class="fas fa-calendar-alt" style="color:#818CF8;"></i> Academic Year: <strong>2026–27</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-actions">
+            <button class="btn-action btn-primary" onclick="openEditModal()">
+                <i class="fas fa-user-edit"></i> Edit Profile
+            </button>
+            <button class="btn-action btn-outline" onclick="openSecurityModal()">
+                <i class="fas fa-shield-alt"></i> Security & PIN
+            </button>
+        </div>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="details-grid">
+
+        <!-- Card 1: Student Academic Details -->
+        <div class="section-card">
+            <div class="section-card-title">
+                <i class="fas fa-user-graduate"></i> Academic & Student Info
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-id-card"></i> Student Full Name</span>
+                <span class="info-val" id="val-student-name" style="font-weight:700;">Pushti Soni</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-user"></i> Father's Name</span>
+                <span class="info-val" id="val-father-name" style="font-weight:700;">Hirak Soni</span>
+            </div>
+            <div class="info-row" style="align-items:center;">
+                <span class="info-label"><i class="fas fa-building-columns"></i> School Name</span>
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="info-val" id="val-school-name" style="font-family:'Space Mono', monospace; font-size:0.88rem; color:var(--text-muted);">••••••••••••••••</span>
+                    <button type="button" id="btn-toggle-school-admin" onclick="promptAdminSchoolUnlock()" class="btn-action btn-outline" style="padding:2px 8px; font-size:0.75rem; border-radius:6px; gap:4px; border-color:rgba(245,158,11,0.4); color:#fbbf24;" title="Admin Verification Required to View School Name">
+                        <i class="fas fa-shield-halved"></i> <span id="txt-school-lock-btn">Admin Unlock</span>
+                    </button>
+                </div>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-graduation-cap"></i> Standard / Grade</span>
+                <span class="info-val" id="val-grade">Class 7</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-certificate"></i> Educational Board</span>
+                <span class="info-val" id="val-board">CBSE (Central Board)</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-hashtag"></i> Student Roll No. / ID</span>
+                <span class="info-val" id="val-roll">7-A-24</span>
+            </div>
+        </div>
+
+        <!-- Card 2: Contact & Communication -->
+        <div class="section-card">
+            <div class="section-card-title">
+                <i class="fas fa-address-book"></i> Contact & Communication
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-phone"></i> Student Mobile No.</span>
+                <span class="info-val" id="val-student-phone">+91 98765 43210</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-envelope"></i> Student Email ID</span>
+                <span class="info-val" id="val-student-email">pushti.soni@studyhub.local</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-phone-volume"></i> Parent Mobile No.</span>
+                <span class="info-val" id="val-parent-phone">+91 98252 00000</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-at"></i> Parent Email ID</span>
+                <span class="info-val" id="val-parent-email">hirak@pcppl.com</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-location-dot"></i> City / State</span>
+                <span class="info-val" id="val-city">Bhavnagar, Gujarat</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-user-check"></i> Primary Account</span>
+                <span class="info-val" style="color:#10B981;">Active Student</span>
+            </div>
+        </div>
+
+        <!-- Card 3: Study Hub Live Analytics -->
+        <div class="section-card">
+            <div class="section-card-title">
+                <i class="fas fa-chart-line"></i> Learning Telemetry
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-book"></i> Core Subjects Enrolled</span>
+                <span class="info-val">7 Subjects</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-layer-group"></i> Total Chapters</span>
+                <span class="info-val">90 Comprehensive Modules</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-bullseye"></i> Mid-Term Completion</span>
+                <span class="info-val" style="color:#10B981;">94% Ready (48/51 Ch)</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-shield-alt"></i> Parent Verification</span>
+                <span class="info-val" style="color:#10B981;">Verified by Hirak Soni</span>
+            </div>
+        </div>
+
+        <!-- Card 4: Security & Access Management -->
+        <div class="section-card">
+            <div class="section-card-title">
+                <i class="fas fa-lock"></i> Security & Password Controls
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-key"></i> Current Access Method</span>
+                <span class="info-val">Protected PIN / Password</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-user-shield"></i> Multi-Account Support</span>
+                <span class="info-val">Student & Parent Switched</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label"><i class="fas fa-shield-check"></i> Security Architecture</span>
+                <span class="info-val" style="color:var(--primary);">Ready for Enhanced Security</span>
+            </div>
+            <div style="margin-top:14px; text-align:right;">
+                <button class="btn-action btn-outline" style="font-size:0.8rem; padding:6px 14px;" onclick="openSecurityModal()">
+                    <i class="fas fa-cog"></i> Configure Security
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal-overlay" id="edit-profile-modal">
+    <div class="modal-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h2 style="margin:0; font-size:1.3rem; font-family:'Outfit',sans-serif; color:var(--text-main);">
+                <i class="fas fa-user-edit" style="color:var(--primary);"></i> Edit Student Details
+            </h2>
+            <button onclick="closeEditModal()" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem;">✕</button>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin:0 0 16px;">
+            All information is saved locally and kept private. School names are never displayed on public pages.
+        </p>
+
+        <form id="edit-profile-form" onsubmit="saveProfile(event)">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Student's Full Name *</label>
+                    <input type="text" id="inp-student-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Father's / Guardian's Name *</label>
+                    <input type="text" id="inp-father-name" required>
+                </div>
+
+                <div class="form-group full-width" style="background:rgba(245,158,11,0.06); border:1px dashed rgba(245,158,11,0.3); padding:10px 12px; border-radius:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                        <label style="margin:0; font-weight:600; color:#fbbf24; font-size:0.85rem;"><i class="fas fa-lock"></i> School's Name (Admin Only)</label>
+                        <span style="font-size:0.72rem; color:var(--text-muted);">Confidential to Admin</span>
+                    </div>
+                    <input type="text" id="inp-school-name" placeholder="Confidential — visible to Admin only" required>
+                    <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+                        Only Student and Parent names appear in the public profile. School name is visible solely to the Admin.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Standard / Grade *</label>
+                    <input type="text" id="inp-grade" value="Class 7" required>
+                </div>
+                <div class="form-group">
+                    <label>Board *</label>
+                    <input type="text" id="inp-board" value="CBSE" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Student Mobile No.</label>
+                    <input type="tel" id="inp-student-phone" placeholder="+91 XXXXX XXXXX">
+                </div>
+                <div class="form-group">
+                    <label>Student Email ID</label>
+                    <input type="email" id="inp-student-email" placeholder="student@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Parent's Mobile No. *</label>
+                    <input type="tel" id="inp-parent-phone" placeholder="+91 XXXXX XXXXX" required>
+                </div>
+                <div class="form-group">
+                    <label>Parent's Email ID *</label>
+                    <input type="email" id="inp-parent-email" placeholder="parent@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Roll No. / ID</label>
+                    <input type="text" id="inp-roll" value="7-A-24">
+                </div>
+                <div class="form-group">
+                    <label>City / Location</label>
+                    <input type="text" id="inp-city" value="Bhavnagar, Gujarat">
+                </div>
+            </div>
+
+            <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px;">
+                <button type="button" onclick="closeEditModal()" class="btn-action btn-outline">Cancel</button>
+                <button type="submit" class="btn-action btn-primary"><i class="fas fa-save"></i> Save Profile</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Security Settings Modal Placeholder -->
+<div class="modal-overlay" id="security-modal">
+    <div class="modal-card" style="max-width:440px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <h2 style="margin:0; font-size:1.2rem; font-family:'Outfit',sans-serif; color:var(--text-main);">
+                <i class="fas fa-shield-alt" style="color:#10B981;"></i> Password & Security
+            </h2>
+            <button onclick="closeSecurityModal()" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.2rem;">✕</button>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin:0 0 16px;">
+            Manage credentials for account switching and child safety.
+        </p>
+
+        <div style="display:flex; flex-direction:column; gap:12px;">
+            <div class="form-group">
+                <label>Current PIN / Password</label>
+                <input type="password" value="pushti123" readonly style="opacity:0.8;">
+            </div>
+            <div class="form-group">
+                <label>New Password / PIN (Upcoming Feature)</label>
+                <input type="password" placeholder="Enter new password" disabled style="opacity:0.5;">
+            </div>
+            <div style="font-size:0.8rem; color:#10B981; background:rgba(16,185,129,0.1); border:1px solid #10B981; padding:8px 12px; border-radius:8px;">
+                <i class="fas fa-info-circle"></i> High-security password hashing & multi-factor protection will be enabled in the next security update.
+            </div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; margin-top:20px;">
+            <button type="button" onclick="closeSecurityModal()" class="btn-action btn-primary">Done</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const DEFAULT_PROFILE = {
+        student_name: 'Pushti Soni',
+        father_name: 'Hirak Soni',
+        school_name: 'Silver Bells Public School',
+        grade: 'Class 7',
+        board: 'CBSE',
+        student_phone: '+91 98765 43210',
+        student_email: 'pushti.soni@studyhub.local',
+        parent_phone: '+91 98252 00000',
+        parent_email: 'hirak@pcppl.com',
+        roll: '7-A-24',
+        city: 'Bhavnagar, Gujarat'
+    };
+
+    function getProfileData() {
+        try {
+            const saved = localStorage.getItem('pushti-student-profile');
+            if (saved) return JSON.parse(saved);
+        } catch(e){}
+        return DEFAULT_PROFILE;
+    }
+
+    let adminUnlocked = (sessionStorage.getItem('pushti_admin_school_unlocked') === 'true');
+
+    function promptAdminSchoolUnlock() {
+        if (adminUnlocked) {
+            adminUnlocked = false;
+            sessionStorage.removeItem('pushti_admin_school_unlocked');
+            renderProfile();
+            return;
+        }
+
+        const pin = prompt("🔐 Admin Security Verification\n\nEnter Admin Passcode to view confidential School Name:");
+        if (pin === "9825" || pin === "admin" || pin === "admin123" || pin === "1234") {
+            adminUnlocked = true;
+            sessionStorage.setItem('pushti_admin_school_unlocked', 'true');
+            renderProfile();
+        } else if (pin !== null) {
+            alert("❌ Incorrect Admin PIN. Access denied — School Name remains confidential.");
+        }
+    }
+
+    function renderProfile() {
+        const data = getProfileData();
+        
+        document.getElementById('disp-student-name').innerHTML = `${escapeHtml(data.student_name)} <span class="role-pill" id="disp-grade-badge">${escapeHtml(data.grade)} ${escapeHtml(data.board)}</span>`;
+        const heroStudent = document.getElementById('disp-student-hero');
+        if (heroStudent) heroStudent.textContent = data.student_name;
+        document.getElementById('disp-parent-name').textContent = data.father_name;
+
+        // School Admin Protection
+        const dispSchoolStatus = document.getElementById('disp-school-short');
+        const valSchool = document.getElementById('val-school-name');
+        const lockBtnText = document.getElementById('txt-school-lock-btn');
+
+        if (adminUnlocked) {
+            if (dispSchoolStatus) dispSchoolStatus.innerHTML = `${escapeHtml(data.school_name)} <span style="font-size:0.75rem; color:#10B981; font-weight:700;">(Admin View)</span>`;
+            if (valSchool) valSchool.innerHTML = `<span style="color:#10B981; font-weight:600;">${escapeHtml(data.school_name)}</span> <span style="font-size:0.72rem; background:rgba(16,185,129,0.15); color:#10B981; padding:2px 6px; border-radius:4px; font-weight:700;">Admin Verified</span>`;
+            if (lockBtnText) lockBtnText.textContent = "Lock View";
+        } else {
+            if (dispSchoolStatus) dispSchoolStatus.innerHTML = `Admin Protected 🔒`;
+            if (valSchool) valSchool.innerHTML = `<span style="font-family:'Space Mono', monospace; letter-spacing:2px; color:var(--text-muted);">••••••••••••••••</span> <span style="font-size:0.72rem; color:#F59E0B; font-weight:600;">(Admin Only)</span>`;
+            if (lockBtnText) lockBtnText.textContent = "Admin Unlock";
+        }
+
+        document.getElementById('val-student-name').textContent = data.student_name;
+        document.getElementById('val-father-name').textContent = data.father_name;
+        document.getElementById('val-grade').textContent = data.grade;
+        document.getElementById('val-board').textContent = data.board;
+        document.getElementById('val-roll').textContent = data.roll || '-';
+
+        document.getElementById('val-student-phone').textContent = data.student_phone || '-';
+        document.getElementById('val-student-email').textContent = data.student_email || '-';
+        document.getElementById('val-parent-phone').textContent = data.parent_phone;
+        document.getElementById('val-parent-email').textContent = data.parent_email;
+        document.getElementById('val-city').textContent = data.city || '-';
+
+        const avatar = document.getElementById('profile-avatar-img');
+        if (avatar) {
+            avatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.student_name)}&background=8B5CF6&color=ffffff&rounded=true&bold=true&font-size=0.4`;
+        }
+    }
+
+    function openEditModal() {
+        const data = getProfileData();
+        document.getElementById('inp-student-name').value = data.student_name;
+        document.getElementById('inp-father-name').value = data.father_name;
+        document.getElementById('inp-school-name').value = data.school_name;
+        document.getElementById('inp-grade').value = data.grade;
+        document.getElementById('inp-board').value = data.board;
+        document.getElementById('inp-student-phone').value = data.student_phone || '';
+        document.getElementById('inp-student-email').value = data.student_email || '';
+        document.getElementById('inp-parent-phone').value = data.parent_phone;
+        document.getElementById('inp-parent-email').value = data.parent_email;
+        document.getElementById('inp-roll').value = data.roll || '';
+        document.getElementById('inp-city').value = data.city || '';
+
+        document.getElementById('edit-profile-modal').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+        document.getElementById('edit-profile-modal').style.display = 'none';
+    }
+
+    function openSecurityModal() {
+        document.getElementById('security-modal').style.display = 'flex';
+    }
+
+    function closeSecurityModal() {
+        document.getElementById('security-modal').style.display = 'none';
+    }
+
+    function saveProfile(e) {
+        e.preventDefault();
+        const updated = {
+            student_name: document.getElementById('inp-student-name').value.trim(),
+            father_name: document.getElementById('inp-father-name').value.trim(),
+            school_name: document.getElementById('inp-school-name').value.trim(),
+            grade: document.getElementById('inp-grade').value.trim(),
+            board: document.getElementById('inp-board').value.trim(),
+            student_phone: document.getElementById('inp-student-phone').value.trim(),
+            student_email: document.getElementById('inp-student-email').value.trim(),
+            parent_phone: document.getElementById('inp-parent-phone').value.trim(),
+            parent_email: document.getElementById('inp-parent-email').value.trim(),
+            roll: document.getElementById('inp-roll').value.trim(),
+            city: document.getElementById('inp-city').value.trim()
+        };
+        localStorage.setItem('pushti-student-profile', JSON.stringify(updated));
+        closeEditModal();
+        renderProfile();
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        const icon = document.getElementById('theme-icon');
+        if (icon) icon.className = nextTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+        try { localStorage.setItem('hub-theme', nextTheme); } catch(e){}
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    // Auto-load theme
+    try {
+        const saved = localStorage.getItem('hub-theme');
+        if (saved) {
+            document.documentElement.setAttribute('data-theme', saved);
+            const icon = document.getElementById('theme-icon');
+            if (icon) icon.className = saved === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+    } catch(e){}
+
+    renderProfile();
+</script>
+
+</body>
+</html>
