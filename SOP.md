@@ -107,6 +107,20 @@ d:\Users\expor\Downloads\Codes\
   - Integrated Admin School Name unlock mechanism (guarded by Admin security passkey).
   - Future-proof placeholder for enhanced password security, session timeout, and multi-factor authorization.
 
+### 1.10 Standardized Knowledge Base Architecture (KB Files) & Zero-Waste Protocol
+* **MANDATORY AUTHORITATIVE STORAGE**: All chapter knowledge bases are permanently structured under:
+  ```text
+  d:\Users\expor\Downloads\Codes\KB Files\<subject>\<chapter_folder>\
+  ```
+  *(and mirrored in `knowledge_base/<subject>/` for automated test generator engines)*.
+* **THE FOUR TENETS OF KB GOVERNANCE**:
+  1. **Refer SOP Before Starting**: Before processing any chapter request, the AI model (Gemini, Claude, Antigravity) must review `SOP.md` for anonymization, styling, UTF-8 safety, and formatting standards.
+  2. **KB-First Retrieval Principle**: For any chapter task (answering student queries, explaining concepts, creating revision drills, or generating worksheets), the AI model MUST search and reference the chapter's KB file (`<chapter>.md` and `<chapter>.json`) first. Never ingest massive production HTML files (300KB+) or perform broad web searches.
+  3. **Build Before Proceeding**: If a requested chapter does not yet possess a KB file in `KB Files/`, the AI model MUST compile the chapter's dual-file KB pair first, and only then proceed with the task.
+  4. **Living Knowledge Base**: Any newly acquired knowledge, teacher notes, periodic drills, school exam problems, or corrections for that chapter must be immediately appended and synchronized back into that chapter's KB file.
+  5. **Smart Token Conservation**: AI assistants must proactively provide smart recommendations to minimize token usage, such as querying structured KB files, using precise line slicing, and directing users to client-side test generation tools.
+
+
 ---
 
 ## PART 2: UNIVERSAL UI/UX & DESIGN SYSTEM (ALL PAGES)

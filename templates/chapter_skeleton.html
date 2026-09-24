@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><!-- CHAPTER_TITLE_FULL --></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg-main: #0F172A;
+    --bg-card: #1E293B;
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --primary: #6366F1;
+    --primary-hover: #818CF8;
+    --accent: #0EA5E9;
+    --border: #334155;
+    --border-hover: #475569;
+    --good: #34D399;
+    --good-bg: #064E3B;
+    --bad: #F87171;
+    --bad-bg: #7F1D1D;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  }
+
+  [data-theme="light"] {
+    --bg-main: #F8FAFC !important;
+    --bg-card: #FFFFFF !important;
+    --text-main: #0F172A !important;
+    --text-muted: #64748B !important;
+    --primary: #4F46E5 !important;
+    --primary-hover: #4338CA !important;
+    --accent: #0284C7 !important;
+    --border: #E2E8F0 !important;
+    --border-hover: #CBD5E1 !important;
+    --good: #059669 !important;
+    --good-bg: #D1FAE5 !important;
+    --bad: #E11D48 !important;
+    --bad-bg: #FFE4E6 !important;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 26px 16px 120px; }
+
+  /* SITE HEADER */
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-main);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  .header-left { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; }
+  .header-left a { text-decoration: none; color: inherit; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+  .header-left a:hover { color: var(--accent); }
+  .header-right { display: flex; align-items: center; gap: 14px; }
+  .theme-toggle { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; padding: 7px 12px; cursor: pointer; transition: 0.2s; }
+  .theme-toggle:hover { border-color: var(--primary); }
+
+  /* HERO HEADER */
+  header.hero { text-align: center; padding: 28px 14px 20px; border-bottom: 1px solid var(--border); margin-bottom: 0px; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: clamp(2rem, 5vw, 2.8rem); margin: 0 0 8px; color: var(--text-main); }
+  .sub { font-size: 1.02rem; color: var(--text-muted); max-width: 800px; margin: 0 auto; }
+
+  /* STICKY 5-TAB NAVIGATION */
+  .tabs-wrapper {
+    position: sticky;
+    top: 57px;
+    z-index: 990;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 26px;
+  }
+  [data-theme="light"] .tabs-wrapper {
+    background: rgba(248, 250, 252, 0.95);
+  }
+  .tabs-container {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; max-width: 1000px; margin: 0 auto; overflow-x: auto; padding: 0 10px; scrollbar-width: none;
+  }
+  .tabs-container::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 8px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.25s;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tab-btn:hover { border-color: var(--primary); color: var(--text-main); }
+  .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: var(--shadow); }
+
+  .tab-kb-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-left: 6px;
+    background: rgba(16, 185, 129, 0.15);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+  }
+
+  .tab-content { display: none; animation: fadeIn 0.35s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* COLLAPSIBLE HEADERS */
+  .collapsible-header {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--text-main); margin: 0 0 16px;
+    display: flex; align-items: center; gap: 10px; border-left: 4px solid var(--primary); padding-left: 12px;
+    cursor: pointer; user-select: none; transition: 0.2s;
+  }
+  .collapsible-header:hover { opacity: 0.85; }
+  .count-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; color: var(--text-muted); font-weight: 500; }
+  .chevron { width: 28px; height: 28px; fill: var(--primary); background: rgba(99, 102, 241, 0.1); border-radius: 50%; padding: 4px; transition: all 0.3s; margin-left: auto; }
+  .collapsible-header.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-content.collapsed { display: none; }
+
+  /* MODE SWITCH (PRACTICE VS TEST) */
+  .mode-switch { display: flex; justify-content: center; border-radius: 100px; overflow: hidden; border: 1px solid var(--primary); max-width: 380px; margin: 0 auto 24px auto; background: var(--bg-card); }
+  .mode-btn { flex: 1; padding: 9px 16px; border: none; background: transparent; color: var(--text-muted); font-size: 0.92rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; transition: 0.25s; }
+  .mode-btn.active { background: var(--primary); color: #fff; }
+  #test-intro { background: var(--bg-card); border: 2px dashed var(--border); border-radius: 14px; padding: 36px 20px; text-align: center; margin-bottom: 28px; box-shadow: var(--shadow); }
+  #test-intro h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; color: var(--text-main); margin-top: 0; }
+  .btn-start { background: var(--primary); color: white; border: none; padding: 12px 32px; font-size: 1.05rem; font-weight: 700; font-family: 'Nunito', sans-serif; border-radius: 100px; cursor: pointer; margin-top: 12px; box-shadow: var(--shadow); transition: 0.2s; }
+  .btn-start:hover { transform: translateY(-2px); background: var(--primary-hover); }
+
+  /* QUESTION STYLES */
+  .q { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; box-shadow: var(--shadow); }
+  .q-text { font-weight: 700; margin-bottom: 10px; font-size: 1rem; color: var(--text-main); }
+  .q-text .num { color: var(--accent); font-family: 'JetBrains Mono', monospace; margin-right: 8px; }
+  .opts label { display: block; padding: 8px 12px; border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.95rem; border: 1px solid transparent; transition: 0.2s; }
+  .opts label:hover { background: rgba(99, 102, 241, 0.08); border-color: rgba(99, 102, 241, 0.2); }
+  .opts input { margin-right: 10px; accent-color: var(--primary); }
+  .fillblank input[type=text] { padding: 8px 14px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; width: 260px; background: var(--bg-main); color: var(--text-main); outline: none; }
+  .fillblank input[type=text]:focus { border-color: var(--primary); }
+  .tf-row { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+  .tf-row label { font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+
+  .feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.5; }
+  .feedback.correct { background: var(--good-bg); color: var(--good); display: block; border: 1px solid var(--good); }
+  .feedback.incorrect { background: var(--bad-bg); color: var(--bad); display: block; border: 1px solid var(--bad); }
+  .feedback .exp { display: block; margin-top: 6px; font-style: italic; opacity: 0.9; }
+
+  /* SUBJECTIVE DETAILS */
+  details { margin-top: 12px; }
+  details summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; color: var(--primary); font-weight: 700; user-select: none; }
+  details .model { margin-top: 10px; font-size: 0.95rem; background: rgba(99, 102, 241, 0.06); border-left: 4px solid var(--primary); padding: 14px 18px; border-radius: 0 8px 8px 0; line-height: 1.6; color: var(--text-main); }
+
+  /* TRIVIA EXTRA CARDS */
+  .trivia-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .trivia-header { display: flex; align-items: center; gap: 10px; font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--accent); margin-bottom: 10px; }
+  .trivia-body { font-size: 0.98rem; line-height: 1.65; color: var(--text-main); }
+
+  /* BOTTOM GRADE BAR */
+  .grade-bar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--bg-card); border-top: 1px solid var(--border); padding: 14px 20px; display: flex; align-items: center; justify-content: center; gap: 16px; box-shadow: 0 -4px 14px rgba(0,0,0,0.25); z-index: 999; display: none; }
+  .grade-bar button { background: var(--primary); color: #fff; border: none; padding: 10px 24px; border-radius: 100px; font-weight: 700; font-family: 'Nunito', sans-serif; font-size: 0.98rem; cursor: pointer; }
+  .grade-bar button:hover { background: var(--primary-hover); }
+  .score-readout { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700; color: var(--text-main); }
+  .score-readout.urgent { color: var(--bad); animation: pulse 1s infinite; }
+  @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+  .result-panel { display: none; background: var(--bg-card); border: 2px solid var(--border); border-radius: 14px; padding: 26px; text-align: center; margin-bottom: 36px; box-shadow: var(--shadow); }
+  .result-panel.show { display: block; }
+  .result-panel .score-big { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 2.8rem; color: var(--primary); }
+  .result-panel .msg { font-size: 1.05rem; margin-top: 10px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+  <!-- UNIVERSAL SITE HEADER -->
+  <header class="site-header">
+    <div class="header-left">
+      <a href="../../index.html"><i class="fas fa-arrow-left"></i> <span>Pushti Study Hub</span></a>
+    </div>
+    <div class="header-right">
+      <button class="theme-toggle" aria-label="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    
+    <!-- HERO HEADER -->
+    <header class="hero">
+      <div class="eyebrow"><!-- SUBJECT_NAME --> &bull; CHAPTER <!-- CHAPTER_NUM --> <span class="tab-kb-badge" style="font-size:0.7rem; padding:2px 8px; vertical-align:middle;"><i class="fas fa-database"></i> KB Active</span></div>
+      <h1><!-- CHAPTER_TITLE --></h1>
+      <p class="sub"><!-- CHAPTER_SUBTITLE --></p>
+    </header>
+
+    <!-- STICKY 5-TAB BAR -->
+    <div class="tabs-wrapper">
+      <div class="tabs-container">
+        <button class="tab-btn active" onclick="switchTab('tab-video', this)"><i class="fas fa-video"></i> Videos &amp; Map</button>
+        <button class="tab-btn" onclick="switchTab('tab-omr', this)"><i class="fas fa-check-circle"></i> OMR (1 Mark)</button>
+        <button class="tab-btn" onclick="switchTab('tab-short', this)"><i class="fas fa-pen"></i> 2/3 Marks</button>
+        <button class="tab-btn" onclick="switchTab('tab-long', this)"><i class="fas fa-file-lines"></i> 4+ Marks</button>
+        <button class="tab-btn" onclick="switchTab('tab-extra', this)"><i class="fas fa-lightbulb"></i> Extra Knowledge</button>
+        <span class="tab-kb-badge" title="Authoritative Knowledge Base Verified"><i class="fas fa-database"></i> KB Active</span>
+      </div>
+    </div>
+
+    <!-- TAB 1: VIDEOS & CONCEPT MAP -->
+    <section id="tab-video" class="tab-content active">
+      <div id="video-content-area">
+        <!-- INJECT_VIDEO_AND_MAP_HTML -->
+      </div>
+    </section>
+
+    <!-- TAB 2: OMR PRACTICE & TIMED TEST -->
+    <section id="tab-omr" class="tab-content">
+      <div class="mode-switch">
+        <button class="mode-btn active" id="btn-practice" onclick="setMode('practice')">Practice Mode</button>
+        <button class="mode-btn" id="btn-test" onclick="setMode('test')">Timed Test Mode</button>
+      </div>
+
+      <div id="test-intro" style="display: none;">
+        <h3>Ready for the Timed Test?</h3>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 16px;">Test your knowledge under timed exam conditions with instant auto-grading.</p>
+        <button class="btn-start" onclick="startTimedTest()"><i class="fas fa-play"></i> Start Timed Test</button>
+      </div>
+
+      <div id="resultPanel" class="result-panel">
+        <div class="score-big" id="scoreBig">0 / 0</div>
+        <div class="msg" id="scoreMsg"></div>
+      </div>
+
+      <div id="omr-content">
+        <!-- Multiple Choice Section -->
+        <div class="collapsible-header" onclick="toggleSection(this)">
+          <i class="fas fa-list-check" style="font-size:1.2rem; color:var(--accent);"></i> Multiple Choice Questions
+          <span class="count-badge" id="mcq-count-badge"></span>
+          <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="collapsible-content">
+          <div id="mcqbook-container" data-prefix="mcq"></div>
+        </div>
+
+        <!-- Fill In The Blanks Section -->
+        <div class="collapsible-header" onclick="toggleSection(this)" style="margin-top: 30px;">
+          <i class="fas fa-pencil-alt" style="font-size:1.2rem; color:var(--accent);"></i> Fill In The Blanks
+          <span class="count-badge" id="fill-count-badge"></span>
+          <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="collapsible-content">
+          <div id="fillbook-container" data-prefix="fill"></div>
+        </div>
+
+        <!-- True or False Section -->
+        <div class="collapsible-header" onclick="toggleSection(this)" style="margin-top: 30px;">
+          <i class="fas fa-check-double" style="font-size:1.2rem; color:var(--accent);"></i> True or False
+          <span class="count-badge" id="tf-count-badge"></span>
+          <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="collapsible-content">
+          <div id="tfbook-container" data-prefix="tf"></div>
+        </div>
+      </div>
+
+      <!-- Bottom Grade Bar for Timed Test -->
+      <div id="grade-bar" class="grade-bar">
+        <span class="score-readout" id="liveCount">⏱ Time: 00:00</span>
+        <button onclick="gradeAll()"><i class="fas fa-check"></i> Submit Test</button>
+      </div>
+    </section>
+
+    <!-- TAB 3: 2/3 MARKS QUESTIONS -->
+    <section id="tab-short" class="tab-content">
+      <div class="collapsible-header" onclick="toggleSection(this)">
+        <i class="fas fa-pen-fancy" style="font-size:1.2rem; color:var(--accent);"></i> Short Answer Questions (2 &amp; 3 Marks)
+        <span class="count-badge" id="short-count-badge"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="collapsible-content">
+        <div id="shortbook-container"></div>
+      </div>
+    </section>
+
+    <!-- TAB 4: 4+ MARKS QUESTIONS -->
+    <section id="tab-long" class="tab-content">
+      <div class="collapsible-header" onclick="toggleSection(this)">
+        <i class="fas fa-file-invoice" style="font-size:1.2rem; color:var(--accent);"></i> Long Answer &amp; Case Study Questions (4+ Marks)
+        <span class="count-badge" id="long-count-badge"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="collapsible-content">
+        <div id="longbook-container"></div>
+      </div>
+    </section>
+
+    <!-- TAB 5: EXTRA KNOWLEDGE / TRIVIA -->
+    <section id="tab-extra" class="tab-content">
+      <div class="collapsible-header" onclick="toggleSection(this)">
+        <i class="fas fa-brain" style="font-size:1.2rem; color:var(--accent);"></i> Beyond Curriculum: Did You Know?
+        <span class="count-badge" id="extra-count-badge"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="collapsible-content">
+        <div id="extrabook-container"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- SCRIPT DATA INJECTION SLOTS -->
+  <script>
+    const mcqBook   = /* INJECT_MCQ_JSON */;
+    const fillBook  = /* INJECT_FILL_JSON */;
+    const tfBook    = /* INJECT_TF_JSON */;
+    const shortBook = /* INJECT_SHORT_JSON */;
+    const longBook  = /* INJECT_LONG_JSON */;
+    const extraBook = /* INJECT_EXTRA_JSON */;
+  </script>
+
+  <!-- CORE 5-TAB ENGINE LOGIC -->
+  <script>
+    let currentMode = 'practice';
+    let testTimer = null;
+    let timeRemaining = 0;
+    const totalMax = mcqBook.length + fillBook.length + tfBook.length;
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function toggleSection(header) {
+      header.classList.toggle('collapsed');
+      const content = header.nextElementSibling;
+      content.classList.toggle('collapsed');
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('btn-practice').classList.toggle('active', mode === 'practice');
+      document.getElementById('btn-test').classList.toggle('active', mode === 'test');
+      
+      const intro = document.getElementById('test-intro');
+      const content = document.getElementById('omr-content');
+      const bar = document.getElementById('grade-bar');
+
+      if (mode === 'practice') {
+        if (testTimer) clearInterval(testTimer);
+        intro.style.display = 'none';
+        content.style.display = 'block';
+        bar.style.display = 'none';
+        resetAnswers();
+      } else {
+        intro.style.display = 'block';
+        content.style.display = 'none';
+        bar.style.display = 'none';
+      }
+    }
+
+    function startTimedTest() {
+      document.getElementById('test-intro').style.display = 'none';
+      document.getElementById('omr-content').style.display = 'block';
+      document.getElementById('grade-bar').style.display = 'flex';
+      resetAnswers();
+      
+      timeRemaining = Math.max(300, totalMax * 45); // 45 seconds per question
+      updateTimerDisplay();
+      if (testTimer) clearInterval(testTimer);
+      testTimer = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        if (timeRemaining <= 0) {
+          clearInterval(testTimer);
+          gradeAll();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const m = Math.floor(timeRemaining / 60);
+      const s = timeRemaining % 60;
+      const el = document.getElementById('liveCount');
+      el.textContent = `⏱ Time: ${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+      el.classList.toggle('urgent', timeRemaining <= 60);
+    }
+
+    function resetAnswers() {
+      document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
+      document.querySelectorAll('#omr-content input[type="text"]').forEach(t => t.value = '');
+      document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+      document.getElementById('resultPanel').classList.remove('show');
+    }
+
+    function checkPracticeMCQ(idx, selectedVal) {
+      if (currentMode !== 'practice') return;
+      const q = mcqBook[idx];
+      const fb = document.getElementById(`mcq-fb-${idx}`);
+      const isCorrect = (selectedVal === q.answer);
+      fb.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+      fb.innerHTML = `<strong>${isCorrect ? 'Correct!' : 'Incorrect.'}</strong> Correct: (${String.fromCharCode(97 + q.answer)}) ${q.options[q.answer]}<span class="exp">${q.exp}</span>`;
+      fb.style.display = 'block';
+    }
+
+    function checkPracticeFill(idx) {
+      if (currentMode !== 'practice') return;
+      const q = fillBook[idx];
+      const input = document.getElementById(`fill-${idx}`);
+      const val = input.value.trim().toLowerCase();
+      const fb = document.getElementById(`fill-fb-${idx}`);
+      const accepted = Array.isArray(q.a) ? q.a : [q.a];
+      const isCorrect = accepted.some(ans => val === ans.toLowerCase() || (val.length > 3 && ans.toLowerCase().includes(val)));
+      fb.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+      fb.innerHTML = `<strong>${isCorrect ? 'Correct!' : 'Incorrect.'}</strong> Correct: ${accepted[0]}<span class="exp">${q.exp}</span>`;
+      fb.style.display = 'block';
+    }
+
+    function checkPracticeTF(idx, val) {
+      if (currentMode !== 'practice') return;
+      const q = tfBook[idx];
+      const fb = document.getElementById(`tf-fb-${idx}`);
+      const isCorrect = (val === q.answer);
+      fb.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+      fb.innerHTML = `<strong>${isCorrect ? 'Correct!' : 'Incorrect.'}</strong> Answer: ${q.answer ? 'True' : 'False'}<span class="exp">${q.exp}</span>`;
+      fb.style.display = 'block';
+    }
+
+    function gradeAll() {
+      if (testTimer) clearInterval(testTimer);
+      let correct = 0;
+      let incorrect = 0;
+      let unanswered = 0;
+
+      // Grade MCQs
+      mcqBook.forEach((q, i) => {
+        const sel = document.querySelector(`input[name="mcq-${i}"]:checked`);
+        const fb = document.getElementById(`mcq-fb-${i}`);
+        if (!sel) {
+          unanswered++;
+          fb.className = 'feedback incorrect';
+          fb.innerHTML = `<strong>Unanswered.</strong> Correct: (${String.fromCharCode(97 + q.answer)}) ${q.options[q.answer]}<span class="exp">${q.exp}</span>`;
+        } else if (parseInt(sel.value) === q.answer) {
+          correct++;
+          fb.className = 'feedback correct';
+          fb.innerHTML = `<strong>Correct!</strong><span class="exp">${q.exp}</span>`;
+        } else {
+          incorrect++;
+          fb.className = 'feedback incorrect';
+          fb.innerHTML = `<strong>Incorrect.</strong> Correct: (${String.fromCharCode(97 + q.answer)}) ${q.options[q.answer]}<span class="exp">${q.exp}</span>`;
+        }
+        fb.style.display = 'block';
+      });
+
+      // Grade Fills
+      fillBook.forEach((q, i) => {
+        const val = document.getElementById(`fill-${i}`).value.trim().toLowerCase();
+        const fb = document.getElementById(`fill-fb-${i}`);
+        const accepted = Array.isArray(q.a) ? q.a : [q.a];
+        if (!val) {
+          unanswered++;
+          fb.className = 'feedback incorrect';
+          fb.innerHTML = `<strong>Unanswered.</strong> Correct: ${accepted[0]}<span class="exp">${q.exp}</span>`;
+        } else if (accepted.some(ans => val === ans.toLowerCase() || (val.length > 3 && ans.toLowerCase().includes(val)))) {
+          correct++;
+          fb.className = 'feedback correct';
+          fb.innerHTML = `<strong>Correct!</strong><span class="exp">${q.exp}</span>`;
+        } else {
+          incorrect++;
+          fb.className = 'feedback incorrect';
+          fb.innerHTML = `<strong>Incorrect.</strong> Correct: ${accepted[0]}<span class="exp">${q.exp}</span>`;
+        }
+        fb.style.display = 'block';
+      });
+
+      // Grade TF
+      tfBook.forEach((q, i) => {
+        const sel = document.querySelector(`input[name="tf-${i}"]:checked`);
+        const fb = document.getElementById(`tf-fb-${i}`);
+        if (!sel) {
+          unanswered++;
+          fb.className = 'feedback incorrect';
+          fb.innerHTML = `<strong>Unanswered.</strong> Answer: ${q.answer ? 'True' : 'False'}<span class="exp">${q.exp}</span>`;
+        } else if ((sel.value === 'true') === q.answer) {
+          correct++;
+          fb.className = 'feedback correct';
+          fb.innerHTML = `<strong>Correct!</strong><span class="exp">${q.exp}</span>`;
+        } else {
+          incorrect++;
+          fb.className = 'feedback incorrect';
+          fb.innerHTML = `<strong>Incorrect.</strong> Answer: ${q.answer ? 'True' : 'False'}<span class="exp">${q.exp}</span>`;
+        }
+        fb.style.display = 'block';
+      });
+
+      document.getElementById('scoreBig').textContent = `${correct} / ${totalMax}`;
+      const pct = Math.round((correct / totalMax) * 100);
+      let msg = `<strong>Score: ${pct}%</strong><br>✔ Correct: ${correct} &nbsp;|&nbsp; ✘ Incorrect: ${incorrect} &nbsp;|&nbsp; ⊝ Unanswered: ${unanswered}<br><br>`;
+      if (pct >= 90) msg += "Outstanding! Complete mastery of this chapter! 🏆";
+      else if (pct >= 70) msg += "Great performance! Review the few highlighted items below. 🌟";
+      else if (pct >= 50) msg += "Good attempt! Scroll through explanations to solidify key concepts. 📖";
+      else msg += "Keep practicing! Review the notes and try the quiz again. 💪";
+
+      document.getElementById('scoreMsg').innerHTML = msg;
+      document.getElementById('resultPanel').classList.add('show');
+      document.getElementById('grade-bar').style.display = 'none';
+      window.scrollTo({ top: document.getElementById('resultPanel').offsetTop - 90, behavior: 'smooth' });
+    }
+
+    // RENDER FUNCTIONS
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Render MCQs
+      document.getElementById('mcq-count-badge').textContent = `(${mcqBook.length})`;
+      const mcqBox = document.getElementById('mcqbook-container');
+      mcqBook.forEach((q, i) => {
+        let optsHtml = '';
+        q.options.forEach((opt, oIdx) => {
+          optsHtml += `<label><input type="radio" name="mcq-${i}" value="${oIdx}" onchange="checkPracticeMCQ(${i}, ${oIdx})"> ${opt}</label>`;
+        });
+        mcqBox.innerHTML += `
+          <div class="q">
+            <div class="q-text"><span class="num">Q${i+1}</span> ${q.q}</div>
+            <div class="opts">${optsHtml}</div>
+            <div class="feedback" id="mcq-fb-${i}"></div>
+          </div>`;
+      });
+
+      // 2. Render Fills
+      document.getElementById('fill-count-badge').textContent = `(${fillBook.length})`;
+      const fillBox = document.getElementById('fillbook-container');
+      fillBook.forEach((q, i) => {
+        fillBox.innerHTML += `
+          <div class="q fillblank">
+            <div class="q-text"><span class="num">F${i+1}</span> ${q.q}</div>
+            <div style="margin-top:8px;">
+              <input type="text" id="fill-${i}" placeholder="Type key term..." onkeydown="if(event.key==='Enter') checkPracticeFill(${i})">
+              <button onclick="checkPracticeFill(${i})" style="padding:8px 14px; background:var(--primary); color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:700; margin-left:6px;">Check</button>
+            </div>
+            <div class="feedback" id="fill-fb-${i}"></div>
+          </div>`;
+      });
+
+      // 3. Render TF
+      document.getElementById('tf-count-badge').textContent = `(${tfBook.length})`;
+      const tfBox = document.getElementById('tfbook-container');
+      tfBook.forEach((q, i) => {
+        const stmt = q.s || q.q;
+        tfBox.innerHTML += `
+          <div class="q">
+            <div class="q-text"><span class="num">TF${i+1}</span> ${stmt}</div>
+            <div class="tf-row">
+              <label><input type="radio" name="tf-${i}" value="true" onchange="checkPracticeTF(${i}, true)"> True</label>
+              <label><input type="radio" name="tf-${i}" value="false" onchange="checkPracticeTF(${i}, false)"> False</label>
+            </div>
+            <div class="feedback" id="tf-fb-${i}"></div>
+          </div>`;
+      });
+
+      // 4. Render Short
+      document.getElementById('short-count-badge').textContent = `(${shortBook.length})`;
+      const shortBox = document.getElementById('shortbook-container');
+      shortBook.forEach((q, i) => {
+        shortBox.innerHTML += `
+          <div class="q">
+            <div class="q-text"><span class="num">SA${i+1}</span> ${q.q}</div>
+            <details>
+              <summary>View Model Answer &amp; Rubric</summary>
+              <div class="model">${q.model || q.answer}</div>
+            </details>
+          </div>`;
+      });
+
+      // 5. Render Long
+      document.getElementById('long-count-badge').textContent = `(${longBook.length})`;
+      const longBox = document.getElementById('longbook-container');
+      longBook.forEach((q, i) => {
+        longBox.innerHTML += `
+          <div class="q">
+            <div class="q-text"><span class="num">LA${i+1}</span> ${q.q}</div>
+            <details>
+              <summary>View Detailed 4+ Mark Rubric &amp; Solution</summary>
+              <div class="model" style="white-space: pre-line;">${q.model || q.answer}</div>
+            </details>
+          </div>`;
+      });
+
+      // 6. Render Extra
+      document.getElementById('extra-count-badge').textContent = `(${extraBook.length})`;
+      const extraBox = document.getElementById('extrabook-container');
+      extraBook.forEach((q, i) => {
+        extraBox.innerHTML += `
+          <div class="trivia-card">
+            <div class="trivia-header"><i class="fas fa-lightbulb"></i> ${q.q}</div>
+            <div class="trivia-body" style="white-space: pre-line;">${q.model || q.answer}</div>
+          </div>`;
+      });
+    });
+  </script>
+
+  <!-- THEME TOGGLE SCRIPT -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const themeBtn = document.querySelector('.theme-toggle');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.body.setAttribute('data-theme', newTheme);
+        const icon = themeBtn.querySelector('i');
+        if (icon) icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+        localStorage.setItem('pushti-theme', newTheme);
+      });
+      const savedTheme = localStorage.getItem('pushti-theme');
+      if (savedTheme) {
+        document.body.setAttribute('data-theme', savedTheme);
+        const icon = themeBtn.querySelector('i');
+        if (icon) icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+      }
+    }
+  });
+  </script>
+
+  <!-- FIREBASE TIMER INJECTION START -->
+  <script type="module">
+    import { db, doc, setDoc, increment } from '../../firebase-config.js';
+    setInterval(() => {
+      const activeUser = localStorage.getItem('pushti-active-user');
+      if (activeUser === 'pushti' || activeUser === 'hirak') {
+        const statsRef = doc(db, 'user_stats', activeUser);
+        setDoc(statsRef, { total_time: increment(60) }, { merge: true })
+          .catch(err => console.error("Error logging time:", err));
+      }
+    }, 60000);
+  </script>
+  <!-- FIREBASE TIMER INJECTION END -->
+
+  <!-- UNIVERSAL PLUGINS -->
+  <script src="../../js/chapter_logs.js"></script>
+  <script src="../../js/scroll_to_top.js"></script>
+</body>
+</html>

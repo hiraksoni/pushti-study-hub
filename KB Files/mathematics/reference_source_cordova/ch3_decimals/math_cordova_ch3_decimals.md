@@ -1,0 +1,307 @@
+# Mathematics (Reference Source (Ref 1 / Cordova)) — Chapter 3: Decimals & School Test Paper
+
+**Curriculum Code**: `MATH_CORDOVA_CH03` | **Paired Main Coursebook**: `MATH_MTG_CH03`  
+**Standardized Authoritative Knowledge Base & High-Yield Item Bank**  
+*Pushti Study Hub Authoritative Reference Store*
+
+---
+
+## 1. Chapter Overview & Core Theoretical Principles
+
+> **Syllabus Scope**: Comprehensive Cordova Chapter 3 repository including the full School Test Paper (Exercise-I • 47 Questions), multi-step decimal evaluations, word problems, and columnar arithmetic.
+
+### Decimal Multiplication & Division Mechanics
+- Multiplying by $10^k$: Shift decimal point $k$ places right.
+- Dividing by $10^k$: Shift decimal point $k$ places left.
+- Decimal multiplication: Multiply as integers, count total decimal places in factors, insert decimal point.
+
+---
+
+## 2. Standardized Item Bank (47 Total Questions)
+
+### 2.4 Subjective, Step-by-Step Solved & Analytical Problems (47 Items)
+
+#### [CORD_MATH3_PAPER_001] [Question 1] Convert the following fractions into decimals: (i) $\dfrac{5}{100}$ (ii) $\dfrac{16}{1000}$ (iii) $\dfrac{12}{10}$ (iv) $\dfrac{254}{1000}$
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  (i) $\dfrac{5}{100}$ Denominator is $100$ (2 zeroes). Shift decimal point 2 places to the left: $$\frac{5}{100} = \mathbf{0.05}$$ 5 hundredths (ii) $\dfrac{16}{1000}$ Denominator is $1000$ (3 zeroes). Shift decimal point 3 places to the left: $$\frac{16}{1000} = \mathbf{0.016}$$ 16 thousandths (iii) $\dfrac{12}{10}$ Denominator is $10$ (1 zero). Shift decimal point 1 place to the left: $$\frac{12}{10} = \mathbf{1.2}$$ 1 one and 2 tenths (iv) $\dfrac{254}{1000}$ Denominator is $1000$ (3 zeroes). Shift decimal point 3 places to the left: $$\frac{254}{1000} = \mathbf{0.254}$$ 254 thousandths
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 1.
+
+#### [CORD_MATH3_PAPER_002] [Question 2] Convert the following decimals into a sum of tenths, hundredths and thousandths: (i) $0.34$ (ii) $1.02$ (iii) $0.8$ (iv) $0.362$
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  (i) $0.34$ Tenths digit $= 3$, Hundredths digit $= 4$: $$0.34 = \frac{3}{10} + \frac{4}{100}$$ $= 3\text{ tenths} + 4\text{ hundredths}$ (ii) $1.02$ Whole part $= 1$, Tenths digit $= 0$, Hundredths digit $= 2$: $$1.02 = 1 + \frac{0}{10} + \frac{2}{100} = \frac{10}{10} + \frac{2}{100}$$ $= 1\text{ one} + 0\text{ tenths} + 2\text{ hundredths}$ (or $10\text{ tenths} + 2\text{ hundredths}$) (iii) $0.8$ Tenths digit $= 8$, Hundredths digit $= 0$: $$0.8 = \frac{8}{10}$$ $= 8\text{ tenths}$ (iv) $0.362$ Tenths digit $= 3$, Hundredths digit $= 6$, Thousandths digit $= 2$: $$0.362 = \frac{3}{10} + \frac{6}{100} + \frac{2}{1000}$$ $= 3\text{ tenths} + 6\text{ hundredths} + 2\text{ thousandths}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 2.
+
+#### [CORD_MATH3_PAPER_003] [Question 3] Convert the decimals marked by letters $\mathbf{a, b, c}$ on the number line into a sum of tenths, hundredths and thousandths: 6.4 a 6.5 c b 6.6 Clean Vector Reconstruction: The interval between $6.4$ and $6.5$ (length $0.1$) is divided into 4 equal parts, so each subdivision is $\frac{0.1}{4} = 0.025$.
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Step 1: Determine the value of each subdivision tick: The distance between major ticks $6.4$ and $6.5$ is $6.5 - 6.4 = 0.1$. Since there are 4 equal subdivisions between them: $$\text{Step Size} = \frac{0.1}{4} = \mathbf{0.025} = \frac{25}{1000}$$ Value at Marker 'a' Point 'a' is 2 steps to the right of $6.4$ (exact midpoint between $6.4$ and $6.5$): $$a = 6.4 + 2 \times 0.025 = 6.4 + 0.050 = \mathbf{6.45}$$ $$\text{Sum of places} = \mathbf{6 + \frac{4}{10} + \frac{5}{100}}$$ 6 ones, 4 tenths, 5 hundredths Value at Marker 'c' Point 'c' is 1 step to the right of $6.5$: $$c = 6.5 + 1 \times 0.025 = \mathbf{6.525}$$ $$\text{Sum of places} = \mathbf{6 + \frac{5}{10} + \frac{2}{100} + \frac{5}{1000}}$$ 6 ones, 5 tenths, 2 hundredths, 5 thousandths Value at Marker 'b' Point 'b' is 2 steps to the right of $6.5$: $$b = 6.5 + 2 \times 0.025 = 6.5 + 0.050 = \mathbf{6.55}$$ $$\text{Sum of places} = \mathbf{6 + \frac{5}{10} + \frac{5}{100}}$$ 6 ones, 5 tenths, 5 hundredths Alternative Interpretation (5 Equal Subdivisions): If the printed line was drawn with 5 equal steps of $0.02$: $a$ (at 2nd tick) $= 6.4 + 0.04 = 6.44 = 6 + \frac{4}{10} + \frac{4}{100}$; $c$ (at 1st tick after 6.5) $= 6.52 = 6 + \frac{5}{10} + \frac{2}{100}$; $b$ (at 2nd tick after 6.5) $= 6.54 = 6 + \frac{5}{10} + \frac{4}{100}$. Both interpretations demonstrate complete place-value mastery.
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 3.
+
+#### [CORD_MATH3_PAPER_004] [Question 4] Using the digits $1, 4, 0, 8$ and $6$ make: (i) The decimal number closest to $300$. (ii) The smallest possible decimal number between $100$ and $1000$.
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Available digits: $\{1, 4, 0, 8, 6\}$. (i) Decimal number closest to $300$: A number close to $300$ must have a 3-digit whole number part: Numbers just below $300$: The hundreds digit can only be $1$ (since $0$ cannot lead). To maximize this number, choose the largest remaining digits for tens and ones: $186.40$ (or $186.4$). $$\text{Difference from } 300 = 300 - 186.40 = \mathbf{113.60}$$ Numbers just above $300$: The next available digit $\ge 3$ for hundreds is $4$. To minimize this number, arrange the remaining digits $\{0, 1, 6, 8\}$ in ascending order: tens $= 0$, ones $= 1$, tenths $= 6$, hundredths $= 8 \implies \mathbf{401.68}$. $$\text{Difference from } 300 = 401.68 - 300 = \mathbf{101.68}$$ Since $101.68 < 113.60$, the number closest to $300$ is: ✅ Final Answer: $\mathbf{401.68}$ (Distance: $101.68$) (ii) Smallest possible decimal number between $100$ and $1000$: Between $100$ and $1000$ requires a 3-digit whole number: To make it as small as possible, minimize the digits from left to right: Hundreds place $= 1$ (smallest non-zero digit) Tens place $= 0$ (smallest available remaining digit) Ones place $= 4$ (next smallest available digit) Tenths place $= 6$, Hundredths place $= 8$ ✅ Final Answer: $\mathbf{104.68}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 4.
+
+#### [CORD_MATH3_PAPER_005] [Question 5] Will a decimal number with more digits be greater than a decimal number with fewer digits?
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  ❌ No, a decimal number with more digits is NOT necessarily greater. Fundamental Mathematical Reason: In whole numbers, more digits mean higher powers of ten (e.g., $1000 > 99$). But in decimals, digits after the point represent fractional parts (tenths, hundredths, thousandths) that decrease rapidly by powers of ten. The value is determined by comparing digits from left to right, starting with the highest place-value column. Concrete Counter-Examples: $0.1234$ vs $0.5$: $0.1234$ has 4 decimal digits, while $0.5$ has only 1 decimal digit. Yet: $$0.1234 < 0.5 \quad (\text{since } 1\text{ tenth} < 5\text{ tenths})$$ $0.0009$ vs $0.1$: $0.0009$ has 4 decimal digits, but $0.0009 < 0.1$. $1.2$ vs $0.9999$: $1.2$ has only 2 digits, while $0.9999$ has 4 digits, but $1.2 > 0.9999$ because $1 > 0$ in the ones column.
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 5.
+
+#### [CORD_MATH3_PAPER_006] [Question 6] Mahi purchases $0.25\text{ kg}$ of beans, $0.3\text{ kg}$ of carrots, $0.5\text{ kg}$ of potatoes, $0.2\text{ kg}$ of capsicums and $0.05\text{ kg}$ of ginger. Calculate the total weight of the items she bought.
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Align all decimal points vertically by writing like decimals with 2 decimal places: $$\begin{alignedat}{2} \text{Weight of beans} &= 0.25\text{ kg} \\ \text{Weight of carrots} &= 0.30\text{ kg} \\ \text{Weight of potatoes} &= 0.50\text{ kg} \\ \text{Weight of capsicums} &= 0.20\text{ kg} \\ \text{Weight of ginger} &= 0.05\text{ kg} \\ \hline \mathbf{\text{Total Weight}} &= \mathbf{1.30\text{ kg}} \end{alignedat}$$ ✅ Final Answer: Total weight is $\mathbf{1.30\text{ kg}}$ (or $\mathbf{1.3\text{ kg}}$).
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 6.
+
+#### [CORD_MATH3_PAPER_007] [Question 7] Pinto supplies $3.79\text{ L}$, $4.2\text{ L}$ and $4.25\text{ L}$ of milk to a dairy in the first three days. In 6 days, he supplies $25\text{ litres}$ of milk. Find the total quantity of milk supplied to the dairy in the last three days.
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Step 1: Calculate the total milk supplied in the first three days: $$\begin{aligned} \text{Day 1} &= 3.79\text{ L} \\ \text{Day 2} &= 4.20\text{ L} \\ \text{Day 3} &= 4.25\text{ L} \\ \hline \text{Total (Days 1–3)} &= 3.79 + 4.20 + 4.25 = \mathbf{12.24\text{ L}} \end{aligned}$$ Step 2: Subtract this from the 6-day total of $25\text{ litres}$ to find the last three days: $$\begin{aligned} \text{Milk in last 3 days} &= 25.00\text{ L} - 12.24\text{ L} \\ &= \mathbf{12.76\text{ L}} \end{aligned}$$ ✅ Final Answer: Pinto supplied $\mathbf{12.76\text{ litres}}$ of milk in the last three days.
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 7.
+
+#### [CORD_MATH3_PAPER_008] [Question 8] Tinku weighed $35.75\text{ kg}$ in January and $34.50\text{ kg}$ in February. Has he gained or lost weight? How much is the change?
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  1. Comparison of weights: $$\text{Weight in January} = 35.75\text{ kg}$$ $$\text{Weight in February} = 34.50\text{ kg}$$ Since $34.50\text{ kg} < 35.75\text{ kg}$, his weight decreased. Therefore, he has lost weight . 2. Calculate the magnitude of the change: $$\text{Change} = 35.75 - 34.50 = \mathbf{1.25\text{ kg}}$$ ✅ Final Answer: Tinku has lost weight by $\mathbf{1.25\text{ kg}}$.
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 8.
+
+#### [CORD_MATH3_PAPER_009] [Question 9] How many millimeters make 1 kilometer?
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Using standard metric unit ladder conversion: $$\begin{aligned} 1\text{ kilometer (km)} &= 1,000\text{ meters (m)} \\ 1\text{ meter (m)} &= 100\text{ centimeters (cm)} \\ 1\text{ centimeter (cm)} &= 10\text{ millimeters (mm)} \end{aligned}$$ Combining these relations: $$1\text{ km} = 1,000 \times 1,000\text{ mm} = \mathbf{1,000,000\text{ mm}} = 10^6\text{ mm}$$ ✅ Final Answer: $\mathbf{1,000,000\text{ mm}}$ (Ten Lakh / One Million millimeters).
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 9.
+
+#### [CORD_MATH3_PAPER_010] [Question 10] Which is greater? (i) $\dfrac{10}{1000}$ or $\dfrac{1}{10}$? (ii) One-hundredth or $90$ thousandths? (iii) One-thousandth or $90$ hundredths?
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  (i) $\dfrac{10}{1000}$ vs $\dfrac{1}{10}$ $$\frac{10}{1000} = \frac{1}{100} = 0.01$$ $$\frac{1}{10} = 0.10$$ Since $0.10 > 0.01$: ✅ $\mathbf{\frac{1}{10}}$ is greater. (ii) One-hundredth vs $90$ thousandths $$\text{One-hundredth} = \frac{1}{100} = 0.010$$ $$90\text{ thousandths} = \frac{90}{1000} = 0.090$$ Since $0.090 > 0.010$: ✅ $\mathbf{90\text{ thousandths}}$ is greater. (iii) One-thousandth vs $90$ hundredths $$\text{One-thousandth} = \frac{1}{1000} = 0.001$$ $$90\text{ hundredths} = \frac{90}{100} = 0.900$$ Since $0.900 > 0.001$: ✅ $\mathbf{90\text{ hundredths}}$ is greater.
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 10.
+
+#### [CORD_MATH3_PAPER_011] [Question 11] Write the decimal forms of the quantities mentioned (an example is given): Example: (i) $87\text{ ones}, 5\text{ tenths and } 60\text{ hundredths} = 87 + 0.5 + 0.60 = 88.10$ (ii) $12\text{ tens and } 12\text{ tenths}$ (iii) $10\text{ tens}, 10\text{ ones}, 10\text{ tenths}, 10\text{ hundredths}$ (iv) $25\text{ tens}, 25\text{ ones}, 25\text{ tenths}, 25\text{ hundredths}$
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  (ii) $12\text{ tens and } 12\text{ tenths}$ $$\begin{aligned} 12\text{ tens} &= 12 \times 10 = 120 \\ 12\text{ tenths} &= \frac{12}{10} = 1.2 \\ \text{Total} &= 120 + 1.2 = \mathbf{121.2} \end{aligned}$$ (iii) $10\text{ tens}, 10\text{ ones}, 10\text{ tenths}, 10\text{ hundredths}$ $$\begin{aligned} 10\text{ tens} &= 100 \\ 10\text{ ones} &= 10 \\ 10\text{ tenths} &= 1.0 \\ 10\text{ hundredths} &= 0.10 \\ \text{Total} &= 100 + 10 + 1.0 + 0.10 = \mathbf{111.1} \end{aligned}$$ (iv) $25\text{ tens}, 25\text{ ones}, 25\text{ tenths}, 25\text{ hundredths}$ $$\begin{aligned} 25\text{ tens} &= 250 \\ 25\text{ ones} &= 25 \\ 25\text{ tenths} &= 2.5 \\ 25\text{ hundredths} &= 0.25 \\ \text{Total} &= 250 + 25 + 2.5 + 0.25 = \mathbf{277.75} \end{aligned}$$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 11.
+
+#### [CORD_MATH3_PAPER_012] [Question 12] Using each digit $0–9$ not more than once, fill the boxes below so that the sum is closest to $10.5$: $[\quad] . [\quad] [\quad] \;+\; [\quad] . [\quad] [\quad]$
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  We need to form two numbers $A.BC$ and $D.EF$ with 6 distinct digits from $\{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}$ such that their sum is closest to $10.50$. Exact Hit: Difference $= 0.0000$ (Sum $= 10.50$) Remarkably, we can achieve an exact sum of $10.50$ using distinct digits! Solution 1: $\mathbf{1.02 + 9.48 = 10.50}$ Digits used: $\{0, 1, 2, 4, 8, 9\}$ — all unique! Solution 2: $\mathbf{2.03 + 8.47 = 10.50}$ Digits used: $\{0, 2, 3, 4, 7, 8\}$ — all unique! Solution 3: $\mathbf{1.03 + 9.47 = 10.50}$ Digits used: $\{0, 1, 3, 4, 7, 9\}$ — all unique! ✅ Final Answer: $\mathbf{1.02 + 9.48 = 10.50}$ (or $\mathbf{2.03 + 8.47 = 10.50}$). Difference from $10.5$ is exactly $\mathbf{0}$.
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 12.
+
+#### [CORD_MATH3_PAPER_013] [Question 13] Write the following fractions in decimal form: (i) $\dfrac{1}{2}$ (ii) $\dfrac{3}{2}$ (iii) $\dfrac{1}{4}$ (iv) $\dfrac{3}{4}$ (v) $\dfrac{1}{5}$ (vi) $\dfrac{4}{5}$
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  (i) $\dfrac{1}{2}$ $$\frac{1 \times 5}{2 \times 5} = \frac{5}{10} = \mathbf{0.5}$$ (ii) $\dfrac{3}{2}$ $$\frac{3 \times 5}{2 \times 5} = \frac{15}{10} = \mathbf{1.5}$$ (iii) $\dfrac{1}{4}$ $$\frac{1 \times 25}{4 \times 25} = \frac{25}{100} = \mathbf{0.25}$$ (iv) $\dfrac{3}{4}$ $$\frac{3 \times 25}{4 \times 25} = \frac{75}{100} = \mathbf{0.75}$$ (v) $\dfrac{1}{5}$ $$\frac{1 \times 2}{5 \times 2} = \frac{2}{10} = \mathbf{0.2}$$ (vi) $\dfrac{4}{5}$ $$\frac{4 \times 2}{5 \times 2} = \frac{8}{10} = \mathbf{0.8}$$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 13.
+
+#### [CORD_MATH3_PAPER_014] [Question 14] The ascending arrangement of $\frac{2}{3}, \frac{6}{7}, \frac{13}{21}$ is:
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `1 Mark • Ordering Fractions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Find LCM of denominators $3, 7, 21$: $\text{LCM} = 21$. Convert each fraction to denominator $21$: $$\frac{2}{3} = \frac{2 \times 7}{3 \times 7} = \frac{14}{21}$$ $$\frac{6}{7} = \frac{6 \times 3}{7 \times 3} = \frac{18}{21}$$ $$\frac{13}{21} = \frac{13}{21}$$ Since $13 < 14 < 18$, the ascending order is $\mathbf{\frac{13}{21} < \frac{2}{3} < \frac{6}{7}}$. ✅ Correct Option: (2)
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 14.
+
+#### [CORD_MATH3_PAPER_015] [Question 15] $\frac{4}{5}$ of $5\text{ kg}$ apples were used on Monday. The next day $\frac{1}{3}$ of what was left was used. Weight (in kg) of apples left now is:
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `1 Mark • Fraction Word Problem` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$\begin{aligned} \text{Total apples} &= 5\text{ kg} \\ \text{Used on Monday} &= \frac{4}{5} \times 5 = 4\text{ kg} \\ \text{Left after Monday} &= 5 - 4 = 1\text{ kg} \\ \text{Used on Tuesday} &= \frac{1}{3} \times 1 = \frac{1}{3}\text{ kg} \\ \text{Left now} &= 1 - \frac{1}{3} = \mathbf{\frac{2}{3}\text{ kg}} \end{aligned}$$ ✅ Correct Option: (3) $\frac{2}{3}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 15.
+
+#### [CORD_MATH3_PAPER_016] [Question 16] Which of the following represents fifteen and five one-tenths?
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `1 Mark • Words to Decimals` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Fifteen $= 15$, and five one-tenths $= 5 \times \frac{1}{10} = \frac{5}{10}$. Together, this is the mixed number $\mathbf{15\frac{5}{10}}$ (or $15.5$). ✅ Correct Option: (3) $15\frac{5}{10}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 16.
+
+#### [CORD_MATH3_PAPER_017] [Question 17] $10\frac{1}{10}\frac{11}{100}$ can be read as:
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `1 Mark • Reading Expanded Forms` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $10$ is "Ten", $\frac{1}{10}$ is "one-tenth", and $\frac{11}{100}$ is "eleven one-hundredths". ✅ Correct Option: (4)
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 17.
+
+#### [CORD_MATH3_PAPER_018] [Question 18] Which of the following is the largest?
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `1 Mark • Decimal Comparison` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Convert each to decimal: (1) $6.5$, (2) $5.6$, (3) $5.9$, (4) $6.6$. Comparing whole parts ($6 > 5$), then tenths ($6.6 > 6.5$), the largest is $\mathbf{6\frac{6}{10}} = 6.6$. ✅ Correct Option: (4) $6\frac{6}{10}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 18.
+
+#### [CORD_MATH3_PAPER_019] [Question 19] What is the value of $34\frac{10}{10} + 30\frac{3}{10}$?
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `1 Mark • Mixed Fractions Addition` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$\begin{aligned} 34\frac{10}{10} &= 34 + 1 = 35 \\ 30\frac{3}{10} &= 30 + \frac{3}{10} \\ 35 + 30 + \frac{3}{10} &= 65 + \frac{3}{10} = \mathbf{65\frac{3}{10}} \end{aligned}$$ ✅ Correct Option: (1) $65\frac{3}{10}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 19.
+
+#### [CORD_MATH3_PAPER_020] [Question 20] If the length of Aditya's hand is $9\frac{2}{10}\text{ units}$ and that of his palm is $6\frac{8}{10}\text{ units}$, then what will be the length of his longest (middle finger)?
+- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `1 Mark • Measurement Subtraction` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$\begin{aligned} \text{Hand length} &= 9\frac{2}{10} = 9.2 \\ \text{Palm length} &= 6\frac{8}{10} = 6.8 \\ \text{Finger length} &= 9.2 - 6.8 = 2.4 = \mathbf{2\frac{4}{10}\text{ units}} \end{aligned}$$ ✅ Correct Option: (2) $2\frac{4}{10}\text{ unit}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 20.
+
+#### [CORD_MATH3_PAPER_021] [Question 21] $9\frac{1}{10}\frac{10}{100} + 3\frac{4}{10}\frac{5}{100} = \text{?}$
+- **Difficulty**: `hard` | **Marks**: `2` | **Topic**: `1 Mark • Decimal Place Sum` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$\begin{aligned} 9 + \frac{1}{10} + \frac{10}{100} &= 9 + 0.10 + 0.10 = 9.20 \\ 3 + \frac{4}{10} + \frac{5}{100} &= 3 + 0.40 + 0.05 = 3.45 \\ \text{Sum} &= 9.20 + 3.45 = 12.65 = \mathbf{12\frac{65}{100}} \end{aligned}$$ ✅ Correct Option: (3) $12\frac{65}{100}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 21.
+
+#### [CORD_MATH3_PAPER_022] [Question 22] $\frac{8}{5}$ in decimal notation can be given as:
+- **Difficulty**: `hard` | **Marks**: `2` | **Topic**: `1 Mark • Fraction to Decimal` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$\frac{8}{5} = \frac{8 \times 2}{5 \times 2} = \frac{16}{10} = \mathbf{1.6}$$ ✅ Correct Option: (1) $1.6$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 22.
+
+#### [CORD_MATH3_PAPER_023] [Question 23] In decimal form $70 + 2 + \frac{4}{10} = \_\_\_\_$
+- **Difficulty**: `hard` | **Marks**: `2` | **Topic**: `1 Mark • Expanded to Decimal` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$70 + 2 + \frac{4}{10} = 72 + 0.4 = \mathbf{72.4}$$ ✅ Correct Option: (3) $72.4$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 23.
+
+#### [CORD_MATH3_PAPER_024] [Question 24] In decimal form, three hundred seven and six-hundredths is equal to:
+- **Difficulty**: `hard` | **Marks**: `2` | **Topic**: `1 Mark • Words to Decimals` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  "Three hundred seven" $= 307$. "Six-hundredths" $= \frac{6}{100} = 0.06$. Total $= 307 + 0.06 = \mathbf{307.06}$. ✅ Correct Option: (4) $307.06$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 24.
+
+#### [CORD_MATH3_PAPER_025] [Question 25] Lowest form of decimal $0.005$ is:
+- **Difficulty**: `hard` | **Marks**: `2` | **Topic**: `1 Mark • Simplest Form` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$0.005 = \frac{5}{1000} = \frac{5 \div 5}{1000 \div 5} = \mathbf{\frac{1}{200}}$$ ✅ Correct Option: (2) $\frac{1}{200}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 25.
+
+#### [CORD_MATH3_PAPER_026] [Question 26] $0.7499$ lies between:
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `1 Mark • Locating Decimals` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Write numbers with 4 decimal places: $$0.749 = 0.7490$$ $$0.75 = 0.7500$$ Since $0.7490 < 0.7499 < 0.7500$, $0.7499$ lies between $\mathbf{0.749}$ and $\mathbf{0.75}$. ✅ Correct Option: (3)
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 26.
+
+#### [CORD_MATH3_PAPER_027] [Question 27] Which of the following decimals is the smallest?
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `1 Mark • Smallest Decimal` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Compare whole parts and tenths digits: (1) $0.37$ (tenths: 3), (2) $1.52$ (ones: 1), (3) $0.087$ (tenths: 0), (4) $0.105$ (tenths: 1). The only number with $0$ in the tenths place is $\mathbf{0.087}$. ✅ Correct Option: (3) $0.087$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 27.
+
+#### [CORD_MATH3_PAPER_028] [Question 28] $0.07 + 0.008$ is equal to:
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `1 Mark • Decimal Addition` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$0.070 + 0.008 = \mathbf{0.078}$$ ✅ Correct Option: (3) $0.078$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 28.
+
+#### [CORD_MATH3_PAPER_029] [Question 29] $15.8 - 6.73$ is equal to:
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `1 Mark • Decimal Subtraction` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$\begin{aligned} &\phantom{-}15.80 \\ -&\phantom{-0}6.73 \\ \hline &\phantom{-0}\mathbf{9.07} \end{aligned}$$ ✅ Correct Option: (2) $9.07$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 29.
+
+#### [CORD_MATH3_PAPER_030] [Question 30] $116\text{ mm} = \_\_\_\_\_\text{ cm}$:
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `1 Mark • Metric Conversion` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$1\text{ cm} = 10\text{ mm} \implies 116\text{ mm} = \frac{116}{10}\text{ cm} = \mathbf{11.6\text{ cm}}$$ ✅ Correct Option: (2) $11.6$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 30.
+
+#### [CORD_MATH3_PAPER_031] [Question 31] $20\text{ rupees } 27\text{ paise}$ in decimals is:
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `1 Mark • Money in Decimals` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$1\text{ rupee} = 100\text{ paise} \implies 27\text{ paise} = \text{Rs. } \frac{27}{100} = \text{Rs. } 0.27$$ $$\text{Total} = \text{Rs. } (20 + 0.27) = \mathbf{\text{Rs. } 20.27}$$ ✅ Correct Option: (3) $\text{Rs. } 20.27$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 31.
+
+#### [CORD_MATH3_PAPER_032] [Question 32] Add: $13.46,\; 219.54,\; 2.084$
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Write numbers as like decimals with 3 decimal places and add vertically: $$\begin{alignedat}{2} &\phantom{0}13.460 \\ +&219.540 \\ +&\phantom{00}2.084 \\ \hline &\mathbf{235.084} \end{alignedat}$$ ✅ Final Answer: $\mathbf{235.084}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 32.
+
+#### [CORD_MATH3_PAPER_033] [Question 33] Subtract: $148.23 - 30.018$
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Write $148.23$ as $148.230$ and subtract vertically: $$\begin{alignedat}{2} &\phantom{0}148.230 \\ -&\phantom{0}30.018 \\ \hline &\mathbf{118.212} \end{alignedat}$$ ✅ Final Answer: $\mathbf{118.212}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 33.
+
+#### [CORD_MATH3_PAPER_034] [Question 34] Express as rupees using decimals: (i) $49\text{ paise}$ (ii) $54\text{ rupees } 64\text{ paise}$ (iii) $249\text{ paise}$
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  (i) $49\text{ paise}$ $$\text{Rs. } \frac{49}{100} = \mathbf{\text{Rs. } 0.49}$$ (ii) $54\text{ rupees } 64\text{ paise}$ $$\text{Rs. } \left(54 + \frac{64}{100}\right) = \mathbf{\text{Rs. } 54.64}$$ (iii) $249\text{ paise}$ $$\text{Rs. } \frac{249}{100} = \mathbf{\text{Rs. } 2.49}$$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 34.
+
+#### [CORD_MATH3_PAPER_035] [Question 35] The product of two decimals is $1.5008$. If one of them is $0.56$, find the other.
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$\begin{aligned} \text{Product} &= 1.5008 \\ \text{First number} &= 0.56 \\ \text{Other number} &= \frac{1.5008}{0.56} \end{aligned}$$ Multiply numerator and denominator by $100$ to make the divisor a whole number: $$\frac{1.5008 \times 100}{0.56 \times 100} = \frac{150.08}{56}$$ Performing division: $150 \div 56 = 2$ with remainder $38$ ($56 \times 2 = 112$) Bring down $.0 \implies 380 \div 56 = 6$ with remainder $44$ ($56 \times 6 = 336$) Bring down $8 \implies 448 \div 56 = 8$ with remainder $0$ ($56 \times 8 = 448$) $$\frac{150.08}{56} = \mathbf{2.68}$$ ✅ Final Answer: The other decimal is $\mathbf{2.68}$.
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 35.
+
+#### [CORD_MATH3_PAPER_036] [Question 36] Evaluate: $\frac{5}{10} + \frac{9}{100}$
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$\frac{5}{10} + \frac{9}{100} = 0.50 + 0.09 = \mathbf{0.59} = \frac{59}{100}$$ ✅ Final Answer: $\mathbf{0.59}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 36.
+
+#### [CORD_MATH3_PAPER_037] [Question 37] Evaluate: $3 + \frac{8}{10} + \frac{3}{100}$
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$3 + \frac{8}{10} + \frac{3}{100} = 3 + 0.8 + 0.03 = \mathbf{3.83}$$ ✅ Final Answer: $\mathbf{3.83}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 37.
+
+#### [CORD_MATH3_PAPER_038] [Question 38] Evaluate: $\frac{36}{100} + 6\frac{3}{100} - 5\frac{45}{100}$
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  Convert all terms to decimals: $$\begin{aligned} \frac{36}{100} &= 0.36 \\ 6\frac{3}{100} &= 6.03 \\ 5\frac{45}{100} &= 5.45 \end{aligned}$$ $$\begin{aligned} 0.36 + 6.03 &= 6.39 \\ 6.39 - 5.45 &= \mathbf{0.94} = \frac{94}{100} = \frac{47}{50} \end{aligned}$$ ✅ Final Answer: $\mathbf{0.94}$ (or $\frac{47}{50}$).
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 38.
+
+#### [CORD_MATH3_PAPER_039] [Question 39] Evaluate: $8 - \frac{4}{10}$
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$8 - \frac{4}{10} = 8.0 - 0.4 = \mathbf{7.6} = 7\frac{6}{10} = 7\frac{3}{5}$$ ✅ Final Answer: $\mathbf{7.6}$ (or $7\frac{3}{5}$).
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 39.
+
+#### [CORD_MATH3_PAPER_040] [Question 40] Extend the pattern: (i) $\dfrac{3}{10}, \dfrac{6}{10}, \dfrac{9}{10}, \dots$ (ii) $2\dfrac{1}{10}, 1\dfrac{9}{10}, 1\dfrac{6}{10}, \dots$ (iii) $5.9, 6.2, 6.5, \dots$
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  (i) $\dfrac{3}{10}, \dfrac{6}{10}, \dfrac{9}{10}$ Rule: Add $\frac{3}{10}$ ($0.3$) each time. $$\frac{9}{10} + \frac{3}{10} = \mathbf{\frac{12}{10}}\; (1.2)$$ $$\frac{12}{10} + \frac{3}{10} = \mathbf{\frac{15}{10}}\; (1.5)$$ $$\frac{15}{10} + \frac{3}{10} = \mathbf{\frac{18}{10}}\; (1.8)$$ (ii) $2\dfrac{1}{10}, 1\dfrac{9}{10}, 1\dfrac{6}{10}$ Rule: Decreasing tenths: $2.1 - 0.2 = 1.9$; $1.9 - 0.3 = 1.6$. If step increases by $0.1$ ($-0.4, -0.5, -0.6$): $$1.6 - 0.4 = \mathbf{1.2} = \mathbf{1\frac{2}{10}}$$ $$1.2 - 0.5 = \mathbf{0.7} = \mathbf{\frac{7}{10}}$$ $$0.7 - 0.6 = \mathbf{0.1} = \mathbf{\frac{1}{10}}$$ (Or with constant difference $-0.3$ if read as $2\frac{1}{10}, 1\frac{8}{10}, 1\frac{5}{10} \implies 1\frac{2}{10}, \frac{9}{10}, \frac{6}{10}$) . (iii) $5.9, 6.2, 6.5$ Rule: Add $+0.3$ each time. $$6.5 + 0.3 = \mathbf{6.8}$$ $$6.8 + 0.3 = \mathbf{7.1}$$ $$7.1 + 0.3 = \mathbf{7.4}$$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 40.
+
+#### [CORD_MATH3_PAPER_041] [Question 41] Write each of the following as decimals: (i) $23 + \dfrac{2}{10} + \dfrac{6}{1000}$ (ii) $700 + 20 + 5 + \dfrac{9}{100}$
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  (i) $23 + \dfrac{2}{10} + \dfrac{6}{1000}$ $$23 + 0.2 + 0.006 = \mathbf{23.206}$$ Note: 0 in hundredths place! (ii) $700 + 20 + 5 + \dfrac{9}{100}$ $$725 + 0.09 = \mathbf{725.09}$$ Note: 0 in tenths place!
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 41.
+
+#### [CORD_MATH3_PAPER_042] [Question 42] Compare the decimal numbers: $$\left(700 + 20 + 3 + \frac{0}{10} + \frac{4}{100}\right) \quad [\quad] \quad \left(700 + 20 + 3 + \frac{0}{10} + \frac{0}{100} + \frac{4}{1000}\right)$$
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$\begin{aligned} \text{LHS} &= 700 + 20 + 3 + \frac{0}{10} + \frac{4}{100} = \mathbf{723.04} = 723.040 \\ \text{RHS} &= 700 + 20 + 3 + \frac{0}{10} + \frac{0}{100} + \frac{4}{1000} = \mathbf{723.004} \end{aligned}$$ Comparing place values from left to right: Whole part: $723 = 723$ (equal) Tenths place: $0 = 0$ (equal) Hundredths place: $4 > 0 \implies \mathbf{723.040 > 723.004}$ ✅ Final Answer: The correct symbol is $\mathbf{>}$ (Greater than).
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 42.
+
+#### [CORD_MATH3_PAPER_043] [Question 43] Write $6\text{ mm}$ in $\text{cm}$ using decimal and $60\text{ m}$ in $\text{km}$ using decimal.
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $6\text{ mm}$ in $\text{cm}$ $$1\text{ cm} = 10\text{ mm} \implies 6\text{ mm} = \frac{6}{10}\text{ cm} = \mathbf{0.6\text{ cm}}$$ $60\text{ m}$ in $\text{km}$ $$1\text{ km} = 1000\text{ m} \implies 60\text{ m} = \frac{60}{1000}\text{ km} = \mathbf{0.06\text{ km}}$$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 43.
+
+#### [CORD_MATH3_PAPER_044] [Question 44] How will you write $2\text{ kg } 9\text{ g}$ in $\text{kg}$ using decimal?
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$1\text{ kg} = 1000\text{ g} \implies 1\text{ g} = \frac{1}{1000}\text{ kg} = 0.001\text{ kg}$$ $$9\text{ g} = \frac{9}{1000}\text{ kg} = 0.009\text{ kg}$$ $$2\text{ kg } 9\text{ g} = 2 + 0.009 = \mathbf{2.009\text{ kg}}$$ ✅ Final Answer: $\mathbf{2.009\text{ kg}}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 44.
+
+#### [CORD_MATH3_PAPER_045] [Question 45] If Meera gave $726\text{ paise}$ to Ajay, then how much money in rupees did she give?
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Decimals & Conversions` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$100\text{ paise} = 1\text{ rupee} \implies 1\text{ paisa} = \text{Rs. } \frac{1}{100}$$ $$\text{Amount in rupees} = \text{Rs. } \frac{726}{100} = \mathbf{\text{Rs. } 7.26}$$ ✅ Final Answer: She gave $\mathbf{\text{Rs. } 7.26}$ ($7\text{ rupees and } 26\text{ paise}$).
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 45.
+
+#### [CORD_MATH3_PAPER_046] [Question 46] Find the decimal expression for $6\text{ rupees } 8\text{ paise}$ (in rupees).
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `2 Marks • Money Decimal` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  $$\begin{aligned} 1\text{ rupee} &= 100\text{ paise} \\ 8\text{ paise} &= \text{Rs. } \frac{8}{100} = \text{Rs. } 0.08 \\ 6\text{ rupees } 8\text{ paise} &= \text{Rs. } (6 + 0.08) = \mathbf{\text{Rs. } 6.08} \end{aligned}$$ ⚠️ Common Student Mistake to Avoid: Many students mistakenly write $6\text{ rupees } 8\text{ paise} = \text{Rs. } 6.8$. But $\text{Rs. } 6.8 = \text{Rs. } 6.80 = 6\text{ rupees } 80\text{ paise}$! Because $1\text{ rupee} = 100\text{ paise}$, single-digit paise must always take the hundredths place with a zero in the tenths place: $\mathbf{\text{Rs. } 6.08}$. ✅ Final Answer: $\mathbf{\text{Rs. } 6.08}$
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 46.
+
+#### [CORD_MATH3_PAPER_047] [Question 47] Simplify the following sums: (i) $1\dfrac{6}{7} + 11\dfrac{2}{5} + \dfrac{21}{5}$ (ii) $2\dfrac{2}{3} + 12\dfrac{2}{4} + 5\dfrac{1}{2}$
+- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `2 Marks • Multi-Fraction Simplification` | **Source**: `school_worksheet`
+- **Step-by-Step Model Solution**:
+  (i) $1\dfrac{6}{7} + 11\dfrac{2}{5} + \dfrac{21}{5}$ Step 1: Combine like-denominator fractions ($\text{denominator } 5$): $$11\frac{2}{5} + \frac{21}{5} = \frac{57}{5} + \frac{21}{5} = \frac{78}{5} = 15.6$$ Step 2: Add $1\frac{6}{7} = \frac{13}{7}$: $$\frac{13}{7} + \frac{78}{5} = \frac{13 \times 5 + 78 \times 7}{35} = \frac{65 + 546}{35} = \frac{611}{35}$$ Step 3: Convert to mixed fraction: $$611 \div 35 = 17\text{ with remainder } 16$$ $$\frac{611}{35} = \mathbf{17\frac{16}{35}} \approx \mathbf{17.457}$$ ✅ Final Answer: $\mathbf{17\frac{16}{35}}$ (ii) $2\dfrac{2}{3} + 12\dfrac{2}{4} + 5\dfrac{1}{2}$ Step 1: Simplify the fraction $\frac{2}{4}$: $$12\frac{2}{4} = 12\frac{1}{2}$$ Step 2: Add halves together: $$12\frac{1}{2} + 5\frac{1}{2} = 12.5 + 5.5 = \mathbf{18}$$ Step 3: Add to $2\frac{2}{3}$: $$18 + 2\frac{2}{3} = \mathbf{20\frac{2}{3}} = \frac{62}{3} \approx \mathbf{20.667}$$ ✅ Final Answer: $\mathbf{20\frac{2}{3}}$ (or $\frac{62}{3}$)
+- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 47.
+
+---
+*Curated for Pushti Study Hub | Reference Source (Ref 1 / Cordova) | Strict CBSE Standards*

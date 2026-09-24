@@ -243,18 +243,64 @@
         text-decoration: none;
         color: inherit;
         flex-grow: 1;
-        padding: 18px 14px;
+        padding: 18px 16px;
         min-width: 0;
     }
     .ch-title-link:hover .ch-title { color: var(--primary); }
+    .ch-title-link:hover .ch-title-text { color: var(--primary); }
     .ch-title-link:hover .ch-arrow-icon { opacity: 1; transform: translateX(2px); }
 
     .ch-content { flex-grow: 1; }
     .ch-title {
-        font-size: 1.1rem; font-weight: 700;
-        margin: 0 0 4px 0;
-        display: flex; align-items: center; gap: 8px;
+        font-size: 1.12rem; font-weight: 700;
+        margin: 0 0 6px 0;
+        display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px;
         transition: color 0.18s;
+        line-height: 1.4;
+    }
+    .ch-title-text {
+        font-size: 1.12rem;
+        font-weight: 700;
+        color: var(--text-main);
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+    }
+    .badge-status-ready {
+        font-size: 0.7rem;
+        background: rgba(16,185,129,0.15);
+        border: 1px solid rgba(16,185,129,0.3);
+        color: #10B981;
+        padding: 2px 7px;
+        border-radius: 4px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+    .badge-status-master {
+        font-size: 0.7rem;
+        background: rgba(16,185,129,0.15);
+        border: 1px solid rgba(16,185,129,0.3);
+        color: #10B981;
+        padding: 2px 7px;
+        border-radius: 4px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+    .badge-status-dual {
+        font-size: 0.7rem;
+        background: rgba(245,158,11,0.15);
+        border: 1px solid rgba(245,158,11,0.4);
+        color: #fbbf24;
+        padding: 2px 7px;
+        border-radius: 4px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+    .badge-date {
+        font-size: 0.68rem;
+        color: var(--text-muted);
+        font-family: 'Space Mono', monospace;
+        white-space: nowrap;
     }
     .ch-arrow-icon {
         font-size: 0.75rem; color: var(--text-muted);
@@ -276,6 +322,24 @@
         border: 1px solid rgba(255,255,255,0.07);
     }
 
+    /* Right side indicator arrow on chapter card */
+    .ch-card-arrow {
+        padding: 0 20px;
+        font-size: 1rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .chapter-card:hover .ch-card-arrow {
+        opacity: 1;
+        color: var(--primary);
+        transform: translateX(4px);
+    }
+
     /* Secondary action buttons — sober, right side */
     .ch-actions {
         display: flex;
@@ -285,7 +349,7 @@
         align-self: stretch;
         justify-content: center;
         border-left: 1px solid var(--border);
-        min-width: 100px;
+        min-width: 90px;
         flex-shrink: 0;
     }
     .btn-link {
@@ -365,6 +429,58 @@
     @keyframes pulse-dot {
         0%, 100% { transform: scale(1); opacity: 1; }
         50% { transform: scale(1.35); opacity: 0.65; }
+    }
+    
+    /* KB INDICATOR ANNOTATION BADGES */
+    .kb-indicator-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.70rem;
+        font-weight: 700;
+        padding: 2px 9px;
+        border-radius: 20px;
+        margin-left: 8px;
+        vertical-align: middle;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        font-family: 'Space Mono', monospace;
+    }
+    .kb-indicator-badge.ready {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10B981;
+        border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .kb-indicator-badge.ref1 {
+        background: rgba(245, 158, 11, 0.15);
+        color: #FBBF24;
+        border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .kb-indicator-badge.pending {
+        background: rgba(245, 158, 11, 0.15);
+        color: #F59E0B;
+        border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .kb-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        padding: 1px 6px;
+        border-radius: 6px;
+        margin-left: 4px;
+        font-family: 'Space Mono', monospace;
+    }
+    .kb-pill.ready {
+        background: rgba(16, 185, 129, 0.18);
+        color: #34D399;
+        border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+    .kb-pill.pending {
+        background: rgba(245, 158, 11, 0.18);
+        color: #FBBF24;
+        border: 1px solid rgba(245, 158, 11, 0.35);
     }
 </style>
 
@@ -511,19 +627,19 @@ document.addEventListener("DOMContentLoaded", function() {
             
             <!-- Left Sidebar: Branches -->
             <aside class="branch-sidebar">
-                <button id="tab-num" class="branch-nav-btn active" style="--branch-color: #F43F5E;" onclick="showCategory('num')" aria-label="Number Systems & Arithmetic">
-                    <div class="branch-icon">🔢</div>
+                <button id="tab-all" class="branch-nav-btn active" style="--branch-color: #6366F1;" onclick="showCategory('all')" aria-label="All 8 Chapters">
+                    <div class="branch-icon">📚</div>
                     <div class="branch-details">
-                        <span class="branch-title">Number Systems</span>
-                        <span class="branch-stats">4 Chapters (Ch 1, 2, 6, 8)</span>
+                        <span class="branch-title">All Chapters</span>
+                        <span class="branch-stats">8 Chapters (Ch 1–8) <span class="kb-pill ready"><i class="fas fa-database"></i> KB Active (349 Qs)</span></span>
                     </div>
                 </button>
 
-                <button id="tab-geo" class="branch-nav-btn" style="--branch-color: #10B981;" onclick="showCategory('geo')" aria-label="Geometry & Lines">
-                    <div class="branch-icon">📐</div>
+                <button id="tab-num" class="branch-nav-btn" style="--branch-color: #F43F5E;" onclick="showCategory('num')" aria-label="Number Systems & Arithmetic">
+                    <div class="branch-icon">🔢</div>
                     <div class="branch-details">
-                        <span class="branch-title">Geometry</span>
-                        <span class="branch-stats">2 Chapters (Ch 5, 7)</span>
+                        <span class="branch-title">Number Systems</span>
+                        <span class="branch-stats">4 Chapters (Ch 1, 2, 6, 8) <span class="kb-pill ready"><i class="fas fa-database"></i> KB Active (153 Qs)</span></span>
                     </div>
                 </button>
 
@@ -531,9 +647,18 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div class="branch-icon">🔣</div>
                     <div class="branch-details">
                         <span class="branch-title">Algebra & Decimals</span>
-                        <span class="branch-stats">2 Chapters (Ch 3, 4)</span>
+                        <span class="branch-stats">2 Chapters (Ch 3, 4) <span class="kb-pill ready"><i class="fas fa-database"></i> KB Active (106 Qs)</span></span>
                     </div>
                 </button>
+
+                <button id="tab-geo" class="branch-nav-btn" style="--branch-color: #10B981;" onclick="showCategory('geo')" aria-label="Geometry & Lines">
+                    <div class="branch-icon">📐</div>
+                    <div class="branch-details">
+                        <span class="branch-title">Geometry</span>
+                        <span class="branch-stats">2 Chapters (Ch 5, 7) <span class="kb-pill ready"><i class="fas fa-database"></i> KB Active (90 Qs)</span></span>
+                    </div>
+                </button>
+
                 <button id="tab-tests" class="branch-nav-btn" style="--branch-color: #F59E0B;" onclick="showCategory('tests')" aria-label="Tests &amp; Exam Prep">
                     <div class="branch-icon">📝</div>
                     <div class="branch-details">
@@ -546,40 +671,41 @@ document.addEventListener("DOMContentLoaded", function() {
             <!-- Right Content Area: Branch Chapters -->
             <div class="branch-content-area">
                 
-                <!-- Number Systems Section -->
-                <div id="sec-num" class="category-section active">
+                <!-- All Chapters Section (Sequential 01 to 08) -->
+                <div id="sec-all" class="category-section active">
                     <div class="chapter-card">
                         <div class="ch-num">01</div>
                         <a href="chapters/maths/maths_ch1.html" class="ch-title-link">
                             <div class="ch-content">
                                 <h3 class="ch-title">
-          <span class="update-dot" title="Recently updated with Ref 1 Integers Track"></span>
-          Large Numbers Around Us / Integers
-          <span style="font-size:0.7rem; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#10B981; padding:2px 7px; border-radius:4px; font-weight:600;">🔋 100% Ready</span>
-          <span style="font-size:0.68rem; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.3); color:#fbbf24; padding:2px 7px; border-radius:4px; font-weight:600;">Dual Track (Main + Ref 1 Ch 1)</span>
-          <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Updated: 17 Sep 2026</span>
-          <i class="fas fa-arrow-right ch-arrow-icon"></i>
-        </h3>
-        <p class="ch-desc">Indian &amp; International place value systems, powers of 10, estimation, plus complete Ref 1 Chapter 1 Integers foundation (Number Line, Sign Laws, Distributive Factoring, 10 Solved Models, 42 Exercise Problems &amp; 27 Interactive Assessments).</p>
-        <div class="ch-tags">
-          <span class="tag" style="color:#0284c7">Place Value</span>
-          <span class="tag" style="color:#0284c7">Large Numbers</span>
-          <span class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.08); font-weight:600;">Ref 1 Integers</span>
-          <span class="tag" style="color:#34d399; border-color:rgba(16,185,129,0.35); background:rgba(16,185,129,0.08); font-weight:600;">Dual-Method Solver</span>
-          <span class="tag" style="color:#10B981">80 Practice Qs</span>
-          <span class="tag" style="color:#818cf8">BODMAS Brackets</span>
-        </div></div>
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently verified"></span>Large Numbers Around Us</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch1_large_numbers/"><i class="fas fa-database"></i> MTG (12 Qs)</span>
+                                    <span class="kb-indicator-badge ref1" title="Reference Source KB: KB Files/mathematics/reference_source_cordova/ch1_integers/"><i class="fas fa-book-reader"></i> Cordova Ch 1 (24 Qs)</span>
+                                    <span class="badge-status-ready">🔋 100% Ready</span>
+                                    <span class="badge-date">Updated: 17 Sep 2026</span>
+                                </h3>
+                                <p class="ch-desc">Indian &amp; International place value systems, 7 to 9-digit numbers, powers of 10, arithmetic operations, rounding &amp; estimation, Roman numerals, and interactive simulations.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#0284c7">Place Value</span>
+                                    <span class="tag" style="color:#0284c7">Large Numbers</span>
+                                    <span class="tag" style="color:#10B981">80 Practice Qs</span>
+                                    <span class="tag" style="color:#818cf8">Roman Numerals</span>
+                                    <span class="tag" style="color:#818cf8">Rounding</span>
+                                </div>
+                            </div>
                         </a>
-                        <div class="ch-actions">
-                            <a href="chapters/maths/maths_ch1.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
-                            <button onclick="openChapterLog('maths_ch1')" class="btn-link" title="Revision Changelog"><i class="fas fa-history"></i> Log</button>
-                        </div>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">02</div>
                         <a href="chapters/maths/maths_ch2.html" class="ch-title-link">
                             <div class="ch-content">
-                                <h3 class="ch-title"><span class="update-dot" title="Recently revamped and verified"></span>Arithmetic Expressions <span style="font-size:0.7rem; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#10B981; padding:2px 7px; border-radius:4px; font-weight:600;">🔋 100% Master SOP</span> <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Updated: 18 Sep 2026</span> <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently revamped and verified"></span>Arithmetic Expressions</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch2_arithmetic_expressions/"><i class="fas fa-database"></i> MTG (70 Qs)</span>
+                                    <span class="badge-status-master">🔋 100% Master SOP</span>
+                                    <span class="badge-date">Updated: 18 Sep 2026</span>
+                                </h3>
                                 <p class="ch-desc">Order of operations (BODMAS), brackets hierarchy, algebraic modeling, 40-Question Practice Test Paper with step-by-step KaTeX solutions, 80 OMR practice questions, and 4 interactive laboratory simulators.</p>
                                 <div class="ch-tags">
                                     <a href="chapters/maths/test_arithmetic_expressions.html" class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1); text-decoration:none;"><i class="fas fa-file-signature"></i> Practice Test (40 Qs) &rarr;</a>
@@ -591,16 +717,91 @@ document.addEventListener("DOMContentLoaded", function() {
                                 </div>
                             </div>
                         </a>
-                        <div class="ch-actions">
-                            <a href="chapters/maths/maths_ch2.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
-                            <button onclick="openChapterLog('maths_ch2')" class="btn-link" title="Revision Changelog"><i class="fas fa-history"></i> Log</button>
-                        </div>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="ch-num">03</div>
+                        <a href="chapters/maths/maths_ch3.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently updated with School Test Paper"></span>A Peek Beyond the Point</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch3_decimals/"><i class="fas fa-database"></i> MTG (31 Qs)</span>
+                                    <span class="kb-indicator-badge ref1" title="Reference Source KB: KB Files/mathematics/reference_source_cordova/ch3_decimals/"><i class="fas fa-book-reader"></i> Cordova Ch 3 (47 Qs)</span>
+                                    <span class="badge-status-ready">🔋 100% Ready</span>
+                                    <span class="badge-date">Updated: 17 Sep 2026</span>
+                                </h3>
+                                <p class="ch-desc">Decimal notation, place value, conversion from fractions, arithmetic with decimals in daily life, 22 solved examples, and 47-Question School Test Paper.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1);"><i class="fas fa-graduation-cap"></i> Dual Track: Main + Ref 1 Ch 3</span>
+                                    <a href="chapters/maths/test_decimals_school_paper.html" class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1); text-decoration:none;"><i class="fas fa-file-signature"></i> School Test (47 Qs) &rarr;</a>
+                                    <span class="tag" style="color:#8B5CF6">Decimals</span>
+                                    <span class="tag" style="color:#8B5CF6">Operations &amp; Metric Units</span>
+                                    <span class="tag" style="color:#10B981">11 Tabs &amp; 25 Submodules</span>
+                                    <span class="tag" style="color:#10B981">100% Verified</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="ch-num">04</div>
+                        <a href="chapters/maths/maths_ch4.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently enhanced with Ref 1 Ch 7"></span>Expressions using Letter-Numbers</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch4_expressions_letter_numbers/"><i class="fas fa-database"></i> MTG (18 Qs)</span>
+                                    <span class="kb-indicator-badge ref1" title="Reference Source KB: KB Files/mathematics/reference_source_cordova/ch7_algebraic_expressions/"><i class="fas fa-book-reader"></i> Cordova Ch 7 (10 Qs)</span>
+                                    <span class="badge-status-dual">📙 Dual: Main + Ref 1 Ch 7</span>
+                                    <span class="badge-date">Updated: 17 Sep 2026</span>
+                                </h3>
+                                <p class="ch-desc">Comprehensive dual-track edition: Main Course + Ref 1 Ch 7 (Algebraic Expressions). Variables, terms, factor tree diagrams, numerical &amp; literal coefficients, degree of polynomials (single &amp; multi-variable), linear/quadratic/cubic classifications, horizontal &amp; column addition/subtraction, 37 solved examples, Exercises 7.1–7.3 (31 sums), Review drills, HOTS, and dual-method competitive solvers.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1);"><i class="fas fa-graduation-cap"></i> Main + Ref 1</span>
+                                    <span class="tag" style="color:#10B981">Factor Trees</span>
+                                    <span class="tag" style="color:#38bdf8">Polynomial Degrees</span>
+                                    <span class="tag" style="color:#f472b6">Dual-Method Solvers</span>
+                                    <span class="tag" style="color:#8B5CF6">12 Tabs &amp; 20 Submodules</span>
+                                    <span class="tag" style="color:#10B981">Verified</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="ch-num">05</div>
+                        <a href="chapters/maths/maths_ch5.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently updated and enhanced with Ref 1 Ch 11"></span>Parallel and Intersecting Lines</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch5_parallel_intersecting_lines/"><i class="fas fa-database"></i> MTG (8 Qs)</span>
+                                    <span class="kb-indicator-badge ref1" title="Reference Source KB: KB Files/mathematics/reference_source_cordova/ch11_lines_and_angles/"><i class="fas fa-book-reader"></i> Cordova Ch 11 (33 Qs)</span>
+                                    <span class="badge-status-dual">📙 Dual: Main + Ref 1 Ch 11</span>
+                                    <span class="badge-date">Updated: 18 Sep 2026</span>
+                                </h3>
+                                <p class="ch-desc">Comprehensive dual-track edition: Main Course + Ref 1 Ch 11 (Lines and Angles). Geometry of intersecting lines, linear pairs, vertically opposite angles, parallel lines &amp; transversals, F/Z/C angle rules, auxiliary line constructions, 26 solved examples, Exercises 11.1–11.2, Review drills, HOTS, Mental Maths Corner (12 Qs), 28-Question Practice Test Paper, and dual-method competitive solvers.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#c084fc; border-color:rgba(192,132,252,0.35); background:rgba(192,132,252,0.1);"><i class="fas fa-file-signature"></i> Practice Test Paper (Ref 1 Ch 11 • 28 Qs)</span>
+                                    <span class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1);"><i class="fas fa-graduation-cap"></i> Main + Ref 1</span>
+                                    <span class="tag" style="color:#10B981">Auxiliary Lines</span>
+                                    <span class="tag" style="color:#38bdf8">Dual-Method Solvers</span>
+                                    <span class="tag" style="color:#f472b6">Exercises 11.1 &amp; 11.2</span>
+                                    <span class="tag" style="color:#8B5CF6">8 Tabs &amp; 16 Submodules</span>
+                                    <span class="tag" style="color:#10B981">Verified</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">06</div>
                         <a href="chapters/maths/maths_ch6.html" class="ch-title-link">
                             <div class="ch-content">
-                                <h3 class="ch-title"><span class="update-dot" title="Recently added and verified"></span>Number Play <span style="font-size:0.7rem; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#10B981; padding:2px 7px; border-radius:4px; font-weight:600;">🔋 100% Ready</span> <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Verified: 13 Sep 2026</span> <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently added and verified"></span>Number Play</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch6_number_play/"><i class="fas fa-database"></i> MTG (25 Qs)</span>
+                                    <span class="badge-status-ready">🔋 100% Ready</span>
+                                    <span class="badge-date">Verified: 13 Sep 2026</span>
+                                </h3>
                                 <p class="ch-desc">Relative ordering, even/odd parity invariance, 3&times;3 magic squares, 10th-century Khajuraho Chautīsā Yantra, Virāhaṅka-Fibonacci prosody, and cryptarithm deduction.</p>
                                 <div class="ch-tags">
                                     <span class="tag" style="color:#818cf8">Parity Invariance</span>
@@ -612,15 +813,44 @@ document.addEventListener("DOMContentLoaded", function() {
                                 </div>
                             </div>
                         </a>
-                        <div class="ch-actions">
-                            <a href="chapters/maths/maths_ch6.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
-                        </div>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="ch-num">07</div>
+                        <a href="chapters/maths/maths_ch7.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently updated and enhanced with Ref 1 Ch 12"></span>A Tale of Three Intersecting Lines</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch7_tale_of_three_lines_triangles/"><i class="fas fa-database"></i> MTG (13 Qs)</span>
+                                    <span class="kb-indicator-badge ref1" title="Reference Source KB: KB Files/mathematics/reference_source_cordova/ch12_triangles_and_properties/"><i class="fas fa-book-reader"></i> Cordova Ch 12 (36 Qs)</span>
+                                    <span class="badge-status-dual">📙 Dual: Main + Ref 1 Ch 12</span>
+                                    <span class="badge-date">Updated: 18 Sep 2026</span>
+                                </h3>
+                                <p class="ch-desc">Comprehensive dual-track edition: Main Course + Ref 1 Ch 12 (The Triangle and Its Properties). Triangle inequality, constructions, angle sum &amp; exterior angles, altitudes &amp; medians, Baudhāyana-Pythagoras theorem, Pythagorean triplets, 48+ solved examples, Exercises 12.1–12.3, review drills, HOTS, 34-Question Practice Test Paper, and dual-method competitive solvers.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#c084fc; border-color:rgba(192,132,252,0.35); background:rgba(192,132,252,0.1);"><i class="fas fa-file-signature"></i> Practice Test Paper (Ref 1 Ch 12 • 34 Qs)</span>
+                                    <span class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1);"><i class="fas fa-graduation-cap"></i> Main + Ref 1</span>
+                                    <span class="tag" style="color:#10B981">Pythagoras Theorem</span>
+                                    <span class="tag" style="color:#38bdf8">Pythagorean Triplets</span>
+                                    <span class="tag" style="color:#f472b6">Dual-Method Solvers</span>
+                                    <span class="tag" style="color:#8B5CF6">8 Tabs &amp; 45 Submodules</span>
+                                    <span class="tag" style="color:#10B981">Verified</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">08</div>
                         <a href="chapters/maths/maths_ch8.html" class="ch-title-link">
                             <div class="ch-content">
-                                <h3 class="ch-title"><span class="update-dot" title="Recently added and verified"></span>Working with Fractions <span style="font-size:0.7rem; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#10B981; padding:2px 7px; border-radius:4px; font-weight:600;">🔋 100% Ready</span> <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Verified: 14 Sep 2026</span> <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently added and verified"></span>Working with Fractions</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch8_working_with_fractions/"><i class="fas fa-database"></i> MTG (12 Qs)</span>
+                                    <span class="kb-indicator-badge ref1" title="Reference Source KB: KB Files/mathematics/reference_source_cordova/ch2_fractions/"><i class="fas fa-book-reader"></i> Cordova Ch 2 (10 Qs)</span>
+                                    <span class="badge-status-ready">🔋 100% Ready</span>
+                                    <span class="badge-date">Verified: 14 Sep 2026</span>
+                                </h3>
                                 <p class="ch-desc">Geometric area models, Brahmagupta's 628 CE multiplication algorithms, Umasvati's Apavartana (150 CE), Bhaskaracharya's Lilavati 1150 CE miser cowrie puzzle, division by reciprocal inversion, 15 solved examples, and interactive labs.</p>
                                 <div class="ch-tags">
                                     <span class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1);"><i class="fas fa-graduation-cap"></i> Dual Track: Main + Ref 1 Ch 2</span>
@@ -634,9 +864,158 @@ document.addEventListener("DOMContentLoaded", function() {
                                 </div>
                             </div>
                         </a>
-                        <div class="ch-actions">
-                            <a href="chapters/maths/maths_ch8.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
-                        </div>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                </div>
+
+                <!-- Number Systems Section -->
+                <div id="sec-num" class="category-section">
+                    <div class="chapter-card">
+                        <div class="ch-num">01</div>
+                        <a href="chapters/maths/maths_ch1.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently verified"></span>Large Numbers Around Us</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch1_large_numbers/"><i class="fas fa-database"></i> MTG (12 Qs)</span>
+                                    <span class="kb-indicator-badge ref1" title="Reference Source KB: KB Files/mathematics/reference_source_cordova/ch1_integers/"><i class="fas fa-book-reader"></i> Cordova Ch 1 (24 Qs)</span>
+                                    <span class="badge-status-ready">🔋 100% Ready</span>
+                                    <span class="badge-date">Updated: 17 Sep 2026</span>
+                                </h3>
+                                <p class="ch-desc">Indian &amp; International place value systems, 7 to 9-digit numbers, powers of 10, arithmetic operations, rounding &amp; estimation, Roman numerals, and interactive simulations.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#0284c7">Place Value</span>
+                                    <span class="tag" style="color:#0284c7">Large Numbers</span>
+                                    <span class="tag" style="color:#10B981">80 Practice Qs</span>
+                                    <span class="tag" style="color:#818cf8">Roman Numerals</span>
+                                    <span class="tag" style="color:#818cf8">Rounding</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="ch-num">02</div>
+                        <a href="chapters/maths/maths_ch2.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently revamped and verified"></span>Arithmetic Expressions</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch2_arithmetic_expressions/"><i class="fas fa-database"></i> MTG (70 Qs)</span>
+                                    <span class="badge-status-master">🔋 100% Master SOP</span>
+                                    <span class="badge-date">Updated: 18 Sep 2026</span>
+                                </h3>
+                                <p class="ch-desc">Order of operations (BODMAS), brackets hierarchy, algebraic modeling, 40-Question Practice Test Paper with step-by-step KaTeX solutions, 80 OMR practice questions, and 4 interactive laboratory simulators.</p>
+                                <div class="ch-tags">
+                                    <a href="chapters/maths/test_arithmetic_expressions.html" class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1); text-decoration:none;"><i class="fas fa-file-signature"></i> Practice Test (40 Qs) &rarr;</a>
+                                    <span class="tag" style="color:#10B981">9 Dedicated Tabs</span>
+                                    <span class="tag" style="color:#10B981">BODMAS</span>
+                                    <span class="tag" style="color:#10B981">Brackets</span>
+                                    <span class="tag" style="color:#10B981">80 Practice Qs</span>
+                                    <span class="tag" style="color:#10B981">4 Simulators</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="ch-num">06</div>
+                        <a href="chapters/maths/maths_ch6.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently added and verified"></span>Number Play</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch6_number_play/"><i class="fas fa-database"></i> MTG (25 Qs)</span>
+                                    <span class="badge-status-ready">🔋 100% Ready</span>
+                                    <span class="badge-date">Verified: 13 Sep 2026</span>
+                                </h3>
+                                <p class="ch-desc">Relative ordering, even/odd parity invariance, 3&times;3 magic squares, 10th-century Khajuraho Chautīsā Yantra, Virāhaṅka-Fibonacci prosody, and cryptarithm deduction.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#818cf8">Parity Invariance</span>
+                                    <span class="tag" style="color:#10b981">Magic Squares</span>
+                                    <span class="tag" style="color:#f59e0b">Virāhaṅka Numbers</span>
+                                    <span class="tag" style="color:#ec4899">Cryptarithms</span>
+                                    <span class="tag" style="color:#10B981">10 Submodules</span>
+                                    <span class="tag" style="color:#10B981">Verified</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="ch-num">08</div>
+                        <a href="chapters/maths/maths_ch8.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently added and verified"></span>Working with Fractions</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch8_working_with_fractions/"><i class="fas fa-database"></i> MTG (12 Qs)</span>
+                                    <span class="kb-indicator-badge ref1" title="Reference Source KB: KB Files/mathematics/reference_source_cordova/ch2_fractions/"><i class="fas fa-book-reader"></i> Cordova Ch 2 (10 Qs)</span>
+                                    <span class="badge-status-ready">🔋 100% Ready</span>
+                                    <span class="badge-date">Verified: 14 Sep 2026</span>
+                                </h3>
+                                <p class="ch-desc">Geometric area models, Brahmagupta's 628 CE multiplication algorithms, Umasvati's Apavartana (150 CE), Bhaskaracharya's Lilavati 1150 CE miser cowrie puzzle, division by reciprocal inversion, 15 solved examples, and interactive labs.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1);"><i class="fas fa-graduation-cap"></i> Dual Track: Main + Ref 1 Ch 2</span>
+                                    <span class="tag" style="color:#10B981">Multiplication</span>
+                                    <span class="tag" style="color:#10B981">Area Model</span>
+                                    <span class="tag" style="color:#F59E0B">Ancient Mathematics</span>
+                                    <span class="tag" style="color:#EF4444">Reciprocals</span>
+                                    <span class="tag" style="color:#8B5CF6">Division</span>
+                                    <span class="tag" style="color:#10B981">12 Tabs &amp; 45 Submodules</span>
+                                    <span class="tag" style="color:#10B981">100% Verified</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                </div>
+
+                <!-- Algebra & Decimals Section -->
+                <div id="sec-alg" class="category-section">
+                    <div class="chapter-card">
+                        <div class="ch-num">03</div>
+                        <a href="chapters/maths/maths_ch3.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently updated with School Test Paper"></span>A Peek Beyond the Point</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch3_decimals/"><i class="fas fa-database"></i> MTG (31 Qs)</span>
+                                    <span class="kb-indicator-badge ref1" title="Reference Source KB: KB Files/mathematics/reference_source_cordova/ch3_decimals/"><i class="fas fa-book-reader"></i> Cordova Ch 3 (47 Qs)</span>
+                                    <span class="badge-status-ready">🔋 100% Ready</span>
+                                    <span class="badge-date">Updated: 17 Sep 2026</span>
+                                </h3>
+                                <p class="ch-desc">Decimal notation, place value, conversion from fractions, arithmetic with decimals in daily life, 22 solved examples, and 47-Question School Test Paper.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1);"><i class="fas fa-graduation-cap"></i> Dual Track: Main + Ref 1 Ch 3</span>
+                                    <a href="chapters/maths/test_decimals_school_paper.html" class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1); text-decoration:none;"><i class="fas fa-file-signature"></i> School Test (47 Qs) &rarr;</a>
+                                    <span class="tag" style="color:#8B5CF6">Decimals</span>
+                                    <span class="tag" style="color:#8B5CF6">Operations &amp; Metric Units</span>
+                                    <span class="tag" style="color:#10B981">11 Tabs &amp; 25 Submodules</span>
+                                    <span class="tag" style="color:#10B981">100% Verified</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="ch-num">04</div>
+                        <a href="chapters/maths/maths_ch4.html" class="ch-title-link">
+                            <div class="ch-content">
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently enhanced with Ref 1 Ch 7"></span>Expressions using Letter-Numbers</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch4_expressions_letter_numbers/"><i class="fas fa-database"></i> MTG (18 Qs)</span>
+                                    <span class="kb-indicator-badge ref1" title="Reference Source KB: KB Files/mathematics/reference_source_cordova/ch7_algebraic_expressions/"><i class="fas fa-book-reader"></i> Cordova Ch 7 (10 Qs)</span>
+                                    <span class="badge-status-dual">📙 Dual: Main + Ref 1 Ch 7</span>
+                                    <span class="badge-date">Updated: 17 Sep 2026</span>
+                                </h3>
+                                <p class="ch-desc">Comprehensive dual-track edition: Main Course + Ref 1 Ch 7 (Algebraic Expressions). Variables, terms, factor tree diagrams, numerical &amp; literal coefficients, degree of polynomials (single &amp; multi-variable), linear/quadratic/cubic classifications, horizontal &amp; column addition/subtraction, 37 solved examples, Exercises 7.1–7.3 (31 sums), Review drills, HOTS, and dual-method competitive solvers.</p>
+                                <div class="ch-tags">
+                                    <span class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1);"><i class="fas fa-graduation-cap"></i> Main + Ref 1</span>
+                                    <span class="tag" style="color:#10B981">Factor Trees</span>
+                                    <span class="tag" style="color:#38bdf8">Polynomial Degrees</span>
+                                    <span class="tag" style="color:#f472b6">Dual-Method Solvers</span>
+                                    <span class="tag" style="color:#8B5CF6">12 Tabs &amp; 20 Submodules</span>
+                                    <span class="tag" style="color:#10B981">Verified</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
                     </div>
                 </div>
 
@@ -646,7 +1025,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         <div class="ch-num">05</div>
                         <a href="chapters/maths/maths_ch5.html" class="ch-title-link">
                             <div class="ch-content">
-                                <h3 class="ch-title"><span class="update-dot" title="Recently updated and enhanced with Ref 1 Ch 11"></span>Parallel and Intersecting Lines <span style="font-size:0.7rem; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.4); color:#fbbf24; padding:2px 7px; border-radius:4px; font-weight:700;">📙 Dual: Main + Ref 1 Ch 11</span> <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Updated: 18 Sep 2026</span> <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently updated and enhanced with Ref 1 Ch 11"></span>Parallel and Intersecting Lines</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch5_parallel_intersecting_lines/"><i class="fas fa-database"></i> MTG (8 Qs)</span>
+                                    <span class="kb-indicator-badge ref1" title="Reference Source KB: KB Files/mathematics/reference_source_cordova/ch11_lines_and_angles/"><i class="fas fa-book-reader"></i> Cordova Ch 11 (33 Qs)</span>
+                                    <span class="badge-status-dual">📙 Dual: Main + Ref 1 Ch 11</span>
+                                    <span class="badge-date">Updated: 18 Sep 2026</span>
+                                </h3>
                                 <p class="ch-desc">Comprehensive dual-track edition: Main Course + Ref 1 Ch 11 (Lines and Angles). Geometry of intersecting lines, linear pairs, vertically opposite angles, parallel lines &amp; transversals, F/Z/C angle rules, auxiliary line constructions, 26 solved examples, Exercises 11.1–11.2, Review drills, HOTS, Mental Maths Corner (12 Qs), 28-Question Practice Test Paper, and dual-method competitive solvers.</p>
                                 <div class="ch-tags">
                                     <span class="tag" style="color:#c084fc; border-color:rgba(192,132,252,0.35); background:rgba(192,132,252,0.1);"><i class="fas fa-file-signature"></i> Practice Test Paper (Ref 1 Ch 11 • 28 Qs)</span>
@@ -659,15 +1044,19 @@ document.addEventListener("DOMContentLoaded", function() {
                                 </div>
                             </div>
                         </a>
-                        <div class="ch-actions">
-                            <a href="chapters/maths/maths_ch5.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Dual Track</a>
-                        </div>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">07</div>
                         <a href="chapters/maths/maths_ch7.html" class="ch-title-link">
                             <div class="ch-content">
-                                <h3 class="ch-title"><span class="update-dot" title="Recently updated and enhanced with Ref 1 Ch 12"></span>A Tale of Three Intersecting Lines <span style="font-size:0.7rem; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.4); color:#fbbf24; padding:2px 7px; border-radius:4px; font-weight:700;">📙 Dual: Main + Ref 1 Ch 12</span> <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Updated: 18 Sep 2026</span> <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
+                                <h3 class="ch-title">
+                                    <span class="ch-title-text"><span class="update-dot" title="Recently updated and enhanced with Ref 1 Ch 12"></span>A Tale of Three Intersecting Lines</span>
+                                    <span class="kb-indicator-badge ready" title="Main Coursebook KB: KB Files/mathematics/main_source_mtg/ch7_tale_of_three_lines_triangles/"><i class="fas fa-database"></i> MTG (13 Qs)</span>
+                                    <span class="kb-indicator-badge ref1" title="Reference Source KB: KB Files/mathematics/reference_source_cordova/ch12_triangles_and_properties/"><i class="fas fa-book-reader"></i> Cordova Ch 12 (36 Qs)</span>
+                                    <span class="badge-status-dual">📙 Dual: Main + Ref 1 Ch 12</span>
+                                    <span class="badge-date">Updated: 18 Sep 2026</span>
+                                </h3>
                                 <p class="ch-desc">Comprehensive dual-track edition: Main Course + Ref 1 Ch 12 (The Triangle and Its Properties). Triangle inequality, constructions, angle sum &amp; exterior angles, altitudes &amp; medians, Baudhāyana-Pythagoras theorem, Pythagorean triplets, 48+ solved examples, Exercises 12.1–12.3, review drills, HOTS, 34-Question Practice Test Paper, and dual-method competitive solvers.</p>
                                 <div class="ch-tags">
                                     <span class="tag" style="color:#c084fc; border-color:rgba(192,132,252,0.35); background:rgba(192,132,252,0.1);"><i class="fas fa-file-signature"></i> Practice Test Paper (Ref 1 Ch 12 • 34 Qs)</span>
@@ -680,51 +1069,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 </div>
                             </div>
                         </a>
-                        <div class="ch-actions">
-                            <a href="chapters/maths/maths_ch7.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Dual Track</a>
-                            <button onclick="openChapterLog('maths_ch7')" class="btn-link" title="Revision Changelog"><i class="fas fa-history"></i> Log</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Algebra & Decimals Section -->
-                <div id="sec-alg" class="category-section">
-                    <div class="chapter-card">
-                        <div class="ch-num">03</div>
-                        <a href="chapters/maths/maths_ch3.html" class="ch-title-link">
-                            <div class="ch-content">
-                                <h3 class="ch-title"><span class="update-dot" title="Recently updated with School Test Paper"></span>A Peek Beyond the Point <span style="font-size:0.7rem; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#10B981; padding:2px 7px; border-radius:4px; font-weight:600;">🔋 100% Ready</span> <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Updated: 17 Sep 2026</span> <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
-                                <p class="ch-desc">Decimal notation, place value, conversion from fractions, arithmetic with decimals in daily life, 22 solved examples, and 47-Question School Test Paper.</p>
-                                <div class="ch-tags">
-                                    <span class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1);"><i class="fas fa-graduation-cap"></i> Dual Track: Main + Ref 1 Ch 3</span>
-                                    <a href="chapters/maths/test_decimals_school_paper.html" class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1); text-decoration:none;"><i class="fas fa-file-signature"></i> School Test (47 Qs) &rarr;</a>
-                                    <span class="tag" style="color:#8B5CF6">Decimals</span>
-                                    <span class="tag" style="color:#8B5CF6">Operations &amp; Metric Units</span>
-                                    <span class="tag" style="color:#10B981">11 Tabs &amp; 25 Submodules</span>
-                                    <span class="tag" style="color:#10B981">100% Verified</span>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="chapter-card">
-                        <div class="ch-num">04</div>
-                        <a href="chapters/maths/maths_ch4.html" class="ch-title-link">
-                            <div class="ch-content">
-                                <h3 class="ch-title"><span class="update-dot" title="Recently enhanced with Ref 1 Ch 7"></span>Expressions using Letter-Numbers <span style="font-size:0.7rem; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.4); color:#fbbf24; padding:2px 7px; border-radius:4px; font-weight:700;">📙 Dual: Main + Ref 1 Ch 7</span> <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Updated: 17 Sep 2026</span> <i class="fas fa-arrow-right ch-arrow-icon"></i></h3>
-                                <p class="ch-desc">Comprehensive dual-track edition: Main Course + Ref 1 Ch 7 (Algebraic Expressions). Variables, terms, factor tree diagrams, numerical &amp; literal coefficients, degree of polynomials (single &amp; multi-variable), linear/quadratic/cubic classifications, horizontal &amp; column addition/subtraction, 37 solved examples, Exercises 7.1–7.3 (31 sums), Review drills, HOTS, and dual-method competitive solvers.</p>
-                                <div class="ch-tags">
-                                    <span class="tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.35); background:rgba(245,158,11,0.1);"><i class="fas fa-graduation-cap"></i> Main + Ref 1</span>
-                                    <span class="tag" style="color:#10B981">Factor Trees</span>
-                                    <span class="tag" style="color:#38bdf8">Polynomial Degrees</span>
-                                    <span class="tag" style="color:#f472b6">Dual-Method Solvers</span>
-                                    <span class="tag" style="color:#8B5CF6">12 Tabs &amp; 20 Submodules</span>
-                                    <span class="tag" style="color:#10B981">Verified</span>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="ch-actions">
-                            <a href="chapters/maths/maths_ch4.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Dual Track</a>
-                        </div>
+                        <div class="ch-card-arrow" title="Open Chapter"><i class="fas fa-chevron-right"></i></div>
                     </div>
                 </div>
 
@@ -757,11 +1102,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         <a href="chapters/maths/test_arithmetic_expressions.html" class="ch-title-link">
                             <div class="ch-content">
                                 <h3 class="ch-title">
-                                    <span class="update-dot" style="background-color:#F59E0B; box-shadow:0 0 6px #F59E0B;"></span>
-                                    Arithmetic Expressions Practice Paper
+                                    <span class="ch-title-text"><span class="update-dot" style="background-color:#F59E0B; box-shadow:0 0 6px #F59E0B;"></span>Arithmetic Expressions Practice Paper</span>
                                     <span style="font-size:0.7rem; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.3); color:#fbbf24; padding:2px 7px; border-radius:4px; font-weight:700;">🎯 Mid-Term Prep (80M)</span>
-                                    <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Given: Mid-Sep 2026</span>
-                                    <i class="fas fa-arrow-right ch-arrow-icon"></i>
+                                    <span class="badge-date">Given: Mid-Sep 2026</span>
                                 </h3>
                                 <p class="ch-desc">
                                     <strong>Scope:</strong> Chapter 2 (Arithmetic Expressions). Focuses on bracket precedence hierarchy (bar, round, curly, square), distributive factoring shortcuts, sign changes, and mental relational comparisons (&lt;, &gt;, =) without manual multiplication.
@@ -777,7 +1120,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                         </a>
                         <div class="ch-actions">
-                            <a href="chapters/maths/test_arithmetic_expressions.html" class="btn-link btn-gemini" style="color:#fbbf24; border-color:rgba(245,158,11,0.3);"><i class="fas fa-play"></i> Open Test</a>
                             <a href="source_materials/Maths PDFs/Class 7 Ch 2 Arithmetic Expressions Practice Paper.pdf" target="_blank" class="btn-link" title="Download / View Original Scans"><i class="fas fa-file-pdf"></i> PDF</a>
                         </div>
                     </div>
@@ -788,11 +1130,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         <a href="chapters/maths/test_lines_angles.html" class="ch-title-link">
                             <div class="ch-content">
                                 <h3 class="ch-title">
-                                    <span class="update-dot" style="background-color:#34d399; box-shadow:0 0 6px #34d399;"></span>
-                                    Lines &amp; Angles Practice Paper (Ref 1 Ch 11)
+                                    <span class="ch-title-text"><span class="update-dot" style="background-color:#34d399; box-shadow:0 0 6px #34d399;"></span>Lines &amp; Angles Practice Paper (Ref 1 Ch 11)</span>
                                     <span style="font-size:0.7rem; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:#10B981; padding:2px 7px; border-radius:4px; font-weight:700;">🎯 Mid-Term Prep (80M)</span>
-                                    <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Given: Mid-Sep 2026</span>
-                                    <i class="fas fa-arrow-right ch-arrow-icon"></i>
+                                    <span class="badge-date">Given: Mid-Sep 2026</span>
                                 </h3>
                                 <p class="ch-desc">
                                     <strong>Scope:</strong> Chapter 5 &bull; Ref 1 Chapter 11 (Pages 34&ndash;36). Exercises 11.1&ndash;11.2, linear pairs, vertically opposite angles, parallel lines &amp; transversal theorems (F, Z, C rules), objective MCQs, fill in blanks, and HOTS auxiliary line proofs.
@@ -808,7 +1148,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                         </a>
                         <div class="ch-actions">
-                            <a href="chapters/maths/test_lines_angles.html" class="btn-link btn-gemini" style="color:#34d399; border-color:rgba(16,185,129,0.3);"><i class="fas fa-play"></i> Open Test</a>
                             <a href="source_materials/Maths PDFs/Class 7 Geometry Concept Practice Paper (Ch 11 &amp; Ch 12).pdf" target="_blank" class="btn-link" title="Download / View Original Scans"><i class="fas fa-file-pdf"></i> PDF</a>
                         </div>
                     </div>
@@ -819,11 +1158,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         <a href="chapters/maths/test_triangles_properties.html" class="ch-title-link">
                             <div class="ch-content">
                                 <h3 class="ch-title">
-                                    <span class="update-dot" style="background-color:#60a5fa; box-shadow:0 0 6px #60a5fa;"></span>
-                                    Properties of Triangles Practice Paper (Ref 1 Ch 12)
+                                    <span class="ch-title-text"><span class="update-dot" style="background-color:#60a5fa; box-shadow:0 0 6px #60a5fa;"></span>Properties of Triangles Practice Paper (Ref 1 Ch 12)</span>
                                     <span style="font-size:0.7rem; background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.3); color:#60a5fa; padding:2px 7px; border-radius:4px; font-weight:700;">🎯 Mid-Term Prep (80M)</span>
-                                    <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Given: Mid-Sep 2026</span>
-                                    <i class="fas fa-arrow-right ch-arrow-icon"></i>
+                                    <span class="badge-date">Given: Mid-Sep 2026</span>
                                 </h3>
                                 <p class="ch-desc">
                                     <strong>Scope:</strong> Chapter 7 &bull; Ref 1 Chapter 12 (Pages 37&ndash;39). Angle sum 180&deg;, exterior angle ratio problems, Baudhāyana-Pythagoras theorem (ladder problem, towers distance), acute angle properties, and the 6-pointed star 360&deg; proof.
@@ -839,7 +1176,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                         </a>
                         <div class="ch-actions">
-                            <a href="chapters/maths/test_triangles_properties.html" class="btn-link btn-gemini" style="color:#60a5fa; border-color:rgba(59,130,246,0.3);"><i class="fas fa-play"></i> Open Test</a>
                             <a href="source_materials/Maths PDFs/Class 7 Geometry Concept Practice Paper (Ch 11 &amp; Ch 12).pdf" target="_blank" class="btn-link" title="Download / View Original Scans"><i class="fas fa-file-pdf"></i> PDF</a>
                         </div>
                     </div>
@@ -850,11 +1186,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         <a href="chapters/maths/test_decimals_school_paper.html" class="ch-title-link">
                             <div class="ch-content">
                                 <h3 class="ch-title">
-                                    <span class="update-dot" style="background-color:#c084fc; box-shadow:0 0 6px #c084fc;"></span>
-                                    Decimals Diagnostic School Test Paper
+                                    <span class="ch-title-text"><span class="update-dot" style="background-color:#c084fc; box-shadow:0 0 6px #c084fc;"></span>Decimals Diagnostic School Test Paper</span>
                                     <span style="font-size:0.7rem; background:rgba(192,132,252,0.15); border:1px solid rgba(192,132,252,0.3); color:#c084fc; padding:2px 7px; border-radius:4px; font-weight:700;">🎯 Mid-Term Prep</span>
-                                    <span style="font-size:0.68rem; color:var(--text-muted); font-family:'Space Mono', monospace;">Given: Sep 2026</span>
-                                    <i class="fas fa-arrow-right ch-arrow-icon"></i>
+                                    <span class="badge-date">Given: Sep 2026</span>
                                 </h3>
                                 <p class="ch-desc">
                                     <strong>Scope:</strong> Chapter 3 (A Peek Beyond the Point &bull; Decimals). Comprehensive 47-question paper covering place value, ordering, addition/subtraction/multiplication/division of decimals, metric units, and multi-step word problems.
@@ -870,7 +1204,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                         </a>
                         <div class="ch-actions">
-                            <a href="chapters/maths/test_decimals_school_paper.html" class="btn-link btn-gemini" style="color:#c084fc; border-color:rgba(192,132,252,0.3);"><i class="fas fa-play"></i> Open Test</a>
+                            <a href="source_materials/Maths PDFs/Class 7 Ch 3 A Peek Beyond the Point Exercise-I.pdf" target="_blank" class="btn-link" title="Download / View Original Scans"><i class="fas fa-file-pdf"></i> PDF</a>
                         </div>
                     </div>
                 </div>
