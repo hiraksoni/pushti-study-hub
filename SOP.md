@@ -1,4 +1,4 @@
-# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.3)
+# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.5)
 *The Definitive Architectural, Design, Pedagogical & Verification Standard for AI-Assisted Generation*
 
 ---
@@ -119,6 +119,29 @@ d:\Users\expor\Downloads\Codes\
   3. **Build Before Proceeding**: If a requested chapter does not yet possess a KB file in `KB Files/`, the AI model MUST compile the chapter's dual-file KB pair first, and only then proceed with the task.
   4. **Living Knowledge Base**: Any newly acquired knowledge, teacher notes, periodic drills, school exam problems, or corrections for that chapter must be immediately appended and synchronized back into that chapter's KB file.
   5. **Smart Token Conservation**: AI assistants must proactively provide smart recommendations to minimize token usage, such as querying structured KB files, using precise line slicing, and directing users to client-side test generation tools.
+
+### 1.11 The "Hath Fero" Urban Planning & Deterministic Blueprint Protocol
+* **Core Philosophy (The Urban Planning Metaphor)**:
+  - **Subject = Province**: Sets the immutable grid system and street names for all its cities.
+  - **Chapter = City**: Structurally identical footprint. Only the **Color Palette (Accent Theme)** and the **Curriculum Content** differ.
+  - **Primary Navigation Tabs = Main Roads / Avenues**: Must have **strictly deterministic indices (1 to N)**. For any chapter in that province, Tab 1 is always the same type of content, Tab 2 is always the same, Tab 3 is always the same.
+  - **Submodule Pills = Sub-streets & Blocks**: Inside any tab, sub-pills (e.g. Drills: MCQs, Fill in the Blanks, True/False) follow an **invariant 1 to M sequence**.
+  - **The "Doozy Kid" Standard**: Even a tired or distracted 12-year-old child must know by instant muscle memory exactly which tab and sub-pill contains notes, exercises, or interactive practice without searching or guessing.
+* **The Zero-Hallucination & "Pending Content" Sentinel**:
+  - Under no circumstances may an AI assistant omit, drop, or renumber a mandatory street/tab simply because content for that section is not yet ready or in the knowledge base.
+  - If content is missing, the AI MUST render the standardized **Pending Content Sentinel**:
+    ```html
+    <div class="pending-content-card">
+      <div class="pending-icon"><i class="fas fa-hammer"></i></div>
+      <div class="pending-body">
+        <h4 class="pending-title">[Pending Content: Section Name]</h4>
+        <p class="pending-desc">This curriculum street is structured in the master blueprint but pending authoring/addition. No content currently keyed.</p>
+        <div class="pending-badge"><i class="fas fa-exclamation-circle"></i> PENDING_ADDITION &bull; Content Needed Here</div>
+      </div>
+    </div>
+    ```
+  - This prevents layout shifts, prevents AI hallucination, and gives the parent/admin immediate visual clarity on pending items.
+* **Invocation Protocol**: When the user invokes `"Hath Fero [scope]"`, the AI model automatically runs a comprehensive audit across all chapters of that province, verifies street indices, sub-streets, color theme isolation, checks relative path depths, and leaves the Hath Fero verification stamp.
 
 
 ---
@@ -1060,6 +1083,7 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 
 | Version | Date | Key Architectural Additions |
 | :---: | :---: | :--- |
+| **v3.5** | 2026-09-24 | **The "Hath Fero" Urban Planning & Deterministic Blueprint Protocol (Section 1.11, `.agents/rules/hath_fero.md`, `scripts/maintenance/hath_fero_audit.py`)**: Codified the province-city-street-substreet spatial invariance standard. Mandates strictly identical tab indices across all chapters within a subject province, invariant sub-street sequences (e.g. MCQs, FIB, T/F), isolated chapter color theming, and standardized 'Pending Content' Sentinels (`.pending-content-card`) so missing material is never silently omitted or hallucinated. |
 | **v3.4** | 2026-09-20 | **Maximum Horizontal Real-Estate Utilization & Sticky Tier-2 Submodule Nav Standard (Section 2.4.1 & 3.1.2)**: Mandated generous 1600px+ content max-width, responsive multi-column question grids (2-column on desktop/laptop), 2x2 MCQ option layout, and multi-column concept/enrichment grids, eliminating wasteful whitespace voids and reducing vertical page scrolling by ~50% on wide desktop and laptop viewports. Standardized sticky top-docking (`top: var(--header-height); z-index: 900; background: var(--bg-sticky); backdrop-filter: blur(12px)`) for submodule navigation pills (`.submodule-nav`), exam control bars (`.exam-control-bar`), and search bars (`.sticky-search-bar`). |
 | **v3.3** | 2026-09-19 | **Centralized Test & Exam Prep Hub Architecture & High-Density Test Standards (Section 4.4, CP-TEST-1)**: Standardized dedicated "#tab-tests" / "#sec-tests" across all 7 subject hubs with deep-link hash listener, decoupling tests from chapter interiors and aggregating them in a centralized subject test bank with complete administration metadata (date given, target 80M exam, syllabus scope, interactive links, original scans); codified strict Left Dock Rail and high-density 4-column single-line MCQ layout for standalone test papers. |
 | **v3.2** | 2026-09-18 | **Implicit Grade Scope & Zero "Class 7" Redundancy Standard (Section 1.1, Section 2.10, CP-TITLE-1)**: Codified that because Pushti Study Hub is built exclusively for Pushti in Class 7 CBSE, all grade context is implicit. Prepending or repeating "Class 7" before chapter names, tab headers, breadcrumbs, card headings, and test papers is strictly prohibited unless explicitly contrasting across two different academic standards (e.g. Class 6 prerequisite vs. Class 7 curriculum, or Class 7 vs. Class 8 Olympiad preview). |

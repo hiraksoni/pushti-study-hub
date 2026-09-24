@@ -4,7 +4,7 @@
 * **Date & Timestamp**: 24 September 2026, 03:45 PM IST
 * **Participants**: Hirak Soni (Father & Project Architect), Antigravity AI (Pair Programming Assistant)
 * **Status**: Codified & Active Standard
-* **Version**: 2.4 (English Grammar Batch 4 Active: G1, G2, G3 Nouns & Pronouns)
+* **Version**: 2.5 (English Grammar Batch 5 Active: G4, G5, G6 Case, Adjectives, Determiners)
 
 ---
 
@@ -118,7 +118,10 @@ d:\Users\expor\Downloads\Codes\
 │       └── grammar/
 │           ├── g1_nouns_classification/          (66 Items • eng_gram_g1_nouns_classification)
 │           ├── g2_nouns_number_gender/           (79 Items • eng_gram_g2_nouns_number_gender)
-│           └── g3_pronouns/                      (79 Items • eng_gram_g3_pronouns)
+│           ├── g3_pronouns/                      (79 Items • eng_gram_g3_pronouns)
+│           ├── g4_case_noun_pronoun/             (79 Items • eng_gram_g4_case_noun_pronoun)
+│           ├── g5_adjectives/                    (79 Items • eng_gram_g5_adjectives)
+│           └── g6_determiners/                   (79 Items • eng_gram_g6_determiners)
 ├── knowledge_base/                               (Mirrored System Store)
 │   ├── sanskrit/
 │   ├── mathematics/
@@ -334,6 +337,9 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 | **English (Grammar)** | `g1_nouns_classification` | Lesson 1: Nouns — Formation & Classification | 66 | `KB Files/english/grammar/g1_nouns_classification/` | ✅ Complete |
 | **English (Grammar)** | `g2_nouns_number_gender` | Lesson 2: Countable & Uncountable Nouns | 79 | `KB Files/english/grammar/g2_nouns_number_gender/` | ✅ Complete |
 | **English (Grammar)** | `g3_pronouns` | Lesson 3: Pronouns — Types & Usage | 79 | `KB Files/english/grammar/g3_pronouns/` | ✅ Complete |
+| **English (Grammar)** | `g4_case_noun_pronoun` | Lesson 4: Case — Noun and Pronoun | 79 | `KB Files/english/grammar/g4_case_noun_pronoun/` | ✅ Complete |
+| **English (Grammar)** | `g5_adjectives` | Lesson 5: Adjectives — Classification & Comparison | 79 | `KB Files/english/grammar/g5_adjectives/` | ✅ Complete |
+| **English (Grammar)** | `g6_determiners` | Lesson 6: Determiners — Types & Functions | 79 | `KB Files/english/grammar/g6_determiners/` | ✅ Complete |
 
 ---
 *Authored & Verified: 24 September 2026 | Pushti Study Hub Core Engineering*
