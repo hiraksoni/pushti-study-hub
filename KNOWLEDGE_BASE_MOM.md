@@ -1,10 +1,10 @@
 # PUSHTI STUDY HUB — MINUTES OF MEETING (MOM)
 **Standardized Knowledge Base (KB) Architecture & Automated Question Paper Generation Engine**
 
-* **Date & Timestamp**: 24 September 2026, 03:45 PM IST
+* **Date & Timestamp**: 24 September 2026, 07:25 PM IST
 * **Participants**: Hirak Soni (Father & Project Architect), Antigravity AI (Pair Programming Assistant)
 * **Status**: Codified & Active Standard
-* **Version**: 2.5 (English Grammar Batch 5 Active: G4, G5, G6 Case, Adjectives, Determiners)
+* **Version**: 3.2 (Hindi Batch 5 Complete: Grammar Finale G6 समास, G7 संज्ञा, G22 मुहावरे एवं लोकोक्तियाँ — 100% Hindi Curriculum Complete! 🎉 | Global Total: 4,165 Items across 82 Dossiers)
 
 ---
 
@@ -46,11 +46,11 @@ d:\Users\expor\Downloads\Codes\
 │   │   └── ch_w1_rachanatmak_karyani/            (16 Tasks)
 │   ├── mathematics/
 │   │   ├── main_source_mtg/
-│   │   │   ├── ch1_large_numbers/                (12 Items • MATH_MTG_CH01)
-│   │   │   ├── ch2_arithmetic_expressions/        (70 Items • MATH_MTG_CH02)
+│   │   │   ├── ch1_large_numbers/                (112 Items • Expanded & Verified)
+│   │   │   ├── ch2_arithmetic_expressions/        (92 Items • Expanded & Verified)
 │   │   │   ├── ch3_decimals/                      (31 Items • MATH_MTG_CH03)
 │   │   │   ├── ch4_expressions_letter_numbers/    (18 Items • MATH_MTG_CH04)
-│   │   │   ├── ch5_parallel_intersecting_lines/   (8 Items • MATH_MTG_CH05)
+│   │   │   ├── ch5_parallel_intersecting_lines/   (126 Items • Expanded & Verified)
 │   │   │   ├── ch6_number_play/                   (25 Items • MATH_MTG_CH06)
 │   │   │   ├── ch7_tale_of_three_lines_triangles/ (13 Items • MATH_MTG_CH07)
 │   │   │   └── ch8_working_with_fractions/        (12 Items • MATH_MTG_CH08)
@@ -98,12 +98,15 @@ d:\Users\expor\Downloads\Codes\
 │   │       ├── ch14_democracy/                   (15 Items)
 │   │       └── ch17_markets/                     (56 Items)
 │   └── ict/
-│       ├── ch1_number_system/                    (108 Items)
+│       ├── ch1_number_system/                    (80 Items • Expanded & Verified)
 │       │   ├── ict_ch1_number_system.md / .json
-│       ├── ch2_excel_advanced/                   (74 Items)
-│       ├── ch3_artificial_intelligence/          (54 Items)
+│       ├── ch2_excel_advanced/                   (74 Items • Expanded & Verified)
+│       │   ├── ict_ch2_excel_advanced.md / .json
+│       ├── ch3_artificial_intelligence/          (54 Items • Expanded & Verified)
+│       │   ├── ict_ch3_artificial_intelligence.md / .json
 │       ├── ch4_html_css/                         (82 Items)
-│       └── ch5_lists_images/                     (72 Items)
+│       └── ch5_lists_images/                     (74 Items • Expanded & Verified)
+│           ├── ict_ch5_lists_images.md / .json
 │   └── english/
 │       ├── literature/
 │       │   ├── ch1_a_hero/                       (23 Items • eng_lit_ch1_a_hero)
@@ -121,7 +124,31 @@ d:\Users\expor\Downloads\Codes\
 │           ├── g3_pronouns/                      (79 Items • eng_gram_g3_pronouns)
 │           ├── g4_case_noun_pronoun/             (79 Items • eng_gram_g4_case_noun_pronoun)
 │           ├── g5_adjectives/                    (79 Items • eng_gram_g5_adjectives)
-│           └── g6_determiners/                   (79 Items • eng_gram_g6_determiners)
+│           ├── g6_determiners/                   (79 Items • eng_gram_g6_determiners)
+│           ├── g7_articles/                      (79 Items • eng_gram_g7_articles)
+│           ├── g8_verbs/                         (79 Items • eng_gram_g8_verbs)
+│           ├── g9_modals_auxiliaries/            (79 Items • eng_gram_g9_modals_auxiliaries)
+│           ├── g10_finite_non_finite/            (79 Items • eng_gram_g10_finite_non_finite)
+│           ├── g17_active_passive/               (79 Items • eng_gram_g17_active_passive)
+│           └── v1_vocabulary_word_power/         (79 Items • eng_gram_v1_vocabulary_word_power)
+│   └── hindi/
+│       ├── literature/
+│       │   ├── ch1_humko_man_ki_shakti_dena/     (34 Items • hin_lit_ch1)
+│       │   ├── ch2_boodhi_kaki/                  (34 Items • hin_lit_ch2)
+│       │   ├── ch3_asafalta_se_seekh/            (34 Items • hin_lit_ch3)
+│       │   ├── ch4_yeh_bhi_ek_pariksha/          (34 Items • hin_lit_ch4)
+│       │   ├── ch5_sneh_bhari_paati/             (34 Items • hin_lit_ch5)
+│       │   ├── ch6_missile_ke_janak/             (34 Items • hin_lit_ch6)
+│       │   ├── ch7_maa_ka_upahar/                (34 Items • hin_lit_ch7)
+│       │   └── ch8_vishwarajya/                  (34 Items • hin_lit_ch8)
+│       └── grammar/
+│           ├── g1_bhasha_lipi_vyakaran/          (34 Items • hin_gram_g1)
+│           ├── g2_varna_vichar/                  (34 Items • hin_gram_g2)
+│           ├── g3_shabda_vichar/                 (34 Items • hin_gram_g3)
+│           ├── g4_upsarg_pratyay/                (34 Items • hin_gram_g4)
+│           ├── g6_samas/                         (34 Items • hin_gram_g6)
+│           ├── g7_sangya/                        (34 Items • hin_gram_g7)
+│           └── g22_muhavare_lokoktiyan/          (34 Items • hin_gram_g22)
 ├── knowledge_base/                               (Mirrored System Store)
 │   ├── sanskrit/
 │   ├── mathematics/
@@ -130,14 +157,18 @@ d:\Users\expor\Downloads\Codes\
 │   ├── physics/
 │   ├── social_science/
 │   ├── ict/
-│   └── english/
+│   ├── english/
+│   └── hindi/
 ├── admin_worksheet_generator.html
 ├── scripts/
 │   ├── build_chapter_from_kb.py                  (Zero-Token Production HTML Compiler)
 │   ├── generate_sanskrit_kbs.py                  (Sanskrit KB Builder)
 │   ├── generate_mathematics_kbs.py               (Mathematics KB Builder)
 │   ├── generate_physics_kbs.py                   (Physics KB Builder)
-│   └── generate_social_science_kbs.py            (Social Science KB Builder)
+│   ├── generate_social_science_kbs.py            (Social Science KB Builder)
+│   ├── generate_english_batch1_kbs.py            (English Literature KB Builder)
+│   ├── generate_english_batch7_grammar_kbs.py    (English Grammar Batch 7 Builder)
+│   └── generate_hindi_batch1_kbs.py              (Hindi Literature Batch 1 Builder)
 └── KNOWLEDGE_BASE_MOM.md                         (This Document)
 ```
 
@@ -275,7 +306,7 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 
 ---
 
-## 7. Active Knowledge Base Inventory (Total: 2,944 Standardized Items across 58 Dossiers)
+## 7. Active Knowledge Base Inventory (Total: 3,757 Standardized Items across 70 Dossiers)
 
 | Subject | Chapter Key | Chapter Name | Items | File Path | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -291,11 +322,11 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 | **Sanskrit** | `ch_g1_sandhi_avyaya` | G1: अनुप्रयुक्त-व्याकरणम् (स्वरसन्धिः एवं अव्ययानि) | 44 | `KB Files/sanskrit/ch_g1_sandhi_avyaya/` | ✅ Complete |
 | **Sanskrit** | `ch_g2_upapada_vibhakti` | G2: उपपद-विभक्तयः (Upapada Vibhakti & Case Rules) | 35 | `KB Files/sanskrit/ch_g2_upapada_vibhakti/` | ✅ Complete |
 | **Sanskrit** | `ch_w1_rachanatmak_karyani` | W1: रचनात्मककार्याणि (पत्रलेखनम्, चित्रवर्णनम्, संवादलेखनम्) | 16 | `KB Files/sanskrit/ch_w1_rachanatmak_karyani/` | ✅ Complete |
-| **Mathematics (MTG)** | `ch1_large_numbers` | Large Numbers Around Us (`MATH_MTG_CH01`) | 12 | `KB Files/mathematics/main_source_mtg/ch1_large_numbers/` | ✅ Complete |
-| **Mathematics (MTG)** | `ch2_arithmetic_expressions` | Arithmetic Expressions (`MATH_MTG_CH02`) | 70 | `KB Files/mathematics/main_source_mtg/ch2_arithmetic_expressions/` | ✅ Complete |
+| **Mathematics (MTG)** | `ch1_large_numbers` | Large Numbers Around Us (`MATH_MTG_CH01`) | 112 | `KB Files/mathematics/main_source_mtg/ch1_large_numbers/` | ✅ Complete (Exhaustive) |
+| **Mathematics (MTG)** | `ch2_arithmetic_expressions` | Arithmetic Expressions (`MATH_MTG_CH02`) | 92 | `KB Files/mathematics/main_source_mtg/ch2_arithmetic_expressions/` | ✅ Complete (Exhaustive) |
 | **Mathematics (MTG)** | `ch3_decimals` | A Peek Beyond the Point (Decimals) (`MATH_MTG_CH03`) | 31 | `KB Files/mathematics/main_source_mtg/ch3_decimals/` | ✅ Complete |
 | **Mathematics (MTG)** | `ch4_expressions_letter_numbers` | Expressions using Letter-Numbers (`MATH_MTG_CH04`) | 18 | `KB Files/mathematics/main_source_mtg/ch4_expressions_letter_numbers/` | ✅ Complete |
-| **Mathematics (MTG)** | `ch5_parallel_intersecting_lines` | Parallel and Intersecting Lines (`MATH_MTG_CH05`) | 8 | `KB Files/mathematics/main_source_mtg/ch5_parallel_intersecting_lines/` | ✅ Complete |
+| **Mathematics (MTG)** | `ch5_parallel_intersecting_lines` | Parallel and Intersecting Lines (`MATH_MTG_CH05`) | 126 | `KB Files/mathematics/main_source_mtg/ch5_parallel_intersecting_lines/` | ✅ Complete (Exhaustive) |
 | **Mathematics (MTG)** | `ch6_number_play` | Number Play (`MATH_MTG_CH06`) | 25 | `KB Files/mathematics/main_source_mtg/ch6_number_play/` | ✅ Complete |
 | **Mathematics (MTG)** | `ch7_tale_of_three_lines_triangles` | A Tale of Three Intersecting Lines (`MATH_MTG_CH07`) | 13 | `KB Files/mathematics/main_source_mtg/ch7_tale_of_three_lines_triangles/` | ✅ Complete |
 | **Mathematics (MTG)** | `ch8_working_with_fractions` | Working with Fractions (`MATH_MTG_CH08`) | 12 | `KB Files/mathematics/main_source_mtg/ch8_working_with_fractions/` | ✅ Complete |
@@ -320,11 +351,11 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 | **Social Science (Civ)** | `ch13_gender` | Understanding Gender | 40 | `KB Files/social_science/civics/ch13_gender/` | ✅ Complete |
 | **Social Science (Civ)** | `ch14_democracy` | How Does Democracy Work? (State Government) | 15 | `KB Files/social_science/civics/ch14_democracy/` | ✅ Complete |
 | **Social Science (Civ)** | `ch17_markets` | Markets Around Us | 56 | `KB Files/social_science/civics/ch17_markets/` | ✅ Complete |
-| **ICT** | `ch1_number_system` | Number System & Binary Arithmetic | 108 | `KB Files/ict/ch1_number_system/` | ✅ Complete |
-| **ICT** | `ch2_excel_advanced` | Advanced Features of Excel | 74 | `KB Files/ict/ch2_excel_advanced/` | ✅ Complete |
-| **ICT** | `ch3_artificial_intelligence`| Artificial Intelligence | 54 | `KB Files/ict/ch3_artificial_intelligence/` | ✅ Complete |
+| **ICT** | `ch1_number_system` | Number System & Binary Arithmetic | 80 | `KB Files/ict/ch1_number_system/` | ✅ Complete (Exhaustive) |
+| **ICT** | `ch2_excel_advanced` | Advanced Features of Excel | 74 | `KB Files/ict/ch2_excel_advanced/` | ✅ Complete (Exhaustive) |
+| **ICT** | `ch3_artificial_intelligence`| Artificial Intelligence | 54 | `KB Files/ict/ch3_artificial_intelligence/` | ✅ Complete (Exhaustive) |
 | **ICT** | `ch4_html_css` | More on CSS & HTML | 82 | `KB Files/ict/ch4_html_css/` | ✅ Complete |
-| **ICT** | `ch5_lists_images` | Lists and Tables in HTML5 | 72 | `KB Files/ict/ch5_lists_images/` | ✅ Complete |
+| **ICT** | `ch5_lists_images` | Lists and Tables in HTML5 | 74 | `KB Files/ict/ch5_lists_images/` | ✅ Complete (Exhaustive) |
 | **English (Literature)** | `ch1_a_hero` | Unit 1.1: A Hero (R.K. Narayan) | 23 | `KB Files/english/literature/ch1_a_hero/` | ✅ Complete |
 | **English (Literature)** | `ch2_taste_of_watermelon` | Unit 1.2: The Taste of Watermelon (Borden Deal) | 23 | `KB Files/english/literature/ch2_taste_of_watermelon/` | ✅ Complete |
 | **English (Literature)** | `ch3_flower_school` | Unit 1.3: The Flower-School (Rabindranath Tagore) | 18 | `KB Files/english/literature/ch3_flower_school/` | ✅ Complete |
@@ -340,7 +371,29 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 | **English (Grammar)** | `g4_case_noun_pronoun` | Lesson 4: Case — Noun and Pronoun | 79 | `KB Files/english/grammar/g4_case_noun_pronoun/` | ✅ Complete |
 | **English (Grammar)** | `g5_adjectives` | Lesson 5: Adjectives — Classification & Comparison | 79 | `KB Files/english/grammar/g5_adjectives/` | ✅ Complete |
 | **English (Grammar)** | `g6_determiners` | Lesson 6: Determiners — Types & Functions | 79 | `KB Files/english/grammar/g6_determiners/` | ✅ Complete |
+| **English (Grammar)** | `g7_articles` | Lesson 7: Articles — Rules & Omission | 79 | `KB Files/english/grammar/g7_articles/` | ✅ Complete |
+| **English (Grammar)** | `g8_verbs` | Lesson 8: Verbs — Revision & Forms | 79 | `KB Files/english/grammar/g8_verbs/` | ✅ Complete |
+| **English (Grammar)** | `g9_modals_auxiliaries` | Lesson 9: Modals and Auxiliaries | 79 | `KB Files/english/grammar/g9_modals_auxiliaries/` | ✅ Complete |
+| **English (Grammar)** | `g10_finite_non_finite` | Lesson 10: Finite and Non-Finite Verbs | 79 | `KB Files/english/grammar/g10_finite_non_finite/` | ✅ Complete |
+| **English (Grammar)** | `g17_active_passive` | Lesson 17: Active and Passive Voice | 79 | `KB Files/english/grammar/g17_active_passive/` | ✅ Complete |
+| **English (Grammar)** | `v1_vocabulary_word_power` | Lesson 26: Vocabulary & Language Usage | 79 | `KB Files/english/grammar/v1_vocabulary_word_power/` | ✅ Complete |
+| **Hindi (Literature)** | `ch1_humko_man_ki_shakti_dena` | पाठ १: हमको मन की शक्ति देना (गुलज़ार) | 34 | `KB Files/hindi/literature/ch1_humko_man_ki_shakti_dena/` | ✅ Complete |
+| **Hindi (Literature)** | `ch2_boodhi_kaki` | पाठ २: बूढ़ी काकी (मुंशी प्रेमचंद) | 34 | `KB Files/hindi/literature/ch2_boodhi_kaki/` | ✅ Complete |
+| **Hindi (Literature)** | `ch3_asafalta_se_seekh` | पाठ ३: असफलता से सीख (प्रेरणादायी काव्य) | 34 | `KB Files/hindi/literature/ch3_asafalta_se_seekh/` | ✅ Complete |
+| **Hindi (Literature)** | `ch4_yeh_bhi_ek_pariksha` | पाठ ४: यह भी एक परीक्षा (सुरेन्द्र अंचल) | 34 | `KB Files/hindi/literature/ch4_yeh_bhi_ek_pariksha/` | ✅ Complete |
+| **Hindi (Literature)** | `ch5_sneh_bhari_paati` | पाठ ५: स्नेह भरी पाती (उषा वधवा) | 34 | `KB Files/hindi/literature/ch5_sneh_bhari_paati/` | ✅ Complete |
+| **Hindi (Literature)** | `ch6_missile_ke_janak` | पाठ ६: मिसाइल के जनक (डॉ. ए. पी. जे. अब्दुल कलाम) | 34 | `KB Files/hindi/literature/ch6_missile_ke_janak/` | ✅ Complete |
+| **Hindi (Literature)** | `ch7_maa_ka_upahar` | पाठ ७: माँ का उपहार (ऐतिहासिक प्रेरक कथा) | 34 | `KB Files/hindi/literature/ch7_maa_ka_upahar/` | ✅ Complete |
+| **Hindi (Literature)** | `ch8_vishwarajya` | पाठ ८: विश्वराज्य (राष्ट्रकवि मैथिलीशरण गुप्त) | 34 | `KB Files/hindi/literature/ch8_vishwarajya/` | ✅ Complete |
+| **Hindi (Grammar)** | `g1_bhasha_lipi_vyakaran` | व्याकरण पाठ १: भाषा, लिपि और व्याकरण | 34 | `KB Files/hindi/grammar/g1_bhasha_lipi_vyakaran/` | ✅ Complete |
+| **Hindi (Grammar)** | `g2_varna_vichar` | व्याकरण पाठ २: वर्ण विचार (स्वर, व्यंजन, उच्चारण) | 34 | `KB Files/hindi/grammar/g2_varna_vichar/` | ✅ Complete |
+| **Hindi (Grammar)** | `g3_shabda_vichar` | व्याकरण पाठ ३: शब्द विचार (तत्सम, तद्भव, रूढ़, यौगिक) | 34 | `KB Files/hindi/grammar/g3_shabda_vichar/` | ✅ Complete |
+| **Hindi (Grammar)** | `g4_upsarg_pratyay` | व्याकरण पाठ ४: शब्द रचना — उपसर्ग एवं प्रत्यय | 34 | `KB Files/hindi/grammar/g4_upsarg_pratyay/` | ✅ Complete |
+| **Hindi (Grammar)** | `g6_samas` | व्याकरण पाठ ६: शब्द रचना — समास | 34 | `KB Files/hindi/grammar/g6_samas/` | ✅ Complete |
+| **Hindi (Grammar)** | `g7_sangya` | व्याकरण पाठ ७: संज्ञा (Noun) | 34 | `KB Files/hindi/grammar/g7_sangya/` | ✅ Complete |
+| **Hindi (Grammar)** | `g22_muhavare_lokoktiyan` | व्याकरण पाठ २२: मुहावरे एवं लोकोक्तियाँ | 34 | `KB Files/hindi/grammar/g22_muhavare_lokoktiyan/` | ✅ Complete |
 
 ---
 *Authored & Verified: 24 September 2026 | Pushti Study Hub Core Engineering*
+
 

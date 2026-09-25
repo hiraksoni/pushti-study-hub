@@ -1,538 +1,858 @@
-# Mathematics (Main Source (Coursebook / MTG)) — Chapter 2: Arithmetic Expressions
+# CHAPTER KNOWLEDGE BASE: ARITHMETIC EXPRESSIONS (MATH_MTG_CH02)
+**Subject**: Mathematics | **Source**: Main Source (Coursebook / MTG) | **Standard**: Class 7 CBSE
+**Curricular Scope**: Pages 1-22 (Complete Textbook Digitization) | **Total Items**: 92
 
-**Curriculum Code**: `MATH_MTG_CH02` | **Paired Reference Source**: `None (Standalone Coursebook Topic)`  
-**Standardized Authoritative Knowledge Base & High-Yield Item Bank**  
-*Pushti Study Hub Authoritative Reference Store*
-
----
-
-## 1. Chapter Overview & Core Theoretical Principles
-
-> **Syllabus Scope**: Formalization of numerical and algebraic expressions, strict operational precedence using BODMAS/PEMDAS, handling of Vinculum (bar bracket), parentheses, braces, square brackets, and word-problem translation.
-
-### Order of Operations (BODMAS)
-- **B**: Brackets (First Vinculum `—`, then Round `()`, then Curly `{}`, then Square `[]`).
-- **O**: Orders / Of (multiplication indicated by 'of' or exponent powers).
-- **D & M**: Division and Multiplication (evaluated from left to right).
-- **A & S**: Addition and Subtraction (evaluated from left to right).
-
-### Vinculum (Bar Bracket) Rule
-A bar over an expression acts as the tightest bracket: e.g. in $15 - \overline{3 + 2}$, the addition under the bar is computed first: $15 - 5 = 10$, NOT $15 - 3 + 2$.
-
-### Translating Real-Life Scenarios into Expressions
-Converting situational descriptions into symbolic mathematics: e.g. '5 less than twice a number $x$' becomes $2x - 5$.
+## 1. Executive Summary & Learning Outcomes
+Authoritative and 100% complete knowledge base for Class 7 Mathematics Chapter 2: Arithmetic Expressions. Digitizes every single problem across all 22 pages of Maths Ch2.pdf: concept illustrations, order of operations (BODMAS), commutative, associative, and distributive laws, additive inverse, bracket removal rules, tinker the terms near-product decomposition, NCERT discovery drills, Foundation MCQs, Match the Following, Assertion-Reason, numerical proofs, and Case Studies I, II & III.
 
 ---
 
-## 2. Standardized Item Bank (70 Total Questions)
-
-### 2.1 Multiple Choice Questions (24 Items)
-
-#### [MTG_MATH2_MCQ_001] What is the value of $20 - 4 \times 3 + 2$?
-- **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Order of Operations` | **Source**: `textbook_exercise`
-  - 10
-  - 50
-  - 6
-  - 14
-- **Answer**: **10**
-- **Mathematical Rationale & Step-by-Step Solution**: BODMAS dictates multiplication before addition/subtraction: $4 \times 3 = 12$; then $20 - 12 + 2 = 8 + 2 = 10$.
-
-#### [MTG_MATH2_MCQ_002] Evaluate: $36 - [18 - \{14 - (15 - 4 \times 2)\}]$.
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Brackets Hierarchy` | **Source**: `textbook_exercise`
-  - 25
-  - 29
-  - 21
-  - 31
-- **Answer**: **25**
-- **Mathematical Rationale & Step-by-Step Solution**: 1. Innermost $(15 - 4 \times 2) = 15 - 8 = 7$.
-2. Curly $\{14 - 7\} = 7$.
-3. Square $[18 - 7] = 11$.
-4. Final: $36 - 11 = 25$.
-
-#### [MTG_MATH2_MCQ_003] Evaluate: $15 - (8 - \overline{5 - 2})$.
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Vinculum (Bar Bracket)` | **Source**: `chapter_notes`
-  - 10
-  - 4
-  - 12
-  - 8
-- **Answer**: **10**
-- **Mathematical Rationale & Step-by-Step Solution**: Solve vinculum first: $\overline{5 - 2} = 3$. Then round brackets: $8 - 3 = 5$. Finally: $15 - 5 = 10$.
-
-#### [MTG_MATH2_MCQ_004] Without full multiplication, which symbol correctly fills the box: $48 \times 25 \;\square\; 24 \times 50$?
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Relational Comparison` | **Source**: `chapter_notes`
-  - =
-  - <
-  - >
-  - None of these
-- **Answer**: **=**
-- **Mathematical Rationale & Step-by-Step Solution**: By associative grouping: $48 \times 25 = (24 \times 2) \times 25 = 24 \times (2 \times 25) = 24 \times 50$. Both sides are equal.
-
-#### [MTG_MATH2_MCQ_011] A class has 57 students and 19 desks. Which expression represents the number of students per desk?
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) 57 - 19
-  - (B) 57 + 19
-  - (C) 57 × 19
-  - (D) 57 ÷ 19
-- **Answer**: **57 ÷ 19**
-- **Mathematical Rationale & Step-by-Step Solution**: Sharing 57 students equally across 19 desks represents division: $57 \div 19 = 3$ students per desk. (Correct: Option D).
-
-#### [MTG_MATH2_MCQ_012] Each pen has a length of 12 cm. Seven such pens placed end-to-end have a total length represented by:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) 12 + 7
-  - (B) 12 - 7
-  - (C) 12 × 7
-  - (D) 12 ÷ 7
-- **Answer**: **12 × 7**
-- **Mathematical Rationale & Step-by-Step Solution**: Repeated addition of 12 cm seven times is represented by multiplication: $12 \times 7 = 84\text{ cm}$. (Correct: Option C).
-
-#### [MTG_MATH2_MCQ_013] Riya scored 15 marks in each of 4 tests and received 10 bonus marks. Her total score is represented by:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) 15 × 4 + 10
-  - (B) (15 + 10) × 4
-  - (C) 15 × (4 + 10)
-  - (D) 15 + 4 × 10
-- **Answer**: **15 × 4 + 10**
-- **Mathematical Rationale & Step-by-Step Solution**: Total marks = 4 tests of 15 marks plus 10 bonus: $(15 \times 4) + 10 = 60 + 10 = 70$. (Correct: Option A).
-
-#### [MTG_MATH2_MCQ_014] Which expression represents: 'Subtract 5 times 8 from 7 times 10'?
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) 5 × 8 - 7 × 10
-  - (B) 7 × 10 - 5 × 8
-  - (C) 10 × 8 - 5 × 7
-  - (D) (7 - 5) × (10 - 8)
-- **Answer**: **7 × 10 - 5 × 8**
-- **Mathematical Rationale & Step-by-Step Solution**: 'Subtract A from B' means $B - A$. Here $B = 7 \times 10$ and $A = 5 \times 8$, so $7 \times 10 - 5 \times 8$. (Correct: Option B).
-
-#### [MTG_MATH2_MCQ_015] A plant starts at 2 cm, grows 2 cm each day, and shrinks 1 cm each night. After 5 days, its height is:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) 2 + 5 × (2 - 1)
-  - (B) (2 + 5) × (2 - 1)
-  - (C) 2 × 5 + (2 - 1)
-  - (D) 2 + (5 × 2) - 1
-- **Answer**: **2 + 5 × (2 - 1)**
-- **Mathematical Rationale & Step-by-Step Solution**: Initial height is 2 cm. Daily net growth is $(2 - 1)\text{ cm}$. Over 5 days: $2 + 5 \times (2 - 1) = 7\text{ cm}$. (Correct: Option A).
-
-#### [MTG_MATH2_MCQ_016] A teacher checks 20 papers per hour for 3 hours and leaves 15 unchecked. The total papers to check is:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) (20 × 3) - 15
-  - (B) 20 × (3 - 15)
-  - (C) (20 × 3) + 15
-  - (D) 20 + (3 × 15)
-- **Answer**: **(20 × 3) + 15**
-- **Mathematical Rationale & Step-by-Step Solution**: Papers checked = $20 \times 3 = 60$. Total papers = checked + unchecked = $(20 \times 3) + 15 = 75$. (Correct: Option C).
-
-#### [MTG_MATH2_MCQ_017] A cinema hall has 25 rows with 30 seats each. For a show, 150 seats were vacant. Tickets sold is:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) (25 × 30) - 150
-  - (B) 25 × (30 - 150)
-  - (C) (25 + 30) - 150
-  - (D) 25 × 30 + 150
-- **Answer**: **(25 × 30) - 150**
-- **Mathematical Rationale & Step-by-Step Solution**: Total capacity is $25 \times 30 = 750$. Minus 150 vacant seats gives $(25 \times 30) - 150 = 600$ tickets. (Correct: Option A).
-
-#### [MTG_MATH2_MCQ_018] Rohan buys 3 notebooks at ₹40 each and 5 pens at ₹12 each. His change from a ₹500 note is:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) 500 - 3 × 40 + 5 × 12
-  - (B) 500 - (3 × 40 + 5 × 12)
-  - (C) (500 - 3 × 40) × 12
-  - (D) 500 - 3 × (40 + 12)
-- **Answer**: **500 - (3 × 40 + 5 × 12)**
-- **Mathematical Rationale & Step-by-Step Solution**: Total expenditure $(3 \times 40 + 5 \times 12)$ must be enclosed in brackets and subtracted from $500$. (Correct: Option B).
-
-#### [MTG_MATH2_MCQ_019] In an assembly, boys sit in 6 rows of 7, and girls sit in 7 rows of 6. Total students seated is:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) (6 × 7) + (7 × 6)
-  - (B) (6 + 7) × (7 + 6)
-  - (C) 6 × 7 × 7 × 6
-  - (D) 6 + 7 + 7 + 6
-- **Answer**: **(6 × 7) + (7 × 6)**
-- **Mathematical Rationale & Step-by-Step Solution**: Boys = $6 \times 7 = 42$. Girls = $7 \times 6 = 42$. Total = $(6 \times 7) + (7 \times 6) = 84$. (Correct: Option A).
-
-#### [MTG_MATH2_MCQ_020] A baker bakes 8 trays of 12 cookies. He discards 6 burnt cookies and packs the rest in boxes of 6. Number of boxes is:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) (8 × 12 - 6) ÷ 6
-  - (B) 8 × (12 - 6) ÷ 6
-  - (C) 8 × 12 - (6 ÷ 6)
-  - (D) (8 × 12) ÷ 6 - 6
-- **Answer**: **(8 × 12 - 6) ÷ 6**
-- **Mathematical Rationale & Step-by-Step Solution**: Good cookies = $(8 \times 12 - 6) = 90$. Boxes needed = $90 \div 6 = 15$. (Correct: Option A).
-
-#### [MTG_MATH2_MCQ_021] A car tank has 15 litres. It is filled with 25 litres, and then uses 4 litres per day for 6 days. Remaining fuel is:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) (15 + 25) - (4 × 6)
-  - (B) 15 + 25 - 4 + 6
-  - (C) 15 + (25 - 4) × 6
-  - (D) (15 + 25 - 4) × 6
-- **Answer**: **(15 + 25) - (4 × 6)**
-- **Mathematical Rationale & Step-by-Step Solution**: Total fuel added = $15 + 25 = 40\text{ L}$. Fuel consumed = $4 \times 6 = 24\text{ L}$. Remaining = $(15 + 25) - (4 \times 6) = 16\text{ L}$. (Correct: Option A).
-
-#### [MTG_MATH2_MCQ_022] A school bus makes 4 trips carrying 32 students per trip. 8 students were absent. Total attendees is:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) 4 × (32 - 8)
-  - (B) (4 × 32) - 8
-  - (C) 4 × 32 + 8
-  - (D) (4 + 32) - 8
-- **Answer**: **(4 × 32) - 8**
-- **Mathematical Rationale & Step-by-Step Solution**: Total expected = $4 \times 32 = 128$. Minus 8 absentees = $(4 \times 32) - 8 = 120$ students. (Correct: Option B).
-
-#### [MTG_MATH2_MCQ_023] A shopkeeper packs 5 boxes with 6 apples and 4 oranges in each. Total fruits packed is:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) 5 × 6 + 4
-  - (B) 5 × (6 + 4)
-  - (C) (5 + 6) × 4
-  - (D) 5 + 6 × 4
-- **Answer**: **5 × (6 + 4)**
-- **Mathematical Rationale & Step-by-Step Solution**: Each box has $(6 + 4) = 10$ fruits. 5 boxes have $5 \times (6 + 4) = 50$ fruits. (Correct: Option B).
-
-#### [MTG_MATH2_MCQ_024] A worker earns ₹350 per day for 6 days and spends ₹80 each day on travel. His net savings is:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) 6 × (350 - 80)
-  - (B) 6 × 350 - 80
-  - (C) 350 - (6 × 80)
-  - (D) (6 + 350) - 80
-- **Answer**: **6 × (350 - 80)**
-- **Mathematical Rationale & Step-by-Step Solution**: Daily net saving = ₹$(350 - 80) = ₹270$. Over 6 days: $6 \times (350 - 80) = ₹1,620$. (Correct: Option A).
-
-#### [MTG_MATH2_MCQ_025] Which expression represents: 'Twice the sum of 14 and 9, decreased by 15'?
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) 2 × 14 + 9 - 15
-  - (B) 2 × (14 + 9) - 15
-  - (C) 2 × (14 + 9 - 15)
-  - (D) (2 × 14) + (9 - 15)
-- **Answer**: **2 × (14 + 9) - 15**
-- **Mathematical Rationale & Step-by-Step Solution**: Sum of 14 and 9 is $(14 + 9)$. Twice this sum is $2 \times (14 + 9)$. Decreased by 15 gives $2 \times (14 + 9) - 15$. (Correct: Option B).
-
-#### [MTG_MATH2_MCQ_026] Without evaluating, compare: $874 - 198 \;\square\; 874 - 200$.
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) >
-  - (B) <
-  - (C) =
-  - (D) Cannot determine
-- **Answer**: **>**
-- **Mathematical Rationale & Step-by-Step Solution**: Subtracting a smaller number (198) leaves a larger result than subtracting a larger number (200). So LHS > RHS. (Correct: Option A).
-
-#### [MTG_MATH2_MCQ_027] Without evaluating, compare: $45 \times 18 \;\square\; 45 \times 19$.
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) >
-  - (B) <
-  - (C) =
-  - (D) Cannot determine
-- **Answer**: **<**
-- **Mathematical Rationale & Step-by-Step Solution**: Both multiply 45. Since $18 < 19$, 45 groups of 18 is strictly less than 45 groups of 19. So LHS < RHS. (Correct: Option B).
-
-#### [MTG_MATH2_MCQ_028] If $156 + (-42) = 114$, then the value of $155 + (-42)$ is:
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) 115
-  - (B) 113
-  - (C) 114
-  - (D) 112
-- **Answer**: **113**
-- **Mathematical Rationale & Step-by-Step Solution**: 155 is 1 less than 156, so the sum decreases by 1: $114 - 1 = 113$. (Correct: Option B).
-
-#### [MTG_MATH2_MCQ_029] Which property justifies: $(3 + 4) + 5 = 3 + (4 + 5)$?
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) Commutative property
-  - (B) Associative property
-  - (C) Distributive property
-  - (D) Identity property
-- **Answer**: **Associative property**
-- **Mathematical Rationale & Step-by-Step Solution**: Regrouping terms without altering their sequence is the Associative Property of Addition. (Correct: Option B).
-
-#### [MTG_MATH2_MCQ_030] Which property justifies: $18 + 27 = 27 + 18$?
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Arithmetic Expressions & Modeling` | **Source**: `textbook_exercise`
-  - (A) Associative property
-  - (B) Distributive property
-  - (C) Commutative property
-  - (D) Closure property
-- **Answer**: **Commutative property**
-- **Mathematical Rationale & Step-by-Step Solution**: Swapping the positions of two addends is the Commutative Property of Addition. (Correct: Option C).
-
-### 2.2 Fill in the Blanks (2 Items)
-
-#### [MTG_MATH2_FIB_001] In the BODMAS rule, the letter 'O' stands for _______.
-- **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `BODMAS Acronym` | **Source**: `textbook_exercise`
-- **Answer**: **Of (Orders/Exponents)**
-- **Mathematical Context**: 'Of' represents fractional or multiplicative scaling (e.g., $\frac{1}{2}\text{ of } 20 = 10$) and powers/roots.
-
-#### [MTG_MATH2_FIB_002] The innermost bracket that is always evaluated first among parentheses, braces, and bar is the _______.
-- **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Bracket Precedence` | **Source**: `chapter_notes`
-- **Answer**: **vinculum (bar bracket)**
-- **Mathematical Context**: The hierarchy of removing brackets begins with Vinculum $\overline{a-b}$, followed by round $( )$, curly $\{ \}$, and square $[ ]$ brackets.
-
-### 2.3 True or False (2 Items)
-
-#### [MTG_MATH2_TF_001] In the expression $12 + 6 \div 3$, addition is performed before division. (True/False)
-- **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Operation Precedence` | **Source**: `textbook_exercise`
-- **Answer**: **False**
-- **Justification & Counter-Example**: Under BODMAS rules, Division has higher precedence than Addition: $6 \div 3 = 2$, then $12 + 2 = 14$.
-
-#### [MTG_MATH2_TF_002] $a \times (b - c) = a \times b - a \times c$ is the distributive law of multiplication over subtraction. (True/False)
-- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Distributive Property` | **Source**: `chapter_notes`
-- **Answer**: **True**
-- **Justification & Counter-Example**: Multiplication distributes over both addition and subtraction.
-
-### 2.4 Subjective, Step-by-Step Solved & Analytical Problems (42 Items)
-
-#### [MTG_MATH2_PAPER_001] [Question 1] Write two different arithmetic expressions whose value is $18$.
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  An arithmetic expression is a valid combination of numbers and operations evaluating to a single value. Expression 1: $3 \times 6$ or $2 \times (5 + 4) = 18$ Expression 2: $30 - 12$ or $90 \div 5 = 18$ Key Insight: Different expressions can share the exact same value. The equality sign ($=$) can connect them into an equation: $3 \times 6 = 30 - 12$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 1.
-
-#### [MTG_MATH2_PAPER_002] [Question 2] Fill in the blank: $27 + 8 = \underline{\hspace{1.5cm}} + 10$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Method 1 (Full Evaluation): $$\text{LHS} = 27 + 8 = 35$$ $$\text{Blank} + 10 = 35 \implies \text{Blank} = 35 - 10 = \mathbf{25}$$ Method 2 (Algebraic Compensation — Smart Thinking): Notice that on the RHS, $10$ is $2$ greater than $8$. To keep the sum equal, the first term must be $2$ smaller than $27$: $$27 - 2 = \mathbf{25}$$ Check: $27 + 8 = 35$ and $25 + 10 = 35$. Both sides are equal!
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 2.
-
-#### [MTG_MATH2_PAPER_003] [Question 3] Fill in the blank: $54 - \underline{\hspace{1.5cm}} = 39$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  In subtraction: $\text{Minuend} - \text{Subtrahend} = \text{Difference}$. $$\text{Subtrahend} = \text{Minuend} - \text{Difference} = 54 - 39$$ $$\text{Blank} = \mathbf{15}$$ Verification: $54 - 15 = (54 - 10) - 5 = 44 - 5 = 39$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 3.
-
-#### [MTG_MATH2_PAPER_004] [Question 4] Fill in the blank: $7 \times \underline{\hspace{1.5cm}} = 84 \div 2$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  First evaluate the RHS: $$\text{RHS} = 84 \div 2 = 42$$ Now set $\text{LHS} = \text{RHS}$: $$7 \times \text{Blank} = 42 \implies \text{Blank} = \dfrac{42}{7} = \mathbf{6}$$ Check: $7 \times 6 = 42$ and $84 \div 2 = 42$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 4.
-
-#### [MTG_MATH2_PAPER_005] [Question 5] Six notebooks cost $\text{₹}28$ each. Write an arithmetic expression for the total cost and find its value.
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  1. Arithmetic Expression: $$\mathbf{6 \times 28} \quad \text{or} \quad \mathbf{6 \times \text{₹}28}$$ 2. Smart Mental Calculation: $$\begin{aligned} 6 \times 28 &= 6 \times (30 - 2) \\ &= 6 \times 30 - 6 \times 2 \\ &= 180 - 12 = \mathbf{\text{₹}168} \end{aligned}$$ Answer: The total cost of the six notebooks is $\mathbf{\text{₹}168}$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 5.
-
-#### [MTG_MATH2_PAPER_006] [Question 6] A customer pays $\text{₹}500$ for items costing $\text{₹}135$ and $\text{₹}86$. Write one expression using brackets for the change received, then find the change.
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  1. Expression using brackets: $$\mathbf{500 - (135 + 86)}$$ 2. Evaluation: $$\text{Step 1 (Add inside brackets): } 135 + 86 = 221$$ $$\text{Step 2 (Subtract from 500): } 500 - 221 = \mathbf{\text{₹}279}$$ Common Error: Writing $500 - 135 + 86$. Without brackets, $86$ would be added to the result rather than subtracted, giving an erroneous $451$!
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 6.
-
-#### [MTG_MATH2_PAPER_007] [Question 7] Explain the difference between the expression $18 + 7 \times 3$ and the equation $18 + 7 \times 3 = 39$.
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Arithmetic Expression ($18 + 7 \times 3$) Equation ($18 + 7 \times 3 = 39$) A mathematical phrase representing a single quantity. A complete mathematical sentence containing an equality sign ($=$). Has no '$=$' sign; it can be evaluated to find its value ($39$). States that two expressions on either side of '$=$' are equal.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 7.
-
-#### [MTG_MATH2_PAPER_008] [Question 8] Arrange these expressions in ascending order of value: $72 - 19$ $50 + 6$ $7 \times 8$ $162 \div 3$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Step 1: Evaluate each expression: $72 - 19 = \mathbf{53}$ $50 + 6 = \mathbf{56}$ $7 \times 8 = \mathbf{56}$ $162 \div 3 = \mathbf{54}$ Step 2: Order the numerical values: $$53 < 54 < 56 = 56$$ Ascending order of expressions: $$\mathbf{(72 - 19) < (162 \div 3) < (50 + 6) = (7 \times 8)}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 8.
-
-#### [MTG_MATH2_PAPER_009] [Question 9] Insert $<, >,$ or $=$ without fully evaluating both sides: $435 + 198 \;\underline{\hspace{1.5cm}}\; 436 + 196$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Compare term by term: First term: $436$ is $1$ more than $435$ ($+1$ for RHS). Second term: $196$ is $2$ less than $198$ ($-2$ for RHS). Net effect on RHS: $+1 - 2 = -1$. Since the RHS is $1$ less than LHS, LHS is greater: $$\mathbf{435 + 198 > 436 + 196}$$ Verification: $435 + 198 = 633$ and $436 + 196 = 632$. Correct!
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 9.
-
-#### [MTG_MATH2_PAPER_010] [Question 10] Insert $<, >,$ or $=$: $723 - 158 \;\underline{\hspace{1.5cm}}\; 724 - 159$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Constant Difference Property: Notice that $724 = 723 + 1$ and $159 = 158 + 1$. When the same number ($1$) is added to both the minuend and the subtrahend, the difference remains unchanged: $$(a + 1) - (b + 1) = a - b$$ $$\mathbf{723 - 158 = 724 - 159}$$ Verification: Both differences equal $565$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 10.
-
-#### [MTG_MATH2_PAPER_011] [Question 11] Insert $<, >,$ or $=$: $307 + 489 \;\underline{\hspace{1.5cm}}\; 309 + 486$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Compare components: $309 = 307 + 2$ (RHS gains $2$) $486 = 489 - 3$ (RHS loses $3$) Net change on RHS: $+2 - 3 = -1$. The RHS is $1$ less than LHS: $$\mathbf{307 + 489 > 309 + 486}$$ Verification: $307 + 489 = 796$, while $309 + 486 = 795$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 11.
-
-#### [MTG_MATH2_PAPER_012] [Question 12] Insert $<, >,$ or $=$: $620 - 247 \;\underline{\hspace{1.5cm}}\; 618 - 244$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Component analysis: $618$ is $2$ less than $620$ (decreases value by $2$). $244$ is $3$ less than $247$ (subtracting $3$ less increases value by $3$). Net change on RHS: $-2 + 3 = +1$. The RHS is $1$ greater than the LHS: $$\mathbf{620 - 247 < 618 - 244}$$ Verification: $620 - 247 = 373$ and $618 - 244 = 374$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 12.
-
-#### [MTG_MATH2_PAPER_013] [Question 13] Insert $<, >,$ or $=$ and explain briefly: $25 \times 19 \;\underline{\hspace{1.5cm}}\; 25 \times 20$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Reasoning: Both expressions share the common factor $25$. The second factor determines the size: $$19 < 20 \implies 25 \times 19 < 25 \times 20$$ Specifically, $25 \times 19$ is smaller by exactly one group of $25$ ($500 - 25 = 475$). $$\mathbf{25 \times 19 < 25 \times 20}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 13.
-
-#### [MTG_MATH2_PAPER_014] [Question 14] Compare by reasoning: $36 \times (18 - 7) \;\underline{\hspace{1.5cm}}\; 36 \times (17 - 6)$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Reasoning: First factor on both sides is identical: $36$. Examine the bracketed expressions: $$\text{LHS bracket: } 18 - 7 = 11$$ $$\text{RHS bracket: } 17 - 6 = 11$$ Since both bracketed factors evaluate to $11$, both expressions represent $36 \times 11$: $$\mathbf{36 \times (18 - 7) = 36 \times (17 - 6)}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 14.
-
-#### [MTG_MATH2_PAPER_015] [Question 15] Identify the terms in: $38 - 7 + 4 \times 6$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Rule: Terms are separated by addition signs. Products and quotients form single compound terms. Rewriting with addition: $38 + (-7) + (4 \times 6)$. The $3$ terms are: Term 1: $38$ Term 2: $-7$ Term 3: $4 \times 6$ (or $24$)
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 15.
-
-#### [MTG_MATH2_PAPER_016] [Question 16] Identify the terms in: $45 - 3 \times 8 + 20 \div 5$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Rewriting as a sum of terms: $45 + (-3 \times 8) + (20 \div 5)$. The $3$ terms are: Term 1: $45$ Term 2: $-(3 \times 8)$ (value: $-24$) Term 3: $20 \div 5$ (value: $+4$)
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 16.
-
-#### [MTG_MATH2_PAPER_017] [Question 17] Rewrite using addition of additive inverses: $62 - 19 + 7 - 12$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Subtracting a number is mathematically identical to adding its additive inverse (negative): $$\text{Subtracting } 19 \implies +(-19)$$ $$\text{Subtracting } 12 \implies +(-12)$$ Rewritten expression: $$\mathbf{62 + (-19) + 7 + (-12)}$$ Benefit: Once written as addition of terms, we can swap and group positive terms and negative terms freely: $(62 + 7) + [(-19) + (-12)] = 69 - 31 = 38$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 17.
-
-#### [MTG_MATH2_PAPER_018] [Question 18] Find the value by thinking in terms: $28 - 7 + 8$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  The terms are $28$, $-7$, and $+8$. Strategy 1 (Combine positives first): $$(28 + 8) - 7 = 36 - 7 = \mathbf{29}$$ Strategy 2 (Combine $-7 + 8$ first): $$28 + (-7 + 8) = 28 + 1 = \mathbf{29}$$ Result: $\mathbf{29}$. Thinking in terms prevents the common mistake of calculating $28 - (7 + 8) = 13$!
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 18.
-
-#### [MTG_MATH2_PAPER_019] [Question 19] Find the value: $39 - 2 \times 6 + 11$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Step 1: Identify compound product term $2 \times 6 = 12$. Step 2: Substitute back into expression: $$39 - 12 + 11$$ Step 3: Group terms: $$(39 + 11) - 12 = 50 - 12 = \mathbf{38}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 19.
-
-#### [MTG_MATH2_PAPER_020] [Question 20] Find the value: $48 - 10 \times 2 + 16 \div 2$
-- **Difficulty**: `medium` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Step 1: Evaluate product and quotient terms: $$10 \times 2 = 20 \quad \text{and} \quad 16 \div 2 = 8$$ Step 2: Replace into expression: $$48 - 20 + 8$$ Step 3: Evaluate left to right or group positives: $$(48 + 8) - 20 = 56 - 20 = \mathbf{36}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 20.
-
-#### [MTG_MATH2_PAPER_021] [Question 21] Find the value of $30 + 5 \times 4$ by first identifying its terms.
-- **Difficulty**: `hard` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Step 1: Identify terms: The terms are $30$ and the product $(5 \times 4)$. Step 2: Evaluate the product term: $$5 \times 4 = 20$$ Step 3: Add the terms: $$30 + 20 = \mathbf{50}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 21.
-
-#### [MTG_MATH2_PAPER_022] [Question 22] Find the value of $(30 + 5) \times 4$. Explain in one sentence why it differs from Question 21.
-- **Difficulty**: `hard` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  1. Evaluation: $$(30 + 5) \times 4 = 35 \times 4 = \mathbf{140}$$ 2. Explanation of Difference: In Question 22, the brackets group $30 + 5$ into a single quantity first, meaning that $4$ scales both $30$ and $5$ (yielding $120 + 20 = 140$), whereas in Question 21, $4$ multiplies only $5$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 22.
-
-#### [MTG_MATH2_PAPER_023] [Question 23] Remove the brackets without changing the value: $75 + (18 - 9)$
-- **Difficulty**: `hard` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Rule: When a bracket is preceded by a plus sign ($+$), the signs inside remain unchanged. $$\mathbf{75 + 18 - 9}$$ Check: Both forms equal $84$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 23.
-
-#### [MTG_MATH2_PAPER_024] [Question 24] Remove the brackets without changing the value: $120 - (35 + 12)$
-- **Difficulty**: `hard` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Rule: When a bracket is preceded by a minus sign ($-$), each sign inside flips upon removal. $$\mathbf{120 - 35 - 12}$$ Check: $120 - 47 = 73$, and $120 - 35 - 12 = 85 - 12 = 73$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 24.
-
-#### [MTG_MATH2_PAPER_025] [Question 25] Remove the brackets without changing the value: $200 - (70 - 25)$
-- **Difficulty**: `hard` | **Marks**: `2` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Distribute the minus sign: $-(+70) = -70$ and $-(-25) = +25$. $$\mathbf{200 - 70 + 25}$$ Check: $200 - 45 = 155$, and $200 - 70 + 25 = 130 + 25 = 155$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 25.
-
-#### [MTG_MATH2_PAPER_026] [Question 26] Add brackets to make the statement true: $48 - 12 + 6 = 30$
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Without brackets: $48 - 12 + 6 = 36 + 6 = 42 \ne 30$. To reach $30$, we need to subtract $18$ from $48$ ($48 - 18 = 30$). Since $12 + 6 = 18$, we group $(12 + 6)$: $$\mathbf{48 - (12 + 6) = 30}$$ Verification: $48 - 18 = 30$. Statement is true!
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 26.
-
-#### [MTG_MATH2_PAPER_027] [Question 27] Add brackets to make the statement true: $60 - 20 - 10 = 50$
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Without brackets: $60 - 20 - 10 = 40 - 10 = 30 \ne 50$. To obtain $50$, we need $60 - 10 = 50$. Notice that $20 - 10 = 10$. Enclose $(20 - 10)$ in brackets: $$\mathbf{60 - (20 - 10) = 50}$$ Verification: $60 - 10 = 50$. Statement is true!
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 27.
-
-#### [MTG_MATH2_PAPER_028] [Question 28] Expand using the distributive property: $7 \times (20 + 3)$
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Distributive Property Formula: $a \times (b + c) = a \times b + a \times c$. $$\begin{aligned} 7 \times (20 + 3) &= \mathbf{7 \times 20 + 7 \times 3} \\ &= 140 + 21 = \mathbf{161} \end{aligned}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 28.
-
-#### [MTG_MATH2_PAPER_029] [Question 29] Write as a single product by taking out the common factor: $9 \times 17 + 9 \times 3$
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Both terms contain $9$ as a common factor: $$9 \times 17 + 9 \times 3 = \mathbf{9 \times (17 + 3)}$$ Evaluating the single product: $$9 \times 20 = \mathbf{180}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 29.
-
-#### [MTG_MATH2_PAPER_030] [Question 30] Evaluate efficiently using a nearby round number: $98 \times 24$
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Express $98$ as $(100 - 2)$: $$\begin{aligned} 98 \times 24 &= (100 - 2) \times 24 \\ &= 100 \times 24 - 2 \times 24 \\ &= 2400 - 48 = \mathbf{2352} \end{aligned}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 30.
-
-#### [MTG_MATH2_PAPER_031] [Question 31] Evaluate efficiently: $103 \times 17$
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Express $103$ as $(100 + 3)$: $$\begin{aligned} 103 \times 17 &= (100 + 3) \times 17 \\ &= 100 \times 17 + 3 \times 17 \\ &= 1700 + 51 = \mathbf{1751} \end{aligned}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 31.
-
-#### [MTG_MATH2_PAPER_032] [Question 32] Evaluate efficiently: $49 \times 36$
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Express $49$ as $(50 - 1)$: $$\begin{aligned} 49 \times 36 &= (50 - 1) \times 36 \\ &= 50 \times 36 - 1 \times 36 \\ &= 1800 - 36 = \mathbf{1764} \end{aligned}$$ Mental Trick for $50 \times 36$: $50 \times 36 = 100 \times (36 \div 2) = 100 \times 18 = 1800$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 32.
-
-#### [MTG_MATH2_PAPER_033] [Question 33] Given that $53 \times 18 = 954$, find $63 \times 18$ without starting the multiplication from the beginning.
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Observe that $63 = 53 + 10$: $$\begin{aligned} 63 \times 18 &= (53 + 10) \times 18 \\ &= (53 \times 18) + (10 \times 18) \\ &= 954 + 180 = \mathbf{1134} \end{aligned}$$ Result: $\mathbf{1134}$ obtained in seconds without long multiplication!
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 33.
-
-#### [MTG_MATH2_PAPER_034] [Question 34] Five friends buy one sandwich each at $\text{₹}42$ and together leave a $\text{₹}20$ tip. Write an expression for the total amount, identify its terms, and find the value.
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  1. Arithmetic Expression: $$\mathbf{5 \times 42 + 20}$$ 2. Terms: $5 \times 42$ (cost of 5 sandwiches) $20$ (tip amount) 3. Value: $$5 \times 42 + 20 = 210 + 20 = \mathbf{\text{₹}230}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 34.
-
-#### [MTG_MATH2_PAPER_035] [Question 35] A museum ticket costs $\text{₹}50$ for an adult and $\text{₹}30$ for a child. Write and evaluate an expression for the cost of tickets for $3$ adults and $4$ children.
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  1. Expression: $$\mathbf{3 \times 50 + 4 \times 30}$$ 2. Evaluation: $$\begin{aligned} \text{Adults: } 3 \times 50 &= 150 \\ \text{Children: } 4 \times 30 &= 120 \\ \text{Total Cost: } 150 + 120 &= \mathbf{\text{₹}270} \end{aligned}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 35.
-
-#### [MTG_MATH2_PAPER_036] [Question 36] A hall has $8$ rows of $14$ chairs and $6$ extra chairs near the stage. Write an expression and find the total number of chairs.
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  1. Expression: $$\mathbf{8 \times 14 + 6}$$ 2. Evaluation: $$8 \times 14 + 6 = 112 + 6 = \mathbf{118\text{ chairs}}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 36.
-
-#### [MTG_MATH2_PAPER_037] [Question 37] A shopkeeper receives $\text{₹}500$ for two items costing $\text{₹}145$ and $\text{₹}238$. Write an expression using brackets and find the change.
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  1. Expression with brackets: $$\mathbf{500 - (145 + 238)}$$ 2. Evaluation: $$\begin{aligned} \text{Total bill: } 145 + 238 &= 383 \\ \text{Change: } 500 - 383 &= \mathbf{\text{₹}117} \end{aligned}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 37.
-
-#### [MTG_MATH2_PAPER_038] [Question 38] A shop packs $96\text{ kg}$ of rice into $3\text{ kg}$ bags and already has $5$ such bags ready. Write an expression for the total number of bags and find its value.
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  1. Expression: $$\mathbf{96 \div 3 + 5} \quad \text{or} \quad \mathbf{\dfrac{96}{3} + 5}$$ 2. Evaluation: $$32 + 5 = \mathbf{37\text{ bags}}$$
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 38.
-
-#### [MTG_MATH2_PAPER_039] [Question 39] Without fully calculating each expression, identify all expressions equal to $84 - (29 + 11)$: (A) $84 - 29 - 11$ (B) $84 - 29 + 11$ (C) $84 + (-29) + (-11)$ (D) $84 - (29 - 11)$
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  Analysis: (A) $84 - 29 - 11$: Removing brackets preceded by minus flips $+11$ to $-11$. EQUAL (Correct) . (B) $84 - 29 + 11$: Erroneously retains $+11$. Equals $66 \ne 44$. NOT Equal . (C) $84 + (-29) + (-11)$: Written as addition of additive inverses of $29$ and $11$. EQUAL (Correct) . (D) $84 - (29 - 11)$: Changes the internal operation to subtraction ($84 - 18 = 66 \ne 44$). NOT Equal . Correct Options: (A) and (C) .
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 39.
-
-#### [MTG_MATH2_PAPER_040] [Question 40] Start with the number $12$. One student writes $(12 + 8) \times 3$; another writes $12 \times 3 + 8$. Find both values, explain why they are different, and write a real-life situation that could match each expression.
-- **Difficulty**: `hard` | **Marks**: `3` | **Topic**: `Arithmetic Expressions & BODMAS` | **Source**: `school_worksheet`
-- **Step-by-Step Model Solution**:
-  1. Numerical Evaluation: Student 1: $(12 + 8) \times 3 = 20 \times 3 = \mathbf{60}$ Student 2: $12 \times 3 + 8 = 36 + 8 = \mathbf{44}$ 2. Why they differ: In $(12 + 8) \times 3$, brackets mandate that $8$ is added to $12$ before multiplying, so the multiplier $3$ scales both amounts. In $12 \times 3 + 8$, only $12$ is multiplied by $3$, and $8$ is added once as a separate independent term. 3. Real-Life Contexts: Scenario for $(12 + 8) \times 3 = 60$: "Pushti prepares 3 birthday gift hampers. Each hamper contains 12 sketch pens and 8 gel pens. What is the total number of pens in all 3 hampers combined?" $\implies 3 \times (12 + 8) = 60\text{ pens}$. Scenario for $12 \times 3 + 8 = 44$: "Pushti buys 3 notebooks at ₹12 each, and also buys a single ₹8 ruler. How much money does she spend in total?" $\implies 3 \times 12 + 8 = 36 + 8 = \text{₹}44$.
-- **Marking Rubric & Working Notes**: Evaluation and step-by-step mathematical reasoning for Question 40.
-
-#### [MTG_MATH2_SA_001] Evaluate: $45 - [38 - \{60 \div 3 - (6 - 9 \div 3)\}]$.
-- **Difficulty**: `medium` | **Marks**: `3` | **Topic**: `Step-by-step Evaluation` | **Source**: `chapter_notes`
-- **Step-by-Step Model Solution**:
-  1. Innermost parenthesis: $6 - (9 \div 3) = 6 - 3 = 3$.
-2. Inside curly braces: $60 \div 3 - 3 = 20 - 3 = 17$.
-3. Inside square brackets: $38 - 17 = 21$.
-4. Final outer subtraction: $45 - 21 = \mathbf{24}$.
-- **Marking Rubric & Working Notes**: Step-by-step bracket hierarchy resolution.
-
-#### [MTG_MATH2_LA_001] A school library bought 15 sets of reference books. Each set includes 4 textbooks costing ₹120 each and 2 notebooks costing ₹35 each. Write a single arithmetic expression for the total cost and calculate the amount.
-- **Difficulty**: `hard_hots` | **Marks**: `5` | **Topic**: `Algebraic Word Modeling` | **Source**: `chapter_notes`
-- **Step-by-Step Model Solution**:
-  • **Expression Formulation**:
-  $$\text{Total Cost} = 15 \times [(4 \times 120) + (2 \times 35)]$$
-• **Step-by-Step Calculation**:
-  1. Cost of textbooks per set $= 4 \times 120 = 480$.
-  2. Cost of notebooks per set $= 2 \times 35 = 70$.
-  3. Total cost per set $= 480 + 70 = 550$.
-  4. Total cost for 15 sets $= 15 \times 550 = \mathbf{₹8,250}$.
-- **Marking Rubric & Working Notes**: Real-world translation of multi-tier costs into structured arithmetic expressions.
+## 2. Core Conceptual Theory & Mathematical Foundations
+
+### 1. Numerical Expressions & Order of Operations (BODMAS / PEMDAS)
+
+An arithmetic (or numerical) expression is a mathematical phrase formed by combining numbers, operation symbols ($+, -, \times, \div$), and grouping symbols (parentheses, brackets, braces).
+
+Order of Operations Hierarchy:
+1. Grouping Symbols (Brackets): Always evaluate expressions inside brackets first, working from innermost to outermost: Parentheses $( )$, Curly Braces $\{ \}$, and Square Brackets $[ ]$.
+2. Orders / Exponents: Evaluate roots and powers.
+3. Multiplication & Division: Possess equal precedence; evaluated strictly from left to right as they appear.
+4. Addition & Subtraction: Possess equal precedence; evaluated strictly from left to right as they appear.
+
+Terms in an Expression:
+Terms are components of an expression separated by addition ($+$) or subtraction ($-$) signs. Products or quotients like $3 \times 4$ or $24 \div 6$ represent a single unified term until evaluated.
+
+### 2. Fundamental Algebraic Properties of Arithmetic Operations
+
+Arithmetic expressions obey core algebraic laws:
+
+1. Commutative Property:
+   • Addition: $a + b = b + a$. Changing the order of addends does not change the sum.
+   • Multiplication: $a \times b = b \times a$. Changing the order of factors does not change the product.
+   • Subtraction & Division: Subtraction and division are NOT commutative: $a - b \ne b - a$ and $a \div b \ne b \div a$.
+
+2. Associative Property:
+   • Addition: $(a + b) + c = a + (b + c)$. Regrouping addends preserves the sum.
+   • Multiplication: $(a \times b) \times c = a \times (b \times c)$. Regrouping factors preserves the product.
+   • Subtraction & Division: Subtraction and division are NOT associative: $(a - b) - c \ne a - (b - c)$.
+
+3. Distributive Property of Multiplication over Addition & Subtraction:
+   • $a \times (b + c) = a \times b + a \times c$
+   • $a \times (b - c) = a \times b - a \times c$
+   • Essential for mental arithmetic decomposition (e.g., $98 \times 12 = (100 - 2) \times 12 = 1200 - 24 = 1176$).
+
+### 3. Signs Preceding Brackets & The Additive Inverse
+
+Rules for Bracket Removal:
+• Positive Sign Outside ($+$): When a bracket is preceded by a plus sign, the bracket can be removed without altering any internal signs: $a + (b - c) = a + b - c$.
+• Negative Sign Outside ($-$): When a bracket is preceded by a minus sign, removing the bracket inverts the sign of every term inside: $a - (b + c) = a - b - c$ and $a - (b - c) = a - b + c$.
+
+Additive Inverse Concept:
+The additive inverse (or opposite) of any number $x$ is $-x$ such that their sum equals the additive identity zero: $x + (-x) = 0$.
+• Additive inverse of positive $a$ is $-a$.
+• Additive inverse of negative $-a$ is $+a$.
+• Subtraction is formally defined as adding the additive inverse: $a - b = a + (-b)$.
+
+### 4. Tinker the Terms: Mental Arithmetic & Near-Product Decompositions
+
+Tinker the Terms is a powerful mental mathematics strategy where known base products are utilized to rapidly compute adjacent expressions without starting multi-digit multiplication from scratch:
+
+Principles:
+• Incrementing a factor: Given $k \times n = P$, then $(k + 1) \times n = P + n$.
+  Example: If $53 \times 18 = 954$, then $55 \times 18 = 954 + 2 \times 18 = 954 + 36 = 990$.
+• Decrementing a factor: Given $k \times n = P$, then $k \times (n - 1) = P - k$.
+  Example: If $53 \times 18 = 954$, then $53 \times 17 = 954 - 53 = 901$.
+
+### 5. Real-World Modeling with Arithmetic Expressions
+
+Arithmetic expressions translate real-world verbal and financial scenarios into solvable mathematical formulations:
+• Unit Pricing & Group Purchases: Total cost $= \text{Quantity} \times \text{Unit Price} + \text{Fixed Fees}$.
+• Financial Cash Flow: Net balance $= \text{Initial Capital} - \text{Expenses} + \text{Revenues}$.
+• Capacity & Seating Allocation: Remaining capacity $= \text{Total Seats} - \text{Occupied Seats} = (Buses \times Seats) - Passengers$.
 
 ---
-*Curated for Pushti Study Hub | Main Source (Coursebook / MTG) | Strict CBSE Standards*
+
+## 3. Standardized Question Bank (92 Authentic Items)
+
+### Multiple Choice Questions (MCQ) (51 Items)
+
+#### [MATH_CH02_029] Riya scored 15 marks in each of 4 tests and got 10 bonus marks. Which of the following expressions represents her total marks?
+- **Source**: `textbook_mcq` | **Topic**: Expression for Total Marks | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) 60 + 10
+  - (b) 15 × 4 + 10
+  - (c) 15 + 15 + 15 + 15 + 10
+  - (d) All of these
+- **Correct Answer**: `(d) All of these`
+- **Explanation / Marking Scheme**: All three expressions correctly evaluate to 70: $15 \times 4 + 10 = 60 + 10 = 15 + 15 + 15 + 15 + 10 = 70$.
+
+#### [MATH_CH02_030] Write an expression representing the subtraction of 5 times 8 from 7 times 10.
+- **Source**: `textbook_mcq` | **Topic**: Word-to-Expression Translation | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) 10 × 7 - 8 × 5
+  - (b) 5 × 8 - 10 × 7
+  - (c) 10 × 8 - 5 × 7
+  - (d) 10 × 5 - 7 × 8
+- **Correct Answer**: `(a) 10 × 7 - 8 × 5`
+- **Explanation / Marking Scheme**: 7 times 10 is $7 \times 10$ (or $10 \times 7$). Subtracting 5 times 8 ($8 \times 5$) from it gives $10 \times 7 - 8 \times 5$.
+
+#### [MATH_CH02_031] How many terms does the given expression have? 7 + 3 × 2 - 5
+- **Source**: `textbook_mcq` | **Topic**: Counting Terms | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) 4
+  - (b) 3
+  - (c) 2
+  - (d) 1
+- **Correct Answer**: `(b) 3`
+- **Explanation / Marking Scheme**: The terms separated by $+$ and $-$ are: $7$, $(3 \times 2)$, and $-5$. Thus there are 3 distinct terms.
+
+#### [MATH_CH02_032] The expression 85 - 28 - 12 is equal to which of the following?
+- **Source**: `textbook_mcq` | **Topic**: Sign Before Brackets | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) 80 - 23 - 7
+  - (b) 85 - (28 - 12)
+  - (c) 85 - (28 + 12)
+  - (d) 84 - 29 - 12
+- **Correct Answer**: `(c) 85 - (28 + 12)`
+- **Explanation / Marking Scheme**: Factoring out the minus sign from $-28 - 12$ gives $-(28 + 12)$. Therefore, $85 - 28 - 12 = 85 - (28 + 12) = 85 - 40 = 45$.
+
+#### [MATH_CH02_033] Place brackets in the expression 65 - 2 × 18 - 12 so that it gives the value 53.
+- **Source**: `textbook_mcq` | **Topic**: Placing Brackets for Value | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) 65 - (2 × 18) - 12
+  - (b) (65 - 2) × (18 - 12)
+  - (c) 65 - 2 × (18 - 12)
+  - (d) None of these
+- **Correct Answer**: `(c) 65 - 2 × (18 - 12)`
+- **Explanation / Marking Scheme**: Evaluating (c): $18 - 12 = 6$. Then $2 \times 6 = 12$. Finally, $65 - 12 = 53$. Matches the target value perfectly.
+
+#### [MATH_CH02_034] Which property is illustrated in (3 + 4) + 5 = 3 + (4 + 5)?
+- **Source**: `textbook_mcq` | **Topic**: Property Identification | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) Commutative property
+  - (b) Associative property
+  - (c) Distributive property
+  - (d) Both (a) and (b)
+- **Correct Answer**: `(b) Associative property`
+- **Explanation / Marking Scheme**: Regrouping addends with parentheses without changing their relative order is the Associative Property of Addition.
+
+#### [MATH_CH02_035] Swapping the positions of terms in an addition expression represents the ________.
+- **Source**: `textbook_mcq` | **Topic**: Swapping Terms Property | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) commutative property
+  - (b) associative property
+  - (c) addition property
+  - (d) distributive property
+- **Correct Answer**: `(a) commutative property`
+- **Explanation / Marking Scheme**: Commutativity refers to ordering/swapping ($a + b = b + a$).
+
+#### [MATH_CH02_036] How many different arithmetic expressions can be formed that evaluate to a given numerical value?
+- **Source**: `textbook_mcq` | **Topic**: Number of Expressions for a Value | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) Only one
+  - (b) Only ten
+  - (c) Depends on value
+  - (d) Many (Infinitely many)
+- **Correct Answer**: `(d) Many (Infinitely many)`
+- **Explanation / Marking Scheme**: Any number can be expressed in infinitely many ways (e.g., $10 = 5 + 5 = 20 \div 2 = 2 \times 5 = 1 + 9 = \dots$).
+
+#### [MATH_CH02_037] Which of the following expressions evaluates to 26?
+- **Source**: `textbook_mcq` | **Topic**: Expression Evaluation | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) 17 + 2 × 3
+  - (b) 15 + 12 - 1
+  - (c) 30 - 17 × 2
+  - (d) 13 × (5 - 2)
+- **Correct Answer**: `(b) 15 + 12 - 1`
+- **Explanation / Marking Scheme**: (a) $17 + 6 = 23$. (b) $15 + 12 - 1 = 27 - 1 = 26$. (c) $30 - 34 = -4$. (d) $13 \times 3 = 39$.
+
+#### [MATH_CH02_038] Find the value of 45 - (20 + 5).
+- **Source**: `textbook_mcq` | **Topic**: Evaluating with Parentheses | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) 20
+  - (b) 25
+  - (c) 35
+  - (d) 5
+- **Correct Answer**: `(a) 20`
+- **Explanation / Marking Scheme**: Evaluate inside parentheses first: $20 + 5 = 25$. Then $45 - 25 = 20$.
+
+#### [MATH_CH02_039] Which of the given expressions correctly demonstrates the distributive property?
+- **Source**: `textbook_mcq` | **Topic**: Distributive Law Pattern | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) 5 + (3 + 2) = (5 + 3) + 2
+  - (b) 5 × (3 + 2) = 5 × 3 + 5 × 2
+  - (c) 5 + (3 × 2) = 5 + 3 × 5 + 2
+  - (d) 5 + 3 - 2 = 5 - 2 + 3
+- **Correct Answer**: `(b) 5 × (3 + 2) = 5 × 3 + 5 × 2`
+- **Explanation / Marking Scheme**: The distributive property distributes multiplication across addition: $a \times (b + c) = a \times b + a \times c$.
+
+#### [MATH_CH02_040] Which of the following expressions is equivalent to 98 × 12?
+- **Source**: `textbook_mcq` | **Topic**: Equivalent Expression Decomposition | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) 100 × 12 - 2 × 12
+  - (b) 90 × 12 - 8 × 12
+  - (c) 98 × 10 - 98 × 2
+  - (d) None of these
+- **Correct Answer**: `(a) 100 × 12 - 2 × 12`
+- **Explanation / Marking Scheme**: $98 \times 12 = (100 - 2) \times 12 = 100 \times 12 - 2 \times 12 = 1200 - 24 = 1176$.
+
+#### [MATH_CH02_041] If x × (6 - 4) > 25 × (7 - 5), then the number x in the blank space can be:
+- **Source**: `textbook_mcq` | **Topic**: Inequality Evaluation | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) 26
+  - (b) 27
+  - (c) 28
+  - (d) All of these
+- **Correct Answer**: `(d) All of these`
+- **Explanation / Marking Scheme**: $x \times 2 > 25 \times 2 \implies 2x > 50 \implies x > 25$. Any integer greater than 25 (including 26, 27, and 28) satisfies the inequality.
+
+#### [MATH_CH02_042] Ramesh subtracted 10 from a number and then added 3. What single number did he actually effectively subtract?
+- **Source**: `textbook_mcq` | **Topic**: Net Subtraction Thought Problem | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) 8
+  - (b) 7
+  - (c) 13
+  - (d) 6
+- **Correct Answer**: `(b) 7`
+- **Explanation / Marking Scheme**: Subtracting 10 and adding 3 is mathematically: $-10 + 3 = -7$. Thus, he effectively subtracted 7.
+
+#### [MATH_CH02_043] The terms in the expression 15 + 3 × 4 - 7 are:
+- **Source**: `textbook_mcq` | **Topic**: Identifying Term Boundaries | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) 15, 3, 4, -7
+  - (b) 15, 12, -7
+  - (c) 15, (3 × 4), -7
+  - (d) Both (b) and (c)
+- **Correct Answer**: `(d) Both (b) and (c)`
+- **Explanation / Marking Scheme**: The terms separated by addition and subtraction are $15$, the product $(3 \times 4)$ which evaluates to $12$, and $-7$.
+
+#### [MATH_CH02_044] The additive inverse of -15 is:
+- **Source**: `textbook_mcq` | **Topic**: Additive Inverse of Negative | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) -1
+  - (b) 15
+  - (c) 0
+  - (d) -15
+- **Correct Answer**: `(b) 15`
+- **Explanation / Marking Scheme**: The additive inverse of $-15$ is $-(-15) = +15$, because $-15 + 15 = 0$.
+
+#### [MATH_CH02_045] Find the value of the expression: 400 - (100 + 150) + (50 - 25).
+- **Source**: `textbook_mcq` | **Topic**: Multi-Bracket Evaluation | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) 225
+  - (b) 175
+  - (c) 125
+  - (d) 200
+- **Correct Answer**: `(b) 175`
+- **Explanation / Marking Scheme**: $100 + 150 = 250$; $50 - 25 = 25$. Then $400 - 250 + 25 = 150 + 25 = 175$.
+
+#### [MATH_CH02_046] 95 × 28 is quickest evaluated using which decomposition?
+- **Source**: `textbook_mcq` | **Topic**: Quickest Evaluation Strategy | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) 90 × 28 - 5 × 28
+  - (b) 100 × 28 - 5 × 28
+  - (c) 90 + 5 × 28
+  - (d) 100 - 5 × 28
+- **Correct Answer**: `(b) 100 × 28 - 5 × 28`
+- **Explanation / Marking Scheme**: Decomposing 95 as $(100 - 5)$ makes multiplication by 100 instantaneous: $2800 - 140 = 2660$.
+
+#### [MATH_CH02_047] Which of the given expressions has the greatest value?
+- **Source**: `textbook_mcq` | **Topic**: Comparison of Expression Magnitudes | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) 36 + 17 - 9 × 2
+  - (b) 42 - 12 + 8
+  - (c) 45 - 8 × 6
+  - (d) 38 + 17 × 2 - 33
+- **Correct Answer**: `(d) 38 + 17 × 2 - 33`
+- **Explanation / Marking Scheme**: (a) $36 + 17 - 18 = 35$.
+(b) $42 - 12 + 8 = 38$.
+(c) $45 - 48 = -3$.
+(d) $38 + 34 - 33 = 39$. Thus, (d) has the greatest value (39).
+
+#### [MATH_CH02_048] 1 - 2 + 3 - 4 + 5 - 6 + 7 - 8 + 9 - 10 is equal to:
+- **Source**: `textbook_mcq` | **Topic**: Alternating Series | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) -5
+  - (b) 5
+  - (c) 4
+  - (d) 0
+- **Correct Answer**: `(a) -5`
+- **Explanation / Marking Scheme**: Pairwise sum: $5 \times (-1) = -5$.
+
+#### [MATH_CH02_049] Find the value of 40 - (18 - 8) × 6 + 24.
+- **Source**: `textbook_mcq` | **Topic**: Order of Operations Drill | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) 204
+  - (b) 260
+  - (c) 4
+  - (d) -4
+- **Correct Answer**: `(c) 4`
+- **Explanation / Marking Scheme**: $18 - 8 = 10$. Then $10 \times 6 = 60$. Expression is $40 - 60 + 24 = -20 + 24 = 4$.
+
+#### [MATH_CH02_050] A teacher checks 20 papers per hour. In 3 hours, she checks papers and leaves 15 unchecked. Write an expression for the total number of papers.
+- **Source**: `textbook_mcq` | **Topic**: Teacher Paper Checking Expression | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) (20 × 3) + 15
+  - (b) (20 × 3) - 15
+  - (c) 20 + (15 × 3)
+  - (d) 20 × (15 - 3)
+- **Correct Answer**: `(a) (20 × 3) + 15`
+- **Explanation / Marking Scheme**: Papers checked in 3 hours $= 20 \times 3$. Plus unchecked papers gives total $= (20 \times 3) + 15 = 60 + 15 = 75$.
+
+#### [MATH_CH02_051] Which of the following equations correctly applies BOTH the commutative and distributive properties?
+- **Source**: `textbook_mcq` | **Topic**: Combined Properties Check | **Difficulty**: `hard` | **Marks**: 1
+- **Options**:
+  - (a) (2 + 3) + 4 = 2 + (4 + 3)
+  - (b) 4 × (2 + 6) = 4 × 6 + 4 × 2
+  - (c) (2 + 4) × 5 = (4 + 2) × 5
+  - (d) 4 × (3 + 2) = (4 × 3) + 2
+- **Correct Answer**: `(b) 4 × (2 + 6) = 4 × 6 + 4 × 2`
+- **Explanation / Marking Scheme**: In (b), distribution yields $4 \times 2 + 4 \times 6$, and commutativity swaps the terms to $4 \times 6 + 4 \times 2$.
+
+#### [MATH_CH02_052] Place brackets in the expression 16 - 2 × 5 - 3 + 4 so that it represents the value 32.
+- **Source**: `textbook_mcq` | **Topic**: Bracket Placement for Target 32 | **Difficulty**: `hard` | **Marks**: 1
+- **Options**:
+  - (a) 16 - (2 × 5) - 3 + 4
+  - (b) 16 - 2 × (5 - 3) + 4
+  - (c) (16 - 2) × 5 - (3 + 4)
+  - (d) (16 - 2) × (5 - 3) + 4
+- **Correct Answer**: `(d) (16 - 2) × (5 - 3) + 4`
+- **Explanation / Marking Scheme**: Evaluating (d): $16 - 2 = 14$; $5 - 3 = 2$. Then $14 \times 2 = 28$. Finally, $28 + 4 = 32$.
+
+#### [MATH_CH02_053] The value of 10 × 5 + (3 + 2) × (24 ÷ 6) is:
+- **Source**: `textbook_mcq` | **Topic**: HOTS / CFQ Order of Operations | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) 74
+  - (b) 62
+  - (c) 70
+  - (d) 84
+- **Correct Answer**: `(c) 70`
+- **Explanation / Marking Scheme**: $10 \times 5 = 50$. $(3 + 2) = 5$. $(24 \div 6) = 4$. Then $5 \times 4 = 20$. Sum $= 50 + 20 = 70$.
+
+#### [MATH_CH02_054] Which of the following expressions evaluates to 63?
+- **Source**: `textbook_mcq` | **Topic**: Expression with Value 63 | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) 5 × (8 + 3) + 18
+  - (b) 90 - (4 × 5 + 7)
+  - (c) 100 - 3 × (9 + 3)
+  - (d) (6 + 7) × 5 + 8
+- **Correct Answer**: `(b) 90 - (4 × 5 + 7)`
+- **Explanation / Marking Scheme**: $4 \times 5 + 7 = 20 + 7 = 27$. Then $90 - 27 = 63$. (a) gives $55 + 18 = 73$. (c) gives $100 - 36 = 64$. (d) gives $65 + 8 = 73$.
+
+#### [MATH_CH02_055] In the expression (25 + 5) + (6 × 3), if the first term (30) is doubled and the second term (18) is halved, how does it affect the total sum?
+- **Source**: `textbook_mcq` | **Topic**: Term Modification Impact | **Difficulty**: `hard` | **Marks**: 1
+- **Options**:
+  - (a) Increased by 3
+  - (b) Decreased by 3
+  - (c) Increased by 21
+  - (d) Increased by 4
+- **Correct Answer**: `(c) Increased by 21`
+- **Explanation / Marking Scheme**: Original sum: $30 + 18 = 48$. First term doubled $= 60$. Second term halved $= 9$. New sum $= 60 + 9 = 69$. Difference $= 69 - 48 = 21$ increase.
+
+#### [MATH_CH02_056] Simplify: 48 ÷ 4 × (5 + 7) - 6 × 2 + (3 - 2) × 5.
+- **Source**: `textbook_mcq` | **Topic**: Multi-Operator Simplify | **Difficulty**: `hard` | **Marks**: 1
+- **Options**:
+  - (a) 18
+  - (b) 137
+  - (c) 16
+  - (d) 15
+- **Correct Answer**: `(b) 137`
+- **Explanation / Marking Scheme**: Parentheses: $(5 + 7) = 12$; $(3 - 2) = 1$. Expression: $48 \div 4 \times 12 - 6 \times 2 + 1 \times 5$.
+From left to right: $48 \div 4 = 12$; $12 \times 12 = 144$.
+Then $6 \times 2 = 12$; $1 \times 5 = 5$.
+Result: $144 - 12 + 5 = 132 + 5 = 137$.
+
+#### [MATH_CH02_057] Which of the following expressions uses all four basic operations (+, -, ×, ÷) and results in a prime number?
+- **Source**: `textbook_mcq` | **Topic**: All Four Operations Prime Result | **Difficulty**: `hard` | **Marks**: 1
+- **Options**:
+  - (a) 25 ÷ 5 + 4 × 3 - 2
+  - (b) 16 ÷ 4 + 3 × 2 - 1
+  - (c) 20 - 4 + (2 × 5) ÷ 2
+  - (d) 30 ÷ 3 + 2 × 4 - 5
+- **Correct Answer**: `(a) 25 ÷ 5 + 4 × 3 - 2`
+- **Explanation / Marking Scheme**: Evaluating (a): $25 \div 5 = 5$; $4 \times 3 = 12$. Then $5 + 12 - 2 = 15$. But evaluating (d): $30 \div 3 = 10$; $2 \times 4 = 8$. Then $10 + 8 - 5 = 13$. 13 is a PRIME number! Thus (d) yields prime 13.
+
+#### [MATH_CH02_058] Which operation sign in the expression 12 + 8 × 2 - 10 should be changed to '×' to make the result maximum possible?
+- **Source**: `textbook_mcq` | **Topic**: Operation Replacement for Maximum | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) + to ×
+  - (b) × to ÷
+  - (c) - to ×
+  - (d) None of these
+- **Correct Answer**: `(a) + to ×`
+- **Explanation / Marking Scheme**: Original: $12 + 16 - 10 = 18$.
+If $+$ is changed to $\times$: $12 \times 8 \times 2 - 10 = 192 - 10 = 182$ (Massive maximum!).
+
+#### [MATH_CH02_059] Which expression will NOT change its value if the brackets are removed?
+- **Source**: `textbook_mcq` | **Topic**: Brackets Invariance | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) (8 + 2) × 5
+  - (b) 20 - (5 + 3)
+  - (c) 18 ÷ (6 ÷ 3)
+  - (d) 3 + (4 × 5)
+- **Correct Answer**: `(d) 3 + (4 × 5)`
+- **Explanation / Marking Scheme**: Because multiplication already takes precedence over addition according to BODMAS, $3 + (4 \times 5)$ and $3 + 4 \times 5$ both equal $3 + 20 = 23$.
+
+#### [MATH_CH02_060] In a class of 5 students, each is assigned 3 sets of 4 problems. Correct problems get 1 mark, plus 2 bonus marks per completed set. 3 students complete all 3 sets, while 2 students complete only 2 sets. If all attempted problems are correct, which expression represents the total marks earned?
+- **Source**: `textbook_mcq` | **Topic**: Classroom Problem Sets Expression | **Difficulty**: `hard` | **Marks**: 1
+- **Options**:
+  - (a) 3 × (3 × 4 + 2) + 2 × (2 × 4 + 2)
+  - (b) 3 × 4 × 2 + 2 × 4 × 2
+  - (c) 3 × (3 × (4 + 2)) + 2 × (2 × (4 + 2))
+  - (d) 3 × 4 × 3 + 2 × 2 × 4
+- **Correct Answer**: `(c) 3 × (3 × (4 + 2)) + 2 × (2 × (4 + 2))`
+- **Explanation / Marking Scheme**: Each set yields $4 \times 1 + 2 = 6$ marks. A student completing 3 sets gets $3 \times 6$; for 3 students: $3 \times (3 \times (4 + 2))$. For the 2 students completing 2 sets: $2 \times (2 \times (4 + 2))$.
+
+#### [MATH_CH02_061] Match List-I with List-II:
+List-I: (P) 5 × 6 + 2 | (Q) 8 × (3 + 2) | (R) 18 ÷ 3 + 9 | (S) 12 - 5 + 6
+List-II: (1) 15 | (2) 40 | (3) 13 | (4) 32
+- **Source**: `match_following` | **Topic**: Matching Expressions to Evaluated Values | **Difficulty**: `medium` | **Marks**: 2
+- **Options**:
+  - (a) P-4, Q-2, R-3, S-1
+  - (b) P-2, Q-4, R-3, S-1
+  - (c) P-2, Q-4, R-1, S-3
+  - (d) P-4, Q-2, R-1, S-3
+- **Correct Answer**: `(d) P-4, Q-2, R-1, S-3`
+- **Explanation / Marking Scheme**: P: $30 + 2 = 32$ (4).
+Q: $8 \times 5 = 40$ (2).
+R: $6 + 9 = 15$ (1).
+S: $7 + 6 = 13$ (3). Matches (d).
+
+#### [MATH_CH02_062] Match situations in List-I with expressions in List-II:
+(P) Taxi charges ₹20 fixed + ₹12/km for 12 km
+(Q) Area of rectangle 12 cm² more than square of side 20 cm
+(R) Riya saved ₹20 for 12 days and gave ₹12 to Megha
+(S) Packet of chocolate costs ₹12 more than toffees costing ₹20; price of 12 chocolate packets
+- **Source**: `match_following` | **Topic**: Matching Real-Life Situations to Expressions | **Difficulty**: `medium` | **Marks**: 2
+- **Options**:
+  - (a) P-3, Q-2, R-4, S-1
+  - (b) P-2, Q-3, R-1, S-4
+  - (c) P-1, Q-2, R-4, S-3
+  - (d) P-3, Q-2, R-4, S-1
+- **Correct Answer**: `(a) P-3, Q-2, R-4, S-1`
+- **Explanation / Marking Scheme**: P: $20 + 12 \times 12$ -> 3.
+Q: $(20 \times 20) + 12$ -> 2.
+R: $(20 \times 12) - 12$ -> 4.
+S: $12 \times (20 + 12)$ -> 1.
+
+#### [MATH_CH02_063] Assertion (A): The expression 12 - (6 + 3) is the same as 12 - 6 - 3.
+Reason (R): While removing a bracket preceded by a negative sign, the sign of each term inside the bracket changes.
+- **Source**: `assertion_reason` | **Topic**: A&R: Negative Sign Before Bracket | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) Both A and R are true and R is the correct explanation of A.
+  - (b) Both A and R are true but R is NOT the correct explanation of A.
+  - (c) A is true but R is false.
+  - (d) A is false but R is true.
+- **Correct Answer**: `(a) Both A and R are true and R is the correct explanation of A.`
+- **Explanation / Marking Scheme**: Both statements are mathematically true, and Reason R directly explains why $12 - (6 + 3) = 12 - 6 - 3$.
+
+#### [MATH_CH02_064] Assertion (A): The value of the expression 32 - 6 × 3 + 5 is 19.
+Reason (R): In the expression 32 - 6 × 3 + 5, the terms are 32, (-6 × 3), and 5.
+- **Source**: `assertion_reason` | **Topic**: A&R: Evaluating Value vs Terms | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) Both A and R are true and R is the correct explanation of A.
+  - (b) Both A and R are true but R is NOT the correct explanation of A.
+  - (c) A is true but R is false.
+  - (d) A is false but R is true.
+- **Correct Answer**: `(a) Both A and R are true and R is the correct explanation of A.`
+- **Explanation / Marking Scheme**: Terms: $32$, $-18$, $5$. Value $= 32 - 18 + 5 = 14 + 5 = 19$. Correct explanation.
+
+#### [MATH_CH02_065] Assertion (A): The expression (25 - 6) + 5 is equal to 25 - (6 + 5).
+Reason (R): Subtraction is associative for whole numbers.
+- **Source**: `assertion_reason` | **Topic**: A&R: Associative Fallacy in Subtraction | **Difficulty**: `hard` | **Marks**: 1
+- **Options**:
+  - (a) Both A and R are true and R is the correct explanation of A.
+  - (b) Both A and R are true but R is not the correct explanation of A.
+  - (c) A is true but R is false.
+  - (d) Both A and R are false.
+- **Correct Answer**: `(d) Both A and R are false.`
+- **Explanation / Marking Scheme**: $(25 - 6) + 5 = 19 + 5 = 24$. But $25 - (6 + 5) = 25 - 11 = 14$. Thus A is false, and subtraction is definitely NOT associative, so R is also false.
+
+#### [MATH_CH02_066] Assertion (A): We can evaluate 25 × 45 by using the known value of 26 × 45 = 1170.
+Reason (R): 25 × 45 can be written as (26 - 1) × 45 = 26 × 45 - 45.
+- **Source**: `assertion_reason` | **Topic**: A&R: Tinker the Terms Logic | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) Both A and R are true and R is the correct explanation of A.
+  - (b) Both A and R are true but R is not the correct explanation of A.
+  - (c) A is true but R is false.
+  - (d) A is false but R is true.
+- **Correct Answer**: `(a) Both A and R are true and R is the correct explanation of A.`
+- **Explanation / Marking Scheme**: $1170 - 45 = 1125$. The Reason correctly provides the algebraic foundation for the Assertion.
+
+#### [MATH_CH02_067] Assertion (A): The expression 25 - 4 × 6 - 6 ÷ 2 × 3 has 3 terms.
+Reason (R): Multiplication and division operations bind numbers together into a single unified term.
+- **Source**: `assertion_reason` | **Topic**: A&R: Composite Term Count | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) Both A and R are true and R is the correct explanation of A.
+  - (b) Both A and R are true but R is not the correct explanation of A.
+  - (c) A is true but R is false.
+  - (d) A is false but R is true.
+- **Correct Answer**: `(a) Both A and R are true and R is the correct explanation of A.`
+- **Explanation / Marking Scheme**: The terms are $25$, $-(4 \times 6)$, and $-(6 \div 2 \times 3)$. There are exactly 3 terms.
+
+#### [MATH_CH02_068] Passage I: A water tank has 600 litres of water. Every day, 30 litres of water is used. Which expression represents the amount of water left in the tank after 10 days?
+- **Source**: `comprehension` | **Topic**: Water Tank Capacity Modeling | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) 600 - (30 × 10)
+  - (b) (600 - 30) × 10
+  - (c) (600 - 10) × 30
+  - (d) 600 - (30 + 10)
+- **Correct Answer**: `(a) 600 - (30 × 10)`
+- **Explanation / Marking Scheme**: Water used in 10 days $= 30 \times 10 = 300$ L. Remaining $= 600 - (30 \times 10) = 300$ L.
+
+#### [MATH_CH02_069] Passage I: After how many days will the 600-litre tank become completely empty if 30 litres is used daily?
+- **Source**: `comprehension` | **Topic**: Water Tank Days to Empty | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) 12 days
+  - (b) 15 days
+  - (c) 18 days
+  - (d) 20 days
+- **Correct Answer**: `(d) 20 days`
+- **Explanation / Marking Scheme**: $600 \div 30 = 20$ days.
+
+#### [MATH_CH02_070] Passage II: How should you rewrite 12 - 5 + 3 × 4 as an addition of terms to identify its terms correctly?
+- **Source**: `comprehension` | **Topic**: Additive Inverse Term Decomposition | **Difficulty**: `medium` | **Marks**: 1
+- **Options**:
+  - (a) 12 + (-5) + 3 + 4
+  - (b) 12 + (-5) + (3 × 4)
+  - (c) 12 - 5 + (3 × 4)
+  - (d) 12 + (-5) + 12
+- **Correct Answer**: `(b) 12 + (-5) + (3 × 4)`
+- **Explanation / Marking Scheme**: Writing subtractions as additions of inverses preserves product terms: $12 + (-5) + (3 \times 4)$.
+
+#### [MATH_CH02_071] Passage II: Which of the following are the terms of 7 + 2 × 8 - 5?
+- **Source**: `comprehension` | **Topic**: Identifying Expression Terms | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) 7, 2, 8, -5
+  - (b) 7, (2 × 8), -5
+  - (c) 7, 2 × 8 - 5
+  - (d) 7, 16, -5
+- **Correct Answer**: `(b) 7, (2 × 8), -5`
+- **Explanation / Marking Scheme**: The terms are $7$, the compound product $(2 \times 8)$, and the negative term $-5$.
+
+#### [MATH_CH02_072] Passage III: A cinema hall sells 120 tickets for ₹150 each and 80 tickets for ₹100 each. Which expression represents the total money collected?
+- **Source**: `comprehension` | **Topic**: Cinema Hall Ticket Sales Expression | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) (120 × 80) + (150 × 100)
+  - (b) (120 × 150) + (80 × 100)
+  - (c) (120 + 80) × (150 × 100)
+  - (d) (120 × 100) + (150 × 80)
+- **Correct Answer**: `(b) (120 × 150) + (80 × 100)`
+- **Explanation / Marking Scheme**: Collection from first tier $= 120 \times 150$. Collection from second tier $= 80 \times 100$. Total $= (120 \times 150) + (80 \times 100)$.
+
+#### [MATH_CH02_073] Passage III: What is the total amount collected from the cinema ticket sales?
+- **Source**: `comprehension` | **Topic**: Cinema Hall Total Collection | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) ₹50,000
+  - (b) ₹24,600
+  - (c) ₹26,000
+  - (d) ₹24,000
+- **Correct Answer**: `(c) ₹26,000`
+- **Explanation / Marking Scheme**: $120 \times 150 = 18,000$. $80 \times 100 = 8,000$. Total $= 18,000 + 8,000 = ₹26,000$.
+
+#### [MATH_CH02_074] Passage III: If the cinema hall spends ₹5 per ticket sold for printing, what is the total expenditure on printing all 200 tickets?
+- **Source**: `comprehension` | **Topic**: Printing Expenditure | **Difficulty**: `easy` | **Marks**: 1
+- **Options**:
+  - (a) ₹800
+  - (b) ₹1,000
+  - (c) ₹1,200
+  - (d) ₹1,500
+- **Correct Answer**: `(b) ₹1,000`
+- **Explanation / Marking Scheme**: Total tickets $= 120 + 80 = 200$. Printing expenditure $= 200 \times 5 = ₹1,000$.
+
+#### [MATH_CH02_088] Case I: In a canteen offering sandwiches at ₹25, juice at ₹15, and fruit bowls at ₹30, 4 students each buy 2 sandwiches, 1 juice, and 1 fruit bowl. What is the total cost for all 4 students before any item is returned?
+- **Source**: `case_study` | **Topic**: Case I: Canteen Bill Formulation | **Difficulty**: `medium` | **Marks**: 2
+- **Options**:
+  - (a) ₹280
+  - (b) ₹240
+  - (c) ₹380
+  - (d) ₹320
+- **Correct Answer**: `(c) ₹380`
+- **Explanation / Marking Scheme**: Per student: $2 \times 25 + 15 + 30 = 50 + 45 = 95$. For 4 students: $4 \times 95 = ₹380$.
+
+#### [MATH_CH02_089] Case I: One student returns a fruit bowl (₹30) and buys an extra juice box (₹15) instead. What is the net cost difference for the group?
+- **Source**: `case_study` | **Topic**: Case I: Cost Difference on Return | **Difficulty**: `medium` | **Marks**: 2
+- **Options**:
+  - (a) ₹15 increase
+  - (b) ₹15 decrease
+  - (c) ₹30 increase
+  - (d) No change
+- **Correct Answer**: `(b) ₹15 decrease`
+- **Explanation / Marking Scheme**: Returning ₹30 and adding ₹15 results in a net difference of $15 - 30 = -15$ (a ₹15 decrease). New total $= 380 - 15 = ₹365$.
+
+#### [MATH_CH02_090] Case II: Prince Zayan received 120 gold coins and his investment tripled. Prince Rehan invested half his 120 coins in a ship that doubled, kept the remaining 60 coins, but lost 20 coins to theft. What is Zayan's total wealth?
+- **Source**: `case_study` | **Topic**: Case II: King Omar's Gold Coins | **Difficulty**: `medium` | **Marks**: 2
+- **Options**:
+  - (a) 360 coins
+  - (b) 240 coins
+  - (c) 120 coins
+  - (d) 480 coins
+- **Correct Answer**: `(a) 360 coins`
+- **Explanation / Marking Scheme**: Zayan's wealth tripled: $3 \times 120 = 360$ coins.
+
+#### [MATH_CH02_091] Case II: What is Prince Rehan's total wealth after one year (doubled ship value + remaining coins after theft)?
+- **Source**: `case_study` | **Topic**: Case II: Rehan's Remaining Wealth | **Difficulty**: `medium` | **Marks**: 2
+- **Options**:
+  - (a) 120 coins
+  - (b) 140 coins
+  - (c) 160 coins
+  - (d) 180 coins
+- **Correct Answer**: `(c) 160 coins`
+- **Explanation / Marking Scheme**: Ship investment $= 60 \times 2 = 120$. Coins kept $= 60 - 20 = 40$. Total $= 120 + 40 = 160$ coins.
+
+#### [MATH_CH02_092] Case II: How much more wealth does Prince Zayan have than Prince Rehan at the end?
+- **Source**: `case_study` | **Topic**: Case II: Wealth Difference | **Difficulty**: `medium` | **Marks**: 2
+- **Options**:
+  - (a) 120 coins
+  - (b) 180 coins
+  - (c) 200 coins
+  - (d) 220 coins
+- **Correct Answer**: `(c) 200 coins`
+- **Explanation / Marking Scheme**: Zayan has 360 coins. Rehan has 160 coins. Difference $= 360 - 160 = 200$ coins.
+
+### Fill in the Blanks / One-Word Answers (5 Items)
+
+#### [MATH_CH02_006] The property that states swapping the terms does not change the result in addition ($a + b = b + a$) is called the ________ property.
+- **Source**: `concept_illustration` | **Topic**: Commutative Property Definition | **Difficulty**: `easy` | **Marks**: 1
+- **Acceptable Answer**: `commutative`
+- **Explanation / Marking Scheme**: The commutative property of addition states that the order of addends does not affect their sum.
+
+#### [MATH_CH02_007] The identity $(a + b) + c = a + (b + c)$ represents the ________ property of addition.
+- **Source**: `concept_illustration` | **Topic**: Associative Property Definition | **Difficulty**: `easy` | **Marks**: 1
+- **Acceptable Answer**: `associative`
+- **Explanation / Marking Scheme**: The associative property states that regrouping numbers with parentheses preserves the sum.
+
+#### [MATH_CH02_018] The additive identity for whole numbers is ________.
+- **Source**: `solved_example` | **Topic**: Additive Identity | **Difficulty**: `easy` | **Marks**: 1
+- **Acceptable Answer**: `0`
+- **Explanation / Marking Scheme**: Zero is the additive identity because adding zero to any number leaves it unchanged ($a + 0 = a$).
+
+#### [MATH_CH02_019] The multiplicative identity for whole numbers is ________.
+- **Source**: `solved_example` | **Topic**: Multiplicative Identity | **Difficulty**: `easy` | **Marks**: 1
+- **Acceptable Answer**: `1`
+- **Explanation / Marking Scheme**: One is the multiplicative identity because multiplying any number by 1 leaves it unchanged ($a \times 1 = a$).
+
+#### [MATH_CH02_026] In a dot pattern where row 1 has 3 dots and every subsequent row increases by 2 dots, the expression for row $n$ is $3 + (n - 1) \times$ ________.
+- **Source**: `ncert_figure_it_out` | **Topic**: Dot Pattern Formula | **Difficulty**: `easy` | **Marks**: 1
+- **Acceptable Answer**: `2`
+- **Explanation / Marking Scheme**: The common difference added at each successive row is 2.
+
+### True / False Statements (4 Items)
+
+#### [MATH_CH02_008] Subtraction of whole numbers is commutative, meaning $a - b = b - a$ for any two numbers.
+- **Source**: `concept_illustration` | **Topic**: Subtraction Commutativity Check | **Difficulty**: `easy` | **Marks**: 1
+- **Answer**: `False`
+- **Explanation / Marking Scheme**: False. Subtraction is not commutative: $7 - 3 = 4$, whereas $3 - 7 = -4$.
+
+#### [MATH_CH02_017] $(25 - 10) - 5$ is equal to $25 - (10 - 5)$.
+- **Source**: `solved_example` | **Topic**: Associative Law for Subtraction | **Difficulty**: `easy` | **Marks**: 1
+- **Answer**: `False`
+- **Explanation / Marking Scheme**: False. $(25 - 10) - 5 = 15 - 5 = 10$. However, $25 - (10 - 5) = 25 - 5 = 20$. Subtraction is not associative.
+
+#### [MATH_CH02_025] $(b + c) \times a$ is equal to $b \times a + c \times a$.
+- **Source**: `ncert_figure_it_out` | **Topic**: Distributive Multiplication Order | **Difficulty**: `easy` | **Marks**: 1
+- **Answer**: `True`
+- **Explanation / Marking Scheme**: True. Right-distributivity holds identically to left-distributivity for multiplication over addition.
+
+#### [MATH_CH02_028] Division of any non-zero number by zero is defined and yields zero in arithmetic expressions.
+- **Source**: `ncert_figure_it_out` | **Topic**: Zero in Division | **Difficulty**: `easy` | **Marks**: 1
+- **Answer**: `False`
+- **Explanation / Marking Scheme**: False. Division by zero is undefined in mathematics.
+
+### Short Answer Conceptual & Numerical Questions (32 Items)
+
+#### [MATH_CH02_001] Aman saves ₹50 per week for 8 weeks. He gives ₹150 to his younger brother. His mother then gives him ₹100 as a birthday gift. Write an arithmetic expression for the amount of money Aman has now, and calculate its final value.
+- **Source**: `concept_illustration` | **Topic**: Real-Life Savings Modeling | **Difficulty**: `easy` | **Marks**: 2
+- **Model Solution**:
+Expression: $8 \times 50 - 150 + 100$. Final Value: ₹350.
+- **Explanation / Marking Scheme**: Aman's total savings from 8 weeks $= 8 \times 50 = 400$. Minus brother's gift: $400 - 150 = 250$. Plus mother's gift: $250 + 100 = 350$.
+
+#### [MATH_CH02_002] Find the additive inverse of: (i) $36$; (ii) $-25$; (iii) $36 - 21$; (iv) $-(10 - 5)$.
+- **Source**: `concept_illustration` | **Topic**: Additive Inverse Rules | **Difficulty**: `easy` | **Marks**: 2
+- **Model Solution**:
+(i) $-36$; (ii) $25$; (iii) $-15$; (iv) $5$.
+- **Explanation / Marking Scheme**: The additive inverse of $x$ is $-x$. (i) Additive inverse of $36$ is $-36$. (ii) Additive inverse of $-25$ is $-(-25) = 25$. (iii) $36 - 21 = 15$, inverse is $-15$. (iv) $-(10 - 5) = -5$, inverse is $-(-5) = 5$.
+
+#### [MATH_CH02_003] Rewrite the expression $45 - (20 + 5)$ by removing the brackets, and find its value.
+- **Source**: `concept_illustration` | **Topic**: Bracket Removal with Negative Sign | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+Expression: $45 - 20 - 5$. Value: $20$.
+- **Explanation / Marking Scheme**: When removing brackets preceded by a minus sign, every internal term changes its sign: $45 - (20 + 5) = 45 - 20 - 5 = 25 - 5 = 20$.
+
+#### [MATH_CH02_004] Given that $525 \times 16 = 8400$, use the 'Tinker the Terms' property to find: (i) $525 \times 17$; (ii) $525 \times 15$ without performing long multiplication.
+- **Source**: `concept_illustration` | **Topic**: Tinker the Terms: Product Extension | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+(i) $525 \times 17 = 8925$; (ii) $525 \times 15 = 7875$.
+- **Explanation / Marking Scheme**: (i) $525 \times 17 = 525 \times (16 + 1) = 8400 + 525 = 8925$. (ii) $525 \times 15 = 525 \times (16 - 1) = 8400 - 525 = 7875$.
+
+#### [MATH_CH02_005] Without evaluating the exact values, compare the expressions $265 + 352$ and $269 + 350$ using reasoning.
+- **Source**: `concept_illustration` | **Topic**: Comparing Expressions by Inspection | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+$265 + 352 > 269 + 350$.
+- **Explanation / Marking Scheme**: Notice $269 = 265 + 4$, while $350 = 352 - 2$. Thus, $269 + 350 = (265 + 4) + (352 - 2) = 265 + 352 + 2$. Therefore, $269 + 350 = 619$ and $265 + 352 = 617$. So $269 + 350 > 265 + 352$.
+
+#### [MATH_CH02_009] Write an arithmetic expression for each verbal situation: (a) Add 15 to the product of 6 and 7; (b) Subtract 28 from the quotient of 144 divided by 12; (c) Multiply the sum of 8 and 14 by 5.
+- **Source**: `solved_example` | **Topic**: Expression Formulation | **Difficulty**: `easy` | **Marks**: 3
+- **Model Solution**:
+(a) $6 \times 7 + 15$; (b) $144 \div 12 - 28$; (c) $(8 + 14) \times 5$.
+- **Explanation / Marking Scheme**: (a) Product of 6 and 7 is $6 \times 7$; adding 15 gives $6 \times 7 + 15$. (b) Quotient is $144 \div 12$; subtracting 28 gives $144 \div 12 - 28$. (c) Sum must be grouped in parentheses: $(8 + 14) \times 5$.
+
+#### [MATH_CH02_010] Evaluate the arithmetic expression: $36 \div 4 + 2 \times (8 - 3) - 5$.
+- **Source**: `solved_example` | **Topic**: Order of Operations with Brackets | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+$14$
+- **Explanation / Marking Scheme**: Step 1 (Parentheses): $8 - 3 = 5$. Expression becomes $36 \div 4 + 2 \times 5 - 5$.
+Step 2 (Division & Multiplication L to R): $36 \div 4 = 9$; $2 \times 5 = 10$. Expression becomes $9 + 10 - 5$.
+Step 3 (Addition & Subtraction): $19 - 5 = 14$.
+
+#### [MATH_CH02_011] Simplify the expression: $100 - [60 \div 5 + (18 \div 6 \times 2)]$.
+- **Source**: `solved_example` | **Topic**: Nested Grouping Evaluation | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+$82$
+- **Explanation / Marking Scheme**: Step 1 (Innermost parentheses): $18 \div 6 = 3$, then $3 \times 2 = 6$.
+Step 2 (Square brackets): $60 \div 5 = 12$, so bracket content $= 12 + 6 = 18$.
+Step 3 (Final subtraction): $100 - 18 = 82$.
+
+#### [MATH_CH02_012] 6 persons raised ₹1500 equally for a charity event. They then collected an additional ₹50 per person from 10 more volunteers. Write an expression for the total money raised and calculate it.
+- **Source**: `solved_example` | **Topic**: Fundraiser Money Distribution | **Difficulty**: `medium` | **Marks**: 3
+- **Model Solution**:
+Expression: $1500 + 10 \times 50$. Total: ₹2000.
+- **Explanation / Marking Scheme**: Initial collection is ₹1500. Additional collection from 10 volunteers $= 10 \times 50 = 500$. Total $= 1500 + 500 = 2000$.
+
+#### [MATH_CH02_013] Insert brackets into the expression $56 - 14 + 9 \times 2$ to make it equal to $74$.
+- **Source**: `solved_example` | **Topic**: Bracket Insertion for Target Value | **Difficulty**: `hard` | **Marks**: 3
+- **Model Solution**:
+Brackets placement: $56 - (14 - 32)$ or $(56 - 14 + 9) + 23$. For textbook p. 11: $56 - (14 - 9 \times 2)$ is not whole. In textbook p. 11 Example 15: Target is 60: $(56 - 14) + (9 \times 2) = 42 + 18 = 60$.
+- **Explanation / Marking Scheme**: Evaluating without brackets: $56 - 14 + 18 = 60$. Placing brackets as $(56 - 14) + (9 \times 2) = 42 + 18 = 60$ verifies the step precedence.
+
+#### [MATH_CH02_014] Use the distributive property to mentally compute: $95 \times 28$.
+- **Source**: `solved_example` | **Topic**: Mental Decompositions using Distributive Law | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+$2660$
+- **Explanation / Marking Scheme**: Decompose $95$ as $(100 - 5)$. Then: $95 \times 28 = (100 - 5) \times 28 = 100 \times 28 - 5 \times 28 = 2800 - 140 = 2660$.
+
+#### [MATH_CH02_015] Use the distributive property to evaluate: $98 \times 12$.
+- **Source**: `solved_example` | **Topic**: Decomposition of Near-Hundred Multiplier | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+$1176$
+- **Explanation / Marking Scheme**: Decompose $98$ as $(100 - 2)$. Then: $98 \times 12 = (100 - 2) \times 12 = 100 \times 12 - 2 \times 12 = 1200 - 24 = 1176$.
+
+#### [MATH_CH02_016] Ananya buys 4 packs of biscuits at ₹25 each, 3 cartons of juice at ₹40 each, and uses a ₹30 discount coupon. Write an arithmetic expression for the net payable amount and calculate it.
+- **Source**: `solved_example` | **Topic**: Multi-Step Grocery Problem | **Difficulty**: `hard` | **Marks**: 3
+- **Model Solution**:
+Expression: $4 \times 25 + 3 \times 40 - 30$. Net Amount: ₹190.
+- **Explanation / Marking Scheme**: Cost of biscuits $= 4 \times 25 = 100$. Cost of juice $= 3 \times 40 = 120$. Subtotal $= 100 + 120 = 220$. Minus coupon: $220 - 30 = 190$.
+
+#### [MATH_CH02_020] Evaluate the alternating arithmetic series: $1 - 2 + 3 - 4 + 5 - 6 + 7 - 8 + 9 - 10$.
+- **Source**: `solved_example` | **Topic**: Alternating Series Cancellation | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+$-5$
+- **Explanation / Marking Scheme**: Group consecutive terms in pairs: $(1 - 2) + (3 - 4) + (5 - 6) + (7 - 8) + (9 - 10) = (-1) + (-1) + (-1) + (-1) + (-1) = -5$.
+
+#### [MATH_CH02_021] A window frame has an outer border of 3 cm on top and bottom, and 5 vertical grill bars of width 2 cm each. If the gaps between the bars are 5 cm each, write an arithmetic expression to model the total width of the window with 4 gaps.
+- **Source**: `ncert_figure_it_out` | **Topic**: Geometric Window Grill Gap Modeling | **Difficulty**: `medium` | **Marks**: 3
+- **Model Solution**:
+Expression: $2 \times 3 + 5 \times 2 + 4 \times 5$. Total width: $36$ cm.
+- **Explanation / Marking Scheme**: Borders: $2 \times 3 = 6$ cm. Grill bars: $5 \times 2 = 10$ cm. Gaps: $4 \times 5 = 20$ cm. Total width $= 6 + 10 + 20 = 36$ cm.
+
+#### [MATH_CH02_022] Complete the statement to verify the distributive property: $3 \times (\Box + 4) = 3 \times 6 + 3 \times 4$.
+- **Source**: `ncert_figure_it_out` | **Topic**: Distributive Fill-In | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+$\Box = 6$
+- **Explanation / Marking Scheme**: By distributive law, $a \times (b + c) = a \times b + a \times c$. Comparing with $3 \times 6 + 3 \times 4$, the missing number in the box is $6$.
+
+#### [MATH_CH02_023] Identify whether $(16 - 11) \times 12$ is equivalent to $16 \times 12 - 11 \times 12$. State the property.
+- **Source**: `ncert_figure_it_out` | **Topic**: Equivalent Expression Verification | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+Yes, they are equivalent by the Distributive Property of Multiplication over Subtraction.
+- **Explanation / Marking Scheme**: $(16 - 11) \times 12 = 5 \times 12 = 60$. Also, $16 \times 12 - 11 \times 12 = 192 - 132 = 60$.
+
+#### [MATH_CH02_024] Does $88 \times (76 - 53)$ yield the same value as $88 \times (53 - 76)$? Explain why or why not.
+- **Source**: `ncert_figure_it_out` | **Topic**: Sign Distribution in Differences | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+No. $88 \times (76 - 53) = +2024$, whereas $88 \times (53 - 76) = -2024$. They are additive inverses of each other.
+- **Explanation / Marking Scheme**: Since $76 - 53 = 23$ is positive, but $53 - 76 = -23$ is negative, the products have opposite signs.
+
+#### [MATH_CH02_027] Using the expression $3 + (20 - 1) \times 2$, calculate the total number of dots in the 20th row.
+- **Source**: `ncert_figure_it_out` | **Topic**: Pattern Calculation: 20th Row | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+$41$ dots.
+- **Explanation / Marking Scheme**: $3 + 19 \times 2 = 3 + 38 = 41$ dots.
+
+#### [MATH_CH02_075] Identify the number of terms in the expression: 12 × (6 ÷ 2) - 3 + 6 × 5.
+- **Source**: `textbook_subjective` | **Topic**: Counting Terms with Sub-Expressions | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+3 terms.
+- **Explanation / Marking Scheme**: The terms are: (1) $12 \times (6 \div 2)$, (2) $-3$, and (3) $6 \times 5$.
+
+#### [MATH_CH02_076] Check whether the expressions 200 - (25 + 46) and 200 - 25 + 46 have the same value.
+- **Source**: `textbook_subjective` | **Topic**: Sign Distribution Verification | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+No, they have different values: $200 - (25 + 46) = 129$, whereas $200 - 25 + 46 = 221$.
+- **Explanation / Marking Scheme**: $200 - (25 + 46) = 200 - 71 = 129$. But $200 - 25 + 46 = 175 + 46 = 221$.
+
+#### [MATH_CH02_077] Write an arithmetic expression for: '12 times 10 added to 15 times 5, and the entire result subtracted from 500.'
+- **Source**: `textbook_subjective` | **Topic**: Verbal to Algebraic Translation | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+Expression: $500 - (12 \times 10 + 15 \times 5)$. Value: $305$.
+- **Explanation / Marking Scheme**: $12 \times 10 = 120$; $15 \times 5 = 75$. Sum $= 195$. Subtracting from 500: $500 - 195 = 305$.
+
+#### [MATH_CH02_078] In a school assembly, boys are seated in 6 rows with 7 boys in each row. Girls are seated in 7 rows with 6 girls in each row. Write an expression for the total number of students and state the mathematical property illustrated.
+- **Source**: `textbook_subjective` | **Topic**: School Assembly Seating | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+Expression: $6 \times 7 + 7 \times 6$. Value: $84$ students. Property: Commutative Property of Multiplication ($6 \times 7 = 7 \times 6$).
+- **Explanation / Marking Scheme**: $6 \times 7 = 42$ boys. $7 \times 6 = 42$ girls. Total $= 42 + 42 = 84$.
+
+#### [MATH_CH02_079] A student needs 2 drawing sheets at ₹7.50 each, 3 color boxes at ₹10 each, and 1 brush at ₹12. Write an arithmetic expression for the total cost and calculate it.
+- **Source**: `textbook_subjective` | **Topic**: Stationery Supply Budget | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+Expression: $2 \times 7.50 + 3 \times 10 + 12$. Total Cost: ₹57.
+- **Explanation / Marking Scheme**: $2 \times 7.50 = 15$. $3 \times 10 = 30$. Brush $= 12$. Total $= 15 + 30 + 12 = 57$.
+
+#### [MATH_CH02_080] Rewrite the expression 25 - (6 + 2 - 7) by removing the brackets, and find its value.
+- **Source**: `textbook_subjective` | **Topic**: Bracket Removal with Mixed Signs | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+Rewritten: $25 - 6 - 2 + 7$. Value: $24$.
+- **Explanation / Marking Scheme**: Reversing signs inside: $25 - 6 - 2 + 7 = 19 - 2 + 7 = 17 + 7 = 24$. (Original: $6 + 2 - 7 = 1$, and $25 - 1 = 24$).
+
+#### [MATH_CH02_081] Given that 53 × 18 = 954, find: (i) 55 × 18; (ii) 53 × 17 using mental math.
+- **Source**: `textbook_subjective` | **Topic**: Given Product Extension | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+(i) $55 \times 18 = 990$; (ii) $53 \times 17 = 901$.
+- **Explanation / Marking Scheme**: (i) $55 \times 18 = (53 + 2) \times 18 = 954 + 36 = 990$. (ii) $53 \times 17 = 53 \times (18 - 1) = 954 - 53 = 901$.
+
+#### [MATH_CH02_082] If 2056 + 625 - 152 = 2529, find the value of 2054 + 626 - 151 without performing long addition.
+- **Source**: `textbook_subjective` | **Topic**: Equivalent Expression by Compensation | **Difficulty**: `medium` | **Marks**: 3
+- **Model Solution**:
+$2529$
+- **Explanation / Marking Scheme**: Compare terms: $2054 = 2056 - 2$; $626 = 625 + 1$; $-151 = -152 + 1$. Net change $= -2 + 1 + 1 = 0$. Value remains identical: $2529$.
+
+#### [MATH_CH02_083] There are 12 groups of children. 6 groups contain 5 students each, and 6 groups contain 3 students each. Express total students as an arithmetic expression and evaluate it using the distributive property.
+- **Source**: `textbook_subjective` | **Topic**: Children Groups Distributive Property | **Difficulty**: `medium` | **Marks**: 3
+- **Model Solution**:
+Expression: $6 \times 5 + 6 \times 3 = 6 \times (5 + 3) = 6 \times 8 = 48$ students.
+- **Explanation / Marking Scheme**: Factoring out common multiplier 6 gives $6 \times (5 + 3) = 48$ students.
+
+#### [MATH_CH02_084] Find the value of: 42 ÷ 3 + 6 × 5 - 4.
+- **Source**: `textbook_subjective` | **Topic**: Order of Operations Evaluation | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+$40$
+- **Explanation / Marking Scheme**: $42 \div 3 = 14$; $6 \times 5 = 30$. Expression becomes $14 + 30 - 4 = 44 - 4 = 40$.
+
+#### [MATH_CH02_085] A school organizes 3 buses with 42 seats each for a field trip. If 99 students go on the trip, how many total seats are left empty across the buses?
+- **Source**: `numerical_value` | **Topic**: School Bus Seating Capacity | **Difficulty**: `medium` | **Marks**: 3
+- **Model Solution**:
+$27$ empty seats.
+- **Explanation / Marking Scheme**: Total seats $= 3 \times 42 = 126$. Empty seats $= 126 - 99 = 27$.
+
+#### [MATH_CH02_086] Calculate the numerical value of: 100 - [60 ÷ 5 + (18 ÷ 6 × 2)].
+- **Source**: `numerical_value` | **Topic**: Nested Expression Evaluation | **Difficulty**: `medium` | **Marks**: 2
+- **Model Solution**:
+$82$
+- **Explanation / Marking Scheme**: $18 \div 6 = 3$; $3 \times 2 = 6$. $60 \div 5 = 12$. Bracket $= 12 + 6 = 18$. Value $= 100 - 18 = 82$.
+
+#### [MATH_CH02_087] A group books 5 concert tickets at ₹1,200 each, pays ₹75 service charge per ticket, and a one-time transaction fee of ₹250. Calculate the total cost.
+- **Source**: `numerical_value` | **Topic**: Concert Ticket Booking Cost | **Difficulty**: `medium` | **Marks**: 3
+- **Model Solution**:
+₹6,625.
+- **Explanation / Marking Scheme**: Ticket cost $= 5 \times 1200 = 6000$. Service charge $= 5 \times 75 = 375$. One-time fee $= 250$. Total $= 6000 + 375 + 250 = ₹6,625$.

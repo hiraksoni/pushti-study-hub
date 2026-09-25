@@ -211,9 +211,32 @@
         }
     }
 
+    function loadCompanionStudyTools() {
+        if (window.__pushtiStudyToolsLoaded) return;
+        var scripts = document.getElementsByTagName('script');
+        var targetSrc = null;
+        for (var i = 0; i < scripts.length; i++) {
+            var src = scripts[i].getAttribute('src') || '';
+            if (src.indexOf('scroll_to_top.js') !== -1) {
+                targetSrc = src.replace('scroll_to_top.js', 'study_tools.js');
+                break;
+            }
+        }
+        if (targetSrc) {
+            var st = document.createElement('script');
+            st.src = targetSrc;
+            st.async = true;
+            document.head.appendChild(st);
+        }
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', function() {
+            init();
+            loadCompanionStudyTools();
+        });
     } else {
         init();
+        loadCompanionStudyTools();
     }
 })();

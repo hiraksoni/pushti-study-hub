@@ -984,22 +984,27 @@
             title: 'Chapter 1: Large Numbers Around Us',
             subject: 'Mathematics',
             unit: 'Number Systems & Foundations',
-            version: 'v2.0.0',
-            lastModified: 'September 24, 2026, 09:15 PM IST',
+            version: 'v2.1.0',
+            lastModified: 'September 25, 2026, 11:30 AM IST',
             modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
-            modelBadgeColor: '#8B5CF6',
+            modelBadgeColor: '#10B981',
             aiProvider: 'Google DeepMind',
-            taskType: '100% Full Textbook Digitization & Complete Solved Exercise Suite',
-            summary: 'Comprehensive 100% full textbook digitization of all 24 pages from Maths Ch1.pdf. Features all 20 worked solved examples, all 7 NCERT Figure It Out discovery drills (Chintamani census, Chitti button clicks, number name letter counts, library book scale), 60 Level-1 Foundation MCQs, Assertion-Reason, Short & Long Answer proofs, Lazy Counter puzzles, and Real-World Competency Cases I through IV (Chit-Picking, Digits Board, USA/India visit, Rural Vaccination Camp), integrated alongside Ref 1 Exercises 1.1-1.4 (42 Qs) and Ref 1 Practice Bank (27 Qs).',
+            taskType: 'Refined Pure Chapter Architecture & Extraneous Content Removal',
+            summary: 'Comprehensive 100% full textbook digitization of all 24 pages from Maths Ch1.pdf dedicated exclusively to Chapter 1 (Large Numbers Around Us). All extraneous reference content (Cordova Integers) has been completely removed to preserve strict single-chapter integrity. Features 4 robust interactive tabs: Concept Pillars (5 core units), Practice & OMR Engine (80 exam items), Textbook Solutions (20 worked solved examples, 7 NCERT discovery drills, try-these, exercises 1.1-1.3, Cases I-IV, HOTS), and 4 interactive laboratory simulators.',
             changesList: [
-                '100% complete textbook digitization across all 24 pages into KB Files (112 comprehensive items with step-by-step mathematical reasoning).',
-                'Tab 3 (Textbook Solutions): Injected all 20 Worked Solved Examples (Pages 10–13) covering expanded forms, place value differences, system conversions, rounding rules, estimation of quotients, and multiplication shortcuts.',
-                'Tab 3 (NCERT Discovery Drills): Injected all 7 NCERT Figure It Out drills (Pages 13–14) including 13-year Chintamani population growth, Chitti button-click expressions, and dual-system number names.',
-                'Tab 3 (Competency & Cases): Injected Real-World Cases I to IV (Pages 22–24: Chit-Picking, Digits Board, Anny & John, Vaccination Logistics), The Lazy Counter additive puzzles, and Expected Digits in Products.',
-                'Updated interactive filter toolbar in Tab 3 with dedicated category buttons for instant access without page reload.',
-                'Mirrored authoritative Knowledge Base into knowledge_base/mathematics/main_source_mtg/ch1_large_numbers/.'
+                'Completely purged extraneous Cordova Integers reference tracks and sidebar tabs to maintain strict single-chapter curriculum boundaries.',
+                'Restored streamlined 4-tab architecture: 1. Concept Pillars, 2. Practice & OMR Engine, 3. Textbook Solutions, 4. Interactive Lab.',
+                'Resolved tab navigation issues by replacing fragile event listeners with a resilient switchTab engine that handles dynamic KaTeX rendering, button highlighting, and sub-pane visibility gracefully.',
+                'Eliminated undefined function calls and broken publication filter buttons, ensuring zero JavaScript console errors.',
+                'Retained 100% textbook coverage: all 20 Worked Solved Examples, 7 Figure It Out discovery drills, Cases I–IV (Chit-Picking, Digits Board, Anny & John, Vaccination Logistics), and 4 live simulators.'
             ],
             history: [
+                {
+                    version: 'v2.1.0',
+                    date: 'September 25, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: 'Purged extraneous Cordova Integers reference tracks. Fixed tab switching engine, eliminated console errors, and restored 100% pure Chapter 1 Large Numbers architecture.'
+                },
                 {
                     version: 'v2.0.0',
                     date: 'September 24, 2026',
@@ -1020,24 +1025,27 @@
             title: 'Chapter 2: Arithmetic Expressions',
             subject: 'Mathematics',
             unit: 'Operations & Algebraic Foundations',
-            version: 'v1.0.1',
-            lastModified: 'September 8, 2026, 01:15 AM IST',
+            version: 'v2.0.0',
+            lastModified: 'September 25, 2026, 12:00 PM IST',
             modelUsed: 'Gemini 2.5 Pro (via Antigravity)',
             modelBadgeColor: '#10B981',
             aiProvider: 'Google DeepMind',
-            taskType: 'Standardized 4-Tab Mathematics Architecture (Gemini.v2)',
-            summary: 'Built complete production module for Class 7 Mathematics Chapter 2: "Arithmetic Expressions" following 100% SOP alignment with Chapter 1 while visually differentiated with an Emerald / Jade & Amethyst theme. Features zero promotional banners, 3-tier sticky HUD navigation (Header 60px, Tabs 45px, Sub-Nav 105px), 5 modular theory units with 10 solved illustrations in Tab 1, high-density 4-column single-line MCQ architecture (60 MCQs + 20 Objectives across 6 sections) with 60-bubble OMR test engine in Tab 2, self-practice NCERT "Figure It Out" discovery activities and Exercises 2.1-2.4 with hidden step-by-step solutions in Tab 3, and 4 interactive math discovery simulators in Tab 4.',
+            taskType: '100% Full Coursebook Digitization & Complete Solved Exercise Suite',
+            summary: 'Comprehensive 100% full coursebook digitization of all 22 pages from Maths Ch2.pdf into authoritative Knowledge Base and interactive chapter module. Injected all 16 worked solved examples (Pages 9–11), 5 NCERT Figure It Out discovery drills, Real-World Case Studies (Case I: School Canteen Q1–Q5 & Case II: King Omar\'s Gold Coins Q1–Q3), School Bus Trip Seating application, and dedicated 40-question Practice Test Paper examination suite.',
             changesList: [
-                'Emerald / Jade & Amethyst mathematical color palette (--primary: #10b981; --accent-purple: #a855f7; --accent-amber: #f59e0b) on deep slate background for clean visual differentiation from Chapter 1.',
-                'Strict SOP Alignment: Zero hero banners, immediate content beneath sticky tabs, breadcrumbs, Claude Edition, Time Table, Mid-Term Syllabus, Audit Log, and Dark/Light toggle.',
-                '3-Tier Persistent Sticky Navigation: Tier 1 Site Header (top: 0), Tier 2 Primary Tabs (top: 60px), and Tier 3 Subtopic/Filter Bars (top: 105px) across all 4 tabs with auto-offset scrolling.',
-                'Tab 1: 5 modular theory units (Expression Basics, Precedence & BODMAS, Brackets & Inversion, Distributive Law, Algebraic Generalization) with 10 step-by-step solved illustrations.',
-                'Tab 2: High-density 4-column single-line MCQ grid (60 MCQs + 20 Objectives across 6 sections), fitting 6-8 questions on screen without wrapping short choices onto multiple lines, plus 60-bubble OMR palette and 60-min exam timer.',
-                'Tab 3: Active self-practice workflow for all NCERT "Figure It Out" discovery activities (Pages 25, 34-35, 37-38, 39, 42-44) and Exercises 2.1-2.4. Problem box shown first, full solutions hidden behind [Show Step-by-Step Solution] toggle, bulk toolbar controls, and strict nowrap rules on tables.',
-                'Tab 4: 4 Dynamic Discovery Simulators: (1) Live BODMAS Step-by-Step Evaluator, (2) Parentheses Target Value Solver, (3) Terms & Sign Reordering Playground, and (4) Distributive Law SVG Area Model Visualizer.',
-                'Zero AudioContext / zero sound effect errors, 100% clean console logs, and central audit log registration.'
+                '100% complete textbook digitization across all 22 pages into KB Files (37 comprehensive questions with step-by-step proofs).',
+                'Tab 7 (Coursebook Solved Examples): Injected all 16 Worked Examples (Pages 9–11) partitioned into 4 logical submodules with KaTeX step-by-step solutions.',
+                'Tab 9 (Real-World Case Studies): Injected Case I (School Canteen Bill 5-part investigation) and Case II (King Omar\'s Gold Coins 3-part trade modeling) with interactive option checks and full explanations.',
+                'Tab 12 (Practice Test Paper): Added dedicated launch hub and syllabus specification for the 40-question NCERT Practice Test Paper (test_arithmetic_expressions.html).',
+                'Master Unified SOP v3.5 Compliance: Integrated header micro-battery syllabus meter (🔋 100% Mid-Term Ready), Audit Log button, 3-second notification dot manager, floating scroll-to-top button, and anonymized commercial publisher metadata.'
             ],
             history: [
+                {
+                    version: 'v2.0.0',
+                    date: 'September 25, 2026',
+                    model: 'Gemini 2.5 Pro (via Antigravity)',
+                    notes: '100% Full Textbook Digitization (22 pages), all 16 worked examples, 5 discovery drills, Cases I & II, 40-Q Practice Test Paper hub, and Master SOP v3.5 compliance.'
+                },
                 {
                     version: 'v1.0.1',
                     date: 'September 8, 2026',

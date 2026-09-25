@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Test Generator | Central Assessment Portal | Pushti Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    :root {
+      --bg-base: #060d16;
+      --surface: #0a1726;
+      --surface-glass: rgba(10, 23, 38, 0.88);
+      --bg-card: rgba(13, 29, 48, 0.75);
+      --bg-card-hover: rgba(16, 36, 60, 0.92);
+      --border: rgba(99, 102, 241, 0.25);
+      --border-hover: rgba(129, 140, 248, 0.55);
+      --primary: #6366f1;
+      --primary-glow: #818cf8;
+      --primary-subtle: rgba(99, 102, 241, 0.14);
+      --accent-science: #10b981;
+      --accent-maths: #f59e0b;
+      --accent-english: #38bdf8;
+      --accent-hindi: #f43f5e;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+    }
+
+    [data-theme="light"] {
+      --bg-base: #f8fafc;
+      --surface: #ffffff;
+      --surface-glass: rgba(255, 255, 255, 0.92);
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --border: rgba(99, 102, 241, 0.3);
+      --border-hover: rgba(99, 102, 241, 0.6);
+      --primary: #4f46e5;
+      --primary-glow: #6366f1;
+      --primary-subtle: rgba(79, 70, 229, 0.12);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Navigation */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--surface-glass);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+    .nav-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+    .nav-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-btn {
+      padding: 7px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 24px 20px 80px 20px;
+    }
+
+    /* Generator Configuration Card */
+    .config-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 30px;
+    }
+
+    .config-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .config-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 20px;
+    }
+
+    .section-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    /* Subject Selector Grid */
+    .subject-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .subject-choice {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      background: var(--bg-card);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .subject-choice:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+    .subject-choice.active {
+      border-color: var(--primary);
+      background: var(--primary-subtle);
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.25);
+    }
+    .subject-choice .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    /* Blueprint / Format Selector */
+    .blueprint-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .blueprint-card {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      background: var(--bg-card);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .blueprint-card:hover {
+      border-color: var(--border-hover);
+    }
+    .blueprint-card.active {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.12);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+    }
+    .bp-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .bp-badge {
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(99, 102, 241, 0.18);
+      color: var(--primary-glow);
+    }
+    .bp-details {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Chapter Filter Checkboxes */
+    .chapter-select-box {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      background: rgba(0, 0, 0, 0.15);
+      margin-bottom: 24px;
+    }
+    .chapter-select-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .chapter-checkbox-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 8px;
+      max-height: 220px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .chapter-check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.86rem;
+      background: var(--bg-card);
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+    }
+    .chapter-check-item input {
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* Generate Button */
+    .generate-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+      transition: all 0.25s ease;
+    }
+    .generate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(99, 102, 241, 0.6);
+      background: linear-gradient(135deg, #4338ca, #6d28d9);
+    }
+
+    /* Test Paper View Container */
+    .paper-wrapper {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating Exam Control Bar */
+    .exam-dock {
+      position: sticky;
+      top: 65px;
+      z-index: 900;
+      background: var(--surface-glass);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 10px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: var(--shadow-md);
+    }
+    .exam-timer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fbbf24;
+    }
+    .dock-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .dock-btn {
+      padding: 7px 13px;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .dock-btn:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-card-hover);
+    }
+    .dock-btn.btn-primary {
+      background: #10b981;
+      border-color: #10b981;
+      color: #fff;
+    }
+
+    /* Official Exam Paper Sheet */
+    .exam-paper {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .paper-header {
+      text-align: center;
+      border-bottom: 2px dashed var(--border);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+    .paper-school {
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .paper-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .paper-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-family: 'Space Mono', monospace;
+      color: var(--text-muted);
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .paper-instructions {
+      background: rgba(0, 0, 0, 0.12);
+      border-left: 3px solid var(--primary);
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin: 16px 0 24px 0;
+      border-radius: 4px;
+      line-height: 1.5;
+    }
+
+    /* Section Styling */
+    .paper-section {
+      margin-bottom: 32px;
+    }
+    .section-banner {
+      background: var(--primary-subtle);
+      border-left: 4px solid var(--primary);
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .section-banner h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .section-marks {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--primary-glow);
+    }
+
+    /* Question Item */
+    .question-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+    .question-card:hover {
+      border-color: var(--border);
+    }
+    .q-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .q-num {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      color: var(--primary-glow);
+      font-size: 0.95rem;
+    }
+    .q-text {
+      flex: 1;
+      font-size: 0.98rem;
+      font-weight: 500;
+      line-height: 1.55;
+    }
+    .q-marks-pill {
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-dim);
+      font-family: 'Space Mono', monospace;
+      white-space: nowrap;
+    }
+
+    /* Options for MCQ */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 13px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      font-size: 0.88rem;
+      transition: all 0.18s;
+    }
+    .option-label:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-hover);
+    }
+    .option-label input[type="radio"] {
+      accent-color: var(--primary);
+    }
+
+    /* Student Working Space */
+    .student-scratch {
+      margin-top: 12px;
+    }
+    .scratch-textarea {
+      width: 100%;
+      height: 60px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border);
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      resize: vertical;
+      outline: none;
+    }
+    .scratch-textarea:focus {
+      border-color: var(--primary);
+    }
+
+    /* Solution Accordion */
+    .solution-box {
+      display: none;
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      background: rgba(16, 185, 129, 0.08);
+      border-left: 3px solid #10b981;
+      font-size: 0.88rem;
+    }
+    .solution-box.visible {
+      display: block;
+    }
+    .sol-header {
+      font-weight: 700;
+      color: #34d399;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sol-text {
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+    .sol-expl {
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    /* Print Stylesheet */
+    @media print {
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .top-nav, .config-card, .exam-dock, .generate-btn, .scratch-textarea, .nav-actions, .pushti-jump-to-top {
+        display: none !important;
+      }
+      .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .paper-wrapper {
+        display: block !important;
+      }
+      .exam-paper {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .paper-title {
+        color: #000 !important;
+      }
+      .question-card {
+        background: #fff !important;
+        border: 1px solid #ddd !important;
+        color: #000 !important;
+        page-break-inside: avoid;
+        margin-bottom: 12px !important;
+        padding: 10px 14px !important;
+      }
+      .option-label {
+        background: #fff !important;
+        border: 1px solid #ccc !important;
+        color: #000 !important;
+      }
+      .solution-box {
+        display: none !important; /* Hide answers in student print */
+      }
+      .paper-section {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <a href="index.html" class="nav-brand">
+      <div class="nav-logo"><i class="fas fa-graduation-cap"></i></div>
+      <div class="nav-title">Pushti Study Hub</div>
+    </a>
+    <div class="nav-actions">
+      <a href="science_index.html" class="nav-btn"><i class="fas fa-flask"></i> Science</a>
+      <a href="maths_index.html" class="nav-btn"><i class="fas fa-calculator"></i> Maths</a>
+      <a href="english_index.html" class="nav-btn"><i class="fas fa-book"></i> English</a>
+      <a href="hindi_index.html" class="nav-btn"><i class="fas fa-om"></i> Hindi</a>
+      <button class="nav-btn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">
+        <i class="fas fa-sun" id="theme-icon"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Configurator Section -->
+    <section class="config-card" id="config-section">
+      <div class="config-title">
+        <i class="fas fa-wand-magic-sparkles" style="color: #6366f1;"></i>
+        Practice Test Paper Generator
+      </div>
+      <p class="config-desc">
+        Generate customized, authentic practice test papers matching your curriculum blueprints. Perfect for self-assessment, time-bound mock exams, and instant recall drills.
+      </p>
+
+      <!-- 1. Subject Selector -->
+      <span class="section-label">1. Select Subject</span>
+      <div class="subject-grid">
+        <div class="subject-choice active" data-subject="science" onclick="selectSubject('science')">
+          <div class="icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+            <i class="fas fa-flask"></i>
+          </div>
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem;">Science</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">Bio, Chem &amp; Physics</div>
+          </div>
+        </div>
+        <div class="subject-choice" data-subject="mathematics" onclick="selectSubject('mathematics')">
+          <div class="icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+            <i class="fas fa-calculator"></i>
+          </div>
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem;">Mathematics</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">Expressions, Lines &amp; Geometry</div>
+          </div>
+        </div>
+        <div class="subject-choice" data-subject="english" onclick="selectSubject('english')">
+          <div class="icon" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">
+            <i class="fas fa-book"></i>
+          </div>
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem;">English</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">Grammar, Reading &amp; Literature</div>
+          </div>
+        </div>
+        <div class="subject-choice" data-subject="hindi" onclick="selectSubject('hindi')">
+          <div class="icon" style="background: rgba(244, 63, 94, 0.15); color: #f43f5e;">
+            <i class="fas fa-om"></i>
+          </div>
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem;">Hindi (हिन्दी)</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">व्याकरण, साहित्य व लेखन</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Exam Blueprint / Format -->
+      <span class="section-label">2. Select Blueprint / Format</span>
+      <div class="blueprint-grid">
+        <div class="blueprint-card active" data-bp="80m" onclick="selectBlueprint('80m')">
+          <div class="bp-title">
+            <span>80-Mark Comprehensive Exam</span>
+            <span class="bp-badge">3 Hours</span>
+          </div>
+          <div class="bp-details">Full syllabus blueprint with Sections A, B, C, D &amp; E. Designed for complete exam preparation.</div>
+        </div>
+        <div class="blueprint-card" data-bp="25m" onclick="selectBlueprint('25m')">
+          <div class="bp-title">
+            <span>25-Mark Sprint Test</span>
+            <span class="bp-badge">45 Mins</span>
+          </div>
+          <div class="bp-details">Quick periodic diagnostic drill focusing on high-frequency questions and core concepts.</div>
+        </div>
+        <div class="blueprint-card" data-bp="40m" onclick="selectBlueprint('40m')">
+          <div class="bp-title">
+            <span>40-Mark Mid-Level Practice</span>
+            <span class="bp-badge">90 Mins</span>
+          </div>
+          <div class="bp-details">Balanced half-length paper combining objective MCQs, short answers, and structured problems.</div>
+        </div>
+      </div>
+
+      <!-- 3. Chapter Selection -->
+      <span class="section-label">3. Select Chapters to Include</span>
+      <div class="chapter-select-box">
+        <div class="chapter-select-header">
+          <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);" id="chapter-count-text">Loading chapters...</span>
+          <div style="display: flex; gap: 8px;">
+            <button class="nav-btn" style="padding: 3px 10px; font-size: 0.75rem;" onclick="toggleAllChapters(true)">Select All</button>
+            <button class="nav-btn" style="padding: 3px 10px; font-size: 0.75rem;" onclick="toggleAllChapters(false)">Clear All</button>
+          </div>
+        </div>
+        <div class="chapter-checkbox-list" id="chapter-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Generate Action -->
+      <button class="generate-btn" onclick="generateTestPaper()">
+        <i class="fas fa-play"></i> Generate Practice Test Paper
+      </button>
+    </section>
+
+    <!-- Generated Paper Section -->
+    <section class="paper-wrapper" id="paper-wrapper">
+      
+      <!-- Sticky Exam Control Dock -->
+      <div class="exam-dock">
+        <div class="exam-timer">
+          <i class="fas fa-clock"></i>
+          <span id="timer-display">03:00:00</span>
+          <button class="dock-btn" onclick="toggleTimer()" id="timer-toggle-btn" style="padding: 3px 8px; margin-left: 6px;">
+            <i class="fas fa-pause"></i>
+          </button>
+        </div>
+        <div class="dock-actions">
+          <button class="dock-btn btn-primary" onclick="toggleSolutions()" id="sol-toggle-btn">
+            <i class="fas fa-eye"></i> Show Marking Scheme
+          </button>
+          <button class="dock-btn" onclick="regenerateTestPaper()">
+            <i class="fas fa-shuffle"></i> Shuffle Questions
+          </button>
+          <button class="dock-btn" onclick="window.print()">
+            <i class="fas fa-print"></i> Print Paper
+          </button>
+          <button class="dock-btn" onclick="resetConfig()">
+            <i class="fas fa-sliders"></i> Modify Settings
+          </button>
+        </div>
+      </div>
+
+      <!-- Paper Sheet -->
+      <article class="exam-paper" id="exam-paper-sheet">
+        <!-- Rendered by JS -->
+      </article>
+
+    </section>
+
+  </main>
+
+  <!-- Question Bank -->
+  <script src="js/test_questions_bank.js"></script>
+
+  <!-- Generator Script -->
+  <script>
+    var currentSubject = 'science';
+    var currentBlueprint = '80m';
+    var timerInterval = null;
+    var timerSeconds = 180 * 60;
+    var isTimerRunning = false;
+    var showingSolutions = false;
+    var lastGeneratedPaper = null;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      // Parse URL subject parameter
+      var params = new URLSearchParams(window.location.search);
+      var subParam = params.get('subject');
+      if (subParam && ['science', 'mathematics', 'english', 'hindi'].indexOf(subParam.toLowerCase()) !== -1) {
+        selectSubject(subParam.toLowerCase());
+      } else {
+        renderChapterCheckboxes();
+      }
+      initTheme();
+    });
+
+    function toggleTheme() {
+      var cur = document.documentElement.getAttribute('data-theme') || 'dark';
+      var next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('pushti-theme', next);
+      var icon = document.getElementById('theme-icon');
+      if (icon) icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    function initTheme() {
+      var saved = localStorage.getItem('pushti-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+      var icon = document.getElementById('theme-icon');
+      if (icon) icon.className = saved === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    function selectSubject(subj) {
+      currentSubject = subj;
+      document.querySelectorAll('.subject-choice').forEach(function(el) {
+        el.classList.toggle('active', el.getAttribute('data-subject') === subj);
+      });
+      renderChapterCheckboxes();
+    }
+
+    function selectBlueprint(bp) {
+      currentBlueprint = bp;
+      document.querySelectorAll('.blueprint-card').forEach(function(el) {
+        el.classList.toggle('active', el.getAttribute('data-bp') === bp);
+      });
+    }
+
+    function renderChapterCheckboxes() {
+      var container = document.getElementById('chapter-list');
+      var countEl = document.getElementById('chapter-count-text');
+      if (!window.PUSHTI_TEST_BANK || !window.PUSHTI_TEST_BANK[currentSubject]) {
+        container.innerHTML = '<p style="color:var(--text-muted); padding:10px;">Question bank loading...</p>';
+        return;
+      }
+
+      var chapters = window.PUSHTI_TEST_BANK[currentSubject];
+      var chKeys = Object.keys(chapters);
+      var totalQs = 0;
+      var html = '';
+
+      chKeys.forEach(function(k, idx) {
+        var ch = chapters[k];
+        var qLen = ch.questions.length;
+        totalQs += qLen;
+        html += '<label class="chapter-check-item">' +
+                '<input type="checkbox" class="ch-check" value="' + k + '" checked> ' +
+                '<span><strong>Ch ' + ch.chapter_num + ':</strong> ' + ch.chapter_title + ' <span style="color:var(--text-dim); font-size:0.75rem;">(' + qLen + ' Qs)</span></span>' +
+                '</label>';
+      });
+
+      container.innerHTML = html;
+      countEl.textContent = chKeys.length + ' Chapters available (' + totalQs + ' Questions in bank)';
+    }
+
+    function toggleAllChapters(check) {
+      document.querySelectorAll('.ch-check').forEach(function(cb) {
+        cb.checked = check;
+      });
+    }
+
+    function getSelectedChapters() {
+      var selected = [];
+      document.querySelectorAll('.ch-check:checked').forEach(function(cb) {
+        selected.push(cb.value);
+      });
+      return selected;
+    }
+
+    function shuffleArray(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+      }
+      return a;
+    }
+
+    function buildPaperModel(subject, blueprint, selectedChKeys) {
+      var bank = window.PUSHTI_TEST_BANK[subject];
+      var pool = [];
+
+      selectedChKeys.forEach(function(k) {
+        if (bank[k] && bank[k].questions) {
+          pool = pool.concat(bank[k].questions);
+        }
+      });
+
+      if (pool.length === 0) {
+        alert('Please select at least one chapter with questions!');
+        return null;
+      }
+
+      // Group pool by types
+      var mcqs = shuffleArray(pool.filter(function(q) { return q.type === 'mcq' || q.type === 'tf' || q.type === 'fib'; }));
+      var short2m = shuffleArray(pool.filter(function(q) { return q.type === 'short_answer' && q.marks <= 2; }));
+      var short3m = shuffleArray(pool.filter(function(q) { return (q.type === 'short_answer' && q.marks > 2) || (q.marks === 3); }));
+      var long5m = shuffleArray(pool.filter(function(q) { return q.type === 'long_answer' || q.marks >= 4; }));
+      var caseQs = shuffleArray(pool.filter(function(q) { return q.type === 'case_study' || q.marks >= 4; }));
+
+      // Fallbacks if specific category is small
+      if (short2m.length < 5) short2m = short2m.concat(shuffleArray(pool.filter(function(q) { return q.type === 'short_answer'; })));
+      if (short3m.length < 5) short3m = short3m.concat(shuffleArray(pool.filter(function(q) { return q.type === 'short_answer'; })));
+      if (long5m.length < 3) long5m = long5m.concat(shuffleArray(pool.filter(function(q) { return q.type === 'short_answer'; })));
+
+      var sections = [];
+      var targetMarks = 80;
+      var timeAllowed = '3 Hours';
+      var timeMins = 180;
+
+      if (blueprint === '80m') {
+        targetMarks = 80;
+        timeAllowed = '3 Hours';
+        timeMins = 180;
+
+        sections = [
+          {
+            name: 'Section A: Objective & Core Knowledge',
+            desc: 'Multiple Choice Questions & Objective Drills (1 Mark each)',
+            marksPerQ: 1,
+            questions: mcqs.slice(0, 20)
+          },
+          {
+            name: 'Section B: Short Answer Conceptual Questions',
+            desc: 'Concise step-by-step conceptual answers (2 Marks each)',
+            marksPerQ: 2,
+            questions: short2m.slice(0, 6)
+          },
+          {
+            name: 'Section C: Analytical & Structured Problems',
+            desc: 'Detailed working, reasoning, or chemical/geometrical solutions (3 Marks each)',
+            marksPerQ: 3,
+            questions: short3m.slice(0, 8)
+          },
+          {
+            name: 'Section D: Long Answer & Comprehensive Applications',
+            desc: 'Extended explanations, derivations, and in-depth answers (5 Marks each)',
+            marksPerQ: 5,
+            questions: long5m.slice(0, 4)
+          }
+        ];
+      } else if (blueprint === '25m') {
+        targetMarks = 25;
+        timeAllowed = '45 Minutes';
+        timeMins = 45;
+
+        sections = [
+          {
+            name: 'Section A: Objective Drills',
+            desc: 'Quick recall & multiple-choice questions (1 Mark each)',
+            marksPerQ: 1,
+            questions: mcqs.slice(0, 10)
+          },
+          {
+            name: 'Section B: Short Conceptual Questions',
+            desc: 'Direct reasoning questions (2 Marks each)',
+            marksPerQ: 2,
+            questions: short2m.slice(0, 3)
+          },
+          {
+            name: 'Section C: Application & Problem Solving',
+            desc: 'Detailed application problems (3 Marks each)',
+            marksPerQ: 3,
+            questions: short3m.slice(0, 3)
+          }
+        ];
+      } else { // 40m
+        targetMarks = 40;
+        timeAllowed = '90 Minutes';
+        timeMins = 90;
+
+        sections = [
+          {
+            name: 'Section A: Objective Foundations',
+            desc: 'MCQs & Rapid Recall (1 Mark each)',
+            marksPerQ: 1,
+            questions: mcqs.slice(0, 10)
+          },
+          {
+            name: 'Section B: Conceptual Clarification',
+            desc: 'Short answer questions (2 Marks each)',
+            marksPerQ: 2,
+            questions: short2m.slice(0, 6)
+          },
+          {
+            name: 'Section C: In-Depth Reasoning',
+            desc: 'Structured analytical questions (3 Marks each)',
+            marksPerQ: 3,
+            questions: short3m.slice(0, 6)
+          }
+        ];
+      }
+
+      return {
+        subject: subject,
+        blueprint: blueprint,
+        targetMarks: targetMarks,
+        timeAllowed: timeAllowed,
+        timeMins: timeMins,
+        selectedChapters: selectedChKeys,
+        sections: sections
+      };
+    }
+
+    function renderPaper(paper) {
+      lastGeneratedPaper = paper;
+      var sheet = document.getElementById('exam-paper-sheet');
+      
+      var subjectDisplayName = {
+        'science': 'Science (Biology, Chemistry & Physics)',
+        'mathematics': 'Mathematics (Theory, Algebraic & Geometry)',
+        'english': 'English (Language, Grammar & Literature)',
+        'hindi': 'Hindi (हिन्दी व्याकरण व साहित्य)'
+      }[paper.subject] || paper.subject;
+
+      var qCounter = 1;
+      var sectionsHtml = '';
+
+      paper.sections.forEach(function(sec, sIdx) {
+        if (!sec.questions || sec.questions.length === 0) return;
+        
+        var secMarks = sec.questions.length * sec.marksPerQ;
+        sectionsHtml += '<div class="paper-section">' +
+                        '<div class="section-banner">' +
+                        '  <div>' +
+                        '    <h4>' + sec.name + '</h4>' +
+                        '    <div style="font-size:0.78rem; color:var(--text-muted);">' + sec.desc + '</div>' +
+                        '  </div>' +
+                        '  <div class="section-marks">[' + sec.questions.length + ' &times; ' + sec.marksPerQ + ' = ' + secMarks + ' Marks]</div>' +
+                        '</div>';
+
+        sec.questions.forEach(function(q) {
+          var num = qCounter++;
+          var optionsHtml = '';
+          if (q.options && q.options.length > 0) {
+            optionsHtml += '<div class="options-grid">';
+            q.options.forEach(function(opt, oIdx) {
+              optionsHtml += '<label class="option-label">' +
+                             '  <input type="radio" name="q_' + num + '" value="' + opt + '"> ' +
+                             '  <span>' + opt + '</span>' +
+                             '</label>';
+            });
+            optionsHtml += '</div>';
+          }
+
+          var solHtml = '<div class="solution-box" id="sol-' + num + '">' +
+                        '  <div class="sol-header"><i class="fas fa-check-circle"></i> Official Model Solution &bull; [' + sec.marksPerQ + ' Mark' + (sec.marksPerQ > 1 ? 's' : '') + ']</div>' +
+                        '  <div class="sol-text"><strong>Answer:</strong> ' + (q.answer || 'Refer to textbook concept principles.') + '</div>' +
+                        (q.explanation ? '  <div class="sol-expl"><strong>Step Explanation:</strong> ' + q.explanation + '</div>' : '') +
+                        '</div>';
+
+          sectionsHtml += '<div class="question-card">' +
+                          '  <div class="q-top">' +
+                          '    <span class="q-num">Q' + num + '.</span>' +
+                          '    <div class="q-text">' + q.question + '</div>' +
+                          '    <span class="q-marks-pill">[' + sec.marksPerQ + 'M]</span>' +
+                          '  </div>' +
+                          optionsHtml +
+                          '  <div class="student-scratch">' +
+                          '    <textarea class="scratch-textarea" placeholder="Type your steps, working, or rough solution here..."></textarea>' +
+                          '  </div>' +
+                          solHtml +
+                          '</div>';
+        });
+
+        sectionsHtml += '</div>';
+      });
+
+      var dateStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+      var headerHtml = '<div class="paper-header">' +
+                       '  <div class="paper-school">PUSHTI STUDY HUB &bull; CENTRAL ASSESSMENT PORTAL</div>' +
+                       '  <h1 class="paper-title">' + subjectDisplayName + '</h1>' +
+                       '  <div style="font-weight:600; color:var(--text-muted); font-size:0.95rem;">Standard Practice Examination Paper</div>' +
+                       '  <div class="paper-meta">' +
+                       '    <span><strong>Date:</strong> ' + dateStr + '</span>' +
+                       '    <span><strong>Time Allowed:</strong> ' + paper.timeAllowed + '</span>' +
+                       '    <span><strong>Maximum Marks:</strong> ' + paper.targetMarks + '</span>' +
+                       '    <span><strong>Total Questions:</strong> ' + (qCounter - 1) + '</span>' +
+                       '  </div>' +
+                       '</div>' +
+                       '<div class="paper-instructions">' +
+                       '  <strong>General Instructions:</strong>' +
+                       '  <ol style="margin-left: 20px; margin-top: 4px;">' +
+                       '    <li>All questions are compulsory. Internal choice is provided in analytical problems.</li>' +
+                       '    <li>Write clear steps and formulas wherever required to earn full step marks.</li>' +
+                       '    <li>Use the scratchpad below each question for quick mental or step calculations.</li>' +
+                       '    <li>Click "Show Marking Scheme" at any time to verify your answers against teacher model solutions.</li>' +
+                       '  </ol>' +
+                       '</div>';
+
+      sheet.innerHTML = headerHtml + sectionsHtml;
+
+      // Render math equations if KaTeX is available
+      if (window.renderMathInElement) {
+        window.renderMathInElement(sheet, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+
+      // Start Countdown Timer
+      startTimer(paper.timeMins * 60);
+
+      // Scroll to paper
+      document.getElementById('paper-wrapper').style.display = 'block';
+      document.getElementById('paper-wrapper').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function generateTestPaper() {
+      var selectedChs = getSelectedChapters();
+      if (selectedChs.length === 0) {
+        alert('Please check at least one chapter to generate the test paper!');
+        return;
+      }
+      var paper = buildPaperModel(currentSubject, currentBlueprint, selectedChs);
+      if (paper) {
+        renderPaper(paper);
+      }
+    }
+
+    function regenerateTestPaper() {
+      if (lastGeneratedPaper) {
+        var paper = buildPaperModel(lastGeneratedPaper.subject, lastGeneratedPaper.blueprint, lastGeneratedPaper.selectedChapters);
+        if (paper) renderPaper(paper);
+      } else {
+        generateTestPaper();
+      }
+    }
+
+    function resetConfig() {
+      document.getElementById('paper-wrapper').style.display = 'none';
+      document.getElementById('config-section').scrollIntoView({ behavior: 'smooth' });
+      clearInterval(timerInterval);
+    }
+
+    function toggleSolutions() {
+      showingSolutions = !showingSolutions;
+      var boxes = document.querySelectorAll('.solution-box');
+      boxes.forEach(function(b) {
+        b.classList.toggle('visible', showingSolutions);
+      });
+      var btn = document.getElementById('sol-toggle-btn');
+      if (btn) {
+        btn.innerHTML = showingSolutions ? '<i class="fas fa-eye-slash"></i> Hide Marking Scheme' : '<i class="fas fa-eye"></i> Show Marking Scheme';
+      }
+    }
+
+    function startTimer(seconds) {
+      clearInterval(timerInterval);
+      timerSeconds = seconds;
+      isTimerRunning = true;
+      updateTimerDisplay();
+
+      timerInterval = setInterval(function() {
+        if (isTimerRunning) {
+          timerSeconds--;
+          if (timerSeconds <= 0) {
+            clearInterval(timerInterval);
+            timerSeconds = 0;
+            alert('Time is up! Please review your answers against the marking scheme.');
+          }
+          updateTimerDisplay();
+        }
+      }, 1000);
+    }
+
+    function toggleTimer() {
+      isTimerRunning = !isTimerRunning;
+      var btn = document.getElementById('timer-toggle-btn');
+      if (btn) {
+        btn.innerHTML = isTimerRunning ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+      }
+    }
+
+    function updateTimerDisplay() {
+      var h = Math.floor(timerSeconds / 3600);
+      var m = Math.floor((timerSeconds % 3600) / 60);
+      var s = timerSeconds % 60;
+      var pad = function(n) { return n < 10 ? '0' + n : n; };
+      var disp = document.getElementById('timer-display');
+      if (disp) {
+        disp.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+      }
+    }
+  </script>
+
+  <!-- Universal Jump to Top Engine -->
+  <script src="js/scroll_to_top.js"></script>
+
+</body>
+</html>

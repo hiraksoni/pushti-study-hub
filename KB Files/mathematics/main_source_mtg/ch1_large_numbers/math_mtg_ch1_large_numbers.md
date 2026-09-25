@@ -1,55 +1,199 @@
 # Large Numbers Around Us (MATH_MTG_CH01)
 **Subject**: Mathematics | **Source**: Main Source (Coursebook / MTG)
-**Pages Covered**: 1 to 24 (Complete Textbook Digitization) | **Total Questions**: 112
+**Pages Covered**: 1 to 24 (Complete Textbook Digitization) | **Total Questions**: 125
 
 ## Chapter Overview
 Exhaustive digitization of all 24 pages of Class 7 Mathematics Chapter 1: Large Numbers Around Us. Covers Indian and International Place Value Systems, Periods & Commas, Powers of Ten, Expanded & Standard Forms, Exact vs Approximate Values, Rounding Rules, Estimation of Operations, Multiplication Shortcuts, Digit Counting in Products, NCERT Figure It Out drills, Level-1 MCQs, Assertion-Reason, Short & Long Answer proofs, Integer problems, and Cases I-IV.
 
 ## Core Conceptual Foundations
-### Indian Place Value System
-Grouped into periods: Ones (Ones, Tens, Hundreds), Thousands (Thousands, Ten Thousands), Lakhs (Lakhs, Ten Lakhs), Crores (Crores, Ten Crores). Commas placed after 3 digits from right, then after every 2 digits: e.g., $9,87,65,432$.
+### 1. Building Large Numbers & Powers of Ten
+Every time we add 1 to the greatest number of $n$ digits, we obtain the smallest number of $(n+1)$ digits:
+- $9 + 1 = 10$ (Ten, $10^1$)
+- $99 + 1 = 100$ (Hundred, $10^2$)
+- $999 + 1 = 1,000$ (Thousand, $10^3$)
+- $9,999 + 1 = 10,000$ (Ten Thousand, $10^4$)
+- $99,999 + 1 = 1,00,000$ (Lakh, $10^5$)
+- $9,99,999 + 1 = 10,00,000$ (Ten Lakh, $10^6$)
+- $99,99,999 + 1 = 1,00,00,000$ (Crore, $10^7$)
+- $9,99,99,999 + 1 = 10,00,00,000$ (Ten Crore, $10^8$)
+- $99,99,99,999 + 1 = 1,00,00,00,000$ (Arab / One Billion, $10^9$)
+- $9,99,99,99,999 + 1 = 10,00,00,00,000$ (Ten Arab / Ten Billion, $10^{10}$).
 
-### International Place Value System
-Grouped into periods of three digits each: Ones (Ones, Tens, Hundreds), Thousands (Thousands, Ten Thousands, Hundred Thousands), Millions (Millions, Ten Millions, Hundred Millions), Billions. Commas placed every 3 digits from right: e.g., $98,765,432$.
+### 2. Indian System of Numeration
+Digits are grouped into periods starting from the right:
+1. **Ones Period (3 digits)**: Ones ($10^0$), Tens ($10^1$), Hundreds ($10^2$)
+2. **Thousands Period (2 digits)**: Thousands ($10^3$), Ten Thousands ($10^4$)
+3. **Lakhs Period (2 digits)**: Lakhs ($10^5$), Ten Lakhs ($10^6$)
+4. **Crores Period (2 digits)**: Crores ($10^7$), Ten Crores ($10^8$)
+5. **Arabs Period (2 digits)**: Arabs ($10^9$), Ten Arabs ($10^{10}$)
+**Comma Rule**: First comma comes after 3 digits from the right; subsequent commas come after every 2 digits (e.g. $1,54,36,59,801$ = One Arab fifty-four crore thirty-six lakh fifty-nine thousand eight hundred one).
 
-### System Equivalences
-$1\text{ lakh} = 100\text{ thousands} = 10^5$; $10\text{ lakhs} = 1\text{ million} = 10^6$; $1\text{ crore} = 10\text{ millions} = 10^7$; $10\text{ crores} = 100\text{ millions} = 10^8$; $1\text{ billion} = 100\text{ crores} = 1,000\text{ millions} = 10^9$.
+### 3. International System of Numeration
+Digits are grouped into periods of strictly 3 digits each from the right:
+1. **Ones Period**: Ones ($10^0$), Tens ($10^1$), Hundreds ($10^2$)
+2. **Thousands Period**: Thousands ($10^3$), Ten Thousands ($10^4$), Hundred Thousands ($10^5$)
+3. **Millions Period**: Millions ($10^6$), Ten Millions ($10^7$), Hundred Millions ($10^8$)
+4. **Billions Period**: Billions ($10^9$), Ten Billions ($10^{10}$)
+**Comma Rule**: Commas come after every 3 digits from the right (e.g. $1,543,659,801$ = One billion five hundred forty-three million six hundred fifty-nine thousand eight hundred one).
 
-### Exact vs Approximate Values & Rounding Off
-Exact value is completely accurate (e.g. 52 students in class). Approximate value gives an estimated estimate close to the actual number. Rounding rule: inspect the digit immediately to the right of the target place. If digit is $0, 1, 2, 3, 4$, round down (leave target digit unchanged and set following digits to 0). If digit is $5, 6, 7, 8, 9$, round up (add 1 to target digit and set following digits to 0).
+### 4. Indian vs. International System Equivalences
+- $1\text{ Lakh} = 100\text{ Thousands} = 10^5$
+- $10\text{ Lakhs} = 1\text{ Million} = 10^6$
+- $1\text{ Crore} = 10\text{ Millions} = 10^7$
+- $10\text{ Crores} = 100\text{ Millions} = 10^8$
+- $1\text{ Arab} = 1\text{ Billion} = 100\text{ Crores} = 1,000\text{ Millions} = 10^9$
+- $10\text{ Arabs} = 10\text{ Billions} = 1,000\text{ Crores} = 10^{10}$.
 
-### Multiplication Shortcuts & Product Patterns
-Multiplying by 5: multiply by 10 and divide by 2 ($n \times 5 = (n \times 10) / 2$). Multiplying by 25: multiply by 100 and divide by 4 ($n \times 25 = (n \times 100) / 4$). Multiplying by 125: multiply by 1000 and divide by 8 ($n \times 125 = (n \times 1000) / 8$). Palindromic patterns: $1 \times 1 = 1$, $11 \times 11 = 121$, $111 \times 111 = 12321$.
+### 5. Expanded Form & Place Value vs. Face Value
+- **Face Value**: The intrinsic numerical digit itself, regardless of its position (e.g. in $5,72,84,310$, face value of 7 is 7).
+- **Place Value**: The digit multiplied by its positional weight (e.g. place value of 7 is $7 \times 10,00,000 = 70,00,000$).
+- **Expanded Form**: Expressing a number as the sum of each digit multiplied by its place value:
+  $$4,26,438 = 4 \times 10^5 + 2 \times 10^4 + 6 \times 10^3 + 4 \times 10^2 + 3 \times 10^1 + 8 \times 10^0$$.
 
-### Expected Number of Digits in Products
-When multiplying an $m$-digit number by an $n$-digit number, the product has either $(m + n - 1)$ or $(m + n)$ digits. E.g. 3-digit $\times$ 4-digit: minimum digits $= 3 + 4 - 1 = 6$; maximum digits $= 3 + 4 = 7$.
+### 6. Comparing and Ordering Large Numbers
+1. **Rule 1 (Digit Count)**: If numbers have unequal digit counts, the number with more digits is strictly greater (e.g. $56,23,41,720$ [9 digits] > $4,62,34,120$ [8 digits]).
+2. **Rule 2 (Left-to-Right Positional Scan)**: If digit counts are equal, compare digits starting from the highest place (leftmost). The number with the greater digit at the first point of difference is greater.
+3. **Ascending Order**: Arranging from smallest to largest ($A < B < C < D$).
+4. **Descending Order**: Arranging from largest to smallest ($A > B > C > D$).
+
+### 7. Exact vs. Approximate Values & Nearest Neighbours Rounding
+- **Exact Value**: Accurate count without any estimation (e.g. 52 students in a classroom).
+- **Approximate Value**: Number close to actual quantity, obtained by rounding up or down.
+- **Real-Life Rounding Heuristics**:
+  - *Round Up*: 18 people attending a party; chairs come in sets of 10 $\implies$ round up to 20 chairs so all can sit.
+  - *Round Down*: ₹58 in pocket; toys cost ₹5 each $\implies$ round down to ₹55 to buy 11 toys.
+- **Rounding Rule**: Inspect the digit immediately to the right of the target rounding place:
+  - If digit is $0, 1, 2, 3, 4$, **round down** (keep target digit unchanged, change all digits to the right to 0).
+  - If digit is $5, 6, 7, 8, 9$, **round up** (add 1 to target digit, change all digits to the right to 0).
+
+### 8. Estimation of Operations (General Rule)
+- **General Rule**: Round each factor or operand to its highest place value (greatest place value), then compute.
+- **Estimated Sum/Difference**: Round both numbers to a common high place (e.g. nearest crore or ten lakh), then add or subtract.
+- **Estimated Product**: Round each multi-digit factor to its highest place value (e.g. $6,784 \times 295 \approx 7,000 \times 300 = 21,00,000$).
+- **Estimated Quotient**: Round dividend and divisor to convenient multiples for mental division (e.g. $8,745 \div 34 \approx 9,000 \div 30 = 300$).
+
+### 9. Mental Multiplication Shortcuts
+- **Multiply by 5**: Annex zero, divide by 2: $n \times 5 = (n \times 10) / 2$ (e.g. $78 \times 5 = 780 / 2 = 390$).
+- **Multiply by 25**: Annex two zeros, divide by 4: $n \times 25 = (n \times 100) / 4$ (e.g. $3,248 \times 25 = 3,24,800 / 4 = 81,200$).
+- **Multiply by 50**: Annex two zeros, divide by 2: $n \times 50 = (n \times 100) / 2$ (e.g. $76 \times 50 = 7,600 / 2 = 3,800$).
+- **Multiply by 125**: Annex three zeros, divide by 8: $n \times 125 = (n \times 1000) / 8$ (e.g. $96 \times 125 = 96,000 / 8 = 12,000$).
+- **Multiply by 250**: Annex three zeros, divide by 4: $n \times 250 = (n \times 1000) / 4$ (e.g. $60 \times 250 = 60,000 / 4 = 15,000$).
+
+### 10. Patterns in Products & Digit Theorems
+- **Repunit Palindromes**: $1 \times 1 = 1$, $11 \times 11 = 121$, $111 \times 111 = 12321$, $1111 \times 1111 = 1234321$, $11111 \times 11111 = 123454321$.
+- **Repunit with Zeros**: $101 \times 101 = 10201$, $10101 \times 10101 = 102030201$, $1010101 \times 1010101 = 1020304030201$.
+- **Repeated 6s and 3s**: $66 \times 61 = 4026$, $666 \times 661 = 440226$, $6666 \times 6661 = 44402226$; $3 \times 5 = 15$, $33 \times 35 = 1155$, $333 \times 335 = 111555$.
+- **Near-100 Squares**: $101^2 = 10201$, $102^2 = 10404$, $103^2 = 10609$, $104^2 = 10816$.
+- **Triangle Product Pattern**: $1\times 9 + 2 = 11$, $12\times 9 + 3 = 111$, $123\times 9 + 4 = 1111$, $1234\times 9 + 5 = 11111$, $12345\times 9 + 6 = 111111$.
+- **Theorem on Expected Product Digits**: When multiplying an $m$-digit number by an $n$-digit number, the number of digits in the product is ALWAYS either $(m + n - 1)$ or $(m + n)$ digits:
+  - Smallest product: $10^{m-1} \times 10^{n-1} = 10^{m+n-2} \implies (m+n-1)$ digits.
+  - Greatest product: $(10^m - 1)(10^n - 1) < 10^{m+n} \implies (m+n)$ digits.
+
+### 11. Metric Conversions & Prefix Scale ($10^9$)
+- **Metric Prefixes**: Kilo ($10^3$), Mega ($10^6$), Giga ($10^9$); Milli ($10^{-3}$), Micro ($10^{-6}$), Nano ($10^{-9}$).
+- $1\text{ km} = 1,000\text{ m} = 1,00,000\text{ cm} = 10^6\text{ mm}$.
+- $1\text{ kg} = 1,000\text{ g} = 10^6\text{ mg}$.
+- $1\text{ kL} = 1,000\text{ L} = 10^6\text{ mL}$.
+
+### 12. Roman Numerals Master System
+- **Basic Symbols**: $\text{I} = 1$, $\text{V} = 5$, $\text{X} = 10$, $\text{L} = 50$, $\text{C} = 100$, $\text{D} = 500$, $\text{M} = 1000$.
+- **Rule 1 (Repetition)**: $\text{I, X, C, M}$ can be repeated up to 3 times ($3 = \text{III}$, $30 = \text{XXX}$, $300 = \text{CCC}$). $\text{V, L, D}$ are never repeated.
+- **Rule 2 (Addition)**: Smaller numeral written after greater is added ($\text{VI} = 5+1=6$, $\text{XV} = 10+5=15$).
+- **Rule 3 (Subtraction)**: Smaller numeral written before greater is subtracted ($\text{IV} = 5-1=4$, $\text{IX} = 10-1=9$, $\text{XL} = 50-10=40$, $\text{XC} = 100-10=90$, $\text{CD} = 500-100=400$, $\text{CM} = 1000-100=900$).
+- $\text{V, L, D}$ are never subtracted.
 
 ## Question Bank (100% Textbook Digitization)
 
-### MTG_MATH1_ILL_001 (concept_illustration) — Place Value & Expanded Form
-**Question**: Illustration 1 (p. 3): Write the following numbers in expanded form: (i) 9863402, (ii) 23400.
-**Answer**: (i) $9863402 = 9\times 10^6 + 8\times 10^5 + 6\times 10^4 + 3\times 10^3 + 4\times 10^2 + 0\times 10^1 + 2\times 10^0$; (ii) $23400 = 2\times 10^4 + 3\times 10^3 + 4\times 10^2$.
-**Explanation**: Express each digit as the product of the face digit and its respective positional power of 10.
+### MTG_MATH1_ILL_001 (concept_illustration) — Indian Number Names in Words
+**Question**: Illustration 1 (p. 2): Write the number names of each of the following numbers in Indian system: (i) 5,04,326 (ii) 38,96,405 (iii) 1,23,40,008.
+**Answer**: (i) Five lakh four thousand three hundred twenty-six; (ii) Thirty-eight lakh ninety-six thousand four hundred five; (iii) One crore twenty-three lakh forty thousand eight.
+**Explanation**: Group digits into Ones, Thousands, Lakhs, and Crores periods and write period names accordingly.
 
-### MTG_MATH1_ILL_002 (concept_illustration) — Indian & International Commas
-**Question**: Illustration 2 (p. 3): Insert commas according to Indian and International systems for 47253819.
-**Answer**: Indian System: $4,72,53,819$; International System: $47,253,819$.
-**Explanation**: Indian system groups $3, 2, 2$; International system groups $3, 3, 3$ digits from the right.
+### MTG_MATH1_ILL_002 (concept_illustration) — Expanded Form of Numbers
+**Question**: Illustration 2 (p. 3): Write the following numbers in expanded form: (i) 98,63,402 (ii) 23,400.
+**Answer**: (i) $98,63,402 = 9\times 10^6 + 8\times 10^5 + 6\times 10^4 + 3\times 10^3 + 4\times 10^2 + 0\times 10^1 + 2\times 10^0$; (ii) $23,400 = 2\times 10^4 + 3\times 10^3 + 4\times 10^2 + 0\times 10^1 + 0\times 10^0$.
+**Explanation**: Multiply each digit by its positional base-10 place value weight.
 
-### MTG_MATH1_ILL_003 (concept_illustration) — Number Comparison
-**Question**: Illustration 6 (p. 4): Compare and write '<', '>' or '=': (i) 50 lakhs [ ] 5 million; (ii) 1 crore [ ] 100 million.
-**Answer**: (i) $50\text{ lakhs} = 5\text{ million}$; (ii) $1\text{ crore} < 100\text{ million}$.
-**Explanation**: (i) $50\text{ lakhs} = 5,000,000 = 5\text{ million}$ (Equal). (ii) $1\text{ crore} = 10,000,000 = 10\text{ million}$, which is less than $100\text{ million}$.
+### MTG_MATH1_ILL_003 (concept_illustration) — Place Value of Digits
+**Question**: Illustration 3 (p. 3): Write the place value of the specified digits in each of the following: (i) 8 in 38,695; (ii) 4 in 40,20,803; (iii) 1 in 3,26,152.
+**Answer**: (i) Place value of 8 in 38,695 is 8,000 ($8 \times 10^3$); (ii) Place value of 4 in 40,20,803 is 40,00,000 ($4 \times 10^6$); (iii) Place value of 1 in 3,26,152 is 100 ($1 \times 10^2$).
+**Explanation**: Place value = Face value $\times$ Positional Value of the place.
 
-### MTG_MATH1_ILL_004 (concept_illustration) — Nearest Neighbours & Rounding
-**Question**: Illustration 10 (p. 6): Write the five nearest neighbours (multiples of 10, 100, 1000, 10000, 100000) for 46,782.
-**Answer**: Nearest 10: 46,780; Nearest 100: 46,800; Nearest 1,000: 47,000; Nearest 10,000: 50,000; Nearest 1,00,000: 0 (or 1,00,000).
-**Explanation**: Inspect the digit following the target rounding place: 2 in ones rounds down to 46,780; 8 in tens rounds up to 46,800; 7 in hundreds rounds up to 47,000; 6 in thousands rounds up to 50,000.
+### MTG_MATH1_ILL_004 (concept_illustration) — Indian vs International Words
+**Question**: Illustration 4 (p. 3): Write the following numerals in words in BOTH Indian and International Systems: (i) 3,94,261; (ii) 54,30,030; (iii) 1,98,60,005.
+**Answer**: (i) Indian: Three lakh ninety-four thousand two hundred sixty-one | International: Three hundred ninety-four thousand two hundred sixty-one; (ii) Indian: Fifty-four lakh thirty thousand thirty | International: Five million four hundred thirty thousand thirty; (iii) Indian: One crore ninety-eight lakh sixty thousand five | International: Nineteen million eight hundred sixty thousand five.
+**Explanation**: Indian groups 3, 2, 2 digits; International groups 3, 3, 3 digits from the right.
 
-### MTG_MATH1_ILL_005 (concept_illustration) — Estimation of Products
-**Question**: Illustration 14 (p. 7): Estimate the product: (i) $66 \times 61$, (ii) $666 \times 661$.
-**Answer**: (i) $70 \times 60 = 4,200$ (Actual $= 4,026$); (ii) $700 \times 700 = 4,90,000$ (Actual $= 4,40,226$).
-**Explanation**: Rounding each factor to its greatest place value simplifies mental estimation while preserving order of magnitude.
+### MTG_MATH1_ILL_005 (concept_illustration) — Placing Commas in Dual Systems
+**Question**: Illustration 5 (p. 3): Place commas using both Indian and International System of Numeration for: (i) 1232843; (ii) 920040; (iii) 86920605.
+**Answer**: (i) Indian: $12,32,843$ | International: $1,232,843$; (ii) Indian: $9,20,040$ | International: $920,040$; (iii) Indian: $8,69,20,605$ | International: $86,920,605$.
+**Explanation**: Indian system: first comma after 3 digits from right, then every 2 digits. International: comma after every 3 digits from right.
+
+### MTG_MATH1_ILL_006 (concept_illustration) — System Quantity Comparison
+**Question**: Illustration 6 (p. 4): Compare and write '<', '>' or '=': (i) 50 lakhs [ ] 5 million; (ii) 60 crores [ ] 60 million; (iii) 70 crore [ ] 7 billion.
+**Answer**: (i) $50\text{ lakhs} = 5\text{ million}$; (ii) $60\text{ crores} > 60\text{ million}$; (iii) $70\text{ crore} < 7\text{ billion}$.
+**Explanation**: (i) $10\text{ lakhs} = 1\text{ million} \implies 50\text{ lakhs} = 5\text{ million}$; (ii) $1\text{ crore} = 10\text{ million} \implies 60\text{ crores} = 600\text{ million} > 60\text{ million}$; (iii) $1\text{ billion} = 100\text{ crores} \implies 7\text{ billion} = 700\text{ crores} > 70\text{ crore}$.
+
+### MTG_MATH1_ILL_007 (concept_illustration) — Positional Number Comparison
+**Question**: Illustration 7 (p. 4): Compare the following pairs of numbers: (i) 56,23,41,720 and 4,62,34,120; (ii) 3,98,12,465 and 3,96,84,521; (iii) 84,01,76,321 and 84,02,76,125.
+**Answer**: (i) $56,23,41,720 > 4,62,34,120$; (ii) $3,98,12,465 > 3,96,84,521$; (iii) $84,01,76,321 < 84,02,76,125$.
+**Explanation**: (i) $56,23,41,720$ has 9 digits while $4,62,34,120$ has 8 digits (Rule 1: more digits = greater). (ii) Both have 8 digits; first two digits are 39, third digit $8 > 6$. (iii) Both have 9 digits; first three digits are 840, fourth digit $1 < 2$.
+
+### MTG_MATH1_ILL_008 (concept_illustration) — Ascending Order of Large Numbers
+**Question**: Illustration 8 (p. 4): Arrange the following numbers in ascending order: 73,24,891; 61,23,489; 74,52,103; 58,91,324.
+**Answer**: $58,91,324 < 61,23,489 < 73,24,891 < 74,52,103$.
+**Explanation**: All numbers have 7 digits. Comparing leftmost digits: $5 < 6 < 7$. Between $73,24,891$ and $74,52,103$, second digits give $3 < 4$.
+
+### MTG_MATH1_ILL_009 (concept_illustration) — Descending Order of Large Numbers
+**Question**: Illustration 9 (p. 4): Arrange in descending order: 9,51,28,734; 9,62,38,651; 9,51,28,467; 9,38,71,234.
+**Answer**: $9,62,38,651 > 9,51,28,734 > 9,51,28,467 > 9,38,71,234$.
+**Explanation**: All have 8 digits and start with 9. Second digits: $6 > 5 > 3$. Between $9,51,28,734$ and $9,51,28,467$, first five digits match ($95128$), sixth digit $7 > 4$.
+
+### MTG_MATH1_ILL_010 (concept_illustration) — Five Nearest Neighbours Table
+**Question**: Illustration 10 (p. 6): Write the five nearest neighbours (nearest 1000, 10000, lakh, ten-lakh, crore) for: (i) 48732645; (ii) 12787356.
+**Answer**: (i) For 4,87,32,645: Nearest 1,000 = 4,87,33,000; Nearest 10,000 = 4,87,30,000; Nearest Lakh = 4,87,00,000; Nearest Ten-Lakh = 4,90,00,000; Nearest Crore = 5,00,00,000.
+(ii) For 1,27,87,356: Nearest 1,000 = 1,27,87,000; Nearest 10,000 = 1,27,90,000; Nearest Lakh = 1,28,00,000; Nearest Ten-Lakh = 1,30,00,000; Nearest Crore = 1,00,00,000.
+**Explanation**: Apply the rounding rule at each target place: digits $\ge 5$ round up, digits $< 5$ round down, setting subsequent places to 0.
+
+### MTG_MATH1_ILL_011 (concept_illustration) — Estimated Sum and Difference
+**Question**: Illustration 11 (p. 6): Find the estimated sum and difference of 7,89,13,245 and 2,13,45,987 by rounding to the nearest crore.
+**Answer**: Estimated Sum = 10,00,00,000; Estimated Difference = 6,00,00,000.
+**Explanation**: $7,89,13,245$ rounds up to $8,00,00,000$ (ten-lakhs digit 8); $2,13,45,987$ rounds down to $2,00,00,000$ (ten-lakhs digit 1). Sum $= 8+2 = 10\text{ crores}$; Difference $= 8-2 = 6\text{ crores}$.
+
+### MTG_MATH1_ILL_012 (concept_illustration) — Mental Multiplication by 5 and 50
+**Question**: Illustration 12 (p. 6): Multiply quickly: (i) $78 \times 5$; (ii) $2 \times 72 \times 50$.
+**Answer**: (i) $78 \times 5 = (78 \times 10)/2 = 780 / 2 = 390$; (ii) $2 \times 72 \times 50 = (2 \times 50) \times 72 = 100 \times 72 = 7,200$.
+**Explanation**: Use $5 = 10/2$ and associative property $2 \times 50 = 100$.
+
+### MTG_MATH1_ILL_013 (concept_illustration) — Mental Shortcuts by 50, 125, 250
+**Question**: Illustration 13 (p. 6): Multiply the numbers below quickly: (i) $50 \times 76$; (ii) $125 \times 96$; (iii) $250 \times 60$.
+**Answer**: (i) $50 \times 76 = (100 \times 76)/2 = 7,600 / 2 = 3,800$; (ii) $125 \times 96 = (1,000 \times 96)/8 = 1,000 \times 12 = 12,000$; (iii) $250 \times 60 = (1,000 \times 60)/4 = 1,000 \times 15 = 15,000$.
+**Explanation**: Replace $50 = 100/2$, $125 = 1000/8$, $250 = 1000/4$ to reduce multi-digit multiplication to simple division.
+
+### MTG_MATH1_ILL_014 (concept_illustration) — Repunit Pattern with Zeros
+**Question**: Illustration 14 (p. 7): Observe the pattern and complete it: $11 \times 11 = 121$; $101 \times 101 = 10201$; $10101 \times 10101 = 102030201$; $1010101 \times 1010101 = ?$; $101010101 \times 101010101 = ?$.
+**Answer**: $1010101 \times 1010101 = 1020304030201$; $101010101 \times 101010101 = 10203040504030201$.
+**Explanation**: The product forms a symmetric palindromic sequence where counts of 1s dictate the central peak number, separated by zeros.
+
+### MTG_MATH1_ILL_015 (concept_illustration) — Product Digits: 2-digit by 3-digit
+**Question**: Illustration 15 (p. 7): Is it possible for the product of a 2-digit number and a 3-digit number to be a 3-digit or a 4-digit number, or must it always result in a 4-digit or a 5-digit number?
+**Answer**: It must always result in either a 4-digit number or a 5-digit number.
+**Explanation**: Smallest product: $10 \times 100 = 1,000$ (4 digits). Greatest product: $99 \times 999 = 98,901$ (5 digits). Therefore, the product can never have 3 digits or more than 5 digits.
+
+### MTG_MATH1_ILL_016 (concept_illustration) — Product Digits: 4-digit by 2-digit & Theorem
+**Question**: Illustration 16 (p. 8): Can the product of a 4-digit number and a 2-digit number ever be a 5-digit number? What is the general rule?
+**Answer**: Yes, it is always either a 5-digit number or a 6-digit number. General rule: An $m$-digit number multiplied by an $n$-digit number always yields either $(m+n-1)$ or $(m+n)$ digits.
+**Explanation**: Smallest: $1000 \times 10 = 10,000$ (5 digits, $4+2-1$). Greatest: $9999 \times 99 = 9,89,901$ (6 digits, $4+2$).
+
+### MTG_MATH1_ILL_017 (concept_illustration) — Real-Life Scale: Parking Lot Capacity
+**Question**: Illustration 17 (p. 8): Let us assume a parking lot can hold 200 cars. How many cars can 500 such parking lots hold? Can they fit 1 lakh cars?
+**Answer**: They can hold $1,00,000$ cars. Yes, they can fit exactly 1 lakh cars.
+**Explanation**: Total cars $= 200 \times 500 = 1,00,000 = 1\text{ lakh}$.
+
+### MTG_MATH1_ILL_018 (concept_illustration) — Real-Life Scale: Walking Around Earth
+**Question**: Illustration 18 (p. 8): The Earth's circumference is about 40,000 km. If a person walks 20 km every day, can he walk around the Earth in one lifetime?
+**Answer**: Yes! He can walk around the Earth in about 5.5 years (less than 6 years).
+**Explanation**: Days required $= 40,000 / 20 = 2,000\text{ days}$. Years $= 2,000 / 365 \approx 5.48\text{ years}$. This is well within an average human lifetime.
 
 ### MTG_MATH1_EX_001 (solved_example) — Expanded Form
 **Question**: Example 1 (p. 10): Write the following numbers in the expanded form: (i) 48,25,302; (ii) 7,05,40,210.

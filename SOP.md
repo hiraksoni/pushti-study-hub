@@ -922,6 +922,31 @@ To prevent visual crowding and optimize screen geometry:
 * **Grammar & Sentence Construction Tabs**: Interactive verb conjugation grids (धातुरूपाणि), noun declensions (शब्दरूपाणि), and sentence formation drills.
 * **Translation Walkthroughs**: Shlokas and prose broken into individual padachheda with anvaya and poetic meaning.
 
+### 3.5 ICT (Information & Communications Technology) Architecture & The 3-Tier Pedagogical Standard
+* **Universal 7-Tab Dock Rail Architecture**:
+  Every ICT chapter (`chapters/ict/ict_*.html`) MUST strictly implement the 7-Tab glassmorphic collapsible sidebar dock rail:
+  1. `tab-theory`: **Comprehensive Concept Mastery** with sticky submodule filter bar.
+  2. `tab-exercises`: **Textbook Solved Exercises ("Let's Exercise")** (100% closed drawers).
+  3. `tab-worksheet`: **School Assessment Worksheet** (Instant interactive validation).
+  4. `tab-exam`: **Terminal School Exam Paper** (Strict 40-Mark Blueprint: Q1 10 MCQs × 1M, Q2 5 FIBs × 1M, Q3 5 TF × 1M, Q4 6 Short × 2M, Q5 2 Long × 4M).
+  5. `tab-drills` / `tab-simulators`: **Interactive Laboratories & Simulators** (Vanilla JS, zero external dependencies).
+  6. `tab-enrichment`: **Enrichment & Olympiad Question Bank** (Live debounced search & counter).
+  7. `tab-flashcards`: **Interactive 3D Flip Flashcards & Rapid Recall** (16+ cards with 3D flip transform).
+
+* **The Mandatory 3-Tier Pedagogical Model (In Tab 1 Theory)**:
+  To eliminate abstract cognitive friction and ensure joyful self-study for Pushti:
+  1. **Tier 1 (Hook & Hardware Warm-Up)**:
+     - Pre-lesson motivation hook: Connect the chapter topic to physical computer hardware or human real-world activity (e.g. transistors as light switches in Number Systems; bookkeeping vs automated formulas in Excel; sensors and cognition in AI).
+     - Intuitive non-technical analogies before introducing formal mathematical or syntax definitions.
+  2. **Tier 2 (Visual Framework & Progressive Worked Examples)**:
+     - **Visual Concept Framework**: Conversion ladders with bottom-to-top arrows, positional expansion grids, cell-referencing drag tables, chart component diagrams, and logic flowcharts.
+     - **3-Tier Progressive Worked Drills**: Level 1 (Beginner) &rarr; Level 2 (Standard Exam) &rarr; Level 3 (Tricky/Edge-Case) with step-by-step reasoning.
+     - **Common Student Traps ("Watch Out")**: Alert callout boxes highlighting common exam blunders.
+  3. **Tier 3 (Chapter Wrap-Up & Master Revision Cheat-Sheet)**:
+     - **"In a Nutshell"**: 5-bullet executive takeaway summary.
+     - **Master Quick-Reference Lookup Matrix / Formula Sheet**: Side-by-side comparative table of all key values, formulas, or syntax rules.
+     - **Top 5 Exam Traps & Common Student Mistakes**: Highlight the 5 most frequent mistakes students make on school exams with corrections.
+
 ---
 
 ## PART 4: PLATFORM HUBS, TIMETABLES & EXAM PATTERNS

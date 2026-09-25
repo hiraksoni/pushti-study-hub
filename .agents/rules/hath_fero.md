@@ -73,6 +73,27 @@ Every Literature chapter (`chapters/english/lit_*.html`, `chapters/hindi/hindi_*
 
 ---
 
+### 3.4 ICT (Computer Science) Province Blueprint & The 3-Tier Pedagogical Standard
+Every ICT chapter (`chapters/ict/ict_*.html`) MUST maintain the unified 7-tab dock rail architecture and enforce the **3-Tier Pedagogical Model**:
+- **Tab 1 (`tab-theory`)**: **Comprehensive Concept Mastery** with sticky submodule filter pills:
+  - **Tier 1 (Hook & Hardware Warm-Up)**: Pre-lesson intuition, real-world connection, and hardware-level motivation (e.g. why computers use binary, why Excel charts matter).
+  - **Tier 2 (Visual Framework & Progressive Worked Examples)**:
+    - Dedicated visual aids (Conversion ladders with bottom-to-top arrows, expansion grids, cell-referencing drag tables, chart component diagrams).
+    - Multi-step worked drills (Level 1 Beginner &rarr; Level 2 Standard &rarr; Level 3 Tricky/Edge-Case).
+    - Common error/pitfall callouts ("Watch Out" / Exam traps).
+  - **Tier 3 (Chapter Wrap-Up & Master Revision Cheat-Sheet)**:
+    - "In a Nutshell" 5-bullet executive takeaways.
+    - Master Quick-Reference Lookup Matrix / Formula sheet.
+    - Top 5 Exam Traps & Common Student Mistakes.
+- **Tab 2 (`tab-exercises`)**: **Textbook Solved Exercises ("Let's Exercise")** (MCQs, FIBs, True/False, Short Qs, Long Qs, Application-based activities with 100% closed drawers).
+- **Tab 3 (`tab-worksheet`)**: **School Assessment Worksheet** (MCQs, Conceptual Definitions, Fill in the Blanks with instant validation).
+- **Tab 4 (`tab-exam`)**: **Terminal School Exam Paper** (Strict 40-Mark Blueprint: Q1 10 MCQs &times; 1M, Q2 5 FIBs &times; 1M, Q3 5 TF &times; 1M, Q4 6 Short &times; 2M, Q5 2 Long &times; 4M, with timer, balanced scorecard at 2.2rem, and Web Audio API feedback).
+- **Tab 5 (`tab-drills` / `tab-simulators`)**: **Interactive Laboratories & Simulators** (Live code playground, interactive logic gates, Turing test, or domain classifier sandbox).
+- **Tab 6 (`tab-enrichment`)**: **Enrichment & Olympiad Question Bank** with live debounced search and dynamic counter badge.
+- **Tab 7 (`tab-flashcards`)**: **Interactive 3D Flip Flashcards & Rapid Recall** (Question front, answer/explanation back, shuffle, and progress tracker).
+
+---
+
 ## 4. The Zero-Hallucination & "Pending Content" Sentinel
 
 ### Absolute Structural Invariance
