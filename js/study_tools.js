@@ -52,8 +52,8 @@
             '.pushti-study-dock {',
             '    position: fixed;',
             '    bottom: 24px;',
-            '    left: 24px;',
-            '    z-index: 99998;',
+            '    left: 84px;',
+            '    z-index: 999999;',
             '    display: flex;',
             '    align-items: center;',
             '    gap: 8px;',
@@ -871,7 +871,7 @@
                 el.style.display = 'none';
             }
         });
-        document.querySelectorAll('.tab-btn, .nav-tab, .branch-nav-btn').forEach(function(el) {
+        document.querySelectorAll('.tab-btn, .nav-tab, .branch-nav-btn, .nav-item').forEach(function(el) {
             el.classList.remove('active');
         });
 
@@ -898,14 +898,23 @@
         var state = loadSavedRecallState();
 
         // 1. Inject Tab Button
+        var isNavItem = !!tabBar.querySelector('.nav-item');
         var btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'tab-btn pushti-recall-tab-btn';
         btn.setAttribute('data-tab', 'tab-quick-recall');
         btn.setAttribute('title', 'Quick Recall Checklist: Active Recollection Engine');
-        btn.innerHTML = '<span class="tab-icon-wrap"><i class="fas fa-clipboard-check" style="color:#10b981;"></i></span>' +
-                        '<div class="tab-label-group"><span class="tab-label">Quick Recall Checklist</span>' +
-                        '<span class="badge-recall">Active Recall</span></div>';
+
+        if (isNavItem) {
+            btn.className = 'nav-item pushti-recall-tab-btn';
+            btn.innerHTML = '<span class="nav-item-icon"><i class="fas fa-clipboard-check" style="color:#10b981;"></i></span>' +
+                            '<span class="nav-item-text">Quick Recall Checklist</span>' +
+                            '<span class="nav-item-badge" style="background:rgba(16,185,129,0.2); color:#34d399;">Recall</span>';
+        } else {
+            btn.className = 'tab-btn pushti-recall-tab-btn';
+            btn.innerHTML = '<span class="tab-icon-wrap"><i class="fas fa-clipboard-check" style="color:#10b981;"></i></span>' +
+                            '<div class="tab-label-group"><span class="tab-label">Quick Recall Checklist</span>' +
+                            '<span class="badge-recall">Active Recall</span></div>';
+        }
 
         btn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -916,7 +925,7 @@
 
         // When any other tab is clicked, hide Quick Recall
         document.addEventListener('click', function(e) {
-            var otherBtn = e.target.closest('.tab-btn, .nav-tab, .branch-nav-btn');
+            var otherBtn = e.target.closest('.tab-btn, .nav-tab, .branch-nav-btn, .nav-item');
             if (otherBtn && !otherBtn.classList.contains('pushti-recall-tab-btn')) {
                 var pane = document.getElementById('tab-quick-recall');
                 if (pane) {

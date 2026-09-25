@@ -218,7 +218,7 @@
         for (var i = 0; i < scripts.length; i++) {
             var src = scripts[i].getAttribute('src') || '';
             if (src.indexOf('scroll_to_top.js') !== -1) {
-                targetSrc = src.replace('scroll_to_top.js', 'study_tools.js');
+                targetSrc = src.replace('scroll_to_top.js', 'study_tools.js') + '?v=2.0.1';
                 break;
             }
         }
