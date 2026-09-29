@@ -428,6 +428,87 @@
             font-weight: 600;
             font-size: 0.92rem;
         }
+    
+        /* ===== TIER-2 SUBMODULE NAVIGATION — प्रश्ननिर्माणम् (CP-GUI-10) ===== */
+        .submodule-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed var(--border);
+        }
+        .submodule-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 14px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            border-radius: 18px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: inherit;
+            white-space: nowrap;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+        .submodule-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent);
+        }
+        .submodule-btn.active {
+            background: var(--tab-active-bg);
+            color: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+        .submodule-pane {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .submodule-pane.active {
+            display: block;
+        }
+
+        /* ===== MCQ / TF OPTION TILES (CP-GUI-5) ===== */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .opt-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            flex: 0 0 22px;
+            border-radius: 6px;
+            background: var(--tab-active-bg);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+        @media (max-width: 600px) {
+            .options-grid { grid-template-columns: 1fr 1fr; }
+        }
+
     </style>
 </head>
 <body>
@@ -453,7 +534,7 @@
     </div>
 </header>
 
-<!-- STICKY TABS FOR CHAPTER G1 (5 DEDICATED TABS) -->
+<!-- STICKY TABS FOR CHAPTER G1 (6 DEDICATED TABS) -->
 <nav class="tabs-wrapper">
     <button class="tab-btn active" onclick="openTab(event, 'tab-sandhi-rules')">
         <i class="fas fa-scroll"></i> स्वरसन्धि-नियमाः (Vowel Sandhi Rules)
@@ -469,6 +550,9 @@
     </button>
     <button class="tab-btn" onclick="openTab(event, 'tab-mixed-quiz')">
         <i class="fas fa-graduation-cap"></i> संयुक्त-व्याकरण-परीक्षा (Mock Exam)
+    </button>
+    <button class="tab-btn" onclick="openTab(event, 'tab-prashna')">
+        <i class="fas fa-comments-question"></i> प्रश्ननिर्माणम् (Question Formation)
     </button>
 </nav>
 
@@ -2421,6 +2505,987 @@
         </div>
     </div>
 
+    <!-- ========================================================================= -->
+    <!-- TAB 6: अध्यायः १९ — प्रश्ननिर्माणम् (QUESTION FORMATION)                    -->
+    <!-- KB SOURCE: KB Files/sanskrit/ch19_prashnirmanam/ (KB v2.0 — 60 questions)  -->
+    <!-- ========================================================================= -->
+    <div id="tab-prashna" class="tab-content">
+        <div style="border-bottom:2px solid var(--border); padding-bottom:12px; margin-bottom:20px;">
+            <h2 style="margin:0; color:var(--accent); font-size:1.5rem;">
+                <i class="fas fa-comments-question" style="margin-right:8px;"></i>प्रश्ननिर्माणम् • Question Formation (प्रश्नवाची अव्ययानि)
+            </h2>
+            <div style="color:var(--text-muted); font-size:0.92rem; margin-top:4px;">
+                Seven interrogative words (किम्, कुत्र, कुतः, कथम्, कदा, कति, कीदृक्), gender-wise forms, the question-formation technique, and a 60-question drill bank.
+            </div>
+        </div>
+
+        <div class="callout-box callout-blue" style="margin-bottom:20px;">
+            <div style="font-size:0.85rem; font-weight:700; color:var(--accent-blue); text-transform:uppercase; margin-bottom:4px;">
+                <i class="fas fa-link"></i> स्थानम् — अव्यय-सङ्गीभूतम् (Cross-Reference)
+            </div>
+            <div style="font-size:0.92rem; line-height:1.7;">
+                <strong>कुत्र</strong> (स्थानवाचक), <strong>कथम्</strong> (रीतिवाचक) एवं <strong>कदा</strong> (कालवाचक) अस्मात् अध्यायस्य
+                <strong>४. अव्ययानि (Meanings &amp; Drills)</strong> शीर्षक-अभ्यासैः सम्बद्धाः सन्ति — तत्र अव्यय-वर्ग-विभागं दृष्ट्वा अत्र प्रश्न-रूपान्तरणम् सिद्धं कुरु।
+            </div>
+        </div>
+
+        <div class="submodule-nav">
+        <button class="submodule-btn active" data-sub="sub-prashna-theory" onclick="subOpen('sub-prashna-theory')"><i class="fas fa-map"></i> सिद्धान्त-पट्टी (Theory &amp; Mind-map)</button>
+        <button class="submodule-btn" data-sub="sub-prashna-drill-a" onclick="subOpen('sub-prashna-drill-a')"><i class="fas fa-list-ol"></i> क — प्रश्नशब्द-परिचयः</button>
+        <button class="submodule-btn" data-sub="sub-prashna-drill-b" onclick="subOpen('sub-prashna-drill-b')"><i class="fas fa-venus-mars"></i> ख — रूपाणि</button>
+        <button class="submodule-btn" data-sub="sub-prashna-drill-c" onclick="subOpen('sub-prashna-drill-c')"><i class="fas fa-right-left"></i> ग — प्रश्न-रूपान्तरणम्</button>
+        <button class="submodule-btn" data-sub="sub-prashna-drill-d" onclick="subOpen('sub-prashna-drill-d')"><i class="fas fa-highlighter"></i> घ — रेखांकितपद-अभ्यासाः</button>
+        <button class="submodule-btn" data-sub="sub-prashna-drill-e" onclick="subOpen('sub-prashna-drill-e')"><i class="fas fa-list-check"></i> ङ — बहुविकल्पीय</button>
+        <button class="submodule-btn" data-sub="sub-prashna-drill-f" onclick="subOpen('sub-prashna-drill-f')"><i class="fas fa-fill-drip"></i> च — रिक्तस्थान-पूर्तिः</button>
+        <button class="submodule-btn" data-sub="sub-prashna-drill-g" onclick="subOpen('sub-prashna-drill-g')"><i class="fas fa-balance-scale"></i> छ — सत्य-असत्य</button>
+        </div>
+
+        <div id="sub-prashna-theory" class="submodule-pane active">
+        <div class="callout-box callout-purple" style="margin-bottom:20px;">
+            <div style="font-size:0.85rem; font-weight:700; color:var(--accent-purple); text-transform:uppercase; margin-bottom:8px;">
+                <i class="fas fa-book-open"></i> मूल-पाठ — चतुः सिद्धान्त-पदलेख (Verbatim Source Text)
+            </div>
+                <h4 style="color:var(--text-main); font-size:1.02rem; margin:14px 0 4px;">प्रश्नस्य परिचयः (Mind-map Overview)</h4>
+                <p style="font-size:0.94rem; line-height:1.75; margin:0 0 6px;">प्रश्ननिर्माणाय मानसपट्टिकायां सप्त प्रश्नशब्दाः निरूपिताः: किम् (कौन / किम् — व्यक्तिवस्तु); कुत्र (कहाँ — स्थानवाचक); कुतः (कहाँ से — पृथक् होने के कारण); कथम् (कैसे — क्रियाविशेषण); कदा (कब — समय); कति (कितने — संख्या); कीदृक् (कैसा — विशेषण के साथ)।</p>
+                <h4 style="color:var(--text-main); font-size:1.02rem; margin:14px 0 4px;">किम्-शब्दस्य लिङ्गानुसारं रूपाणि (Gender-wise Forms)</h4>
+                <p style="font-size:0.94rem; line-height:1.75; margin:0 0 6px;">पुल्लिङ्ग — कः, कौ, के (प्रथमा से सप्तमी); स्त्रीलिङ्ग — का, के, काः (प्रथमा से सप्तमी); नपुंसकलिङ्ग — किम्, के, कानि (प्रथमा से सप्तमी)। प्रत्येकं वाक्ये कर्ता-पदस्य स्थाने तदनुरूपं किम्-रूपं प्रयुज्यते (बालकः→कः, बालिका→का, वायुयानम्→किम्, कमलानि→कानि)।</p>
+                <h4 style="color:var(--text-main); font-size:1.02rem; margin:14px 0 4px;">कीदृश्-शब्दस्य रूपाणि (Forms of कीदृक्/कीदृश्)</h4>
+                <p style="font-size:0.94rem; line-height:1.75; margin:0 0 6px;">पुल्लिङ्ग: कीदृशः, कीदृशौ, कीदृशाः; स्त्रीलिङ्ग: कीदृशी, कीदृश्यौ, कीदृश्यः; नपुंसकलिङ्ग: कीदृशम्, कीदृशे, कीदृशानि (एकवचनम्, द्विवचनम्, बहुवचनम् क्रमेण)। कीदृक्-शब्दः विशेषणशब्देन सह लिङ्ग-वचनयोः सङ्गतिं कृत्वा प्रयुज्यते (स्थूलः→कीदृशः, पतिव्रता→कीदृशी, पक्वानि→कीदृशानि)।</p>
+                <h4 style="color:var(--text-main); font-size:1.02rem; margin:14px 0 4px;">वाक्ये प्रश्नरचना-विधि (Question Formation Technique)</h4>
+                <p style="font-size:0.94rem; line-height:1.75; margin:0 0 6px;">वाक्यस्य विषय-काल-स्थान-संख्या-विशेषणक्रियापदानि त्याज्या तेषां स्थाने योग्यः प्रश्नशब्दः (किम्/कुत्र/कुतः/कथम्/कदा/कति/कीदृक्) प्रयुज्यते तथा प्रश्नचिह्नं (?) लिख्यते। अभ्यासार्थे रेखांकितपदस्य विभक्तेः अनुसारं प्रश्नपदं चयनीयम् (द्वितीया→किम्, तृतीया→केन/कैः, चतुर्थी→कस्मै, स्थाने→कुत्र, समये→कदा)।</p>
+        </div>
+
+        <div class="sop-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+                <h3 style="margin:0; color:var(--accent); font-size:1.22rem;">
+                    <i class="fas fa-project-diagram"></i> १. प्रश्नस्य परिचयः • Mind-map Overview of the Seven Question Words
+                </h3>
+                <span class="card-badge badge-blue">7 प्रश्नशब्दाः</span>
+            </div>
+            <p style="font-size:0.95rem; line-height:1.7; margin-bottom:6px;">
+                प्रश्ननिर्माणाय मानसपट्टिकायां सप्त प्रश्नशब्दाः निरूपिताः — प्रत्येकस्यापि स्वार्थः, प्रयोगः एवं उदाहरण-वाक्यम् अत्र तुलनीय रूपेण प्रस्तुतम्।
+            </p>
+            <div class="flow-grid">
+                    <div class="flow-step-card">
+                        <div class="step-num" style="color:var(--accent);"><i class="fas fa-user-secret"></i> १</div>
+                        <div class="step-title" style="font-size:1.15rem;"><strong style="color:var(--accent);">किम्</strong></div>
+                        <div class="step-desc">
+                            <strong>कौन / किम् — व्यक्तिवस्तु</strong><br>
+                            व्यक्तेः वा वस्तोः (कौन / किम्)<br>
+                            &rArr; <em>कः क्रीडति ?</em>
+                        </div>
+                    </div>
+
+                    <div class="flow-step-card">
+                        <div class="step-num" style="color:var(--accent);"><i class="fas fa-map-marker-alt"></i> २</div>
+                        <div class="step-title" style="font-size:1.15rem;"><strong style="color:var(--accent);">कुत्र</strong></div>
+                        <div class="step-desc">
+                            <strong>कहाँ — स्थानवाचक</strong><br>
+                            जस्मिन् स्थाने विषयः तिष्ठति तत्र प्रयुज्यते<br>
+                            &rArr; <em>बालकः कुत्र गच्छति ?</em>
+                        </div>
+                    </div>
+
+                    <div class="flow-step-card">
+                        <div class="step-num" style="color:var(--accent);"><i class="fas fa-sign-out-alt"></i> ३</div>
+                        <div class="step-title" style="font-size:1.15rem;"><strong style="color:var(--accent);">कुतः</strong></div>
+                        <div class="step-desc">
+                            <strong>कहाँ से — पृथक् होने के कारण</strong><br>
+                            अपादान-प्रश्नशब्दः (अलग होने के भावे)<br>
+                            &rArr; <em>भक्ताः कुतः आगच्छन्ति ?</em>
+                        </div>
+                    </div>
+
+                    <div class="flow-step-card">
+                        <div class="step-num" style="color:var(--accent);"><i class="fas fa-route"></i> ४</div>
+                        <div class="step-title" style="font-size:1.15rem;"><strong style="color:var(--accent);">कथम्</strong></div>
+                        <div class="step-desc">
+                            <strong>कैसे — क्रियाविशेषण</strong><br>
+                            क्रियायाः गति-रीतिसम्बन्धे प्रयुज्यते<br>
+                            &rArr; <em>कच्छपाः कथम् चलन्ति ?</em>
+                        </div>
+                    </div>
+
+                    <div class="flow-step-card">
+                        <div class="step-num" style="color:var(--accent);"><i class="fas fa-clock"></i> ५</div>
+                        <div class="step-title" style="font-size:1.15rem;"><strong style="color:var(--accent);">कदा</strong></div>
+                        <div class="step-desc">
+                            <strong>कब — समय</strong><br>
+                            कालवाचक-प्रश्नशब्दः<br>
+                            &rArr; <em>रामः कदा उत्तिष्ठति ?</em>
+                        </div>
+                    </div>
+
+                    <div class="flow-step-card">
+                        <div class="step-num" style="color:var(--accent);"><i class="fas fa-sort-numeric-up"></i> ६</div>
+                        <div class="step-title" style="font-size:1.15rem;"><strong style="color:var(--accent);">कति</strong></div>
+                        <div class="step-desc">
+                            <strong>कितने — संख्या</strong><br>
+                            संख्यावाचक-प्रश्नशब्दः<br>
+                            &rArr; <em>पाण्डवाः कति आसन् ?</em>
+                        </div>
+                    </div>
+
+                    <div class="flow-step-card">
+                        <div class="step-num" style="color:var(--accent);"><i class="fas fa-gem"></i> ७</div>
+                        <div class="step-title" style="font-size:1.15rem;"><strong style="color:var(--accent);">कीदृक्</strong></div>
+                        <div class="step-desc">
+                            <strong>कैसा — विशेषण के साथ</strong><br>
+                            विशेषणशब्देन सह लिङ्ग-वचनानुसारं प्रयुज्यते<br>
+                            &rArr; <em>सीता कीदृशी महिला आसीत् ?</em>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+
+        <div class="sop-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+                <h3 style="margin:0; color:var(--accent); font-size:1.22rem;">
+                    <i class="fas fa-venus-mars"></i> २. किम्-शब्दस्य लिङ्गानुसारं रूपाणि • Gender-wise Forms of किम्
+                </h3>
+                <span class="card-badge badge-purple">प्रथमा से सप्तमी</span>
+            </div>
+            <p style="font-size:0.95rem; line-height:1.7; margin-bottom:4px;">
+                प्रत्येकं वाक्ये कर्ता-पदस्य स्थाने तदनुरूपं किम्-रूपं प्रयुज्यते — कः, कौ, के (पुल्लिङ्ग); का, के, काः (स्त्रीलिङ्ग); किम्, के, कानि (नपुंसकलिङ्ग)।
+            </p>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th style="width:20%;">लिङ्गम् (Gender)</th><th style="width:14%;">एकवचनम्</th><th style="width:14%;">द्विवचनम्</th><th style="width:14%;">बहुवचनम्</th><th style="width:38%;">उदाहरण-रूपान्तरणम् (Model Substitution)</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong style="color:var(--accent);">पुल्लिङ्गम्</strong></td><td><strong style="color:var(--accent);">कः</strong></td><td><strong style="color:var(--accent);">कौ</strong></td><td><strong style="color:var(--accent);">के</strong></td><td><em>बालकः &rarr; कः, वीरौ &rarr; कौ, अश्वाः &rarr; के</em></td></tr>
+                        <tr><td><strong style="color:var(--accent-purple);">स्त्रीलिङ्गम्</strong></td><td><strong style="color:var(--accent);">का</strong></td><td><strong style="color:var(--accent);">के</strong></td><td><strong style="color:var(--accent);">काः</strong></td><td><em>बालिका &rarr; का, कन्ये &rarr; के, महिलाः &rarr; काः</em></td></tr>
+                        <tr><td><strong style="color:var(--accent-blue);">नपुंसकलिङ्गम्</strong></td><td><strong style="color:var(--accent);">किम्</strong></td><td><strong style="color:var(--accent);">के</strong></td><td><strong style="color:var(--accent);">कानि</strong></td><td><em>वायुयानम् &rarr; किम्, पत्रे &rarr; के, कमलानि &rarr; कानि</em></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="sop-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+                <h3 style="margin:0; color:var(--accent); font-size:1.22rem;">
+                    <i class="fas fa-gem"></i> ३. कीदृश्-शब्दस्य रूपाणि • Forms of कीदृक् / कीदृश्
+                </h3>
+                <span class="card-badge badge-green">पुं · स्त्री · नपुं</span>
+            </div>
+            <p style="font-size:0.95rem; line-height:1.7; margin-bottom:4px;">
+                कीदृक्-शब्दः विशेषणशब्देन सह लिङ्ग-वचनयोः सङ्गतिं कृत्वा प्रयुज्यते (एकवचनम्, द्विवचनम्, बहुवचनम् क्रमेण)।
+            </p>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th style="width:20%;">लिङ्गम् (Gender)</th><th style="width:14%;">एकवचनम्</th><th style="width:14%;">द्विवचनम्</th><th style="width:14%;">बहुवचनम्</th><th style="width:38%;">उदाहरण-रूपान्तरणम् (Model Substitution)</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong style="color:var(--accent);">पुल्लिङ्गम्</strong></td><td><strong style="color:var(--accent);">कीदृशः</strong></td><td><strong style="color:var(--accent);">कीदृशौ</strong></td><td><strong style="color:var(--accent);">कीदृशाः</strong></td><td><em>स्थूलः &rarr; कीदृशः</em></td></tr>
+                        <tr><td><strong style="color:var(--accent-purple);">स्त्रीलिङ्गम्</strong></td><td><strong style="color:var(--accent);">कीदृशी</strong></td><td><strong style="color:var(--accent);">कीदृश्यौ</strong></td><td><strong style="color:var(--accent);">कीदृश्यः</strong></td><td><em>पतिव्रता &rarr; कीदृशी</em></td></tr>
+                        <tr><td><strong style="color:var(--accent-blue);">नपुंसकलिङ्गम्</strong></td><td><strong style="color:var(--accent);">कीदृशम्</strong></td><td><strong style="color:var(--accent);">कीदृशे</strong></td><td><strong style="color:var(--accent);">कीदृशानि</strong></td><td><em>पक्वानि &rarr; कीदृशानि</em></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="sop-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+                <h3 style="margin:0; color:var(--accent); font-size:1.22rem;">
+                    <i class="fas fa-route"></i> ४. वाक्ये प्रश्नरचना-विधिः • Step-by-Step Question-Formation Technique
+                </h3>
+                <span class="card-badge badge-amber">4 चरणाः</span>
+            </div>
+            <p style="font-size:0.95rem; line-height:1.7; margin-bottom:4px;">
+                वाक्यस्य विषय-काल-स्थान-संख्या-विशेषणक्रियापदानि त्याज्या तेषां स्थाने योग्यः प्रश्नशब्दः प्रयुज्यते तथा प्रश्नचिह्नं (?) लिख्यते।
+            </p>
+            <div class="flow-grid" style="grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));">
+                    <div class="flow-step-card">
+                        <div class="step-num" style="color:var(--accent-green);"><i class="fas fa-magnifying-glass"></i> Step १</div>
+                        <div class="step-title" style="font-size:1.02rem;">चिनोतु — रेखांकितपदम्</div>
+                        <div class="step-desc">वाक्यस्य विषय-काल-स्थान-संख्या-विशेषणक्रियापदानि त्याज्या — यः पदः प्रश्नाय जिज्ञास्यः स एव रेखांकितः।</div>
+                    </div>
+
+                    <div class="flow-step-card">
+                        <div class="step-num" style="color:var(--accent);"><i class="fas fa-list-ul"></i> Step २</div>
+                        <div class="step-title" style="font-size:1.02rem;">चिनोतु — प्रश्नशब्दः</div>
+                        <div class="step-desc">स्थाने योग्यः प्रश्नशब्दः प्रयुज्यते (किम् / कुत्र / कुतः / कथम् / कदा / कति / कीदृक्)।</div>
+                    </div>
+
+                    <div class="flow-step-card">
+                        <div class="step-num" style="color:var(--accent-green);"><i class="fas fa-sliders-h"></i> Step ३</div>
+                        <div class="step-title" style="font-size:1.02rem;">प्रयुज्यताम् — विभक्ति-अनुरूपं रूपम्</div>
+                        <div class="step-desc">कर्ता-पदस्य स्थाने लिङ्ग-वचनानुसारं किम्-रूपं प्रयोज्येत (बालकः&rarr;कः, बालिका&rarr;का, वायुयानम्&rarr;किम्, कमलानि&rarr;कानि)।</div>
+                    </div>
+
+                    <div class="flow-step-card">
+                        <div class="step-num" style="color:var(--accent);"><i class="fas fa-question"></i> Step ४</div>
+                        <div class="step-title" style="font-size:1.02rem;">लिख्यताम् — प्रश्नचिह्नम्</div>
+                        <div class="step-desc">अन्तिमे प्रश्नचिह्नं (?) अवश्यं लिख्यताम् — तदेव अन्तिम-उत्तरम् भवति।</div>
+                    </div>
+
+            </div>
+            <h4 style="color:var(--text-main); font-size:1.05rem; margin:8px 0 10px;">विभक्ति-सारिणी — प्रश्नपद-चयन-मार्गदर्शिका</h4>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th style="width:34%;">रेखांकितपदस्य विभक्तिः (Case of the Underlined Word)</th><th style="width:22%;">प्रश्नपदम् (Question Word)</th><th style="width:44%;">उदाहरण (Model)</th></tr></thead>
+                    <tbody>
+                        <tr><td>प्रथमा (कर्ता / Subject)</td><td><strong style="color:var(--accent);">कः / का / किम्</strong></td><td><em>बालकः &rarr; कः क्रीडति ?</em></td></tr>
+                        <tr><td>द्वितीया (कर्म / Object)</td><td><strong style="color:var(--accent);">किम्</strong></td><td><em>दूरदर्शनं &rarr; छात्राः किम् पश्यन्ति ?</em></td></tr>
+                        <tr><td>तृतीया (करण / Instrument)</td><td><strong style="color:var(--accent);">केन / कैः</strong></td><td><em>नासिकया &rarr; ते केन पुष्पाणि जिघ्रन्ति ?</em></td></tr>
+                        <tr><td>चतुर्थी (सम्प्रदान / Recipient)</td><td><strong style="color:var(--accent);">कस्मै</strong></td><td><em>पुत्राय &rarr; माता कस्मै कुप्यति ?</em></td></tr>
+                        <tr><td>पञ्चमी (अपादान / Source)</td><td><strong style="color:var(--accent);">कुतः</strong></td><td><em>हिमालयात् &rarr; गंगा कुतः निर्गच्छति ?</em></td></tr>
+                        <tr><td>सप्तमी — स्थानम् (Place)</td><td><strong style="color:var(--accent);">कुत्र</strong></td><td><em>सरोवरे &rarr; कलिकाः कुत्र विकसन्ति ?</em></td></tr>
+                        <tr><td>सप्तमी — कालः (Time)</td><td><strong style="color:var(--accent);">कदा</strong></td><td><em>प्रातः &rarr; जनाः कदा भ्रमणाय गच्छन्ति ?</em></td></tr>
+                        <tr><td>संख्यावाचक-पदम् (Number)</td><td><strong style="color:var(--accent);">कति</strong></td><td><em>पञ्च &rarr; पाण्डवाः कति आसन् ?</em></td></tr>
+                        <tr><td>विशेषणपदम् (Quality)</td><td><strong style="color:var(--accent);">कीदृक्-रूपम्</strong></td><td><em>स्थूलः &rarr; कीदृशः ; पक्वानि &rarr; कीदृशानि</em></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        </div>
+
+        <div id="sub-prashna-drill-a" class="submodule-pane">
+        <div class="sop-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+                <h3 style="margin:0; color:var(--accent); font-size:1.22rem;">
+                    <i class="fas fa-list-ol"></i> ५. अभ्यासः-क — प्रश्नशब्द-परिचयः (Interrogative Words)
+                </h3>
+                <span class="card-badge badge-blue">Concept Drill • 7 प्रश्नाः</span>
+            </div>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px; line-height:1.6;">प्रत्येकः प्रश्नः सप्त प्रश्नशब्दानामर्थ-प्रयोग-विभाजनमेव परीक्षते।</p>
+            <div class="q-row" data-kb="san19_id_001">
+                <div class="q-text">
+                    <strong>१.</strong> 'किम्' इति प्रश्नशब्देन कस्य प्रश्नस्य उत्पत्तिः भवति?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">व्यक्तेः वा वस्तोः (कौन / किम्)<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">मानसपट्टिकायां 'किम् (कौन)' इति दर्शितम्; अयं सर्वनाम-प्रश्नशब्दः व्यक्ति-वस्तुनोः प्रश्नाय प्रयुज्यते।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_id_002">
+                <div class="q-text">
+                    <strong>२.</strong> 'कुत्र' इत्यस्य अर्थः कः?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">कहाँ (स्थानवाचकः)<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'कुत्र' स्थानवाचक प्रश्नशब्दः (कहाँ); जस्मिन् स्थाने विषयः तिष्ठति तत्र प्रयुज्यते — 'बालकः कुत्र गच्छति?'</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_id_003">
+                <div class="q-text">
+                    <strong>३.</strong> 'कुतः' इत्यस्य अर्थः कः?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">कहाँ से (पृथक् होने के कारण / अपादानम्)<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'कुतः' अपादान-प्रश्नशब्दः (कहाँ से, अलग होने के भावे); अध्याये 'भक्ताः कुतः आगच्छन्ति?' इत्यत्र प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_id_004">
+                <div class="q-text">
+                    <strong>४.</strong> 'कथम्' इति कस्य विशेषणस्य साथ प्रयुज्यते?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">क्रियाविशेषणस्य (कैसे)<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'कथम्' क्रियाविशेषण-प्रश्नशब्दः; क्रियायाः गति-रीतिसम्बन्धे प्रयुज्यते — 'कच्छपाः कथम् चलन्ति?'</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_id_005">
+                <div class="q-text">
+                    <strong>५.</strong> 'कदा' शब्दः किंवदति?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">समयम् (कब)<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'कदा' कालवाचक प्रश्नशब्दः (समय के लिए / अवस्थावाचक); 'रामः कदा उत्तिष्ठति?' इत्यत्र प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_id_006">
+                <div class="q-text">
+                    <strong>६.</strong> 'कति' शब्दः कस्मै अर्थाय प्रयुज्यते?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">संख्यायै (कितने)<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'कति' संख्यावाचक प्रश्नशब्दः; मानसपट्टिकायां 'कति (कितने) — संख्या' इति निरूपितम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_id_007">
+                <div class="q-text">
+                    <strong>७.</strong> 'कीदृक्' शब्दस्य अर्थः कः? कुत्र प्रयुज्यते?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">कैसा; विशेषणशब्देन सह<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'कीदृक्' गुणवाचक प्रश्नशब्दः (कैसा); विशेषणशब्देन सह लिङ्ग-वचनानुसारं प्रयुज्यते — 'सीता कीदृशी महिला आसीत्?'</span></span>
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+
+        <div id="sub-prashna-drill-b" class="submodule-pane">
+        <div class="sop-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+                <h3 style="margin:0; color:var(--accent); font-size:1.22rem;">
+                    <i class="fas fa-venus-mars"></i> ६. अभ्यासः-ख — किम्-एवं-कीदृक्-रूपाणि (Gender-wise Forms)
+                </h3>
+                <span class="card-badge badge-purple">Form Drill • 6 प्रश्नाः</span>
+            </div>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px; line-height:1.6;">रूपाणि लिङ्ग-वचनानुसारं यथोचितं स्मरतु।</p>
+            <div class="q-row" data-kb="san19_id_008">
+                <div class="q-text">
+                    <strong>८.</strong> पुल्लिङ्गे किम्-शब्दस्य (प्रथमा से सप्तमी) रूपाणि कानि?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">कः, कौ, के<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">एकवचने "कः", द्विवचने "कौ", बहुवचने "के" — अध्याये "पुल्लिंग — कः, कौ, के (प्रथमा से सप्तमी)" इति निरूपितम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_id_009">
+                <div class="q-text">
+                    <strong>९.</strong> स्त्रीलिङ्गे किम्-शब्दस्य रूपाणि कानि?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">का, के, काः<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">एकवचने "का", द्विवचने "के", बहुवचने "काः" — बालिका→का, कन्ये→के, महिलाः→काः इति उदाहरणेषु दर्शितम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_id_010">
+                <div class="q-text">
+                    <strong>१०.</strong> नपुंसकलिङ्गे किम्-शब्दस्य रूपाणि कानि?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">किम्, के, कानि<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">एकवचने "किम्", द्विवचने "के", बहुवचने "कानि" — वायुयानम्→किम्, पत्रे→के, कमलानि→कानि इति उदाहरणेषु दर्शितम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_id_011">
+                <div class="q-text">
+                    <strong>११.</strong> कीदृक्-शब्दस्य पुल्लिङ्गे एकवचन-द्विवचन-बहुवचनानि कानि?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">कीदृशः, कीदृशौ, कीदृशाः<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">पुल्लिङ्गे क्रमेण कीदृशः (एक.), कीदृशौ (द्वि.), कीदृशाः (बहु.) — "स्थूलः" शब्दस्य स्थाने "कीदृशः" प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_id_012">
+                <div class="q-text">
+                    <strong>१२.</strong> कीदृक्-शब्दस्य स्त्रीलिङ्गे एकवचन-द्विवचन-बहुवचनानि कानि?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">कीदृशी, कीदृश्यौ, कीदृश्यः<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">स्त्रीलिङ्गे क्रमेण कीदृशी (एक.), कीदृश्यौ (द्वि.), कीदृश्यः (बहु.) — "पतिव्रता" शब्दस्य स्थाने "कीदृशी" प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_id_013">
+                <div class="q-text">
+                    <strong>१३.</strong> कीदृक्-शब्दस्य नपुंसकलिङ्गे एकवचन-द्विवचन-बहुवचनानि कानि?
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">कीदृशम्, कीदृशे, कीदृशानि<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">नपुंसकलिङ्गे क्रमेण कीदृशम् (एक.), कीदृशे (द्वि.), कीदृशानि (बहु.) — "पक्वानि" शब्दस्य स्थाने "कीदृशानि" प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+
+        <div id="sub-prashna-drill-c" class="submodule-pane">
+        <div class="sop-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+                <h3 style="margin:0; color:var(--accent); font-size:1.22rem;">
+                    <i class="fas fa-right-left"></i> ७. अभ्यासः-ग — वाक्य-प्रश्न-रूपान्तरणम् (Sentence &rarr; Question)
+                </h3>
+                <span class="card-badge badge-green">27 प्रश्नाः</span>
+            </div>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:8px; line-height:1.6;">नीचे प्रत्येकः अभ्यासः वाक्य-परिवर्तन-प्रश्नस्य रूपम् (Sentence &rarr; Question) रचयितुम्।</p>
+                <h4 style="color:var(--text-main); font-size:1.05rem; margin:22px 0 10px;">किम्-प्रश्नाः (Person &amp; Thing) <span style="font-size:0.82rem; color:var(--text-muted); font-weight:500;">(9 प्रश्नाः)</span></h4>
+            <div class="q-row" data-kb="san19_conv_001">
+                <div class="q-text">
+                    <strong>१४.</strong> 'बालकः क्रीडति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'कः क्रीडति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'बालकः' (पुल्लिङ्ग-एकवचन-कर्ता) स्थाने प्रथमायां 'कः' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_002">
+                <div class="q-text">
+                    <strong>१५.</strong> 'वीरौ रक्षतः ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'कौ रक्षतः ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'वीरौ' (पुल्लिङ्ग-द्विवचनम्) स्थाने 'कौ' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_003">
+                <div class="q-text">
+                    <strong>१६.</strong> 'अश्वाः धावन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'के धावन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'अश्वाः' (पुल्लिङ्ग-बहुवचनम्) स्थाने 'के' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_004">
+                <div class="q-text">
+                    <strong>१७.</strong> 'बालिका पठति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'का पठति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'बालिका' (स्त्रीलिङ्ग-एकवचनम्) स्थाने 'का' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_005">
+                <div class="q-text">
+                    <strong>१८.</strong> 'कन्ये हसतः ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'के हसतः ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'कन्ये' (स्त्रीलिङ्ग-द्विवचनम्) स्थाने 'के' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_006">
+                <div class="q-text">
+                    <strong>१९.</strong> 'महिलाः जिघ्रन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'काः जिघ्रन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'महिलाः' (स्त्रीलिङ्ग-बहुवचनम्) स्थाने 'काः' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_007">
+                <div class="q-text">
+                    <strong>२०.</strong> 'वायुयानम् उत्पतति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'किम् उत्पतति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'वायुयानम्' (नपुंसकलिङ्ग-एकवचनम्) स्थाने 'किम्' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_008">
+                <div class="q-text">
+                    <strong>२१.</strong> 'पत्रे पततः ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'के पततः ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">अत्र 'पत्रे' इति पदस्य स्थाने नपुंसकलिङ्ग-प्रश्नपदं 'के' प्रयुक्तम् (अध्याये 'किम्, के, कानि' इति नपुं रूपाणि)।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_009">
+                <div class="q-text">
+                    <strong>२२.</strong> 'कमलानि विकसन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'कानि विकसन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'कमलानि' (नपुंसकलिङ्ग-बहुवचनम्) स्थाने 'कानि' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+                <h4 style="color:var(--text-main); font-size:1.05rem; margin:22px 0 10px;">कुत्र-प्रश्नाः (Place) <span style="font-size:0.82rem; color:var(--text-muted); font-weight:500;">(3 प्रश्नाः)</span></h4>
+            <div class="q-row" data-kb="san19_conv_010">
+                <div class="q-text">
+                    <strong>२३.</strong> 'बालकाः उद्यानं गच्छन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'बालकाः कुत्र गच्छन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'उद्यानं' (स्थानवाचकम्) स्थाने 'कुत्र' (स्थानवाचक प्रश्नशब्दः) प्रयुक्तम्; विषयः 'बालकाः' तथैव तिष्ठति।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_011">
+                <div class="q-text">
+                    <strong>२४.</strong> 'कलिकाः सरोवरे विकसन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'कलिकाः कुत्र विकसन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'सरोवरे' (सप्तम्या स्थानवाचकम्) स्थाने 'कुत्र' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_012">
+                <div class="q-text">
+                    <strong>२५.</strong> 'जनाः गृहेषु वसन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'जनाः कुत्र वसन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'गृहेषु' (सप्तम्या स्थानवाचकम्) स्थाने 'कुत्र' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+                <h4 style="color:var(--text-main); font-size:1.05rem; margin:22px 0 10px;">कुतः-प्रश्नाः (Source &amp; Separation) <span style="font-size:0.82rem; color:var(--text-muted); font-weight:500;">(3 प्रश्नाः)</span></h4>
+            <div class="q-row" data-kb="san19_conv_013">
+                <div class="q-text">
+                    <strong>२६.</strong> 'भक्ताः देवालयात् आगच्छन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'भक्ताः कुतः आगच्छन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'देवालयात्' (अपादान-पञ्चमी) स्थाने 'कुतः' (कहाँ से) प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_014">
+                <div class="q-text">
+                    <strong>२७.</strong> 'बालकः अश्वात् पतति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'बालकः कुतः पतति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'अश्वात्' (अपादान-पञ्चमी) स्थाने 'कुतः' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_015">
+                <div class="q-text">
+                    <strong>२८.</strong> 'गंगा हिमालयात् निर्गच्छति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'गंगा कुतः निर्गच्छति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'हिमालयात्' (अपादान-पञ्चमी) स्थाने 'कुतः' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+                <h4 style="color:var(--text-main); font-size:1.05rem; margin:22px 0 10px;">कथम्-प्रश्नाः (Manner) <span style="font-size:0.82rem; color:var(--text-muted); font-weight:500;">(3 प्रश्नाः)</span></h4>
+            <div class="q-row" data-kb="san19_conv_016">
+                <div class="q-text">
+                    <strong>२९.</strong> 'कच्छपाः शनैः शनैः चलन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'कच्छपाः कथम् चलन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'शनैः शनैः' (क्रियाविशेषणम्) स्थाने 'कथम्' (कैसे) प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_017">
+                <div class="q-text">
+                    <strong>३०.</strong> 'कक्षायाम् छात्राः तूष्णीम् तिष्ठन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'कक्षायाम् छात्राः कथम् तिष्ठन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'तूष्णीम्' (क्रियाविशेषणम्) स्थाने 'कथम्' प्रयुक्तम्; 'कक्षायाम्' इति स्थानपदं तथैव तिष्ठति।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_018">
+                <div class="q-text">
+                    <strong>३१.</strong> 'बालिकाः उच्चैः हसन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'बालिकाः कथम् हसन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'उच्चैः' (क्रियाविशेषणम्) स्थाने 'कथम्' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+                <h4 style="color:var(--text-main); font-size:1.05rem; margin:22px 0 10px;">कदा-प्रश्नाः (Time) <span style="font-size:0.82rem; color:var(--text-muted); font-weight:500;">(3 प्रश्नाः)</span></h4>
+            <div class="q-row" data-kb="san19_conv_019">
+                <div class="q-text">
+                    <strong>३२.</strong> 'रामः पञ्चवादने उत्तिष्ठति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'रामः कदा उत्तिष्ठति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'पञ्चवादने' (कालवाचक-सप्तमी) स्थाने 'कदा' (समय) प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_020">
+                <div class="q-text">
+                    <strong>३३.</strong> 'जनाः प्रातः भ्रमणाय गच्छन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'जनाः कदा भ्रमणाय गच्छन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'प्रातः' (कालवाचकः) स्थाने 'कदा' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_021">
+                <div class="q-text">
+                    <strong>३४.</strong> 'महात्मा गांधी बाल्ये अनुकरणं न अकरोत् ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'महात्मा गांधी कदा अनुकरणं न अकरोत् ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'बाल्ये' (कालवाचक-सप्तमी) स्थाने 'कदा' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+                <h4 style="color:var(--text-main); font-size:1.05rem; margin:22px 0 10px;">कति-प्रश्नाः (Number) <span style="font-size:0.82rem; color:var(--text-muted); font-weight:500;">(3 प्रश्नाः)</span></h4>
+            <div class="q-row" data-kb="san19_conv_022">
+                <div class="q-text">
+                    <strong>३५.</strong> 'दशरथस्य तिस्रः भार्याः आसन् ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'दशरथस्य कति भार्याः आसन् ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'तिस्रः' (संख्यावाचक-बहुवचनम्) स्थाने 'कति' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_023">
+                <div class="q-text">
+                    <strong>३६.</strong> 'पाण्डवाः पञ्च आसन् ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'पाण्डवाः कति आसन् ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'पञ्च' (संख्यावाचकः) स्थाने 'कति' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_024">
+                <div class="q-text">
+                    <strong>३७.</strong> 'वृक्षेषु त्रयः वानराः कूदन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'वृक्षेषु कति वानराः कूदन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'त्रयः' (संख्यावाचक-बहुवचनम्) स्थाने 'कति' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+                <h4 style="color:var(--text-main); font-size:1.05rem; margin:22px 0 10px;">कीदृक्-प्रश्नाः (Quality) <span style="font-size:0.82rem; color:var(--text-muted); font-weight:500;">(3 प्रश्नाः)</span></h4>
+            <div class="q-row" data-kb="san19_conv_025">
+                <div class="q-text">
+                    <strong>३८.</strong> 'जन्तुशालायां स्थूलः गण्डकः अस्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'जन्तुशालायां कीदृशः गण्डकः अस्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'स्थूलः' (विशेषणम्, पुल्लिङ्ग-एकवचनम्) स्थाने 'कीदृशः' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_026">
+                <div class="q-text">
+                    <strong>३९.</strong> 'सीता पतिव्रता महिला आसीत् ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'सीता कीदृशी महिला आसीत् ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'पतिव्रता' (विशेषणम्, स्त्रीलिङ्ग-एकवचनम्) स्थाने 'कीदृशी' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_conv_027">
+                <div class="q-text">
+                    <strong>४०.</strong> 'वृक्षात् पक्वानि फलानि पतन्ति ।' इत्यस्य वाक्यस्य प्रश्नरूपं रचयात्।
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'वृक्षात् कीदृशानि फलानि पतन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'पक्वानि' (विशेषणम्, नपुंसकलिङ्ग-बहुवचनम्) स्थाने 'कीदृशानि' प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+
+        <div id="sub-prashna-drill-d" class="submodule-pane">
+        <div class="sop-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+                <h3 style="margin:0; color:var(--accent); font-size:1.22rem;">
+                    <i class="fas fa-highlighter"></i> ८. अभ्यासः-घ — रेखांकितपद-आधृत्य प्रश्नरचना (Question Formation on Underlined Words)
+                </h3>
+                <span class="card-badge badge-amber">2 अङ्क-युक्त अभ्यासाः • 6 प्रश्नाः</span>
+            </div>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px; line-height:1.6;">रेखांकितपदस्य विभक्तिं पृष्ठ्वत् पश्यतु — तदनुसारं प्रश्नपदं चिनोतु।</p>
+            <div class="q-row" data-kb="san19_ex_001">
+                <div class="q-text">
+                    <strong>४१.</strong> अभ्यासार्थः — 'छात्राः दूरदर्शनं पश्यन्ति ।' इत्यत्र रेखांकितपदस्य स्थाने उचितं प्रश्नपदं कल्प्य प्रश्नः क्रियताम्। (रेखांकितम्: 'दूरदर्शनं') <em>(२ अङ्क / 2 Marks)</em>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'छात्राः किम् पश्यन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">रेखांकितं "दूरदर्शनं" — द्वितीया (कर्म); तस्य स्थाने द्वितीयायां "किम्" प्रयुक्तम्। (शिक्षकदत्तसंकेतः "किम्" इति नीलकलमेन उपरि लिखितः।)</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_ex_002">
+                <div class="q-text">
+                    <strong>४२.</strong> अभ्यासार्थः — 'ते नासिकया पुष्पाणि जिघ्रन्ति ।' इत्यत्र रेखांकितपदस्य स्थाने उचितं प्रश्नपदं कल्प्य प्रश्नः क्रियताम्। (रेखांकितम्: 'नासिकया') <em>(२ अङ्क / 2 Marks)</em>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'ते केन पुष्पाणि जिघ्रन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">रेखांकितं "नासिकया" — तृतीया (करणम्); तस्य स्थाने तृतीयायां "केन" प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_ex_003">
+                <div class="q-text">
+                    <strong>४३.</strong> अभ्यासार्थः — 'अश्वाः अश्वैः सह धावन्ति ।' इत्यत्र रेखांकितपदस्य स्थाने उचितं प्रश्नपदं कल्प्य प्रश्नः क्रियताम्। (रेखांकितम्: 'अश्वैः') <em>(२ अङ्क / 2 Marks)</em>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'अश्वाः कैः सह धावन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">रेखांकितं "अश्वैः" — तृतीया-बहुवचनम्; तस्य स्थाने पुल्लिङ्गे तृतीया-बहुवचने "कैः" प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_ex_004">
+                <div class="q-text">
+                    <strong>४४.</strong> अभ्यासार्थः — 'माता पुत्राय कुप्यति ।' इत्यत्र रेखांकितपदस्य स्थाने उचितं प्रश्नपदं कल्प्य प्रश्नः क्रियताम्। (रेखांकितम्: 'पुत्राय') <em>(२ अङ्क / 2 Marks)</em>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'माता कस्मै कुप्यति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">रेखांकितं "पुत्राय" — चतुर्थी (सम्प्रदानम्); तस्य स्थाने चतुर्थ्यां "कस्मै" प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_ex_005">
+                <div class="q-text">
+                    <strong>४५.</strong> अभ्यासार्थः — 'परिश्रमेण विना सफलता न अस्ति ।' इत्यत्र रेखांकितपदस्य स्थाने उचितं प्रश्नपदं कल्प्य प्रश्नः क्रियताम्। (रेखांकितम्: 'परिश्रमेण') <em>(२ अङ्क / 2 Marks)</em>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'केन विना सफलता न अस्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">रेखांकितं "परिश्रमेण" — तृतीया; "विना" इत्यस्य योगे तृतीयैव भवति (अध्याय १४ नियमः); तस्य स्थाने "केन" प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_ex_006">
+                <div class="q-text">
+                    <strong>४६.</strong> अभ्यासार्थः — 'छात्राः कक्षायाः बहि क्रीडन्ति ।' इत्यत्र रेखांकितपदस्य स्थाने उचितं प्रश्नपदं कल्प्य प्रश्नः क्रियताम्। (रेखांकितम्: 'कक्षायाः') <em>(२ अङ्क / 2 Marks)</em>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">'छात्राः कुत्र क्रीडन्ति ?'<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">रेखांकितं "कक्षायाः" — अधिकरण-सप्तमी (स्थानवाचकम्); स्थानप्रश्ने अध्याये निरूपितं "कुत्र" प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+
+        <div id="sub-prashna-drill-e" class="submodule-pane">
+        <div class="sop-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+                <h3 style="margin:0; color:var(--accent); font-size:1.22rem;">
+                    <i class="fas fa-list-check"></i> ९. अभ्यासः-ङ — बहुविकल्पीय प्रश्नाः (Multiple Choice)
+                </h3>
+                <span class="card-badge badge-blue">5 प्रश्नाः</span>
+            </div>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px; line-height:1.6;">प्रत्येकः प्रश्नः चार-विकल्पीय (A–D) — उत्तरं प्रकट कर्तुम् पूर्वम् विकल्पं चिनोतु।</p>
+            <div class="q-row" data-kb="san19_mcq_001">
+                <div class="q-text">
+                    <strong>४७.</strong> मानसपट्टिकायां कः शब्दः संख्यायाः प्रश्नाय दर्शितः?
+                    <div class="options-grid">
+                        <div class="option-item"><span class="opt-badge">A</span> कदा</div>
+                        <div class="option-item"><span class="opt-badge">B</span> कति</div>
+                        <div class="option-item"><span class="opt-badge">C</span> कुत्र</div>
+                        <div class="option-item"><span class="opt-badge">D</span> कथम्</div>
+                    </div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">कति<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'कति (कितने) — संख्या' इति मानसपट्टिकायां निरूपितम्; कदा→समय, कुत्र→स्थान, कथम्→क्रियाविशेषण इति क्रमेण।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_mcq_002">
+                <div class="q-text">
+                    <strong>४८.</strong> "बालकः कुत्र गच्छति ?" इत्यत्र "कुत्र" शब्दः किंवदति?
+                    <div class="options-grid">
+                        <div class="option-item"><span class="opt-badge">A</span> समयम्</div>
+                        <div class="option-item"><span class="opt-badge">B</span> संख्याम्</div>
+                        <div class="option-item"><span class="opt-badge">C</span> स्थानम्</div>
+                        <div class="option-item"><span class="opt-badge">D</span> विशेषणम्</div>
+                    </div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">स्थानम्<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'कुत्र' स्थानवाचक प्रश्नशब्दः (कहाँ); 'उद्यानं' इति स्थानपदस्य स्थाने प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_mcq_003">
+                <div class="q-text">
+                    <strong>४९.</strong> "ते केन पुष्पाणि जिघ्रन्ति ?" इत्यत्र प्रयुक्तस्य प्रश्नपदस्य का विभक्तिः?
+                    <div class="options-grid">
+                        <div class="option-item"><span class="opt-badge">A</span> द्वितीया</div>
+                        <div class="option-item"><span class="opt-badge">B</span> तृतीया</div>
+                        <div class="option-item"><span class="opt-badge">C</span> चतुर्थी</div>
+                        <div class="option-item"><span class="opt-badge">D</span> सप्तमी</div>
+                    </div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">तृतीया<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'नासिकया' (करण-तृतीया) इत्यस्य स्थाने 'केन' प्रयुक्तम्; केन — किम्-शब्दस्य तृतीया-एकवचन-रूपम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_mcq_004">
+                <div class="q-text">
+                    <strong>५०.</strong> "सीता कीदृशी महिला आसीत् ?" इत्यत्र "कीदृशी" किं रूपम्?
+                    <div class="options-grid">
+                        <div class="option-item"><span class="opt-badge">A</span> पुल्लिङ्ग-एकवचनम्</div>
+                        <div class="option-item"><span class="opt-badge">B</span> स्त्रीलिङ्ग-एकवचनम्</div>
+                        <div class="option-item"><span class="opt-badge">C</span> नपुंसकलिङ्ग-एकवचनम्</div>
+                        <div class="option-item"><span class="opt-badge">D</span> स्त्रीलिङ्ग-बहुवचनम्</div>
+                    </div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">स्त्रीलिङ्ग-एकवचनम्<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'महिला' (स्त्रीलिङ्ग-एकवचनम्) इत्यनुसारं 'कीदृशी' रूपं प्रयुक्तम् — कीदृक्-शब्दस्य स्त्री-एकवचनम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_mcq_005">
+                <div class="q-text">
+                    <strong>५१.</strong> "वृक्षात् कीदृशानि फलानि पतन्ति ?" इत्यत्र "कीदृशानि" किं रूपम्?
+                    <div class="options-grid">
+                        <div class="option-item"><span class="opt-badge">A</span> नपुंसकलिङ्ग-बहुवचनम्</div>
+                        <div class="option-item"><span class="opt-badge">B</span> पुल्लिङ्ग-बहुवचनम्</div>
+                        <div class="option-item"><span class="opt-badge">C</span> स्त्रीलिङ्ग-द्विवचनम्</div>
+                        <div class="option-item"><span class="opt-badge">D</span> नपुंसकलिङ्ग-एकवचनम्</div>
+                    </div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">नपुंसकलिङ्ग-बहुवचनम्<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">'फलानि' (नपुंसकलिङ्ग-बहुवचनम्) इत्यनुसारं 'कीदृशानि' रूपं प्रयुक्तम्।</span></span>
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+
+        <div id="sub-prashna-drill-f" class="submodule-pane">
+        <div class="sop-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+                <h3 style="margin:0; color:var(--accent); font-size:1.22rem;">
+                    <i class="fas fa-fill-drip"></i> १०. अभ्यासः-च — रिक्तस्थान-पूर्तिः (Fill in the Blanks)
+                </h3>
+                <span class="card-badge badge-amber">Fill-up Drill • 5 प्रश्नाः</span>
+            </div>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px; line-height:1.6;">रिक्तस्थाने योग्यः प्रश्नशब्दः (कुतः / कदा / कति / कीदृशी / किम् / कथम्) योजयतु।</p>
+            <div class="q-row" data-kb="san19_fib_001">
+                <div class="q-text">
+                    <strong>५२.</strong> गंगा _____ निर्गच्छति। (कुतः / कुत्र / कदा)
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">कुतः<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">हिमालयात् (अपादानम्) अलगं भूत्वा निर्गमनम् अतः "कुतः" (कहाँ से) युक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_fib_002">
+                <div class="q-text">
+                    <strong>५३.</strong> दशरथस्य _____ भार्याः आसन्। (कति / कदा / कुत्र)
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">कति<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">भार्याणां संख्या प्रश्ने "कति" (कितने) युक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_fib_003">
+                <div class="q-text">
+                    <strong>५४.</strong> सीता _____ महिला आसीत्। (कीदृशी / कीदृशः / कीदृशम्)
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">कीदृशी<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">"महिला" स्त्रीलिङ्ग-एकवचनम् अतः स्त्री-एकवचन-रूपं "कीदृशी" युक्तम्।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_fib_004">
+                <div class="q-text">
+                    <strong>५५.</strong> छात्राः _____ पश्यन्ति ? (दूरदर्शनं / किम् / दूरदर्शने)
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">किम्<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">द्वितीया-कर्मपदस्य स्थाने प्रश्ने "किम्" प्रयुज्यते (अभ्यासार्थे दर्शितवत्)।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_fib_005">
+                <div class="q-text">
+                    <strong>५६.</strong> _____ शब्दः क्रियाविशेषणस्य साथ प्रयुज्यते। (कथम् / कदा / कति)
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">कथम्<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">"कथम् (कैसे) — क्रिया विशेषण" इति मानसपट्टिकायां निरूपितम्।</span></span>
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+
+        <div id="sub-prashna-drill-g" class="submodule-pane">
+        <div class="sop-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;">
+                <h3 style="margin:0; color:var(--accent); font-size:1.22rem;">
+                    <i class="fas fa-balance-scale"></i> ११. अभ्यासः-छ — सत्य-असत्य निर्णयः (True or False)
+                </h3>
+                <span class="card-badge badge-purple">4 प्रश्नाः</span>
+            </div>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px; line-height:1.6;">प्रत्येकः कथनं सत्यम् अस्ति वा असत्यम् — निर्णयं प्रकट कर्तुम्।</p>
+            <div class="q-row" data-kb="san19_tf_001">
+                <div class="q-text">
+                    <strong>५७.</strong> "कति" शब्दः समयवाचकः अस्ति।
+                    <div class="options-grid">
+                        <div class="option-item"><span class="opt-badge">क</span> सत्य (True)</div>
+                        <div class="option-item"><span class="opt-badge">ख</span> असत्य (False)</div>
+                    </div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">असत्य<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">"कति" संख्यावाचकः (कितने), समयवाचकः तु "कदा" इति शब्दः।</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_tf_002">
+                <div class="q-text">
+                    <strong>५८.</strong> "कुतः" शब्देन पृथक् होने के भावे (अपादाने) प्रश्नः भवति।
+                    <div class="options-grid">
+                        <div class="option-item"><span class="opt-badge">क</span> सत्य (True)</div>
+                        <div class="option-item"><span class="opt-badge">ख</span> असत्य (False)</div>
+                    </div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">सत्य<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">अध्याये "कुतः (कहाँ से) (पृथक् होने के कारण)" इति निरूपितम्; उदाहरणम् — "गंगा कुतः निर्गच्छति?"</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_tf_003">
+                <div class="q-text">
+                    <strong>५९.</strong> "कीदृक्" शब्दः विशेषणशब्देन सह प्रयुज्यते।
+                    <div class="options-grid">
+                        <div class="option-item"><span class="opt-badge">क</span> सत्य (True)</div>
+                        <div class="option-item"><span class="opt-badge">ख</span> असत्य (False)</div>
+                    </div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">सत्य<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">"कीदृक् — कैसा (विशेषण के साथ)" इति अध्याये निरूपितम्; उदाहरणम् — "जन्तुशालायां कीदृशः गण्डकः अस्ति?"</span></span>
+                </div>
+            </div>
+
+            <div class="q-row" data-kb="san19_tf_004">
+                <div class="q-text">
+                    <strong>६०.</strong> पुल्लिङ्ग-एकवचने "किम्" इति रूपं भवति।
+                    <div class="options-grid">
+                        <div class="option-item"><span class="opt-badge">क</span> सत्य (True)</div>
+                        <div class="option-item"><span class="opt-badge">ख</span> असत्य (False)</div>
+                    </div>
+                </div>
+                <div>
+                    <button class="reveal-btn" onclick="toggleAns(this)">Reveal Answer</button>
+                    <span class="answer">असत्य<span style="display:block; margin-top:4px; font-weight:500; color:var(--text-muted); font-size:0.85rem;">पुल्लिङ्ग-एकवचने "कः" भवति; "किम्" तु नपुंसकलिङ्ग-एकवचन-रूपम्।</span></span>
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+
+    </div>
+
 </div> <!-- end container -->
 
 <script>
@@ -2437,6 +3502,21 @@ function openTab(evt, tabName) {
     }
     if (evt && evt.currentTarget) {
         evt.currentTarget.classList.add('active');
+    }
+}
+
+function subOpen(subName) {
+    const panes = document.querySelectorAll('#tab-prashna .submodule-pane');
+    panes.forEach(p => p.classList.remove('active'));
+    const btns = document.querySelectorAll('#tab-prashna .submodule-btn');
+    btns.forEach(b => b.classList.remove('active'));
+    const target = document.getElementById(subName);
+    if (target) {
+        target.classList.add('active');
+    }
+    const btn = document.querySelector(`#tab-prashna .submodule-btn[data-sub="${subName}"]`);
+    if (btn) {
+        btn.classList.add('active');
     }
 }
 
