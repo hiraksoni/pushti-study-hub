@@ -1,643 +1,1016 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter 13</title>
-    <style>
-        :root {
-            --primary: #4F46E5;
-            --primary-hover: #4338CA;
-            --bg-color: #0F172A;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --text-main: #F8FAFC;
-            --text-muted: #94A3B8;
-            --accent: #10B981;
-            --border: rgba(255, 255, 255, 0.1);
-        }
-        
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%);
-            color: var(--text-main);
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-        }
-
-        .standard-header {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .standard-back-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .standard-back-btn:hover {
-            color: var(--text-main);
-        }
-
-        .standard-subject-title {
-            margin-left: 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-
-        .section-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: 1rem;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        h2 {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 0.5rem;
-        }
-
-        .question-block {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .question-block:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .question {
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .options {
-            list-style-type: none;
-            padding: 0;
-            margin: 0 0 1rem 0;
-        }
-
-        .options li {
-            margin-bottom: 0.5rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .options li::before {
-            content: "•";
-            color: var(--primary);
-            position: absolute;
-            left: 0;
-        }
-
-        .answer-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .reveal-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: background-color 0.2s ease;
-        }
-
-        .reveal-btn:hover {
-            background: var(--primary-hover);
-        }
-
-        .answer {
-            display: none;
-            color: var(--accent);
-            font-weight: 500;
-            background: rgba(16, 185, 129, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        .answer.visible {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 13: Understanding Gender | Social Science - Pushti Study Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-[data-theme="light"] {
-    --bg-main: #f8fafc !important;
-    --bg-card: #ffffff !important;
-    --text-main: #0f172a !important;
-    --text-muted: #475569 !important;
-    --accent: #6366f1 !important;
-    --border: #e2e8f0 !important;
-    --surface: #f1f5f9 !important;
-}
-[data-theme="light"] .site-header {
-    background: #f8fafc !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-}
-[data-theme="light"] .icon-btn { color: #0f172a !important; }
+  :root {
+    --bg-main: #0F172A;
+    --bg-card: #1E293B;
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --primary: #3B82F6;
+    --primary-hover: #2563EB;
+    --accent: #38BDF8;
+    --border: #334155;
+    --border-hover: #475569;
+    --good: #34D399;
+    --good-bg: #064E3B;
+    --bad: #F87171;
+    --bad-bg: #7F1D1D;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+    --civic-blue: #60A5FA;
+  }
+
+  [data-theme="light"] {
+    --bg-main: #F8FAFC !important;
+    --bg-card: #FFFFFF !important;
+    --text-main: #0F172A !important;
+    --text-muted: #64748B !important;
+    --primary: #2563EB !important;
+    --primary-hover: #1D4ED8 !important;
+    --accent: #0284C7 !important;
+    --border: #E2E8F0 !important;
+    --border-hover: #CBD5E1 !important;
+    --good: #059669 !important;
+    --good-bg: #D1FAE5 !important;
+    --bad: #E11D48 !important;
+    --bad-bg: #FFE4E6 !important;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04) !important;
+    --civic-blue: #1D4ED8 !important;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Nunito', sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 26px 16px 120px; }
+
+  /* SITE HEADER */
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-main);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  .header-left { display: flex; align-items: center; gap: 8px; font-size: 1.05rem; font-weight: 500; color: var(--text-main); }
+  .header-left a { text-decoration: none; color: inherit; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+  .header-left a:hover { color: var(--accent); }
+  .header-right { display: flex; align-items: center; gap: 16px; }
+  .theme-toggle { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; padding: 6px 12px; cursor: pointer; transition: 0.2s; }
+  .theme-toggle:hover { border-color: var(--primary); }
+
+  /* HERO HEADER */
+  header.hero { text-align: center; padding: 28px 14px 20px; border-bottom: 1px solid var(--border); margin-bottom: 0px; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: clamp(2rem, 5vw, 2.8rem); margin: 0 0 8px; color: var(--text-main); }
+  .sub { font-size: 1.02rem; color: var(--text-muted); max-width: 850px; margin: 0 auto; line-height: 1.6; }
+
+  /* STICKY 5-TAB NAVIGATION */
+  .tabs-wrapper {
+    position: sticky;
+    top: 55px;
+    z-index: 990;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 26px;
+  }
+  [data-theme="light"] .tabs-wrapper {
+    background: rgba(248, 250, 252, 0.95);
+  }
+  .tabs-container {
+    display: flex; justify-content: center; gap: 8px; flex-wrap: nowrap; max-width: 1050px; margin: 0 auto; overflow-x: auto; padding: 0 10px; scrollbar-width: none;
+  }
+  .tabs-container::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 8px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.25s;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tab-btn:hover { border-color: var(--primary); color: var(--text-main); }
+  .tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: var(--shadow); }
+
+  .tab-kb-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-left: 6px;
+    background: rgba(16, 185, 129, 0.15);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+  }
+
+  .tab-content { display: none; animation: fadeIn 0.35s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* THEORY GLASS CARDS (CLAUDE PEDAGOGICAL LAYER) */
+  .theory-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .theory-card:hover {
+    border-color: rgba(59, 130, 246, 0.4);
+    transform: translateY(-2px);
+  }
+  .theory-card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.65rem;
+    color: var(--civic-blue);
+    margin-top: 0;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .theory-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .theory-card li {
+    position: relative;
+    padding-left: 1.6rem;
+    margin-bottom: 10px;
+    line-height: 1.65;
+    color: var(--text-main);
+  }
+  .theory-card li::before {
+    content: "•";
+    position: absolute;
+    left: 0.2rem;
+    color: var(--primary);
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+  .important-term {
+    color: #93C5FD;
+    font-weight: 700;
+  }
+  .date-badge {
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: #38BDF8;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+    font-weight: 600;
+  }
+  .highlight-tag {
+    color: #34D399;
+    font-weight: 600;
+  }
+
+  /* COMPARISON BOX (SEX VS GENDER) */
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  @media (max-width: 700px) {
+    .comparison-grid { grid-template-columns: 1fr; }
+  }
+  .comp-box {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .comp-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* REFORMERS GRID */
+  .reformer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .reformer-card {
+    background: rgba(59, 130, 246, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .reformer-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--civic-blue);
+    margin-bottom: 6px;
+  }
+
+  /* GLOSSARY TABLE */
+  .glossary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+    font-size: 0.95rem;
+  }
+  .glossary-table th, .glossary-table td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    text-align: left;
+  }
+  .glossary-table th {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--primary);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+  }
+
+  /* COLLAPSIBLE HEADERS */
+  .collapsible-header {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--text-main); margin: 0 0 16px;
+    display: flex; align-items: center; gap: 10px; border-left: 4px solid var(--primary); padding-left: 12px;
+    cursor: pointer; user-select: none; transition: 0.2s;
+  }
+  .collapsible-header:hover { opacity: 0.85; }
+  .count-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; color: var(--text-muted); font-weight: 500; }
+  .chevron { width: 24px; height: 24px; fill: var(--primary); background: rgba(59, 130, 246, 0.1); border-radius: 50%; padding: 4px; transition: all 0.3s; margin-left: auto; }
+  .collapsible-header.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-content.collapsed { display: none; }
+
+  /* MODE SWITCH (PRACTICE VS TEST) */
+  .mode-switch { display: flex; justify-content: center; border-radius: 100px; overflow: hidden; border: 1px solid var(--primary); max-width: 380px; margin: 0 auto 24px auto; background: var(--bg-card); }
+  .mode-btn { flex: 1; padding: 9px 16px; border: none; background: transparent; color: var(--text-muted); font-size: 0.92rem; font-weight: 700; font-family: 'Nunito', sans-serif; cursor: pointer; transition: 0.25s; }
+  .mode-btn.active { background: var(--primary); color: #fff; }
+  #test-intro { background: var(--bg-card); border: 2px dashed var(--border); border-radius: 14px; padding: 36px 20px; text-align: center; margin-bottom: 28px; box-shadow: var(--shadow); }
+  #test-intro h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; color: var(--text-main); margin-top: 0; }
+  .btn-start { background: var(--primary); color: white; border: none; padding: 12px 32px; font-size: 1.05rem; font-weight: 700; font-family: 'Nunito', sans-serif; border-radius: 100px; cursor: pointer; margin-top: 12px; box-shadow: var(--shadow); transition: 0.2s; }
+  .btn-start:hover { transform: translateY(-2px); background: var(--primary-hover); }
+
+  /* QUESTION BLOCKS */
+  .q-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .q-num { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent); font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
+  .q-text { font-size: 1.05rem; font-weight: 600; margin-bottom: 14px; line-height: 1.5; }
+  
+  .mcq-options { display: flex; flex-direction: column; gap: 8px; }
+  .mcq-opt { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; transition: 0.2s; font-size: 0.95rem; }
+  .mcq-opt:hover { border-color: var(--primary); background: rgba(59, 130, 246, 0.05); }
+  .mcq-opt input { cursor: pointer; accent-color: var(--primary); }
+
+  .fill-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+  .fill-input { background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 14px; color: var(--text-main); font-size: 0.95rem; font-family: inherit; min-width: 220px; }
+  .fill-input:focus { outline: none; border-color: var(--primary); }
+  .btn-check { background: var(--primary); color: #fff; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.88rem; }
+  .btn-check:hover { background: var(--primary-hover); }
+
+  .tf-row { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; }
+  .tf-row label { font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+
+  .feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; display: none; line-height: 1.5; }
+  .feedback.correct { background: var(--good-bg); color: var(--good); display: block; border: 1px solid var(--good); }
+  .feedback.incorrect { background: var(--bad-bg); color: var(--bad); display: block; border: 1px solid var(--bad); }
+  .feedback .exp { display: block; margin-top: 6px; font-style: italic; opacity: 0.9; }
+
+  /* SUBJECTIVE DETAILS */
+  details { margin-top: 12px; }
+  details summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; color: var(--primary); font-weight: 700; user-select: none; }
+  details .model { margin-top: 10px; font-size: 0.95rem; background: rgba(59, 130, 246, 0.06); border-left: 4px solid var(--primary); padding: 14px 18px; border-radius: 0 8px 8px 0; line-height: 1.6; color: var(--text-main); }
+
+  /* TRIVIA EXTRA CARDS */
+  .trivia-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow); }
+  .trivia-header { display: flex; align-items: center; gap: 10px; font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--accent); margin-bottom: 10px; }
+  .trivia-body { font-size: 0.98rem; line-height: 1.65; color: var(--text-main); }
+
+  /* BOTTOM GRADE BAR */
+  .grade-bar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--bg-card); border-top: 1px solid var(--border); padding: 14px 20px; display: flex; align-items: center; justify-content: center; gap: 16px; box-shadow: 0 -4px 14px rgba(0,0,0,0.25); z-index: 999; display: none; }
+  .grade-bar button { background: var(--primary); color: #fff; border: none; padding: 10px 24px; border-radius: 100px; font-weight: 700; font-family: 'Nunito', sans-serif; font-size: 0.98rem; cursor: pointer; }
+  .grade-bar button:hover { background: var(--primary-hover); }
+  .score-readout { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 700; color: var(--text-main); }
+  .score-readout.urgent { color: var(--bad); animation: pulse 1s infinite; }
+  @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+  .result-panel { display: none; background: var(--bg-card); border: 2px solid var(--border); border-radius: 14px; padding: 26px; text-align: center; margin-bottom: 36px; box-shadow: var(--shadow); }
+  .result-panel.show { display: block; }
+  .result-panel .score-big { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 2.8rem; color: var(--primary); }
+  .result-panel .msg { font-size: 1.05rem; margin-top: 10px; line-height: 1.6; }
 </style>
 </head>
 <body>
-    <header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--surface); position: sticky; top: 0; z-index: 1000;">
-    <div class="header-left" style="display:flex; align-items:center; gap: 8px; font-size: 1.1rem; font-weight: 500; color: var(--text-main);">
-        <a href="../../index.html" style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:6px;">
-            <i class="fas fa-home"></i> Home
-        </a>
-        <span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <a href="../../social_science_index.html" style="text-decoration:none; color:inherit;">Social Science</a><span style="margin: 0 8px; color: var(--text-muted);">&gt;</span> <span style="color:var(--accent); font-weight:600;">Notes</span>
+
+  <!-- UNIVERSAL SITE HEADER -->
+  <header class="site-header">
+    <div class="header-left">
+      <a href="../../index.html"><i class="fas fa-home"></i> Home</a>
+      <span style="color:var(--text-muted);">&gt;</span>
+      <a href="../../social_science_index.html">Social Science</a>
+      <span style="color:var(--text-muted);">&gt;</span>
+      <span style="color:var(--primary); font-weight:700;">Chapter 13</span>
     </div>
     
-    <div class="header-right" style="display:flex; align-items:center; gap: 20px;">
-        <div class="search-container" style="display:flex; align-items:center;">
-            <button id="global-search-btn" aria-label="Search" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; padding:5px; display:flex; align-items:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
-            <input id="global-search-input" type="text" placeholder="Search..." style="display:none; margin-left:10px; padding: 6px 15px; border-radius:20px; border:1px solid var(--border); background:rgba(0,0,0,0.2); color:white; width: 180px;">
-        </div>
+    <div class="header-right">
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+      </button>
+      <a href="../../timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--bg-card); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
+      <a href="../../midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding: 6px 12px; background:var(--bg-card); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
+    </div>
+  </header>
+
+  <div class="wrap">
+    
+    <!-- HERO HEADER -->
+    <header class="hero">
+      <div class="eyebrow">CIVICS &bull; CHAPTER 13 &bull; AUTHORITATIVE MASTER HUB <span class="tab-kb-badge" style="font-size:0.7rem; padding:2px 8px; vertical-align:middle;"><i class="fas fa-database"></i> KB Active (49 Qs)</span></div>
+      <h1>Understanding Gender</h1>
+      <p class="sub">Sociological construction of gender vs biological sex, mechanisms and domestic impacts of gender stereotypes, pioneering social reformers (Raja Rammohan Roy, Ishwar Chandra Vidyasagar, Savitribai &amp; Jyotirao Phule, Pandita Ramabai, Rokeya Sakhawat Hossain), and constitutional protections (33% Panchayati Raj quota, RTE, Equal Remuneration).</p>
+    </header>
+
+    <!-- STICKY 5-TAB BAR -->
+    <div class="tabs-wrapper">
+      <div class="tabs-container">
+        <button class="tab-btn active" onclick="switchTab('tab-theory', this)"><i class="fas fa-landmark"></i> Concept Dossier &amp; Pillars</button>
+        <button class="tab-btn" onclick="switchTab('tab-omr', this)"><i class="fas fa-check-circle"></i> Objective Practice (28 Qs)</button>
+        <button class="tab-btn" onclick="switchTab('tab-short', this)"><i class="fas fa-pen"></i> Short Answers (13 Qs)</button>
+        <button class="tab-btn" onclick="switchTab('tab-long', this)"><i class="fas fa-file-lines"></i> Long Answers (8 Qs)</button>
+        <button class="tab-btn" onclick="switchTab('tab-extra', this)"><i class="fas fa-lightbulb"></i> Beyond Curriculum</button>
+        <span class="tab-kb-badge" title="Authoritative Knowledge Base Verified"><i class="fas fa-database"></i> 49 Verified Qs</span>
+      </div>
+    </div>
+
+    <!-- TAB 1: THEORY DOSSIER & PILLARS (UNIFYING CLAUDE'S PEDAGOGY + MASTER KB) -->
+    <section id="tab-theory" class="tab-content active">
+      
+      <!-- Card 1: Meaning of Gender -->
+      <div class="theory-card">
+        <h2><i class="fas fa-venus-mars"></i> 1. Meaning of Gender: Biological Sex vs Social Construct</h2>
         
-        <nav class="header-nav" style="display:flex; align-items:center; gap: 15px;">
-            <button class="icon-btn theme-toggle" aria-label="Toggle dark mode" style="background:transparent; border:none; color:white; cursor:pointer; font-size:1.2rem;">
-                <i class="fas fa-moon"></i>
-            </button>
-            
-            <a href="../../timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
-            <a href="../../midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
+        <div class="comparison-grid">
+          <div class="comp-box">
+            <div class="comp-title"><i class="fas fa-dna"></i> Biological Sex</div>
+            <p style="margin:0; font-size:0.92rem; color:var(--text-muted); line-height:1.5;">Refers to the physical, biological, and anatomical differences between males and females with which human beings are born. It is universal and biological.</p>
+          </div>
+          <div class="comp-box">
+            <div class="comp-title"><i class="fas fa-users"></i> Gender</div>
+            <p style="margin:0; font-size:0.92rem; color:var(--text-muted); line-height:1.5;">Refers to the social roles, expectations, and behavioral norms that a society creates and assigns to boys and girls, and men and women. It is socially constructed, not biological.</p>
+          </div>
+        </div>
 
-            <div class="user-profile-wrapper" style="position:relative;">
-                <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:40px; height:40px; border:2px solid var(--accent);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
-                    <img src="https://ui-avatars.com/api/?name=Pushti&background=8B5CF6&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
-                </div>
-                <div id="global-dropdown" style="display:none; position:absolute; right:0; top:50px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:15px; width:220px; box-shadow: 0 8px 24px rgba(0,0,0,0.3); flex-direction:column; gap:12px; z-index:1001;">
-                    <div style="text-align:center; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
-                        <div style="font-weight:700; font-size:1.1rem; color:var(--text-primary);">Pushti</div>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.9rem; font-weight:500;">Student</span>
-                        <label class="switch" style="position:relative; display:inline-block; width:34px; height:20px;">
-                            <input type="checkbox" id="global-role-checkbox" style="opacity:0; width:0; height:0;">
-                            <span class="slider" style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--border); transition:.4s; border-radius:34px;"></span>
-                        </label>
-                        <span style="font-size:0.9rem; font-weight:500;">Parent</span>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </div>
-</header>
-<style>
-.switch input:checked + .slider { background-color: var(--accent, #8B5CF6); }
-.switch input:checked + .slider:before { transform: translateX(14px); }
-.slider:before { position:absolute; content:""; height:14px; width:14px; left:3px; bottom:3px; background-color:white; transition:.4s; border-radius:50%; }
-.tabs-wrapper { position: static !important; }
-.site-header { background: var(--bg-main) !important; backdrop-filter: none !important; }
-.tabs-wrapper { position: sticky !important; top: 61px !important; z-index: 990 !important; background: var(--bg-main) !important; border-bottom: 1px solid var(--border); padding-top: 10px; padding-bottom: 10px; margin-top: 0 !important; display: flex !important; gap: 10px !important; justify-content: center !important; flex-wrap: wrap !important; }
-</style>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const searchBtn = document.getElementById('global-search-btn');
-    const searchInput = document.getElementById('global-search-input');
-    
-    if(searchBtn && searchInput) {
-        searchBtn.addEventListener('click', function() {
-            if(searchInput.style.display === 'none' || searchInput.style.display === '') {
-                searchInput.style.display = 'block';
-                searchInput.focus();
-            } else {
-                performSearch(searchInput.value.toLowerCase());
-            }
-        });
+        <ul>
+          <li><strong>Social Construction:</strong> Gender is not something we are born with; society teaches boys and girls how they should look, behave, dress, and what careers they should pursue.</li>
+          <li><strong>Cultural &amp; Temporal Variation:</strong> Understandings of gender roles vary significantly across different societies, cultures, and historical eras. What is considered a woman's or man's job in one culture may differ in another.</li>
+          <li><strong>Socialization Process:</strong> From early childhood, socialization reinforces gender roles—boys are given toy cars, guns, and encouraged to be tough and assertive, while girls are given dolls, cooking sets, and encouraged to be gentle and accommodating.</li>
+        </ul>
+      </div>
+
+      <!-- Card 2: Gender Stereotypes & Domestic Inequalities -->
+      <div class="theory-card">
+        <h2><i class="fas fa-scale-unbalanced"></i> 2. Gender Stereotypes, Biases &amp; Domestic Inequalities</h2>
+        <ul>
+          <li><span class="important-term">Stereotype:</span> A rigid, oversimplified, and widely held belief or preconceived image about a particular group of people (e.g., <em>'Boys don't cry'</em>, <em>'Girls are naturally better at cooking and cleaning'</em>).</li>
+          <li><span class="important-term">Gender Discrimination:</span> Unequal, biased, or unfair treatment meted out to individuals purely on the basis of their gender.</li>
+          <li><strong>Major Impacts of Gender Stereotypes:</strong>
+            <ul>
+              <li><span class="important-term">Devaluing Unpaid Domestic Work:</span> Domestic chores (cooking, cleaning, laundry, fetching water) and caregiving (looking after children, elderly, and the sick) are physically demanding and time-consuming, yet society often considers it 'natural' women's work and assigns it zero economic monetary value.</li>
+              <li><span class="important-term">The Double Burden (Second Shift):</span> Millions of women who work outside the home in offices, fields, or factories must still return home to complete 100% of the household chores and childcare, carrying an exhausting 'double burden'.</li>
+              <li><span class="important-term">Denied Opportunities for Education &amp; Growth:</span> Stereotypes that girls will eventually marry and leave home have historically led families to prioritize boys' education while withdrawing girls from school early.</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Card 3: Importance of Gender Equality -->
+      <div class="theory-card">
+        <h2><i class="fas fa-hand-holding-heart"></i> 3. Importance of Gender Equality for Human Dignity</h2>
+        <ul>
+          <li><span class="important-term">Right to Dignity:</span> Gender equality is not a luxury or favor; it is a foundational human right essential for living a life of dignity, self-respect, and freedom.</li>
+          <li><strong>Unlocking Human Potential:</strong> When rigid gender stereotypes dictate life choices, people are denied the freedom to pursue their unique talents, whether a girl aspiring to be an aerospace engineer or a boy wishing to excel in nursing or culinary arts.</li>
+          <li><strong>Role of the Family:</strong> Families play a pivotal role—they can either reinforce harmful gender biases by assigning chores unequally, or actively break stereotypes by teaching mutual respect and sharing domestic tasks equally among sons and daughters.</li>
+        </ul>
+      </div>
+
+      <!-- Card 4: Social Reformers -->
+      <div class="theory-card">
+        <h2><i class="fas fa-users-rays"></i> 4. Historic Struggles for Equality &amp; Social Reformers</h2>
+        <p style="color:var(--text-muted); font-size:0.92rem; margin-top:0;">Throughout Indian history, visionary social reformers fought fiercely against entrenched customs to secure women's rights and education:</p>
         
-        searchInput.addEventListener('keypress', function(e) {
-            if(e.key === 'Enter') {
-                performSearch(searchInput.value.toLowerCase());
-            }
-        });
+        <div class="reformer-grid">
+          <div class="reformer-card">
+            <div class="reformer-name"><i class="fas fa-fire-flame-curved"></i> Raja Rammohan Roy</div>
+            <p style="margin:0; font-size:0.88rem; line-height:1.5;">Father of the Indian Renaissance. Campaigned relentlessly against the horrific practice of <em>sati</em> (burning widows on their husbands' pyres), leading the British government to pass the <strong>Sati Abolition Act of 1829</strong>.</p>
+          </div>
+          <div class="reformer-card">
+            <div class="reformer-name"><i class="fas fa-book-open-reader"></i> Ishwar Chandra Vidyasagar</div>
+            <p style="margin:0; font-size:0.88rem; line-height:1.5;">Championed girls' schooling across Bengal and used ancient Sanskrit texts to prove widow remarriage was permissible, resulting in the historic <strong>Hindu Widows' Remarriage Act of 1856</strong>.</p>
+          </div>
+          <div class="reformer-card">
+            <div class="reformer-name"><i class="fas fa-chalkboard-user"></i> Savitribai &amp; Jyotirao Phule</div>
+            <p style="margin:0; font-size:0.88rem; line-height:1.5;">Pioneers of female education. Founded the first modern Indian school for girls in <strong>Pune in 1848</strong>. Savitribai endured public stones and insults to teach underprivileged girls, becoming India's first female headmistress.</p>
+          </div>
+          <div class="reformer-card">
+            <div class="reformer-name"><i class="fas fa-house-chimney-window"></i> Pandita Ramabai</div>
+            <p style="margin:0; font-size:0.88rem; line-height:1.5;">Remarkable Sanskrit scholar who founded <strong>Sarada Sadan in Mumbai (1889)</strong> and the Mukti Mission in Pune, providing shelter, vocational training (printing, carpentry, tailoring), and education to destitute widows.</p>
+          </div>
+          <div class="reformer-card">
+            <div class="reformer-name"><i class="fas fa-feather-pointed"></i> Begum Rokeya Sakhawat Hossain</div>
+            <p style="margin:0; font-size:0.88rem; line-height:1.5;">Visionary author and activist who wrote <em>Sultana's Dream</em> (1905). Started dedicated schools for Muslim girls in Bhagalpur and Kolkata, advocating fearlessly for women's intellectual freedom.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Constitutional & Government Safeguards -->
+      <div class="theory-card">
+        <h2><i class="fas fa-gavel"></i> 5. Constitutional Safeguards &amp; Government Policies</h2>
+        <ul>
+          <li><strong>Constitutional Guarantee of Equality:</strong>
+            <ul>
+              <li><strong>Article 14:</strong> Guarantees equality before the law for all citizens irrespective of gender.</li>
+              <li><strong>Article 15:</strong> Strictly prohibits state discrimination on grounds of religion, race, caste, sex, or place of birth.</li>
+              <li><strong>Article 16:</strong> Guarantees equal employment opportunities in public offices.</li>
+            </ul>
+          </li>
+          <li><strong>33% Panchayati Raj Quota:</strong> Under the 73rd and 74th Constitutional Amendments, a minimum of <strong>33% of all seats in local rural Panchayats and urban municipalities are legally reserved for women</strong>, empowering over 1.4 million female grassroots leaders across India.</li>
+          <li><strong>Right to Free &amp; Compulsory Education (RTE Act):</strong> Guarantees every girl and boy between 6 and 14 years the fundamental right to quality school education.</li>
+          <li><strong>Equal Remuneration Act (1976):</strong> Mandates that men and women performing the same work or work of a similar nature must be paid equal wages, prohibiting wage discrimination.</li>
+          <li><strong>Support Infrastructure:</strong> The government has established thousands of <strong>Anganwadis</strong> (childcare centers) and passed laws mandating that organizations with more than 30 female employees must provide clean creche facilities so mothers can work without giving up childcare.</li>
+          <li><strong>Protective Legislation:</strong> Passage of the <em>Protection of Women from Domestic Violence Act (2005)</em> and strict anti-dowry penal statutes.</li>
+        </ul>
+      </div>
+
+      <!-- Card 6: Quick Audit Glossary Table -->
+      <div class="theory-card">
+        <h2><i class="fas fa-book-bookmark"></i> 6. Master Exam Glossary (Quick-Audit Reference)</h2>
+        <p style="color:var(--text-muted); font-size:0.92rem; margin-top:0;">Use this authoritative vocabulary table to rapidly cross-verify terms appearing in any school exam question paper:</p>
+        <table class="glossary-table">
+          <thead>
+            <tr>
+              <th style="width:25%;">Term / Law</th>
+              <th>Authoritative Sociological &amp; Constitutional Definition</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Biological Sex</strong></td>
+              <td>Anatomical and biological differences (male/female) determined by chromosomes and biology at birth.</td>
+            </tr>
+            <tr>
+              <td><strong>Gender</strong></td>
+              <td>The socially learned behaviors, expectations, and roles assigned to boys and girls by society.</td>
+            </tr>
+            <tr>
+              <td><strong>Gender Stereotype</strong></td>
+              <td>A rigid, preconceived, and generalized belief about how males or females ought to act or think.</td>
+            </tr>
+            <tr>
+              <td><strong>Gender Discrimination</strong></td>
+              <td>Unfair, biased, or disadvantageous treatment of an individual solely based on their gender.</td>
+            </tr>
+            <tr>
+              <td><strong>Devaluation of Labor</strong></td>
+              <td>Failing to recognize or compensate the tremendous physical and emotional effort of unpaid domestic and caregiving work.</td>
+            </tr>
+            <tr>
+              <td><strong>Double Burden</strong></td>
+              <td>The dual workload borne by women who work outside for a wage and also shoulder nearly all domestic household duties.</td>
+            </tr>
+            <tr>
+              <td><strong>Sarada Sadan</strong></td>
+              <td>Widows' educational and vocational home established by Pandita Ramabai in 1889 to foster female economic independence.</td>
+            </tr>
+            <tr>
+              <td><strong>Equal Remuneration Act (1976)</strong></td>
+              <td>Central legislation mandating equal wages for equal work without gender discrimination.</td>
+            </tr>
+            <tr>
+              <td><strong>Panchayati Raj Quota</strong></td>
+              <td>Constitutional reservation reserving at least 33% (up to 50% in several states) of local government seats for women.</td>
+            </tr>
+            <tr>
+              <td><strong>Anganwadi</strong></td>
+              <td>Government-sponsored rural mother-and-child care center providing nutrition, health checkups, and preschool education.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+    <!-- TAB 2: OBJECTIVE PRACTICE (OMR) -->
+    <section id="tab-omr" class="tab-content">
+      <!-- Mode Switcher -->
+      <div class="mode-switch">
+        <button id="btn-practice" class="mode-btn active" onclick="setMode('practice')"><i class="fas fa-graduation-cap"></i> Practice Mode</button>
+        <button id="btn-test" class="mode-btn" onclick="setMode('test')"><i class="fas fa-stopwatch"></i> Timed Test Mode</button>
+      </div>
+
+      <div id="test-intro" style="display:none;">
+        <h3>Ready for the Timed Test?</h3>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 16px;">Test your mastery under simulated examination conditions (28 Objective Questions: MCQs, FIBs, and True/False) with instant auto-grading.</p>
+        <button class="btn-start" onclick="startTimedTest()"><i class="fas fa-play"></i> Start Timed Test</button>
+      </div>
+
+      <div id="resultPanel" class="result-panel">
+        <div class="score-big" id="scoreBig">0 / 0</div>
+        <div class="msg" id="scoreMsg"></div>
+      </div>
+
+      <div id="omr-content">
+        <!-- Multiple Choice Section -->
+        <div class="collapsible-header" onclick="toggleSection(this)">
+          <i class="fas fa-list-check" style="font-size:1.2rem; color:var(--accent);"></i> Multiple Choice Questions
+          <span class="count-badge" id="mcq-count-badge"></span>
+          <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="collapsible-content">
+          <div id="mcqbook-container" data-prefix="mcq"></div>
+        </div>
+
+        <!-- Fill In The Blanks Section -->
+        <div class="collapsible-header" onclick="toggleSection(this)" style="margin-top: 30px;">
+          <i class="fas fa-pencil-alt" style="font-size:1.2rem; color:var(--accent);"></i> Fill In The Blanks
+          <span class="count-badge" id="fill-count-badge"></span>
+          <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="collapsible-content">
+          <div id="fillbook-container" data-prefix="fill"></div>
+        </div>
+
+        <!-- True or False Section -->
+        <div class="collapsible-header" onclick="toggleSection(this)" style="margin-top: 30px;">
+          <i class="fas fa-check-double" style="font-size:1.2rem; color:var(--accent);"></i> True or False
+          <span class="count-badge" id="tf-count-badge"></span>
+          <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <div class="collapsible-content">
+          <div id="tfbook-container" data-prefix="tf"></div>
+        </div>
+      </div>
+
+      <!-- Bottom Grade Bar for Timed Test -->
+      <div id="grade-bar" class="grade-bar">
+        <span class="score-readout" id="liveCount">⏱ Time: 00:00</span>
+        <button onclick="gradeAll()"><i class="fas fa-check"></i> Submit Test</button>
+      </div>
+    </section>
+
+    <!-- TAB 3: SHORT ANSWERS (2 & 3 MARKS) -->
+    <section id="tab-short" class="tab-content">
+      <div class="collapsible-header" onclick="toggleSection(this)">
+        <i class="fas fa-pen-fancy" style="font-size:1.2rem; color:var(--accent);"></i> Short Answer Questions (2 &amp; 3 Marks)
+        <span class="count-badge" id="short-count-badge"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="collapsible-content">
+        <div id="shortbook-container"></div>
+      </div>
+    </section>
+
+    <!-- TAB 4: LONG ANSWERS & CASE STUDIES (4+ MARKS) -->
+    <section id="tab-long" class="tab-content">
+      <div class="collapsible-header" onclick="toggleSection(this)">
+        <i class="fas fa-file-invoice" style="font-size:1.2rem; color:var(--accent);"></i> Long Answer &amp; Case Study Questions (4+ Marks)
+        <span class="count-badge" id="long-count-badge"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="collapsible-content">
+        <div id="longbook-container"></div>
+      </div>
+    </section>
+
+    <!-- TAB 5: BEYOND CURRICULUM & TRIVIA -->
+    <section id="tab-extra" class="tab-content">
+      <div class="collapsible-header" onclick="toggleSection(this)">
+        <i class="fas fa-brain" style="font-size:1.2rem; color:var(--accent);"></i> Beyond Curriculum: High-Yield Insights &amp; Real-World Case Studies
+        <span class="count-badge" id="extra-count-badge"></span>
+        <svg class="chevron" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </div>
+      <div class="collapsible-content">
+        <div id="extrabook-container"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- INJECTED QUESTION DATA ARRAYS -->
+  <script>
+    const mcqBook   = [{"q": "Which of the following is NOT an example of a gender stereotype?", "options": ["Boys are naughty, and girls are quiet.", "Girls cook better food than boys.", "Both girls and boys can play cricket.", "Only boys are good at sports."], "answer": 2, "exp": "Standard textbook exercise from B. Choose the correct answer."}, {"q": "Which of the following is an impact of gender inequality on women?", "options": ["Equal opportunities for education", "Devaluing the work done by women", "Equal sharing of household work", "Reservation for Women in Panchayats"], "answer": 1, "exp": "Standard textbook exercise from B. Choose the correct answer."}, {"q": "Who led the movement to abolish sati in 1829?", "options": ["Savitribai Phule", "Raja Rammohun Roy", "Pandita Ramabai", "Ishwar Chandra Vidyasagar"], "answer": 1, "exp": "Standard textbook exercise from B. Choose the correct answer."}, {"q": "Which right guarantees equal opportunities for employment and equal pay for equal work?", "options": ["Right to Education", "Right to Freedom", "Right to Property", "Right to Equality"], "answer": 3, "exp": "Standard textbook exercise from B. Choose the correct answer."}, {"q": "Which of the following is a way in which we can promote gender equality?", "options": ["Follow gender stereotypes", "Rely solely on government initiatives", "Treat everyone equally", "Ignore laws about gender equality"], "answer": 2, "exp": "Standard textbook exercise from B. Choose the correct answer."}, {"q": "Who led the movement that successfully abolished Sati in 1829?", "options": ["a) Savitribai Phule", "b) Raja Rammohan Roy", "c) Pandita Ramabai", "d) Ishwar Chandra Vidyasagar"], "answer": 1, "exp": "Raja Rammohan Roy campaigned against Sati, leading to its legal abolition in 1829."}, {"q": "What percentage of seats are reserved for women in Panchayati Raj local bodies?", "options": ["a) 25%", "b) 50%", "c) 33%", "d) 10%"], "answer": 2, "exp": "The government has reserved 33% (one-third) of seats in Panchayats for women leaders."}, {"q": "Sex is a biological difference, whereas Gender is a ________ construct.", "options": ["[A] Social", "[B] Biological"], "answer": 0, "exp": "Sex is biological (born with); Gender is social (learned roles)!"}, {"q": "Sarada Sadan was established by ________ to help widows learn skills.", "options": ["[A] Pandita Ramabai", "[B] Savitribai Phule"], "answer": 0, "exp": "Savitribai Phule opened girls' schools; Pandita Ramabai opened Sarada Sadan."}, {"q": "Which pioneering Indian social reformer spearheaded the movement that led to the legal abolition of Sati in 1829?", "options": ["Raja Rammohan Roy", "Ishwar Chandra Vidyasagar", "Jyotirao Phule", "Swami Vivekananda"], "answer": 0, "exp": "Raja Rammohan Roy's persistent advocacy persuaded British administrators to declare Sati illegal and punishable by law in 1829."}, {"q": "Savitribai Phule, alongside her husband Jyotirao Phule, founded the first modern Indian school for girls in 1848 at:", "options": ["Pune", "Kolkata", "Mumbai", "Chennai"], "answer": 0, "exp": "Savitribai and Jyotirao Phule opened India's first modern indigenous girls' school at Bhide Wada in Pune in 1848."}, {"q": "What proportion of total seats in rural local self-governments (Panchayats) is constitutionally reserved for women in India?", "options": ["33% (One-third)", "50% (One-half)", "20% (One-fifth)", "10% (One-tenth)"], "answer": 0, "exp": "Under the 73rd Constitutional Amendment, at least 33% (one-third) of all elected seats in Panchayats are reserved for women."}];
+    const fillBook  = [{"q": "Gender is a _______ construct.", "a": ["social"], "exp": "Textbook foundational exercise from A. Fill in the blanks."}, {"q": "Gender stereotypes lead to gender _______.", "a": ["discrimination"], "exp": "Textbook foundational exercise from A. Fill in the blanks."}, {"q": "Families can either strengthen or _______ gender stereotypes.", "a": ["break"], "exp": "Textbook foundational exercise from A. Fill in the blanks."}, {"q": "_______ opened Sarada Sadan where widows were encouraged to get educated and learn a skill that would help them earn money.", "a": ["Pandita Ramabai"], "exp": "Textbook foundational exercise from A. Fill in the blanks."}, {"q": "33% of seats in _______ are reserved for women.", "a": ["Panchayats"], "exp": "Textbook foundational exercise from A. Fill in the blanks."}, {"q": "Pandita Ramabai founded an educational and vocational haven in Maharashtra for destitute widows called _______.", "a": ["Sarada Sadan"], "exp": "Sarada Sadan was established by Pandita Ramabai to provide widows with literacy, vocational skills, and self-reliance."}, {"q": "A fixed, generalized, and oversimplified belief held about all members of a group is termed a _______.", "a": ["stereotype"], "exp": "Stereotypes assign predetermined attributes to individuals regardless of their personal abilities."}];
+    const tfBook    = [{"s": "When people are treated differently or unequally because of their gender, it is known as gender discrimination.", "answer": true, "exp": "True"}, {"s": "Our preconceived ideas and opinions on how boys and girls should behave lead to gender inequality.", "answer": true, "exp": "True"}, {"s": "Widow remarriage became legal in 1856 because of the efforts of Savitribai Phule.", "answer": false, "exp": "False. Widow remarriage became legal in 1856 because of the efforts of Ishwar Chandra Vidyasagar."}, {"s": "Right to Equality promotes gender equality by giving equal educational opportunities to both boys and girls.", "answer": true, "exp": "True"}, {"s": "We should encourage people around us to follow gender stereotypes.", "answer": false, "exp": "False. We should break gender stereotypes and encourage gender equality."}, {"s": "Widow remarriage became legal in 1856 due to efforts by Savitribai Phule.", "answer": false, "exp": "FALSE. It became legal in 1856 due to efforts by Ishwar Chandra Vidyasagar."}, {"s": "The Khasi tribe of Meghalaya follows a matrilineal family structure.", "answer": true, "exp": "TRUE. In Khasi society, property and family names pass through the mother."}, {"s": "The Hindu Widows' Remarriage Act of 1856 was enacted primarily due to the campaigning of Ishwar Chandra Vidyasagar.", "answer": true, "exp": "Ishwar Chandra Vidyasagar presented ancient scriptural evidence and petitions to legalize widow remarriage in 1856."}, {"s": "Gender roles are biologically predetermined at birth and remain completely identical across all global cultures.", "answer": false, "exp": "Sex is biological, whereas gender refers to social roles and cultural expectations that vary widely across societies and evolve over time."}];
+    const shortBook = [{"q": "A social reformer who worked for the abolition of sati", "model": "Raja Rammohun Roy", "rubric": "Exercise problem from D. Name the following."}, {"q": "A social reformer who worked to make widow remarriage legal", "model": "Ishwar Chandra Vidyasagar", "rubric": "Exercise problem from D. Name the following."}, {"q": "Two social reformers who established the first Indian school for girls", "model": "Savitribai Phule and Jyotirao Phule", "rubric": "Exercise problem from D. Name the following."}, {"q": "A woman social reformer who was also a freedom fighter", "model": "Sarojini Naidu", "rubric": "Exercise problem from D. Name the following."}, {"q": "What do you understand by the term gender equality? Answer in about 20-30 words.", "model": "Gender equality means that every human being, regardless of their gender, should have equal rights to think, express, work, and access opportunities without discrimination.", "rubric": "Textbook brief response solution."}, {"q": "What are gender stereotypes? How are gender stereotypes strengthened?", "model": "Gender stereotypes are fixed beliefs about how boys and girls should behave and their roles in society. They are strengthened by families, schools, and society treating children differently based on gender.", "rubric": "Textbook brief response solution."}, {"q": "Explain why gender equality is important for us.", "model": "Gender equality is important because it allows individuals to realise their full potential, live a life of dignity, and contribute equally to society, free from limitations set by gender roles.", "rubric": "Textbook brief response solution."}, {"q": "Do you think it is only the government's responsibility to ensure gender equality? Why/why not?", "model": "No, it is a shared responsibility. While the government creates laws and policies, individuals, families, and schools must change their mindsets and actions to practice equality in everyday life.", "rubric": "Textbook brief response solution."}, {"q": "List any three ways in which we can play a positive role in reducing gender inequality.", "model": "1. Treat everyone equally regardless of gender. 2. Break gender stereotypes by encouraging boys and girls to pursue diverse interests. 3. Share household chores equally.", "rubric": "Textbook brief response solution."}, {"q": "Explain the key features, historical or geographical significance, and characteristics of Case Studies: Growing Up in Different Societies Meghalaya vs Haryana.", "model": "• Matrilineal society where lineage and family name pass through the mother.\n• Daughters inherit a larger share of parental property.\n• Youngest daughter takes care of aging parents.", "rubric": "Core curriculum conceptual foundation for Case Studies: Growing Up in Different Societies Meghalaya vs Haryana."}, {"q": "Explain the key features, historical or geographical significance, and characteristics of 13.2 & 13.3 Stereotypes & Devaluing Women's Work Impact on Society.", "model": "• A fixed, oversimplified, or biased belief about a group of people.\n• Examples: \"Boys don't cry,\" \"Girls are good at cooking,\" \"Boys are better at sports/maths\".", "rubric": "Core curriculum conceptual foundation for 13.2 & 13.3 Stereotypes & Devaluing Women's Work Impact on Society."}, {"q": "Explain the fundamental difference between 'Sex' and 'Gender'.", "model": "• **Sex**: Refers to the biological and anatomical differences between males and females determined at birth (universal and unchangeable across cultures).\n• **Gender**: Refers to the socially constructed roles, behaviors, expressions, and expectations that a given society considers appropriate for men and women (varies across communities and changes over time).", "rubric": "Key sociological definition foundational to Civics curriculum."}, {"q": "Summarize the major contributions of Savitribai Phule and Pandita Ramabai towards empowering Indian women.", "model": "• **Savitribai Phule**: Overcame severe social ostracism to become India's first female teacher, establishing the first girls' school in Pune (1848) and advocating for inter-caste education and women's self-worth.\n• **Pandita Ramabai**: Sanskrit scholar who authored critique on women's oppression and established *Sarada Sadan* (1889) to grant economic independence, education, and vocational printing/carpentry training to widows.", "rubric": "Highlights key 19th-century pioneers of female education and autonomy in India."}];
+    const longBook  = [{"q": "Using an example, explain how gender stereotypes lead to gender inequality.", "model": "If society believes the stereotype that women are only meant for household work, it limits their opportunities for education and employment. This unequal access to opportunities leads to gender inequality.", "rubric": "Comprehensive multi-point textbook model answer."}, {"q": "Describe any two factors that lead to gender inequality in not more than 80 words.", "model": "1. Preconceived Stereotypes: Beliefs that boys and girls should have different roles limit their potential. 2. Unequal burden of household work: The expectation that only women must manage the household prevents them from seeking outside employment.", "rubric": "Comprehensive multi-point textbook model answer."}, {"q": "How do women get affected by the unpaid work they do?", "model": "Women performing unpaid household work are often not recognized for their efforts. This devalues their labor, restricts their financial independence, and limits their time to pursue careers or further education, reinforcing their lower economic status.", "rubric": "Comprehensive multi-point textbook model answer."}, {"q": "Explain the historical evolution of the women's movement in India in about 100 words.", "model": "Historically, women faced social evils like sati and denial of education. Social reformers like Raja Rammohun Roy and Savitribai Phule championed women's rights and education. Over time, the movement gained momentum, and post-independence, the Constitution granted equal rights. Women continue to advocate for equality today.", "rubric": "Comprehensive multi-point textbook model answer."}, {"q": "Describe any two laws that the government has passed to promote gender equality.", "model": "1. Right to Equality: Prohibits discrimination on the basis of gender and guarantees equal opportunities. 2. Laws against Dowry and Domestic Violence: Protects women from violence and abuse, making such acts punishable offenses.", "rubric": "Comprehensive multi-point textbook model answer."}, {"q": "Explain the key features, historical or geographical significance, and characteristics of 13.5 & 13.6 Social Reformers & Government Initiatives Fighting for Rights.", "model": "• Raja Rammohan Roy: Led movement to abolish Sati in 1829.\n• Ishwar Chandra Vidyasagar: Fought for the Hindu Widow Remarriage Act (1856).\n• Savitribai & Jyotirao Phule: Started the first Indian school for girls in Pune (1848).\n• Pandita Ramabai: Founded Sarada Sadan in Mumbai for widows.\n• Begum Rokeya Sakhawat Hossain: Championed Muslim girls' education.", "rubric": "Core curriculum conceptual foundation for 13.5 & 13.6 Social Reformers & Government Initiatives Fighting for Rights."}, {"q": "What is meant by the 'invisible' nature of domestic work? Explain the term 'double burden' experienced by working women.", "model": "• **Invisible & Devalued Household Labour**: Domestic work—cooking, cleaning, washing clothes, fetching water, child-rearing, and caring for the elderly—is physically demanding and time-consuming. Yet, society assumes it is 'natural' for women, providing no monetary wage and according it very low status.\n• **The Double Burden**: Refers to the situation where women participate in the formal workforce or wage labour outside the home, yet still shoulder the primary responsibility for all unpaid domestic chores and family caregiving inside the home.", "rubric": "Core social justice and economic equality concepts in CBSE Civics."}, {"q": "Explain the major constitutional provisions and welfare laws enacted in India to eradicate gender inequality and protect women's dignity.", "model": "1. **Constitutional Rights (Articles 14, 15, 16)**: Prohibit any state discrimination based on sex, guarantee equality before law, and mandate equal employment opportunities.\n2. **Equal Remuneration Act**: Mandates equal pay for men and women performing identical or similar work, preventing wage exploitation.\n3. **Local Governance Representation**: 33% mandatory reservation in Panchayati Raj institutions (73rd Amendment) ensures over 1 million women hold active political leadership roles across rural India.\n4. **Support for Working Mothers**: Government mandates crèche facilities in workplaces with over 30 female employees and sets up nationwide Anganwadi centers.\n5. **Special Protective Acts**: Protection of Women from Domestic Violence Act (2005) and Dowry Prohibition Act establish enforceable legal remedies against harassment and marital violence.", "rubric": "Comprehensive appraisal of the state apparatus advancing gender equality in India."}];
+    const extraBook = [{"title": "Sultana's Dream (1905) — India's First Feminist Utopian Fiction", "content": "In 1905, before women even had voting rights in most Western democracies, Indian Muslim reformer <strong>Begum Rokeya Sakhawat Hossain</strong> wrote <em>Sultana's Dream</em>. It envisioned 'Ladyland'—a peaceful society where women were scientists, inventors, and statesmen harnessing solar power and cloud-flying cars, while men stayed indoors managing domestic affairs. Rokeya dedicated her life to running schools for underprivileged girls in Kolkata and Bhagalpur."}, {"title": "The Time-Use Survey: The Invisible Economy", "content": "According to National Sample Survey data in India, women spend an average of <strong>299 minutes (5 hours) per day</strong> on unpaid domestic caregiving and household labor, compared to just 97 minutes by men. Because this labor does not produce a market wage, traditional economics often classified home-makers as 'non-working', making their massive economic contribution statistically invisible."}, {"title": "Women Leading at the Grassroots: 1.4 Million Elected Women", "content": "India's 73rd Constitutional Amendment (1992) pioneered a mandatory <strong>33% reservation for women in Panchayati Raj institutions</strong> (expanded to 50% in states like Bihar, Madhya Pradesh, and Kerala). Today, over <strong>1.4 million women</strong> serve as elected Panchayat Sarpanches and ward members in India—representing the largest cohort of democratically elected female leaders anywhere in the world."}, {"title": "Shattering Occupational Stereotypes: Indian Women in Aviation", "content": "While gender stereotypes suggest that technical and high-risk careers are suited primarily for men, India actually leads the globe with the highest percentage of female airline commercial pilots in the world—at approximately <strong>12.4% to 15%</strong>, compared to a global average of only around 5% in countries like the US and UK."}, {"title": "Exam Trap: Confusing Biological Sex with Social Gender", "content": "In examinations, questions often test: <em>'Is gender permanent or socially constructed?'</em> Remember: <strong>Biological sex</strong> refers to physiological and anatomical differences (male, female) which are biological. <strong>Gender</strong> refers to societal expectations, roles, and behaviors assigned to boys and girls, which change over time and differ across cultures."}, {"title": "The Dual Mechanism: Social Mindset + Legal Safeguards", "content": "CBSE evaluators look for the distinction between legislative reform and societal transformation. Laws like the <strong>Equal Remuneration Act (1976)</strong> and the <strong>Domestic Violence Act (2005)</strong> provide necessary legal protections, but true gender equality cannot be achieved without transforming cultural mindsets within families and sharing domestic caregiving responsibilities equally."}];
+  </script>
+
+  <!-- CORE INTERACTIVE ENGINE -->
+  <script>
+    let currentMode = 'practice';
+    let testTimer = null;
+    let timeRemaining = 0;
+    const totalMax = mcqBook.length + fillBook.length + tfBook.length;
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+      window.scrollTo({ top: 120, behavior: 'smooth' });
     }
-    
-    function performSearch(term) {
-        const cards = document.querySelectorAll('.chapter-card, .topic-card, .shloka-box, .translation-row, .shloka-block');
-        if (cards.length > 0) {
-            cards.forEach(card => {
-                if(card.innerText.toLowerCase().includes(term)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    }
-});
-</script>
 
-    <div class="container">
-        <!-- A. Fill in the blanks -->
-        <div class="section-card">
-            <h2>A. Fill in the blanks</h2>
-            
-            <div class="question-block">
-                <div class="question">1. Gender is a _______ construct.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">social</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">2. Gender stereotypes lead to gender _______.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">discrimination</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">3. Families can either strengthen or _______ gender stereotypes.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">break</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">4. _______ opened Sarada Sadan where widows were encouraged to get educated and learn a skill that would help them earn money.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">Pandita Ramabai</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">5. 33% of seats in _______ are reserved for women.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">Panchayats</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- B. Choose the correct answer -->
-        <div class="section-card">
-            <h2>B. Choose the correct answer</h2>
-
-            <div class="question-block">
-                <div class="question">1. Which of the following is NOT an example of a gender stereotype?</div>
-                <ul class="options">
-                    <li>(a) Boys are naughty, and girls are quiet.</li>
-                    <li>(b) Girls cook better food than boys.</li>
-                    <li>(c) Both girls and boys can play cricket.</li>
-                    <li>(d) Only boys are good at sports.</li>
-                </ul>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">(c) Both girls and boys can play cricket.</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">2. Which of the following is an impact of gender inequality on women?</div>
-                <ul class="options">
-                    <li>(a) Equal opportunities for education</li>
-                    <li>(b) Devaluing the work done by women</li>
-                    <li>(c) Equal sharing of household work</li>
-                    <li>(d) Reservation for Women in Panchayats</li>
-                </ul>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">(b) Devaluing the work done by women</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">3. Who led the movement to abolish sati in 1829?</div>
-                <ul class="options">
-                    <li>(a) Savitribai Phule</li>
-                    <li>(b) Raja Rammohun Roy</li>
-                    <li>(c) Pandita Ramabai</li>
-                    <li>(d) Ishwar Chandra Vidyasagar</li>
-                </ul>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">(b) Raja Rammohun Roy</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">4. Which right guarantees equal opportunities for employment and equal pay for equal work?</div>
-                <ul class="options">
-                    <li>(a) Right to Education</li>
-                    <li>(b) Right to Freedom</li>
-                    <li>(c) Right to Property</li>
-                    <li>(d) Right to Equality</li>
-                </ul>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">(d) Right to Equality</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">5. Which of the following is a way in which we can promote gender equality?</div>
-                <ul class="options">
-                    <li>(a) Follow gender stereotypes</li>
-                    <li>(b) Rely solely on government initiatives</li>
-                    <li>(c) Treat everyone equally</li>
-                    <li>(d) Ignore laws about gender equality</li>
-                </ul>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">(c) Treat everyone equally</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- C. Write True or False -->
-        <div class="section-card">
-            <h2>C. Write True or False. Rewrite the false statements correctly.</h2>
-
-            <div class="question-block">
-                <div class="question">1. When people are treated differently or unequally because of their gender, it is known as gender discrimination.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">True</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">2. Our preconceived ideas and opinions on how boys and girls should behave lead to gender inequality.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">True</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">3. Widow remarriage became legal in 1856 because of the efforts of Savitribai Phule.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">False. Widow remarriage became legal in 1856 because of the efforts of Ishwar Chandra Vidyasagar.</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">4. Right to Equality promotes gender equality by giving equal educational opportunities to both boys and girls.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">True</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">5. We should encourage people around us to follow gender stereotypes.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">False. We should break gender stereotypes and encourage gender equality.</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- D. Name the following -->
-        <div class="section-card">
-            <h2>D. Name the following</h2>
-
-            <div class="question-block">
-                <div class="question">1. A social reformer who worked for the abolition of sati</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">Raja Rammohun Roy</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">2. A social reformer who worked to make widow remarriage legal</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">Ishwar Chandra Vidyasagar</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">3. Two social reformers who established the first Indian school for girls</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">Savitribai Phule and Jyotirao Phule</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">4. A woman social reformer who was also a freedom fighter</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">Sarojini Naidu</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- E. Answer the following questions in brief -->
-        <div class="section-card">
-            <h2>E. Answer the following questions in brief</h2>
-
-            <div class="question-block">
-                <div class="question">1. What do you understand by the term gender equality? Answer in about 20-30 words.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">Gender equality means that every human being, regardless of their gender, should have equal rights to think, express, work, and access opportunities without discrimination.</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">2. What are gender stereotypes? How are gender stereotypes strengthened?</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">Gender stereotypes are fixed beliefs about how boys and girls should behave and their roles in society. They are strengthened by families, schools, and society treating children differently based on gender.</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">3. Explain why gender equality is important for us.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">Gender equality is important because it allows individuals to realise their full potential, live a life of dignity, and contribute equally to society, free from limitations set by gender roles.</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">4. Do you think it is only the government's responsibility to ensure gender equality? Why/why not?</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">No, it is a shared responsibility. While the government creates laws and policies, individuals, families, and schools must change their mindsets and actions to practice equality in everyday life.</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">5. List any three ways in which we can play a positive role in reducing gender inequality.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Answer</button>
-                    <span class="answer">1. Treat everyone equally regardless of gender. 2. Break gender stereotypes by encouraging boys and girls to pursue diverse interests. 3. Share household chores equally.</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- F. Answer the following questions in detail -->
-        <div class="section-card">
-            <h2>F. Answer the following questions in detail</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;"><em>Try to answer these descriptive questions in your notebook, then check the key points below.</em></p>
-
-            <div class="question-block">
-                <div class="question">1. Using an example, explain how gender stereotypes lead to gender inequality.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Key Points</button>
-                    <span class="answer">If society believes the stereotype that women are only meant for household work, it limits their opportunities for education and employment. This unequal access to opportunities leads to gender inequality.</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">2. Describe any two factors that lead to gender inequality in not more than 80 words.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Key Points</button>
-                    <span class="answer">1. Preconceived Stereotypes: Beliefs that boys and girls should have different roles limit their potential. 2. Unequal burden of household work: The expectation that only women must manage the household prevents them from seeking outside employment.</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">3. How do women get affected by the unpaid work they do?</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Key Points</button>
-                    <span class="answer">Women performing unpaid household work are often not recognized for their efforts. This devalues their labor, restricts their financial independence, and limits their time to pursue careers or further education, reinforcing their lower economic status.</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">4. Explain the historical evolution of the women's movement in India in about 100 words.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Key Points</button>
-                    <span class="answer">Historically, women faced social evils like sati and denial of education. Social reformers like Raja Rammohun Roy and Savitribai Phule championed women's rights and education. Over time, the movement gained momentum, and post-independence, the Constitution granted equal rights. Women continue to advocate for equality today.</span>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question">5. Describe any two laws that the government has passed to promote gender equality.</div>
-                <div class="answer-container">
-                    <button class="reveal-btn" onclick="toggleAnswer(this)">Reveal Key Points</button>
-                    <span class="answer">1. Right to Equality: Prohibits discrimination on the basis of gender and guarantees equal opportunities. 2. Laws against Dowry and Domestic Violence: Protects women from violence and abuse, making such acts punishable offenses.</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function toggleAnswer(btn) {
-            const answer = btn.nextElementSibling;
-            if (answer.classList.contains('visible')) {
-                answer.classList.remove('visible');
-                btn.textContent = 'Reveal Answer';
-            } else {
-                answer.classList.add('visible');
-                btn.textContent = 'Hide Answer';
-            }
-        }
-    </script>
-
-    <!-- FIREBASE TIMER INJECTION START -->
-    <script type="module">
-      import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
-      import { db } from "../../../js/firebase-config.js";
-    
-      const activeUser = localStorage.getItem('pushti-active-user') || 'none';
-      if(activeUser !== 'none' && activeUser !== 'parent' && activeUser !== 'admin') {
-          setInterval(async () => {
-              try {
-                  const docRef = doc(db, "user_stats", activeUser);
-                  const docSnap = await getDoc(docRef);
-                  let newTime = 1;
-                  if (docSnap.exists()) {
-                      newTime = (docSnap.data().total_time || 0) + 1;
-                  }
-                  await setDoc(docRef, { total_time: newTime }, { merge: true });
-              } catch(e) {
-                  console.log("Error updating timer: ", e);
-              }
-          }, 60000);
+    document.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && document.getElementById(hash)) {
+        const btn = document.querySelector(`button[onclick*="${hash}"]`);
+        if (btn) switchTab(hash, btn);
       }
-    </script>
-    <!-- FIREBASE TIMER INJECTION END -->
+    });
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const themeBtn = document.querySelector('.theme-toggle');
-    if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
-        themeBtn.classList.add('handled-by-inline');
-        themeBtn.addEventListener('click', (e) => {
-            // Prevent app.js from also firing if it's there
-            e.stopImmediatePropagation();
-            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.body.setAttribute('data-theme', newTheme);
-            const icon = themeBtn.querySelector('i');
-            if(icon) {
-                icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-            localStorage.setItem('pushti-theme', newTheme);
-            
-            if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ theme: newTheme }, '*');
-            }
-        });
-        const savedTheme = localStorage.getItem('pushti-theme');
-        if(savedTheme) {
-            document.body.setAttribute('data-theme', savedTheme);
-            const icon = themeBtn.querySelector('i');
-            if(icon) {
-                icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-        }
+    function toggleSection(header) {
+      header.classList.toggle('collapsed');
+      const content = header.nextElementSibling;
+      content.classList.toggle('collapsed');
     }
-});
-</script>
-    <!-- Universal Jump to Top Engine -->
-    <script src="../../js/scroll_to_top.js"></script>
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('btn-practice').classList.toggle('active', mode === 'practice');
+      document.getElementById('btn-test').classList.toggle('active', mode === 'test');
+      
+      const intro = document.getElementById('test-intro');
+      const content = document.getElementById('omr-content');
+      const bar = document.getElementById('grade-bar');
+
+      if (mode === 'practice') {
+        if (testTimer) clearInterval(testTimer);
+        intro.style.display = 'none';
+        content.style.display = 'block';
+        bar.style.display = 'none';
+        resetAnswers();
+      } else {
+        intro.style.display = 'block';
+        content.style.display = 'none';
+        bar.style.display = 'none';
+      }
+    }
+
+    function startTimedTest() {
+      document.getElementById('test-intro').style.display = 'none';
+      document.getElementById('omr-content').style.display = 'block';
+      document.getElementById('grade-bar').style.display = 'flex';
+      resetAnswers();
+      
+      timeRemaining = Math.max(300, totalMax * 45); // 45 seconds per question
+      updateTimerDisplay();
+      if (testTimer) clearInterval(testTimer);
+      testTimer = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        if (timeRemaining <= 0) {
+          clearInterval(testTimer);
+          gradeAll();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const m = Math.floor(timeRemaining / 60);
+      const s = timeRemaining % 60;
+      const el = document.getElementById('liveCount');
+      el.textContent = `⏱ Time: ${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+      el.classList.toggle('urgent', timeRemaining <= 60);
+    }
+
+    function resetAnswers() {
+      document.querySelectorAll('#omr-content input[type="radio"]').forEach(r => r.checked = false);
+      document.querySelectorAll('#omr-content input[type="text"]').forEach(t => t.value = '');
+      document.querySelectorAll('#omr-content .feedback').forEach(f => { f.style.display = 'none'; f.className = 'feedback'; });
+      document.getElementById('resultPanel').classList.remove('show');
+    }
+
+    function checkPracticeMCQ(idx, selectedVal) {
+      if (currentMode !== 'practice') return;
+      const q = mcqBook[idx];
+      const fb = document.getElementById(`mcq-fb-${idx}`);
+      const isCorrect = (selectedVal === q.answer);
+      fb.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+      fb.innerHTML = `<strong>${isCorrect ? 'Correct!' : 'Incorrect.'}</strong> Correct Answer: (${String.fromCharCode(97 + q.answer)}) ${q.options[q.answer]}<span class="exp">${q.exp}</span>`;
+      fb.style.display = 'block';
+    }
+
+    function checkPracticeFill(idx) {
+      if (currentMode !== 'practice') return;
+      const q = fillBook[idx];
+      const input = document.getElementById(`fill-${idx}`);
+      const val = input.value.trim().toLowerCase();
+      const fb = document.getElementById(`fill-fb-${idx}`);
+      const accepted = Array.isArray(q.a) ? q.a : [q.a];
+      const isCorrect = accepted.some(ans => val === ans.toLowerCase() || (val.length > 3 && ans.toLowerCase().includes(val)));
+      fb.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+      fb.innerHTML = `<strong>${isCorrect ? 'Correct!' : 'Incorrect.'}</strong> Correct Answer: ${accepted[0]}<span class="exp">${q.exp}</span>`;
+      fb.style.display = 'block';
+    }
+
+    function checkPracticeTF(idx, val) {
+      if (currentMode !== 'practice') return;
+      const q = tfBook[idx];
+      const fb = document.getElementById(`tf-fb-${idx}`);
+      const isCorrect = (val === q.answer);
+      fb.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+      fb.innerHTML = `<strong>${isCorrect ? 'Correct!' : 'Incorrect.'}</strong> Correct Answer: ${q.answer ? 'True' : 'False'}<span class="exp">${q.exp}</span>`;
+      fb.style.display = 'block';
+    }
+
+    function gradeAll() {
+      if (testTimer) clearInterval(testTimer);
+      let correct = 0;
+      let incorrect = 0;
+      let unanswered = 0;
+
+      // Grade MCQs
+      mcqBook.forEach((q, i) => {
+        const sel = document.querySelector(`input[name="mcq-${i}"]:checked`);
+        const fb = document.getElementById(`mcq-fb-${i}`);
+        if (!sel) {
+          unanswered++;
+          fb.className = 'feedback incorrect';
+          fb.innerHTML = `<strong>Unanswered.</strong> Correct: (${String.fromCharCode(97 + q.answer)}) ${q.options[q.answer]}<span class="exp">${q.exp}</span>`;
+        } else if (parseInt(sel.value) === q.answer) {
+          correct++;
+          fb.className = 'feedback correct';
+          fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${q.exp}</span>`;
+        } else {
+          incorrect++;
+          fb.className = 'feedback incorrect';
+          fb.innerHTML = `<strong>Incorrect.</strong> Correct: (${String.fromCharCode(97 + q.answer)}) ${q.options[q.answer]}<span class="exp">${q.exp}</span>`;
+        }
+        fb.style.display = 'block';
+      });
+
+      // Grade Fill
+      fillBook.forEach((q, i) => {
+        const val = (document.getElementById(`fill-${i}`).value || '').trim().toLowerCase();
+        const fb = document.getElementById(`fill-fb-${i}`);
+        const accepted = Array.isArray(q.a) ? q.a : [q.a];
+        if (!val) {
+          unanswered++;
+          fb.className = 'feedback incorrect';
+          fb.innerHTML = `<strong>Unanswered.</strong> Correct: ${accepted[0]}<span class="exp">${q.exp}</span>`;
+        } else if (accepted.some(ans => val === ans.toLowerCase() || (val.length > 3 && ans.toLowerCase().includes(val)))) {
+          correct++;
+          fb.className = 'feedback correct';
+          fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${q.exp}</span>`;
+        } else {
+          incorrect++;
+          fb.className = 'feedback incorrect';
+          fb.innerHTML = `<strong>Incorrect.</strong> Correct: ${accepted[0]}<span class="exp">${q.exp}</span>`;
+        }
+        fb.style.display = 'block';
+      });
+
+      // Grade TF
+      tfBook.forEach((q, i) => {
+        const sel = document.querySelector(`input[name="tf-${i}"]:checked`);
+        const fb = document.getElementById(`tf-fb-${i}`);
+        if (!sel) {
+          unanswered++;
+          fb.className = 'feedback incorrect';
+          fb.innerHTML = `<strong>Unanswered.</strong> Correct: ${q.answer ? 'True' : 'False'}<span class="exp">${q.exp}</span>`;
+        } else if ((sel.value === 'true') === q.answer) {
+          correct++;
+          fb.className = 'feedback correct';
+          fb.innerHTML = `<strong>Correct!</strong> <span class="exp">${q.exp}</span>`;
+        } else {
+          incorrect++;
+          fb.className = 'feedback incorrect';
+          fb.innerHTML = `<strong>Incorrect.</strong> Correct: ${q.answer ? 'True' : 'False'}<span class="exp">${q.exp}</span>`;
+        }
+        fb.style.display = 'block';
+      });
+
+      const scoreEl = document.getElementById('scoreBig');
+      const msgEl = document.getElementById('scoreMsg');
+      scoreEl.textContent = `${correct} / ${totalMax}`;
+      
+      const pct = Math.round((correct / totalMax) * 100);
+      let badge = 'Mastery Achieved! 🏆';
+      if (pct < 60) badge = 'Needs Focused Revision 📖';
+      else if (pct < 85) badge = 'Good Effort! Keep Polishing ✨';
+
+      msgEl.innerHTML = `<strong>Score: ${pct}% &bull; ${badge}</strong><br>Correct: ${correct} | Incorrect: ${incorrect} | Unanswered: ${unanswered}`;
+      
+      document.getElementById('resultPanel').classList.add('show');
+      document.getElementById('grade-bar').style.display = 'none';
+      window.scrollTo({ top: document.getElementById('resultPanel').offsetTop - 90, behavior: 'smooth' });
+    }
+
+    // Populate question blocks on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // MCQs
+      const mcqContainer = document.getElementById('mcqbook-container');
+      document.getElementById('mcq-count-badge').textContent = `(${mcqBook.length} Qs)`;
+      mcqBook.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.innerHTML = `
+          <div class="q-num">Question ${idx + 1} &bull; 1 Mark (MCQ)</div>
+          <div class="q-text">${q.q}</div>
+          <div class="mcq-options">
+            ${q.options.map((opt, oIdx) => `
+              <label class="mcq-opt">
+                <input type="radio" name="mcq-${idx}" value="${oIdx}" onchange="checkPracticeMCQ(${idx}, ${oIdx})">
+                <span><strong>(${String.fromCharCode(97 + oIdx)})</strong> ${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div id="mcq-fb-${idx}" class="feedback"></div>
+        `;
+        mcqContainer.appendChild(card);
+      });
+
+      // Fill in Blanks
+      const fillContainer = document.getElementById('fillbook-container');
+      document.getElementById('fill-count-badge').textContent = `(${fillBook.length} Qs)`;
+      fillBook.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.innerHTML = `
+          <div class="q-num">Question ${idx + 1} &bull; 1 Mark (FIB)</div>
+          <div class="q-text">${q.q}</div>
+          <div class="fill-row">
+            <input type="text" id="fill-${idx}" class="fill-input" placeholder="Type answer here..." onkeypress="if(event.key==='Enter') checkPracticeFill(${idx})">
+            <button class="btn-check" onclick="checkPracticeFill(${idx})">Check</button>
+          </div>
+          <div id="fill-fb-${idx}" class="feedback"></div>
+        `;
+        fillContainer.appendChild(card);
+      });
+
+      // True or False
+      const tfContainer = document.getElementById('tfbook-container');
+      document.getElementById('tf-count-badge').textContent = `(${tfBook.length} Qs)`;
+      tfBook.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.innerHTML = `
+          <div class="q-num">Question ${idx + 1} &bull; 1 Mark (True/False)</div>
+          <div class="q-text">${q.s}</div>
+          <div class="tf-row">
+            <label><input type="radio" name="tf-${idx}" value="true" onchange="checkPracticeTF(${idx}, true)"> True</label>
+            <label><input type="radio" name="tf-${idx}" value="false" onchange="checkPracticeTF(${idx}, false)"> False</label>
+          </div>
+          <div id="tf-fb-${idx}" class="feedback"></div>
+        `;
+        tfContainer.appendChild(card);
+      });
+
+      // Short Answers
+      const shortContainer = document.getElementById('shortbook-container');
+      document.getElementById('short-count-badge').textContent = `(${shortBook.length} Qs)`;
+      shortBook.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.innerHTML = `
+          <div class="q-num">Short Answer Question ${idx + 1} &bull; 2/3 Marks</div>
+          <div class="q-text">${q.q}</div>
+          <details>
+            <summary><i class="fas fa-key"></i> Reveal Model Answer &amp; Rubric</summary>
+            <div class="model">
+              <strong>Model Answer:</strong><br>${q.model}
+              ${q.rubric ? `<br><br><span style="font-size:0.85rem; color:var(--text-muted);"><strong>Evaluation Rubric:</strong> ${q.rubric}</span>` : ''}
+            </div>
+          </details>
+        `;
+        shortContainer.appendChild(card);
+      });
+
+      // Long Answers
+      const longContainer = document.getElementById('longbook-container');
+      document.getElementById('long-count-badge').textContent = `(${longBook.length} Qs)`;
+      longBook.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.innerHTML = `
+          <div class="q-num">Long Answer / Case Study Question ${idx + 1} &bull; 4+ Marks</div>
+          <div class="q-text">${q.q}</div>
+          <details>
+            <summary><i class="fas fa-clipboard-check"></i> Reveal Comprehensive Model Answer &amp; Structure</summary>
+            <div class="model">
+              <strong>Structured Solution:</strong><br>${q.model.replace(/\n/g, '<br>')}
+              ${q.rubric ? `<br><br><span style="font-size:0.85rem; color:var(--text-muted);"><strong>Grading Criteria:</strong> ${q.rubric}</span>` : ''}
+            </div>
+          </details>
+        `;
+        longContainer.appendChild(card);
+      });
+
+      // Extra Knowledge / Trivia
+      const extraContainer = document.getElementById('extrabook-container');
+      document.getElementById('extra-count-badge').textContent = `(${extraBook.length} Items)`;
+      extraBook.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'trivia-card';
+        card.innerHTML = `
+          <div class="trivia-header"><i class="fas fa-lightbulb" style="color:var(--primary);"></i> ${item.title}</div>
+          <div class="trivia-body">${item.content}</div>
+        `;
+        extraContainer.appendChild(card);
+      });
+    });
+  </script>
+
+  <!-- FIREBASE TELEMETRY TIMER INJECTION -->
+  <script type="module">
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+    import { db } from "../../js/firebase-config.js";
+  
+    const activeUser = localStorage.getItem('pushti-active-user') || 'none';
+    if(activeUser !== 'none' && activeUser !== 'parent' && activeUser !== 'admin') {
+        setInterval(async () => {
+            try {
+                const docRef = doc(db, "user_stats", activeUser);
+                const docSnap = await getDoc(docRef);
+                let newTime = 1;
+                if (docSnap.exists()) {
+                    newTime = (docSnap.data().total_time || 0) + 1;
+                }
+                await setDoc(docRef, { total_time: newTime }, { merge: true });
+            } catch(e) {
+                console.log("Error updating timer: ", e);
+            }
+        }, 60000);
+    }
+  </script>
+
+  <!-- THEME TOGGLE SCRIPT -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+      const themeBtn = document.querySelector('.theme-toggle');
+      if(themeBtn && !themeBtn.classList.contains('handled-by-inline')) {
+          themeBtn.classList.add('handled-by-inline');
+          themeBtn.addEventListener('click', (e) => {
+              e.stopImmediatePropagation();
+              const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+              const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+              document.body.setAttribute('data-theme', newTheme);
+              const icon = themeBtn.querySelector('i');
+              if(icon) {
+                  icon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+              }
+              localStorage.setItem('pushti-theme', newTheme);
+          });
+          const savedTheme = localStorage.getItem('pushti-theme');
+          if(savedTheme) {
+              document.body.setAttribute('data-theme', savedTheme);
+              const icon = themeBtn.querySelector('i');
+              if(icon) {
+                  icon.className = savedTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+              }
+          }
+      }
+  });
+  </script>
+  <!-- Universal Scroll to Top -->
+  <script src="../../js/scroll_to_top.js"></script>
 </body>
 </html>
