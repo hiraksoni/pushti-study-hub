@@ -1,4 +1,4 @@
-# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.5)
+# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.6)
 *The Definitive Architectural, Design, Pedagogical & Verification Standard for AI-Assisted Generation*
 
 ---
@@ -142,6 +142,36 @@ d:\Users\expor\Downloads\Codes\
     ```
   - This prevents layout shifts, prevents AI hallucination, and gives the parent/admin immediate visual clarity on pending items.
 * **Invocation Protocol**: When the user invokes `"Hath Fero [scope]"`, the AI model automatically runs a comprehensive audit across all chapters of that province, verifies street indices, sub-streets, color theme isolation, checks relative path depths, and leaves the Hath Fero verification stamp.
+
+### 1.12 The "As Per Rules" Master Definition (Unified Framework Governance)
+* **THE UNIFIED "RULES" DIRECTIVE**:
+  When the user or project lead invokes the phrase `"as per rules"`, it functions as a comprehensive, binding directive requiring strict compliance with the complete canon of project governance without needing to restate individual SOPs or documents.
+* **The Master Rules Canon Encompasses**:
+  1. **`SOP.md`** (The Master Authoritative Architectural, Pedagogical, Design & Verification Standard).
+  2. **Knowledge Bases (`KB Files/` & `.agents/rules/knowledge_base.md`)**: Mandatory KB-first retrieval protocol; never ingest heavy HTML or perform blind web searches when pre-compiled dossiers exist.
+  3. **The Hath Fero Protocol (`.agents/rules/hath_fero.md`)**: Province-city-street-substreet spatial invariance and standardized "Pending Content" sentinels.
+  4. **Publication & School Anonymization Standards** (Sections 1.6 & 1.7): Zero commercial publisher names, zero private school names, and admin-only encrypted profile storage.
+  5. **Implicit Class 7 Scope** (Sections 1.1 & 2.10): Absolute omission of redundant "Class 7" prefixes in student-facing UI.
+  6. **Technical & File Encoding Safety** (Section 1.5): Python UTF-8 write protocol, zero PowerShell character corruption, zero KaTeX overflow.
+  7. **Topic Search & Anti-Rot Video Protocol** (Section 1.13 & `.agents/rules/topic_search_queries.md`): Zero hardcoded video links or channel embeds; dynamic Google search query strings.
+
+### 1.13 Zero Direct Video URLs & Dynamic Search Query Standard (Token Optimization & Anti-Rot)
+* **Strict Prohibition of Hardcoded Video URLs & Channel Branding**:
+  - Under no circumstances may any chapter HTML, markdown dossier, or interactive module embed or link directly to specific third-party video URLs (`youtube.com/watch?v=...`, `youtu.be/...`, Vimeo, etc.), embed `<iframe>` players, or reference third-party channel names (Vedantu, LearnFatafat, Magnet Brains, etc.).
+* **The Four Strategic Advantages**:
+  1. **Anti-Rot (Zero Dead Links)**: Direct video links frequently break, change privacy settings, get geo-restricted, or get deleted over time. Dynamic search strings never die.
+  2. **Token Conservation**: Eliminates burning model tokens inspecting, transcribing, or verifying third-party video links and working status.
+  3. **Delegation to Google Search**: Leverages Google's search algorithms to dynamically surface the highest-rated, freshest, and most age-appropriate educational videos and articles.
+  4. **Zero Channel Commercialization**: Keeps the portal completely clean of external marketing, sponsor shoutouts, and vendor branding.
+* **The Dynamic Search Query Architecture**:
+  - Replace video embeds with topic-wise **Topic Search Cards** (`.topic-search-card`).
+  - Each card provides:
+    - A visible, copyable **Recommended Search Query** in a styled `<code>` block.
+    - A **Google Video Search Button** (`https://www.google.com/search?tbm=vid&q=...`).
+    - A **Deep-Dive Knowledge Search Button** (`https://www.google.com/search?q=...`).
+* **Standard Query Engineering Formulas**:
+  - **Video Search Formula**: `Class 7 [Subject] "[Exact Topic/Law/Concept]" animated explanation visual experiment`
+  - **Knowledge Search Formula**: `Class 7 [Subject] "[Exact Topic/Law/Concept]" notes summary practice questions`
 
 
 ---
@@ -592,6 +622,139 @@ Every interactive chapter must adhere to modern web usability best practices:
      - Test paper labels, modal titles, and action pills must remain clean without prefixing `"Class 7"`.
 * **The Sole Exception (Multi-Standard Comparison)**:
   - Mentioning a class or grade standard is **strictly prohibited UNLESS** explicitly contrasting two different academic standards (e.g., comparing *"Class 6 Prerequisite: Fractions"* vs *"Class 7: Rational Numbers"*, or referencing a *"Class 8 Advanced Olympiad Preview"*). If no second standard is being compared, omission of `"Class 7"` is mandatory.
+
+### 2.11 Topic Search & Knowledge Exploration Architecture (Video & Web Query Cards)
+* **Standard Component Blueprint**:
+  Whenever visual experiments, animated demonstrations, or supplementary reading are integrated, use the standardized `.topic-search-card` component:
+  ```html
+  <div class="topic-search-card">
+    <div class="topic-search-header">
+      <span class="topic-badge"><i class="fas fa-search"></i> Topic 1</span>
+      <h4 class="topic-title">[Specific Concept or Law Name]</h4>
+    </div>
+    <p class="topic-desc">[One-line context describing the visual experiment or theory to explore].</p>
+    
+    <div class="topic-query-box">
+      <span class="query-label"><i class="fas fa-terminal"></i> Recommended Search:</span>
+      <code class="query-code">[Engineered Search String]</code>
+    </div>
+
+    <div class="topic-search-actions">
+      <a href="https://www.google.com/search?tbm=vid&q=[URL_ENCODED_QUERY]" 
+         target="_blank" rel="noopener noreferrer" class="btn-search-action btn-video-search">
+        <i class="fas fa-play-circle"></i> Search Videos on Google
+      </a>
+      <a href="https://www.google.com/search?q=[URL_ENCODED_QUERY]" 
+         target="_blank" rel="noopener noreferrer" class="btn-search-action btn-web-search">
+        <i class="fas fa-book-open"></i> Deep-Dive Articles & Notes
+      </a>
+    </div>
+  </div>
+  ```
+* **Card CSS Standard Specification**:
+  ```css
+  .topic-search-card {
+    background: var(--bg-card, rgba(255, 255, 255, 0.04));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .topic-search-card:hover {
+    border-color: var(--accent, #8b5cf6);
+    transform: translateY(-2px);
+  }
+  .topic-search-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .topic-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(139, 92, 246, 0.15);
+    color: #c4b5fd;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    font-family: 'Space Mono', monospace;
+  }
+  .topic-title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+  .topic-desc {
+    font-size: 0.86rem;
+    color: var(--text-muted);
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+  }
+  .topic-query-box {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .query-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: 'Space Mono', monospace;
+  }
+  .query-code {
+    font-size: 0.8rem;
+    color: #38bdf8;
+    background: transparent;
+    font-family: 'Space Mono', monospace;
+    word-break: break-word;
+  }
+  .topic-search-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .btn-search-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .btn-video-search {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: #fca5a5;
+  }
+  .btn-video-search:hover {
+    background: #ef4444;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+  }
+  .btn-web-search {
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.35);
+    color: #93c5fd;
+  }
+  .btn-web-search:hover {
+    background: #3b82f6;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+  }
+  ```
 
 ---
 
@@ -1066,6 +1229,7 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-GEO-3 (Theme-Adaptive Vector Contrast)**: Do all lines, angle arcs, markers, and text labels maintain crisp legibility in both Dark Mode and Light Mode?
 - [ ] **CP-GEO-4 (Responsive Laptop Containment for Geometry)**: Do all SVGs scale fluidly without causing card border breaches or horizontal scrolling on a 1280px–1366px laptop viewport?
 - [ ] **CP-GEO-5 (Strict Visual & Notation Fidelity with Textbook PDF)**: In all geometry chapters, have all figures been cross-verified against high-resolution crops of the official textbook PDF? Are all line names, vertex letters, ray directions, orientations (vertical vs. horizontal vs. slanted), and question alignments 100% faithful with zero invented letters, zero arbitrary rotations, and zero altered notations?
+- [ ] **CP-CON-7 (Zero Hardcoded Video Links & Dynamic Search Queries Gate)**: Are 100% of chapter references free of hardcoded third-party video URLs (`youtube.com/watch`, `youtu.be`, etc.), embedded `<iframe>` players, and external channel branding? Do all video recommendations and extended study concepts use standardized `.topic-search-card` components with engineered Google search query strings (`tbm=vid` for video demonstrations, standard query for deep-dive articles)?
 
 
 ### Checkpoint Suite 3: Intent & Student Experience
@@ -1108,6 +1272,7 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 
 | Version | Date | Key Architectural Additions |
 | :---: | :---: | :--- |
+| **v3.6** | 2026-09-30 | **"As Per Rules" Master Canon & Zero-Rot Dynamic Google Search Query Protocol (Sections 1.12, 1.13, 2.11, CP-CON-7, `.agents/rules/topic_search_queries.md`)**: Codified the unified definition of "as per rules"; strictly prohibited hardcoded third-party video URLs (`youtube.com`, Vimeo, etc.), iframes, and external channel branding to prevent link rot and save AI token budget; established the Topic Search Card standard (`.topic-search-card`) with engineered Google Video (`tbm=vid`) and Knowledge Search query formulas. |
 | **v3.5** | 2026-09-24 | **The "Hath Fero" Urban Planning & Deterministic Blueprint Protocol (Section 1.11, `.agents/rules/hath_fero.md`, `scripts/maintenance/hath_fero_audit.py`)**: Codified the province-city-street-substreet spatial invariance standard. Mandates strictly identical tab indices across all chapters within a subject province, invariant sub-street sequences (e.g. MCQs, FIB, T/F), isolated chapter color theming, and standardized 'Pending Content' Sentinels (`.pending-content-card`) so missing material is never silently omitted or hallucinated. |
 | **v3.4** | 2026-09-20 | **Maximum Horizontal Real-Estate Utilization & Sticky Tier-2 Submodule Nav Standard (Section 2.4.1 & 3.1.2)**: Mandated generous 1600px+ content max-width, responsive multi-column question grids (2-column on desktop/laptop), 2x2 MCQ option layout, and multi-column concept/enrichment grids, eliminating wasteful whitespace voids and reducing vertical page scrolling by ~50% on wide desktop and laptop viewports. Standardized sticky top-docking (`top: var(--header-height); z-index: 900; background: var(--bg-sticky); backdrop-filter: blur(12px)`) for submodule navigation pills (`.submodule-nav`), exam control bars (`.exam-control-bar`), and search bars (`.sticky-search-bar`). |
 | **v3.3** | 2026-09-19 | **Centralized Test & Exam Prep Hub Architecture & High-Density Test Standards (Section 4.4, CP-TEST-1)**: Standardized dedicated "#tab-tests" / "#sec-tests" across all 7 subject hubs with deep-link hash listener, decoupling tests from chapter interiors and aggregating them in a centralized subject test bank with complete administration metadata (date given, target 80M exam, syllabus scope, interactive links, original scans); codified strict Left Dock Rail and high-density 4-column single-line MCQ layout for standalone test papers. |
