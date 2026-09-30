@@ -90,16 +90,16 @@ d:\Users\expor\Downloads\Codes\
 │   │       └── phy_ch3_motion_time.json          (110 Items)
 │   ├── social_science/
 │   │   ├── geography/
-│   │   │   ├── ch1_interior_earth/               (45 Items)
+│   │   │   ├── ch1_interior_earth/               (54 Items)
 │   │   │   └── ch2_changing_earth/               (36 Items)
 │   │   ├── history/
-│   │   │   ├── ch6_first_empires/                (42 Items)
+│   │   │   ├── ch6_first_empires/                (51 Items)
 │   │   │   ├── ch7_iron_age/                     (20 Items)
 │   │   │   └── ch8_guptas_harsha/                (37 Items)
 │   │   └── civics/
-│   │       ├── ch13_gender/                      (40 Items)
+│   │       ├── ch13_gender/                      (49 Items)
 │   │       ├── ch14_democracy/                   (15 Items)
-│   │       └── ch17_markets/                     (56 Items)
+│   │       └── ch17_markets/                     (65 Items)
 │   └── ict/
 │       ├── ch1_number_system/                    (80 Items • Expanded & Verified)
 │       │   ├── ict_ch1_number_system.md / .json
@@ -355,14 +355,14 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 | **Physics** | `ch1_electricity` | Electricity: Circuits & Components | 120 | `KB Files/physics/ch1_electricity/` | ✅ Complete |
 | **Physics** | `ch2_heat` | Heat Transfer & Temperature | 117 | `KB Files/physics/ch2_heat/` | ✅ Complete |
 | **Physics** | `ch3_motion_time` | Measurement of Time and Motion | 110 | `KB Files/physics/ch3_motion_time/` | ✅ Complete |
-| **Social Science (Geo)** | `ch1_interior_earth` | Interior of the Earth | 45 | `KB Files/social_science/geography/ch1_interior_earth/` | ✅ Complete |
+| **Social Science (Geo)** | `ch1_interior_earth` | Interior of the Earth | 54 | `KB Files/social_science/geography/ch1_interior_earth/` | ✅ Complete |
 | **Social Science (Geo)** | `ch2_changing_earth` | Our Changing Earth | 36 | `KB Files/social_science/geography/ch2_changing_earth/` | ✅ Complete |
-| **Social Science (Hist)** | `ch6_first_empires` | The First Indian Empires (The Mauryas) | 42 | `KB Files/social_science/history/ch6_first_empires/` | ✅ Complete |
+| **Social Science (Hist)** | `ch6_first_empires` | The First Indian Empires (The Mauryas) | 51 | `KB Files/social_science/history/ch6_first_empires/` | ✅ Complete |
 | **Social Science (Hist)** | `ch7_iron_age` | India in the Iron Age | 20 | `KB Files/social_science/history/ch7_iron_age/` | ✅ Complete |
 | **Social Science (Hist)** | `ch8_guptas_harsha` | India from 4th to 7th Century CE (Guptas & Harsha) | 37 | `KB Files/social_science/history/ch8_guptas_harsha/` | ✅ Complete |
-| **Social Science (Civ)** | `ch13_gender` | Understanding Gender | 40 | `KB Files/social_science/civics/ch13_gender/` | ✅ Complete |
+| **Social Science (Civ)** | `ch13_gender` | Understanding Gender | 49 | `KB Files/social_science/civics/ch13_gender/` | ✅ Complete |
 | **Social Science (Civ)** | `ch14_democracy` | How Does Democracy Work? (State Government) | 15 | `KB Files/social_science/civics/ch14_democracy/` | ✅ Complete |
-| **Social Science (Civ)** | `ch17_markets` | Markets Around Us | 56 | `KB Files/social_science/civics/ch17_markets/` | ✅ Complete |
+| **Social Science (Civ)** | `ch17_markets` | Markets Around Us | 65 | `KB Files/social_science/civics/ch17_markets/` | ✅ Complete |
 | **ICT** | `ch1_number_system` | Number System & Binary Arithmetic | 80 | `KB Files/ict/ch1_number_system/` | ✅ Complete (Exhaustive) |
 | **ICT** | `ch2_excel_advanced` | Advanced Features of Excel | 74 | `KB Files/ict/ch2_excel_advanced/` | ✅ Complete (Exhaustive) |
 | **ICT** | `ch3_artificial_intelligence`| Artificial Intelligence | 54 | `KB Files/ict/ch3_artificial_intelligence/` | ✅ Complete (Exhaustive) |

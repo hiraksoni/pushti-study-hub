@@ -236,10 +236,23 @@
         display: flex;
         align-items: center;
         background: var(--bg-main);
-        border-radius: 12px;
-        padding: 20px;
+        border-radius: 14px;
+        padding: 22px 24px;
         margin-bottom: 16px;
         border: 1px solid var(--border);
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+    }
+    .chapter-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(16, 185, 129, 0.5);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+    .chapter-card.card-hist:hover {
+        border-color: rgba(245, 158, 11, 0.5);
+    }
+    .chapter-card.card-civ:hover {
+        border-color: rgba(59, 130, 246, 0.5);
     }
 
     
@@ -247,18 +260,22 @@
         font-size: 2.5rem;
         font-weight: 800;
         font-family: 'Outfit', sans-serif;
-        color: rgba(255,255,255,0.1);
-        width: 80px;
+        color: rgba(255,255,255,0.12);
+        width: 75px;
         flex-shrink: 0;
+        transition: color 0.2s ease;
+    }
+    .chapter-card:hover .ch-num {
+        color: rgba(255,255,255,0.25);
     }
     .ch-content {
         flex-grow: 1;
     }
     .ch-title {
-        font-size: 1.2rem; font-weight: 600; margin: 0 0 6px 0;
+        font-size: 1.25rem; font-weight: 700; margin: 0 0 6px 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
     }
     .ch-desc {
-        font-size: 0.9rem; color: var(--text-muted); margin: 0 0 12px 0;
+        font-size: 0.92rem; color: var(--text-muted); margin: 0 0 12px 0; line-height: 1.5;
     }
     .ch-tags {
         display: flex; gap: 8px; flex-wrap: wrap;
@@ -271,25 +288,47 @@
         font-size: 0.75rem;
         font-weight: 600;
     }
-    .ch-arrow {
-        color: var(--text-muted);
-        font-size: 1.5rem;
+    .ch-arrow-wrap {
         margin-left: 20px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        transition: all 0.25s ease;
+    }
+    .chapter-card:hover .ch-arrow-wrap {
+        background: rgba(16, 185, 129, 0.15);
+        border-color: #10B981;
+        color: #10B981;
+        transform: translateX(4px);
+    }
+    .chapter-card.card-hist:hover .ch-arrow-wrap {
+        background: rgba(245, 158, 11, 0.15);
+        border-color: #F59E0B;
+        color: #F59E0B;
+    }
+    .chapter-card.card-civ:hover .ch-arrow-wrap {
+        background: rgba(59, 130, 246, 0.15);
+        border-color: #3B82F6;
+        color: #3B82F6;
     }
     .ch-title-link {
         text-decoration: none;
         color: inherit;
         flex-grow: 1;
-        display: block;
+        display: flex;
+        align-items: center;
+        width: 100%;
         transition: color 0.2s ease;
     }
     .ch-title-link:hover .ch-title {
-        color: #10B981;
-    }
-    .ch-title-link:hover .ch-arrow-icon {
-        transform: translateX(4px);
-        opacity: 1 !important;
-        color: #10B981;
+        color: inherit;
     }
     
     /* KB INDICATOR ANNOTATION BADGES */
@@ -483,7 +522,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div class="branch-icon">🌍</div>
                     <div class="branch-details">
                         <span class="branch-title">Geography</span>
-                        <span class="branch-stats">2/2 Ready &bull; <span class="kb-pill ready"><i class="fas fa-database"></i> KB Active (81)</span></span>
+                        <span class="branch-stats">2/2 Ready &bull; <span class="kb-pill ready"><i class="fas fa-database"></i> KB Active (90 Qs)</span></span>
                     </div>
                 </button>
 
@@ -491,7 +530,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div class="branch-icon">🏛️</div>
                     <div class="branch-details">
                         <span class="branch-title">History</span>
-                        <span class="branch-stats">3/3 Ready &bull; <span class="kb-pill ready"><i class="fas fa-database"></i> KB Active (99)</span></span>
+                        <span class="branch-stats">3/3 Ready &bull; <span class="kb-pill ready"><i class="fas fa-database"></i> KB Active (108 Qs)</span></span>
                     </div>
                 </button>
 
@@ -499,7 +538,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div class="branch-icon">⚖️</div>
                     <div class="branch-details">
                         <span class="branch-title">Civics</span>
-                        <span class="branch-stats">3/3 Ready &bull; <span class="kb-pill ready"><i class="fas fa-database"></i> KB Active (129)</span></span>
+                        <span class="branch-stats">3/3 Ready &bull; <span class="kb-pill ready"><i class="fas fa-database"></i> KB Active (129 Qs)</span></span>
                     </div>
                 </button>
 
@@ -519,107 +558,99 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div id="sec-geo" class="category-section active">
                     <div class="chapter-card">
                         <div class="ch-num">01</div>
-                        <a href="chapters/social_science/geo_ch1_interior_earth.html" class="ch-title-link" title="Launch Interactive Study Hub">
+                        <a href="chapters/social_science/social_science_1.html" class="ch-title-link" title="Launch Chapter 1 Master Hub">
                             <div class="ch-content">
-                                <h3 class="ch-title">Interior of the Earth <span style="font-size:0.7rem; background:rgba(16,185,129,0.18); border:1px solid rgba(16,185,129,0.35); color:#10B981; padding:2px 8px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">✨ Interactive Hub</span> <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/geography/ch1_interior_earth/"><i class="fas fa-database"></i> KB Available (54 Qs)</span> <i class="fas fa-arrow-right ch-arrow-icon" style="font-size:0.85rem; opacity:0.6; transition:transform 0.2s;"></i></h3>
-                                <p class="ch-desc">Explore subterranean layers (Crust, Mantle, Core), 3 rock families, interactive rock cycle simulator &amp; full textbook exercises.</p>
-                                <div class="ch-tags"><span class="tag" style="color:#10B981">Crust</span><span class="tag" style="color:#10B981">Mantle</span><span class="tag" style="color:#10B981">Core</span><span class="tag" style="color:#10B981">Rock Cycle</span><span class="tag" style="color:#10B981">Interactive 3D</span></div>
+                                <h3 class="ch-title">Interior of the Earth <span style="font-size:0.7rem; background:rgba(16,185,129,0.18); border:1px solid rgba(16,185,129,0.35); color:#10B981; padding:2px 8px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">✨ Master Hub</span> <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/geography/ch1_interior_earth/"><i class="fas fa-database"></i> KB Available (54 Qs)</span></h3>
+                                <p class="ch-desc">Comprehensive Geography study hub: 6 Foundation Pillars, Nebular Hypothesis, SIAL vs SIMA vs NIFE, 39 objective drills, 15 subjective questions &amp; full rock specimen glossary.</p>
+                                <div class="ch-tags"><span class="tag" style="color:#10B981">Crust</span><span class="tag" style="color:#10B981">Mantle</span><span class="tag" style="color:#10B981">Core</span><span class="tag" style="color:#10B981">Rock Cycle</span><span class="tag" style="color:#10B981">54 Verified Qs</span></div>
                             </div>
+                            <div class="ch-arrow-wrap"><i class="fas fa-arrow-right"></i></div>
                         </a>
-                        <div class="ch-actions">
-                            <a href="chapters/social_science/geo_ch1_interior_earth.html" class="btn-link" style="color:#10B981; border-color:rgba(16,185,129,0.4); background:rgba(16,185,129,0.1);"><i class="fas fa-globe"></i> Interactive Hub</a>
-                        </div>
                     </div>
                     <div class="chapter-card">
                         <div class="ch-num">02</div>
-                        <div class="ch-content">
-                            <h3 class="ch-title">Our Changing Earth <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/geography/ch2_changing_earth/"><i class="fas fa-database"></i> KB Available (36 Qs)</span></h3>
-                            <p class="ch-desc">Understand tectonic plates, earthquakes, and volcanoes.</p>
-                            <div class="ch-tags"><span class="tag" style="color:#10B981">Tectonics</span><span class="tag" style="color:#10B981">Earthquakes</span><span class="tag" style="color:#10B981">Volcanoes</span></div>
-                        </div>
-                        <div class="ch-actions">
-                            <a href="source_materials/chapters/social_science/old_notes_ch2.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
-                        </div>
+                        <a href="chapters/social_science/social_science_2.html" class="ch-title-link" title="Launch Chapter 2 Master Hub">
+                            <div class="ch-content">
+                                <h3 class="ch-title">Our Changing Earth <span style="font-size:0.7rem; background:rgba(16,185,129,0.18); border:1px solid rgba(16,185,129,0.35); color:#10B981; padding:2px 8px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">✨ Master Hub</span> <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/geography/ch2_changing_earth/"><i class="fas fa-database"></i> KB Available (36 Qs)</span></h3>
+                                <p class="ch-desc">Comprehensive Geography study hub: 6 Foundation Pillars, Endogenic vs Exogenic forces, Volcano anatomy, Earthquake seismology, 27 objective drills, 9 subjective questions &amp; full geomorphic glossary.</p>
+                                <div class="ch-tags"><span class="tag" style="color:#10B981">Endogenic</span><span class="tag" style="color:#10B981">Exogenic</span><span class="tag" style="color:#10B981">Tectonics</span><span class="tag" style="color:#10B981">Earthquakes</span><span class="tag" style="color:#10B981">36 Verified Qs</span></div>
+                            </div>
+                            <div class="ch-arrow-wrap"><i class="fas fa-arrow-right"></i></div>
+                        </a>
                     </div>
                 </div>
 
                 <!-- History Section -->
                 <div id="sec-hist" class="category-section">
-                    <div class="chapter-card">
-                        <div class="ch-num">06</div>
+                    <div class="chapter-card card-hist">
+                        <div class="ch-num" style="color: rgba(245,158,11,0.2);">06</div>
                         <a href="chapters/social_science/social_science_6.html" class="ch-title-link" title="Launch Chapter 6 Master Hub">
                             <div class="ch-content">
-                                <h3 class="ch-title">The First Indian Empires <span style="font-size:0.7rem; background:rgba(245,158,11,0.18); border:1px solid rgba(245,158,11,0.35); color:#F59E0B; padding:2px 8px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">✨ Master Hub</span> <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/history/ch6_first_empires/"><i class="fas fa-database"></i> KB Available (51 Qs)</span> <i class="fas fa-arrow-right ch-arrow-icon" style="font-size:0.85rem; opacity:0.6; transition:transform 0.2s;"></i></h3>
+                                <h3 class="ch-title">The First Indian Empires <span style="font-size:0.7rem; background:rgba(245,158,11,0.18); border:1px solid rgba(245,158,11,0.35); color:#F59E0B; padding:2px 8px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">✨ Master Hub</span> <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/history/ch6_first_empires/"><i class="fas fa-database"></i> KB Available (51 Qs)</span></h3>
                                 <p class="ch-desc">Comprehensive Mauryan Empire study hub: 6 Foundation Pillars, Periodisation, Ashoka's Dhamma, 33 objective drills, 18 subjective questions &amp; full glossary.</p>
                                 <div class="ch-tags"><span class="tag" style="color:#F59E0B">Mauryas</span><span class="tag" style="color:#F59E0B">Ashoka</span><span class="tag" style="color:#F59E0B">Administration</span><span class="tag" style="color:#F59E0B">Dhamma</span><span class="tag" style="color:#F59E0B">51 Verified Qs</span></div>
                             </div>
+                            <div class="ch-arrow-wrap"><i class="fas fa-arrow-right"></i></div>
                         </a>
-                        <div class="ch-actions">
-                            <a href="chapters/social_science/social_science_6.html" class="btn-link" style="background:linear-gradient(135deg, #F59E0B, #D97706); color:#fff; border:none; font-weight:700; box-shadow:0 4px 14px rgba(245,158,11,0.35);"><i class="fas fa-book-open"></i> Complete Chapter Hub</a>
-                        </div>
                     </div>
-                    <div class="chapter-card">
-                        <div class="ch-num">07</div>
-                        <div class="ch-content">
-                            <h3 class="ch-title">India in the Iron Age <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/history/ch7_iron_age/"><i class="fas fa-database"></i> KB Available (20 Qs)</span></h3>
-                            <p class="ch-desc">Learn about the societal changes and developments during the Iron Age.</p>
-                            <div class="ch-tags"><span class="tag" style="color:#F59E0B">Iron Age</span><span class="tag" style="color:#F59E0B">Society</span><span class="tag" style="color:#F59E0B">Trade</span></div>
-                        </div>
-                        <div class="ch-actions">
-                            <a href="source_materials/chapters/social_science/old_notes_ch7.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
-                        </div>
+                    <div class="chapter-card card-hist">
+                        <div class="ch-num" style="color: rgba(245,158,11,0.2);">07</div>
+                        <a href="chapters/social_science/social_science_7.html" class="ch-title-link" title="Launch Chapter 7 Master Hub">
+                            <div class="ch-content">
+                                <h3 class="ch-title">India in the Iron Age <span style="font-size:0.7rem; background:rgba(245,158,11,0.18); border:1px solid rgba(245,158,11,0.35); color:#F59E0B; padding:2px 8px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">✨ Master Hub</span> <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/history/ch7_iron_age/"><i class="fas fa-database"></i> KB Available (20 Qs)</span></h3>
+                                <p class="ch-desc">Comprehensive Iron Age study hub: Agricultural revolution, second urbanisation, Post-Mauryan kingdoms (Kushanas, Satavahanas, Muvendar), Silk Route economics &amp; 20 verified questions.</p>
+                                <div class="ch-tags"><span class="tag" style="color:#F59E0B">Iron Age</span><span class="tag" style="color:#F59E0B">Silk Route</span><span class="tag" style="color:#F59E0B">Kushanas</span><span class="tag" style="color:#F59E0B">Satavahanas</span><span class="tag" style="color:#F59E0B">20 Verified Qs</span></div>
+                            </div>
+                            <div class="ch-arrow-wrap"><i class="fas fa-arrow-right"></i></div>
+                        </a>
                     </div>
-                    <div class="chapter-card">
-                        <div class="ch-num">08</div>
-                        <div class="ch-content">
-                            <h3 class="ch-title">India from the 4th to 7th Century CE <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/history/ch8_guptas_harsha/"><i class="fas fa-database"></i> KB Available (37 Qs)</span></h3>
-                            <p class="ch-desc">The Gupta Empire (Chandragupta, Samudragupta), administration, society, and Harshavardhana.</p>
-                            <div class="ch-tags"><span class="tag" style="color:#F59E0B">Gupta Empire</span><span class="tag" style="color:#F59E0B">Samudragupta</span><span class="tag" style="color:#F59E0B">Harshavardhana</span></div>
-                        </div>
-                        <div class="ch-actions">
-                            <a href="source_materials/chapters/social_science/old_notes_ch8.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
-                        </div>
+                    <div class="chapter-card card-hist">
+                        <div class="ch-num" style="color: rgba(245,158,11,0.2);">08</div>
+                        <a href="chapters/social_science/social_science_8.html" class="ch-title-link" title="Launch Chapter 8 Master Hub">
+                            <div class="ch-content">
+                                <h3 class="ch-title">India from the 4th to 7th Century CE <span style="font-size:0.7rem; background:rgba(245,158,11,0.18); border:1px solid rgba(245,158,11,0.35); color:#F59E0B; padding:2px 8px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">✨ Master Hub</span> <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/history/ch8_guptas_harsha/"><i class="fas fa-database"></i> KB Available (37 Qs)</span></h3>
+                                <p class="ch-desc">Comprehensive Classical India study hub: The Gupta Empire (Samudragupta's Prashasti, Chandragupta II), Harshavardhana's reign, Chalukyas, Pallavas &amp; 37 verified questions.</p>
+                                <div class="ch-tags"><span class="tag" style="color:#F59E0B">Gupta Empire</span><span class="tag" style="color:#F59E0B">Samudragupta</span><span class="tag" style="color:#F59E0B">Harshavardhana</span><span class="tag" style="color:#F59E0B">Chalukyas</span><span class="tag" style="color:#F59E0B">37 Verified Qs</span></div>
+                            </div>
+                            <div class="ch-arrow-wrap"><i class="fas fa-arrow-right"></i></div>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Civics Section -->
                 <div id="sec-civ" class="category-section">
-                    <div class="chapter-card">
-                        <div class="ch-num">13</div>
+                    <div class="chapter-card card-civ">
+                        <div class="ch-num" style="color: rgba(59,130,246,0.2);">13</div>
                         <a href="chapters/social_science/social_science_13.html" class="ch-title-link" title="Launch Chapter 13 Master Hub">
                             <div class="ch-content">
-                                <h3 class="ch-title">Understanding Gender <span style="font-size:0.7rem; background:rgba(59,130,246,0.18); border:1px solid rgba(59,130,246,0.35); color:#60A5FA; padding:2px 8px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">✨ Master Hub</span> <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/civics/ch13_gender/"><i class="fas fa-database"></i> KB Available (49 Qs)</span> <i class="fas fa-arrow-right ch-arrow-icon" style="font-size:0.85rem; opacity:0.6; transition:transform 0.2s;"></i></h3>
+                                <h3 class="ch-title">Understanding Gender <span style="font-size:0.7rem; background:rgba(59,130,246,0.18); border:1px solid rgba(59,130,246,0.35); color:#60A5FA; padding:2px 8px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">✨ Master Hub</span> <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/civics/ch13_gender/"><i class="fas fa-database"></i> KB Available (49 Qs)</span></h3>
                                 <p class="ch-desc">Comprehensive Civics study hub: 6 Foundation Pillars, Gender vs Sex, Social Reformers, 28 objective drills, 21 subjective questions &amp; full glossary.</p>
                                 <div class="ch-tags"><span class="tag" style="color:#3B82F6">Gender</span><span class="tag" style="color:#3B82F6">Stereotypes</span><span class="tag" style="color:#3B82F6">Equality</span><span class="tag" style="color:#3B82F6">Reformers</span><span class="tag" style="color:#3B82F6">49 Verified Qs</span></div>
                             </div>
+                            <div class="ch-arrow-wrap"><i class="fas fa-arrow-right"></i></div>
                         </a>
-                        <div class="ch-actions">
-                            <a href="chapters/social_science/social_science_13.html" class="btn-link" style="background:linear-gradient(135deg, #3B82F6, #1D4ED8); color:#fff; border:none; font-weight:700; box-shadow:0 4px 14px rgba(59,130,246,0.35);"><i class="fas fa-book-open"></i> Complete Chapter Hub</a>
-                        </div>
                     </div>
-                    <div class="chapter-card">
-                        <div class="ch-num">14</div>
-                        <div class="ch-content">
-                            <h3 class="ch-title">How Does Democracy Work? <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/civics/ch14_democracy/"><i class="fas fa-database"></i> KB Available (15 Qs)</span></h3>
-                            <p class="ch-desc">Elections, universal adult suffrage, role of political parties, and government accountability.</p>
-                            <div class="ch-tags"><span class="tag" style="color:#3B82F6">Democracy</span><span class="tag" style="color:#3B82F6">Elections</span><span class="tag" style="color:#3B82F6">Governance</span></div>
-                        </div>
-                        <div class="ch-actions">
-                            <a href="source_materials/chapters/social_science/old_notes_ch14.html" class="btn-link btn-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
-                        </div>
+                    <div class="chapter-card card-civ">
+                        <div class="ch-num" style="color: rgba(59,130,246,0.2);">14</div>
+                        <a href="chapters/social_science/social_science_14.html" class="ch-title-link" title="Launch Chapter 14 Master Hub">
+                            <div class="ch-content">
+                                <h3 class="ch-title">How Does Democracy Work? <span style="font-size:0.7rem; background:rgba(59,130,246,0.18); border:1px solid rgba(59,130,246,0.35); color:#60A5FA; padding:2px 8px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">✨ Master Hub</span> <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/civics/ch14_democracy/"><i class="fas fa-database"></i> KB Available (15 Qs)</span></h3>
+                                <p class="ch-desc">Comprehensive Democratic Governance hub: Universal adult suffrage, Election Commission of India, 8-step election lifecycle, party systems, legislative debates &amp; 15 verified questions.</p>
+                                <div class="ch-tags"><span class="tag" style="color:#3B82F6">Democracy</span><span class="tag" style="color:#3B82F6">Elections</span><span class="tag" style="color:#3B82F6">ECI &amp; EVM</span><span class="tag" style="color:#3B82F6">Governance</span><span class="tag" style="color:#3B82F6">15 Verified Qs</span></div>
+                            </div>
+                            <div class="ch-arrow-wrap"><i class="fas fa-arrow-right"></i></div>
+                        </a>
                     </div>
-                    <div class="chapter-card">
-                        <div class="ch-num">17</div>
+                    <div class="chapter-card card-civ">
+                        <div class="ch-num" style="color: rgba(59,130,246,0.2);">17</div>
                         <a href="chapters/social_science/social_science_17.html" class="ch-title-link" title="Launch Chapter 17 Master Hub">
                             <div class="ch-content">
-                                <h3 class="ch-title">Markets Around Us <span style="font-size:0.7rem; background:rgba(59,130,246,0.18); border:1px solid rgba(59,130,246,0.35); color:#60A5FA; padding:2px 8px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">✨ Master Hub</span> <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/civics/ch17_markets/"><i class="fas fa-database"></i> KB Available (65 Qs)</span> <i class="fas fa-arrow-right ch-arrow-icon" style="font-size:0.85rem; opacity:0.6; transition:transform 0.2s;"></i></h3>
+                                <h3 class="ch-title">Markets Around Us <span style="font-size:0.7rem; background:rgba(59,130,246,0.18); border:1px solid rgba(59,130,246,0.35); color:#60A5FA; padding:2px 8px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">✨ Master Hub</span> <span class="kb-indicator-badge ready" title="Authoritative KB: KB Files/social_science/civics/ch17_markets/"><i class="fas fa-database"></i> KB Available (65 Qs)</span></h3>
                                 <p class="ch-desc">Comprehensive Civics study hub: 6 Foundation Pillars, Weekly Markets vs Malls, Supply Chain Economics, 46 objective drills, 19 subjective questions &amp; full glossary.</p>
                                 <div class="ch-tags"><span class="tag" style="color:#3B82F6">Markets</span><span class="tag" style="color:#3B82F6">Supply Chain</span><span class="tag" style="color:#3B82F6">Retail</span><span class="tag" style="color:#3B82F6">Intermediaries</span><span class="tag" style="color:#3B82F6">65 Verified Qs</span></div>
                             </div>
+                            <div class="ch-arrow-wrap"><i class="fas fa-arrow-right"></i></div>
                         </a>
-                        <div class="ch-actions">
-                            <a href="chapters/social_science/social_science_17.html" class="btn-link" style="background:linear-gradient(135deg, #3B82F6, #1D4ED8); color:#fff; border:none; font-weight:700; box-shadow:0 4px 14px rgba(59,130,246,0.35);"><i class="fas fa-book-open"></i> Complete Chapter Hub</a>
-                        </div>
                     </div>
                 </div>
 

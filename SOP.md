@@ -154,6 +154,7 @@ d:\Users\expor\Downloads\Codes\
   5. **Implicit Class 7 Scope** (Sections 1.1 & 2.10): Absolute omission of redundant "Class 7" prefixes in student-facing UI.
   6. **Technical & File Encoding Safety** (Section 1.5): Python UTF-8 write protocol, zero PowerShell character corruption, zero KaTeX overflow.
   7. **Topic Search & Anti-Rot Video Protocol** (Section 1.13 & `.agents/rules/topic_search_queries.md`): Zero hardcoded video links or channel embeds; dynamic Google search query strings.
+  8. **The Exhaustive 'Why / How / When' Pedagogical Depth Protocol** (Section 1.14 & `.agents/rules/pedagogical_depth.md`): Zero superficial 1-2 sentence summaries; mandatory complete coverage of Why, How, When, What taxonomy, and critical exam traps/peculiarities.
 
 ### 1.13 Zero Direct Video URLs & Dynamic Search Query Standard (Token Optimization & Anti-Rot)
 * **Strict Prohibition of Hardcoded Video URLs & Channel Branding**:
@@ -173,6 +174,22 @@ d:\Users\expor\Downloads\Codes\
   - **Video Search Formula**: `Class 7 [Subject] "[Exact Topic/Law/Concept]" animated explanation visual experiment`
   - **Knowledge Search Formula**: `Class 7 [Subject] "[Exact Topic/Law/Concept]" notes summary practice questions`
 
+### 1.14 The Exhaustive "Why / How / When" Pedagogical Depth Protocol (Zero-Superficiality Standard)
+* **CRITICAL MANDATE — THE TEXTBOOK SELF-SUFFICIENCY LAW**:
+  Every concept, diagram, simulator stage, theory card, and solution must provide **thorough, textbook-grade explanations answering "Why", "How", "When", "What", and "Peculiarities"** rather than superficial 1-2 sentence high-level summaries.
+* **The 5 Mandatory Pedagogical Dimensions for Every Concept & Stage**:
+  1. **❓ WHY (The Underlying Scientific / Historical / Civic Driving Forces)**:
+     - The fundamental causal forces, physical/chemical principles, economic drivers, or historical motives (e.g., Why do rocks melt? Why did dense Fe/Ni sink to the core while silicates floated? Why does compaction squeeze out water? Why do plates move? Why did Ashoka renounce warfare?).
+  2. **⚙️ HOW (Step-by-Step Mechanical, Chemical, or Institutional Process)**:
+     - The exact sequential mechanism (e.g., How does lithification cement loose grains with silica/calcite mineral glue? How does cooling velocity dictate crystal size? How does centrifugal water force erode outer meander banks while depositing on inner point bars?).
+  3. **⏳ WHEN & TIMEFRAME (Geological Epochs, Historical Eras, or Seasonal Cycles)**:
+     - Explicit time scales (e.g., millions of years of lithification; 4.6 billion years ago during Nebular density differentiation; 66-million-year-old Deccan Traps; seasonal flood cycles for oxbow cut-offs).
+  4. **🔬 WHAT (Complete Scientific Taxonomy, Genetic Sub-classes & Mineral Chemistry)**:
+     - Never just name a single generic term. Provide the complete genetic classification (e.g., Sedimentary: Mechanically, Organically, Chemically formed; Igneous: Intrusive Plutonic vs. Extrusive Volcanic; Minerals: Metallic vs. Non-Metallic with chemical formulas).
+  5. **🧬 CRITICAL PECULIARITIES & EXAM TRAPS (The "Why Only Here?" Dimension)**:
+     - Address deep conceptual questions and student perplexities (e.g., *Why do ONLY sedimentary rocks contain fossils? Why is the inner core solid despite 6,000°C? Why can S-waves not pass through the outer core? Why do desert mushroom rocks have narrow bases?*).
+* **ZERO IGNORING OF KB & SOURCE CONTENT**:
+  If rich theory, definitions, thermal gradients, historical sources, or case studies are present in KB files or original source materials, AI assistants and builders are **strictly forbidden from discarding or condensing them into brief blurbs**. Full explanatory depth must be prominently displayed in the UI.
 
 ---
 
