@@ -1,26 +1,26 @@
 @echo off
-title Pushti Study Hub - Localhost Server (Port 8000)
-cd /d "d:\Users\expor\Downloads\Codes"
+title Pushti Study Hub - Localhost Server Starter
+cd /d "%~dp0"
 
 echo ==========================================================
-echo        Pushti Study Hub - Localhost Server Starter
+echo        Pushti Study Hub - Silent Background Server
 echo ==========================================================
 echo.
 
 :: Check if port 8000 is already active
 netstat -ano | findstr :8000 | findstr LISTENING >nul 2>&1
 if %errorlevel% equ 0 (
-    echo [STATUS] Python server is ALREADY running on port 8000!
+    echo [STATUS] Server is ALREADY running silently on port 8000!
 ) else (
-    echo [STATUS] Initiating Python HTTP Server on port 8000...
-    start "Pushti Study Hub Server" /min cmd /c "python -m http.server 8000"
-    ping -n 3 127.0.0.1 >nul
+    echo [STATUS] Initiating Silent Background Server on port 8000...
+    start "" pythonw "%~dp0run_background_server.py"
+    timeout /t 1 /nobreak >nul 2>&1
 )
 
 echo [STATUS] Opening Pushti Study Hub in browser...
 start http://localhost:8000
 echo.
-echo ==========================================================
-echo   Hub is live at: http://localhost:8000
-echo ==========================================================
-ping -n 3 127.0.0.1 >nul
+echo [STATUS] Server is running in the background with ZERO windows.
+echo [INFO] Cannot be closed by mistake. Use Stop_Pushti_Server.bat to stop.
+timeout /t 2 /nobreak >nul 2>&1
+exit

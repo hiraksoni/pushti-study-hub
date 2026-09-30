@@ -4,7 +4,7 @@
 * **Date & Timestamp**: 24 September 2026, 07:25 PM IST
 * **Participants**: Hirak Soni (Father & Project Architect), Antigravity AI (Pair Programming Assistant)
 * **Status**: Codified & Active Standard
-* **Version**: 3.2 (Hindi Batch 5 Complete: Grammar Finale G6 समास, G7 संज्ञा, G22 मुहावरे एवं लोकोक्तियाँ — 100% Hindi Curriculum Complete! 🎉 | Global Total: 4,165 Items across 82 Dossiers)
+* **Version**: 3.3 (KB Batch 6: Sanskrit Ch19 प्रश्ननिर्माणम् + Mathematics Mid-Term Worksheet (28 Sep 2026, 80 Marks) — 110 New Items | Global Total: 4,489 Items across 84 Dossiers)
 
 ---
 
@@ -41,6 +41,7 @@ d:\Users\expor\Downloads\Codes\
 │   │   ├── ch13_varna_matra_sankhya/             (40 Items)
 │   │   ├── ch14_shabdarupani/                    (28 Items)
 │   │   ├── ch15_dhaturupani/                   (30 Items)
+│   │   ├── ch19_prashnirmanam/                 (60 Items)
 │   │   ├── ch_g1_sandhi_avyaya/                  (44 Items)
 │   │   ├── ch_g2_upapada_vibhakti/               (35 Items)
 │   │   └── ch_w1_rachanatmak_karyani/            (16 Tasks)
@@ -54,13 +55,15 @@ d:\Users\expor\Downloads\Codes\
 │   │   │   ├── ch6_number_play/                   (25 Items • MATH_MTG_CH06)
 │   │   │   ├── ch7_tale_of_three_lines_triangles/ (13 Items • MATH_MTG_CH07)
 │   │   │   └── ch8_working_with_fractions/        (12 Items • MATH_MTG_CH08)
-│   │   └── reference_source_cordova/
-│   │       ├── ch1_integers/                      (24 Items • MATH_CORDOVA_CH01)
-│   │       ├── ch2_fractions/                     (10 Items • MATH_CORDOVA_CH02)
-│   │       ├── ch3_decimals/                      (47 Items • MATH_CORDOVA_CH03)
-│   │       ├── ch7_algebraic_expressions/         (10 Items • MATH_CORDOVA_CH07)
-│   │       ├── ch11_lines_and_angles/             (33 Items • MATH_CORDOVA_CH11)
-│   │       └── ch12_triangles_and_properties/     (36 Items • MATH_CORDOVA_CH12)
+│   │   ├── reference_source_cordova/
+│   │   │   ├── ch1_integers/                      (24 Items • MATH_CORDOVA_CH01)
+│   │   │   ├── ch2_fractions/                     (10 Items • MATH_CORDOVA_CH02)
+│   │   │   ├── ch3_decimals/                      (47 Items • MATH_CORDOVA_CH03)
+│   │   │   ├── ch7_algebraic_expressions/         (10 Items • MATH_CORDOVA_CH07)
+│   │   │   ├── ch11_lines_and_angles/             (33 Items • MATH_CORDOVA_CH11)
+│   │   │   └── ch12_triangles_and_properties/     (36 Items • MATH_CORDOVA_CH12)
+│   │   └── school_worksheet/
+│   │       └── midterm_2026_silver_bells/          (50 Items • Mid-Term 80 Marks)
 │   ├── biology/
 │   │   ├── ch2_adolescence/
 │   │   │   ├── bio_ch2_adolescence.md
@@ -304,9 +307,16 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 * **Geography**: 20 Marks (Case Study 3M, MCQ/FB 5M, Short Q/A 4M, Label Picture 2M, Long Q/A 6M)
 * **Total**: 3 Subjects • **80 Marks**
 
+### 6.4 Mathematics — 80 Marks Mid-Term Pattern
+* **Date of Receipt**: 29 September 2026 (Actual Exam Paper dated 28 September 2026)
+* **Section A (25 Marks)**: Q1 MCQs 10 × 1M = 10 | Q2 Fill in the Blanks 5 × 1M = 5 | Q3 True/False 5 × 1M = 5 | Q4 Attempt 5 of 6 × 1M = 5
+* **Section B (47 Marks)**: Q5 Attempt 6 of 7 × 2M = 12 | Q6 Attempt 5 of 6 × 3M = 15 | Q7 Attempt 4 of 5 × 5M = 20
+* **Section C (8 Marks)**: Q8 — 2 Case Studies × 4M ((a) 1M + (b) 1M + (c) 2M, internal choice)
+* **Total**: 3 Sections • **80 Marks**
+
 ---
 
-## 7. Active Knowledge Base Inventory (Total: 3,757 Standardized Items across 70 Dossiers)
+## 7. Active Knowledge Base Inventory (Total: 4,489 Standardized Items across 84 Dossiers)
 
 | Subject | Chapter Key | Chapter Name | Items | File Path | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -319,6 +329,7 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 | **Sanskrit** | `ch13_varna_matra_sankhya` | अध्यायः १३: वर्णमात्रा-परिचयः एवं संख्याज्ञानम् | 40 | `KB Files/sanskrit/ch13_varna_matra_sankhya/` | ✅ Complete |
 | **Sanskrit** | `ch14_shabdarupani` | अध्यायः १४: शब्दरूपाणि (Noun Declensions) | 28 | `KB Files/sanskrit/ch14_shabdarupani/` | ✅ Complete |
 | **Sanskrit** | `ch15_dhaturupani` | अध्यायः १५: धातुरूपाणि (Verb Conjugations) | 30 | `KB Files/sanskrit/ch15_dhaturupani/` | ✅ Complete |
+| **Sanskrit** | `ch19_prashnirmanam` | अध्यायः १९: प्रश्ननिर्माणम् (Question Formation) | 60 | `KB Files/sanskrit/ch19_prashnirmanam/` | ✅ Complete |
 | **Sanskrit** | `ch_g1_sandhi_avyaya` | G1: अनुप्रयुक्त-व्याकरणम् (स्वरसन्धिः एवं अव्ययानि) | 44 | `KB Files/sanskrit/ch_g1_sandhi_avyaya/` | ✅ Complete |
 | **Sanskrit** | `ch_g2_upapada_vibhakti` | G2: उपपद-विभक्तयः (Upapada Vibhakti & Case Rules) | 35 | `KB Files/sanskrit/ch_g2_upapada_vibhakti/` | ✅ Complete |
 | **Sanskrit** | `ch_w1_rachanatmak_karyani` | W1: रचनात्मककार्याणि (पत्रलेखनम्, चित्रवर्णनम्, संवादलेखनम्) | 16 | `KB Files/sanskrit/ch_w1_rachanatmak_karyani/` | ✅ Complete |
@@ -336,6 +347,7 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 | **Mathematics (Cordova)** | `ch7_algebraic_expressions` | Algebraic Expressions (`MATH_CORDOVA_CH07`) | 10 | `KB Files/mathematics/reference_source_cordova/ch7_algebraic_expressions/` | ✅ Complete |
 | **Mathematics (Cordova)** | `ch11_lines_and_angles` | Lines and Angles (`MATH_CORDOVA_CH11`) | 33 | `KB Files/mathematics/reference_source_cordova/ch11_lines_and_angles/` | ✅ Complete |
 | **Mathematics (Cordova)** | `ch12_triangles_and_properties` | The Triangle and Its Properties (`MATH_CORDOVA_CH12`) | 36 | `KB Files/mathematics/reference_source_cordova/ch12_triangles_and_properties/` | ✅ Complete |
+| **Mathematics (School Worksheet)** | `midterm_2026_silver_bells` | Mid-Term Examination — Mathematics (28 Sep 2026, 80 Marks) | 50 | `KB Files/mathematics/school_worksheet/midterm_2026_silver_bells/` | ✅ Complete |
 | **Biology** | `ch2_adolescence` | Reaching the Age of Adolescence | 109 | `KB Files/biology/ch2_adolescence/` | ✅ Complete |
 | **Biology** | `ch3_life_processes` | Life Processes (Control & Coordination) | 214 | `KB Files/biology/ch3_life_processes/` | ✅ Complete |
 | **Chemistry** | `ch1_acids_bases_salts` | Acids, Bases and Salts | 188 | `KB Files/chemistry/ch1_acids_bases_salts/` | ✅ Complete |

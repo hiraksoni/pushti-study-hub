@@ -603,7 +603,7 @@ Every interactive chapter must adhere to modern web usability best practices:
 1. **Collapsible Vertical Dock Rail & The Zero-Peeking Text Mandate**:
    - Default width collapsed to `62px` pinned to the left edge (`left: 0; top: 54px; bottom: 0;`).
    - Reclaims ~200px of screen real estate for wide formulas, coordinate tables, and answer cards.
-   - Snappy **0.72-second hover delay** (`transition-delay: 0.72s;`, reduced to 60% of original 1.2s) providing an effortless, non-awkward expansion while still protecting against accidental cursor pass-throughs.
+   - Snappy **0.72-second hover delay** (`transition-delay: 0.15s;`, reduced to 60% of original 1.2s) providing an effortless, non-awkward expansion while still protecting against accidental cursor pass-throughs.
    - **The Zero-Peeking Text Mandate (Non-Negotiable)**:
      - In the collapsed 62px state, **zero letters, words, or label fragments may ever peek out** into the main viewport.
      - All button text labels and metadata must be enclosed within a dedicated `.tab-label-group` container:
@@ -905,7 +905,7 @@ Under **v3.0**, all Science and Social Science modules adopt the **5-Module Inte
 #### 3.2.2 Subject-Wise Navigation Layout Standard: Top Sticky Bar vs. Left Dock Rail
 To prevent visual crowding and optimize screen geometry:
 * **Mathematics & Heavy Algebra Modules**:
-  - Use the **62px Collapsible Left Dock Rail** (expanding to 280px on 0.72s hover or pin). Mathematics derivations are vertically deep and horizontally compact, making left docks ideal to reclaim horizontal margin.
+  - Use the **62px Collapsible Left Dock Rail** (expanding to 280px on 0.15s hover or pin). Mathematics derivations are vertically deep and horizontally compact, making left docks ideal to reclaim horizontal margin.
 * **Science, Social Science & Visual Simulation Modules**:
   - Use the **Top Sticky Glassmorphic Navigation Bar** with horizontal wrapping pill tabs (`flex-wrap: wrap; gap: 8px;`).
   - **Reason**: Science and Geography require wide landscape canvas space for side-by-side SVG inspectors (450px cutaway + 400px telemetry card) and 4-column comparative matrices. A permanent left rail constricts these diagrams on 1366px laptop screens. The top sticky bar provides 100% viewport width while keeping navigation pinned and accessible at all times.
@@ -1037,7 +1037,7 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 ### Checkpoint Suite 1: Theme & GUI Integrity
 - [ ] **CP-GUI-1 (Zero White Patches)**: Has the universal button reset (`button { font-family: inherit; color: var(--text-main); background: transparent; border: 1px solid var(--border); }`) been applied? Verify that 0 unstyled native `buttonface` elements appear in dark mode.
 - [ ] **CP-GUI-2 (Zero Horizontal Scroll)**: Do all pill rows, modal tabs, and activity headers wrap cleanly using flex-wrap with 0 horizontal scrollbars?
-- [ ] **CP-GUI-3 (Dock Rail & Margin Push)**: Does the collapsible vertical dock rail operate with a 0.72s hover delay? When pinned, does `.main-content` shift right by 280px without overlapping text?
+- [ ] **CP-GUI-3 (Dock Rail & Margin Push)**: Does the collapsible vertical dock rail operate with a 0.15s hover delay? When pinned, does `.main-content` shift right by 280px without overlapping text?
 - [ ] **CP-GUI-4 (Question Palette Wrap)**: Is `.palette-grid` styled as an auto-filling grid (`repeat(auto-fill, minmax(36px, 1fr))`) so numbers wrap cleanly instead of stacking vertically?
 - [ ] **CP-GUI-5 (MCQ Option Cards)**: Are MCQ options styled as structured card tiles (`.option-item` / `.options-grid`) with distinct letter badges (`A`, `B`, `C`, `D`), rather than cramped plain-text rows?
 - [ ] **CP-GUI-6 (Dark/Light Contrast)**: Do all text, badges, borders, and callouts maintain strong readability in both dark and light modes?

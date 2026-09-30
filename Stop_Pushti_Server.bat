@@ -1,5 +1,7 @@
 @echo off
 title Stop Pushti Study Hub Server
+cd /d "%~dp0"
+
 echo ==========================================================
 echo       Stopping Pushti Study Hub Server on Port 8000
 echo ==========================================================
@@ -12,10 +14,13 @@ for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8000 ^| findstr LISTENING') 
     taskkill /f /pid %%a >nul 2>&1
 )
 
+:: Terminate any running tray controller
+powershell -Command "Get-CimInstance Win32_Process -ErrorAction SilentlyContinue | Where-Object { $_.CommandLine -like '*tray_controller*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }" >nul 2>&1
+
 if "%FOUND%"=="1" (
     echo [SUCCESS] Localhost server stopped successfully!
 ) else (
     echo [INFO] No active server found on port 8000.
 )
 
-ping -n 3 127.0.0.1 >nul
+timeout /t 2 /nobreak >nul 2>&1

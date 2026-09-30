@@ -9,23 +9,67 @@
 
 > **Syllabus Summary**: Sociological analysis of gender socialization, gender stereotyping, the invisible and unpaid nature of domestic and caregiving work, the double burden borne by women, and constitutional and legal guarantees promoting gender equality (Anganwadis, Crèches, Equal Wages Act).
 
-### 1. Gender Socialization & Stereotypes
+### Core Competencies & Learning Objectives
+- Conceptual distinction between biological sex and socially constructed gender roles
+- Mechanisms of gender socialization through toys, clothing, household chores, and societal attitudes
+- Critical analysis of domestic labor: invisible, physically demanding, time-consuming, and economically unremunerated
+- Understanding the concept of 'double burden' faced by working women
+- Constitutional provisions: Article 14 (Equality before law), Article 15 (Prohibition of discrimination based on sex)
+- Government interventions and welfare schemes: maternity benefits, mandatory crèche facilities, Anganwadi child-care centers, and women's self-help groups
+
+### Detailed Theoretical Modules
+#### 1. Gender Socialization & Stereotypes
 From early childhood, societies teach boys and girls distinct behaviors and expectations. Boys are often given cars and weapons, encouraged to be assertive and emotionally restrained; girls are given dolls and kitchen sets, socialized to be gentle, caring, and nurturing. These expectations harden into **gender stereotypes** that restrict individual aspirations and career opportunities.
 
-### 2. Valuing Housework & The Double Burden
+#### 2. Valuing Housework & The Double Burden
 A major portion of women's labour takes place within the home. This work includes strenuous physical tasks (carrying water pots, collecting firewood, cooking over stoves, laundry) and emotional caregiving. Because no money changes hands, society devalues this labour as 'unproductive'. When women work outside the home, they face the **double burden** of completing full-time wage employment alongside domestic responsibilities.
 
-### 3. Constitutional Mandates & Women's Empowerment
+#### 3. Constitutional Mandates & Women's Empowerment
 The Indian Constitution guarantees that gender cannot be a basis for discrimination. The government has enacted policies such as:
 - Setting up village **Anganwadis** (day-care nurseries) and mandating crèches in organizations with more than 30 female employees.
 - Enforcing the **Equal Remuneration Act** mandating equal pay for equal work.
 - Promoting girls' education through welfare schemes and reserving seats in local self-governments (Panchayati Raj).
 
+#### 4. Historic Social Reformers & Legal Safeguards for Gender Equality (Enriched Source)
+Gender is a socially constructed role system rather than biological destiny. Key reformers fought for women's liberation: Raja Rammohan Roy (Abolition of Sati, 1829), Ishwar Chandra Vidyasagar (Widow Remarriage Act, 1856), Savitribai Phule (First Girls' School, Pune 1848), and Pandita Ramabai (Sarada Sadan for widows). The Constitution ensures equality via Articles 14, 15, and 16, mandates 33% female reservation in Panchayats, provides RTE for ages 6–14, and enforces strict laws against dowry and domestic abuse.
+
 ---
 
-## 2. Standardized Item Bank (40 Total Questions)
+## 2. Additional Curated Sources & Conceptual Glossaries
 
-### 2.1 Multiple Choice Questions (9 Items)
+### Source: Sociological Constructs, Historic Reformers & Constitutional Safeguards
+*Enriched modules exploring social construction of gender, historical champions of gender reform, and legal guarantees for equality.*
+
+#### Sociological Definition of Gender & Mechanisms of Inequality
+• **Gender**: The expectations, roles, and behavioral codes that a specific society deems appropriate for males and females. Unlike biological sex, gender is socially constructed, meaning it is learned rather than innate, and varies across cultures and historical eras.
+• **Gender Discrimination**: Unfair, unequal, or biased treatment meted out to individuals purely on the grounds of their gender.
+• **Stereotypes**: Rigid, oversimplified, and preconceived notions regarding the capabilities or roles of a group (e.g., 'women are inherently suited for domestic caregiving' or 'boys do not cry'). Stereotypes restrict human potential and justify systemic discrimination.
+• **Impacts of Gender Inequality**:
+  1. Devaluation of domestic work and emotional caregiving.
+  2. The unequal 'double burden' placed on working women.
+  3. Denial of equal educational and leadership opportunities for young girls.
+
+#### Pioneering Social Reformers for Women's Rights in India
+1. **Raja Rammohan Roy**: Founded the Brahmo Samaj and spearheaded the historic reform movement that persuaded the government to pass the Bengal Sati Regulation in 1829, outlawing the horrific practice of burning widows.
+2. **Ishwar Chandra Vidyasagar**: Eminent Sanskrit scholar who campaigned tirelessly for women's literacy and persuaded authorities to enact the Hindu Widows' Remarriage Act in 1856.
+3. **Savitribai Phule & Jyotirao Phule**: Founded the first modern Indian school for girls at Bhide Wada in Pune in 1848, facing immense social hostility to educate girls from marginalized backgrounds.
+4. **Pandita Ramabai**: Celebrated scholar who established *Sarada Sadan* in Mumbai/Pune in 1889 to provide shelter, literacy, and vocational training to destitute widows and abandoned women.
+
+#### Constitutional Guarantees, Government Policies & Civic Action
+• **Fundamental Rights**:
+  - Article 14: Guarantees equality before the law and equal protection of the laws to all citizens.
+  - Article 15: Explicitly prohibits state discrimination on grounds of sex, religion, race, or caste.
+  - Article 16: Guarantees equality of opportunity in public employment and mandates equal remuneration.
+• **Grassroots Political Empowerment**: The 73rd and 74th Constitutional Amendments reserve a minimum of 33% of seats in Panchayati Raj institutions and urban local bodies exclusively for women, fostering thousands of female grassroots leaders.
+• **Protective Legislation**: The Protection of Women from Domestic Violence Act (2005) and the Dowry Prohibition Act provide legal relief and protection against domestic abuse.
+• **Universal Schooling**: The Right of Children to Free and Compulsory Education (RTE) Act mandates education for all children aged 6 to 14 years, closing the historic gender gap in literacy.
+• **Civic Responsibility**: True equality requires individuals to actively identify and break everyday stereotypes at home, in schools, and in workplaces.
+
+---
+
+## 3. Standardized Item Bank (49 Total Questions)
+
+### 3.1 Multiple Choice Questions (12 Items)
 
 #### [CIV13_MCQ_001] Which of the following is NOT an example of a gender stereotype?
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Understanding Gender` | **Source**: `textbook_exercise`
@@ -34,7 +78,7 @@ The Indian Constitution guarantees that gender cannot be a basis for discriminat
   - (c) Both girls and boys can play cricket.
   - (d) Only boys are good at sports.
 - **Answer**: **(c) Both girls and boys can play cricket.**
-- **Historical / Conceptual Context**: Standard textbook exercise from B. Choose the correct answer.
+- **Conceptual Context**: Standard textbook exercise from B. Choose the correct answer.
 
 #### [CIV13_MCQ_002] Which of the following is an impact of gender inequality on women?
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Understanding Gender` | **Source**: `textbook_exercise`
@@ -43,7 +87,7 @@ The Indian Constitution guarantees that gender cannot be a basis for discriminat
   - (c) Equal sharing of household work
   - (d) Reservation for Women in Panchayats
 - **Answer**: **(b) Devaluing the work done by women**
-- **Historical / Conceptual Context**: Standard textbook exercise from B. Choose the correct answer.
+- **Conceptual Context**: Standard textbook exercise from B. Choose the correct answer.
 
 #### [CIV13_MCQ_003] Who led the movement to abolish sati in 1829?
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Understanding Gender` | **Source**: `textbook_exercise`
@@ -52,7 +96,7 @@ The Indian Constitution guarantees that gender cannot be a basis for discriminat
   - (c) Pandita Ramabai
   - (d) Ishwar Chandra Vidyasagar
 - **Answer**: **(b) Raja Rammohun Roy**
-- **Historical / Conceptual Context**: Standard textbook exercise from B. Choose the correct answer.
+- **Conceptual Context**: Standard textbook exercise from B. Choose the correct answer.
 
 #### [CIV13_MCQ_004] Which right guarantees equal opportunities for employment and equal pay for equal work?
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Understanding Gender` | **Source**: `textbook_exercise`
@@ -61,7 +105,7 @@ The Indian Constitution guarantees that gender cannot be a basis for discriminat
   - (c) Right to Property
   - (d) Right to Equality
 - **Answer**: **(d) Right to Equality**
-- **Historical / Conceptual Context**: Standard textbook exercise from B. Choose the correct answer.
+- **Conceptual Context**: Standard textbook exercise from B. Choose the correct answer.
 
 #### [CIV13_MCQ_005] Which of the following is a way in which we can promote gender equality?
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Understanding Gender` | **Source**: `textbook_exercise`
@@ -70,7 +114,7 @@ The Indian Constitution guarantees that gender cannot be a basis for discriminat
   - (c) Treat everyone equally
   - (d) Ignore laws about gender equality
 - **Answer**: **(c) Treat everyone equally**
-- **Historical / Conceptual Context**: Standard textbook exercise from B. Choose the correct answer.
+- **Conceptual Context**: Standard textbook exercise from B. Choose the correct answer.
 
 #### [CIV13_MCQ_002] Who led the movement that successfully abolished Sati in 1829?
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Gender Equality` | **Source**: `textbook_exercise`
@@ -79,7 +123,7 @@ The Indian Constitution guarantees that gender cannot be a basis for discriminat
   - c) Pandita Ramabai
   - d) Ishwar Chandra Vidyasagar
 - **Answer**: **b) Raja Rammohan Roy**
-- **Historical / Conceptual Context**: Raja Rammohan Roy campaigned against Sati, leading to its legal abolition in 1829.
+- **Conceptual Context**: Raja Rammohan Roy campaigned against Sati, leading to its legal abolition in 1829.
 
 #### [CIV13_MCQ_003] What percentage of seats are reserved for women in Panchayati Raj local bodies?
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Gender Equality` | **Source**: `textbook_exercise`
@@ -88,23 +132,50 @@ The Indian Constitution guarantees that gender cannot be a basis for discriminat
   - c) 33%
   - d) 10%
 - **Answer**: **c) 33%**
-- **Historical / Conceptual Context**: The government has reserved 33% (one-third) of seats in Panchayats for women leaders.
+- **Conceptual Context**: The government has reserved 33% (one-third) of seats in Panchayats for women leaders.
 
 #### [CIV13_MCQ_004] Sex is a biological difference, whereas Gender is a ________ construct.
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Gender Equality` | **Source**: `textbook_exercise`
   - [A] Social
   - [B] Biological
 - **Answer**: **[A] Social**
-- **Historical / Conceptual Context**: Sex is biological (born with); Gender is social (learned roles)!
+- **Conceptual Context**: Sex is biological (born with); Gender is social (learned roles)!
 
 #### [CIV13_MCQ_005] Sarada Sadan was established by ________ to help widows learn skills.
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Gender Equality` | **Source**: `textbook_exercise`
   - [A] Pandita Ramabai
   - [B] Savitribai Phule
 - **Answer**: **[A] Pandita Ramabai**
-- **Historical / Conceptual Context**: Savitribai Phule opened girls' schools; Pandita Ramabai opened Sarada Sadan.
+- **Conceptual Context**: Savitribai Phule opened girls' schools; Pandita Ramabai opened Sarada Sadan.
 
-### 2.2 Fill in the Blanks (5 Items)
+#### [CIV13_CLAUDE_MCQ_001] Which pioneering Indian social reformer spearheaded the movement that led to the legal abolition of Sati in 1829?
+- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Social Reformers` | **Source**: `claude_curated_notes`
+  - Raja Rammohan Roy
+  - Ishwar Chandra Vidyasagar
+  - Jyotirao Phule
+  - Swami Vivekananda
+- **Answer**: **Raja Rammohan Roy**
+- **Conceptual Context**: Raja Rammohan Roy's persistent advocacy persuaded British administrators to declare Sati illegal and punishable by law in 1829.
+
+#### [CIV13_CLAUDE_MCQ_002] Savitribai Phule, alongside her husband Jyotirao Phule, founded the first modern Indian school for girls in 1848 at:
+- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Women's Education Pioneers` | **Source**: `claude_curated_notes`
+  - Pune
+  - Kolkata
+  - Mumbai
+  - Chennai
+- **Answer**: **Pune**
+- **Conceptual Context**: Savitribai and Jyotirao Phule opened India's first modern indigenous girls' school at Bhide Wada in Pune in 1848.
+
+#### [CIV13_CLAUDE_MCQ_003] What proportion of total seats in rural local self-governments (Panchayats) is constitutionally reserved for women in India?
+- **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Constitutional Safeguards` | **Source**: `claude_curated_notes`
+  - 33% (One-third)
+  - 50% (One-half)
+  - 20% (One-fifth)
+  - 10% (One-tenth)
+- **Answer**: **33% (One-third)**
+- **Conceptual Context**: Under the 73rd Constitutional Amendment, at least 33% (one-third) of all elected seats in Panchayats are reserved for women.
+
+### 3.2 Fill in the Blanks (7 Items)
 
 #### [CIV13_FIB_001] Gender is a _______ construct.
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Understanding Gender` | **Source**: `textbook_exercise`
@@ -131,7 +202,17 @@ The Indian Constitution guarantees that gender cannot be a basis for discriminat
 - **Answer**: **Panchayats**
 - **Conceptual Context**: Textbook foundational exercise from A. Fill in the blanks.
 
-### 2.3 True or False (7 Items)
+#### [CIV13_CLAUDE_FIB_001] Pandita Ramabai founded an educational and vocational haven in Maharashtra for destitute widows called _______.
+- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Historic Reformers` | **Source**: `claude_curated_notes`
+- **Answer**: **Sarada Sadan**
+- **Conceptual Context**: Sarada Sadan was established by Pandita Ramabai to provide widows with literacy, vocational skills, and self-reliance.
+
+#### [CIV13_CLAUDE_FIB_002] A fixed, generalized, and oversimplified belief held about all members of a group is termed a _______.
+- **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Sociological Concepts` | **Source**: `claude_curated_notes`
+- **Answer**: **stereotype**
+- **Conceptual Context**: Stereotypes assign predetermined attributes to individuals regardless of their personal abilities.
+
+### 3.3 True or False (9 Items)
 
 #### [CIV13_TF_001] When people are treated differently or unequally because of their gender, it is known as gender discrimination.
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Understanding Gender` | **Source**: `textbook_exercise`
@@ -168,7 +249,17 @@ The Indian Constitution guarantees that gender cannot be a basis for discriminat
 - **Answer**: **True**
 - **Reason & Justification**: TRUE. In Khasi society, property and family names pass through the mother.
 
-### 2.4 Subjective, Analytical & Descriptive Questions (19 Items)
+#### [CIV13_CLAUDE_TF_001] The Hindu Widows' Remarriage Act of 1856 was enacted primarily due to the campaigning of Ishwar Chandra Vidyasagar.
+- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Widow Remarriage Act` | **Source**: `claude_curated_notes`
+- **Answer**: **True**
+- **Reason & Justification**: Ishwar Chandra Vidyasagar presented ancient scriptural evidence and petitions to legalize widow remarriage in 1856.
+
+#### [CIV13_CLAUDE_TF_002] Gender roles are biologically predetermined at birth and remain completely identical across all global cultures.
+- **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Sex vs Gender` | **Source**: `claude_curated_notes`
+- **Answer**: **False**
+- **Reason & Justification**: Sex is biological, whereas gender refers to social roles and cultural expectations that vary widely across societies and evolve over time.
+
+### 3.4 Subjective, Analytical & Descriptive Questions (21 Items)
 
 #### [CIV13_SA_001] A social reformer who worked for the abolition of sati
 - **Difficulty**: `medium` | **Marks**: `3` | **Topic**: `Understanding Gender` | **Source**: `textbook_exercise`
@@ -292,6 +383,23 @@ The Indian Constitution guarantees that gender cannot be a basis for discriminat
   • **Invisible & Devalued Household Labour**: Domestic work—cooking, cleaning, washing clothes, fetching water, child-rearing, and caring for the elderly—is physically demanding and time-consuming. Yet, society assumes it is 'natural' for women, providing no monetary wage and according it very low status.
 • **The Double Burden**: Refers to the situation where women participate in the formal workforce or wage labour outside the home, yet still shoulder the primary responsibility for all unpaid domestic chores and family caregiving inside the home.
 - **Marking Rubric & Notes**: Core social justice and economic equality concepts in CBSE Civics.
+
+#### [CIV13_CLAUDE_SA_001] Summarize the major contributions of Savitribai Phule and Pandita Ramabai towards empowering Indian women.
+- **Difficulty**: `medium` | **Marks**: `3` | **Topic**: `Contributions of Female Reformers` | **Source**: `claude_curated_notes`
+- **Model Answer**:
+  • **Savitribai Phule**: Overcame severe social ostracism to become India's first female teacher, establishing the first girls' school in Pune (1848) and advocating for inter-caste education and women's self-worth.
+• **Pandita Ramabai**: Sanskrit scholar who authored critique on women's oppression and established *Sarada Sadan* (1889) to grant economic independence, education, and vocational printing/carpentry training to widows.
+- **Marking Rubric & Notes**: Highlights key 19th-century pioneers of female education and autonomy in India.
+
+#### [CIV13_CLAUDE_LA_001] Explain the major constitutional provisions and welfare laws enacted in India to eradicate gender inequality and protect women's dignity.
+- **Difficulty**: `hard_hots` | **Marks**: `5` | **Topic**: `Constitutional and Legal Framework` | **Source**: `claude_curated_notes`
+- **Model Answer**:
+  1. **Constitutional Rights (Articles 14, 15, 16)**: Prohibit any state discrimination based on sex, guarantee equality before law, and mandate equal employment opportunities.
+2. **Equal Remuneration Act**: Mandates equal pay for men and women performing identical or similar work, preventing wage exploitation.
+3. **Local Governance Representation**: 33% mandatory reservation in Panchayati Raj institutions (73rd Amendment) ensures over 1 million women hold active political leadership roles across rural India.
+4. **Support for Working Mothers**: Government mandates crèche facilities in workplaces with over 30 female employees and sets up nationwide Anganwadi centers.
+5. **Special Protective Acts**: Protection of Women from Domestic Violence Act (2005) and Dowry Prohibition Act establish enforceable legal remedies against harassment and marital violence.
+- **Marking Rubric & Notes**: Comprehensive appraisal of the state apparatus advancing gender equality in India.
 
 ---
 *Curated for Pushti Study Hub | Strict CBSE Academic Standard*

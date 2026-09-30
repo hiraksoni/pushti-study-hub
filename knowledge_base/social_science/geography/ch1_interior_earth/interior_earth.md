@@ -9,13 +9,21 @@
 
 > **Syllabus Summary**: Detailed exploration of Earth's subterranean concentric layers (Crust, Mantle, Core), chemical compositions (SIAL, SIMA, NIFE), rock families (Igneous, Sedimentary, Metamorphic), the continuous Rock Cycle, and critical economic minerals.
 
-### 1. Concentric Layers of the Earth
+### Core Competencies & Learning Objectives
+- Concentric layer stratification: Crust (Continental SIAL ~35 km vs Oceanic SIMA ~5 km), Mantle (Asthenosphere, 2900 km depth), and Core (Outer liquid NIFE & Inner solid NIFE, 3500 km radius)
+- Density differentiation and temperature-pressure gradients from surface to 6371 km Earth center
+- Petrology: Primary Igneous rocks (Intrusive Granite vs Extrusive Basalt), Secondary Sedimentary strata with fossils (Sandstone, Limestone, Shale), and Tertiary Metamorphic transformation under high heat and pressure (Marble, Slate, Quartzite)
+- The continuous cyclical transformation of the Rock Cycle driven by internal magma heat and surface denudation
+- Vital economic applications of metallic and non-metallic minerals in industry, infrastructure, and energy
+
+### Detailed Theoretical Modules
+#### 1. Concentric Layers of the Earth
 Earth is structured like an onion in concentric spherical shells:
 1. **Crust**: Outermost thinnest solid skin (only ~1% of Earth's volume). Continental crust averages 35 km (composed of Silica and Alumina: **SIAL**, density ~2.7 g/cm³); oceanic floor averages 5 km (composed of Silica and Magnesium: **SIMA**, density ~3.0 g/cm³).
 2. **Mantle**: Extends up to a depth of 2,900 km beneath the crust (forms ~84% of Earth's volume). Its upper plastic zone is the **Asthenosphere** upon which lithospheric plates float.
 3. **Core**: Innermost layer with a radius of approximately 3,500 km (forms ~15% of Earth's volume). Composed predominantly of Nickel and Iron (**NIFE**). Outer core is molten liquid generating Earth's geomagnetic field; inner core is solid under extreme hydrostatic pressures reaching ~6,000°C.
 
-### 2. Classification of Rocks & The Rock Cycle
+#### 2. Classification of Rocks & The Rock Cycle
 Rocks are natural aggregates of minerals forming Earth's crust, categorized into three genetic groups:
 - **Igneous (Primary Rocks)**: Formed by the solidification of molten magma/lava. *Extrusive* (rapid cooling on surface, fine-grained, e.g., Basalt of Deccan Trap); *Intrusive* (slow cooling deep inside, coarse-grained, e.g., Granite).
 - **Sedimentary Rocks**: Formed by the accumulation, compaction, and cementation of sediment particles (*lithification*). Layered and contain **fossils** (e.g., Sandstone from quartz grains, Limestone, Shale).
@@ -23,14 +31,55 @@ Rocks are natural aggregates of minerals forming Earth's crust, categorized into
 
 **The Rock Cycle**: A continuous geological process where molten magma cools into igneous rock; weathering breaks it into sediments forming sedimentary rock; heat and pressure alter them into metamorphic rock; and subduction melts them back into magma.
 
-### 3. Minerals and Economic Significance
+#### 3. Minerals and Economic Significance
 Minerals are naturally occurring inorganic substances possessing definite chemical compositions and physical properties. Used as energy fuels (Coal, Petroleum, Natural Gas) and raw materials for metallurgy and construction (Iron, Bauxite, Gold, Quartz, Gypsum).
+
+#### 4. Cosmic Origin, Geothermal Gradient & Petrological Sub-classes (Enriched Source)
+Earth formed 4.6 billion years ago from a rotating solar nebula. Heavy iron-nickel sank to establish the core, while lighter silica-alumina floated to create the crust. Subterranean temperatures increase rapidly from surface conditions to ~700°C at crustal base, 870°C–4400°C in the mantle, and up to 6000°C in the inner core. Igneous rocks encompass intrusive (Granite, Diorite) and extrusive (Basalt, Andesite) types. Minerals divide into Metallic (Iron, Copper, Gold) and Non-Metallic (Mica, Gypsum, Potash).
 
 ---
 
-## 2. Standardized Item Bank (45 Total Questions)
+## 2. Additional Curated Sources & Conceptual Glossaries
 
-### 2.1 Multiple Choice Questions (19 Items)
+### Source: Cosmic Genesis, Layer Thermodynamics & Petrology Extensions
+*Enriched cosmological, thermal zonation, and mineralogical classifications from curated chapter modules.*
+
+#### Cosmic Origins & Planetary Density Differentiation
+Over 4.6 billion years ago, a massive cloud of gas and dust called a nebula formed in outer space. Gravitational attraction caused it to collapse, forming the Sun and rotating protoplanetary bodies. As the proto-Earth slowly cooled over millions of years, an immense density differentiation took place: dense, heavy materials (principally molten iron and nickel) sank deep inward under gravitational pull to form the Core, while lighter silicate materials floated upward to crystallize into the Crust.
+
+#### Subterranean Thermal Gradients & Exact Layer Boundaries
+• Continental Crust: Thickness ranges between 35 km and 70 km under mountain chains; composed of SIAL (silica and aluminium); temperature rises from surface levels up to ~700°C at its base.
+• Oceanic Crust: Thin and dense floor averaging 5 km to 8 km; composed of SIMA (silica and magnesium).
+• Mantle: Extends to a depth of 2,900 km; composed of semi-liquid, plastic silicate rock rich in magnesium and iron; ambient temperatures range from 870°C in the upper asthenosphere to 4400°C near the core boundary.
+• Outer Core: 2,300 km thick molten liquid shell of NIFE (nickel and iron); temperatures reach 4400°C to 6100°C; its circulating convective currents generate Earth's geomagnetic field.
+• Inner Core: 1,200 km thick solid sphere of pure iron/nickel; solid despite temperatures reaching up to 6000°C (as hot as the surface of the Sun) due to colossal hydrostatic pressure.
+
+#### Comprehensive Mineral & Petrological Taxonomy
+• Intrusive Igneous: Granite, Diorite, Gabbro (slow magma crystallization beneath the crust yielding large interlocking crystals).
+• Extrusive Igneous: Basalt, Andesite, Obsidian (rapid lava cooling on the planetary surface yielding fine-grained or glassy textures).
+• Sedimentary: Sandstone, Limestone, Shale, Gypsum (strata formed by compaction and lithification of weathered mineral fragments, often embedding fossils).
+• Metamorphic: Granite → Gneiss, Limestone → Marble, Clay/Shale → Slate, Sandstone → Quartzite.
+• Mineral Families:
+  - Metallic Minerals: Possess metallic luster and conduct heat/electricity (e.g., Iron, Copper, Tin, Bauxite, Gold).
+  - Non-Metallic Minerals: Lack metallic luster (e.g., Mica, Gypsum, Potash, Limestone, Salt).
+
+#### Curated Key Terms Glossary
+Authoritative conceptual glossary covering core geological terminology.
+
+**Key Terminology & Definitions:**
+- **Nebula**: A colossal cosmic cloud of dust and gas in outer space from which stars and solar systems condense under gravity.
+- **Density Differentiation**: The planetary process whereby heavy molten metallic elements sink to the center while lighter silicates rise to form external shells.
+- **Molten**: Liquefied by intense subterranean thermal energy.
+- **Texture**: The physical feel, crystal grain size, and arrangement of constituent particles on a rock surface.
+- **Solidifies**: Changes from a liquid molten state (magma/lava) into rigid crystalline rock.
+- **Fossils**: Preserved impressions or organic petrified remains of ancient plants and prehistoric organisms embedded in sedimentary rock strata.
+- **Cyclic Process**: A continuous recurring geological sequence that repeats endlessly over millions of years (e.g., the Rock Cycle).
+
+---
+
+## 3. Standardized Item Bank (54 Total Questions)
+
+### 3.1 Multiple Choice Questions (22 Items)
 
 #### [GEO1_MCQ_009] Which is the thinnest layer of the earth?
 - **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Earth Layers & Rocks` | **Source**: `textbook_exercise`
@@ -79,7 +128,7 @@ Minerals are naturally occurring inorganic substances possessing definite chemic
   - c) Sediments
   - d) Nebula
 - **Answer**: **a) Rocks**
-- **Historical / Conceptual Context**: Rocks are naturally occurring substances that make up the earth's crust (outermost layer).
+- **Conceptual Context**: Rocks are naturally occurring substances that make up the earth's crust (outermost layer).
 
 #### [GEO1_MCQ_020] Minerals that do not contain metals are called ________.
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `textbook_exercise`
@@ -88,7 +137,7 @@ Minerals are naturally occurring inorganic substances possessing definite chemic
   - c) Igneous rocks
   - d) Primary minerals
 - **Answer**: **b) Non-metallic minerals**
-- **Historical / Conceptual Context**: Minerals are classified into two types. If they do not contain metals, they are called non-metallic minerals (like quartz and mica).
+- **Conceptual Context**: Minerals are classified into two types. If they do not contain metals, they are called non-metallic minerals (like quartz and mica).
 
 #### [GEO1_MCQ_021] Which of the following is NOT an example of metamorphic rocks?
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `textbook_exercise`
@@ -97,7 +146,7 @@ Minerals are naturally occurring inorganic substances possessing definite chemic
   - c) Gneiss
   - d) Shale
 - **Answer**: **d) Shale**
-- **Historical / Conceptual Context**: Shale is a sedimentary rock. It transforms into the metamorphic rock called Slate under heat and pressure.
+- **Conceptual Context**: Shale is a sedimentary rock. It transforms into the metamorphic rock called Slate under heat and pressure.
 
 #### [GEO1_MCQ_022] The continental crust is mainly made up of silica and ________.
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `textbook_exercise`
@@ -106,7 +155,7 @@ Minerals are naturally occurring inorganic substances possessing definite chemic
   - c) Iron
   - d) Nickel
 - **Answer**: **a) Aluminium**
-- **Historical / Conceptual Context**: The continental crust is called 'sial' because it is made of Silica and Aluminium.
+- **Conceptual Context**: The continental crust is called 'sial' because it is made of Silica and Aluminium.
 
 #### [GEO1_MCQ_023] What is the composition of the earth's core, also known as 'nife'?
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `textbook_exercise`
@@ -115,7 +164,7 @@ Minerals are naturally occurring inorganic substances possessing definite chemic
   - c) Nickel and Fluorine
   - d) Neon and Iron
 - **Answer**: **b) Nickel and Iron**
-- **Historical / Conceptual Context**: The core is mainly made up of nickel and iron (ferrum), hence referred to as 'nife'.
+- **Conceptual Context**: The core is mainly made up of nickel and iron (ferrum), hence referred to as 'nife'.
 
 #### [GEO1_MCQ_024] Which rocks are called 'Primary Rocks' because they were the first to be formed?
 - **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `chapter_notes`
@@ -124,7 +173,7 @@ Minerals are naturally occurring inorganic substances possessing definite chemic
   - c) Igneous Rocks
   - d) Fossils
 - **Answer**: **c) Igneous Rocks**
-- **Historical / Conceptual Context**: Igneous rocks are directly formed when magma/lava cools and solidifies, making them the first rocks formed (Primary Rocks).
+- **Conceptual Context**: Igneous rocks are directly formed when magma/lava cools and solidifies, making them the first rocks formed (Primary Rocks).
 
 #### [GEO1_MCQ_025] Intrusive igneous rocks develop large crystals because ________.
 - **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `chapter_notes`
@@ -133,7 +182,7 @@ Minerals are naturally occurring inorganic substances possessing definite chemic
   - c) They are compressed by the ocean
   - d) They are melted by extreme heat
 - **Answer**: **b) The magma cools down slowly inside the earth**
-- **Historical / Conceptual Context**: Magma cooling slowly inside the warmer earth allows these rocks to develop large crystals.
+- **Conceptual Context**: Magma cooling slowly inside the warmer earth allows these rocks to develop large crystals.
 
 #### [GEO1_MCQ_026] Which rocks often contain fossils of dead plants and animals?
 - **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `chapter_notes`
@@ -142,7 +191,7 @@ Minerals are naturally occurring inorganic substances possessing definite chemic
   - c) Metamorphic Rocks
   - d) Extrusive Igneous
 - **Answer**: **b) Sedimentary Rocks**
-- **Historical / Conceptual Context**: As sediments settle in layers on the seabed, dead plants and animals settle with them, forming fossils trapped in sedimentary rocks.
+- **Conceptual Context**: As sediments settle in layers on the seabed, dead plants and animals settle with them, forming fossils trapped in sedimentary rocks.
 
 #### [GEO1_MCQ_027] Which mineral is added to toothpaste to make teeth stronger?
 - **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `chapter_notes`
@@ -151,44 +200,71 @@ Minerals are naturally occurring inorganic substances possessing definite chemic
   - c) Calcium
   - d) Potassium
 - **Answer**: **a) Fluoride**
-- **Historical / Conceptual Context**: A mineral called fluoride is specifically added to toothpaste to make teeth stronger.
+- **Conceptual Context**: A mineral called fluoride is specifically added to toothpaste to make teeth stronger.
 
 #### [GEO1_MCQ_028] The earth's oceanic crust is mainly made up of silica and ________.
 - **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `chapter_notes`
   - [A] Aluminium (sial)
   - [B] Magnesium (sima)
 - **Answer**: **[B] Magnesium (sima)**
-- **Historical / Conceptual Context**: Sial (Aluminium) is the *continental* land crust. The *oceanic* crust is Sima (Magnesium)!
+- **Conceptual Context**: Sial (Aluminium) is the *continental* land crust. The *oceanic* crust is Sima (Magnesium)!
 
 #### [GEO1_MCQ_029] Extrusive igneous rocks like basalt are formed when ________ cools down.
 - **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `chapter_notes`
   - [A] Lava (outside)
   - [B] Magma (inside)
 - **Answer**: **[A] Lava (outside)**
-- **Historical / Conceptual Context**: When molten rock is inside, it's called magma (forms intrusive rocks). When it pours out onto the surface, it is called lava (forms extrusive rocks).
+- **Conceptual Context**: When molten rock is inside, it's called magma (forms intrusive rocks). When it pours out onto the surface, it is called lava (forms extrusive rocks).
 
 #### [GEO1_MCQ_030] Under extreme heat and pressure, limestone transforms into ________.
 - **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `chapter_notes`
   - [A] Marble
   - [B] Slate
 - **Answer**: **[A] Marble**
-- **Historical / Conceptual Context**: Limestone changes into Marble. Clay/Shale changes into Slate.
+- **Conceptual Context**: Limestone changes into Marble. Clay/Shale changes into Slate.
 
 #### [GEO1_MCQ_031] The inner core is ________ despite its extremely high temperature.
 - **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `chapter_notes`
   - [A] Liquid
   - [B] Solid
 - **Answer**: **[B] Solid**
-- **Historical / Conceptual Context**: The outer core is liquid, but the inner core is solid because of extreme high pressure pushing the molecules together.
+- **Conceptual Context**: The outer core is liquid, but the inner core is solid because of extreme high pressure pushing the molecules together.
 
 #### [GEO1_MCQ_032] The thickest layer of the earth is the ________.
 - **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `chapter_notes`
   - [A] Mantle
   - [B] Crust
 - **Answer**: **[A] Mantle**
-- **Historical / Conceptual Context**: We live on the crust, but it is the thinnest layer. The mantle is the thickest layer (2,900 km).
+- **Conceptual Context**: We live on the crust, but it is the thinnest layer. The mantle is the thickest layer (2,900 km).
 
-### 2.2 Fill in the Blanks (8 Items)
+#### [GEO1_CLAUDE_MCQ_001] According to the nebular hypothesis, how did the distinct concentric layers of the Earth originate?
+- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Cosmic Planetary Genesis` | **Source**: `claude_curated_notes`
+  - Heavier materials like iron sank to the core while lighter silicates floated to form the crust
+  - Volcanic eruptions ejected all core materials from outer space onto the crust
+  - The Earth formed as a hollow rock sphere that gradually filled inward with water
+  - A massive meteor collided with Earth, pushing all minerals to the surface
+- **Answer**: **Heavier materials like iron sank to the core while lighter silicates floated to form the crust**
+- **Conceptual Context**: During planetary formation 4.6 billion years ago, gravitational density differentiation caused dense metallic iron and nickel to sink into the core while lighter silicate minerals floated to form the crust.
+
+#### [GEO1_CLAUDE_MCQ_002] Which of the following pairs correctly identifies an intrusive igneous rock and an extrusive igneous rock, respectively?
+- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Petrology Sub-types` | **Source**: `claude_curated_notes`
+  - Granite and Basalt
+  - Basalt and Granite
+  - Sandstone and Marble
+  - Limestone and Slate
+- **Answer**: **Granite and Basalt**
+- **Conceptual Context**: Granite cools slowly inside the Earth forming large intrusive crystals, whereas Basalt solidifies rapidly on the surface as fine-grained extrusive lava.
+
+#### [GEO1_CLAUDE_MCQ_003] Which of the following is classified as a non-metallic mineral?
+- **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Mineral Classification` | **Source**: `claude_curated_notes`
+  - Mica
+  - Copper
+  - Bauxite
+  - Tin
+- **Answer**: **Mica**
+- **Conceptual Context**: Mica is a non-metallic mineral valued for its thermal and electrical insulation properties, unlike copper, bauxite, and tin which yield metals.
+
+### 3.2 Fill in the Blanks (10 Items)
 
 #### [GEO1_FIB_001] The earth's crust is divided into the ________ crust and the ________ crust.
 - **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Earth Structure & Layers` | **Source**: `textbook_exercise`
@@ -230,7 +306,17 @@ Minerals are naturally occurring inorganic substances possessing definite chemic
 - **Answer**: **non-metallic**
 - **Conceptual Context**: Examples include Potash, Gypsum, Limestone, Mica, and Diamond. They break easily and do not conduct electricity.
 
-### 2.3 True or False (5 Items)
+#### [GEO1_CLAUDE_FIB_001] A rotating cosmic cloud of gas and dust from which our Solar System condensed 4.6 billion years ago is known as a _______.
+- **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Cosmic Origins` | **Source**: `claude_curated_notes`
+- **Answer**: **nebula**
+- **Conceptual Context**: The solar nebula collapsed under gravitational pull to form the Sun and planets.
+
+#### [GEO1_CLAUDE_FIB_002] The temperature of Earth's solid inner core reaches approximately _______, which is comparable to the surface temperature of the Sun.
+- **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Geothermal Gradients` | **Source**: `claude_curated_notes`
+- **Answer**: **6000°C**
+- **Conceptual Context**: Extreme gravitational and hydrostatic pressure keeps the inner core solid despite temperatures reaching ~6000°C.
+
+### 3.3 True or False (7 Items)
 
 #### [GEO1_TF_033] The inner core is the liquid part of the core.
 - **Difficulty**: `medium` | **Marks**: `1` | **Topic**: `Interior of the Earth` | **Source**: `chapter_notes`
@@ -257,7 +343,17 @@ Minerals are naturally occurring inorganic substances possessing definite chemic
 - **Answer**: **True**
 - **Reason & Justification**: TRUE. Diamond is a naturally occurring hardest mineral frequently used in jewelry.
 
-### 2.4 Subjective, Analytical & Descriptive Questions (13 Items)
+#### [GEO1_CLAUDE_TF_001] Oceanic crust (SIMA) is thicker than continental crust (SIAL).
+- **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Crustal Dimensions` | **Source**: `claude_curated_notes`
+- **Answer**: **False**
+- **Reason & Justification**: Oceanic crust is only 5 to 8 km thick, whereas continental crust averages 35 km and reaches up to 70 km under major mountain ranges.
+
+#### [GEO1_CLAUDE_TF_002] When limestone undergoes intense heat and pressure deep within the Earth, it recrystallizes into marble.
+- **Difficulty**: `easy` | **Marks**: `1` | **Topic**: `Metamorphism` | **Source**: `claude_curated_notes`
+- **Answer**: **True**
+- **Reason & Justification**: Limestone is a sedimentary rock that metamorphoses into crystalline marble under intense heat and tectonic pressure.
+
+### 3.4 Subjective, Analytical & Descriptive Questions (15 Items)
 
 #### [GEO1_HOTS_014] Do you think humans can reach the core of the earth? Why or why not?
 - **Difficulty**: `hard_hots` | **Marks**: `5` | **Topic**: `Geological Systems & Rock Cycle` | **Source**: `hots_mastery`
@@ -344,6 +440,21 @@ Minerals are naturally occurring inorganic substances possessing definite chemic
 • A mineral called fluoride is added to toothpaste to make teeth stronger.
 • Plants use potassium and magnesium to grow.
 - **Marking Rubric & Notes**: Core curriculum conceptual foundation for Everyday Uses of Minerals Our Daily Life.
+
+#### [GEO1_CLAUDE_SA_001] Explain how gravitational density differentiation created the distinct layers of the Earth during its early molten stage.
+- **Difficulty**: `medium` | **Marks**: `3` | **Topic**: `Planetary Differentiation` | **Source**: `claude_curated_notes`
+- **Model Answer**:
+  1. 4.6 billion years ago, Earth condensed from a hot cosmic nebula and remained in a molten state.
+2. Under the influence of gravity, heavy metallic elements (predominantly iron and nickel) sank toward the center, forming the dense metallic Core.
+3. Intermediate-density iron-magnesium silicates formed the thick Mantle, while the lightest silica-alumina minerals floated to the surface, cooling to form the thin solid Crust.
+- **Marking Rubric & Notes**: Foundational geophysical concept of planetary stratification.
+
+#### [GEO1_CLAUDE_SA_002] Differentiate between metallic and non-metallic minerals, providing two examples of each.
+- **Difficulty**: `medium` | **Marks**: `3` | **Topic**: `Mineral Classification` | **Source**: `claude_curated_notes`
+- **Model Answer**:
+  • **Metallic Minerals**: Contain metals in raw chemical form, possess metallic luster, and conduct electricity and heat well. Examples: Iron ore, Bauxite (aluminium ore), Copper, Gold.
+• **Non-Metallic Minerals**: Do not contain extractable metals, lack metallic shine, and serve as insulators or industrial compounds. Examples: Mica, Gypsum, Limestone, Potash.
+- **Marking Rubric & Notes**: Core economic mineral classification in CBSE Geography.
 
 ---
 *Curated for Pushti Study Hub | Strict CBSE Academic Standard*
