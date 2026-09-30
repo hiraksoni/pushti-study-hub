@@ -308,12 +308,8 @@
     function injectTopBarFullscreenButton() {
         if (document.getElementById('pushti-topbar-fs-btn')) return;
 
-        // Target: header-right, header-actions, nav-actions, top-header
-        var targetContainer = document.querySelector('.header-right, .header-actions, .nav-actions, .top-nav .nav-actions, .site-header .header-right');
-        if (!targetContainer) {
-            targetContainer = document.querySelector('.header-left, .top-header, header');
-        }
-        if (!targetContainer) return;
+        // Try to anchor right next to Time Table, Mid-Term, Theme Toggle, or Header Nav
+        var anchor = document.querySelector('.header-nav a[href*="timetable"], .site-header a[href*="timetable"], a[href*="timetable"], a[href*="midterm"], .header-nav .theme-toggle, .site-header .theme-toggle, .theme-toggle, .user-profile-wrapper');
 
         var fsBtn = document.createElement('button');
         fsBtn.type = 'button';
@@ -323,12 +319,13 @@
         fsBtn.innerHTML = '<i class="fas fa-expand"></i> <span>Fullscreen</span>';
         fsBtn.addEventListener('click', toggleFullscreenLandscape);
 
-        // Insert before theme toggle or at start of header-right
-        var themeToggle = targetContainer.querySelector('.theme-toggle, .icon-btn');
-        if (themeToggle) {
-            targetContainer.insertBefore(fsBtn, themeToggle);
+        if (anchor && anchor.parentNode) {
+            anchor.parentNode.insertBefore(fsBtn, anchor);
         } else {
-            targetContainer.appendChild(fsBtn);
+            var targetContainer = document.querySelector('.header-nav, .nav-actions, .header-actions, .header-right, .top-nav, .site-header, header');
+            if (targetContainer) {
+                targetContainer.appendChild(fsBtn);
+            }
         }
 
         document.addEventListener('fullscreenchange', updateFullscreenUI);
@@ -381,6 +378,12 @@
         initVoices();
         injectTopBarFullscreenButton();
         attachSpeakerButtons();
+
+        // Safety retry for delayed DOM rendering
+        setTimeout(function() {
+            injectTopBarFullscreenButton();
+            attachSpeakerButtons();
+        }, 150);
 
         // Refresh buttons when tabs or modules change dynamically
         document.addEventListener('click', function (e) {
