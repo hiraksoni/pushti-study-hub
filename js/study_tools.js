@@ -182,8 +182,12 @@
 
     // --- 4. TTS Execution ---
     function stopSpeaking() {
-        if (!('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel();
+        if (window.PushtiOnlineTTS) {
+            window.PushtiOnlineTTS.stop();
+        }
+        if ('speechSynthesis' in window && window.speechSynthesis.speaking) {
+            window.speechSynthesis.cancel();
+        }
         isSpeaking = false;
         if (currentBtn) {
             currentBtn.classList.remove('speaking');
@@ -197,11 +201,6 @@
     }
 
     function speakTargetText(rawText, containerEl, btnEl) {
-        if (!('speechSynthesis' in window)) {
-            alert('Speech Synthesis is not supported in this browser.');
-            return;
-        }
-
         // If clicking on already speaking button, toggle stop
         if (isSpeaking && currentBtn === btnEl) {
             stopSpeaking();
@@ -215,6 +214,26 @@
 
         currentActiveEl = containerEl;
         currentBtn = btnEl;
+
+        // Use Online Cloud Audio TTS if available
+        if (window.PushtiOnlineTTS) {
+            isSpeaking = true;
+            window.PushtiOnlineTTS.speak(text, {
+                lang: isHindiPage ? 'hi' : 'en',
+                btn: btnEl,
+                targetEl: containerEl,
+                onComplete: function () {
+                    stopSpeaking();
+                }
+            });
+            return;
+        }
+
+        // Fallback to Web Speech API
+        if (!('speechSynthesis' in window)) {
+            alert('Speech Synthesis is not supported in this browser.');
+            return;
+        }
 
         if (currentActiveEl) currentActiveEl.classList.add('pushti-tts-reading-target');
         if (currentBtn) {

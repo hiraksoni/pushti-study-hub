@@ -212,20 +212,27 @@
     }
 
     function loadCompanionStudyTools() {
-        if (window.__pushtiStudyToolsLoaded) return;
         var scripts = document.getElementsByTagName('script');
         var targetSrc = null;
+        var ttsSrc = null;
         for (var i = 0; i < scripts.length; i++) {
             var src = scripts[i].getAttribute('src') || '';
             if (src.indexOf('scroll_to_top.js') !== -1) {
-                targetSrc = src.replace('scroll_to_top.js', 'study_tools.js') + '?v=2.0.2';
+                targetSrc = src.replace('scroll_to_top.js', 'study_tools.js') + '?v=3.1.0';
+                ttsSrc = src.replace('scroll_to_top.js', 'online_tts.js') + '?v=1.0.0';
                 break;
             }
         }
-        if (targetSrc) {
+        if (ttsSrc && !window.PushtiOnlineTTS) {
+            var tts = document.createElement('script');
+            tts.src = ttsSrc;
+            tts.async = false;
+            document.head.appendChild(tts);
+        }
+        if (targetSrc && !window.__pushtiStudyToolsLoaded) {
             var st = document.createElement('script');
             st.src = targetSrc;
-            st.async = true;
+            st.async = false;
             document.head.appendChild(st);
         }
     }
