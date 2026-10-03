@@ -474,6 +474,16 @@
             if (el.closest('header, nav, aside, footer, #globalSearchDropdown, .modal, .quiz-box, .flashcard')) return;
             if (el.querySelector('.pushti-tts-speaker-btn') || el.classList.contains('pushti-tts-processed')) return;
             
+            // DEDUPLICATION: check if the parent container already has an explicit TTS button or speak trigger
+            var parentCard = el.closest('.group, .p-4, .p-5, .p-6, .rounded-xl, .rounded-2xl, .card, article, section, div[class*="border"]');
+            if (parentCard) {
+                var existingBtn = parentCard.querySelector('button[onclick*="speak"], button[onclick*="tts"], button[class*="speak"], [class*="fa-volume"], [class*="fa-headphones"]');
+                if (existingBtn && !existingBtn.classList.contains('pushti-tts-speaker-btn')) {
+                    el.classList.add('pushti-tts-processed');
+                    return;
+                }
+            }
+
             var rawText = (el.innerText || el.textContent || '').trim();
             if (rawText.length < MIN_TEXT_LENGTH) return;
 
@@ -495,6 +505,18 @@
                 headerEl.appendChild(btn);
             } else {
                 el.appendChild(btn);
+            }
+        });
+
+        // Cleanup sweep: remove any accidentally injected buttons inside containers that already possess an explicit speaker button
+        var allInjected = document.querySelectorAll('.pushti-tts-speaker-btn');
+        allInjected.forEach(function (btn) {
+            var parent = btn.closest('.group, .p-4, .p-5, .p-6, .rounded-xl, .card, article, section, div[class*="border"]');
+            if (parent) {
+                var manualBtns = parent.querySelectorAll('button[onclick*="speak"], button[onclick*="tts"]');
+                if (manualBtns.length > 0) {
+                    btn.remove();
+                }
             }
         });
     }

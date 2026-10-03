@@ -1,4 +1,4 @@
-# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.8)
+# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.9)
 *The Definitive Architectural, Design, Pedagogical & Verification Standard for AI-Assisted Generation*
 
 ---
@@ -783,28 +783,37 @@ Every interactive chapter must adhere to modern web usability best practices:
   }
   ```
 
-### 2.12 High-Fidelity Natural Female Audio Read-Aloud (TTS) Standard (v4.0)
+### 2.12 High-Fidelity Multi-Voice Audio Read-Aloud (TTS) Standard (v4.1)
 * **Engine Architecture (`js/online_tts.js`)**:
   - All speech synthesis across Pushti Study Hub must run via the dedicated **Audio Read-Aloud Engine** (`window.PushtiOnlineTTS`).
-  - **Melodious Female Voice Priority**: To ensure pleasant, natural, and engaging listening for Pushti without robotic fatigue (avoiding harsh or robotic male voices), the engine dynamically discovers, prioritizes, and locks onto high-fidelity **Natural Female Hindi Voices**:
-    1. `Microsoft Swara Online (Natural) - Hindi (India)` (Edge / Windows 11)
-    2. `Microsoft Kalpana - Hindi (India)`
-    3. `Google हिन्दी` (Android / Chrome Natural Female)
-    4. `Lekha` (macOS / iOS)
+  - **Dynamic Device Voice Indexing & Multi-Voice Selector (`#tts-ctrl-voice`)**:
+    - The floating player widget provides an instant voice selection dropdown indexing all voices available on Pushti's active device:
+      1. `Microsoft Swara Online (Natural Hindi ♀)` (Edge / Windows 11 — High Fidelity)
+      2. `Microsoft Madhur Online (Natural Hindi ♂)` (Edge / Windows 11 — High Fidelity)
+      3. `Samsung Hindi (Tab A8)` / `Samsung Indian English (Tab A8)` (Galaxy Tab A8 SM-X205)
+      4. `Google Hindi (Online HD)` / `Google हिन्दी (Android)` / `Google Indian English`
+      5. `Microsoft Kalpana`, `Hemant`, `Neerja`, `Prabhat`, and `Apple Lekha`.
+    - User's voice preference is persistently saved in `localStorage.setItem('psh_tts_voice_name', ...)` and auto-restored on subsequent visits.
+  - **Natural Pitch Normalization (Pitch 1.0)**:
+    - Utterance pitch is strictly locked to natural `1.0`. Artificial upward pitch-shifting (e.g. 1.08) is strictly prohibited as it introduces metallic resonance, nasal distortion, and robotic timbre on mobile/tablet synthesizers.
+  - **Granular Speed Controls (`0.75x` to `2.0x`)**:
+    - The speed selector (`#tts-ctrl-speed`) supports: `0.75x`, `0.85x`, `1.0x (Normal)`, `1.15x`, `1.3x`, `1.4x`, `1.5x`, `1.75x`, and `2.0x`.
+    - Speed preference is saved in `localStorage.setItem('psh_tts_speed', ...)` and applies immediately to active playback.
 * **State Machine with Real Play / Pause / Resume**:
   - Full interactive state control: 1-click **Play**, **Pause**, **Resume**, and **Stop**.
-  - **Persistent Floating Audio Player**: Pinned at the bottom-right during active reading, showing real-time sentence progress (`वाक्य ३ / १८`) and `👩 महिला स्वर` active indicator.
+  - **Persistent Floating Audio Player**: Pinned at the bottom during active reading, showing real-time sentence progress (`[३/१८]`), active voice badge (`🎙️ Swara`), voice dropdown, speed dropdown, sentence jump controls, and pause/stop controls.
 * **Continuous Multi-Sentence Queue & 14s Android Watchdog**:
   - Long prose and poems are tokenized into natural sentence boundaries (`।`, `.`, `?`, `!`, `,`, `\n`) under 150 characters per chunk.
   - Proactive **14-second watchdog timer** continuously refreshes speech synthesis utterances to prevent the notorious Chromium/Android speech stall bug on long passages.
 * **Graceful Cloud Fallback Protocol**:
-  - If a client device lacks high-quality neural female voices, the engine automatically falls back to online cloud audio streaming via the local proxy `/api/tts?tl=hi&q=...` or Google TTS (`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=hi&q=...`).
-* **Selective Speaker Placement Gate**:
+  - If a client device lacks high-quality neural voices, the engine automatically falls back to online cloud audio streaming via the local proxy `/api/tts?tl=hi&q=...` or Google TTS (`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=hi&q=...`).
+* **Selective Speaker Placement & Anti-Duplication Gate**:
+  - Automated speaker injection (`js/study_tools.js` -> `attachSpeakerButtons()`) must check whether the parent card, paragraph, or container already contains an explicit TTS button (`button[onclick*="speak"]`, `.fa-volume-up`, etc.). If an existing button is detected, automated injection is suppressed to prevent duplicate speaker icon clutter.
   - Speaker buttons must be attached **ONLY to substantive explanation paragraphs and concept cards ($\ge 140$ characters)**.
   - Spamming speaker icons next to single words, labels, table headers, or short phrases is strictly prohibited.
   - In Hindi literature modules: verse reading buttons use `<button onclick="speakHindiText('', this)">`, vocabulary cards use `<button onclick="speakHindiWord('शब्द', 'अर्थ', this)">`, and full recitations use `<button onclick="speakFullLesson(this)">`.
 * **Synchronized UI States**:
-  - While speaking, buttons transform into an animated pulsing stop button: `<i class="fas fa-stop text-rose-400 animate-pulse"></i> रोकें`. Clicking at any time cleanly halts audio and restores the button.
+  - While speaking, buttons transform into an animated pulsing state: `<i class="fas fa-pause text-amber-400"></i> विराम (Pause)` or `<i class="fas fa-stop text-rose-400"></i>`. Clicking at any time cleanly pauses/halts audio and restores button state.
 
 ### 2.13 Top-Bar Fullscreen & Landscape Engine Placement
 * **Location Standard**: The Fullscreen & Landscape button (`#pushti-topbar-fs-btn`) must be permanently mounted in the **top header bar** (adjacent to Search, Theme Toggle, and Time Table).
@@ -1340,9 +1349,8 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-GUI-11 (Empty State & Search UX Gate)**: Does every search-enabled or filtered directory implement a dedicated empty state container with an illustrative vector icon, friendly message, and an actionable 1-click "Clear Filters" button when 0 results match?
 - [ ] **CP-GUI-12 (Dual-Theme Token Parity Gate)**: In Tailwind CSS modules, are both `class="dark"` and `data-theme="dark"` / `data-theme="light"` attributes synchronized on `<html>` to guarantee flawless parent dashboard and iframe interoperability?
 - [ ] **CP-GUI-14 (Top-Bar Fullscreen Placement & Header Tooling Gate)**: Verify that Fullscreen/Expand controls are strictly located on the 54px top header bar (`.header-actions` / `.controls-group`) alongside Theme Toggle, Search, and Home. Verify that no fullscreen or theme toggle buttons are placed at the bottom of the left dock rail or floating detached on the page.
-- [ ] **CP-GUI-15 (Snappy Dock Rail 0.15s Transition & Strict Tab Contiguity Gate)**: Verify that the collapsible dock rail transitions within `0.15s` (not legacy 1.2s). In Tab-11 modules (Hindi, SST, etc.), verify that all tabs 1 through 11 are strictly contiguous inside `.dock-nav` or `.nav-list` with zero buttons placed below or outside the list.
-- [ ] **CP-TTS-1 (Natural Female Voice Priority & State Machine Gate)**: In language chapters and reading-heavy sections, verify that audio read-aloud functionality utilizes `js/online_tts.js` v4.0 prioritizing natural, sweet female voices (`Microsoft Swara`, `Kalpana`, `Google हिन्दी`, `Lekha`), with 1-click Play/Pause/Resume/Stop state machine, persistent floating player widget, 14s Android watchdog timer, and graceful cloud fallback.
-- [ ] **CP-TTS-2 (DOM Self-Healing & Substantive Attachment Gate)**: Verify that TTS speaker buttons navigate safely to their target text block using DOM traversal or element references (`speakHindiText('', this)`) without throwing `nextElementSibling` TypeError. Verify that speaker buttons attach only to substantive content blocks ($\ge 140$ chars) and never to UI chrome, nav items, or short labels.
+- [ ] **CP-TTS-1 (Multi-Voice Selector, Speed & Pitch Normalization Gate)**: In language chapters and reading-heavy sections, verify that audio read-aloud functionality utilizes `js/online_tts.js` v4.1; provides instant voice dropdown indexing Windows Natural (`Swara`, `Madhur`, `Neerja`), Samsung Galaxy Tab A8 (`Samsung Hindi`), and Google HD voices; supports expanded speeds (`0.75x` to `2.0x`) with `localStorage` memory; strictly normalizes pitch to natural `1.0` (zero chipmunk/metallic distortion on tablets); includes 14s Android watchdog timer.
+- [ ] **CP-TTS-2 (Speaker Deduplication & Substantive Attachment Gate)**: Verify that automated speaker injection (`attachSpeakerButtons()`) checks parent cards and never duplicates if an explicit speaker button already exists in card header/body; verify that TTS speaker buttons navigate safely to their target text block using DOM traversal or element references (`speakHindiText('', this)`) without throwing `nextElementSibling` TypeError; verify that speaker buttons attach only to substantive content blocks ($\ge 140$ chars) and never to UI chrome, nav items, or short labels.
 - [ ] **CP-LANG-1 (Bilingual English Equivalents & Hints Gate)**: For language subjects (Hindi/Sanskrit) in the English-medium CBSE curriculum, verify that chapter titles display clear English equivalents in parentheses across headings and index cards, and `#btn-en-toggle` seamlessly toggles inline `.en-hint` translations.
 - [ ] **CP-GUI-16 (Samsung Galaxy Tab A8 SM-X205 Dual-Orientation Verification Gate)**:
   Simulate Pushti's primary study tablet (Samsung Galaxy Tab A8 Model SM-X205, 10.5" 1920×1200, default DPR 1.875):
@@ -1405,6 +1413,7 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 
 | Version | Date | Key Architectural Additions |
 | :---: | :---: | :--- |
+| **v3.9** | 2026-10-04 | **Multi-Voice Selector Engine, 0.75x–2.0x Granular Speed Controls, Natural Pitch (1.0) Normalization & Universal Speaker Deduplication Gate (Section 2.12, CP-TTS-1, CP-TTS-2, `.agents/rules/gui_theme_tts_standards.md`)**: Upgraded `js/online_tts.js` to v4.1 with instant floating player voice selector dropdown (`#tts-ctrl-voice`) indexing Windows Natural (`Swara`, `Madhur`, `Neerja`), Samsung Galaxy Tab A8 SM-X205 (`Samsung Hindi`, `Samsung Indian English`), and Google HD Online voices; expanded speed control (`#tts-ctrl-speed`) to 9 levels (`0.75x`, `0.85x`, `1.0x`, `1.15x`, `1.3x`, `1.4x`, `1.5x`, `1.75x`, `2.0x`) with `localStorage` memory; eliminated robotic/squeaky distortion on tablets by locking pitch strictly to natural `1.0`; eliminated duplicate speaker icons across all chapters by enforcing parent-card TTS button detection in `js/study_tools.js` (`attachSpeakerButtons()`). |
 | **v3.8** | 2026-10-03 | **Target Hardware Specification: Samsung Galaxy Tab A8 (Model SM-X205) Dual-Orientation Standard & 15.6" Laptop Protocol (Section 2.16, CP-GUI-16, `.agents/rules/gui_theme_tts_standards.md`)**: Formally codified Pushti's primary study tablet hardware (Samsung Galaxy Tab A8 SM-X205, 10.5" 1920×1200, default DPR 1.875, Landscape 1024×640 CSS px, Portrait 640×1024 CSS px) alongside the 15.6" Windows 11 laptop; eliminated sidebar-content overlap in Landscape via mandatory `margin-left: 62px !important; width: calc(100% - 62px) !important;`; eliminated viewport crushing in Portrait by capping dock rail to 62px, hiding pin toggles on screens < 1100px, and enforcing `lg:flex-row` for hero banners; mandated dual-orientation SM-X205 tablet testing on all verification runs. |
 | **v3.7** | 2026-10-03 | **Online Cloud Audio TTS, Top-Bar Fullscreen Standard, Snappy Dock Rail (0.15s) & Automated Dual Server Protocol (Sections 1.15, 2.12, 2.13, 2.14, CP-GUI-14, CP-GUI-15, CP-TTS-1, CP-TTS-2, `.agents/rules/gui_theme_tts_standards.md`)**: Codified dedicated GUI/Theme/TTS standard; replaced broken native browser SpeechSynthesis with high-fidelity Online Cloud Audio streaming engine (`js/online_tts.js`) featuring sentence chunking, pre-buffering, and `/api/tts` proxy; mandated top-bar placement for Fullscreen controls (banning dock-bottom clutter); standardized 0.15s snappy hover transition on vertical dock rails and strictly contiguous Tab 11 nesting; automated local dual-protocol server (`https_server.py` supporting HTTPS 8443 and HTTP 8000) and `requirements.txt`. |
 | **v3.6** | 2026-09-30 | **"As Per Rules" Master Canon & Zero-Rot Dynamic Google Search Query Protocol (Sections 1.12, 1.13, 2.11, CP-CON-7, `.agents/rules/topic_search_queries.md`)**: Codified the unified definition of "as per rules"; strictly prohibited hardcoded third-party video URLs (`youtube.com`, Vimeo, etc.), iframes, and external channel branding to prevent link rot and save AI token budget; established the Topic Search Card standard (`.topic-search-card`) with engineered Google Video (`tbm=vid`) and Knowledge Search query formulas. |

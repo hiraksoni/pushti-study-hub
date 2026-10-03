@@ -78,23 +78,31 @@ Every chapter module must feature a clean, sticky top header (`h-[54px]` / `heig
 
 ---
 
-## 4. High-Fidelity Natural Female Audio Read-Aloud (TTS) Standard (v4.0)
+## 4. High-Fidelity Natural Female Audio Read-Aloud (TTS) Standard (v4.1)
 
-### 4.1 Architecture & Voice Priority Hierarchy (`js/online_tts.js`)
-- **Melodious Female Voice Priority**: To ensure pleasant, natural, and engaging listening for Pushti without robotic fatigue (avoiding harsh or robotic male voices), the audio engine dynamically discovers, prioritizes, and locks onto high-fidelity **Female Hindi Voices**:
-  1. `Microsoft Swara Online (Natural) - Hindi (India)` (Edge / Windows 11)
-  2. `Microsoft Kalpana - Hindi (India)`
-  3. `Google हिन्दी` (Android / Chrome Natural Female)
-  4. `Lekha` (macOS / iOS)
+### 4.1 Architecture & Voice Selection Engine (`js/online_tts.js`)
+- **Device Voice Indexing & Multi-Voice Selector (`#tts-ctrl-voice`)**:
+  - The floating player widget provides an instant voice dropdown allowing Pushti to switch between available voices on her device at any time without stopping playback:
+    - **Windows 11 / Edge Laptop**: `Microsoft Swara Online (Natural Hindi ♀)`, `Microsoft Madhur Online (Natural Hindi ♂)`, `Kalpana`, `Hemant`, `Neerja (Natural Indian English ♀)`, `Prabhat (Natural Indian English ♂)`.
+    - **Samsung Galaxy Tab A8 (Model SM-X205)**: `Samsung Hindi (Tab A8)`, `Samsung Indian English (Tab A8)`.
+    - **Android Chrome / Google Speech Services**: `Google Hindi (Online HD)`, `Google हिन्दी (Android)`, `Google Indian English`.
+    - **Apple macOS / iOS**: `Lekha (Hindi ♀)`.
+  - The student's chosen voice is persistently saved in `localStorage.setItem('psh_tts_voice_name', ...)` and auto-restored on subsequent visits.
+- **Natural Pitch Normalization (Pitch 1.0)**:
+  - Speech synthesis pitch is strictly normalized to natural `1.0`. Artificial upward pitch-shifting (e.g. 1.08) is strictly prohibited as it causes metallic squeaking, nasal phasing, and robotic artifacts on mobile/tablet synthesizers.
+- **Granular Speed Controls (`0.75x` to `2.0x`)**:
+  - The speed dropdown (`#tts-ctrl-speed`) supports: `0.75x`, `0.85x`, `1.0x (Normal)`, `1.15x`, `1.3x`, `1.4x`, `1.5x`, `1.75x`, and `2.0x`.
+  - User preference is saved in `localStorage.setItem('psh_tts_speed', ...)` and instantly applies to active playback without restarting the chapter.
 - **State Machine with Real Play / Pause / Resume**:
   - Full playback controls: 1-click **Play**, **Pause**, **Resume**, and **Stop**.
-  - Persistent Floating Player Widget: Stays pinned at bottom-right during active reading, showing real-time sentence progress (`वाक्य ३ / १८`) and `👩 महिला स्वर` active badge.
+  - Persistent Floating Player Widget: Pinned at bottom during active reading, showing real-time sentence progress (`[३/१८]`), active voice badge (`🎙️ Swara`), voice selector, speed selector, sentence prev/next, and stop buttons.
 - **Continuous Multi-Sentence Queue & 14s Android Watchdog**:
   - Long prose and poems are tokenized into natural sentence boundaries (`।`, `.`, `?`, `!`, `,`, `\n`).
   - Includes a proactive **14-second watchdog timer** that refreshes speech synthesis utterances to prevent the notorious Chromium/Android freeze bug on long passages.
 - **Graceful Cloud Fallback**: If a client device lacks high-quality neural female voices, the engine automatically falls back to online cloud streaming via the local proxy `/api/tts?tl=hi&q=...` or Google TTS (`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=hi&q=...`).
 
-### 4.2 Selective Speaker Placement Rule
+### 4.2 Selective Speaker Placement & Deduplication Gate
+- **Strict Anti-Duplication Rule**: Automated speaker button injection (via `js/study_tools.js` -> `attachSpeakerButtons()`) must check whether the parent card, paragraph, or container already contains an explicit TTS button (`button[onclick*="speak"]`, `.fa-volume-up`, etc.). If an existing button is detected, automated injection is suppressed to prevent "double speaker icon" clutter.
 - **Substantive Content Only**: Speaker buttons must be attached **ONLY to substantive explanation paragraphs, poems, and concept cards ($\ge 140$ characters)**.
 - **Prohibition**: Never spam speaker icons next to single words, labels, table headers, breadcrumbs, badges, or short metadata.
 - **Hindi Chapter Specifics**:
@@ -102,8 +110,8 @@ Every chapter module must feature a clean, sticky top header (`h-[54px]` / `heig
   - Vocabulary tables: `<button onclick="speakHindiWord('शब्द', 'अर्थ', this)">`
   - Full chapter continuous recitation: `<button onclick="speakFullLesson(this)">`
 - **UI Feedback**: While playing, buttons transform into an animated pulsing stop button:
-  `<i class="fas fa-stop text-rose-400 animate-pulse"></i> रोकें`
-  Clicking again immediately halts audio playback and resets the button.
+  `<i class="fas fa-pause text-amber-400"></i> विराम (Pause)` or `<i class="fas fa-stop text-rose-400"></i>`
+  Clicking again immediately halts/pauses audio playback and updates the button.
 
 ---
 
@@ -185,9 +193,9 @@ Every newly created or audited chapter must pass:
   - Landscape (1024×640): 62px dock rail cleared via `margin-left: 62px !important; width: calc(100% - 62px) !important;`; zero title or card overlap.
   - Portrait (640×1024 / 800×1280): 62px dock rail capped (no 280px pin); hero banner uses `lg:flex-row` so title spans 100% width; badges wrap cleanly beneath.
   - Touch targets $\ge 44\text{px} \times 44\text{px}$ with `-webkit-tap-highlight-color: transparent;`.
-- [ ] **CP-TTS-1 (Natural Female Voice Priority)**: Uses `js/online_tts.js` v4.0; locks onto sweet, natural female voices (`Microsoft Swara`, `Kalpana`, `Google हिन्दी`, `Lekha`); includes 14s watchdog timer; fallbacks to cloud proxy.
-- [ ] **CP-TTS-2 (Play/Pause/Resume & Floating Player)**: State machine allows 1-click play, pause, and resume; floating widget displays sentence counter (`वाक्य x / y`).
-- [ ] **CP-TTS-3 (Substantive Placement Gate)**: Speaker buttons exist only on content blocks $\ge 140$ characters (or specific poem/vocab study cards); UI pulses stop button while playing.
+- [ ] **CP-TTS-1 (Multi-Voice Selector, Speed & Pitch Normalization Gate)**: Uses `js/online_tts.js` v4.1; provides instant voice dropdown indexing Windows Natural (`Swara`, `Madhur`, `Neerja`), Samsung Galaxy Tab A8 (`Samsung Hindi`), and Google HD voices; supports expanded speeds (`0.75x` to `2.0x`) with `localStorage` memory; strictly normalizes pitch to natural `1.0` (zero chipmunk/metallic distortion on tablets); includes 14s Android watchdog timer.
+- [ ] **CP-TTS-2 (Play/Pause/Resume State Machine & Floating Player)**: State machine allows 1-click play, pause, and resume; floating widget displays sentence counter (`[x/y]`), active voice badge (`🎙️ Swara`), and voice/speed controls.
+- [ ] **CP-TTS-3 (Speaker Deduplication & Substantive Placement Gate)**: Automated injection checks parent cards and never duplicates if an explicit speaker button already exists in card header/body; speaker buttons attach only to substantive content blocks ($\ge 140$ characters); UI toggles to pause/stop state while playing.
 - [ ] **CP-LANG-1 (Bilingual English Equivalents & Hints)**: Chapter titles display English equivalents in parentheses; `#btn-en-toggle` enables/disables inline `.en-hint` translations.
 - [ ] **CP-THEME-1 (Dual-Theme Token Parity)**: Flawless readability in both Dark (`data-theme="dark"`) and Light (`data-theme="light"`) modes with persistent storage.
 
