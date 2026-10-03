@@ -831,7 +831,11 @@ Because Pushti studies in an **English-medium CBSE curriculum**, language subjec
   - **Header Toggle Button**: Every language module must include a prominent `#btn-en-toggle` button in the top bar:
     `<button id="btn-en-toggle" onclick="toggleEnglishHints()" ...>🔤 EN Hints / अर्थ</button>`
   - **Inline English Hints (`.en-hint`)**: Subtle contextual translations embedded alongside difficult literary Hindi terms, hidden by default and smoothly toggled via CSS `.show-en-hints .en-hint { display: inline-block !important; }`.
-  - **Dotted Term Glosses (`.term-gloss`)**: Key literary, grammatical, and cultural terms feature a subtle dotted cyan underline with instant hover tooltip definition (`title="..."`).
+  - **Interactive Term Gloss Popovers (`.term-gloss`)**: Key literary, grammatical, and cultural terms feature a dotted cyan underline (`cursor: pointer; touch-action: manipulation;`).
+    - **Desktop**: Hovering over the word triggers a glassmorphic popover with term, English meaning, Hindi definition, and audio playback.
+    - **Tablet / Touchscreen**: Tapping the word toggles the popover open/closed. Uses viewport-relative fixed positioning (auto-flipping above if near bottom edge) and includes a dedicated '×' close button and audio pronunciation button.
+    - **Elimination of Common Drawer**: Generic whole-hub slide-out drawers ("Shabd Kosh") are removed to avoid visual clutter and redundant lists; in-situ hover/tap tooltips provide targeted, contextual vocabulary support.
+
 
 ---
 

@@ -141,35 +141,44 @@
       /* Term Gloss Dotted Underline */
       .term-gloss {
         border-bottom: 1.5px dotted #38bdf8;
-        cursor: help;
+        cursor: pointer;
         transition: all 0.2s ease;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(56, 189, 248, 0.2);
+        display: inline;
       }
-      .term-gloss:hover {
+      .term-gloss:hover, .term-gloss:active, .term-gloss.active-gloss {
         color: #38bdf8;
-        background: rgba(56, 189, 248, 0.12);
-        border-radius: 3px;
+        background: rgba(56, 189, 248, 0.15);
+        border-radius: 4px;
+        padding: 0 2px;
       }
     `;
     document.head.appendChild(style);
   }
 
-  // Inject DOM Elements: Tooltip, Selection Pill, Drawer Button & Drawer
+  // Inject DOM Elements: Tooltip & Selection Pill (Drawer removed per user instruction)
   function injectBilingualDOM() {
     if (document.getElementById("gloss-tooltip")) return;
 
-    // 1. Floating Tooltip
+    // 1. Floating Tooltip (Viewport-relative fixed positioning for Desktop & Tablets)
     const tooltip = document.createElement("div");
     tooltip.id = "gloss-tooltip";
-    tooltip.className = "fixed hidden z-[9999] max-w-xs sm:max-w-sm p-4 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-blue-500/40 shadow-2xl text-xs transition-opacity duration-200 pointer-events-auto text-slate-100";
+    tooltip.className = "fixed hidden z-[9999] w-72 sm:w-80 p-3.5 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-blue-500/40 shadow-2xl text-xs transition-opacity duration-150 pointer-events-auto text-slate-100 select-none";
     tooltip.innerHTML = `
       <div class="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-800">
         <div class="flex items-center gap-2 min-w-0">
-          <span class="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse flex-shrink-0"></span>
           <h5 id="gloss-tt-term" class="font-bold text-white text-sm truncate font-heading"></h5>
         </div>
-        <button id="gloss-tt-audio" class="p-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs transition-colors cursor-pointer" title="उच्चारण सुनें">
-          <i class="fas fa-volume-up"></i>
-        </button>
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+          <button id="gloss-tt-audio" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 hover:text-amber-200 text-xs transition-colors cursor-pointer" title="उच्चारण सुनें (Listen)">
+            <i class="fas fa-volume-up"></i>
+          </button>
+          <button id="gloss-tt-close" class="p-1.5 rounded-lg bg-slate-800 hover:bg-rose-500/20 text-slate-400 hover:text-rose-300 text-xs transition-colors cursor-pointer" title="बंद करें (Close)">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
       </div>
       <div class="mb-2">
         <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block mb-0.5">English Meaning</span>
@@ -177,21 +186,28 @@
       </div>
       <div>
         <span class="text-[10px] uppercase font-mono tracking-wider text-slate-400 block mb-0.5">सरल व्याख्या / अर्थ</span>
-        <p id="gloss-tt-desc" class="text-slate-200 text-xs leading-relaxed"></p>
+        <p id="gloss-tt-desc" class="text-slate-200 text-xs leading-relaxed font-sans"></p>
       </div>
     `;
     document.body.appendChild(tooltip);
 
-    // Audio button in tooltip
-    tooltip.querySelector("#gloss-tt-audio").addEventListener("click", () => {
+    // Audio button in tooltip (natural female voice via PushtiOnlineTTS if available)
+    tooltip.querySelector("#gloss-tt-audio").addEventListener("click", (e) => {
+      e.stopPropagation();
       const term = document.getElementById("gloss-tt-term").innerText;
-      speakHindi(term);
+      speakTerm(term);
+    });
+
+    // Dedicated Close button inside tooltip for tablets & touchscreens
+    tooltip.querySelector("#gloss-tt-close").addEventListener("click", (e) => {
+      e.stopPropagation();
+      hideTooltip();
     });
 
     // 2. Selection Lookup Pill
     const pill = document.createElement("div");
     pill.id = "selection-lookup-pill";
-    pill.className = "fixed hidden z-[9999] p-2 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-amber-500/40 shadow-2xl text-xs flex items-center gap-2 transition-all text-slate-100";
+    pill.className = "fixed hidden z-[9999] p-2 rounded-2xl bg-slate-900/95 backdrop-blur-xl border border-amber-500/40 shadow-2xl text-xs flex items-center gap-2 transition-all text-slate-100 select-none";
     pill.innerHTML = `
       <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xs flex-shrink-0">
         🔤
@@ -210,107 +226,56 @@
       </div>
     `;
     document.body.appendChild(pill);
-
-    // 3. Floating Drawer Button
-    const drawerBtn = document.createElement("button");
-    drawerBtn.id = "btn-vocab-drawer";
-    drawerBtn.className = "fixed bottom-6 right-6 z-40 px-3.5 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-2xl backdrop-blur-md flex items-center gap-2 border border-blue-400/40 transition-all hover:scale-105 cursor-pointer";
-    drawerBtn.innerHTML = `<i class="fas fa-language text-base text-amber-300"></i> <span>🔤 EN &harr; HI शब्दकोश</span>`;
-    drawerBtn.onclick = toggleVocabDrawer;
-    document.body.appendChild(drawerBtn);
-
-    // 4. Slide-Out Drawer & Backdrop
-    const backdrop = document.createElement("div");
-    backdrop.id = "bilingual-drawer-backdrop";
-    backdrop.className = "fixed inset-0 bg-black/60 backdrop-blur-sm z-[9990] hidden transition-opacity";
-    backdrop.onclick = toggleVocabDrawer;
-    document.body.appendChild(backdrop);
-
-    const drawer = document.createElement("aside");
-    drawer.id = "bilingual-drawer";
-    drawer.className = "fixed top-0 right-0 h-full w-full sm:w-96 bg-slate-900/95 backdrop-blur-2xl border-l border-slate-800 z-[9995] shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col text-slate-100";
-    drawer.innerHTML = `
-      <div class="p-5 border-b border-slate-800 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold">
-            🔤
-          </div>
-          <div>
-            <h4 class="text-sm font-bold text-white font-heading">त्वरित द्विभाषी शब्दकोश</h4>
-            <span class="text-[11px] text-slate-400 font-mono">English &harr; Hindi Quick Lexicon</span>
-          </div>
-        </div>
-        <button onclick="window.toggleVocabDrawer()" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all cursor-pointer">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <div class="p-4 border-b border-slate-800/80 bg-slate-950/40">
-        <div class="relative">
-          <input type="text" id="drawer-search-input" placeholder="अंग्रेज़ी या हिंदी में खोजें (e.g. victory, भाषा)..." class="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 font-sans">
-          <i class="fas fa-search absolute left-3 top-2.5 text-xs text-slate-500"></i>
-        </div>
-      </div>
-
-      <div id="drawer-items-list" class="flex-1 overflow-y-auto p-4 space-y-2.5"></div>
-
-      <div class="p-4 border-t border-slate-800 bg-slate-950/60 text-center text-[11px] text-slate-500 font-sans">
-        पुष्टि की अध्ययन सुविधा हेतु &bull; Pushti Study Hub
-      </div>
-    `;
-    document.body.appendChild(drawer);
-
-    drawer.querySelector("#drawer-search-input").addEventListener("keyup", (e) => {
-      filterDrawerWords(e.target.value);
-    });
-
-    renderDrawerItems();
   }
 
-  // Speak helper
+  // Audio speech synthesis helper with priority for PushtiOnlineTTS melodious voice
+  function speakTerm(text) {
+    if (!text) return;
+    if (window.PushtiOnlineTTS && typeof window.PushtiOnlineTTS.speak === "function") {
+      window.PushtiOnlineTTS.speak(text, { lang: "hi" });
+    } else {
+      speakHindi(text);
+    }
+  }
+
   function speakHindi(text) {
     if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = "hi-IN";
     const voices = window.speechSynthesis.getVoices();
-    const hiVoice = voices.find(v => v.lang.startsWith("hi"));
+    const hiVoice = voices.find(v => v.lang && v.lang.startsWith("hi"));
     if (hiVoice) u.voice = hiVoice;
     window.speechSynthesis.speak(u);
   }
 
-  // Tooltip Logic
-  function setupGlossaryTooltips() {
+  // Tooltip State & Logic for Desktop Hover + Tablet / Touch Tap
+  let activeGlossEl = null;
+  let hideTimeout = null;
+
+  function hideTooltip() {
+    clearTimeout(hideTimeout);
     const tt = document.getElementById("gloss-tooltip");
-    if (!tt) return;
-    let hideTimeout = null;
-
-    document.querySelectorAll(".term-gloss").forEach((el) => {
-      el.addEventListener("mouseenter", () => {
-        clearTimeout(hideTimeout);
-        showTooltip(el);
-      });
-      el.addEventListener("mouseleave", () => {
-        hideTimeout = setTimeout(() => tt.classList.add("hidden"), 300);
-      });
-      el.addEventListener("click", (e) => {
-        e.stopPropagation();
-        showTooltip(el);
-      });
-    });
-
-    tt.addEventListener("mouseenter", () => clearTimeout(hideTimeout));
-    tt.addEventListener("mouseleave", () => tt.classList.add("hidden"));
-
-    document.addEventListener("click", (e) => {
-      if (!tt.contains(e.target) && !e.target.classList.contains("term-gloss")) {
-        tt.classList.add("hidden");
-      }
-    });
+    if (tt) {
+      tt.classList.add("hidden");
+    }
+    if (activeGlossEl) {
+      activeGlossEl.classList.remove("active-gloss");
+      activeGlossEl = null;
+    }
   }
 
   function showTooltip(el) {
+    clearTimeout(hideTimeout);
     const tt = document.getElementById("gloss-tooltip");
+    if (!tt) return;
+
+    if (activeGlossEl && activeGlossEl !== el) {
+      activeGlossEl.classList.remove("active-gloss");
+    }
+    activeGlossEl = el;
+    activeGlossEl.classList.add("active-gloss");
+
     const term = el.getAttribute("data-term") || el.innerText.trim();
     const en = el.getAttribute("data-en") || (MASTER_LEXICON[term] ? MASTER_LEXICON[term].en : "");
     const desc = el.getAttribute("data-desc") || (MASTER_LEXICON[term] ? MASTER_LEXICON[term].desc : "");
@@ -319,21 +284,96 @@
     document.getElementById("gloss-tt-en").innerText = en ? en : "Vocabulary Word";
     document.getElementById("gloss-tt-desc").innerText = desc ? desc : "पाठ्यपुस्तक प्रामाणिक पद।";
 
+    // Unhide in measuring state to compute actual rendered height/width
+    tt.style.visibility = "hidden";
     tt.classList.remove("hidden");
 
     const rect = el.getBoundingClientRect();
-    const ttWidth = 280;
-    let left = rect.left + window.scrollX;
-    let top = rect.bottom + window.scrollY + 8;
+    const ttWidth = tt.offsetWidth || 300;
+    const ttHeight = tt.offsetHeight || 130;
 
-    if (left + ttWidth > window.innerWidth) left = window.innerWidth - ttWidth - 20;
-    if (left < 10) left = 10;
+    // Viewport-based coordinates (FIXED positioning requires viewport rect, NOT window.scrollX/Y!)
+    let left = rect.left;
+    if (left + ttWidth > window.innerWidth - 12) {
+      left = window.innerWidth - ttWidth - 12;
+    }
+    if (left < 12) left = 12;
 
-    tt.style.left = `${left}px`;
-    tt.style.top = `${top}px`;
+    // Vertical positioning: default below word; flip above if overflowing bottom
+    let top = rect.bottom + 8;
+    if (top + ttHeight > window.innerHeight - 12) {
+      const spaceAbove = rect.top - 8;
+      if (spaceAbove >= ttHeight) {
+        top = rect.top - ttHeight - 8;
+      } else {
+        top = Math.max(12, window.innerHeight - ttHeight - 12);
+      }
+    }
+
+    tt.style.left = `${Math.round(left)}px`;
+    tt.style.top = `${Math.round(top)}px`;
+    tt.style.visibility = "visible";
   }
 
-  // Selection Lookup Engine
+  function setupGlossaryTooltips() {
+    const tt = document.getElementById("gloss-tooltip");
+    if (!tt) return;
+
+    function bindGlossElements(root) {
+      (root || document).querySelectorAll(".term-gloss").forEach((el) => {
+        if (el.__glossBound) return;
+        el.__glossBound = true;
+
+        // Desktop mouse hover
+        el.addEventListener("mouseenter", () => {
+          clearTimeout(hideTimeout);
+          showTooltip(el);
+        });
+        el.addEventListener("mouseleave", () => {
+          hideTimeout = setTimeout(() => hideTooltip(), 350);
+        });
+
+        // Click / Touch tap toggle (Tablets & Phones)
+        el.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          clearTimeout(hideTimeout);
+          if (activeGlossEl === el && !tt.classList.contains("hidden")) {
+            hideTooltip();
+          } else {
+            showTooltip(el);
+          }
+        });
+      });
+    }
+
+    bindGlossElements(document);
+    window.__bindGlossElements = bindGlossElements;
+
+    // Keep tooltip visible when hovering tooltip box itself
+    tt.addEventListener("mouseenter", () => clearTimeout(hideTimeout));
+    tt.addEventListener("mouseleave", () => {
+      hideTimeout = setTimeout(() => hideTooltip(), 300);
+    });
+
+    // Dismiss when tapping/clicking anywhere outside
+    document.addEventListener("click", (e) => {
+      if (tt.classList.contains("hidden")) return;
+      if (!tt.contains(e.target) && !e.target.closest(".term-gloss")) {
+        hideTooltip();
+      }
+    });
+
+    // Dismiss when touchstart occurs outside on tablets
+    document.addEventListener("touchstart", (e) => {
+      if (tt.classList.contains("hidden")) return;
+      if (!tt.contains(e.target) && !e.target.closest(".term-gloss")) {
+        hideTooltip();
+      }
+    }, { passive: true });
+  }
+
+  // Selection Lookup Engine (Fixed viewport coordinates for Tablet & Desktop)
   function setupSelectionLookup() {
     const pill = document.getElementById("selection-lookup-pill");
     if (!pill) return;
@@ -366,22 +406,23 @@
 
       document.getElementById("sel-btn-audio").onclick = (e) => {
         e.stopPropagation();
-        speakHindi(selectedText);
+        speakTerm(selectedText);
       };
       document.getElementById("sel-btn-trans").href = `https://translate.google.com/?sl=hi&tl=en&text=${encodeURIComponent(selectedText)}&op=translate`;
 
       try {
         const range = sel.getRangeAt(0);
         const rect = range.getBoundingClientRect();
-        let top = rect.top + window.scrollY - 48;
-        let left = rect.left + window.scrollX;
+        const pillHeight = pill.offsetHeight || 44;
+        let top = rect.top - pillHeight - 8;
+        let left = rect.left;
 
-        if (top < 10) top = rect.bottom + window.scrollY + 8;
-        if (left + 220 > window.innerWidth) left = window.innerWidth - 230;
+        if (top < 10) top = rect.bottom + 8;
+        if (left + 230 > window.innerWidth - 12) left = window.innerWidth - 242;
         if (left < 10) left = 10;
 
-        pill.style.top = `${top}px`;
-        pill.style.left = `${left}px`;
+        pill.style.top = `${Math.round(top)}px`;
+        pill.style.left = `${Math.round(left)}px`;
         pill.classList.remove("hidden");
       } catch (err) {
         pill.classList.add("hidden");
@@ -393,65 +434,19 @@
         pill.classList.add("hidden");
       }
     });
-  }
 
-  // Drawer functions
-  window.toggleVocabDrawer = function () {
-    const drawer = document.getElementById("bilingual-drawer");
-    const backdrop = document.getElementById("bilingual-drawer-backdrop");
-    if (!drawer) return;
-    const isClosed = drawer.classList.contains("translate-x-full");
-
-    if (isClosed) {
-      drawer.classList.remove("translate-x-full");
-      backdrop.classList.remove("hidden");
-      document.getElementById("drawer-search-input").focus();
-    } else {
-      drawer.classList.add("translate-x-full");
-      backdrop.classList.add("hidden");
-    }
-  };
-
-  function renderDrawerItems() {
-    const list = document.getElementById("drawer-items-list");
-    if (!list) return;
-
-    let itemsHtml = "";
-    for (const [term, data] of Object.entries(MASTER_LEXICON)) {
-      itemsHtml += `
-        <div class="drawer-item p-3 rounded-2xl bg-slate-800/80 border border-slate-700/80 hover:border-blue-500/50 transition-all flex items-start justify-between gap-3 group" data-term="${term.toLowerCase()}" data-en="${data.en.toLowerCase()}">
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 mb-1 flex-wrap">
-              <span class="font-bold text-white text-sm font-heading">${term}</span>
-              <span class="text-xs font-mono font-semibold text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">${data.en}</span>
-            </div>
-            <p class="text-xs text-slate-300 leading-relaxed">${data.desc}</p>
-          </div>
-          <button onclick="window.speakHindiWordFromDrawer('${term}')" class="p-2 rounded-xl bg-slate-900 group-hover:bg-blue-600 text-slate-400 group-hover:text-white transition-all text-xs flex-shrink-0 cursor-pointer" title="सुनें">
-            <i class="fas fa-volume-up"></i>
-          </button>
-        </div>`;
-    }
-    list.innerHTML = itemsHtml;
-  }
-
-  window.speakHindiWordFromDrawer = function(term) {
-    speakHindi(term);
-  };
-
-  function filterDrawerWords(query) {
-    const q = query.toLowerCase().trim();
-    document.querySelectorAll("#drawer-items-list .drawer-item").forEach((item) => {
-      const term = item.getAttribute("data-term") || "";
-      const en = item.getAttribute("data-en") || "";
-      const desc = item.innerText.toLowerCase();
-      if (term.includes(q) || en.includes(q) || desc.includes(q)) {
-        item.style.display = "";
-      } else {
-        item.style.display = "none";
+    document.addEventListener("touchstart", (e) => {
+      if (!pill.contains(e.target)) {
+        pill.classList.add("hidden");
       }
-    });
+    }, { passive: true });
   }
+
+  // Legacy stubs (Drawer removed per user instruction)
+  window.toggleVocabDrawer = function () {};
+  window.speakHindiWordFromDrawer = function (term) {
+    speakTerm(term);
+  };
 
   // Header Toggle Logic
   window.toggleEnglishHints = function () {
@@ -493,7 +488,7 @@
         if (content.includes(term) && !content.includes(`data-term="${term}"`)) {
           const en = MASTER_LEXICON[term].en;
           const desc = MASTER_LEXICON[term].desc;
-          const rep = `<span class="term-gloss font-semibold cursor-help" data-term="${term}" data-en="${en}" data-desc="${desc}">${term}</span><span class="en-hint font-sans">(${en})</span>`;
+          const rep = `<span class="term-gloss font-semibold cursor-pointer" data-term="${term}" data-en="${en}" data-desc="${desc}">${term}</span><span class="en-hint font-sans">(${en})</span>`;
           // Replace only first occurrence
           content = content.replace(term, rep);
           count++;
@@ -501,6 +496,9 @@
       }
       container.innerHTML = content;
     });
+    if (window.__bindGlossElements) {
+      window.__bindGlossElements();
+    }
   }
 
   // Init everything on DOM ready
