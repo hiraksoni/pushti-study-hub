@@ -358,20 +358,22 @@
         var MIN_TEXT_LENGTH = 140;
 
         var candidates = document.querySelectorAll(
+            'main p, .tab-content p, article p, section p, ' +
             '.concept-card, .rule-box, .formula-card, .formula-box, .key-point, ' +
             '.note-card, .theory-card, .illustration-card, .summary-box, .concept-block, ' +
-            'section > p, .subtopic-pane > p, .unit-card'
+            '.subtopic-pane > p, .unit-card'
         );
 
         candidates.forEach(function (el) {
+            // Ignore headers, footers, navigation, modals, search dropdowns, quizzes, flashcards
+            if (el.closest('header, nav, aside, footer, #globalSearchDropdown, .modal, .quiz-box, .flashcard')) return;
             if (el.querySelector('.pushti-tts-speaker-btn') || el.classList.contains('pushti-tts-processed')) return;
-            el.classList.add('pushti-tts-processed');
-
+            
             var rawText = (el.innerText || el.textContent || '').trim();
             if (rawText.length < MIN_TEXT_LENGTH) return;
 
-            // Find best location to attach the speaker icon
-            var headerEl = el.querySelector('h2, h3, h4, h5, strong, .concept-title, .rule-title');
+            el.classList.add('pushti-tts-processed');
+
             var btn = document.createElement('button');
             btn.type = 'button';
             btn.className = 'pushti-tts-speaker-btn';
@@ -383,10 +385,11 @@
                 speakTargetText(rawText, el, btn);
             });
 
+            var headerEl = el.querySelector('h2, h3, h4, h5, strong, .concept-title, .rule-title');
             if (headerEl) {
                 headerEl.appendChild(btn);
             } else {
-                el.insertBefore(btn, el.firstChild);
+                el.appendChild(btn);
             }
         });
     }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="hi" class="dark" data-theme="dark">
 <head>
+  <meta name="referrer" content="no-referrer">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>पाठ ३: असफलता से सीख (हार को जीत में बदलना) — गीता तिवारी | Pushti Study Hub</title>
@@ -556,7 +557,7 @@
         <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/30 transition-all mb-3 relative group">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-mono text-amber-400 font-semibold">अनुभाग / पद्यांश 1</span>
-            <button onclick="speakHindiText(this.nextElementSibling.innerText, this)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] text-amber-300 font-medium transition-all flex items-center gap-1 cursor-pointer">
+            <button onclick="speakHindiText('', this)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] text-amber-300 font-medium transition-all flex items-center gap-1 cursor-pointer">
               <i class="fas fa-volume-up"></i> सुनें
             </button>
           </div>
@@ -569,7 +570,7 @@
         <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/30 transition-all mb-3 relative group">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-mono text-amber-400 font-semibold">अनुभाग / पद्यांश 2</span>
-            <button onclick="speakHindiText(this.nextElementSibling.innerText, this)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] text-amber-300 font-medium transition-all flex items-center gap-1 cursor-pointer">
+            <button onclick="speakHindiText('', this)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] text-amber-300 font-medium transition-all flex items-center gap-1 cursor-pointer">
               <i class="fas fa-volume-up"></i> सुनें
             </button>
           </div>
@@ -582,7 +583,7 @@
         <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-amber-500/30 transition-all mb-3 relative group">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-mono text-amber-400 font-semibold">अनुभाग / पद्यांश 3</span>
-            <button onclick="speakHindiText(this.nextElementSibling.innerText, this)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] text-amber-300 font-medium transition-all flex items-center gap-1 cursor-pointer">
+            <button onclick="speakHindiText('', this)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] text-amber-300 font-medium transition-all flex items-center gap-1 cursor-pointer">
               <i class="fas fa-volume-up"></i> सुनें
             </button>
           </div>
@@ -2454,6 +2455,18 @@
 
         // --- TTS SPEECH FUNCTIONS (High-Fidelity Online Cloud Audio Engine) ---
     function speakHindiText(text, btn) {
+      if (!text && btn) {
+        if (btn.parentElement && btn.parentElement.nextElementSibling) {
+          text = btn.parentElement.nextElementSibling.innerText || '';
+        }
+        if (!text) {
+          const card = btn.closest('.group, .p-4, .p-5, .p-6, div');
+          if (card) {
+            const p = card.querySelector('p, .verse-line, .text-slate-100');
+            text = p ? p.innerText : '';
+          }
+        }
+      }
       if (window.PushtiOnlineTTS) {
         window.PushtiOnlineTTS.speak(text, { lang: 'hi', btn: btn });
         return;
@@ -2602,5 +2615,6 @@
   </script>
   <script src="../../js/online_tts.js"></script>
   <script src="../../js/scroll_to_top.js"></script>
+  <script src="../../js/bilingual_helper.js"></script>
 </body>
 </html>

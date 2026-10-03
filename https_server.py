@@ -37,6 +37,33 @@ class HubRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-cache, must-revalidate')
         super().end_headers()
 
+    def do_GET(self):
+        if self.path.startswith('/api/tts'):
+            import urllib.parse
+            import urllib.request
+            parsed = urllib.parse.urlparse(self.path)
+            qs = urllib.parse.parse_qs(parsed.query)
+            q = qs.get('q', [''])[0]
+            tl = qs.get('tl', ['hi'])[0]
+            if q:
+                target_url = f"https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl={urllib.parse.quote(tl)}&q={urllib.parse.quote(q)}"
+                req = urllib.request.Request(target_url, headers={'User-Agent': 'Mozilla/5.0'})
+                try:
+                    with urllib.request.urlopen(req) as resp:
+                        audio_data = resp.read()
+                        self.send_response(200)
+                        self.send_header('Content-Type', 'audio/mpeg')
+                        self.send_header('Content-Length', str(len(audio_data)))
+                        self.send_header('Access-Control-Allow-Origin', '*')
+                        self.send_header('Cache-Control', 'public, max-age=86400')
+                        self.end_headers()
+                        self.wfile.write(audio_data)
+                        return
+                except Exception as e:
+                    self.send_error(500, str(e))
+                    return
+        super().do_GET()
+
     def log_message(self, format, *args):
         try:
             sys.stderr.write(f"[{self.log_date_time_string()}] {self.address_string()} {format % args}\n")

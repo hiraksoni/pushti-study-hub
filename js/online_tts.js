@@ -1,21 +1,27 @@
 /**
  * Pushti Study Hub - Online Cloud Audio TTS Engine
- * High-fidelity, zero-delay online text-to-speech for Hindi and English.
- * Solves browser SpeechSynthesis stutter, timeout, and dropped-audio bugs by streaming
- * natural native pronunciation via Google Cloud Translate Audio API.
+ * Version: 2.0.0 (High-Fidelity Dual-Route Audio Streamer)
  *
- * Features:
- *   - Auto language detection (Hindi 'hi' for Devanagari, English 'en' for Latin).
- *   - Intelligent sentence boundary chunking (। , . ? ! \n).
- *   - Lookahead audio pre-buffering for gapless, smooth playback across long lessons.
- *   - UI button state synchronization & reading element spotlight.
- *   - Graceful fallback if offline.
+ * Solves:
+ *   1. System SpeechSynthesis timeout/stutter/stalls on Windows/Chromium.
+ *   2. Google Translate TTS Referrer 404 blocking via automatic no-referrer injection
+ *      and dedicated local `/api/tts` proxy.
+ *   3. Self-healing DOM text extraction (supports inline buttons even if sibling selectors were broken).
+ *   4. Zero-delay lookahead prebuffering for gapless playback of long lessons.
  */
 
 (function (window) {
     'use strict';
 
-    if (window.PushtiOnlineTTS) return;
+    // Auto-inject <meta name="referrer" content="no-referrer"> to allow audio streaming
+    if (!document.querySelector('meta[name="referrer"]')) {
+        try {
+            var meta = document.createElement('meta');
+            meta.name = 'referrer';
+            meta.content = 'no-referrer';
+            document.head.appendChild(meta);
+        } catch (e) {}
+    }
 
     var currentAudio = null;
     var preloadedAudio = null;
@@ -27,12 +33,15 @@
     var activeTargetEl = null;
     var playSessionId = 0;
 
-    // Detect if text contains Devanagari (Hindi / Sanskrit)
+    // Detect if host has local /api/tts proxy endpoint
+    var isLocalHost = (window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1' || 
+                       window.location.protocol === 'file:');
+
     function isDevanagari(text) {
         return /[\u0900-\u097F]/.test(text);
     }
 
-    // Clean text for speech
     function sanitizeText(raw) {
         if (!raw) return '';
         return raw
@@ -52,13 +61,11 @@
             .trim();
     }
 
-    // Split text into natural sentence chunks under maxChars (Google API accepts ~180-200 chars)
     function chunkText(text, maxChars) {
-        maxChars = maxChars || 160;
+        maxChars = maxChars || 150;
         var clean = sanitizeText(text);
         if (!clean) return [];
 
-        // Split on Hindi purna viram (।), periods (.), exclamation (!), question marks (?), newlines
         var sentenceDelims = /([।\.\?\!\n]+)/;
         var tokens = clean.split(sentenceDelims);
         var rawSentences = [];
@@ -75,7 +82,6 @@
             if (item.length <= maxChars) {
                 chunks.push(item);
             } else {
-                // Split long sentence on commas, semicolons, or spaces
                 var subTokens = item.split(/([,;:\s]+)/);
                 var cur = '';
                 for (var st = 0; st < subTokens.length; st++) {
@@ -94,8 +100,14 @@
     }
 
     function getAudioUrl(textChunk, lang) {
-        var encoded = encodeURIComponent(textChunk);
-        return 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=' + encodeURIComponent(lang) + '&q=' + encoded;
+        var encText = encodeURIComponent(textChunk);
+        var encLang = encodeURIComponent(lang);
+        if (isLocalHost && window.location.protocol.indexOf('http') === 0) {
+            // Local high-speed proxy
+            return '/api/tts?tl=' + encLang + '&q=' + encText;
+        }
+        // Direct Google Cloud Audio endpoint (with no-referrer meta)
+        return 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=' + encLang + '&q=' + encText;
     }
 
     function stop() {
@@ -148,8 +160,10 @@
         }
         var nextChunk = audioQueue[index];
         var url = getAudioUrl(nextChunk, lang);
-        preloadedAudio = new Audio(url);
+        preloadedAudio = new Audio();
+        preloadedAudio.referrerPolicy = 'no-referrer';
         preloadedAudio.preload = 'auto';
+        preloadedAudio.src = url;
     }
 
     function playQueue(lang, sessionId, onComplete) {
@@ -167,12 +181,14 @@
 
         if (!audioObj) {
             var url = getAudioUrl(chunk, lang);
-            audioObj = new Audio(url);
+            audioObj = new Audio();
+            audioObj.referrerPolicy = 'no-referrer';
+            audioObj.src = url;
         }
 
         currentAudio = audioObj;
 
-        // Preload next chunk ahead of time for gapless streaming
+        // Lookahead buffer
         preloadNext(currentQueueIndex + 1, lang, sessionId);
 
         audioObj.onended = function () {
@@ -183,17 +199,19 @@
 
         audioObj.onerror = function () {
             if (sessionId !== playSessionId) return;
-            console.warn('[PushtiOnlineTTS] Audio chunk error, advancing to next chunk:', chunk);
-            currentQueueIndex++;
-            playQueue(lang, sessionId, onComplete);
+            console.warn('[PushtiOnlineTTS] Audio stream error on chunk:', chunk);
+            // Fallback attempt to SpeechSynthesis
+            fallbackSpeechSynthesis(chunk, lang, function () {
+                currentQueueIndex++;
+                playQueue(lang, sessionId, onComplete);
+            });
         };
 
         var playPromise = audioObj.play();
         if (playPromise !== undefined) {
             playPromise.catch(function (err) {
                 if (sessionId !== playSessionId) return;
-                console.warn('[PushtiOnlineTTS] Autoplay prevented or network error:', err);
-                // Fallback attempt with SpeechSynthesis if audio fetch fails
+                console.warn('[PushtiOnlineTTS] Play error:', err);
                 fallbackSpeechSynthesis(chunk, lang, function () {
                     currentQueueIndex++;
                     playQueue(lang, sessionId, onComplete);
@@ -221,8 +239,15 @@
     function speak(text, options) {
         options = options || {};
 
-        // If clicking on the same button currently speaking, toggle stop
-        if (isPlaying && options.btn && options.btn === activeBtn) {
+        var btn = options.btn;
+        // Auto-detect button from event if not provided
+        if (!btn && window.event && window.event.target) {
+            try {
+                btn = window.event.target.closest('button');
+            } catch (e) {}
+        }
+
+        if (isPlaying && btn && btn === activeBtn) {
             stop();
             return;
         }
@@ -232,13 +257,12 @@
         var clean = sanitizeText(text);
         if (!clean) return;
 
-        // Determine language
         var lang = options.lang;
         if (!lang) {
             lang = isDevanagari(clean) ? 'hi' : 'en';
         }
 
-        var chunks = chunkText(clean, 160);
+        var chunks = chunkText(clean, 150);
         if (!chunks.length) return;
 
         audioQueue = chunks;
@@ -246,9 +270,8 @@
         isPlaying = true;
         var mySessionId = ++playSessionId;
 
-        // Update UI Button
-        if (options.btn) {
-            activeBtn = options.btn;
+        if (btn) {
+            activeBtn = btn;
             originalBtnContent = activeBtn.innerHTML;
             activeBtn.setAttribute('data-speaking', 'true');
             activeBtn.classList.add('speaking');
@@ -260,7 +283,6 @@
             }
         }
 
-        // Target highlight
         if (options.targetEl) {
             activeTargetEl = options.targetEl;
             activeTargetEl.classList.add('pushti-tts-reading-target');
@@ -269,7 +291,7 @@
         playQueue(lang, mySessionId, options.onComplete);
     }
 
-    // Expose Public API
+    // Expose API
     window.PushtiOnlineTTS = {
         speak: speak,
         stop: stop,
@@ -280,18 +302,64 @@
         sanitizeText: sanitizeText
     };
 
-    // Override global helper functions so existing onclick handlers automatically use Online TTS
-    window.speakHindiText = function (text, btn) {
-        window.PushtiOnlineTTS.speak(text, { lang: 'hi', btn: btn });
+    // --- SELF-HEALING HINDI WRAPPERS ---
+    window.speakHindiText = function (targetOrText, btn) {
+        var text = '';
+        var targetEl = null;
+
+        // Try extracting text from string or DOM element
+        if (typeof targetOrText === 'string') {
+            text = targetOrText;
+        } else if (targetOrText && targetOrText.innerText) {
+            text = targetOrText.innerText;
+            targetEl = targetOrText;
+        }
+
+        var activeTargetBtn = btn;
+        if (!activeTargetBtn && window.event && window.event.target) {
+            try {
+                activeTargetBtn = window.event.target.closest('button');
+            } catch (e) {}
+        }
+
+        // Self-heal: extract from parent card if text was missing/empty
+        if (!text && activeTargetBtn) {
+            if (activeTargetBtn.parentElement && activeTargetBtn.parentElement.nextElementSibling) {
+                targetEl = activeTargetBtn.parentElement.nextElementSibling;
+                text = targetEl.innerText || targetEl.textContent || '';
+            }
+            if (!text) {
+                var card = activeTargetBtn.closest('.group, .p-4, .p-5, .p-6, .concept-card, div');
+                if (card) {
+                    targetEl = card.querySelector('p, .verse-line, .text-slate-100');
+                    text = targetEl ? (targetEl.innerText || targetEl.textContent || '') : '';
+                }
+            }
+        }
+
+        if (text) {
+            window.PushtiOnlineTTS.speak(text, { lang: 'hi', btn: activeTargetBtn, targetEl: targetEl });
+        }
     };
 
     window.speakHindiWord = function (word, meaning, btn) {
+        var activeTargetBtn = btn;
+        if (!activeTargetBtn && window.event && window.event.target) {
+            try {
+                activeTargetBtn = window.event.target.closest('button');
+            } catch (e) {}
+        }
         var text = word + '... अर्थात्... ' + meaning;
-        window.PushtiOnlineTTS.speak(text, { lang: 'hi', btn: btn });
+        window.PushtiOnlineTTS.speak(text, { lang: 'hi', btn: activeTargetBtn });
     };
 
     window.speakFullLesson = function (btn) {
-        // Collect all readable text in #tabText
+        var activeTargetBtn = btn;
+        if (!activeTargetBtn && window.event && window.event.target) {
+            try {
+                activeTargetBtn = window.event.target.closest('button');
+            } catch (e) {}
+        }
         var targetContainer = document.getElementById('tabText') || document.querySelector('.lesson-content-body');
         var text = '';
         if (targetContainer) {
@@ -308,7 +376,7 @@
                 return p.textContent;
             }).join('. ');
         }
-        window.PushtiOnlineTTS.speak(text, { lang: 'hi', btn: btn, targetEl: targetContainer });
+        window.PushtiOnlineTTS.speak(text, { lang: 'hi', btn: activeTargetBtn, targetEl: targetContainer });
     };
 
 })(window);
