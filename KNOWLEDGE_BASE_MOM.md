@@ -136,22 +136,25 @@ d:\Users\expor\Downloads\Codes\
 │           └── v1_vocabulary_word_power/         (79 Items • eng_gram_v1_vocabulary_word_power)
 │   └── hindi/
 │       ├── literature/
-│       │   ├── ch1_humko_man_ki_shakti_dena/     (34 Items • hin_lit_ch1)
-│       │   ├── ch2_boodhi_kaki/                  (34 Items • hin_lit_ch2)
-│       │   ├── ch3_asafalta_se_seekh/            (34 Items • hin_lit_ch3)
-│       │   ├── ch4_yeh_bhi_ek_pariksha/          (34 Items • hin_lit_ch4)
-│       │   ├── ch5_sneh_bhari_paati/             (34 Items • hin_lit_ch5)
-│       │   ├── ch6_missile_ke_janak/             (34 Items • hin_lit_ch6)
-│       │   ├── ch7_maa_ka_upahar/                (34 Items • hin_lit_ch7)
-│       │   └── ch8_vishwarajya/                  (34 Items • hin_lit_ch8)
+│       │   ├── ch1_humko_man_ki_shakti_dena/     (19 Items • 100% Textbook & Notebook Ingested)
+│       │   ├── ch2_boodhi_kaki/                  (23 Items • 100% Textbook & Notebook Ingested)
+│       │   ├── ch3_asafalta_se_seekh/            (25 Items • 100% Textbook & Notebook Ingested)
+│       │   ├── ch4_yeh_bhi_ek_pariksha/          (24 Items • 100% Textbook & Notebook Ingested)
+│       │   ├── ch5_sneh_bhari_paati/             (19 Items • 100% Textbook & Notebook Ingested)
+│       │   ├── ch6_missile_ke_janak/             (16 Items • 100% Textbook & Notebook Ingested)
+│       │   ├── ch7_maa_ka_upahar/                (23 Items • 100% Textbook & Notebook Ingested)
+│       │   └── ch8_vishwarajya/                  (23 Items • 100% Textbook Ingested + 50M Term-1 Exam)
 │       └── grammar/
-│           ├── g1_bhasha_lipi_vyakaran/          (34 Items • hin_gram_g1)
-│           ├── g2_varna_vichar/                  (34 Items • hin_gram_g2)
-│           ├── g3_shabda_vichar/                 (34 Items • hin_gram_g3)
-│           ├── g4_upsarg_pratyay/                (34 Items • hin_gram_g4)
-│           ├── g6_samas/                         (34 Items • hin_gram_g6)
-│           ├── g7_sangya/                        (34 Items • hin_gram_g7)
-│           └── g22_muhavare_lokoktiyan/          (34 Items • hin_gram_g22)
+│           ├── g1_bhasha_lipi_vyakaran/          (23 Items • 100% Textbook & Notebook Ingested)
+│           ├── g2_varna_vichar/                  (27 Items • 100% Textbook & Notebook Ingested)
+│           ├── g3_shabda_vichar/                 (26 Items • 100% Textbook & Notebook Ingested)
+│           ├── g4_upsarg_pratyay/                (19 Items • 100% Textbook & Notebook Ingested)
+│           ├── g6_samas/                         (13 Items • 100% Textbook & Notebook Ingested)
+│           ├── g7_sangya/                        (14 Items • 100% Textbook & Notebook Ingested)
+│           ├── g20_shabdo_ka_parivar/            (12 Items • 100% Textbook Ingested)
+│           ├── g22_muhavare_lokoktiyan/          (11 Items • 100% Textbook Ingested)
+│           ├── g23_patra_lekhan/                 (10 Items • 100% Textbook Ingested)
+│           └── g25_anuched_lekhan/               (9 Items • 100% Textbook Ingested)
 ├── knowledge_base/                               (Mirrored System Store)
 │   ├── sanskrit/
 │   ├── mathematics/
@@ -389,21 +392,24 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 | **English (Grammar)** | `g10_finite_non_finite` | Lesson 10: Finite and Non-Finite Verbs | 79 | `KB Files/english/grammar/g10_finite_non_finite/` | ✅ Complete |
 | **English (Grammar)** | `g17_active_passive` | Lesson 17: Active and Passive Voice | 79 | `KB Files/english/grammar/g17_active_passive/` | ✅ Complete |
 | **English (Grammar)** | `v1_vocabulary_word_power` | Lesson 26: Vocabulary & Language Usage | 79 | `KB Files/english/grammar/v1_vocabulary_word_power/` | ✅ Complete |
-| **Hindi (Literature)** | `ch1_humko_man_ki_shakti_dena` | पाठ १: हमको मन की शक्ति देना (गुलज़ार) | 34 | `KB Files/hindi/literature/ch1_humko_man_ki_shakti_dena/` | ✅ Complete |
-| **Hindi (Literature)** | `ch2_boodhi_kaki` | पाठ २: बूढ़ी काकी (मुंशी प्रेमचंद) | 34 | `KB Files/hindi/literature/ch2_boodhi_kaki/` | ✅ Complete |
-| **Hindi (Literature)** | `ch3_asafalta_se_seekh` | पाठ ३: असफलता से सीख (प्रेरणादायी काव्य) | 34 | `KB Files/hindi/literature/ch3_asafalta_se_seekh/` | ✅ Complete |
-| **Hindi (Literature)** | `ch4_yeh_bhi_ek_pariksha` | पाठ ४: यह भी एक परीक्षा (सुरेन्द्र अंचल) | 34 | `KB Files/hindi/literature/ch4_yeh_bhi_ek_pariksha/` | ✅ Complete |
-| **Hindi (Literature)** | `ch5_sneh_bhari_paati` | पाठ ५: स्नेह भरी पाती (उषा वधवा) | 34 | `KB Files/hindi/literature/ch5_sneh_bhari_paati/` | ✅ Complete |
-| **Hindi (Literature)** | `ch6_missile_ke_janak` | पाठ ६: मिसाइल के जनक (डॉ. ए. पी. जे. अब्दुल कलाम) | 34 | `KB Files/hindi/literature/ch6_missile_ke_janak/` | ✅ Complete |
-| **Hindi (Literature)** | `ch7_maa_ka_upahar` | पाठ ७: माँ का उपहार (ऐतिहासिक प्रेरक कथा) | 34 | `KB Files/hindi/literature/ch7_maa_ka_upahar/` | ✅ Complete |
-| **Hindi (Literature)** | `ch8_vishwarajya` | पाठ ८: विश्वराज्य (राष्ट्रकवि मैथिलीशरण गुप्त) | 34 | `KB Files/hindi/literature/ch8_vishwarajya/` | ✅ Complete |
-| **Hindi (Grammar)** | `g1_bhasha_lipi_vyakaran` | व्याकरण पाठ १: भाषा, लिपि और व्याकरण | 34 | `KB Files/hindi/grammar/g1_bhasha_lipi_vyakaran/` | ✅ Complete |
-| **Hindi (Grammar)** | `g2_varna_vichar` | व्याकरण पाठ २: वर्ण विचार (स्वर, व्यंजन, उच्चारण) | 34 | `KB Files/hindi/grammar/g2_varna_vichar/` | ✅ Complete |
-| **Hindi (Grammar)** | `g3_shabda_vichar` | व्याकरण पाठ ३: शब्द विचार (तत्सम, तद्भव, रूढ़, यौगिक) | 34 | `KB Files/hindi/grammar/g3_shabda_vichar/` | ✅ Complete |
-| **Hindi (Grammar)** | `g4_upsarg_pratyay` | व्याकरण पाठ ४: शब्द रचना — उपसर्ग एवं प्रत्यय | 34 | `KB Files/hindi/grammar/g4_upsarg_pratyay/` | ✅ Complete |
-| **Hindi (Grammar)** | `g6_samas` | व्याकरण पाठ ६: शब्द रचना — समास | 34 | `KB Files/hindi/grammar/g6_samas/` | ✅ Complete |
-| **Hindi (Grammar)** | `g7_sangya` | व्याकरण पाठ ७: संज्ञा (Noun) | 34 | `KB Files/hindi/grammar/g7_sangya/` | ✅ Complete |
-| **Hindi (Grammar)** | `g22_muhavare_lokoktiyan` | व्याकरण पाठ २२: मुहावरे एवं लोकोक्तियाँ | 34 | `KB Files/hindi/grammar/g22_muhavare_lokoktiyan/` | ✅ Complete |
+| **Hindi (Literature)** | `ch1_humko_man_ki_shakti_dena` | पाठ १: हमको मन की शक्ति देना (गुलज़ार) | 19 | `KB Files/hindi/literature/ch1_humko_man_ki_shakti_dena/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Literature)** | `ch2_boodhi_kaki` | पाठ २: बूढ़ी काकी (मुंशी प्रेमचंद) | 23 | `KB Files/hindi/literature/ch2_boodhi_kaki/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Literature)** | `ch3_asafalta_se_seekh` | पाठ ३: असफलता से सीख (गीता तिवारी) | 25 | `KB Files/hindi/literature/ch3_asafalta_se_seekh/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Literature)** | `ch4_yeh_bhi_ek_pariksha` | पाठ ४: यह भी एक परीक्षा (सुरेन्द्र अंचल) | 24 | `KB Files/hindi/literature/ch4_yeh_bhi_ek_pariksha/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Literature)** | `ch5_sneh_bhari_paati` | पाठ ५: स्नेह भरी पाती (उषा वधवा) | 19 | `KB Files/hindi/literature/ch5_sneh_bhari_paati/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Literature)** | `ch6_missile_ke_janak` | पाठ ६: मिसाइल के जनक (डॉ. ए. पी. जे. अब्दुल कलाम) | 16 | `KB Files/hindi/literature/ch6_missile_ke_janak/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Literature)** | `ch7_maa_ka_upahar` | पाठ ७: माँ का उपहार (ऐतिहासिक प्रेरक कथा) | 23 | `KB Files/hindi/literature/ch7_maa_ka_upahar/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Literature)** | `ch8_vishwarajya` | पाठ ८: विश्वराज्य (राष्ट्रकवि मैथिलीशरण गुप्त) | 23 | `KB Files/hindi/literature/ch8_vishwarajya/` | ✅ 100% Textbook Ingested + 50M Exam |
+| **Hindi (Grammar)** | `g1_bhasha_lipi_vyakaran` | व्याकरण पाठ १: भाषा, लिपि और व्याकरण | 23 | `KB Files/hindi/grammar/g1_bhasha_lipi_vyakaran/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Grammar)** | `g2_varna_vichar` | व्याकरण पाठ २: वर्ण विचार (स्वर, व्यंजन, उच्चारण) | 27 | `KB Files/hindi/grammar/g2_varna_vichar/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Grammar)** | `g3_shabda_vichar` | व्याकरण पाठ ३: शब्द विचार (तत्सम, तद्भव, रूढ़, यौगिक) | 26 | `KB Files/hindi/grammar/g3_shabda_vichar/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Grammar)** | `g4_upsarg_pratyay` | व्याकरण पाठ ४: शब्द रचना — उपसर्ग एवं प्रत्यय | 19 | `KB Files/hindi/grammar/g4_upsarg_pratyay/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Grammar)** | `g6_samas` | व्याकरण पाठ ६: शब्द रचना — समास | 13 | `KB Files/hindi/grammar/g6_samas/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Grammar)** | `g7_sangya` | व्याकरण पाठ ७: शब्द भेद : विकारी शब्द — संज्ञा | 14 | `KB Files/hindi/grammar/g7_sangya/` | ✅ 100% Textbook & Notebook Ingested |
+| **Hindi (Grammar)** | `g20_shabdo_ka_parivar` | व्याकरण पाठ २०: शब्दों का परिवार (Vocabulary) | 12 | `KB Files/hindi/grammar/g20_shabdo_ka_parivar/` | ✅ 100% Textbook Ingested |
+| **Hindi (Grammar)** | `g22_muhavare_lokoktiyan` | व्याकरण पाठ २२: मुहावरे एवं लोकोक्तियाँ (Phrases & Proverbs) | 11 | `KB Files/hindi/grammar/g22_muhavare_lokoktiyan/` | ✅ 100% Textbook Ingested |
+| **Hindi (Grammar)** | `g23_patra_lekhan` | व्याकरण पाठ २३: पत्र लेखन (Letter Writing) | 10 | `KB Files/hindi/grammar/g23_patra_lekhan/` | ✅ 100% Textbook Ingested |
+| **Hindi (Grammar)** | `g25_anuched_lekhan` | व्याकरण पाठ २५: अनुच्छेद लेखन (Paragraph Writing) | 9 | `KB Files/hindi/grammar/g25_anuched_lekhan/` | ✅ 100% Textbook Ingested |
 
 ---
 *Authored & Verified: 24 September 2026 | Pushti Study Hub Core Engineering*

@@ -78,34 +78,54 @@ Every chapter module must feature a clean, sticky top header (`h-[54px]` / `heig
 
 ---
 
-## 4. High-Fidelity Online Cloud Audio Read-Aloud (TTS) Standard
+## 4. High-Fidelity Natural Female Audio Read-Aloud (TTS) Standard (v4.0)
 
-### 4.1 Architecture & Primary Engine (`js/online_tts.js`)
-- **Engine**: Pure online cloud audio streaming via Google Cloud Translate Audio API (`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl={lang}&q={text}`).
-- **Strict Prohibition**: Do **NOT** rely on the browser's built-in `window.speechSynthesis` for long text, chapter lessons, or Hindi reading. System SpeechSynthesis stutters, stalls after 15 seconds, and drops sentences due to missing OS voice packages.
+### 4.1 Architecture & Voice Priority Hierarchy (`js/online_tts.js`)
+- **Melodious Female Voice Priority**: To ensure pleasant, natural, and engaging listening for Pushti without robotic fatigue (avoiding harsh or robotic male voices), the audio engine dynamically discovers, prioritizes, and locks onto high-fidelity **Female Hindi Voices**:
+  1. `Microsoft Swara Online (Natural) - Hindi (India)` (Edge / Windows 11)
+  2. `Microsoft Kalpana - Hindi (India)`
+  3. `Google हिन्दी` (Android / Chrome Natural Female)
+  4. `Lekha` (macOS / iOS)
+- **State Machine with Real Play / Pause / Resume**:
+  - Full playback controls: 1-click **Play**, **Pause**, **Resume**, and **Stop**.
+  - Persistent Floating Player Widget: Stays pinned at bottom-right during active reading, showing real-time sentence progress (`वाक्य ३ / १८`) and `👩 महिला स्वर` active badge.
+- **Continuous Multi-Sentence Queue & 14s Android Watchdog**:
+  - Long prose and poems are tokenized into natural sentence boundaries (`।`, `.`, `?`, `!`, `,`, `\n`).
+  - Includes a proactive **14-second watchdog timer** that refreshes speech synthesis utterances to prevent the notorious Chromium/Android freeze bug on long passages.
+- **Graceful Cloud Fallback**: If a client device lacks high-quality neural female voices, the engine automatically falls back to online cloud streaming via the local proxy `/api/tts?tl=hi&q=...` or Google TTS (`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=hi&q=...`).
 
-### 4.2 Referrer Policy & Local Proxy Protocol
-1. **Auto `no-referrer` Injection**: [js/online_tts.js](file:///d:/Users/expor/Downloads/Codes/js/online_tts.js) automatically injects `<meta name="referrer" content="no-referrer">` into `<head>` to prevent Google 404 blocking when hosted on public web servers (e.g. GitHub Pages).
-2. **Local Audio Proxy**: When running locally (`localhost` / `127.0.0.1`), audio requests route through the high-speed `/api/tts?tl={lang}&q={text}` endpoint in `https_server.py`, ensuring zero CORS, zero latency, and instant playback.
-
-### 4.3 Intelligent Sentence Chunking & Gapless Pre-Buffering
-- **Chunk Threshold**: Texts are divided into natural sentence boundaries (`।`, `.`, `?`, `!`, `,`, `\n`) under 150 characters.
-- **Lookahead Preload**: While chunk $i$ is actively playing, chunk $i+1$ is pre-buffered in an HTML5 `<audio>` element with `preload="auto"` so transitions between sentences have **zero delay**.
-
-### 4.4 Selective Speaker Placement Rule
-- **Substantive Content Only**: Speaker buttons must be attached **ONLY to substantive explanation paragraphs and concept cards ($\ge 140$ characters)**.
+### 4.2 Selective Speaker Placement Rule
+- **Substantive Content Only**: Speaker buttons must be attached **ONLY to substantive explanation paragraphs, poems, and concept cards ($\ge 140$ characters)**.
 - **Prohibition**: Never spam speaker icons next to single words, labels, table headers, breadcrumbs, badges, or short metadata.
 - **Hindi Chapter Specifics**:
-  - Individual verse sections: `<button onclick="speakHindiText('', this)">`
+  - Individual verse/paragraph sections: `<button onclick="speakHindiText('', this)">`
   - Vocabulary tables: `<button onclick="speakHindiWord('शब्द', 'अर्थ', this)">`
-  - Full chapter recitation: `<button onclick="speakFullLesson(this)">`
+  - Full chapter continuous recitation: `<button onclick="speakFullLesson(this)">`
 - **UI Feedback**: While playing, buttons transform into an animated pulsing stop button:
   `<i class="fas fa-stop text-rose-400 animate-pulse"></i> रोकें`
   Clicking again immediately halts audio playback and resets the button.
 
 ---
 
-## 5. Local Server & Environment Automation Standard
+## 5. Bilingual Language Learning & English Equivalent Naming Standard
+
+Because Pushti studies in an **English-medium CBSE curriculum**, language subjects (Hindi & Sanskrit) must provide clear bilingual scaffolding to ensure 100% comprehension:
+
+### 5.1 English Equivalent Chapter Naming
+- In all chapter `<title>`, main hero `<h1>`, breadcrumbs, sidebar dock tooltips, and subject portal cards (`hindi_index.html`), every Hindi chapter title must include its clear English translation / transliterated equivalent in parentheses:
+  - Example: `Chapter 1: हमको मन की शक्ति देना (Humko Man Ki Shakti Dena — Prayer for Mental Strength)`
+  - Example: `Chapter 1: भाषा, लिपि और व्याकरण (Language, Script & Grammar)`
+  - Example: `Chapter 6: समास (Compound Words — Samas)`
+
+### 5.2 Dynamic Bilingual Scaffolding (`js/bilingual_helper.js`)
+- **Header Toggle Button**: Every language module must include a prominent `#btn-en-toggle` button in the top bar:
+  `<button id="btn-en-toggle" onclick="toggleEnglishHints()" ...>🔤 EN Hints / अर्थ</button>`
+- **Inline English Hints (`.en-hint`)**: Subtle contextual translations embedded alongside difficult literary Hindi terms, hidden by default and smoothly toggled via CSS `.show-en-hints .en-hint { display: inline-block !important; }`.
+- **Dotted Term Glosses (`.term-gloss`)**: Key literary, grammatical, and cultural terms feature a subtle dotted cyan underline with instant hover tooltip definition (`title="..."`).
+
+---
+
+## 6. Local Server & Environment Automation Standard
 
 - **Dual-Protocol Server (`https_server.py`)**:
   - Simultaneously serves HTTPS on port `8443` (`https://localhost:8443/`) and zero-warning HTTP on port `8000` (`http://localhost:8000/`) using multi-threaded `ThreadingHTTPServer`.
@@ -121,11 +141,13 @@ Every chapter module must feature a clean, sticky top header (`h-[54px]` / `heig
 
 ---
 
-## 6. Verification Checklist Gate
+## 7. Verification Checklist Gate
 
 Every newly created or audited chapter must pass:
 - [ ] **CP-GUI-14 (Top-Bar Fullscreen Placement)**: Fullscreen & Landscape button is mounted on the top header; no bottom dock clutter.
 - [ ] **CP-GUI-15 (Dock Rail 0.15s Hover & Tab Sequence)**: Sidebar expands in 0.15s; Tab 11 Google Hub sits directly below Tab 10; zero empty vertical void above hero cards.
-- [ ] **CP-TTS-1 (Online Cloud Audio Streaming)**: Uses `PushtiOnlineTTS`; chunks sentences cleanly; preloads gaplessly; bypasses OS voice limitations.
-- [ ] **CP-TTS-2 (Substantive Placement Gate)**: Speaker buttons exist only on content blocks $\ge 140$ characters (or specific poem/vocab study cards); UI pulses stop button while playing.
+- [ ] **CP-TTS-1 (Natural Female Voice Priority)**: Uses `js/online_tts.js` v4.0; locks onto sweet, natural female voices (`Microsoft Swara`, `Kalpana`, `Google हिन्दी`, `Lekha`); includes 14s watchdog timer; fallbacks to cloud proxy.
+- [ ] **CP-TTS-2 (Play/Pause/Resume & Floating Player)**: State machine allows 1-click play, pause, and resume; floating widget displays sentence counter (`वाक्य x / y`).
+- [ ] **CP-TTS-3 (Substantive Placement Gate)**: Speaker buttons exist only on content blocks $\ge 140$ characters (or specific poem/vocab study cards); UI pulses stop button while playing.
+- [ ] **CP-LANG-1 (Bilingual English Equivalents & Hints)**: Chapter titles display English equivalents in parentheses; `#btn-en-toggle` enables/disables inline `.en-hint` translations.
 - [ ] **CP-THEME-1 (Dual-Theme Token Parity)**: Flawless readability in both Dark (`data-theme="dark"`) and Light (`data-theme="light"`) modes with persistent storage.

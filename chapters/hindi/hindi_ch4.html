@@ -4,7 +4,7 @@
   <meta name="referrer" content="no-referrer">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>पाठ ४: यह भी एक परीक्षा (मानवता की सीख) — सुरेंद्र अंचल | Pushti Study Hub</title>
+  <title>पाठ 4: यह भी एक परीक्षा — Yeh Bhi Ek Pariksha (This Too Is an Examination) | Pushti Study Hub</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -217,6 +217,42 @@
       border-radius: 6px !important;
       border-style: solid !important;
     }
+      /* English Translation Hints Styling */
+    .en-hint {
+      display: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #93c5fd;
+      background: rgba(59, 130, 246, 0.14);
+      border: 1px solid rgba(59, 130, 246, 0.28);
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 5px;
+      vertical-align: middle;
+      letter-spacing: 0.3px;
+      user-select: none;
+    }
+    html:not(.dark) .en-hint {
+      color: #1d4ed8;
+      background: rgba(37, 99, 235, 0.1);
+      border-color: rgba(37, 99, 235, 0.25);
+    }
+    body.show-en-hints .en-hint {
+      display: inline-block !important;
+    }
+
+    /* Term Gloss Dotted Underline */
+    .term-gloss {
+      border-bottom: 1.5px dotted #38bdf8;
+      cursor: help;
+      transition: all 0.2s ease;
+    }
+    .term-gloss:hover {
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border-radius: 3px;
+    }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-white transition-colors duration-300">
@@ -242,6 +278,11 @@
 
     <!-- Right Cluster -->
     <div class="flex items-center gap-2 sm:gap-3">
+      <!-- Bilingual English Hints Toggle -->
+      <button id="btn-en-toggle" onclick="toggleEnglishHints()" class="px-2.5 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-amber-400 hover:text-amber-300 text-xs font-semibold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer" title="अंग्रेज़ी संकेत चालू/बंद करें (Toggle English Translation Hints)">
+        <i class="fas fa-language text-sm text-blue-400"></i>
+        <span id="en-toggle-label">EN: OFF</span>
+      </button>
       <!-- 1. Search Button / Toggle Input -->
       <div class="relative flex items-center">
         <button id="globalSearchBtn" onclick="toggleGlobalSearch()" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer flex items-center justify-center" aria-label="Search" title="Search Questions">
@@ -2371,6 +2412,15 @@
     }
 
     // --- THEME TOGGLE ---
+        // --- BILINGUAL ENGLISH HINTS TOGGLE ---
+    function toggleEnglishHints() {
+      document.body.classList.toggle('show-en-hints');
+      const isOn = document.body.classList.contains('show-en-hints');
+      const lbl = document.getElementById('en-toggle-label');
+      if (lbl) lbl.textContent = isOn ? 'EN: ON' : 'EN: OFF';
+      localStorage.setItem('psh_en_hints', isOn ? 'true' : 'false');
+    }
+
     function toggleTheme() {
       const html = document.documentElement;
       const isDark = html.classList.contains('dark');
@@ -2618,6 +2668,12 @@
         toggleSidebarPin();
       }
       // Theme check
+            // EN hints check
+      if (localStorage.getItem('psh_en_hints') === 'true') {
+        document.body.classList.add('show-en-hints');
+        const lbl = document.getElementById('en-toggle-label');
+        if (lbl) lbl.textContent = 'EN: ON';
+      }
       const savedTheme = localStorage.getItem('psh_theme');
       if (savedTheme === 'light') {
         document.documentElement.classList.remove('dark');

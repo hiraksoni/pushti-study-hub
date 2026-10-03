@@ -783,17 +783,22 @@ Every interactive chapter must adhere to modern web usability best practices:
   }
   ```
 
-### 2.12 High-Fidelity Online Cloud Audio Read-Aloud (TTS) Standard
-* **Engine Mandate (`js/online_tts.js`)**:
-  - All speech synthesis across Pushti Study Hub must run via the dedicated **Online Cloud Audio TTS Engine** (`window.PushtiOnlineTTS`).
-  - **Strict Prohibition**: Relying on the browser's built-in `window.speechSynthesis` (Web Speech API) for long prose, lesson recitations, or Hindi reading is strictly prohibited. Operating system synthesizers buffer erratically, stall on strings >200 characters, and frequently lack native Hindi voice packages on student PCs.
-* **Streaming Protocol & Referrer Isolation**:
-  - Streams high-fidelity Indian Hindi (`tl=hi`) and Indian English (`tl=en`) from Google Cloud Audio (`https://translate.google.com/translate_tts`).
-  - Automatically injects `<meta name="referrer" content="no-referrer">` into `<head>` (and routes through the local `/api/tts` proxy on localhost) to prevent Google 404 blocking.
-* **Intelligent Sentence Boundary Chunking**:
-  - Text is parsed and segmented on sentence boundaries (`।`, `.`, `?`, `!`, `,`, `\n`) under 150 characters per chunk, eliminating length timeouts.
-* **Lookahead Audio Pre-Buffering**:
-  - While chunk $i$ is actively playing, chunk $i+1$ is pre-buffered in an HTML5 `<audio>` element with `preload="auto"`, achieving gapless playback across paragraphs and full chapter lessons.
+### 2.12 High-Fidelity Natural Female Audio Read-Aloud (TTS) Standard (v4.0)
+* **Engine Architecture (`js/online_tts.js`)**:
+  - All speech synthesis across Pushti Study Hub must run via the dedicated **Audio Read-Aloud Engine** (`window.PushtiOnlineTTS`).
+  - **Melodious Female Voice Priority**: To ensure pleasant, natural, and engaging listening for Pushti without robotic fatigue (avoiding harsh or robotic male voices), the engine dynamically discovers, prioritizes, and locks onto high-fidelity **Natural Female Hindi Voices**:
+    1. `Microsoft Swara Online (Natural) - Hindi (India)` (Edge / Windows 11)
+    2. `Microsoft Kalpana - Hindi (India)`
+    3. `Google हिन्दी` (Android / Chrome Natural Female)
+    4. `Lekha` (macOS / iOS)
+* **State Machine with Real Play / Pause / Resume**:
+  - Full interactive state control: 1-click **Play**, **Pause**, **Resume**, and **Stop**.
+  - **Persistent Floating Audio Player**: Pinned at the bottom-right during active reading, showing real-time sentence progress (`वाक्य ३ / १८`) and `👩 महिला स्वर` active indicator.
+* **Continuous Multi-Sentence Queue & 14s Android Watchdog**:
+  - Long prose and poems are tokenized into natural sentence boundaries (`।`, `.`, `?`, `!`, `,`, `\n`) under 150 characters per chunk.
+  - Proactive **14-second watchdog timer** continuously refreshes speech synthesis utterances to prevent the notorious Chromium/Android speech stall bug on long passages.
+* **Graceful Cloud Fallback Protocol**:
+  - If a client device lacks high-quality neural female voices, the engine automatically falls back to online cloud audio streaming via the local proxy `/api/tts?tl=hi&q=...` or Google TTS (`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=hi&q=...`).
 * **Selective Speaker Placement Gate**:
   - Speaker buttons must be attached **ONLY to substantive explanation paragraphs and concept cards ($\ge 140$ characters)**.
   - Spamming speaker icons next to single words, labels, table headers, or short phrases is strictly prohibited.
@@ -814,6 +819,19 @@ Every interactive chapter must adhere to modern web usability best practices:
   - **Tab 11 (Google Knowledge & Video Hub)** must be positioned **immediately beneath Tab 10**, NOT separated or pushed to the bottom of the screen.
 * **Dock Footer Containment**: Only the Pin Toggle button (`#pinToggleBtn`) resides inside the bottom `.sidebar-footer`.
 * **Zero Top-Void / Div Balance Gate**: All `<div>` and `<aside>` tags within the sidebar must balance with 100% precision (35 open / 35 close per file). Stray closing tags that prematurely terminate `<aside>` and push `<main>` downward causing large blank black spaces are strictly prohibited.
+
+### 2.15 Bilingual Language Learning & English Equivalent Naming Standard
+Because Pushti studies in an **English-medium CBSE curriculum**, language subjects (Hindi & Sanskrit) must provide clear bilingual scaffolding to ensure 100% comprehension:
+* **English Equivalent Chapter Naming**:
+  - In all chapter `<title>`, main hero `<h1>`, breadcrumbs, sidebar dock tooltips, and subject portal cards (`hindi_index.html`), every Hindi chapter title must include its clear English translation / transliterated equivalent in parentheses:
+    - Example: `Chapter 1: हमको मन की शक्ति देना (Humko Man Ki Shakti Dena — Prayer for Mental Strength)`
+    - Example: `Chapter 1: भाषा, लिपि और व्याकरण (Language, Script & Grammar)`
+    - Example: `Chapter 6: समास (Compound Words — Samas)`
+* **Dynamic Bilingual Scaffolding (`js/bilingual_helper.js`)**:
+  - **Header Toggle Button**: Every language module must include a prominent `#btn-en-toggle` button in the top bar:
+    `<button id="btn-en-toggle" onclick="toggleEnglishHints()" ...>🔤 EN Hints / अर्थ</button>`
+  - **Inline English Hints (`.en-hint`)**: Subtle contextual translations embedded alongside difficult literary Hindi terms, hidden by default and smoothly toggled via CSS `.show-en-hints .en-hint { display: inline-block !important; }`.
+  - **Dotted Term Glosses (`.term-gloss`)**: Key literary, grammatical, and cultural terms feature a subtle dotted cyan underline with instant hover tooltip definition (`title="..."`).
 
 ---
 
@@ -1171,6 +1189,28 @@ To prevent visual crowding and optimize screen geometry:
 
 ---
 
+### 3.6 Hindi Subject Master Hub Architecture (साहित्य एवं व्यावहारिक व्याकरण)
+*Exemplified in Literature Ch 1–8 (`chapters/hindi/hindi_ch*.html`) and Grammar G1–W25 (`chapters/hindi/hindi_gra_ch*.html`).*
+
+1. **Structural Parity Standard**:
+   - Both Literature (गद्य व पद्य) and Grammar (व्यावहारिक व्याकरण एवं रचनात्मक लेखन) chapters implement the identical structural framework:
+     - **Sticky Glassmorphic Header (54px)**: Breadcrumbs, `#btn-en-toggle`, `#globalSearchBtn`, theme toggle, `#pushti-topbar-fs-btn`, schedule pills, and session timer.
+     - **Collapsible Vertical Dock Rail (`.sidebar-dock`)**: Snappy `0.15s` expansion on hover or pin, containing contiguous tab buttons for all modules.
+     - **Hero Card with Stats Pill Matrix**: Author/Vyakaran badges, authoritative question count (`KB Active (X Qs)`), and mind map jump triggers.
+
+2. **Standard 9-Module Interactive Breakdown**:
+   - **Tab 1: मूल पाठ व परिचय (Literature) / नियम व संकल्पनाएँ (Grammar)**: Complete un-abridged textbook text or foundational rules, with natural female audio read-aloud buttons.
+   - **Tab 2: शब्दार्थ वाटिका (Vocab) / पारिभाषिक शब्दावली**: Word cards with Sanskrit/Hindi meanings, English equivalents, and audio pronunciation.
+   - **Tab 3: व्यावहारिक व्याकरण व अभ्यास**: In-depth grammatical analysis (सन्धि, समास, उपसर्ग, प्रत्यय, विलोम, पर्यायवाची).
+   - **Tab 4: वस्तुनिष्ठ अभ्यास (MCQs & FIBs)**: Interactive click-to-reveal blanks (`.fib-blank`) and auto-checked MCQs.
+   - **Tab 5: संपूर्ण प्रश्नोत्तर बैंक (Q&A Bank)**: Complete textbook exercise solutions (लघु, दीर्घ, मूल्यपरक प्रश्नोत्तर) with 100% textbook coverage.
+   - **Tab 6: संवर्धन व व्यावहारिक अनुप्रयोग**: Cultural context, real-life connections, and creative writing prompts.
+   - **Tab 7: १०-प्रश्न मास्टर क्विज़ (Master Quiz)**: Timed, interactive auto-graded quiz with instant feedback and score analysis.
+   - **Tab 8: 3D परीक्षा फ्लैशकार्ड (Flashcards)**: Flip and shuffle 3D revision cards for memory retention.
+   - **Tab 9: गूगल ज्ञान एवं वीडियो हब (Google Hub)**: Embedded educational video queries and curated research links.
+
+---
+
 ## PART 4: PLATFORM HUBS, TIMETABLES & EXAM PATTERNS
 
 ### 4.1 Subject Hub Standards (`*_index.html`)
@@ -1277,8 +1317,9 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-GUI-12 (Dual-Theme Token Parity Gate)**: In Tailwind CSS modules, are both `class="dark"` and `data-theme="dark"` / `data-theme="light"` attributes synchronized on `<html>` to guarantee flawless parent dashboard and iframe interoperability?
 - [ ] **CP-GUI-14 (Top-Bar Fullscreen Placement & Header Tooling Gate)**: Verify that Fullscreen/Expand controls are strictly located on the 54px top header bar (`.header-actions` / `.controls-group`) alongside Theme Toggle, Search, and Home. Verify that no fullscreen or theme toggle buttons are placed at the bottom of the left dock rail or floating detached on the page.
 - [ ] **CP-GUI-15 (Snappy Dock Rail 0.15s Transition & Strict Tab Contiguity Gate)**: Verify that the collapsible dock rail transitions within `0.15s` (not legacy 1.2s). In Tab-11 modules (Hindi, SST, etc.), verify that all tabs 1 through 11 are strictly contiguous inside `.dock-nav` or `.nav-list` with zero buttons placed below or outside the list.
-- [ ] **CP-TTS-1 (Online Cloud Audio TTS Engine Gate)**: In language chapters and reading-heavy sections, verify that audio read-aloud functionality utilizes the High-Fidelity Online Cloud Audio streaming engine (`js/online_tts.js` via `/api/tts` proxy or Google Cloud endpoint) with sentence-level chunking and pre-buffering. Verify that buggy `window.speechSynthesis` is eliminated or demoted to an offline-only fallback.
+- [ ] **CP-TTS-1 (Natural Female Voice Priority & State Machine Gate)**: In language chapters and reading-heavy sections, verify that audio read-aloud functionality utilizes `js/online_tts.js` v4.0 prioritizing natural, sweet female voices (`Microsoft Swara`, `Kalpana`, `Google हिन्दी`, `Lekha`), with 1-click Play/Pause/Resume/Stop state machine, persistent floating player widget, 14s Android watchdog timer, and graceful cloud fallback.
 - [ ] **CP-TTS-2 (DOM Self-Healing & Substantive Attachment Gate)**: Verify that TTS speaker buttons navigate safely to their target text block using DOM traversal or element references (`speakHindiText('', this)`) without throwing `nextElementSibling` TypeError. Verify that speaker buttons attach only to substantive content blocks ($\ge 140$ chars) and never to UI chrome, nav items, or short labels.
+- [ ] **CP-LANG-1 (Bilingual English Equivalents & Hints Gate)**: For language subjects (Hindi/Sanskrit) in the English-medium CBSE curriculum, verify that chapter titles display clear English equivalents in parentheses across headings and index cards, and `#btn-en-toggle` seamlessly toggles inline `.en-hint` translations.
 
 ### Checkpoint Suite 2: Content & Pedagogical Completeness
 - [ ] **CP-CON-1 (100% Textbook Fidelity)**: Are ALL solved examples and ALL *Figure It Out* exercise problems extracted and solved with full mathematical steps?
