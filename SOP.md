@@ -1,4 +1,4 @@
-# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.6)
+# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.7)
 *The Definitive Architectural, Design, Pedagogical & Verification Standard for AI-Assisted Generation*
 
 ---
@@ -190,6 +190,16 @@ d:\Users\expor\Downloads\Codes\
      - Address deep conceptual questions and student perplexities (e.g., *Why do ONLY sedimentary rocks contain fossils? Why is the inner core solid despite 6,000°C? Why can S-waves not pass through the outer core? Why do desert mushroom rocks have narrow bases?*).
 * **ZERO IGNORING OF KB & SOURCE CONTENT**:
   If rich theory, definitions, thermal gradients, historical sources, or case studies are present in KB files or original source materials, AI assistants and builders are **strictly forbidden from discarding or condensing them into brief blurbs**. Full explanatory depth must be prominently displayed in the UI.
+
+### 1.15 Dual-Protocol Local Development Server & Automated Environment Protocol
+* **Dual-Protocol Serving (HTTPS 8443 + HTTP 8000)**:
+  - Local development is served via `https_server.py`, which concurrently runs both an **HTTPS server on port 8443** (for secure context and SSL link testing) and an **HTTP server on port 8000** (for zero-certificate-warning immediate testing) using Python's multi-threaded `ThreadingHTTPServer`.
+  - Built-in local audio proxy endpoint `/api/tts` for high-speed, zero-Referrer Google TTS streaming.
+* **Automated Requirements Protocol (`requirements.txt`)**:
+  - All Python environment dependencies must be codified in `requirements.txt` (`werkzeug`, `cryptography`, `beautifulsoup4`, `websocket-client`).
+  - All launchers (`start_servers.bat`, `launch_hindi_chapters.bat`) automatically verify and install dependencies (`python -m pip install -q -r requirements.txt`) before initiating server execution.
+* **Windows Console UTF-8 Reconfiguration**:
+  - Python scripts must explicitly reconfigure `sys.stdout` and `sys.stderr` to UTF-8 (`sys.stdout.reconfigure(encoding='utf-8', errors='replace')`) on startup to prevent Windows default `cp1252` encoding crashes when handling Devanagari Hindi or mathematical Unicode characters.
 
 ---
 
@@ -773,6 +783,38 @@ Every interactive chapter must adhere to modern web usability best practices:
   }
   ```
 
+### 2.12 High-Fidelity Online Cloud Audio Read-Aloud (TTS) Standard
+* **Engine Mandate (`js/online_tts.js`)**:
+  - All speech synthesis across Pushti Study Hub must run via the dedicated **Online Cloud Audio TTS Engine** (`window.PushtiOnlineTTS`).
+  - **Strict Prohibition**: Relying on the browser's built-in `window.speechSynthesis` (Web Speech API) for long prose, lesson recitations, or Hindi reading is strictly prohibited. Operating system synthesizers buffer erratically, stall on strings >200 characters, and frequently lack native Hindi voice packages on student PCs.
+* **Streaming Protocol & Referrer Isolation**:
+  - Streams high-fidelity Indian Hindi (`tl=hi`) and Indian English (`tl=en`) from Google Cloud Audio (`https://translate.google.com/translate_tts`).
+  - Automatically injects `<meta name="referrer" content="no-referrer">` into `<head>` (and routes through the local `/api/tts` proxy on localhost) to prevent Google 404 blocking.
+* **Intelligent Sentence Boundary Chunking**:
+  - Text is parsed and segmented on sentence boundaries (`।`, `.`, `?`, `!`, `,`, `\n`) under 150 characters per chunk, eliminating length timeouts.
+* **Lookahead Audio Pre-Buffering**:
+  - While chunk $i$ is actively playing, chunk $i+1$ is pre-buffered in an HTML5 `<audio>` element with `preload="auto"`, achieving gapless playback across paragraphs and full chapter lessons.
+* **Selective Speaker Placement Gate**:
+  - Speaker buttons must be attached **ONLY to substantive explanation paragraphs and concept cards ($\ge 140$ characters)**.
+  - Spamming speaker icons next to single words, labels, table headers, or short phrases is strictly prohibited.
+  - In Hindi literature modules: verse reading buttons use `<button onclick="speakHindiText('', this)">`, vocabulary cards use `<button onclick="speakHindiWord('शब्द', 'अर्थ', this)">`, and full recitations use `<button onclick="speakFullLesson(this)">`.
+* **Synchronized UI States**:
+  - While speaking, buttons transform into an animated pulsing stop button: `<i class="fas fa-stop text-rose-400 animate-pulse"></i> रोकें`. Clicking at any time cleanly halts audio and restores the button.
+
+### 2.13 Top-Bar Fullscreen & Landscape Engine Placement
+* **Location Standard**: The Fullscreen & Landscape button (`#pushti-topbar-fs-btn`) must be permanently mounted in the **top header bar** (adjacent to Search, Theme Toggle, and Time Table).
+* **Strict Bottom Dock Prohibition**: Placing fullscreen triggers or tool buttons in bottom viewport docks or floating bottom bars is strictly prohibited to keep student focus clear and prevent screen occlusion.
+* **Orientation Lock**: On supported tablet/mobile devices, invoking Fullscreen attempts landscape orientation lock (`screen.orientation.lock('landscape')`) for optimal diagram and equation viewing.
+* **Quick Recap Button Status**: Simple placeholder "quick recap" buttons are halted until a fully engineered micro-recap pedagogical engine is approved.
+
+### 2.14 Collapsible Dock Rail Standard (0.15s Snappy Hover & Contiguous Tab Nesting)
+* **Snappy 0.15s Hover Delay**: The collapsible vertical dock rail (`.sidebar-dock`) must expand with an instantaneous **`0.15s`** transition (`transition: width 0.15s cubic-bezier(0.16, 1, 0.3, 1)`). Sluggish delays (1.0s or 1.2s) are strictly prohibited.
+* **Contiguous Tab Button Nesting**:
+  - All navigation buttons (Tabs 1 to 10 + Tab 11 Google Hub) must be nested directly inside the upper button stack container: `<div class="flex flex-col gap-1.5 p-2">`.
+  - **Tab 11 (Google Knowledge & Video Hub)** must be positioned **immediately beneath Tab 10**, NOT separated or pushed to the bottom of the screen.
+* **Dock Footer Containment**: Only the Pin Toggle button (`#pinToggleBtn`) resides inside the bottom `.sidebar-footer`.
+* **Zero Top-Void / Div Balance Gate**: All `<div>` and `<aside>` tags within the sidebar must balance with 100% precision (35 open / 35 close per file). Stray closing tags that prematurely terminate `<aside>` and push `<main>` downward causing large blank black spaces are strictly prohibited.
+
 ---
 
 ## PART 3: SUBJECT-WISE CHAPTER ARCHITECTURES
@@ -783,7 +825,7 @@ Every interactive chapter must adhere to modern web usability best practices:
 1. **Collapsible Vertical Dock Rail & The Zero-Peeking Text Mandate**:
    - Default width collapsed to `62px` pinned to the left edge (`left: 0; top: 54px; bottom: 0;`).
    - Reclaims ~200px of screen real estate for wide formulas, coordinate tables, and answer cards.
-   - Snappy **0.72-second hover delay** (`transition-delay: 0.15s;`, reduced to 60% of original 1.2s) providing an effortless, non-awkward expansion while still protecting against accidental cursor pass-throughs.
+   - Snappy **0.15-second hover delay** (`transition: width 0.15s cubic-bezier(0.16, 1, 0.3, 1); transition-delay: 0.15s;`) providing an effortless, instantaneous expansion while still protecting against accidental cursor pass-throughs.
    - **The Zero-Peeking Text Mandate (Non-Negotiable)**:
      - In the collapsed 62px state, **zero letters, words, or label fragments may ever peek out** into the main viewport.
      - All button text labels and metadata must be enclosed within a dedicated `.tab-label-group` container:
@@ -1233,6 +1275,10 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-MATH-2 (Fraction Readability & Subpart Compactness Gate)**: Are all standalone fractions formatted with \dfrac or font-amplified KaTeX (>=1.15em)? Do atomic mathematical subparts (<=25 chars) use compact chips/grids (minmax(140px, 1fr) or flex chips) fitting 4 subparts in a single row on laptop viewports without stranding an orphaned box on a second row?
 - [ ] **CP-GUI-11 (Empty State & Search UX Gate)**: Does every search-enabled or filtered directory implement a dedicated empty state container with an illustrative vector icon, friendly message, and an actionable 1-click "Clear Filters" button when 0 results match?
 - [ ] **CP-GUI-12 (Dual-Theme Token Parity Gate)**: In Tailwind CSS modules, are both `class="dark"` and `data-theme="dark"` / `data-theme="light"` attributes synchronized on `<html>` to guarantee flawless parent dashboard and iframe interoperability?
+- [ ] **CP-GUI-14 (Top-Bar Fullscreen Placement & Header Tooling Gate)**: Verify that Fullscreen/Expand controls are strictly located on the 54px top header bar (`.header-actions` / `.controls-group`) alongside Theme Toggle, Search, and Home. Verify that no fullscreen or theme toggle buttons are placed at the bottom of the left dock rail or floating detached on the page.
+- [ ] **CP-GUI-15 (Snappy Dock Rail 0.15s Transition & Strict Tab Contiguity Gate)**: Verify that the collapsible dock rail transitions within `0.15s` (not legacy 1.2s). In Tab-11 modules (Hindi, SST, etc.), verify that all tabs 1 through 11 are strictly contiguous inside `.dock-nav` or `.nav-list` with zero buttons placed below or outside the list.
+- [ ] **CP-TTS-1 (Online Cloud Audio TTS Engine Gate)**: In language chapters and reading-heavy sections, verify that audio read-aloud functionality utilizes the High-Fidelity Online Cloud Audio streaming engine (`js/online_tts.js` via `/api/tts` proxy or Google Cloud endpoint) with sentence-level chunking and pre-buffering. Verify that buggy `window.speechSynthesis` is eliminated or demoted to an offline-only fallback.
+- [ ] **CP-TTS-2 (DOM Self-Healing & Substantive Attachment Gate)**: Verify that TTS speaker buttons navigate safely to their target text block using DOM traversal or element references (`speakHindiText('', this)`) without throwing `nextElementSibling` TypeError. Verify that speaker buttons attach only to substantive content blocks ($\ge 140$ chars) and never to UI chrome, nav items, or short labels.
 
 ### Checkpoint Suite 2: Content & Pedagogical Completeness
 - [ ] **CP-CON-1 (100% Textbook Fidelity)**: Are ALL solved examples and ALL *Figure It Out* exercise problems extracted and solved with full mathematical steps?
@@ -1289,6 +1335,7 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 
 | Version | Date | Key Architectural Additions |
 | :---: | :---: | :--- |
+| **v3.7** | 2026-10-03 | **Online Cloud Audio TTS, Top-Bar Fullscreen Standard, Snappy Dock Rail (0.15s) & Automated Dual Server Protocol (Sections 1.15, 2.12, 2.13, 2.14, CP-GUI-14, CP-GUI-15, CP-TTS-1, CP-TTS-2, `.agents/rules/gui_theme_tts_standards.md`)**: Codified dedicated GUI/Theme/TTS standard; replaced broken native browser SpeechSynthesis with high-fidelity Online Cloud Audio streaming engine (`js/online_tts.js`) featuring sentence chunking, pre-buffering, and `/api/tts` proxy; mandated top-bar placement for Fullscreen controls (banning dock-bottom clutter); standardized 0.15s snappy hover transition on vertical dock rails and strictly contiguous Tab 11 nesting; automated local dual-protocol server (`https_server.py` supporting HTTPS 8443 and HTTP 8000) and `requirements.txt`. |
 | **v3.6** | 2026-09-30 | **"As Per Rules" Master Canon & Zero-Rot Dynamic Google Search Query Protocol (Sections 1.12, 1.13, 2.11, CP-CON-7, `.agents/rules/topic_search_queries.md`)**: Codified the unified definition of "as per rules"; strictly prohibited hardcoded third-party video URLs (`youtube.com`, Vimeo, etc.), iframes, and external channel branding to prevent link rot and save AI token budget; established the Topic Search Card standard (`.topic-search-card`) with engineered Google Video (`tbm=vid`) and Knowledge Search query formulas. |
 | **v3.5** | 2026-09-24 | **The "Hath Fero" Urban Planning & Deterministic Blueprint Protocol (Section 1.11, `.agents/rules/hath_fero.md`, `scripts/maintenance/hath_fero_audit.py`)**: Codified the province-city-street-substreet spatial invariance standard. Mandates strictly identical tab indices across all chapters within a subject province, invariant sub-street sequences (e.g. MCQs, FIB, T/F), isolated chapter color theming, and standardized 'Pending Content' Sentinels (`.pending-content-card`) so missing material is never silently omitted or hallucinated. |
 | **v3.4** | 2026-09-20 | **Maximum Horizontal Real-Estate Utilization & Sticky Tier-2 Submodule Nav Standard (Section 2.4.1 & 3.1.2)**: Mandated generous 1600px+ content max-width, responsive multi-column question grids (2-column on desktop/laptop), 2x2 MCQ option layout, and multi-column concept/enrichment grids, eliminating wasteful whitespace voids and reducing vertical page scrolling by ~50% on wide desktop and laptop viewports. Standardized sticky top-docking (`top: var(--header-height); z-index: 900; background: var(--bg-sticky); backdrop-filter: blur(12px)`) for submodule navigation pills (`.submodule-nav`), exam control bars (`.exam-control-bar`), and search bars (`.sticky-search-bar`). |
