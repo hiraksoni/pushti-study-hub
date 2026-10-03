@@ -143,37 +143,111 @@
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Desktop Margin Push */
-    @media (min-width: 861px) {
-      .main-app-content {
-        margin-left: 62px;
-        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Responsive Dock Rail & Universal Margin Push (Tablet & Desktop Safe) */
+    @media (min-width: 640px) and (max-width: 1099px) {
+      .sidebar-dock {
+        width: 62px !important;
+        position: fixed !important;
+        left: 0 !important;
+        top: 54px !important;
+        bottom: 0 !important;
+        z-index: 900 !important;
       }
-      .sidebar-dock.pinned ~ .main-app-content {
-        margin-left: 280px;
+      .sidebar-dock.pinned { width: 62px !important; }
+      .sidebar-dock .tab-label-group { display: none !important; }
+      .sidebar-dock .sidebar-footer { display: none !important; }
+      .main-app-content {
+        margin-left: 62px !important;
+        width: calc(100% - 62px) !important;
+        max-width: min(1600px, calc(100vw - 62px)) !important;
+        box-sizing: border-box !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
       }
     }
-    @media (max-width: 860px) {
+
+    @media (min-width: 1100px) {
       .sidebar-dock {
-        position: static;
-        width: 100% !important;
-        height: auto;
-        flex-direction: row;
-        border-right: none;
-        border-bottom: 1px solid rgba(51, 65, 85, 0.7);
-        padding: 6px;
-        overflow-x: auto;
+        width: 62px;
+        position: fixed;
+        left: 0;
+        top: 54px;
+        bottom: 0;
+        z-index: 900;
       }
+      .main-app-content {
+        margin-left: 62px !important;
+        width: calc(100% - 62px) !important;
+        max-width: min(1600px, calc(100vw - 62px)) !important;
+        box-sizing: border-box !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .sidebar-dock.pinned { width: 280px !important; }
+      .sidebar-dock.pinned ~ .main-app-content {
+        margin-left: 280px !important;
+        width: calc(100% - 280px) !important;
+        max-width: min(1600px, calc(100vw - 280px)) !important;
+      }
+      .sidebar-dock:hover .tab-label-group,
+      .sidebar-dock.pinned .tab-label-group {
+        display: flex !important;
+        width: auto !important;
+        min-width: 140px !important;
+        max-width: 200px !important;
+        margin-left: 12px !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+    }
+
+    @media (max-width: 639px) {
+      .flex.flex-1.relative { flex-direction: column !important; }
+      .sidebar-dock {
+        position: sticky !important;
+        top: 54px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 48px !important;
+        max-height: 48px !important;
+        min-height: 48px !important;
+        flex-direction: row !important;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(51, 65, 85, 0.7) !important;
+        padding: 4px 6px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        z-index: 850 !important;
+      }
+      .sidebar-dock > div:first-child {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 6px !important;
+        width: 100% !important;
+        padding: 0 !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+      }
+      .sidebar-dock .nav-tab-btn {
+        width: auto !important;
+        height: 40px !important;
+        padding: 4px 10px !important;
+        flex-shrink: 0 !important;
+      }
+      .sidebar-dock .tab-label-group { display: none !important; }
+      .sidebar-dock .sidebar-footer { display: none !important; }
       .main-app-content {
         margin-left: 0 !important;
-      }
-      .tab-label-group {
-        display: none !important;
-      }
-      .sidebar-footer {
-        display: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 14px !important;
       }
     }
+
 
     /* Light Theme Parity */
     html:not(.dark) body {
@@ -238,6 +312,37 @@
     .term-gloss:hover {
       color: #38bdf8;
       background: rgba(56, 189, 248, 0.12);
+    }
+
+    /* Tatsam-Tadbhav Self-Test Mode */
+    .test-mode .tadbhav-pill:not(.revealed) .tadbhav-val {
+      filter: blur(6px);
+      user-select: none;
+      opacity: 0.15;
+    }
+    .test-mode .tadbhav-pill:not(.revealed)::after {
+      content: "👁️ उत्तर देखें";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(14, 165, 233, 0.14);
+      border: 1px dashed rgba(56, 189, 248, 0.5);
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #38bdf8;
+      cursor: pointer;
+    }
+    .test-mode .tadbhav-pill.revealed .tadbhav-val {
+      filter: none;
+      opacity: 1;
+      animation: fadeInTadbhav 0.2s ease-in;
+    }
+    @keyframes fadeInTadbhav {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
@@ -435,7 +540,7 @@
       <!-- HERO BANNER -->
       <div class="mb-6 bg-gradient-to-br from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800/80 rounded-2xl p-5 md:p-6 shadow-xl relative overflow-hidden">
         <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">
               CBSE Hindi Grammar · पाठ 3 (G3)
@@ -549,41 +654,1311 @@
               </div>
               <p class="text-sm sm:text-base text-slate-100 font-sans leading-relaxed whitespace-pre-line">१. तत्सम शब्द: &#x27;तत्&#x27; + &#x27;सम&#x27; अर्थात् &#x27;उसके समान&#x27; (संस्कृत के समान)। जो शब्द संस्कृत भाषा से अपने मूल रूप में ही हिंदी में प्रयुक्त होते हैं (जैसे- अश्रु, अग्नि, मुख, दुग्ध, कर्ण)।<br>२. तद्भव शब्द: &#x27;तत्&#x27; + &#x27;भव&#x27; अर्थात् &#x27;उससे उत्पन्न&#x27;। संस्कृत भाषा के जो शब्द विकृत होकर या रूप बदलकर हिंदी में आए हैं (जैसे- आँसू, आग, मुँह, दूध, कान)।<br>३. देशज शब्द: &#x27;देश&#x27; + &#x27;ज&#x27; अर्थात् &#x27;देश में जन्मा&#x27;। जिनका मूल स्रोत संस्कृत नहीं है बल्कि भारत के विभिन्न क्षेत्रों की स्थानीय बोलियों से आवश्यकतानुसार हिंदी में आए हैं।<br>४. विदेशज शब्द: जो विदेशी भाषाओं से आकर हिंदी भाषा में घुल-मिल गए हैं।<br>५. संकर शब्द: जो दो अलग-अलग भाषाओं के शब्दों से मिलकर बने हैं।</p>
             </div>
-            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/30 transition-all relative group">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-mono text-blue-400 font-semibold">प्रमुख ३८ तत्सम-तद्भव शब्द तालिका (38 Canonical Pairs)</span>
-                <button onclick="speakHindiText('', this)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] text-blue-300 font-medium transition-all flex items-center gap-1 cursor-pointer">
-                  <i class="fas fa-volume-up"></i> सुनें
-                </button>
-              </div>
-              <p class="text-sm sm:text-base text-slate-100 font-sans leading-relaxed whitespace-pre-line">अश्रु -&gt; आँसू | अस्थि -&gt; हड्डी | आम्र -&gt; आम | उष्ट्र -&gt; ऊँट | ओष्ठ -&gt; ओठ | कज्जल -&gt; काजल | कपाट -&gt; किवाड़ | कपोत -&gt; कबूतर | कर्ण -&gt; कान | कर्म -&gt; काम | काक -&gt; कौआ | कार्य -&gt; काज | कुंभकार -&gt; कुम्हार | कोकिल -&gt; कोयल | गृह -&gt; घर | ग्राम -&gt; गाँव | घट -&gt; घड़ा | घृत -&gt; घी | जिह्वा -&gt; जीभ | ज्येष्ठ -&gt; जेठ | दधि -&gt; दही | दुग्ध -&gt; दूध | धूम्र -&gt; धुआँ | निद्रा -&gt; नींद | नृत्य -&gt; नाच | पंच -&gt; पाँच | पक्षी -&gt; पंछी | पृष्ठ -&gt; पीठ | भिक्षा -&gt; भीख | भ्रमर -&gt; भँवरा | भ्रातृ -&gt; भाई | मयूर -&gt; मोर | मस्तक -&gt; माथा | मृत्तिका -&gt; मिट्टी | सत्य -&gt; सच | सप्त -&gt; सात | सर्प -&gt; साँप | हस्त -&gt; हाथ।</p>
+                        <!-- ==================== ETYMOLOGY & VOCABULARY STUDY SUITE ==================== -->
+            <!-- Quick Anchor Navigation Pills -->
+            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center gap-2 overflow-x-auto whitespace-nowrap text-xs">
+              <span class="text-slate-400 font-semibold text-[11px] font-mono uppercase mr-1">त्वरित नेविगेशन:</span>
+              <a href="#sec-tatsam" class="px-2.5 py-1 rounded-lg bg-blue-500/20 text-blue-300 hover:bg-blue-500/30 border border-blue-500/40 transition-all font-medium">📜 तत्सम-तद्भव (38 Pairs)</a>
+              <a href="#sec-deshaj" class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 border border-emerald-500/40 transition-all font-medium">🏡 देशज शब्द (Dialect)</a>
+              <a href="#sec-videshaj" class="px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 hover:bg-purple-500/30 border border-purple-500/40 transition-all font-medium">🌐 विदेशज शब्द (Loanwords)</a>
+              <a href="#sec-sankar" class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/40 transition-all font-medium">🧩 संकर शब्द (Hybrid)</a>
             </div>
-            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/30 transition-all relative group">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-mono text-blue-400 font-semibold">देशज शब्दों का संग्रह (Indigenous Dialect Words)</span>
-                <button onclick="speakHindiText('', this)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] text-blue-300 font-medium transition-all flex items-center gap-1 cursor-pointer">
-                  <i class="fas fa-volume-up"></i> सुनें
-                </button>
+
+            <!-- MODULE 1: TATSAM-TADBHAV CANONICAL PAIRS -->
+            <div id="sec-tatsam" class="p-5 rounded-2xl bg-slate-900/70 border border-blue-500/30 shadow-xl space-y-4">
+              <!-- Header Bar -->
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse"></span>
+                    <h3 class="text-base sm:text-lg font-bold text-white font-heading">
+                      प्रमुख ३८ तत्सम-तद्भव प्रामाणिक शब्द-तालिका
+                    </h3>
+                    <span class="text-xs font-mono px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-400 border border-blue-500/20 font-semibold">38 Pairs</span>
+                  </div>
+                  <p class="text-xs text-slate-400 mt-1">संस्कृत के मूल शब्द (तत्सम) ➔ हिंदी में परिवर्तित रूप (तद्भव) व अंग्रेज़ी अर्थ</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button id="btn-toggle-tadbhav-mode" onclick="toggleTadbhavRevealMode()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 border border-slate-700 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm" title="तद्भव शब्द छुपाकर स्वयं का परीक्षण करें">
+                    <i class="fas fa-brain text-amber-400"></i> स्वयं-परीक्षण मोड (Self-Test Mode)
+                  </button>
+                  <button id="btn-reveal-all-tadbhav" onclick="revealAllTadbhav()" class="hidden px-2.5 py-1.5 rounded-xl bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 border border-emerald-500/40 text-xs font-semibold transition-all cursor-pointer" title="सभी उत्तर एक साथ देखें">
+                    सभी दिखाएँ
+                  </button>
+                </div>
               </div>
-              <p class="text-sm sm:text-base text-slate-100 font-sans leading-relaxed whitespace-pre-line">झाडू, झुग्गी, पगड़ी, लोटा, झोला, टाँग, पेट, जूता, डिबिया, लकड़ी, खिड़की, खड़ाऊँ, फावड़ा, लथपथ, खिचड़ी, पैसा, थाली आदि देशज शब्द हैं जो क्षेत्रीय प्रभाव से हिंदी में आए हैं।</p>
+
+              <!-- Golden Recognition Rules (5 Memory Mnemonics) -->
+              <details class="group p-4 rounded-xl bg-gradient-to-r from-blue-950/40 to-slate-900/60 border border-blue-500/30">
+                <summary class="flex items-center justify-between cursor-pointer list-none font-bold text-xs sm:text-sm text-blue-300">
+                  <span class="flex items-center gap-2">
+                    <span class="text-amber-400 text-base">💡</span>
+                    <span>स्मृति सूत्र: तत्सम बनाम तद्भव पहचानने के ५ अचूक गोल्डन नियम (5 Memory Rules)</span>
+                  </span>
+                  <i class="fas fa-chevron-down text-xs text-blue-400 group-open:rotate-180 transition-transform"></i>
+                </summary>
+                <div class="mt-3 pt-3 border-t border-slate-800/80 grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs text-slate-200">
+                  <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800 flex items-start gap-2">
+                    <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-[11px] flex-shrink-0">१</span>
+                    <div>
+                      <strong class="text-amber-300">चंद्रबिंदु (ँ) = तद्भव:</strong>
+                      <p class="text-slate-300 mt-0.5">जिन शब्दों में चंद्रबिंदु (ँ) आए, वे प्रायः तद्भव होते हैं (आँसू, ऊँट, गाँव, धुआँ, पाँच, भँवरा, साँप)। तत्सम में अनुस्वार या पंचम वर्ण होता है (अश्रु, उष्ट्र, ग्राम)।</p>
+                    </div>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800 flex items-start gap-2">
+                    <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-[11px] flex-shrink-0">२</span>
+                    <div>
+                      <strong class="text-amber-300">'क्ष' ➔ 'ख/छ':</strong>
+                      <p class="text-slate-300 mt-0.5">तत्सम का संयुक्त व्यंजन 'क्ष' तद्भव में 'ख' या 'छ' बन जाता है (उदा. पक्षी ➔ पंछी, भिक्षा ➔ भीख, क्षीर ➔ खीर)।</p>
+                    </div>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800 flex items-start gap-2">
+                    <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-[11px] flex-shrink-0">३</span>
+                    <div>
+                      <strong class="text-amber-300">'श/ष' ➔ दंत्य 'स':</strong>
+                      <p class="text-slate-300 mt-0.5">संस्कृत के तालव्य 'श' व मूर्धन्य 'ष' हिंदी तद्भव में प्रायः 'स' बनते हैं (उदा. सर्प ➔ साँप, मस्तक ➔ माथा, सत्य ➔ सच, कृषक ➔ किसान)।</p>
+                    </div>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800 flex items-start gap-2">
+                    <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-[11px] flex-shrink-0">४</span>
+                    <div>
+                      <strong class="text-amber-300">'ऋ' व आधे 'र्' (रेफ़/पदेन):</strong>
+                      <p class="text-slate-300 mt-0.5">'ऋ' की मात्रा (मृत्तिका, घृत, पृष्ठ, भ्रातृ) अथवा आधा 'र्' (कर्म, कर्ण, भ्रमर, आम्र, नृत्य, धूम्र) युक्त शब्द सदैव <strong>तत्सम</strong> होते हैं।</p>
+                    </div>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800 flex items-start gap-2 md:col-span-2">
+                    <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-[11px] flex-shrink-0">५</span>
+                    <div>
+                      <strong class="text-amber-300">'व' ➔ 'ब':</strong>
+                      <p class="text-slate-300 mt-0.5">संस्कृत तत्सम का 'व' हिंदी तद्भव में प्रायः 'ब' बन जाता है (उदा. विवाह ➔ ब्याह, वानर ➔ बंदर, विद्युत ➔ बिजली, वधु ➔ बहू)।</p>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <!-- Interactive Search & Group Filter Toolbar -->
+              <div class="p-3 rounded-xl bg-slate-950/60 border border-slate-800 space-y-2.5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                  <div class="relative flex-1">
+                    <input type="text" id="tatsamSearchInput" oninput="searchTatsam(this.value)" placeholder="खोजें... (उदा. दूध, milk, सर्प, ear, bone, अश्रु)..." class="w-full pl-9 pr-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 font-sans">
+                    <i class="fas fa-search absolute left-3 top-2.5 text-xs text-slate-500"></i>
+                  </div>
+                  <span class="text-xs font-mono text-slate-400 flex-shrink-0">
+                    <span id="tatsamVisibleCount" class="font-bold text-amber-300">38</span> / 38 शब्द प्रदर्शित
+                  </span>
+                </div>
+                <!-- Alphabet / Category Filter Pills -->
+                <div class="flex items-center gap-1.5 overflow-x-auto whitespace-nowrap text-xs pb-1">
+                  <button onclick="filterTatsamGroup('all', this)" class="tatsam-filter-btn px-2.5 py-1 rounded-lg bg-blue-600 text-white border border-blue-400 text-[11px] font-semibold transition-all cursor-pointer shadow-md">सभी (38)</button>
+                  <button onclick="filterTatsamGroup('star', this)" class="tatsam-filter-btn px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-[11px] font-semibold transition-all cursor-pointer">⭐ परीक्षा उपयोगी</button>
+                  <button onclick="filterTatsamGroup('अ-ऊ', this)" class="tatsam-filter-btn px-2 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-[11px] font-semibold transition-all cursor-pointer">अ-ऊ (5)</button>
+                  <button onclick="filterTatsamGroup('क-घ', this)" class="tatsam-filter-btn px-2 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-[11px] font-semibold transition-all cursor-pointer">क-घ (13)</button>
+                  <button onclick="filterTatsamGroup('ज-द', this)" class="tatsam-filter-btn px-2 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-[11px] font-semibold transition-all cursor-pointer">ज-द (4)</button>
+                  <button onclick="filterTatsamGroup('ध-प', this)" class="tatsam-filter-btn px-2 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-[11px] font-semibold transition-all cursor-pointer">ध-प (5)</button>
+                  <button onclick="filterTatsamGroup('भ-म', this)" class="tatsam-filter-btn px-2 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-[11px] font-semibold transition-all cursor-pointer">भ-म (5)</button>
+                  <button onclick="filterTatsamGroup('स-ह', this)" class="tatsam-filter-btn px-2 py-1 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 text-[11px] font-semibold transition-all cursor-pointer">स-ह (4)</button>
+                </div>
+              </div>
+
+              <!-- 38 Structured Cards Grid -->
+              <div id="tatsam-cards-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="अश्रु" data-tadbhav="आँसू" data-en="Tears" data-group="अ-ऊ" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">1</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">अश्रु <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">आँसू</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Tears">🇬🇧 Tears</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('अश्रु', 'आँसू', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="अस्थि" data-tadbhav="हड्डी" data-en="Bone" data-group="अ-ऊ" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">2</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">अस्थि <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">हड्डी</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Bone">🇬🇧 Bone</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('अस्थि', 'हड्डी', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="आम्र" data-tadbhav="आम" data-en="Mango" data-group="अ-ऊ" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">3</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">आम्र </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">आम</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Mango">🇬🇧 Mango</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('आम्र', 'आम', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="उष्ट्र" data-tadbhav="ऊँट" data-en="Camel" data-group="अ-ऊ" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">4</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">उष्ट्र <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">ऊँट</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Camel">🇬🇧 Camel</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('उष्ट्र', 'ऊँट', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="ओष्ठ" data-tadbhav="ओठ" data-en="Lips" data-group="अ-ऊ" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">5</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">ओष्ठ </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">ओठ</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Lips">🇬🇧 Lips</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('ओष्ठ', 'ओठ', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="कज्जल" data-tadbhav="काजल" data-en="Kohl / Eyeliner" data-group="क-घ" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">6</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">कज्जल </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">काजल</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Kohl / Eyeliner">🇬🇧 Kohl / Eyeliner</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('कज्जल', 'काजल', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="कपाट" data-tadbhav="किवाड़" data-en="Door shutter" data-group="क-घ" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">7</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">कपाट <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">किवाड़</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Door shutter">🇬🇧 Door shutter</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('कपाट', 'किवाड़', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="कपोत" data-tadbhav="कबूतर" data-en="Pigeon" data-group="क-घ" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">8</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">कपोत </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">कबूतर</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Pigeon">🇬🇧 Pigeon</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('कपोत', 'कबूतर', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="कर्ण" data-tadbhav="कान" data-en="Ear" data-group="क-घ" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">9</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">कर्ण <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">कान</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Ear">🇬🇧 Ear</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('कर्ण', 'कान', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="कर्म" data-tadbhav="काम" data-en="Work / Duty" data-group="क-घ" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">10</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">कर्म <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">काम</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Work / Duty">🇬🇧 Work / Duty</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('कर्म', 'काम', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="काक" data-tadbhav="कौआ" data-en="Crow" data-group="क-घ" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">11</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">काक </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">कौआ</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Crow">🇬🇧 Crow</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('काक', 'कौआ', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="कार्य" data-tadbhav="काज" data-en="Work / Task" data-group="क-घ" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">12</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">कार्य </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">काज</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Work / Task">🇬🇧 Work / Task</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('कार्य', 'काज', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="कुंभकार" data-tadbhav="कुम्हार" data-en="Potter" data-group="क-घ" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">13</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">कुंभकार </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">कुम्हार</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Potter">🇬🇧 Potter</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('कुंभकार', 'कुम्हार', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="कोकिल" data-tadbhav="कोयल" data-en="Cuckoo" data-group="क-घ" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">14</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">कोकिल </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">कोयल</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Cuckoo">🇬🇧 Cuckoo</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('कोकिल', 'कोयल', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="गृह" data-tadbhav="घर" data-en="Home / House" data-group="क-घ" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">15</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">गृह <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">घर</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Home / House">🇬🇧 Home / House</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('गृह', 'घर', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="ग्राम" data-tadbhav="गाँव" data-en="Village" data-group="क-घ" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">16</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">ग्राम <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">गाँव</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Village">🇬🇧 Village</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('ग्राम', 'गाँव', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="घट" data-tadbhav="घड़ा" data-en="Earthen Pitcher" data-group="क-घ" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">17</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">घट </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">घड़ा</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Earthen Pitcher">🇬🇧 Earthen Pitcher</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('घट', 'घड़ा', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="घृत" data-tadbhav="घी" data-en="Clarified Butter (Ghee)" data-group="क-घ" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">18</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">घृत <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">घी</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Clarified Butter (Ghee)">🇬🇧 Clarified Butter (Ghee)</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('घृत', 'घी', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="जिह्वा" data-tadbhav="जीभ" data-en="Tongue" data-group="ज-द" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">19</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">जिह्वा <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">जीभ</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Tongue">🇬🇧 Tongue</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('जिह्वा', 'जीभ', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="ज्येष्ठ" data-tadbhav="जेठ" data-en="Elder / Elder brother-in-law" data-group="ज-द" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">20</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">ज्येष्ठ </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">जेठ</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Elder / Elder brother-in-law">🇬🇧 Elder / Elder brother-in-law</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('ज्येष्ठ', 'जेठ', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="दधि" data-tadbhav="दही" data-en="Curd / Yogurt" data-group="ज-द" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">21</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">दधि <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">दही</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Curd / Yogurt">🇬🇧 Curd / Yogurt</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('दधि', 'दही', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="दुग्ध" data-tadbhav="दूध" data-en="Milk" data-group="ज-द" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">22</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">दुग्ध <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">दूध</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Milk">🇬🇧 Milk</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('दुग्ध', 'दूध', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="धूम्र" data-tadbhav="धुआँ" data-en="Smoke" data-group="ध-प" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">23</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">धूम्र <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">धुआँ</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Smoke">🇬🇧 Smoke</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('धूम्र', 'धुआँ', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="निद्रा" data-tadbhav="नींद" data-en="Sleep" data-group="ध-प" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">24</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">निद्रा <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">नींद</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Sleep">🇬🇧 Sleep</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('निद्रा', 'नींद', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="नृत्य" data-tadbhav="नाच" data-en="Dance" data-group="ध-प" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">25</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">नृत्य <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">नाच</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Dance">🇬🇧 Dance</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('नृत्य', 'नाच', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="पंच" data-tadbhav="पाँच" data-en="Five" data-group="ध-प" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">26</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">पंच </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">पाँच</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Five">🇬🇧 Five</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('पंच', 'पाँच', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="पक्षी" data-tadbhav="पंछी" data-en="Bird" data-group="ध-प" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">27</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">पक्षी <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">पंछी</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Bird">🇬🇧 Bird</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('पक्षी', 'पंछी', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="पृष्ठ" data-tadbhav="पीठ" data-en="Back / Page" data-group="भ-म" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">28</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">पृष्ठ </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">पीठ</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Back / Page">🇬🇧 Back / Page</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('पृष्ठ', 'पीठ', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="भिक्षा" data-tadbhav="भीख" data-en="Alms / Begging" data-group="भ-म" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">29</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">भिक्षा </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">भीख</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Alms / Begging">🇬🇧 Alms / Begging</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('भिक्षा', 'भीख', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="भ्रमर" data-tadbhav="भँवरा" data-en="Bumblebee" data-group="भ-म" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">30</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">भ्रमर <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">भँवरा</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Bumblebee">🇬🇧 Bumblebee</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('भ्रमर', 'भँवरा', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="भ्रातृ" data-tadbhav="भाई" data-en="Brother" data-group="भ-म" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">31</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">भ्रातृ </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">भाई</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Brother">🇬🇧 Brother</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('भ्रातृ', 'भाई', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="मयूर" data-tadbhav="मोर" data-en="Peacock" data-group="भ-म" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">32</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">मयूर <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">मोर</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Peacock">🇬🇧 Peacock</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('मयूर', 'मोर', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="मस्तक" data-tadbhav="माथा" data-en="Forehead / Head" data-group="भ-म" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">33</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">मस्तक </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">माथा</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Forehead / Head">🇬🇧 Forehead / Head</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('मस्तक', 'माथा', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="मृत्तिका" data-tadbhav="मिट्टी" data-en="Clay / Soil" data-group="भ-म" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">34</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">मृत्तिका <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">मिट्टी</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Clay / Soil">🇬🇧 Clay / Soil</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('मृत्तिका', 'मिट्टी', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="सत्य" data-tadbhav="सच" data-en="Truth" data-group="स-ह" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">35</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">सत्य <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">सच</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Truth">🇬🇧 Truth</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('सत्य', 'सच', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="सप्त" data-tadbhav="सात" data-en="Seven" data-group="स-ह" data-star="false" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">36</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">सप्त </span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">सात</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Seven">🇬🇧 Seven</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('सप्त', 'सात', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="सर्प" data-tadbhav="साँप" data-en="Snake / Serpent" data-group="स-ह" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">37</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">सर्प <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">साँप</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Snake / Serpent">🇬🇧 Snake / Serpent</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('सर्प', 'साँप', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="tatsam-card p-3 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex items-center justify-between gap-2.5 group relative cursor-pointer" data-tatsam="हस्त" data-tadbhav="हाथ" data-en="Hand" data-group="स-ह" data-star="true" onclick="revealCardTadbhav(this)">
+                  <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                    <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center font-mono text-[10px] flex-shrink-0">38</span>
+                    <div class="flex flex-col min-w-0">
+                      <span class="text-[9px] font-mono uppercase text-amber-400 font-bold tracking-wider">तत्सम (संस्कृत)</span>
+                      <span class="text-sm font-bold text-amber-300 font-heading truncate flex items-center">हस्त <span class="text-amber-400 text-xs ml-1" title="परीक्षा उपयोगी (Exam Star)">⭐</span></span>
+                    </div>
+                    <span class="text-slate-500 text-xs flex-shrink-0 font-bold">➔</span>
+                    <div class="flex flex-col min-w-0 tadbhav-pill relative pr-2">
+                      <span class="text-[9px] font-mono uppercase text-sky-400 font-bold tracking-wider">तद्भव (हिंदी)</span>
+                      <span class="text-sm font-bold text-sky-300 font-heading tadbhav-val truncate">हाथ</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <span class="text-[10px] font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60 hidden sm:inline-block max-w-[120px] truncate" title="Hand">🇬🇧 Hand</span>
+                    <button onclick="event.stopPropagation(); speakTatsamPair('हस्त', 'हाथ', this)" class="p-2 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white transition-all text-xs cursor-pointer flex-shrink-0" title="उच्चारण व व्याख्या सुनें">
+                      <i class="fas fa-volume-up"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/30 transition-all relative group">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-mono text-blue-400 font-semibold">विदेशज शब्दों का विस्तृत वर्गीकरण (Foreign Loanwords)</span>
-                <button onclick="speakHindiText('', this)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] text-blue-300 font-medium transition-all flex items-center gap-1 cursor-pointer">
-                  <i class="fas fa-volume-up"></i> सुनें
-                </button>
+
+            <!-- MODULE 2: DESHAJ WORDS -->
+            <div id="sec-deshaj" class="p-5 rounded-2xl bg-slate-900/70 border border-emerald-500/30 shadow-xl space-y-4">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                    <h3 class="text-base sm:text-lg font-bold text-white font-heading">
+                      देशज शब्दों का विषयवार संग्रह (Indigenous Dialect Words)
+                    </h3>
+                    <span class="text-xs font-mono px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">17 Words</span>
+                  </div>
+                  <p class="text-xs text-slate-400 mt-1">क्षेत्रीय बोलियों व जनसामान्य के दैनिक संपर्क से हिंदी भाषा में अपनाए गए शब्द</p>
+                </div>
               </div>
-              <p class="text-sm sm:text-base text-slate-100 font-sans leading-relaxed whitespace-pre-line">• अरबी-फ़ारसी शब्द: अदालत, अमीर, अल्लाह, आफ़त, कत्ल, कदम, कसूर, कागज़, कानून, कैदी, खून-खराबा, खत, गरीब, ज़मींदार, जहाज़, ज़िला, दरोगा, दुनिया, फ़कीर, बाज़ार, बेगम, बर्फ़, बगीचा, मालिक, सज़ा, हुक्म आदि।<br>• अंग्रेज़ी शब्द: मास्टर, सिनेमा, रेल, कोट, स्टेशन, रेडियो, अफ़सर, कॉलेज, कोर्ट, कर्फ्यू, टेलीफ़ोन, टिकट, राशन, डॉक्टर, फ़्रीज, फ़ुटबॉल, नर्स, ट्यूब, टीम, मशीन, मिल, मोटर, यूनियन, पुलिस, टैक्सी, टोस्ट, गैस, इंजन, कमीशन, कॉपी आदि।<br>• अन्य विदेशी भाषाएँ (तुर्की, पुर्तगाली, चीनी आदि): आलपीन, अलमारी, इस्तरी, कनस्तर, कप्तान, गोदाम, कमीज़, कालीन, कैंची, कैमरा, पादरी, संतरा, काजू, बाल्टी, साबुन, कारतूस, रिक्शा, चाय, प्याज़, लीची आदि।</p>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                <!-- Group 1: Household Items -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fas fa-utensils"></i> १. दैनिक घरेलू वस्तुएँ व औजार (Household Utensils & Tools)
+                      </span>
+                      <button onclick="speakDeshajCategory('दैनिक घरेलू वस्तुएँ', 'लोटा, झोला, डिबिया, थाली, झाडू, लकड़ी, खड़ाऊँ, फावड़ा', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">लोटा <span class="text-[11px] text-emerald-300 font-mono">(Round Pot)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">झोला <span class="text-[11px] text-emerald-300 font-mono">(Cloth Bag)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">डिबिया <span class="text-[11px] text-emerald-300 font-mono">(Small Box)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">थाली <span class="text-[11px] text-emerald-300 font-mono">(Plate)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">झाडू <span class="text-[11px] text-emerald-300 font-mono">(Broom)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">लकड़ी <span class="text-[11px] text-emerald-300 font-mono">(Stick/Wood)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">खड़ाऊँ <span class="text-[11px] text-emerald-300 font-mono">(Wooden Sandals)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">फावड़ा <span class="text-[11px] text-emerald-300 font-mono">(Spade)</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Group 2: Clothing & Attire -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fas fa-tshirt"></i> २. वेशभूषा व रूप-रंग (Clothing & State)
+                      </span>
+                      <button onclick="speakDeshajCategory('वेशभूषा व रूप-रंग', 'पगड़ी, जूता, लथपथ', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">पगड़ी <span class="text-[11px] text-emerald-300 font-mono">(Turban)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">जूता <span class="text-[11px] text-emerald-300 font-mono">(Shoes)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">लथपथ <span class="text-[11px] text-emerald-300 font-mono">(Drenched / Soaked)</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Group 3: Food & Utility -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fas fa-bowl-rice"></i> ३. खान-पान व दैनिक क्रय (Food & Currency)
+                      </span>
+                      <button onclick="speakDeshajCategory('खान-पान व दैनिक क्रय', 'खिचड़ी, पैसा', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">खिचड़ी <span class="text-[11px] text-emerald-300 font-mono">(Khichdi)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">पैसा <span class="text-[11px] text-emerald-300 font-mono">(Money / Coin)</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Group 4: Shelter & Anatomy -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fas fa-home"></i> ४. आवास व शरीर के अंग (Shelter & Anatomy)
+                      </span>
+                      <button onclick="speakDeshajCategory('आवास व शरीर के अंग', 'खिड़की, झुग्गी, टाँग, पेट', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">खिड़की <span class="text-[11px] text-emerald-300 font-mono">(Window)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">झुग्गी <span class="text-[11px] text-emerald-300 font-mono">(Hut / Shanty)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">टाँग <span class="text-[11px] text-emerald-300 font-mono">(Leg)</span></span>
+                      <span class="px-2.5 py-1 rounded-lg bg-slate-800/90 text-slate-200 border border-slate-700 text-xs font-medium">पेट <span class="text-[11px] text-emerald-300 font-mono">(Stomach)</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/30 transition-all relative group">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-xs font-mono text-blue-400 font-semibold">संकर शब्द (Hybrid / Compound Words of Multiple Origins)</span>
-                <button onclick="speakHindiText('', this)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] text-blue-300 font-medium transition-all flex items-center gap-1 cursor-pointer">
-                  <i class="fas fa-volume-up"></i> सुनें
-                </button>
+
+            <!-- MODULE 3: VIDESHAJ LOANWORDS -->
+            <div id="sec-videshaj" class="p-5 rounded-2xl bg-slate-900/70 border border-purple-500/30 shadow-xl space-y-4">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+                    <h3 class="text-base sm:text-lg font-bold text-white font-heading">
+                      विदेशज शब्दों का विस्तृत वर्गीकरण (Foreign Loanwords)
+                    </h3>
+                    <span class="text-xs font-mono px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20 font-semibold">4 Language Groups</span>
+                  </div>
+                  <p class="text-xs text-slate-400 mt-1">विदेशी शासनों, व्यापार व सांस्कृतिक आदान-प्रदान द्वारा हिंदी में समाहित विदेशी शब्द</p>
+                </div>
               </div>
-              <p class="text-sm sm:text-base text-slate-100 font-sans leading-relaxed whitespace-pre-line">जो शब्द दो अलग-अलग भाषाओं के शब्दों के संयोग से बनते हैं, वे &#x27;संकर शब्द&#x27; कहलाते हैं। पाठ्यपुस्तक में दिए गए उदाहरण:<br>• किताबघर = किताब (विदेशज/अरबी) + घर (हिंदी)<br>• घड़ीसाज़ = घड़ी (हिंदी) + साज़ (अरबी/फ़ारसी)<br>• पूँजीपति = पूँजी (हिंदी) + पति (संस्कृत)<br>• माँगपत्र = माँग (हिंदी) + पत्र (संस्कृत)<br>• रेलयात्री = रेल (अंग्रेज़ी) + यात्री (संस्कृत)</p>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                <!-- Group 1: Arabic -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-purple-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-xs font-mono text-purple-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fas fa-balance-scale"></i> १. अरबी शब्द (Arabic — कानून, अदालत व धर्म)
+                      </span>
+                      <button onclick="speakForeignCategory('अरबी शब्द', 'अदालत, अमीर, अल्लाह, आफ़त, कत्ल, कदम, कसूर, कागज़, कानून, कैदी, खत, गरीब, दरोगा, दुनिया, फ़कीर, मालिक, हुक्म', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-purple-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mt-2">
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">अदालत <span class="text-[10px] text-purple-300 font-mono">(Court)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कानून <span class="text-[10px] text-purple-300 font-mono">(Law)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कैदी <span class="text-[10px] text-purple-300 font-mono">(Prisoner)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">खत <span class="text-[10px] text-purple-300 font-mono">(Letter)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">ज़िला <span class="text-[10px] text-purple-300 font-mono">(District)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">दरोगा <span class="text-[10px] text-purple-300 font-mono">(Inspector)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">हुक्म <span class="text-[10px] text-purple-300 font-mono">(Order)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">अमीर <span class="text-[10px] text-purple-300 font-mono">(Rich)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">गरीब <span class="text-[10px] text-purple-300 font-mono">(Poor)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">मालिक <span class="text-[10px] text-purple-300 font-mono">(Owner)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">दुनिया <span class="text-[10px] text-purple-300 font-mono">(World)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">फ़कीर <span class="text-[10px] text-purple-300 font-mono">(Fakir)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कत्ल <span class="text-[10px] text-purple-300 font-mono">(Murder)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">आफ़त <span class="text-[10px] text-purple-300 font-mono">(Trouble)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कसूर <span class="text-[10px] text-purple-300 font-mono">(Fault)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कागज़ <span class="text-[10px] text-purple-300 font-mono">(Paper)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कदम <span class="text-[10px] text-purple-300 font-mono">(Step)</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Group 2: Persian -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-purple-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-xs font-mono text-purple-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fas fa-store"></i> २. फ़ारसी शब्द (Persian — समाज, व्यापार व परिवेश)
+                      </span>
+                      <button onclick="speakForeignCategory('फ़ारसी शब्द', 'बाज़ार, ज़मींदार, जहाज़, बेगम, बर्फ़, बगीचा, खून-खराबा, सज़ा, दीवार, गुलाब', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-purple-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mt-2">
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">बाज़ार <span class="text-[10px] text-purple-300 font-mono">(Market)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">ज़मींदार <span class="text-[10px] text-purple-300 font-mono">(Landlord)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">जहाज़ <span class="text-[10px] text-purple-300 font-mono">(Ship)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">बेगम <span class="text-[10px] text-purple-300 font-mono">(Queen/Lady)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">बर्फ़ <span class="text-[10px] text-purple-300 font-mono">(Ice/Snow)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">बगीचा <span class="text-[10px] text-purple-300 font-mono">(Garden)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">खून-खराबा <span class="text-[10px] text-purple-300 font-mono">(Bloodshed)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">सज़ा <span class="text-[10px] text-purple-300 font-mono">(Punishment)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">दीवार <span class="text-[10px] text-purple-300 font-mono">(Wall)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">गुलाब <span class="text-[10px] text-purple-300 font-mono">(Rose)</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Group 3: English -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-purple-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-xs font-mono text-purple-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fas fa-train"></i> ३. अंग्रेज़ी शब्द (English — तकनीक, परिवहन व संस्थान)
+                      </span>
+                      <button onclick="speakForeignCategory('अंग्रेज़ी शब्द', 'स्टेशन, रेल, मोटर, सिनेमा, डॉक्टर, अस्पताल, स्कूल, कॉलेज, कोर्ट, कर्फ्यू, टेलीफ़ोन, टिकट, राशन, फ़्रीज, फ़ुटबॉल, नर्स, ट्यूब, टीम, मशीन, मिल, पुलिस, टैक्सी, गैस, इंजन', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-purple-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 mt-2">
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">स्टेशन <span class="text-[10px] text-purple-300 font-mono">(Station)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">रेल <span class="text-[10px] text-purple-300 font-mono">(Train)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">मोटर <span class="text-[10px] text-purple-300 font-mono">(Motor)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">सिनेमा <span class="text-[10px] text-purple-300 font-mono">(Cinema)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">डॉक्टर <span class="text-[10px] text-purple-300 font-mono">(Doctor)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कॉलेज <span class="text-[10px] text-purple-300 font-mono">(College)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कोर्ट <span class="text-[10px] text-purple-300 font-mono">(Court)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कर्फ्यू <span class="text-[10px] text-purple-300 font-mono">(Curfew)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">टेलीफ़ोन <span class="text-[10px] text-purple-300 font-mono">(Telephone)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">टिकट <span class="text-[10px] text-purple-300 font-mono">(Ticket)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">राशन <span class="text-[10px] text-purple-300 font-mono">(Ration)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">फ़्रीज <span class="text-[10px] text-purple-300 font-mono">(Fridge)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">फ़ुटबॉल <span class="text-[10px] text-purple-300 font-mono">(Football)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">नर्स <span class="text-[10px] text-purple-300 font-mono">(Nurse)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">टीम <span class="text-[10px] text-purple-300 font-mono">(Team)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">मशीन <span class="text-[10px] text-purple-300 font-mono">(Machine)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">पुलिस <span class="text-[10px] text-purple-300 font-mono">(Police)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">टैक्सी <span class="text-[10px] text-purple-300 font-mono">(Taxi)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">गैस <span class="text-[10px] text-purple-300 font-mono">(Gas)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">इंजन <span class="text-[10px] text-purple-300 font-mono">(Engine)</span></span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कॉपी <span class="text-[10px] text-purple-300 font-mono">(Notebook)</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Group 4: Other Languages -->
+                <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-purple-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-xs font-mono text-purple-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fas fa-globe-asia"></i> ४. अन्य भाषाएँ (पुर्तगाली, तुर्की, चीनी, जापानी)
+                      </span>
+                      <button onclick="speakForeignCategory('अन्य विदेशी भाषाएँ', 'पुर्तगाली शब्द हैं: आलपीन, अलमारी, इस्तरी, बाल्टी, साबुन, काजू, संतरा, कमीज़। तुर्की शब्द: कैंची, चाकू, कारतूस। चीनी शब्द: चाय, लीची। जापानी शब्द: रिक्शा', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-purple-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="space-y-2 mt-2">
+                      <div>
+                        <span class="text-[11px] font-bold text-amber-300 font-mono block mb-1">🇵🇹 पुर्तगाली (Portuguese):</span>
+                        <div class="flex flex-wrap gap-1.5">
+                          <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">आलपीन <span class="text-[10px] text-purple-300 font-mono">(Pin)</span></span>
+                          <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">अलमारी <span class="text-[10px] text-purple-300 font-mono">(Almirah)</span></span>
+                          <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">इस्तरी <span class="text-[10px] text-purple-300 font-mono">(Iron)</span></span>
+                          <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">बाल्टी <span class="text-[10px] text-purple-300 font-mono">(Bucket)</span></span>
+                          <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">साबुन <span class="text-[10px] text-purple-300 font-mono">(Soap)</span></span>
+                          <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">काजू <span class="text-[10px] text-purple-300 font-mono">(Cashew)</span></span>
+                          <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">संतरा <span class="text-[10px] text-purple-300 font-mono">(Orange)</span></span>
+                          <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कमीज़ <span class="text-[10px] text-purple-300 font-mono">(Shirt)</span></span>
+                        </div>
+                      </div>
+                      <div>
+                        <span class="text-[11px] font-bold text-sky-300 font-mono block mb-1">🇹🇷 तुर्की (Turkish):</span>
+                        <div class="flex flex-wrap gap-1.5">
+                          <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कैंची <span class="text-[10px] text-purple-300 font-mono">(Scissors)</span></span>
+                          <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">चाकू <span class="text-[10px] text-purple-300 font-mono">(Knife)</span></span>
+                          <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">तोप <span class="text-[10px] text-purple-300 font-mono">(Cannon)</span></span>
+                          <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">कारतूस <span class="text-[10px] text-purple-300 font-mono">(Cartridge)</span></span>
+                        </div>
+                      </div>
+                      <div class="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-800/70">
+                        <span class="text-[11px] font-bold text-emerald-300 font-mono">🇨🇳 चीनी:</span>
+                        <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">चाय</span>
+                        <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">लीची</span>
+                        <span class="text-[11px] font-bold text-rose-300 font-mono ml-2">🇯🇵 जापानी:</span>
+                        <span class="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700/80 text-xs">रिक्शा</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MODULE 4: SANKAR WORDS -->
+            <div id="sec-sankar" class="p-5 rounded-2xl bg-slate-900/70 border border-amber-500/30 shadow-xl space-y-4">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                    <h3 class="text-base sm:text-lg font-bold text-white font-heading">
+                      संकर शब्द: निर्माण सूत्र एवं उदाहरण (Hybrid Compound Words)
+                    </h3>
+                    <span class="text-xs font-mono px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold">Formula Cards</span>
+                  </div>
+                  <p class="text-xs text-slate-400 mt-1">दो भिन्न भाषाओं या स्रोतों के शब्दों के मेल से बने नवीन शब्द (भाषा १ + भाषा २ = संकर शब्द)</p>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <!-- Card 1 -->
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-bold text-white font-heading">📖 किताबघर</span>
+                      <button onclick="speakHybridFormula('किताबघर', 'किताब जो अरबी भाषा का शब्द है', 'घर जो हिंदी भाषा का शब्द है', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="space-y-1 text-xs font-mono">
+                      <div class="flex items-center justify-between">
+                        <span class="px-2 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30">किताब (अरबी)</span>
+                        <span class="text-slate-500">+</span>
+                        <span class="px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">घर (हिंदी)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] text-slate-400 mt-2 font-mono">🇬🇧 Bookstore / Library</span>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-bold text-white font-heading">⌚ घड़ीसाज़</span>
+                      <button onclick="speakHybridFormula('घड़ीसाज़', 'घड़ी जो हिंदी भाषा का शब्द है', 'साज़ जो फ़ारसी भाषा का शब्द है', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="space-y-1 text-xs font-mono">
+                      <div class="flex items-center justify-between">
+                        <span class="px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">घड़ी (हिंदी)</span>
+                        <span class="text-slate-500">+</span>
+                        <span class="px-2 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30">साज़ (फ़ारसी)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] text-slate-400 mt-2 font-mono">🇬🇧 Watchmaker</span>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-bold text-white font-heading">💰 पूँजीपति</span>
+                      <button onclick="speakHybridFormula('पूँजीपति', 'पूँजी जो हिंदी भाषा का शब्द है', 'पति जो संस्कृत भाषा का शब्द है', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="space-y-1 text-xs font-mono">
+                      <div class="flex items-center justify-between">
+                        <span class="px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">पूँजी (हिंदी)</span>
+                        <span class="text-slate-500">+</span>
+                        <span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">पति (संस्कृत)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] text-slate-400 mt-2 font-mono">🇬🇧 Capitalist</span>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-bold text-white font-heading">📜 माँगपत्र</span>
+                      <button onclick="speakHybridFormula('माँगपत्र', 'माँग जो हिंदी भाषा का शब्द है', 'पत्र जो संस्कृत भाषा का शब्द है', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="space-y-1 text-xs font-mono">
+                      <div class="flex items-center justify-between">
+                        <span class="px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">माँग (हिंदी)</span>
+                        <span class="text-slate-500">+</span>
+                        <span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">पत्र (संस्कृत)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] text-slate-400 mt-2 font-mono">🇬🇧 Charter of demands</span>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-bold text-white font-heading">🚆 रेलयात्री</span>
+                      <button onclick="speakHybridFormula('रेलयात्री', 'रेल जो अंग्रेज़ी भाषा का शब्द है', 'यात्री जो संस्कृत भाषा का शब्द है', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="space-y-1 text-xs font-mono">
+                      <div class="flex items-center justify-between">
+                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-300 border border-rose-500/30">रेल (अंग्रेज़ी)</span>
+                        <span class="text-slate-500">+</span>
+                        <span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">यात्री (संस्कृत)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] text-slate-400 mt-2 font-mono">🇬🇧 Train Passenger</span>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-bold text-white font-heading">🎟️ टिकटघर</span>
+                      <button onclick="speakHybridFormula('टिकटघर', 'टिकट जो अंग्रेज़ी भाषा का शब्द है', 'घर जो हिंदी भाषा का शब्द है', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="space-y-1 text-xs font-mono">
+                      <div class="flex items-center justify-between">
+                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-300 border border-rose-500/30">टिकट (अंग्रेज़ी)</span>
+                        <span class="text-slate-500">+</span>
+                        <span class="px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">घर (हिंदी)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] text-slate-400 mt-2 font-mono">🇬🇧 Ticket Counter</span>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-bold text-white font-heading">🚨 लाठीचार्ज</span>
+                      <button onclick="speakHybridFormula('लाठीचार्ज', 'लाठी जो हिंदी भाषा का शब्द है', 'चार्ज जो अंग्रेज़ी भाषा का शब्द है', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="space-y-1 text-xs font-mono">
+                      <div class="flex items-center justify-between">
+                        <span class="px-2 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">लाठी (हिंदी)</span>
+                        <span class="text-slate-500">+</span>
+                        <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-300 border border-rose-500/30">चार्ज (अंग्रेज़ी)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] text-slate-400 mt-2 font-mono">🇬🇧 Baton Charge</span>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition-all flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-bold text-white font-heading">🌳 छायादार</span>
+                      <button onclick="speakHybridFormula('छायादार', 'छाया जो संस्कृत भाषा का शब्द है', 'दार जो फ़ारसी भाषा का प्रत्यय है', this)" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs transition-all cursor-pointer" title="सुनें">
+                        <i class="fas fa-volume-up"></i>
+                      </button>
+                    </div>
+                    <div class="space-y-1 text-xs font-mono">
+                      <div class="flex items-center justify-between">
+                        <span class="px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">छाया (संस्कृत)</span>
+                        <span class="text-slate-500">+</span>
+                        <span class="px-2 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30">दार (फ़ारसी)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] text-slate-400 mt-2 font-mono">🇬🇧 Shady Canopy / Tree</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -721,39 +2096,39 @@
           <div class="p-5 rounded-2xl bg-slate-950/70 border border-slate-800/90 space-y-4">
             <div class="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/30 text-center">
               <span class="text-xs font-mono text-blue-400 uppercase font-bold tracking-wider">केंद्रीय विषय</span>
-              <h3 class="text-lg font-extrabold text-white mt-0.5">{ch_title}</h3>
+              <h3 class="text-lg font-extrabold text-white mt-0.5">पाठ ३: शब्द विचार (Morphology & Etymology)</h3>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
                 <span class="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider">शाखा 1</span>
-                <h4 class="text-sm font-bold text-white mt-1 mb-1">शब्द की अवधारणा एवं वर्गीकरण (Concept of Words & 4 Classifications)</h4>
-                <p class="text-xs text-slate-300 leading-relaxed">वर्णों के सार्थक मेल को 'शब्द' कहते हैं। भाषा में शब्दों के माध्यम से ही व्यक्तियों, प्राणियों, गुणों और क्रियाओं के विष...</p>
+                <h4 class="text-sm font-bold text-white mt-1 mb-1">शब्द की अवधारणा एवं वर्गीकरण (Concept & 4 Bases)</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">वर्णों के सार्थक मेल को 'शब्द' कहते हैं। वर्गीकरण के ४ आधार: प्रयोग (२ भेद), स्रोत/उत्पत्ति (५ भेद), बनावट/रचना (३ भेद), अर्थ (पर्याय, विलोम आदि)।</p>
               </div>
               <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
                 <span class="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider">शाखा 2</span>
-                <h4 class="text-sm font-bold text-white mt-1 mb-1">प्रयोग के आधार पर शब्द-भेद: विकारी बनाम अविकारी</h4>
-                <p class="text-xs text-slate-300 leading-relaxed">• विकारी शब्द: वचन, लिंग, काल, कारक आदि के प्रभाव से जिन शब्दों का रूप बदल जाता है, वे विकारी शब्द कहलाते हैं। ये चार प्...</p>
+                <h4 class="text-sm font-bold text-white mt-1 mb-1">प्रयोग के आधार पर भेद: विकारी बनाम अविकारी</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">• विकारी (४): संज्ञा, सर्वनाम, विशेषण, क्रिया (लिंग/वचन/काल से परिवर्तनशील)<br>• अविकारी/अव्यय (४): क्रियाविशेषण, संबंधबोधक, समुच्चयबोधक, विस्मयादिबोधक।</p>
               </div>
               <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
                 <span class="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider">शाखा 3</span>
-                <h4 class="text-sm font-bold text-white mt-1 mb-1">स्रोत या उत्पत्ति के आधार पर शब्द-भेद</h4>
-                <p class="text-xs text-slate-300 leading-relaxed">१. तत्सम शब्द: 'तत्' + 'सम' अर्थात् 'उसके समान' (संस्कृत के समान)। जो शब्द संस्कृत भाषा से अपने मूल रूप में ही हिंदी में...</p>
+                <h4 class="text-sm font-bold text-white mt-1 mb-1">स्रोत या उत्पत्ति के ५ प्रमुख भेद</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">१. तत्सम (संस्कृत सम)<br>२. तद्भव (संस्कृत से विकसित रूप)<br>३. देशज (स्थानीय बोलियों से)<br>४. विदेशज (विदेशी भाषाओं से)<br>५. संकर (दो भाषाओं के मेल से निर्मित)।</p>
               </div>
               <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
                 <span class="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider">शाखा 4</span>
-                <h4 class="text-sm font-bold text-white mt-1 mb-1">प्रमुख ३८ तत्सम-तद्भव शब्द तालिका (38 Canonical Pairs)</h4>
-                <p class="text-xs text-slate-300 leading-relaxed">अश्रु -> आँसू | अस्थि -> हड्डी | आम्र -> आम | उष्ट्र -> ऊँट | ओष्ठ -> ओठ | कज्जल -> काजल | कपाट -> किवाड़ | कपोत -> कबूत...</p>
+                <h4 class="text-sm font-bold text-white mt-1 mb-1">तत्सम ➔ तद्भव रूपांतरण (३८ शब्द-युग्म)</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">५ गोल्डन नियम: चंद्रबिंदु (ँ) = तद्भव; 'क्ष' ➔ 'ख/छ'; 'श/ष' ➔ 'स'; 'ऋ' व रेफ़ 'र्' = तत्सम; 'व' ➔ 'ब'। उदाहरण: अश्रु ➔ आँसू, दुग्ध ➔ दूध, कर्ण ➔ कान, सर्प ➔ साँप।</p>
               </div>
               <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
                 <span class="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider">शाखा 5</span>
                 <h4 class="text-sm font-bold text-white mt-1 mb-1">देशज शब्दों का संग्रह (Indigenous Dialect Words)</h4>
-                <p class="text-xs text-slate-300 leading-relaxed">झाडू, झुग्गी, पगड़ी, लोटा, झोला, टाँग, पेट, जूता, डिबिया, लकड़ी, खिड़की, खड़ाऊँ, फावड़ा, लथपथ, खिचड़ी, पैसा, थाली आदि दे...</p>
+                <p class="text-xs text-slate-300 leading-relaxed">घरेलू वस्तुएँ: लोटा, झोला, थाली, डिबिया, झाडू, लकड़ी, खड़ाऊँ। वेशभूषा: पगड़ी, जूता। खान-पान व दैनिक जीवन: खिचड़ी, पैसा, लथपथ। आवास: खिड़की, झुग्गी।</p>
               </div>
               <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
                 <span class="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider">शाखा 6</span>
-                <h4 class="text-sm font-bold text-white mt-1 mb-1">विदेशज शब्दों का विस्तृत वर्गीकरण (Foreign Loanwords)</h4>
-                <p class="text-xs text-slate-300 leading-relaxed">• अरबी-फ़ारसी शब्द: अदालत, अमीर, अल्लाह, आफ़त, कत्ल, कदम, कसूर, कागज़, कानून, कैदी, खून-खराबा, खत, गरीब, ज़मींदार, जहाज़...</p>
+                <h4 class="text-sm font-bold text-white mt-1 mb-1">विदेशज एवं संकर शब्द (Loanwords & Hybrids)</h4>
+                <p class="text-xs text-slate-300 leading-relaxed">• अरबी: अदालत, कानून, खत। फ़ारसी: बाज़ार, ज़मींदार। अंग्रेज़ी: स्टेशन, डॉक्टर, रेल। पुर्तगाली: अलमारी, आलपीन। तुर्की: कैंची।<br>• संकर सूत्र: किताबघर (अरबी+हिंदी), रेलयात्री (अंग्रेज़ी+संस्कृत)।</p>
               </div>
             </div>
           </div>
@@ -2214,7 +3589,7 @@
           Pushti Study Hub &bull; 100% NCERT &amp; CBSE Standard Learning System
         </p>
         <p class="text-slate-500 font-mono text-[11px]">
-          Localhost Navigation: <a href="https://localhost:8443/chapters/hindi/hindi_gra_{ch_slug}.html" class="text-blue-400 hover:underline">https://localhost:8443/chapters/hindi/hindi_gra_{ch_slug}.html</a> | <a href="http://localhost:8000/chapters/hindi/hindi_gra_{ch_slug}.html" class="text-blue-400 hover:underline">http://localhost:8000/chapters/hindi/hindi_gra_{ch_slug}.html</a>
+          Localhost Navigation: <a href="https://localhost:8443/chapters/hindi/hindi_gra_ch3.html" class="text-blue-400 hover:underline">https://localhost:8443/chapters/hindi/hindi_gra_ch3.html</a> | <a href="http://localhost:8000/chapters/hindi/hindi_gra_ch3.html" class="text-blue-400 hover:underline">http://localhost:8000/chapters/hindi/hindi_gra_ch3.html</a>
         </p>
       </footer>
 
@@ -2228,7 +3603,18 @@
     const answeredMasterQuestions = new Set();
     const answeredDrills = new Set();
     let allFlashcardsFlipped = false;
-    const masterQuizQuestions = {js_quiz_data};
+    const masterQuizQuestions = [
+      { q: "ये शब्द अविकारी हैं -", opts: ["पास, मीठा", "और, शीघ्र", "वे, बालक"], ans: 1, exp: "'और' (समुच्चयबोधक) तथा 'शीघ्र' (क्रियाविशेषण) दोनों अविकारी (अव्यय) शब्द हैं।" },
+      { q: "ये शब्द तत्सम हैं -", opts: ["कर्म, कार्य", "पंछी, पृष्ठ", "घी, जीभ"], ans: 0, exp: "'कर्म' और 'कार्य' दोनों संस्कृत के मूल तत्सम शब्द हैं।" },
+      { q: "यह संकर शब्द है -", opts: ["फ़ुटबॉल", "लथपथ", "पूँजीपति"], ans: 2, exp: "'पूँजीपति' = पूँजी (हिंदी) + पति (संस्कृत), दो भिन्न भाषाओं के मेल से बना संकर शब्द है।" },
+      { q: "'विकारी शब्द' की व्याकरणिक परिभाषा क्या है?", opts: ["लिंग, वचन, कारक, काल आदि के प्रभाव से जिनका रूप बदल जाता है।", "भाषा का अमानक व अनौपचारिक रूप", "ध्वनियों का अनिश्चित उच्चारण", "केवल विदेशी भाषाओं में प्रयुक्त नियम"], ans: 0, exp: "लिंग, वचन, कारक, काल आदि के कारण रूप बदलने वाले शब्द विकारी कहलाते हैं (संज्ञा, सर्वनाम, विशेषण, क्रिया)।" },
+      { q: "'अविकारी शब्द' की व्याकरणिक परिभाषा क्या है?", opts: ["किसी भी व्याकरणिक परिस्थिति में जिनका रूप कभी नहीं बदलता।", "भाषा का अमानक व अनौपचारिक रूप", "ध्वनियों का अनिश्चित उच्चारण", "केवल विदेशी भाषाओं में प्रयुक्त नियम"], ans: 0, exp: "जिन शब्दों का रूप किसी भी स्थिति में नहीं बदलता, वे अविकारी (अव्यय) कहलाते हैं।" },
+      { q: "'तत्सम शब्द' की व्याकरणिक परिभाषा क्या है?", opts: ["संस्कृत भाषा के मूल शब्द जो बिना किसी परिवर्तन के हिंदी में प्रयुक्त होते हैं।", "भाषा का अमानक व अनौपचारिक रूप", "ध्वनियों का अनिश्चित उच्चारण", "केवल विदेशी भाषाओं में प्रयुक्त नियम"], ans: 0, exp: "संस्कृत भाषा के मूल शब्द जो हिंदी में ज्यों के त्यों प्रयुक्त होते हैं, तत्सम कहलाते हैं।" },
+      { q: "'तद्भव शब्द' की व्याकरणिक परिभाषा क्या है?", opts: ["संस्कृत के वे शब्द जो रूप बदलकर हिंदी भाषा में शामिल हुए हैं।", "भाषा का अमानक व अनौपचारिक रूप", "ध्वनियों का अनिश्चित उच्चारण", "केवल विदेशी भाषाओं में प्रयुक्त नियम"], ans: 0, exp: "संस्कृत से विकसित होकर थोड़े बदले रूप में हिंदी में प्रयुक्त शब्द तद्भव कहलाते हैं।" },
+      { q: "'देशज शब्द' की व्याकरणिक परिभाषा क्या है?", opts: ["जो शब्द क्षेत्रीय बोलियों एवं स्थानीय प्रभाव से हिंदी में अपनाए गए हैं।", "भाषा का अमानक व अनौपचारिक रूप", "ध्वनियों का अनिश्चित उच्चारण", "केवल विदेशी भाषाओं में प्रयुक्त नियम"], ans: 0, exp: "जो शब्द क्षेत्रीय बोलियों से स्थानीय आवश्यकतानुसार हिंदी में आए हैं, वे देशज शब्द हैं।" },
+      { q: "'विदेशज शब्द' की व्याकरणिक परिभाषा क्या है?", opts: ["विदेशी भाषाओं (अरबी, फ़ारसी, अंग्रेज़ी, पुर्तगाली आदि) से आकर हिंदी में प्रयुक्त शब्द।", "भाषा का अमानक व अनौपचारिक रूप", "ध्वनियों का अनिश्चित उच्चारण", "केवल विदेशी भाषाओं में प्रयुक्त नियम"], ans: 0, exp: "विदेशी भाषाओं से हिंदी में आए शब्द विदेशज (आगत) कहलाते हैं।" },
+      { q: "'संकर शब्द' की व्याकरणिक परिभाषा क्या है?", opts: ["दो भिन्न भाषाओं या स्रोतों के शब्दों के मेल से बने नवीन शब्द।", "भाषा का अमानक व अनौपचारिक रूप", "ध्वनियों का अनिश्चित उच्चारण", "केवल विदेशी भाषाओं में प्रयुक्त नियम"], ans: 0, exp: "दो अलग-अलग भाषाओं के शब्दों के योग से निर्मित शब्द संकर कहलाते हैं।" }
+    ];
 
     // --- TAB SWITCHING ---
     function switchMainTab(targetTabId, btnEl) {{
@@ -2244,12 +3630,13 @@
     }}
 
     // --- SIDEBAR PIN TOGGLE ---
-    function toggleSidebarPin() {{
+    function toggleSidebarPin() {
+      if (window.innerWidth < 1100) return;{
       const dock = document.getElementById('sidebarDock');
       const btn = document.getElementById('pinToggleBtn');
       dock.classList.toggle('pinned');
       const isPinned = dock.classList.contains('pinned');
-      localStorage.setItem('gra_{ch_slug}_dock_pinned', isPinned);
+      localStorage.setItem('psh_dock_pinned', isPinned);
       if (btn) {{
         if (isPinned) {{
           btn.classList.add('bg-blue-500/30', 'text-blue-300');
@@ -2348,8 +3735,152 @@
       document.querySelectorAll('.vocab-row').forEach(row => {{
         const text = row.textContent.toLowerCase();
         row.style.display = text.includes(q) ? '' : 'none';
-      }});
-    }}
+      });
+    }
+
+    // --- TTS SPEECH FUNCTIONS (Natural Melodious Voice standard) ---
+    function speakHindiText(text, btn) {
+      if (!text && btn) {
+        if (btn.parentElement && btn.parentElement.nextElementSibling) {
+          text = btn.parentElement.nextElementSibling.innerText || '';
+        }
+        if (!text) {
+          const card = btn.closest('.group, .p-4, .p-5, .p-6, div');
+          if (card) {
+            const p = card.querySelector('p, .text-slate-100');
+            text = p ? p.innerText : '';
+          }
+        }
+      }
+      if (!text) return;
+      if (window.PushtiOnlineTTS && typeof window.PushtiOnlineTTS.speak === 'function') {
+        window.PushtiOnlineTTS.speak(text, { lang: 'hi', btn: btn });
+        return;
+      }
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const clean = text.replace(/<[^>]*>/g, '').trim();
+        const utter = new SpeechSynthesisUtterance(clean);
+        utter.lang = 'hi-IN';
+        utter.rate = 0.9;
+        const voices = window.speechSynthesis.getVoices();
+        const hiVoice = voices.find(v => v.lang.startsWith('hi'));
+        if (hiVoice) utter.voice = hiVoice;
+        window.speechSynthesis.speak(utter);
+      }
+    }
+
+    function speakHindiWord(word, meaning, btn) {
+      speakHindiText(`${word}... अर्थात्... ${meaning}`, btn);
+    }
+
+    function speakFullLesson(btn) {
+      const targetContainer = document.getElementById('tabTheory') || document.querySelector('.lesson-content-body');
+      const paragraphs = targetContainer ? targetContainer.querySelectorAll('p, .text-slate-100') : document.querySelectorAll('main p');
+      const fullText = Array.from(paragraphs).slice(0, 8).map(p => p.textContent).join('. ');
+      speakHindiText(fullText, btn);
+    }
+
+    function speakTatsamPair(tatsam, tadbhav, btn) {
+      const text = `${tatsam}... संस्कृत तत्सम शब्द है, जिसका तद्भव हिंदी रूप... ${tadbhav}... है।`;
+      speakHindiText(text, btn);
+    }
+
+    function speakDeshajCategory(title, words, btn) {
+      const text = `${title}... इसके अंतर्गत प्रमुख देशज शब्द हैं: ${words}`;
+      speakHindiText(text, btn);
+    }
+
+    function speakForeignCategory(title, words, btn) {
+      const text = `${title}... प्रमुख विदेशी शब्द हैं: ${words}`;
+      speakHindiText(text, btn);
+    }
+
+    function speakHybridFormula(word, part1, part2, btn) {
+      const text = `संकर शब्द: ${word}... यह ${part1} और ${part2} के मेल से बना है।`;
+      speakHindiText(text, btn);
+    }
+
+    // --- TATSAM-TADBHAV INTERACTIVE ENGINE ---
+    let currentTatsamGroup = 'all';
+    let isTadbhavTestMode = false;
+
+    function searchTatsam(query) {
+      const q = query.trim().toLowerCase();
+      const cards = document.querySelectorAll('.tatsam-card');
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const tatsam = (card.getAttribute('data-tatsam') || '').toLowerCase();
+        const tadbhav = (card.getAttribute('data-tadbhav') || '').toLowerCase();
+        const en = (card.getAttribute('data-en') || '').toLowerCase();
+        const group = card.getAttribute('data-group') || '';
+        const star = card.getAttribute('data-star') || '';
+
+        const matchesQuery = !q || tatsam.includes(q) || tadbhav.includes(q) || en.includes(q);
+        const matchesGroup = (currentTatsamGroup === 'all') || 
+                             (currentTatsamGroup === 'star' && star === 'true') || 
+                             (currentTatsamGroup === group);
+
+        if (matchesQuery && matchesGroup) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      const counter = document.getElementById('tatsamVisibleCount');
+      if (counter) counter.textContent = visibleCount;
+    }
+
+    function filterTatsamGroup(group, btnEl) {
+      currentTatsamGroup = group;
+      document.querySelectorAll('.tatsam-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-400', 'shadow-md');
+        btn.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
+      });
+      if (btnEl) {
+        btnEl.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        btnEl.classList.add('bg-blue-600', 'text-white', 'border-blue-400', 'shadow-md');
+      }
+      const searchInput = document.getElementById('tatsamSearchInput');
+      searchTatsam(searchInput ? searchInput.value : '');
+    }
+
+    function toggleTadbhavRevealMode() {
+      isTadbhavTestMode = !isTadbhavTestMode;
+      const container = document.getElementById('tatsam-cards-container');
+      const toggleBtn = document.getElementById('btn-toggle-tadbhav-mode');
+      const revealAllBtn = document.getElementById('btn-reveal-all-tadbhav');
+
+      if (isTadbhavTestMode) {
+        container.classList.add('test-mode');
+        if (toggleBtn) {
+          toggleBtn.innerHTML = '<i class="fas fa-eye text-emerald-400"></i> अध्ययन मोड (Study View)';
+          toggleBtn.classList.add('border-emerald-500', 'bg-emerald-950/40');
+        }
+        if (revealAllBtn) revealAllBtn.classList.remove('hidden');
+      } else {
+        container.classList.remove('test-mode');
+        document.querySelectorAll('.tadbhav-pill').forEach(pill => pill.classList.remove('revealed'));
+        if (toggleBtn) {
+          toggleBtn.innerHTML = '<i class="fas fa-brain text-amber-400"></i> स्वयं-परीक्षण मोड (Self-Test Mode)';
+          toggleBtn.classList.remove('border-emerald-500', 'bg-emerald-950/40');
+        }
+        if (revealAllBtn) revealAllBtn.classList.add('hidden');
+      }
+    }
+
+    function revealCardTadbhav(cardEl) {
+      if (!isTadbhavTestMode) return;
+      const pill = cardEl.querySelector('.tadbhav-pill');
+      if (pill) {
+        pill.classList.toggle('revealed');
+      }
+    }
+
+    function revealAllTadbhav() {
+      document.querySelectorAll('.tadbhav-pill').forEach(pill => pill.classList.add('revealed'));
+    }
 
     // --- DRILLS INTERACTION ---
     function checkDrillMCQAnswer(qId, chosenOpt, btnEl) {{
@@ -2444,7 +3975,7 @@
     // --- INITIALIZATION ---
     document.addEventListener('DOMContentLoaded', () => {{
       // Check dock pin
-      if (localStorage.getItem('gra_{ch_slug}_dock_pinned') === 'true') {{
+      if (window.innerWidth >= 1100 && localStorage.getItem('psh_dock_pinned') === 'true') {{
         toggleSidebarPin();
       }}
       // Theme check

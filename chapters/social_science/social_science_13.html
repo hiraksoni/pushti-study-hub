@@ -113,40 +113,111 @@
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Desktop Margin Push */
-    @media (min-width: 861px) {
+        /* Responsive Dock Rail & Universal Margin Push (Tablet & Desktop Safe) */
+    @media (min-width: 640px) and (max-width: 1099px) {
+      .sidebar-dock {
+        width: 62px !important;
+        position: fixed !important;
+        left: 0 !important;
+        top: 54px !important;
+        bottom: 0 !important;
+        z-index: 900 !important;
+      }
+      .sidebar-dock.pinned { width: 62px !important; }
+      .sidebar-dock .tab-label-group { display: none !important; }
+      .sidebar-dock .sidebar-footer { display: none !important; }
       .main-app-content {
         margin-left: 62px !important;
         width: calc(100% - 62px) !important;
-        max-width: calc(100% - 62px) !important;
-        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        max-width: min(1600px, calc(100vw - 62px)) !important;
+        box-sizing: border-box !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
       }
+    }
+
+    @media (min-width: 1100px) {
+      .sidebar-dock {
+        width: 62px;
+        position: fixed;
+        left: 0;
+        top: 54px;
+        bottom: 0;
+        z-index: 900;
+      }
+      .main-app-content {
+        margin-left: 62px !important;
+        width: calc(100% - 62px) !important;
+        max-width: min(1600px, calc(100vw - 62px)) !important;
+        box-sizing: border-box !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .sidebar-dock.pinned { width: 280px !important; }
       .sidebar-dock.pinned ~ .main-app-content {
         margin-left: 280px !important;
         width: calc(100% - 280px) !important;
-        max-width: calc(100% - 280px) !important;
+        max-width: min(1600px, calc(100vw - 280px)) !important;
+      }
+      .sidebar-dock:hover .tab-label-group,
+      .sidebar-dock.pinned .tab-label-group {
+        display: flex !important;
+        width: auto !important;
+        min-width: 140px !important;
+        max-width: 200px !important;
+        margin-left: 12px !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
       }
     }
-    @media (max-width: 860px) {
+
+    @media (max-width: 639px) {
+      .flex.flex-1.relative { flex-direction: column !important; }
       .sidebar-dock {
-        position: static;
+        position: sticky !important;
+        top: 54px !important;
+        left: 0 !important;
+        right: 0 !important;
         width: 100% !important;
-        height: auto;
-        flex-direction: row;
-        border-right: none;
-        border-bottom: 1px solid rgba(51, 65, 85, 0.7);
-        padding: 6px;
+        height: 48px !important;
+        max-height: 48px !important;
+        min-height: 48px !important;
+        flex-direction: row !important;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(51, 65, 85, 0.7) !important;
+        padding: 4px 6px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        z-index: 850 !important;
       }
+      .sidebar-dock > div:first-child {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 6px !important;
+        width: 100% !important;
+        padding: 0 !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+      }
+      .sidebar-dock .nav-tab-btn {
+        width: auto !important;
+        height: 40px !important;
+        padding: 4px 10px !important;
+        flex-shrink: 0 !important;
+      }
+      .sidebar-dock .tab-label-group { display: none !important; }
+      .sidebar-dock .sidebar-footer { display: none !important; }
       .main-app-content {
         margin-left: 0 !important;
-      }
-      .tab-label-group {
-        display: none !important;
-      }
-      .sidebar-footer {
-        display: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 14px !important;
       }
     }
+
 
     /* Light Theme Parity */
     html:not(.dark) body {
@@ -375,7 +446,7 @@
     <!-- HERO HEADER CARD -->
     <section class="mb-8 rounded-2xl bg-gradient-to-r from-slate-900 via-blue-950/40 to-slate-900 border border-blue-500/20 p-6 sm:p-8 shadow-2xl relative overflow-hidden">
       <div class="absolute -right-16 -top-16 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div>
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-300 text-xs font-mono mb-3">
             <i class="fas fa-scale-balanced text-blue-400"></i>
@@ -643,7 +714,7 @@
     <!-- ==================== TAB 2: COMPARATIVE SOCIALIZATION SIMULATOR ==================== -->
     <section id="tabSocializationSimulator" class="tab-content space-y-6">
       <div class="rounded-2xl bg-slate-900 border border-slate-800 p-6 shadow-2xl">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-slate-800 pb-4">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 border-b border-slate-800 pb-4">
           <div>
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-300 text-xs font-mono mb-2">
               <i class="fas fa-sliders-h text-blue-400"></i>
@@ -2583,7 +2654,7 @@
         <!-- Hero Banner for Google Hub -->
         <div class="bg-gradient-to-br from-slate-900 via-slate-900/90 to-slate-950 border border-cyan-500/30 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
           <div class="absolute -right-12 -top-12 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-          <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div>
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-bold uppercase tracking-wider mb-3">
                 <i class="fab fa-google text-cyan-400"></i> Chapter 13 Civics · Complete Research Suite
@@ -2884,6 +2955,7 @@
 
     // --- 3. DOCK PINNING TOGGLE ---
     function toggleSidebarPin() {
+      if (window.innerWidth < 1100) return;
       const sidebar = document.getElementById('sidebarDock');
       sidebar.classList.toggle('pinned');
       const isPinned = sidebar.classList.contains('pinned');

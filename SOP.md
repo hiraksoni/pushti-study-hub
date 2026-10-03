@@ -1,4 +1,4 @@
-# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.7)
+# PUSHTI STUDY HUB — MASTER UNIFIED SOP (v3.8)
 *The Definitive Architectural, Design, Pedagogical & Verification Standard for AI-Assisted Generation*
 
 ---
@@ -836,6 +836,26 @@ Because Pushti studies in an **English-medium CBSE curriculum**, language subjec
     - **Tablet / Touchscreen**: Tapping the word toggles the popover open/closed. Uses viewport-relative fixed positioning (auto-flipping above if near bottom edge) and includes a dedicated '×' close button and audio pronunciation button.
     - **Elimination of Common Drawer**: Generic whole-hub slide-out drawers ("Shabd Kosh") are removed to avoid visual clutter and redundant lists; in-situ hover/tap tooltips provide targeted, contextual vocabulary support.
 
+### 2.16 Target Device Specification: Samsung Galaxy Tab A8 (SM-X205) & 15.6" Laptop Dual-Verification Protocol
+Pushti's primary study hardware consists of two active physical target environments that must be rigorously verified during all QA runs:
+1. **Samsung Galaxy Tab A8 (Model SM-X205 — LTE/Wi-Fi)**:
+   - **Hardware Display**: 10.5-inch TFT LCD, $1920 \times 1200$ physical resolution (16:10 aspect ratio, ~216 ppi), running Android One UI with Google Chrome for Android and Samsung Internet.
+   - **Default Display Scaling (DPR ~1.875)**:
+     - **Landscape Mode ($1024 \times 640$ CSS Viewport)**:
+       - 62px collapsed vertical dock rail fixed on the left edge.
+       - The main content area (`.main-app-content` / `.main-content`) **MUST enforce** `margin-left: 62px !important; width: calc(100% - 62px) !important; max-width: min(1600px, calc(100vw - 62px)) !important;` with at least 1.5rem (24px) padding.
+       - Strictly prevents the fixed sidebar from overlapping or obscuring chapter titles, paragraphs, or equations.
+     - **Portrait Mode ($640 \times 1024$ / $800 \times 1280$ CSS Viewport)**:
+       - 62px dock rail in compact icon-only mode (`.tab-label-group { display: none !important; }`).
+       - Content takes remaining width: `width: calc(100% - 62px) !important; margin-left: 62px !important;`.
+       - **Disallowance of 280px Pinned Dock on Tablets**: On screen widths $< 1100px$, sidebar pinning to 280px is strictly forbidden (`width: 62px !important;`). The pin toggle button (`.sidebar-footer`, `.pin-btn`) is hidden via `@media (max-width: 1099px)` to prevent accidental viewport crushing.
+       - Hero banner flex layouts use `lg:flex-row` (staying `flex-col` below 1024px) so headings (`h1`) span 100% of the available width without squashing into narrow 4-line columns, with action badges and continuous audio play buttons wrapping gracefully beneath.
+   - **Touch Parameters**: All tap targets (tabs, speaker buttons, flashcards, MCQ cards, option tiles) must maintain $\ge 44\text{px} \times 44\text{px}$ touch envelopes with `-webkit-tap-highlight-color: transparent;` and smooth momentum touch scrolling (`-webkit-overflow-scrolling: touch;`).
+2. **15.6" Windows 11 Laptop**:
+   - $1366 \times 768$ (Native Laptop) or $1920 \times 1080$ (Full HD at 125% scaling = $1536 \times 864$).
+   - Supports snappy 0.15s hover expansion of the 62px dock rail to 280px, and user-initiated dock pinning with automatic 280px margin push (`.sidebar-dock.pinned ~ .main-app-content { margin-left: 280px !important; }`).
+3. **Universal Checkpoint Mandate**:
+   - Every chapter creation, refactor, and verification audit MUST test and confirm visual and functional integrity across **both orientations of the Samsung Galaxy Tab A8 SM-X205** alongside the 15.6" Windows 11 laptop display.
 
 ---
 
@@ -1324,6 +1344,11 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 - [ ] **CP-TTS-1 (Natural Female Voice Priority & State Machine Gate)**: In language chapters and reading-heavy sections, verify that audio read-aloud functionality utilizes `js/online_tts.js` v4.0 prioritizing natural, sweet female voices (`Microsoft Swara`, `Kalpana`, `Google हिन्दी`, `Lekha`), with 1-click Play/Pause/Resume/Stop state machine, persistent floating player widget, 14s Android watchdog timer, and graceful cloud fallback.
 - [ ] **CP-TTS-2 (DOM Self-Healing & Substantive Attachment Gate)**: Verify that TTS speaker buttons navigate safely to their target text block using DOM traversal or element references (`speakHindiText('', this)`) without throwing `nextElementSibling` TypeError. Verify that speaker buttons attach only to substantive content blocks ($\ge 140$ chars) and never to UI chrome, nav items, or short labels.
 - [ ] **CP-LANG-1 (Bilingual English Equivalents & Hints Gate)**: For language subjects (Hindi/Sanskrit) in the English-medium CBSE curriculum, verify that chapter titles display clear English equivalents in parentheses across headings and index cards, and `#btn-en-toggle` seamlessly toggles inline `.en-hint` translations.
+- [ ] **CP-GUI-16 (Samsung Galaxy Tab A8 SM-X205 Dual-Orientation Verification Gate)**:
+  Simulate Pushti's primary study tablet (Samsung Galaxy Tab A8 Model SM-X205, 10.5" 1920×1200, default DPR 1.875):
+  - **Landscape Mode (1024×640 CSS px)**: Verify that the 62px collapsed vertical dock rail NEVER overlaps or obscures chapter titles, paragraphs, or equations. Confirm that `.main-app-content` has `margin-left: 62px !important; width: calc(100% - 62px) !important;` with at least 1.5rem (24px) padding between the dock border and the content edge.
+  - **Portrait Mode (640×1024 / 800×1280 CSS px)**: Verify that the dock rail remains collapsed at 62px (icons only) and is strictly prevented from pinning or expanding to 280px. Confirm that hero headings (`h1`) span 100% of the available width without squashing into narrow 4-line columns, with action badges and continuous audio play buttons wrapping gracefully beneath.
+  - **Touch Target Integrity**: Verify that all interactive elements (buttons, speaker icons, tabs, flashcards) meet the $\ge 44\text{px} \times 44\text{px}$ touch envelope requirement with `-webkit-tap-highlight-color: transparent;`.
 
 ### Checkpoint Suite 2: Content & Pedagogical Completeness
 - [ ] **CP-CON-1 (100% Textbook Fidelity)**: Are ALL solved examples and ALL *Figure It Out* exercise problems extracted and solved with full mathematical steps?
@@ -1380,6 +1405,7 @@ Before marking any task, chapter, or feature as complete, the agent must pass th
 
 | Version | Date | Key Architectural Additions |
 | :---: | :---: | :--- |
+| **v3.8** | 2026-10-03 | **Target Hardware Specification: Samsung Galaxy Tab A8 (Model SM-X205) Dual-Orientation Standard & 15.6" Laptop Protocol (Section 2.16, CP-GUI-16, `.agents/rules/gui_theme_tts_standards.md`)**: Formally codified Pushti's primary study tablet hardware (Samsung Galaxy Tab A8 SM-X205, 10.5" 1920×1200, default DPR 1.875, Landscape 1024×640 CSS px, Portrait 640×1024 CSS px) alongside the 15.6" Windows 11 laptop; eliminated sidebar-content overlap in Landscape via mandatory `margin-left: 62px !important; width: calc(100% - 62px) !important;`; eliminated viewport crushing in Portrait by capping dock rail to 62px, hiding pin toggles on screens < 1100px, and enforcing `lg:flex-row` for hero banners; mandated dual-orientation SM-X205 tablet testing on all verification runs. |
 | **v3.7** | 2026-10-03 | **Online Cloud Audio TTS, Top-Bar Fullscreen Standard, Snappy Dock Rail (0.15s) & Automated Dual Server Protocol (Sections 1.15, 2.12, 2.13, 2.14, CP-GUI-14, CP-GUI-15, CP-TTS-1, CP-TTS-2, `.agents/rules/gui_theme_tts_standards.md`)**: Codified dedicated GUI/Theme/TTS standard; replaced broken native browser SpeechSynthesis with high-fidelity Online Cloud Audio streaming engine (`js/online_tts.js`) featuring sentence chunking, pre-buffering, and `/api/tts` proxy; mandated top-bar placement for Fullscreen controls (banning dock-bottom clutter); standardized 0.15s snappy hover transition on vertical dock rails and strictly contiguous Tab 11 nesting; automated local dual-protocol server (`https_server.py` supporting HTTPS 8443 and HTTP 8000) and `requirements.txt`. |
 | **v3.6** | 2026-09-30 | **"As Per Rules" Master Canon & Zero-Rot Dynamic Google Search Query Protocol (Sections 1.12, 1.13, 2.11, CP-CON-7, `.agents/rules/topic_search_queries.md`)**: Codified the unified definition of "as per rules"; strictly prohibited hardcoded third-party video URLs (`youtube.com`, Vimeo, etc.), iframes, and external channel branding to prevent link rot and save AI token budget; established the Topic Search Card standard (`.topic-search-card`) with engineered Google Video (`tbm=vid`) and Knowledge Search query formulas. |
 | **v3.5** | 2026-09-24 | **The "Hath Fero" Urban Planning & Deterministic Blueprint Protocol (Section 1.11, `.agents/rules/hath_fero.md`, `scripts/maintenance/hath_fero_audit.py`)**: Codified the province-city-street-substreet spatial invariance standard. Mandates strictly identical tab indices across all chapters within a subject province, invariant sub-street sequences (e.g. MCQs, FIB, T/F), isolated chapter color theming, and standardized 'Pending Content' Sentinels (`.pending-content-card`) so missing material is never silently omitted or hallucinated. |

@@ -141,13 +141,53 @@ Because Pushti studies in an **English-medium CBSE curriculum**, language subjec
 
 ---
 
-## 7. Verification Checklist Gate
+## 7. Target Hardware Specification: Samsung Galaxy Tab A8 (SM-X205) & 15.6" Laptop Protocol
+
+Pushti's primary study devices consist of two distinct environments that must be rigorously verified during all QA runs:
+
+### 7.1 Samsung Galaxy Tab A8 (Model SM-X205 — LTE/Wi-Fi)
+- **Physical Specifications**: 10.5-inch TFT LCD, $1920 \times 1200$ physical resolution (16:10 aspect ratio, ~216 ppi), running Android One UI with Google Chrome for Android and Samsung Internet.
+- **Display Viewport Dynamics (Default DPR ~1.875)**:
+  - **Landscape Mode ($1024 \times 640$ CSS Viewport)**:
+    - 62px collapsed vertical dock rail fixed on the left edge.
+    - The main content area (`.main-app-content` / `.main-content`) **MUST enforce**:
+      ```css
+      @media (min-width: 640px) and (max-width: 1099px) {
+        .main-app-content, .main-content {
+          margin-left: 62px !important;
+          width: calc(100% - 62px) !important;
+          max-width: min(1600px, calc(100vw - 62px)) !important;
+          padding-left: 1.5rem !important;
+          padding-right: 1.5rem !important;
+        }
+      }
+      ```
+    - Strictly prevents the fixed sidebar from overlapping, touching, or obscuring chapter titles, paragraphs, or equations.
+  - **Portrait Mode ($640 \times 1024$ / $800 \times 1280$ CSS Viewport)**:
+    - 62px dock rail in compact icon-only mode (`.tab-label-group { display: none !important; }`).
+    - Content takes remaining width: `width: calc(100% - 62px) !important; margin-left: 62px !important;`.
+    - **Disallowance of 280px Pinned Dock on Tablets**: On screen widths $< 1100px$, sidebar pinning to 280px is strictly forbidden (`width: 62px !important;`). The pin toggle button (`.sidebar-footer`, `.pin-btn`) is hidden via `@media (max-width: 1099px)` to prevent accidental viewport crushing.
+    - Hero banner flex layouts use `lg:flex-row` (staying `flex-col` below 1024px) so headings (`h1`) span 100% of the available width without squashing into narrow 4-line columns, with action badges and continuous audio play buttons wrapping gracefully beneath.
+- **Touch Parameters**: All tap targets (tabs, speaker buttons, flashcards, MCQ cards, option tiles) must maintain $\ge 44\text{px} \times 44\text{px}$ touch envelopes with `-webkit-tap-highlight-color: transparent;` and smooth momentum touch scrolling (`-webkit-overflow-scrolling: touch;`).
+
+### 7.2 15.6" Windows 11 Laptop
+- $1366 \times 768$ (Native Laptop) or $1920 \times 1080$ (Full HD at 125% scaling = $1536 \times 864$).
+- Supports snappy 0.15s hover expansion of the 62px dock rail to 280px, and user-initiated dock pinning with automatic 280px margin push (`.sidebar-dock.pinned ~ .main-app-content { margin-left: 280px !important; }`).
+
+---
+
+## 8. Verification Checklist Gate
 
 Every newly created or audited chapter must pass:
 - [ ] **CP-GUI-14 (Top-Bar Fullscreen Placement)**: Fullscreen & Landscape button is mounted on the top header; no bottom dock clutter.
 - [ ] **CP-GUI-15 (Dock Rail 0.15s Hover & Tab Sequence)**: Sidebar expands in 0.15s; Tab 11 Google Hub sits directly below Tab 10; zero empty vertical void above hero cards.
+- [ ] **CP-GUI-16 (Samsung Galaxy Tab A8 SM-X205 Dual-Orientation Gate)**:
+  - Landscape (1024×640): 62px dock rail cleared via `margin-left: 62px !important; width: calc(100% - 62px) !important;`; zero title or card overlap.
+  - Portrait (640×1024 / 800×1280): 62px dock rail capped (no 280px pin); hero banner uses `lg:flex-row` so title spans 100% width; badges wrap cleanly beneath.
+  - Touch targets $\ge 44\text{px} \times 44\text{px}$ with `-webkit-tap-highlight-color: transparent;`.
 - [ ] **CP-TTS-1 (Natural Female Voice Priority)**: Uses `js/online_tts.js` v4.0; locks onto sweet, natural female voices (`Microsoft Swara`, `Kalpana`, `Google हिन्दी`, `Lekha`); includes 14s watchdog timer; fallbacks to cloud proxy.
 - [ ] **CP-TTS-2 (Play/Pause/Resume & Floating Player)**: State machine allows 1-click play, pause, and resume; floating widget displays sentence counter (`वाक्य x / y`).
 - [ ] **CP-TTS-3 (Substantive Placement Gate)**: Speaker buttons exist only on content blocks $\ge 140$ characters (or specific poem/vocab study cards); UI pulses stop button while playing.
 - [ ] **CP-LANG-1 (Bilingual English Equivalents & Hints)**: Chapter titles display English equivalents in parentheses; `#btn-en-toggle` enables/disables inline `.en-hint` translations.
 - [ ] **CP-THEME-1 (Dual-Theme Token Parity)**: Flawless readability in both Dark (`data-theme="dark"`) and Light (`data-theme="light"`) modes with persistent storage.
+

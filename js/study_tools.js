@@ -113,6 +113,111 @@
             '    outline-offset: 3px;',
             '    border-radius: 8px;',
             '    transition: outline 0.2s ease;',
+            '}',
+            '',
+            '/* Universal Tablet & Landscape/Portrait Dock Rail Guardrails */',
+            '@media (min-width: 640px) and (max-width: 1099px) {',
+            '    .sidebar-dock, .sidebar {',
+            '        width: 62px !important;',
+            '        position: fixed !important;',
+            '        left: 0 !important;',
+            '        top: 54px !important;',
+            '        bottom: 0 !important;',
+            '        z-index: 900 !important;',
+            '    }',
+            '    .sidebar-dock.pinned, .sidebar.pinned { width: 62px !important; }',
+            '    .sidebar-dock .tab-label-group, .sidebar .tab-label-group { display: none !important; }',
+            '    .sidebar-dock .sidebar-footer, .sidebar .sidebar-footer, .sidebar .pin-btn { display: none !important; }',
+            '    .main-app-content, .main-content {',
+            '        margin-left: 62px !important;',
+            '        width: calc(100% - 62px) !important;',
+            '        max-width: min(1600px, calc(100vw - 62px)) !important;',
+            '        box-sizing: border-box !important;',
+            '        padding-left: 1.5rem !important;',
+            '        padding-right: 1.5rem !important;',
+            '    }',
+            '}',
+            '',
+            '@media (min-width: 1100px) {',
+            '    .sidebar-dock, .sidebar {',
+            '        width: 62px;',
+            '        position: fixed;',
+            '        left: 0;',
+            '        top: 54px;',
+            '        bottom: 0;',
+            '        z-index: 900;',
+            '    }',
+            '    .main-app-content, .main-content {',
+            '        margin-left: 62px !important;',
+            '        width: calc(100% - 62px) !important;',
+            '        max-width: min(1600px, calc(100vw - 62px)) !important;',
+            '        box-sizing: border-box !important;',
+            '        padding-left: 2rem !important;',
+            '        padding-right: 2rem !important;',
+            '        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);',
+            '    }',
+            '    .sidebar-dock.pinned, .sidebar.pinned { width: 280px !important; }',
+            '    .sidebar-dock.pinned ~ .main-app-content, .sidebar.pinned ~ .main-content {',
+            '        margin-left: 280px !important;',
+            '        width: calc(100% - 280px) !important;',
+            '        max-width: min(1600px, calc(100vw - 280px)) !important;',
+            '    }',
+            '    .sidebar-dock:hover .tab-label-group, .sidebar-dock.pinned .tab-label-group,',
+            '    .sidebar:hover .tab-label-group, .sidebar.pinned .tab-label-group {',
+            '        display: flex !important;',
+            '        width: auto !important;',
+            '        min-width: 140px !important;',
+            '        max-width: 200px !important;',
+            '        margin-left: 12px !important;',
+            '        opacity: 1 !important;',
+            '        pointer-events: auto !important;',
+            '    }',
+            '}',
+            '',
+            '@media (max-width: 639px) {',
+            '    .flex.flex-1.relative, .app-layout { flex-direction: column !important; }',
+            '    .sidebar-dock, .sidebar {',
+            '        position: sticky !important;',
+            '        top: 54px !important;',
+            '        left: 0 !important;',
+            '        right: 0 !important;',
+            '        width: 100% !important;',
+            '        height: 48px !important;',
+            '        max-height: 48px !important;',
+            '        min-height: 48px !important;',
+            '        flex-direction: row !important;',
+            '        border-right: none !important;',
+            '        border-bottom: 1px solid rgba(51, 65, 85, 0.7) !important;',
+            '        padding: 4px 6px !important;',
+            '        overflow-x: auto !important;',
+            '        overflow-y: hidden !important;',
+            '        -webkit-overflow-scrolling: touch !important;',
+            '        z-index: 850 !important;',
+            '    }',
+            '    .sidebar-dock > div:first-child, .sidebar .sidebar-tabs {',
+            '        display: flex !important;',
+            '        flex-direction: row !important;',
+            '        flex-wrap: nowrap !important;',
+            '        gap: 6px !important;',
+            '        width: 100% !important;',
+            '        padding: 0 !important;',
+            '        overflow-x: auto !important;',
+            '        overflow-y: hidden !important;',
+            '    }',
+            '    .sidebar-dock .nav-tab-btn, .sidebar .tab-btn {',
+            '        width: auto !important;',
+            '        height: 40px !important;',
+            '        padding: 4px 10px !important;',
+            '        flex-shrink: 0 !important;',
+            '    }',
+            '    .sidebar-dock .tab-label-group, .sidebar .tab-label-group { display: none !important; }',
+            '    .sidebar-dock .sidebar-footer, .sidebar .sidebar-footer, .sidebar .pin-btn { display: none !important; }',
+            '    .main-app-content, .main-content {',
+            '        margin-left: 0 !important;',
+            '        width: 100% !important;',
+            '        max-width: 100% !important;',
+            '        padding: 14px !important;',
+            '    }',
             '}'
         ].join('\n');
         document.head.appendChild(style);
@@ -394,17 +499,34 @@
         });
     }
 
-    // --- 8. Initialization ---
+    // --- 8. Tablet & Mobile Responsive Guardrails ---
+    function enforceTabletDockContainment() {
+        if (window.innerWidth < 1100) {
+            var docks = document.querySelectorAll('.sidebar-dock, .sidebar');
+            docks.forEach(function(d) {
+                d.classList.remove('pinned');
+            });
+        }
+    }
+
+    // --- 9. Initialization ---
     function init() {
         injectStyles();
         initVoices();
         injectTopBarFullscreenButton();
         attachSpeakerButtons();
+        enforceTabletDockContainment();
+
+        window.addEventListener('resize', enforceTabletDockContainment);
+        window.addEventListener('orientationchange', function() {
+            setTimeout(enforceTabletDockContainment, 100);
+        });
 
         // Safety retry for delayed DOM rendering
         setTimeout(function() {
             injectTopBarFullscreenButton();
             attachSpeakerButtons();
+            enforceTabletDockContainment();
         }, 150);
 
         // Refresh buttons when tabs or modules change dynamically
