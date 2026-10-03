@@ -353,8 +353,8 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 | **Mathematics (School Worksheet)** | `midterm_2026_silver_bells` | Mid-Term Examination — Mathematics (28 Sep 2026, 80 Marks) | 50 | `KB Files/mathematics/school_worksheet/midterm_2026_silver_bells/` | ✅ Complete |
 | **Biology** | `ch2_adolescence` | Reaching the Age of Adolescence | 109 | `KB Files/biology/ch2_adolescence/` | ✅ Complete |
 | **Biology** | `ch3_life_processes` | Life Processes (Control & Coordination) | 214 | `KB Files/biology/ch3_life_processes/` | ✅ Complete |
-| **Chemistry** | `ch1_acids_bases_salts` | Acids, Bases and Salts | 188 | `KB Files/chemistry/ch1_acids_bases_salts/` | ✅ Complete |
-| **Chemistry** | `ch2_metals_and_non_metals` | Metals and Non-Metals | 196 | `KB Files/chemistry/ch2_metals_and_non_metals/` | ✅ Complete |
+| **Chemistry** | `ch1_acids_bases_salts` | Exploring Substances: Acidic, Basic and Neutral | 197 | `KB Files/chemistry/ch1_acids_bases_salts/` | ✅ 100% TLBR Ingested, Pure Unicode Sub/Superscripts, Dual Schema & Store |
+| **Chemistry** | `ch2_metals_and_non_metals` | The World of Metals and Non-metals | 208 | `KB Files/chemistry/ch2_metals_and_non_metals/` | ✅ 100% TLBR Ingested, Pure Unicode Sub/Superscripts, Dual Schema & Store |
 | **Physics** | `ch1_electricity` | Electricity: Circuits & Components | 120 | `KB Files/physics/ch1_electricity/` | ✅ Complete |
 | **Physics** | `ch2_heat` | Heat Transfer & Temperature | 117 | `KB Files/physics/ch2_heat/` | ✅ Complete |
 | **Physics** | `ch3_motion_time` | Measurement of Time and Motion | 110 | `KB Files/physics/ch3_motion_time/` | ✅ Complete |
@@ -412,6 +412,28 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 | **Hindi (Grammar)** | `g25_anuched_lekhan` | व्याकरण पाठ २५: अनुच्छेद लेखन (Paragraph Writing) | 9 | `KB Files/hindi/grammar/g25_anuched_lekhan/` | ✅ 100% Textbook Ingested |
 
 ---
-*Authored & Verified: 24 September 2026 | Pushti Study Hub Core Engineering*
+
+## 8. Science (Chemistry) Authoritative Audit & TLBR Rule Implementation (03 October 2026)
+
+### 8.1 Scope & Source Verification
+- **Chapter 1: Exploring Substances: Acidic, Basic and Neutral**
+  - **Source Material:** `source_materials/science/Chem 1 23 Aug 2026.pdf` (17 scanned pages / book pages 3–34)
+  - **Total Items Verified:** **197 items** (12 NCERT, 14 Solved Examples, 65 MCQs [Level 1, Level 2, Level 3 HOTS], 15 FIBs, 15 True/False, 5 Match, 10 Assertion & Reason, 14 Comprehension, 15 Very Short Answer, 10 Short Answer, 10 Long Answer, 5 Numerical, 7 Case Based).
+  - **Sub/Superscripts Standard:** 100% pure Unicode (`H₂SO₄`, `HNO₃`, `HCl`, `Ca(OH)₂`, `Mg(OH)₂`, `OH⁻`, `H⁺`, `CuSO₄·5H₂O`, `FeSO₄·7H₂O`, `Na₂CO₃·10H₂O`, `→`).
+  - **Theory Modules:** 7 comprehensive sections covering definitions, dissociation, indicators, everyday neutralisation, salts classification, pH scale, acid rain, and all 7 activity corners & illustrations.
+- **Chapter 2: The World of Metals and Non-metals**
+  - **Source Material:** `source_materials/science/Chem 2 23 Aug 2026 (1).pdf` (17 scanned pages / book pages 35–66)
+  - **Total Items Verified:** **208 items** (12 NCERT, 15 Solved Examples, 60 MCQs [Level 1, Level 2, Level 3 HOTS], 15 FIBs, 15 True/False, 5 Match, 10 Assertion & Reason, 13 Comprehension, 15 Very Short Answer, 15 Short Answer, 5 Long Answer, 5 Numerical, 23 Case Based across Cases I to V).
+  - **Sub/Superscripts Standard:** 100% pure Unicode (`Al₂O₃`, `Fe₂O₃·xH₂O`, `CuCO₃·Cu(OH)₂`, `Ag₂S`, `ZnSO₄`, `CuSO₄`, `FeSO₄`, `H₂`, `O₂`, `→`).
+  - **Theory Modules:** 5 comprehensive sections covering metal/non-metal properties, reactivity series, displacement reactions, corrosion & industrial prevention (galvanizing, electroplating, alloying), commercial alloy tables (10 alloys), non-metal reactions, and comparison tables.
+
+### 8.2 Architectural & Quality Compliance
+1. **Dual Schema Enforcement:** Both `questions` and `assessment_items` arrays are populated with identical, validated, high-pedagogical content.
+2. **Dual-Store Synchronization:** 100% mirrored between `KB Files/chemistry/` (hierarchical) and `knowledge_base/chemistry/` (flat root mirrors).
+3. **No Commercial Publisher Names:** 0 occurrences of proprietary brand names.
+4. **Automated Verification:** Verified and passed by `scripts/verify_chemistry_kbs.py` with 405 total items.
+
+---
+*Authored & Verified: 03 October 2026 | Pushti Study Hub Core Engineering*
 
 
