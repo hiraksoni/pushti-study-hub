@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Pushti Study Hub - Master Question Bank for Test Generator
  * Compliant with SOP v3.5 and Hath Fero Urban Standards.
  * Pure client-side data bundle - 100% offline & local file:// compatible.
@@ -48651,6 +48651,90 @@ window.PUSHTI_TEST_BANK = {
      "options": [],
      "answer": "1. Redefining Heroism: Traditional historical heroism has almost universally celebrated military conquerors, battlefield generals, and physical destruction—commemorating them with bronze statues and stone arches. Emma Lazarus fundamentally inverts this masculine, martial definition by presenting true heroism as selfless compassion, physical service, and gentle healing. Nightingale's courage lay not in inflicting wounds, but in cleaning rat-infested hospital wards, washing the dying, defying aristocratic societal prejudice, and offering unconditional empathy. 2. Superiority of Compassion over Stone Monuments: The poem emphasizes that while battle triumphs fade and physical monuments crumble into dust, acts of pure love leave an indelible imprint upon human consciousness ('Her name is graven on each noble heart'). The tears shed in gratitude across generations represent a living, spiritual monument far more enduring than any cold marble statue. By choosing the lamp over the sword, Florence Nightingale established nursing as a noble profession and proved that gentleness can conquer the cruelty of war.",
      "explanation": "High-order synthesis examining the ethical definition of heroism and Nightingale's enduring humanitarian legacy."
+    }
+   ]
+  },
+  "Worksheet_Eng_VII_Alpha - Class VII English Worksheet (Silver Bells)": {
+   "chapter_num": "Worksheet_Eng_VII_Alpha",
+   "chapter_title": "Class VII English Worksheet - Silver Bells Public School (Summaries and Story Writing)",
+   "questions": [
+    {
+     "id": "eng_ws7a_sum_001",
+     "subject": "english",
+     "chapter_num": "Worksheet_Eng_VII_Alpha",
+     "chapter_title": "Class VII English Worksheet - Silver Bells Public School (Summaries and Story Writing)",
+     "type": "short_answer",
+     "marks": 3,
+     "difficulty": "medium",
+     "question": "Write a summary of the paragraph titled 'Serving Others'.",
+     "options": [],
+     "answer": "Serving others is a key to happiness. When we focus on helping others instead of dwelling on our own problems, we feel less stressed and more content. Helping others strengthens our relationships and deepens our sense of gratitude, because we realise that everyone faces difficulties. Even small acts of kindness, such as helping a classmate or comforting a friend, give us a sense of purpose and satisfaction. Thus, serving others creates a positive cycle of kindness that enriches both our own lives and the lives of those around us.",
+     "explanation": "A good summary captures: (1) Central idea: service leads to happiness. (2) Supporting reasons: reduces self-focus, strengthens relationships, builds gratitude. (3) Concluding point: even small acts of kindness matter. Aim for 5-6 sentences in your own words without copying directly from the passage."
+    },
+    {
+     "id": "eng_ws7a_sum_002",
+     "subject": "english",
+     "chapter_num": "Worksheet_Eng_VII_Alpha",
+     "chapter_title": "Class VII English Worksheet - Silver Bells Public School (Summaries and Story Writing)",
+     "type": "short_answer",
+     "marks": 3,
+     "difficulty": "medium",
+     "question": "Write a summary of the paragraph titled 'Online Classes'.",
+     "options": [],
+     "answer": "Online classes differ from traditional classes mainly in interaction, instruction methods, and scheduling. Teacher-student interaction is usually delayed through email, and student-to-student contact is limited to email or discussion boards. Instruction is mostly delivered through videos and reading materials, making hands-on experiences very difficult. However, online classes offer great scheduling flexibility: students can study at any time and set their own pace without disrupting their personal or work schedules. In short, while online classes lack personal interaction and practical learning, they compensate with convenient and flexible scheduling.",
+     "explanation": "Key points to include: (1) Limited face-to-face interaction (time-delayed email). (2) Restricted instruction: videos and articles only. (3) No hands-on experiences (e.g., touching rocks in geology). (4) Main advantage: flexible scheduling. (5) Student-controlled pace. Keep the summary concise in 5-6 sentences."
+    },
+    {
+     "id": "eng_ws7a_sum_003",
+     "subject": "english",
+     "chapter_num": "Worksheet_Eng_VII_Alpha",
+     "chapter_title": "Class VII English Worksheet - Silver Bells Public School (Summaries and Story Writing)",
+     "type": "short_answer",
+     "marks": 3,
+     "difficulty": "medium",
+     "question": "Write a combined summary of the three 'Historical and Social Snippets' (Snippets I, II, and III).",
+     "options": [],
+     "answer": "The three snippets highlight important social and historical stories related to education. The first tells how China sent 120 boys to the United States in the 1870s to learn from American developments and help modernise their country, a tradition that continues today. The second describes how volunteers over 50, through Experience Corps, help children in low-income areas of 19 American cities improve their reading and writing skills. The third explains how the Goldman Sachs 10,000 Women Initiative empowers female entrepreneurs in developing countries by educating them in planning, financing, networking, and marketing. Together, all three snippets show how education and social initiatives bring meaningful change to individuals, communities, and nations.",
+     "explanation": "Summarise each snippet briefly: Snippet I: Chinese exchange students (1870s). Snippet II: Experience Corps volunteers helping children read. Snippet III: 10,000 Women Initiative for female entrepreneurs. Link all three with the overarching theme: education and social progress drive positive change."
+    },
+    {
+     "id": "eng_ws7a_sum_004",
+     "subject": "english",
+     "chapter_num": "Worksheet_Eng_VII_Alpha",
+     "chapter_title": "Class VII English Worksheet - Silver Bells Public School (Summaries and Story Writing)",
+     "type": "short_answer",
+     "marks": 3,
+     "difficulty": "medium",
+     "question": "Write a summary of the paragraph titled 'Climate Change'.",
+     "options": [],
+     "answer": "Climate change is causing rising global temperatures, leading to more frequent and severe weather events. Melting polar ice caps raise sea levels, putting coastal areas at risk of flooding and erosion. A warmer atmosphere holds more moisture, producing unpredictable rainfall that results in both severe droughts and devastating floods, harming agriculture and water supply. Beyond the environment, climate change also disrupts food supply chains, spreads diseases, and forces migration. To address these challenges, countries are investing in adaptive infrastructure, early warning systems, and policies to cut greenhouse gas emissions. Cooperation between governments, scientists, and communities is essential to build a more resilient and sustainable future.",
+     "explanation": "The summary must cover five key areas: (1) Rising temperatures causing extreme weather. (2) Melting ice causing sea level rise and coastal flooding. (3) Unpredictable rainfall causing droughts and floods. (4) Socio-economic impacts: food, disease, forced migration. (5) Solutions: adaptive infrastructure, emission-reduction policies, and global cooperation."
+    },
+    {
+     "id": "eng_ws7a_story_001",
+     "subject": "english",
+     "chapter_num": "Worksheet_Eng_VII_Alpha",
+     "chapter_title": "Class VII English Worksheet - Silver Bells Public School (Summaries and Story Writing)",
+     "type": "long_answer",
+     "marks": 5,
+     "difficulty": "medium",
+     "question": "Develop the following outline into a complete story (Outline A): A rich man - many servants - purse with lot of money stolen from drawer - rich man files complaint at police station - all servants called - stick of same length given to each - servants told thief's stick will grow by one inch overnight - thief cuts his stick by one inch - caught the next day.",
+     "options": [],
+     "answer": "Title: The Clever Stick. Once upon a time, there lived a wealthy merchant in a grand house. He had many servants who worked faithfully for him day and night. One morning, the merchant opened his drawer to find that his purse, filled with gold coins, had vanished. Troubled and upset, he immediately went to the police station and filed a complaint. A clever officer came to the merchant's house and gathered all the servants in the courtyard. He gave each servant a stick of exactly the same length and announced solemnly: 'These are magical sticks. The stick belonging to the thief will grow one inch longer by tomorrow morning. Return at the same time tomorrow with your sticks.' That night, the actual thief, a servant named Raju, was gripped by fear. He thought to himself: 'If my stick grows longer, I will surely be caught.' In a panic, he secretly cut one inch off his stick, thinking he had outsmarted the police. The next morning, the officer measured every stick carefully. Every stick was the same length except Raju's, which was one inch shorter than the rest. The officer pointed at him and said: 'You are the thief! Only a guilty person would cut the stick.' Raju broke down and confessed. The stolen purse was recovered from his room, and he was handed over to the authorities. Moral: Guilt always betrays the wrongdoer. Honesty and justice will always triumph over dishonesty.",
+     "explanation": "A strong story must include: (1) Engaging title. (2) Setting and character introduction. (3) The theft as the central problem. (4) The stick trick as rising action. (5) The thief cutting his stick out of fear as the climax. (6) Discovery and confession as resolution. (7) A clear moral. Use past tense, varied vocabulary, and clear paragraphing."
+    },
+    {
+     "id": "eng_ws7a_story_002",
+     "subject": "english",
+     "chapter_num": "Worksheet_Eng_VII_Alpha",
+     "chapter_title": "Class VII English Worksheet - Silver Bells Public School (Summaries and Story Writing)",
+     "type": "long_answer",
+     "marks": 5,
+     "difficulty": "medium",
+     "question": "Develop the following outline into a complete story (Outline B): Lazy king - liked to eat and sleep all the time - became inactive - doctor called to cure him - minister of king meets a holy man - sadhu offers to cure the king - calls the king to his hut on foot - king does as told - walks all the way to the hut - starts sweating - sadhu gives iron ball to the king and asks him to do exercise with it every day - king does as told - loses weight - gets cured - moral.",
+     "options": [],
+     "answer": "Title: The Iron Ball That Saved a Kingdom. In a prosperous kingdom there lived a king who had everything: wealth, servants, and a magnificent palace. Yet the king had one terrible weakness: he was extremely lazy. He spent his days eating rich food and sleeping for long hours. Over time he grew very heavy and inactive, and could barely climb the palace steps without losing his breath. His concerned ministers called the royal doctor, who prescribed medicines, but nothing worked since the king refused to change his habits. One day the wise minister set out to seek help beyond the palace walls. In a quiet forest he met a holy man, a sadhu, renowned for his wisdom and healing powers. 'I can cure your king,' the sadhu said simply, 'but he must come to my hut on foot, alone.' The minister conveyed this condition to the king. Desperate for a cure, the king agreed. He wore simple clothes and walked through the town toward the forest. It was a long, tiring journey. By the time he reached the sadhu's humble hut, the king was dripping with sweat but felt strangely alive and refreshed. The sadhu smiled and handed the king a heavy iron ball. 'Lift this ball and swing it every single day,' he instructed. 'That is your only medicine.' The king was puzzled but obeyed faithfully. Day after day he walked outside and exercised with the iron ball. Slowly his body grew stronger. His weight reduced, his energy returned, and his health was fully restored. He returned to thank the sadhu, who said: 'Medicines can only do so much. Regular exercise and an active life are the greatest cures of all.' Moral: Hard work and regular exercise are the true foundations of good health. Laziness leads only to illness and weakness.",
+     "explanation": "The story must follow the outline faithfully: introduce the lazy king, show the problem of inactivity, bring in the sadhu as the unlikely solution, depict the walk as the first exercise, show the iron ball as the daily exercise routine, and conclude with the king's transformation and cure. Include a clear moral. Use vivid descriptions, logical sequence, and proper paragraphing."
     }
    ]
   }

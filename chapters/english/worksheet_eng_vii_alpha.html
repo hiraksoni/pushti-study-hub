@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Worksheet – Class VII Alpha | Silver Bells Public School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0f1117;
+            --surface: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.1);
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --accent: #fbbf24;
+            --accent-glow: rgba(251,191,36,0.15);
+            --green: #34d399;
+            --green-bg: rgba(52,211,153,0.1);
+            --green-border: rgba(52,211,153,0.3);
+            --blue: #60a5fa;
+            --blue-bg: rgba(96,165,250,0.08);
+            --purple: #c084fc;
+            --red: #f87171;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(15,17,23,0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 24px;
+            display: flex; align-items: center; justify-content: space-between; gap: 16px;
+        }
+        .back-link {
+            display: flex; align-items: center; gap: 8px;
+            text-decoration: none; color: var(--muted);
+            font-size: 0.92rem; font-weight: 500;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--text); }
+        .header-title {
+            font-size: 1rem; font-weight: 700; color: var(--accent);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .reveal-all-btn {
+            background: var(--accent-glow); border: 1.5px solid var(--accent);
+            color: var(--accent); padding: 7px 18px; border-radius: 8px;
+            cursor: pointer; font-weight: 700; font-size: 0.88rem;
+            transition: all 0.2s; white-space: nowrap;
+        }
+        .reveal-all-btn:hover { background: rgba(251,191,36,0.28); }
+
+        /* ── PAPER META BANNER ── */
+        .paper-banner {
+            background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(245,158,11,0.05));
+            border: 1.5px solid rgba(251,191,36,0.3);
+            border-radius: 14px;
+            padding: 22px 28px;
+            margin: 28px auto;
+            max-width: 860px;
+        }
+        .school-name {
+            font-size: 1.22rem; font-weight: 800; color: var(--accent);
+            text-align: center; letter-spacing: 0.5px;
+        }
+        .paper-sub {
+            text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 4px;
+        }
+        .paper-meta {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;
+            margin-top: 16px; padding-top: 14px;
+            border-top: 1px solid rgba(251,191,36,0.2);
+            font-size: 0.88rem;
+        }
+        .meta-item { display: flex; gap: 6px; align-items: center; }
+        .meta-label { color: var(--muted); }
+        .meta-val { color: var(--text); font-weight: 600; }
+        .marks-pill {
+            background: var(--accent-glow); border: 1px solid var(--accent);
+            color: var(--accent); padding: 3px 12px; border-radius: 20px;
+            font-weight: 800; font-size: 0.9rem;
+        }
+
+        /* ── MAIN CONTAINER ── */
+        .container { max-width: 860px; margin: 0 auto; padding: 0 20px 60px; }
+
+        /* ── SECTION HEADER ── */
+        .section-header {
+            display: flex; align-items: center; gap: 12px;
+            margin: 36px 0 18px;
+            padding: 14px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 10px 10px 0;
+        }
+        .section-badge {
+            background: var(--accent); color: #000;
+            font-weight: 900; font-size: 0.8rem;
+            padding: 3px 10px; border-radius: 6px; white-space: nowrap;
+        }
+        .section-title { font-size: 1.05rem; font-weight: 700; }
+        .section-marks { margin-left: auto; color: var(--accent); font-weight: 700; font-size: 0.88rem; white-space: nowrap; }
+
+        /* ── QUESTION CARD ── */
+        .q-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        .q-card.revealed { border-color: var(--green-border); }
+
+        .q-head {
+            display: flex; align-items: flex-start; gap: 14px;
+            padding: 18px 20px 16px;
+        }
+        .q-num {
+            background: var(--accent-glow); border: 1.5px solid var(--accent);
+            color: var(--accent); font-weight: 900; font-size: 0.9rem;
+            width: 34px; height: 34px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; margin-top: 2px;
+        }
+        .q-body { flex: 1; }
+        .q-label {
+            font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.8px; color: var(--muted); margin-bottom: 6px;
+        }
+        .q-text {
+            font-size: 1.05rem; line-height: 1.65; color: var(--text);
+            font-weight: 500;
+        }
+        .q-marks {
+            color: var(--muted); font-size: 0.78rem; margin-top: 8px;
+            font-style: italic;
+        }
+
+        .q-footer {
+            padding: 0 20px 16px;
+            display: flex; justify-content: flex-end;
+        }
+        .reveal-btn {
+            background: var(--surface); border: 1.5px solid var(--border);
+            color: var(--muted); padding: 8px 20px; border-radius: 8px;
+            cursor: pointer; font-weight: 700; font-size: 0.88rem;
+            display: flex; align-items: center; gap: 8px;
+            transition: all 0.2s;
+        }
+        .reveal-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+        .q-card.revealed .reveal-btn { border-color: var(--green); color: var(--green); background: var(--green-bg); }
+
+        /* ── ANSWER PANEL ── */
+        .answer-panel {
+            display: none;
+            border-top: 1px solid var(--border);
+            padding: 20px;
+            background: rgba(0,0,0,0.25);
+            animation: slideDown 0.3s ease;
+        }
+        .answer-panel.visible { display: block; }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ans-label {
+            font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 1px; color: var(--green); margin-bottom: 10px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .ans-text {
+            background: var(--green-bg);
+            border: 1px solid var(--green-border);
+            border-radius: 8px; padding: 16px 18px;
+            font-size: 0.98rem; line-height: 1.75; color: var(--text);
+        }
+        /* Story answer with paragraphs */
+        .ans-text.story { white-space: pre-line; }
+
+        .exp-label {
+            font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 1px; color: var(--blue); margin: 14px 0 8px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .exp-text {
+            background: var(--blue-bg);
+            border: 1px solid rgba(96,165,250,0.25);
+            border-radius: 8px; padding: 14px 16px;
+            font-size: 0.9rem; line-height: 1.65; color: var(--muted);
+        }
+
+        /* ── SCORE TRACKER ── */
+        .score-bar {
+            position: sticky; bottom: 20px; float: right;
+            background: rgba(15,17,23,0.95); border: 1.5px solid var(--accent);
+            border-radius: 12px; padding: 10px 18px;
+            font-size: 0.88rem; font-weight: 700; color: var(--accent);
+            display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 4px 20px rgba(251,191,36,0.2);
+            margin-right: 10px;
+        }
+
+        /* ── PROGRESS STRIP ── */
+        .progress-wrap {
+            background: rgba(255,255,255,0.05);
+            border-radius: 100px; height: 5px;
+            margin: 20px 0 32px; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; background: var(--accent);
+            border-radius: 100px; width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        /* ── COMPLETION BANNER ── */
+        .done-banner {
+            display: none;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(52,211,153,0.12), rgba(16,185,129,0.06));
+            border: 1.5px solid var(--green-border);
+            border-radius: 14px; padding: 28px;
+            margin-top: 32px;
+        }
+        .done-banner.visible { display: block; }
+        .done-banner h2 { color: var(--green); font-size: 1.4rem; margin-bottom: 8px; }
+        .done-banner p { color: var(--muted); font-size: 0.95rem; }
+
+        @media(max-width:600px) {
+            .paper-meta { gap: 12px; }
+            .section-header { flex-wrap: wrap; }
+            .section-marks { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="../../english_index.html#tests" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to English
+    </a>
+    <div class="header-title">
+        <i class="fas fa-file-signature"></i> Class VII Alpha Worksheet
+    </div>
+    <button class="reveal-all-btn" onclick="revealAll()">
+        <i class="fas fa-eye"></i> Reveal All Answers
+    </button>
+</header>
+
+<div class="container">
+
+    <!-- Paper Banner -->
+    <div class="paper-banner">
+        <div class="school-name">🏫 Silver Bells Public School</div>
+        <div class="paper-sub">English Worksheet &nbsp;|&nbsp; Class VII Alpha</div>
+        <div class="paper-meta">
+            <div class="meta-item"><span class="meta-label">Student:</span><span class="meta-val">Pushti H. Dholakiya</span></div>
+            <div class="meta-item"><span class="meta-label">Subject:</span><span class="meta-val">English</span></div>
+            <div class="meta-item"><span class="meta-label">Type:</span><span class="meta-val">Practice Worksheet</span></div>
+            <div class="meta-item"><span class="marks-pill">Total: 22 Marks</span></div>
+        </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+
+    <!-- ══════════════════════════════════════════
+         SECTION A – SUMMARIES
+    ══════════════════════════════════════════ -->
+    <div class="section-header">
+        <span class="section-badge">SECTION A</span>
+        <span class="section-title">Write the Summary of the given paragraphs.</span>
+        <span class="section-marks">4 × 3 = 12 Marks</span>
+    </div>
+
+    <!-- Q1 -->
+    <div class="q-card" id="card1">
+        <div class="q-head">
+            <div class="q-num">1</div>
+            <div class="q-body">
+                <div class="q-label">Summary Writing</div>
+                <div class="q-text">Write the summary of the paragraph: <strong>Serving Others</strong>
+                    <br><br>
+                    <em style="color:var(--muted); font-size:0.92rem;">"Serving others can help make people happier in any situation. When people are feeling stressed or unhappy, it is often because they are focused on their problems and worries. Focusing on our own problems and worries makes us feel more stressed about them. When we focus on helping other people with their problems, we feel happier because we are not focused on ourselves. Helping others also helps in the other areas of building happiness: it strengthens our relationships with others and it helps us feel more gratitude… Moreover, serving others teaches us to be kind, patient, and understanding. Even small acts of kindness… can make a meaningful difference."</em>
+                </div>
+                <div class="q-marks">[3 Marks]</div>
+            </div>
+        </div>
+        <div class="q-footer">
+            <button class="reveal-btn" onclick="reveal(1)"><i class="fas fa-lightbulb"></i> Reveal Answer</button>
+        </div>
+        <div class="answer-panel" id="ans1">
+            <div class="ans-label"><i class="fas fa-check-circle"></i> Model Answer</div>
+            <div class="ans-text">Serving others is a key to happiness. When we help others instead of dwelling on our own problems, we feel less stressed and more content. Helping others also strengthens our relationships and deepens our sense of gratitude, as we realise that everyone faces difficulties. Even small acts of kindness — such as helping a classmate or comforting a friend — give us a sense of purpose and satisfaction. Thus, serving others creates a positive cycle of kindness that enriches both our own lives and the lives of those around us.</div>
+            <div class="exp-label"><i class="fas fa-star"></i> Marking Guide</div>
+            <div class="exp-text">
+                ✅ 1M — Central idea: helping others reduces stress and leads to happiness.<br>
+                ✅ 1M — Supporting points: builds relationships + gratitude + sense of purpose.<br>
+                ✅ 1M — Conclusion: even small acts create a cycle of kindness. Write in own words (no direct copying).
+            </div>
+        </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-card" id="card2">
+        <div class="q-head">
+            <div class="q-num">2</div>
+            <div class="q-body">
+                <div class="q-label">Summary Writing</div>
+                <div class="q-text">Write the summary of the paragraph: <strong>Online Classes</strong>
+                    <br><br>
+                    <em style="color:var(--muted); font-size:0.92rem;">"Online classes, on the other hand, do not offer face-to-face interaction and they are more limited in their instruction methods, yet they offer greater flexibility for scheduling. The interaction between teachers and students in an online class is typically time-delayed… Interaction with classmates is less personal… The method of instruction in online classes is typically limited to videos and reading articles… The scheduling is very flexible. Students typically enroll in online classes because they need the ability to take classes at night, early in the morning, or even during their lunch break at work."</em>
+                </div>
+                <div class="q-marks">[3 Marks]</div>
+            </div>
+        </div>
+        <div class="q-footer">
+            <button class="reveal-btn" onclick="reveal(2)"><i class="fas fa-lightbulb"></i> Reveal Answer</button>
+        </div>
+        <div class="answer-panel" id="ans2">
+            <div class="ans-label"><i class="fas fa-check-circle"></i> Model Answer</div>
+            <div class="ans-text">Online classes differ from traditional classes in three main ways: interaction, instruction, and scheduling. Teacher–student communication is delayed (usually by email), and student-to-student interaction is limited to email or discussion boards. Instruction relies mainly on videos and reading materials, making hands-on learning very difficult. However, online classes offer great scheduling flexibility — students can study at any time and set their own pace without disrupting their personal or work schedules. In short, while they lack personal interaction and practical learning, their flexibility is a significant advantage.</div>
+            <div class="exp-label"><i class="fas fa-star"></i> Marking Guide</div>
+            <div class="exp-text">
+                ✅ 1M — Limitation 1: no face-to-face interaction (time-delayed communication).<br>
+                ✅ 1M — Limitation 2: instruction only through videos/articles; no hands-on experiences.<br>
+                ✅ 1M — Main advantage: highly flexible scheduling; student-controlled pace.
+            </div>
+        </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-card" id="card3">
+        <div class="q-head">
+            <div class="q-num">3</div>
+            <div class="q-body">
+                <div class="q-label">Summary Writing</div>
+                <div class="q-text">Write the summary of: <strong>Historical and Social Snippets</strong> (Snippets I, II &amp; III combined)
+                    <br><br>
+                    <em style="color:var(--muted); font-size:0.92rem;">
+                        <strong>I.</strong> "Many thousands of Chinese are studying at schools in the United States… China sent one hundred twenty boys to America to learn about developments that could help modernize their country."<br><br>
+                        <strong>II.</strong> "Illiteracy is a problem in many of the world's poorest countries… volunteers of Experience Corps are helping youngsters learn to read. The volunteers, all over 50, work with students in low-income areas."<br><br>
+                        <strong>III.</strong> "Women entrepreneurs in the developing world often face challenges… the 10,000 Women Initiative… it's an investment in education with dividends that benefit the businesswomen, their local communities and their national economies."
+                    </em>
+                </div>
+                <div class="q-marks">[3 Marks]</div>
+            </div>
+        </div>
+        <div class="q-footer">
+            <button class="reveal-btn" onclick="reveal(3)"><i class="fas fa-lightbulb"></i> Reveal Answer</button>
+        </div>
+        <div class="answer-panel" id="ans3">
+            <div class="ans-label"><i class="fas fa-check-circle"></i> Model Answer</div>
+            <div class="ans-text">The three snippets highlight the power of education and social initiatives in creating change. Snippet I tells how China sent 120 boys to the United States in the 1870s to learn modern skills and help modernise their country — a tradition that continues today with thousands of Chinese students studying in the US. Snippet II describes how volunteers over the age of 50, through Experience Corps, help children in low-income areas of 19 American cities improve their reading and writing skills. Snippet III explains how the Goldman Sachs 10,000 Women Initiative empowers female entrepreneurs in developing countries by training them in planning, financing, networking, and marketing. Together, these snippets show that education and community initiatives can bring meaningful, lasting change to individuals, communities, and nations.</div>
+            <div class="exp-label"><i class="fas fa-star"></i> Marking Guide</div>
+            <div class="exp-text">
+                ✅ 1M — Snippet I: China's 1870s student exchange programme to modernise the country.<br>
+                ✅ 1M — Snippet II: Experience Corps volunteers helping children in low-income areas overcome illiteracy.<br>
+                ✅ 1M — Snippet III: 10,000 Women Initiative empowering female entrepreneurs through business education. Link all three with the common theme: education drives social progress.
+            </div>
+        </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-card" id="card4">
+        <div class="q-head">
+            <div class="q-num">4</div>
+            <div class="q-body">
+                <div class="q-label">Summary Writing</div>
+                <div class="q-text">Write the summary of the paragraph: <strong>Climate Change</strong>
+                    <br><br>
+                    <em style="color:var(--muted); font-size:0.92rem;">"The increase in global temperatures has led to more frequent and severe weather events, posing a significant threat to ecosystems and human societies. One of the major impacts of climate change is the rise in sea levels… Coastal areas are particularly vulnerable… Additionally, the warming atmosphere can hold more moisture, leading to intense and unpredictable precipitation patterns… The effects of climate change are widespread, influencing not only the environment but also the socio-economic stability of communities… To mitigate these effects, countries are investing in adaptive infrastructure, developing early warning systems, and implementing policies to reduce greenhouse gas emissions."</em>
+                </div>
+                <div class="q-marks">[3 Marks]</div>
+            </div>
+        </div>
+        <div class="q-footer">
+            <button class="reveal-btn" onclick="reveal(4)"><i class="fas fa-lightbulb"></i> Reveal Answer</button>
+        </div>
+        <div class="answer-panel" id="ans4">
+            <div class="ans-label"><i class="fas fa-check-circle"></i> Model Answer</div>
+            <div class="ans-text">Climate change is causing rising global temperatures that lead to more frequent and severe weather events. Melting polar ice caps raise sea levels, putting coastal areas at risk of flooding and erosion. A warmer atmosphere holds more moisture, producing unpredictable rainfall that causes both severe droughts and devastating floods, harming agriculture and water supply. Beyond the environment, climate change disrupts food supply chains, spreads diseases, and forces migration. To combat these effects, countries are investing in adaptive infrastructure, early warning systems, and policies to reduce greenhouse gas emissions. Global cooperation between governments, scientists, and communities is essential to build a sustainable and resilient future.</div>
+            <div class="exp-label"><i class="fas fa-star"></i> Marking Guide</div>
+            <div class="exp-text">
+                ✅ 1M — Environmental impacts: rising temps → extreme weather; melting ice → sea level rise; coastal flooding.<br>
+                ✅ 1M — Socio-economic impacts: disrupted food supply, spread of diseases, forced migration.<br>
+                ✅ 1M — Solutions: adaptive infrastructure, emission-reduction policies, and global cooperation between governments, scientists, and communities.
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         SECTION B – STORY WRITING
+    ══════════════════════════════════════════ -->
+    <div class="section-header">
+        <span class="section-badge">SECTION B</span>
+        <span class="section-title">Write a story with the given outline.</span>
+        <span class="section-marks">2 × 5 = 10 Marks</span>
+    </div>
+
+    <!-- Q5 -->
+    <div class="q-card" id="card5">
+        <div class="q-head">
+            <div class="q-num">5</div>
+            <div class="q-body">
+                <div class="q-label">Story Writing – Outline A</div>
+                <div class="q-text">Develop the following outline into a complete story:
+                    <br><br>
+                    <span style="color:var(--accent); font-weight:600;">A rich man</span> ……… had many servants ……… <span style="color:var(--accent); font-weight:600;">purse with lot of money is stolen</span> from rich man's drawer ……… rich man files a complaint in the police station ……… all the servants called ……… <span style="color:var(--accent); font-weight:600;">stick of same length given to each</span> ……… servants told that stick of the thief will grow by one inch overnight ……… <span style="color:var(--accent); font-weight:600;">the thief cuts his stick by one inch</span> ……… he is easily caught the next day.
+                </div>
+                <div class="q-marks">[5 Marks] — Give a suitable title. Write a moral at the end.</div>
+            </div>
+        </div>
+        <div class="q-footer">
+            <button class="reveal-btn" onclick="reveal(5)"><i class="fas fa-lightbulb"></i> Reveal Answer</button>
+        </div>
+        <div class="answer-panel" id="ans5">
+            <div class="ans-label"><i class="fas fa-check-circle"></i> Model Story</div>
+            <div class="ans-text story"><strong>The Clever Stick</strong>
+
+Once upon a time, there lived a wealthy merchant in a grand house at the edge of town. He was known for his generosity and had many faithful servants who worked for him day and night.
+
+One morning, the merchant opened his desk drawer to take out his purse and found it missing. The purse was filled with gold coins he had saved over many years. He searched every room but could not find it. Troubled and upset, he went straight to the police station and filed a complaint.
+
+A wise and clever police officer came to the merchant's house. He gathered all the servants in the courtyard and announced: "I am going to give each of you a stick of exactly the same length. These are magical sticks. The stick belonging to the thief will grow one inch longer by tomorrow morning. Return here at the same time tomorrow — with your sticks."
+
+That night, the actual thief — a servant named Raju — was gripped by fear and guilt. He thought to himself: "If my stick really grows longer, everyone will know I am the thief." Unable to sleep, he crept out in the middle of the night and secretly cut one inch off his stick, believing he had cleverly outsmarted the police.
+
+The next morning, all the servants lined up. The officer measured each stick carefully. Every single stick was the same length — except Raju's, which was one inch shorter than the rest. The officer pointed directly at him and said calmly: "You are the thief. Only a guilty person would cut the stick."
+
+Raju's face went pale. He broke down and confessed. The stolen purse was found hidden under his mattress and returned to the merchant. Raju was handed over to the authorities.
+
+<strong>Moral: Guilt always betrays the wrongdoer. Honesty and justice will always triumph over dishonesty.</strong></div>
+            <div class="exp-label"><i class="fas fa-star"></i> Marking Guide</div>
+            <div class="exp-text">
+                ✅ 1M — Title + setting: rich merchant, servants, stolen purse.<br>
+                ✅ 1M — Rising action: complaint filed; officer distributes sticks; clever announcement.<br>
+                ✅ 1M — Climax: thief cuts his stick out of fear/guilt.<br>
+                ✅ 1M — Resolution: shorter stick reveals the thief; confession + recovery of purse.<br>
+                ✅ 1M — Clear moral + language quality (past tense, paragraphing, vocabulary).
+            </div>
+        </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="q-card" id="card6">
+        <div class="q-head">
+            <div class="q-num">6</div>
+            <div class="q-body">
+                <div class="q-label">Story Writing – Outline B</div>
+                <div class="q-text">Develop the following outline into a complete story:
+                    <br><br>
+                    <span style="color:var(--accent); font-weight:600;">Lazy king</span> ……… liked to eat and sleep all the time ……… became inactive ……… <span style="color:var(--accent); font-weight:600;">doctor called to cure him</span> ……… minister of king meets a holy man ……… <span style="color:var(--accent); font-weight:600;">sadhu offers to cure the king</span> ……… calls the king to his hut on foot ……… king does as he is told ……… <span style="color:var(--accent); font-weight:600;">walks all the way to the hut</span> ……… starts sweating ……… Sadhu gives <span style="color:var(--accent); font-weight:600;">iron ball</span> to the king and asks him to do exercise with it every day ……… king does as he is told ……… loses weight ……… gets cured ……… moral.
+                </div>
+                <div class="q-marks">[5 Marks] — Give a suitable title. Write a moral at the end.</div>
+            </div>
+        </div>
+        <div class="q-footer">
+            <button class="reveal-btn" onclick="reveal(6)"><i class="fas fa-lightbulb"></i> Reveal Answer</button>
+        </div>
+        <div class="answer-panel" id="ans6">
+            <div class="ans-label"><i class="fas fa-check-circle"></i> Model Story</div>
+            <div class="ans-text story"><strong>The Iron Ball That Saved a Kingdom</strong>
+
+In a prosperous kingdom, there lived a king who had everything a man could want — wealth, power, a grand palace, and devoted servants. Yet the king had one dangerous weakness: he was extremely lazy. He spent his days doing nothing but eating rich food and sleeping for long hours. He never walked anywhere, never exercised, and never took an interest in the affairs of his kingdom.
+
+Over the months, the king grew very heavy and inactive. He could barely climb the palace steps without losing his breath. His ministers grew deeply worried. They called upon the royal doctor, who examined the king and prescribed several medicines. But the medicines did little good, for the king refused to change his habits.
+
+One day, the king's wise and loyal minister set out from the palace to seek a different kind of help. While walking through a forest on the outskirts of the kingdom, he came across a holy man — a sadhu — who sat peacefully under an ancient tree. The sadhu was known far and wide for his wisdom.
+
+"I can cure your king," the sadhu said simply, after hearing the minister's concern, "but there is one condition. He must come to my forest hut on foot — alone, with no palanquin and no royal escort."
+
+The minister returned to the palace and told the king. At first, the king frowned and grumbled. But, desperate for a cure, he agreed. The very next morning, he wore simple clothes, slipped out of the palace quietly, and began to walk through the town and toward the forest.
+
+It was a long and tiring journey. The sun beat down. The path was uneven. By the time the king finally reached the sadhu's modest hut deep in the forest, he was red-faced, breathless, and dripping with sweat. But strangely — he felt alive and alert in a way he had not felt in years.
+
+The sadhu greeted him with a gentle smile. He said nothing about the walk. Instead, he handed the king a heavy iron ball. "Your Majesty," he said, "take this iron ball home. Hold it with both hands and swing it for some time every single day. Walk here and back each morning. That is your only medicine."
+
+The king was puzzled, but he trusted the holy man and obeyed. Day after day, he walked to the forest and back, and exercised faithfully with the iron ball. Slowly, his body began to change. His muscles strengthened. His appetite balanced. Week after week, his weight reduced and his energy returned. After two months, the king was completely cured — fitter, healthier, and happier than he had been in years.
+
+He returned to the sadhu to express his deepest gratitude. The sadhu smiled and said: "Your Majesty, I gave you no magic medicine. The walk was your medicine. The iron ball was your medicine. An active life is the greatest cure of all."
+
+<strong>Moral: Hard work, regular exercise, and an active lifestyle are the true foundations of good health. Laziness is the root of all illness.</strong></div>
+            <div class="exp-label"><i class="fas fa-star"></i> Marking Guide</div>
+            <div class="exp-text">
+                ✅ 1M — Title + introduction: the lazy king, his habits, and growing inactivity.<br>
+                ✅ 1M — Rising action: doctor fails; minister finds sadhu; sadhu's condition (walk on foot).<br>
+                ✅ 1M — Climax: king walks to the hut, arrives sweating but energised; given the iron ball.<br>
+                ✅ 1M — Resolution: king follows advice daily → loses weight → fully cured.<br>
+                ✅ 1M — Clear moral + language quality (past tense, vivid description, proper paragraphing).
+            </div>
+        </div>
+    </div>
+
+    <!-- Completion Banner -->
+    <div class="done-banner" id="doneBanner">
+        <h2>🎉 All Answers Revealed!</h2>
+        <p>You've reviewed all 6 questions. Compare your answers carefully with the model answers and check the marking guide for each section. All the best for your exam, Pushti! ⭐</p>
+    </div>
+
+</div>
+
+<!-- Floating score tracker -->
+<div class="score-bar" id="scoreBar" style="display:none;">
+    <i class="fas fa-eye"></i>
+    <span id="scoreText">0 / 6 revealed</span>
+</div>
+
+<script>
+    let revealed = 0;
+    const total = 6;
+
+    function reveal(n) {
+        const card = document.getElementById('card' + n);
+        const panel = document.getElementById('ans' + n);
+        if (card.classList.contains('revealed')) return;
+
+        card.classList.add('revealed');
+        panel.classList.add('visible');
+        revealed++;
+        updateProgress();
+
+        // Scroll answer into view smoothly
+        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+    }
+
+    function revealAll() {
+        for (let i = 1; i <= total; i++) reveal(i);
+    }
+
+    function updateProgress() {
+        const pct = (revealed / total) * 100;
+        document.getElementById('progressFill').style.width = pct + '%';
+
+        const scoreBar = document.getElementById('scoreBar');
+        scoreBar.style.display = 'flex';
+        document.getElementById('scoreText').textContent = revealed + ' / ' + total + ' revealed';
+
+        if (revealed === total) {
+            document.getElementById('doneBanner').classList.add('visible');
+            document.querySelector('.reveal-all-btn').innerHTML = '<i class="fas fa-check-circle"></i> All Revealed';
+            document.querySelector('.reveal-all-btn').style.borderColor = 'var(--green)';
+            document.querySelector('.reveal-all-btn').style.color = 'var(--green)';
+            document.querySelector('.reveal-all-btn').style.background = 'var(--green-bg)';
+        }
+    }
+</script>
+
+</body>
+</html>
