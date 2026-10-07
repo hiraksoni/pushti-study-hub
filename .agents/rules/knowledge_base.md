@@ -58,40 +58,7 @@ Every chapter knowledge base must maintain a synchronized pair:
 
 ---
 
-## 4. Diagram & Visual Asset Architecture (Mandatory for Visual Items)
-To preserve essential anatomical diagrams, clinical experimental apparatus, physics circuits, geometric constructions, and phase charts without token overhead or quality loss:
-1. **High-Resolution Vector/Raster Cropping (300 DPI)**:
-   - All textbook diagrams must be cropped directly from source materials/PDFs using PyMuPDF (`fitz` / `pymupdf`) with sub-pixel bounding rects (`page.get_pixmap(clip=fitz.Rect(x0, y0, x1, y1), dpi=300)`).
-   - Saved as lossless PNG assets with zero surrounding body text, page numbers, or publisher watermarks.
-2. **Directory & Multi-Store Mirroring**:
-   - Primary Store: `KB Files/<subject>/<chapter_folder>/images/<diagram_name>.png`
-   - Mirrored Store: `knowledge_base/<subject>/<chapter_folder>/images/<diagram_name>.png`
-   - Web Generator Store: `knowledge_base/<subject>/images/<diagram_name>.png`
-3. **Structured Schema Integration (`"diagram"` object)**:
-   - For every question requiring visual reference, include a `"diagram"` dictionary:
-     ```json
-     "diagram": {
-       "image_path": "images/<diagram_name>.png",
-       "caption": "Descriptive academic caption",
-       "alt_text": "Accessibility text describing visual features"
-     }
-     ```
-   - Must be present in both `questions` and `assessment_items` arrays.
-4. **Companion Markdown Embedding**:
-   - Markdown compilers must embed the image directly under the question text:
-     ```markdown
-     ![Caption](images/<diagram_name>.png)
-     *Caption*
-     ```
-5. **Automated Verification**:
-   - Verification suites (`verify_*.py`) must validate that every referenced `image_path` exists on disk, is non-empty (>5 KB), and matches across dual stores.
-6. **Tier 2 AI-Enhanced Conceptual Infographics**:
-   - In addition to verbatim textbook crops (Tier 1), high-yield pedagogical topics support AI-enhanced deep infographics (Tier 2: `images/<diagram_name>_enhanced.png`).
-   - Enhanced infographics illustrate underlying physics/chemistry (e.g. pressure gradients, enzyme maps, flow vectors, and comparative panels) and include structured `"concept_breakdown"` metadata (`pressure_physics`, `muscular_action`, `exam_trap`) to maximize long-term retention and exam recall.
-
----
-
-## 5. Proactive Token Optimization Standard
+## 4. Proactive Token Optimization Standard
 Every AI assistant (Gemini, Claude, Antigravity) must practice proactive token conservation:
 1. **Suggest KB Referencing**: When the user requests a drill or revision sheet, suggest querying the KB JSON/MD rather than parsing full HTML templates.
 2. **Use Targeted Reads**: Specify exact line slices (`StartLine`/`EndLine`) when viewing files rather than loading whole 800+ line blocks.

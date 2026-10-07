@@ -321,18 +321,9 @@ Rumination allows herbivores to quickly harvest vegetative forage and mechanical
 **Type:** `short_answer` | **Marks:** `3` | **Difficulty:** `medium` | **Source:** `textbook_solved_example`
 
 **Question:**
-Study the mechanism of breathing:
+Study the physiological mechanism of breathing:
 (i) Which breathing process involves ribs moving upward and outward while the diaphragm moves down?
 (ii) What anatomical and physical changes take place during this process?
-
-![Mechanism of Inhalation in Humans: Ribcage movement and Diaphragm contraction](images/bio_ch3_inhalation_mechanics.png)
-*Mechanism of Inhalation in Humans: Ribcage movement and Diaphragm contraction*
-
-> [!TIP] **Master Concept Deep Dive (360° Infographic)**
-> ![Mechanism of Inhalation in Humans: Ribcage movement and Diaphragm contraction](images/bio_ch3_inhalation_mechanics_enhanced.png)
-> * **Pressure Physics**: Thoracic volume expansion lowers intra-pulmonary pressure below atmospheric pressure (Boyle's Law: negative pressure draws ambient air into lungs).
-> * **Muscular Action**: External intercostals contract (ribcage up & out); Diaphragm contracts and flattens downward.
-> * **Exam Trap**: The diaphragm does NOT relax or expand during inhalation; it actively contracts and flattens downward.
 
 **Answer:**
 (i) Inhalation (Inspiration).
@@ -605,9 +596,6 @@ Vomiting is caused by reverse peristalsis triggered by neural protective reflexe
 
 **Question:**
 Identify the four sequential compartments of the complex stomach in ruminants and state their order of food passage.
-
-![Sequential Compartments of Complex Ruminant Stomach: Rumen, Reticulum, Omasum, Abomasum](images/bio_ch3_se_ruminant_stomach.png)
-*Sequential Compartments of Complex Ruminant Stomach: Rumen, Reticulum, Omasum, Abomasum*
 
 **Answer:**
 The four compartments of the ruminant stomach in sequence are:
@@ -1393,20 +1381,19 @@ According to the chapter's biological concepts: Only 2 and 3 is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `easy` | **Source:** `textbook_exercise`
 
 **Question:**
-Given figure illustrates the internal structure of lungs.
-The exchange of gases takes place at which labelled structure?
+In the human respiratory system, in which specialized micro-anatomical structures does the exchange of respiratory gases (O₂ and CO₂) between air and blood capillaries take place?
 
 **Options:**
-- (a) I
-- (b) II
-- (c) III
-- (d) IV
+- (a) Bronchi
+- (b) Trachea
+- (c) Alveoli (air sacs)
+- (d) Larynx
 
 **Answer:**
-(c) III
+(c) Alveoli (air sacs)
 
 **Explanation:**
-According to the chapter's biological concepts: III is correct.
+Gaseous exchange occurs across the thin, moist epithelial walls of alveoli (air sacs), which are surrounded by a dense network of blood capillaries.
 
 ---
 
@@ -1434,7 +1421,7 @@ According to the chapter's biological concepts: Diaphragm becomes flattened, rib
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `easy` | **Source:** `textbook_exercise`
 
 **Question:**
-The given figure illustrates the effect of exhaled air on lime water. Lime water turns milky due to the presence of ________ in exhaled air.
+When exhaled air is gently blown through a tube into freshly prepared clear lime water, the lime water turns milky due to the presence of ________ in exhaled air.
 
 **Options:**
 - (a) carbon monoxide
@@ -1446,7 +1433,7 @@ The given figure illustrates the effect of exhaled air on lime water. Lime water
 (b) carbon dioxide
 
 **Explanation:**
-According to the chapter's biological concepts: carbon dioxide is correct.
+Exhaled air contains about 4.4% carbon dioxide, which reacts with lime water (calcium hydroxide) to precipitate insoluble white calcium carbonate: Ca(OH)₂ + CO₂ -> CaCO₃↓ + H₂O.
 
 ---
 
@@ -1494,19 +1481,19 @@ According to the chapter's biological concepts: physical, bio-chemical is correc
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `easy` | **Source:** `school_worksheet`
 
 **Question:**
-Given figure represents a breathing process. During this process,
+During the process of exhalation (breathing out) in humans, which of the following physical events occurs?
 
 **Options:**
-- (a) ribs move upward and outward
-- (b) air from outside rushes into the lungs
-- (c) air pressure inside the lungs increases
-- (d) volume of thoracic cavity increases.
+- (a) Ribs move upward and outward
+- (b) Air from outside rushes into the lungs
+- (c) Air pressure inside the lungs increases above atmospheric pressure
+- (d) Volume of thoracic cavity increases
 
 **Answer:**
-(c) air pressure inside the lungs increases
+(c) Air pressure inside the lungs increases above atmospheric pressure
 
 **Explanation:**
-According to the chapter's biological concepts: air pressure inside the lungs increases is correct.
+During exhalation, the diaphragm relaxes and domes upward while ribs move down and inward. This decreases thoracic volume, increasing air pressure inside the lungs so air is forced out.
 
 ---
 
@@ -1534,19 +1521,19 @@ According to the chapter's biological concepts: Earthworm and frog is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `easy` | **Source:** `school_worksheet`
 
 **Question:**
-The given figure shows various parts of human digestive system labelled as I, II, III and IV. Identify the part that stores bile juice.
+Which organ of the human digestive system temporarily stores and concentrates bile juice produced by the liver before releasing it into the small intestine?
 
 **Options:**
-- (a) I
-- (b) II
-- (c) III
-- (d) IV
+- (a) Stomach
+- (b) Gall bladder
+- (c) Pancreas
+- (d) Large intestine
 
 **Answer:**
-(b) II
+(b) Gall bladder
 
 **Explanation:**
-According to the chapter's biological concepts: II is correct.
+Bile is synthesized by the liver and stored in the gall bladder until required for the emulsification of fats in the small intestine.
 
 ---
 
@@ -1716,19 +1703,19 @@ According to the chapter's biological concepts: A - (ii), B - (iii), C - (i), D 
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-The given diagram shows parts of human alimentary canal labelled as I and II. Identify I and II and select the correct statement regarding them.
+In the human alimentary canal, comparing the small intestine and the large intestine, which of the following statements is correct regarding their dimensions and structure?
 
 **Options:**
-- (a) I represents small intestine which is the longest part of alimentary canal.
-- (b) II represents large intestine which is the longest part of alimentary canal.
-- (c) II represents small intestine which is the widest part of alimentary canal.
-- (d) I represents large intestine which is the widest part of alimentary canal.
+- (a) Small intestine is shorter and wider than the large intestine.
+- (b) Large intestine is longer than the small intestine.
+- (c) Small intestine is the widest part of the alimentary canal.
+- (d) Large intestine is wider and shorter (about 1.5 m) than the small intestine (about 7.5 m).
 
 **Answer:**
-(d) I represents large intestine which is the widest part of alimentary canal.
+(d) Large intestine is wider and shorter (about 1.5 m) than the small intestine (about 7.5 m).
 
 **Explanation:**
-According to the chapter's biological concepts: I represents large intestine which is the widest part of alimentary canal. is correct.
+The large intestine is wider in diameter than the small intestine, but significantly shorter in length (approx. 1.5 m compared to 7.5 m for the small intestine).
 
 ---
 
@@ -1963,19 +1950,19 @@ According to the chapter's biological concepts: (I) buccal cavity, (II) salivary
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Identify the labels (1, 2 and 3) in the given figure showing exchange of gases between alveoli and blood capillaries. Select the correct option.
+During gas exchange across the alveolar-capillary membrane: gas (1) diffuses from capillary blood into the alveolar air space to be exhaled, gas (2) diffuses from alveolar air into blood, and cellular component (3) transports gas (2) bound to haemoglobin. Identify 1, 2, and 3.
 
 **Options:**
-- (a) 1: CO2, 2: O2, 3: RBCs
-- (b) 1: O2, 2: CO2, 3: RBCs
-- (c) 1: RBCs, 2: O2, 3: CO2
-- (d) 1: CO2, 2: RBCs, 3: O2
+- (a) 1: CO₂, 2: O₂, 3: RBCs (Red Blood Cells)
+- (b) 1: O₂, 2: CO₂, 3: RBCs (Red Blood Cells)
+- (c) 1: RBCs, 2: O₂, 3: CO₂
+- (d) 1: CO₂, 2: RBCs, 3: O₂
 
 **Answer:**
-(a) 1: CO2, 2: O2, 3: RBCs
+(a) 1: CO₂, 2: O₂, 3: RBCs (Red Blood Cells)
 
 **Explanation:**
-According to the chapter's biological concepts: 1: CO2, 2: O2, 3: RBCs is correct.
+Carbon dioxide (1) diffuses from blood into alveoli to be exhaled, while oxygen (2) diffuses from alveoli into red blood cells (3) where it binds with haemoglobin.
 
 ---
 
@@ -2003,7 +1990,7 @@ According to the chapter's biological concepts: (I) small intestine, (II) large 
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Identify the labels P, Q and R in the given figure and select the correct option.
+In the human respiratory tract, inhaled air passes sequentially from the windpipe (P) into two primary branches (Q) entering each lung, which further terminate in microscopic air sacs (R). Identify P, Q, and R in this pathway.
 
 **Options:**
 - (a) P-Trachea, Q-Alveoli, R-Bronchiole
@@ -2015,7 +2002,7 @@ Identify the labels P, Q and R in the given figure and select the correct option
 (c) P-Trachea, Q-Bronchi, R-Alveoli
 
 **Explanation:**
-According to the chapter's biological concepts: P-Trachea, Q-Bronchi, R-Alveoli is correct.
+Air flows down the trachea (P), branches into two bronchi (Q), and ends in clusters of alveoli (R) for gas exchange.
 
 ---
 
@@ -2107,19 +2094,19 @@ According to the chapter's biological concepts: Inhaled air - 21% oxygen, 0.04% 
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-In mammals the diaphragm is a muscular membrane that divides the thorax from abdomen. It plays an essential role in breathing. Which of the following labelled parts represents diaphragm in the given figure?
+In mammals, which large, dome-shaped muscular sheet forms the floor of the thoracic cavity, separating it from the abdominal cavity, and plays an essential active role in breathing?
 
 **Options:**
-- (a) P
-- (b) Q
-- (c) R
-- (d) S
+- (a) Rib cage
+- (b) Trachea
+- (c) Intercostal muscles
+- (d) Diaphragm
 
 **Answer:**
-(d) S
+(d) Diaphragm
 
 **Explanation:**
-According to the chapter's biological concepts: S is correct.
+The diaphragm is the muscular partition between the thoracic and abdominal cavities. Its movement drives inhalation and exhalation.
 
 ---
 
@@ -2151,11 +2138,11 @@ According to the chapter's biological concepts: Well 1: Stomach, Well 2: Mouth c
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Refer to the given flow chart showing the characteristics P, Q and R which are present in some animals and absent in others.
+Refer to the given taxonomic classification of respiratory adaptations:
 Organisms -> P (Yes) -> Humans
 Organisms -> P (No) -> R (Yes) -> Cockroaches
 Organisms -> P (No) -> R (No) -> Q (Yes) -> Spiders
-Identify P, Q, R and select the correct option.
+Identify the respiratory structures P, Q, and R.
 
 **Options:**
 - (a) P-Diaphragm, Q-Book lungs, R-Operculum
@@ -2167,7 +2154,7 @@ Identify P, Q, R and select the correct option.
 (c) P-Lungs, Q-Book lungs, R-Spiracles
 
 **Explanation:**
-According to the chapter's biological concepts: P-Lungs, Q-Book lungs, R-Spiracles is correct.
+Humans possess lungs (P), cockroaches possess spiracles and tracheae (R), and spiders breathe using book lungs (Q).
 
 ---
 
@@ -2175,19 +2162,19 @@ According to the chapter's biological concepts: P-Lungs, Q-Book lungs, R-Spiracl
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Refer to the given diagram of human digestive system and select the correct option regarding its labelled parts P, Q, R, S and T.
+Consider the anatomical organs of the mammalian digestive system: P (Stomach), Q (Liver), R (Pancreas), S (Small intestine), and T (Large intestine). Which of the following statements is correct regarding their comparative anatomy and physiology?
 
 **Options:**
-- (a) R secretes digestive enzymes viz. amylase, lipase, pepsin, trypsin, etc.
-- (b) P secretes bile juice whereas T secretes hydrochloric acid.
-- (c) S is longer in cow as compared to tiger to aid the digestion of cellulose rich food.
-- (d) Q is the largest digestive gland which secretes different enzymes for digestion of fats, proteins and carbohydrates.
+- (a) R (Pancreas) secretes pepsin and hydrochloric acid.
+- (b) P (Stomach) secretes bile juice whereas T secretes trypsin.
+- (c) S (Small intestine) is much longer in herbivores like cows than in carnivores like tigers to aid the digestion of cellulose-rich food.
+- (d) Q (Liver) secretes digestive enzymes that hydrolyze proteins into amino acids.
 
 **Answer:**
-(c) S is longer in cow as compared to tiger to aid the digestion of cellulose rich food.
+(c) S (Small intestine) is much longer in herbivores like cows than in carnivores like tigers to aid the digestion of cellulose-rich food.
 
 **Explanation:**
-According to the chapter's biological concepts: S is longer in cow as compared to tiger to aid the digestion of cellulose rich food. is correct.
+Herbivores have a significantly longer small intestine than carnivores because digesting tough cellulose requires a longer passage time and microbial assistance.
 
 ---
 
@@ -2255,19 +2242,19 @@ According to the chapter's biological concepts: Stomach: P, Small intestine: R, 
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Refer to the given graph representing percentage of undigested starch in different parts of alimentary canal. Identify regions of alimentary canal P - S and select the correct statement.
+In a biochemical tracking experiment measuring starch digestion along the human digestive tract: starch breakdown begins in region P (about 30%), remains unchanged in regions Q and R, and completes in region S. Identify regions P, Q, R, and S sequentially.
 
 **Options:**
 - (a) P could be mouth, Q could be oesophagus, R could be stomach and S could be small intestine.
-- (b) Digestion of food is completed in R which also possesses many finger-like projections in its wall that provide a large surface area for the absorption of food molecules.
-- (c) Q secretes digestive juice which contains mucus, and enzyme amylase.
+- (b) Digestion of food is completed in R which also possesses many finger-like projections.
+- (c) Q secretes digestive juice which contains mucus and enzyme amylase.
 - (d) P makes the medium acidic to help the digestive enzyme to act upon food stuff.
 
 **Answer:**
 (a) P could be mouth, Q could be oesophagus, R could be stomach and S could be small intestine.
 
 **Explanation:**
-According to the chapter's biological concepts: P could be mouth, Q could be oesophagus, R could be stomach and S could be small intestine. is correct.
+Salivary amylase digests starch in the mouth (P). No digestion occurs in the oesophagus (Q). Acid in the stomach (R) halts amylase. Complete digestion occurs in the small intestine (S).
 
 ---
 
@@ -2321,19 +2308,19 @@ According to the chapter's biological concepts: Varun would not be able to diges
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Refer to the given Venn diagram. Identify P and Q and select the correct statement.
+In human digestive physiology, consider digestive glands P and Q: gland P is the largest gland of the body producing bile (no digestive enzymes), while gland Q is located below the stomach and secretes comprehensive digestive juice. Select the correct statement regarding Q.
 
 **Options:**
 - (a) Q produces a juice which gets mixed with fats present in food and converts it into small fat droplets.
-- (b) Q secretes a digestive juice which acts on carbohydrates, fats and proteins and converts them into glycerol, fatty acids and amino acids, respectively.
-- (c) P could be the smallest organ of digestive system whereas Q could the longest portion of alimentary canal.
+- (b) Q (pancreas) secretes a digestive juice which acts on carbohydrates, fats and proteins and converts them into simpler absorbable forms.
+- (c) P could be the smallest organ of digestive system whereas Q could be the longest portion of alimentary canal.
 - (d) P absorbs water and salt from undigested food whereas Q is the site of absorption of digested food.
 
 **Answer:**
-(b) Q secretes a digestive juice which acts on carbohydrates, fats and proteins and converts them into glycerol, fatty acids and amino acids, respectively.
+(b) Q (pancreas) secretes a digestive juice which acts on carbohydrates, fats and proteins and converts them into simpler absorbable forms.
 
 **Explanation:**
-According to the chapter's biological concepts: Q secretes a digestive juice which acts on carbohydrates, fats and proteins and converts them into glycerol, fatty acids and amino acids, respectively. is correct.
+The pancreas (Q) secretes pancreatic juice containing amylase, trypsin, and lipase which hydrolyze carbohydrates, proteins, and fats respectively.
 
 ---
 
@@ -2381,7 +2368,7 @@ According to the chapter's biological concepts: P-Trypsin, Q-Lipase, R-Glycerol,
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Given below is the diagrammatic sectional view of the human respiratory system. Which set of three parts out of I-VI have been correctly identified?
+In the anatomical organization of the human respiratory tract: the common passage for air and food is IV, the main windpipe supported by cartilaginous rings is VI, and the two primary branches entering the lungs are III. Which set of structures is correctly identified?
 
 **Options:**
 - (a) II-Bronchioles, IV-Pharynx, VI-Bronchus
@@ -2393,7 +2380,7 @@ Given below is the diagrammatic sectional view of the human respiratory system. 
 (b) III-Bronchi, IV-Pharynx, VI-Trachea
 
 **Explanation:**
-According to the chapter's biological concepts: III-Bronchi, IV-Pharynx, VI-Trachea is correct.
+IV is the pharynx, VI is the trachea (windpipe), and III represents the bronchi branching into each lung.
 
 ---
 
@@ -3292,7 +3279,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 How does breathing rate of a person change while sleeping and exercising?
 
 **Answer:**
-Model Answer: How does breathing rate of a person change while sleeping and exercising? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+During sleeping, the breathing rate slows down (around 12–14 breaths per minute) because the body requires less metabolic energy and oxygen. During vigorous exercise, the breathing rate increases substantially (up to 25 or more breaths per minute) to supply additional oxygen to working muscles and rapidly expel excess carbon dioxide.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3306,7 +3293,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 What do you understand by the term mastication?
 
 **Answer:**
-Model Answer: What do you understand by the term mastication? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Mastication is the mechanical process of chewing food in the mouth, where teeth crush, grind, and tear food into small particles and mix it thoroughly with saliva.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3320,7 +3307,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 In which animals gaseous exchange occurs through lungs?
 
 **Answer:**
-Model Answer: In which animals gaseous exchange occurs through lungs? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Mammals (including humans, cows, whales), birds, reptiles (such as lizards, snakes), and adult amphibians (such as frogs on land) respire through lungs.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3334,7 +3321,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Salivary amylase enzyme acts on which food component?
 
 **Answer:**
-Model Answer: Salivary amylase enzyme acts on which food component? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Salivary amylase (ptyalin) acts on dietary starch (complex carbohydrates), breaking it down into simpler disaccharide sugars such as maltose.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3348,7 +3335,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Write down the percentage of oxygen in inhaled and exhaled air.
 
 **Answer:**
-Model Answer: Write down the percentage of oxygen in inhaled and exhaled air. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Inhaled air contains approximately 21% oxygen (and 0.04% CO₂), whereas exhaled air contains approximately 16.4% oxygen (and 4.4% CO₂).
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3362,7 +3349,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Which is the longest part of alimentary canal?
 
 **Answer:**
-Model Answer: Which is the longest part of alimentary canal? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+The small intestine is the longest part of the human alimentary canal, measuring approximately 7.5 metres (25 feet) in an adult.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3376,7 +3363,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 What are the parts of human respiratory system?
 
 **Answer:**
-Model Answer: What are the parts of human respiratory system? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+The human respiratory system comprises the external nostrils, nasal cavity, pharynx, larynx (voice box), trachea (windpipe), two primary bronchi, bronchioles, and lungs containing microscopic alveoli.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3390,7 +3377,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Which food components are acted upon by the pancreatic juices?
 
 **Answer:**
-Model Answer: Which food components are acted upon by the pancreatic juices? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Pancreatic juice acts on all three major macronutrients: amylase breaks down carbohydrates/starch, trypsin digests proteins into peptides, and lipase breaks down emulsified fats into fatty acids and glycerol.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3404,7 +3391,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 What do you understand by the term 'cud'?
 
 **Answer:**
-Model Answer: What do you understand by the term 'cud'? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Cud is the partially chewed and fermented food stored in the rumen of ruminant animals that is brought back (regurgitated) into the mouth to be chewed thoroughly a second time.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3418,7 +3405,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Name the energy giving nutrients.
 
 **Answer:**
-Model Answer: Name the energy giving nutrients. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Carbohydrates and fats are the primary energy-giving nutrients in human food.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3432,7 +3419,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 What changes take place in the air as it passes through the nasal passage?
 
 **Answer:**
-Model Answer: What changes take place in the air as it passes through the nasal passage? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+As inhaled air flows through the nasal passage, fine hairs and sticky mucus filter out dust particles and microbes, while the vascular mucosa warms and humidifies the incoming air to body temperature.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3446,7 +3433,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Exchange of gases occurs in which part of the lungs in humans?
 
 **Answer:**
-Model Answer: Exchange of gases occurs in which part of the lungs in humans? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Exchange of gases in humans takes place across the thin, moist walls of the microscopic alveoli (air sacs) and surrounding blood capillaries in the lungs.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3460,7 +3447,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 In which form is oxygen carried by blood to the body cells in our body?
 
 **Answer:**
-Model Answer: In which form is oxygen carried by blood to the body cells in our body? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Oxygen is carried by blood mainly in chemical combination with haemoglobin (present in red blood cells) in the form of oxyhaemoglobin.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3474,7 +3461,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Which organ in human body serves as the common passage for both food and air?
 
 **Answer:**
-Model Answer: Which organ in human body serves as the common passage for both food and air? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+The pharynx serves as the common muscular pathway for both food and air.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3488,7 +3475,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Name the secretion of liver that helps in digestion of fats.
 
 **Answer:**
-Model Answer: Name the secretion of liver that helps in digestion of fats. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Bile juice, synthesized and secreted by the liver, emulsifies large fat globules into tiny droplets for efficient enzymatic digestion.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3502,7 +3489,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Name any three glands of human digestive system.
 
 **Answer:**
-Model Answer: Name any three glands of human digestive system. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Three major glands of the human digestive system are: (1) Salivary glands, (2) Liver, and (3) Pancreas.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3516,7 +3503,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Define breathing rate.
 
 **Answer:**
-Model Answer: Define breathing rate. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Breathing rate is defined as the number of times a person breathes (one inhalation plus one exhalation) per minute.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3530,7 +3517,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 What happens to the volume of chest cavity during exhalation?
 
 **Answer:**
-Model Answer: What happens to the volume of chest cavity during exhalation? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+During exhalation, the chest (thoracic) cavity decreases in volume as the ribs move downward and inward and the diaphragm relaxes upward into a dome shape.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3544,7 +3531,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Name different types of teeth found in man.
 
 **Answer:**
-Model Answer: Name different types of teeth found in man. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+The four types of teeth found in an adult human are: (1) Incisors (cutting/biting), (2) Canines (piercing/tearing), (3) Premolars (chewing/grinding), and (4) Molars (crushing/grinding).
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3560,7 +3547,8 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 (a) What is the significance of highly coiled nature of small intestine? (b) Absorption of digested food occurs in the stomach. Do you agree?
 
 **Answer:**
-Model Answer: (a) What is the significance of highly coiled nature of small intestine? (b) Absorption of digested food occurs in the stomach. Do you agree? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+(a) The highly coiled structure of the small intestine packs a massive length (about 7.5 m) into a compact abdominal space, slowing the transit of chyme to allow thorough enzymatic digestion and maximum absorption of nutrients.
+(b) No, we disagree. Virtually no absorption of digested food occurs in the stomach; the stomach primarily functions in mechanical churning, acid sterilization, and initial protein breakdown. The small intestine is the true site of nutrient absorption due to its millions of microscopic villi.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3574,7 +3562,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 How do the gills help in the exchange of gases in fishes?
 
 **Answer:**
-Model Answer: How do the gills help in the exchange of gases in fishes? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Fishes take in water through the mouth and force it over the gills. Gills consist of numerous thin, comb-like gill filaments richly supplied with blood capillaries. As oxygenated water flows over the gill filaments, dissolved oxygen diffuses from the water into the blood, while carbon dioxide from the blood diffuses out into the water.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3588,7 +3576,9 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Name the two parts of a bird's stomach and explain their functions.
 
 **Answer:**
-Model Answer: Name the two parts of a bird's stomach and explain their functions. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+A bird's stomach is divided into two distinct anatomical parts:
+1. Proventriculus (Glandular stomach): Secretes gastric juices and digestive enzymes (hydrochloric acid and pepsin) to initiate chemical digestion of food.
+2. Gizzard (Muscular stomach): A thick-walled, heavily muscled chamber containing swallowed small stones and grit that mechanically crushes, grinds, and pulverizes tough seeds and grains in place of teeth.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3602,7 +3592,10 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Write down the role of saliva in digestion process.
 
 **Answer:**
-Model Answer: Write down the role of saliva in digestion process. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Role of saliva in digestion:
+1. Lubrication: Mucus in saliva moistens, softens, and lubricates dry food into a smooth bolus for effortless swallowing.
+2. Chemical digestion: Contains the digestive enzyme salivary amylase (ptyalin), which hydrolyzes dietary starch into simpler disaccharide sugars (maltose).
+3. Oral cleansing: Contains lysozyme and buffers that inhibit oral bacterial growth and protect teeth.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3621,12 +3614,11 @@ Give one word for the following:
 (v) Small openings present on sides of bodies of insects for respiration.
 
 **Answer:**
-Model Answer: Give one word for the following:
-(i) The muscular sheet between thoracic cavity and abdominal cavity.
-(ii) Organs of respiration in fish.
-(iii) A gas that turns lime water milky.
-(iv) The respiratory organ in earthworm.
-(v) Small openings present on sides of bodies of insects for respiration. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+(i) Diaphragm
+(ii) Gills
+(iii) Carbon dioxide (CO₂)
+(iv) Moist skin (cutaneous respiration)
+(v) Spiracles
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3640,7 +3632,8 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Differentiate between mechanical digestion and chemical digestion.
 
 **Answer:**
-Model Answer: Differentiate between mechanical digestion and chemical digestion. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+1. Mechanical Digestion: The physical breakdown of large food pieces into smaller particles without altering chemical bonds (e.g., mastication by teeth, churning in the stomach, and bile emulsification of fats).
+2. Chemical Digestion: The enzymatic hydrolysis of complex macronutrient polymers into simple, water-soluble absorbable monomers (e.g., starch into glucose by amylase, proteins into amino acids by pepsin/trypsin, fats into fatty acids/glycerol by lipase).
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3654,7 +3647,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 How does the food get absorbed?
 
 **Answer:**
-Model Answer: How does the food get absorbed? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Food is absorbed in the small intestine through millions of microscopic, finger-like projections called villi. Each villus contains a dense network of blood capillaries and a central lymph vessel (lacteal). The villi drastically increase the absorptive surface area. Digested simple nutrients (glucose, amino acids, vitamins, minerals) diffuse across the thin epithelial lining directly into the capillary blood, while fatty acids and glycerol enter the lacteals.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3668,7 +3661,11 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 What happens to the food in small intestine?
 
 **Answer:**
-Model Answer: What happens to the food in small intestine? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+In the small intestine, food undergoes complete digestion and systemic absorption:
+1. Secretions from liver (bile) and pancreas (pancreatic juice) mix with intestinal juice (succus entericus) in an alkaline medium.
+2. Carbohydrates are converted into glucose, proteins into amino acids, and fats into fatty acids and glycerol.
+3. Millions of villi absorb these digested monomers into the bloodstream and lymph.
+4. Unabsorbed, undigested residue is propelled forward into the large intestine.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3679,10 +3676,13 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 **Type:** `short_answer` | **Marks:** `2` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Study the given experimental set up. In which test tube, will the lime water turn milky after 12 hours and why?
+In an experiment to demonstrate respiration, Test Tube A contains a live snail with a small beaker of lime water, Test Tube B contains a green plant kept in darkness with lime water, and Test Tube C contains only lime water (control). In which test tube(s) will the lime water turn milky after 12 hours, and why?
 
 **Answer:**
-Model Answer: Study the given experimental set up. In which test tube, will the lime water turn milky after 12 hours and why? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+The lime water turns milky in both Test Tube A and Test Tube B:
+1. In Test Tube A, the live snail continuously respires aerobically, releasing carbon dioxide (CO₂) that reacts with lime water to precipitate insoluble calcium carbonate (CaCO₃), turning the solution milky.
+2. In Test Tube B, because the plant is kept in complete darkness, photosynthesis cannot take place; it exclusively respires, releasing carbon dioxide which likewise turns lime water milky.
+3. In Test Tube C (control), there is no living organism to release CO₂, so the lime water remains clear.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3696,7 +3696,14 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 What are the digestion products of carbohydrates, proteins and fats? In what way are they utilised by human body?
 
 **Answer:**
-Model Answer: What are the digestion products of carbohydrates, proteins and fats? In what way are they utilised by human body? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+1. Digestion Products:
+   - Carbohydrates -> Simple sugars (mainly Glucose)
+   - Proteins -> Amino acids
+   - Fats -> Fatty acids and Glycerol
+2. Utilization by Human Body:
+   - Glucose is oxidized during cellular respiration to release usable metabolic energy (ATP).
+   - Amino acids are utilized for tissue growth, structural repair, and synthesis of enzymes and hormones.
+   - Fatty acids and glycerol provide reserve energy, form cell membranes, and insulate internal organs.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3710,7 +3717,10 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 What happens to the air breathe in, once it reaches the lungs?
 
 **Answer:**
-Model Answer: What happens to the air breathe in, once it reaches the lungs? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Once inhaled air reaches the lungs:
+1. Air branches into bronchi and microscopic bronchioles, finally arriving at the thin-walled alveoli.
+2. Oxygen from high alveolar concentration diffuses across the moist alveolar-capillary membrane into red blood cells, binding with haemoglobin to form oxyhaemoglobin.
+3. Concurrently, carbon dioxide dissolved in deoxygenated blood diffuses in the opposite direction—from capillary blood into the alveoli—to be expelled during the subsequent exhalation.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3728,11 +3738,10 @@ Give one word for the following:
 (iv) Cutting and biting teeth.
 
 **Answer:**
-Model Answer: Give one word for the following:
-(i) The part of stomach that temporarily stores partially chewed food in cows.
-(ii) The semi-digested food in ruminants that is chewed again.
-(iii) The structure that bears taste buds.
-(iv) Cutting and biting teeth. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+(i) Rumen
+(ii) Cud
+(iii) Tongue
+(iv) Incisors
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3746,7 +3755,10 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 How does the nostrils and the nose contribute to the process of breathing?
 
 **Answer:**
-Model Answer: How does the nostrils and the nose contribute to the process of breathing? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+The nostrils and nasal cavity contribute to breathing by:
+1. Filtration: Coarse hairs trap large suspended airborne dust particles and debris.
+2. Trapping microbes: Mucous membrane lines the cavity, capturing microscopic dust, pollen, and bacteria.
+3. Conditioning: Rich vascular capillary beds beneath the nasal mucosa warm cold inhaled air to core body temperature and saturate it with moisture to protect the sensitive lung tissue.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3757,10 +3769,10 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 **Type:** `short_answer` | **Marks:** `2` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Draw a simple diagram showing peristalsis in oesophagus.
+Describe the process of peristalsis in the oesophagus and explain how food moves downward into the stomach.
 
 **Answer:**
-Model Answer: Draw a simple diagram showing peristalsis in oesophagus. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Peristalsis is the coordinated, involuntary wave of rhythmic muscular contractions and relaxations occurring along the digestive tract. In the oesophagus, when a lubricated bolus of food is swallowed, circular muscles immediately behind the bolus contract while longitudinal muscles in front relax and dilate the lumen. This wave-like motion systematically pushes the food downward from the pharynx into the stomach, operating even against gravity.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3774,7 +3786,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 What is rumination?
 
 **Answer:**
-Model Answer: What is rumination? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Rumination (cud-chewing) is the specialized digestive process in ruminants (e.g., cows, sheep, deer) where swallowed plant material is stored and fermented in the rumen, subsequently regurgitated in small balls (cud) back into the mouth, thoroughly re-chewed and re-insalivated during rest, and re-swallowed for complete chemical digestion.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3788,7 +3800,12 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Why does air rush into our body when we inhale?
 
 **Answer:**
-Model Answer: Why does air rush into our body when we inhale? involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Air rushes into our body during inhalation due to a negative pressure gradient:
+1. The external intercostal muscles contract, pulling the rib cage upward and outward.
+2. Simultaneously, the diaphragm contracts and flattens downward.
+3. This dual muscular action increases the thoracic cavity's volume, expanding the elastic lungs.
+4. As volume increases, the internal air pressure in the lungs drops below external atmospheric pressure.
+5. Atmospheric air automatically rushes from the higher external pressure into the lungs until pressures equalize.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3806,11 +3823,10 @@ Give one word for the following:
 (iv) Sac-like structure that stores bile juice.
 
 **Answer:**
-Model Answer: Give one word for the following:
-(i) Finger-like projections present in small intestine.
-(ii) Widest organ of alimentary canal.
-(iii) Largest gland of human body.
-(iv) Sac-like structure that stores bile juice. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+(i) Villi
+(ii) Stomach
+(iii) Liver
+(iv) Gall bladder
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3824,7 +3840,11 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 Give differences in the composition of air being inhaled and exhaled.
 
 **Answer:**
-Model Answer: Give differences in the composition of air being inhaled and exhaled. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+Differences in composition between inhaled and exhaled air:
+1. Oxygen: Inhaled air contains ~21% oxygen; Exhaled air contains ~16.4% oxygen (used in cellular respiration).
+2. Carbon Dioxide: Inhaled air contains ~0.04% CO₂; Exhaled air contains ~4.4% CO₂ (produced as a cellular metabolic waste product).
+3. Water Vapour: Inhaled air has variable moisture; Exhaled air is saturated with water vapour.
+4. Nitrogen: Inhaled air contains ~78% nitrogen; Exhaled air contains ~78% nitrogen (inert and unused).
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3838,7 +3858,14 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 (a) Mention the different compartments of alimentary canal. (b) Define absorption.
 
 **Answer:**
-Model Answer: (a) Mention the different compartments of alimentary canal. (b) Define absorption. involves core biological mechanisms taught in Class 7 Science. Essential points: precise identification of organs, physiological functions, chemical secretions, and systemic importance.
+(a) Different compartments of the human alimentary canal:
+1. Buccal cavity (mouth)
+2. Oesophagus (food pipe)
+3. Stomach
+4. Small intestine (duodenum, jejunum, ileum)
+5. Large intestine (caecum, colon)
+6. Rectum and Anus
+(b) Absorption: Absorption is the physiological process by which digested, water-soluble nutrient molecules pass through the epithelial lining of the small intestine (via villi) into the bloodstream and lymph vessels for transport to body cells.
 
 **Explanation:**
 Evaluated based on clear conceptual keywords and accurate biological terminology.
@@ -3851,7 +3878,7 @@ Evaluated based on clear conceptual keywords and accurate biological terminology
 **Type:** `long_answer` | **Marks:** `5` | **Difficulty:** `hard` | **Source:** `textbook_exercise`
 
 **Question:**
-With the help of simple diagram explain how does digestion of food take place in ruminating mammals?
+Explain how digestion of food takes place in ruminating mammals, detailing the pathway of food and the functions of the four stomach compartments.
 
 **Answer:**
 Digestion in Ruminants (Cud-Chewing Animals like Cows, Buffaloes, Deer):
@@ -3891,14 +3918,17 @@ Award 1 mark each for: correct anatomical labels, physiological sequence, chemic
 **Type:** `long_answer` | **Marks:** `5` | **Difficulty:** `hard` | **Source:** `textbook_exercise`
 
 **Question:**
-With the help of a diagram, explain the structure of human respiratory system.
+Explain the structural organization and pathway of the human respiratory system from the external nostrils to the alveoli.
 
 **Answer:**
-Comprehensive 4-Mark Model Solution for 'With the help of a diagram, explain the structure of human respiratory system.':
-1. Definition and Structural Overview.
-2. Step-by-step Physiological Mechanism.
-3. Chemical equations or organ-specific secretions.
-4. Summary diagram / biological significance.
+The human respiratory system consists of the following sequential anatomical structures:
+1. Nostrils & Nasal Cavity: Air enters through paired nostrils into the nasal cavity, where fine hairs and mucus filter debris, while vascular mucosa warms and moistens the air.
+2. Pharynx: A common muscular funnel-shaped passage connecting nasal cavity and mouth to the larynx and oesophagus.
+3. Larynx (Voice Box): Located above the trachea; contains vocal cords and is protected during swallowing by the flap-like epiglottis.
+4. Trachea (Windpipe): A sturdy tube supported by C-shaped rings of cartilage that prevent it from collapsing during air pressure fluctuations.
+5. Bronchi: In the thoracic cavity, the trachea bifurcates into the right and left primary bronchi entering the respective lungs.
+6. Bronchioles: Inside the lungs, each bronchus repeatedly branches into smaller secondary and tertiary tubes termed bronchioles.
+7. Alveoli (Air Sacs): Bronchioles terminate in clusters of millions of microscopic, thin-walled balloon-like sacs surrounded by a dense meshwork of blood capillaries, providing an immense surface area for gaseous exchange.
 
 **Explanation:**
 Award 1 mark each for: correct anatomical labels, physiological sequence, chemical secretions, and accurate biological reasoning.
@@ -3912,11 +3942,14 @@ Award 1 mark each for: correct anatomical labels, physiological sequence, chemic
 (a) How does sneezing or coughing help in the entry of clean air into our body? (b) What is breathing rate (or respiratory rate)? How does it change under different conditions?
 
 **Answer:**
-Comprehensive 4-Mark Model Solution for '(a) How does sneezing or coughing help in the entry of clean air into our body? (b) What is breathing rate (or respiratory rate)? How does it change under different conditions?':
-1. Definition and Structural Overview.
-2. Step-by-step Physiological Mechanism.
-3. Chemical equations or organ-specific secretions.
-4. Summary diagram / biological significance.
+(a) Protective Function of Sneezing and Coughing:
+When foreign irritating particles (such as dust, smoke, pollen, or microbes) enter the nasal cavity or trachea and bypass nasal hairs, they stimulate sensory receptors in the mucous lining. This triggers a sudden, violent, involuntary reflex expulsion of air—a sneeze (from nasal tract) or cough (from lower airways)—blasting the trapped foreign matter and excess mucus out of the respiratory tract, thereby keeping the airway clean and preventing pulmonary infection.
+
+(b) Breathing Rate and Physiological Changes:
+Breathing rate is the number of breaths taken per minute (one breath = one inhalation + one exhalation).
+- Under resting conditions in a healthy adult, the normal breathing rate is 12 to 18 breaths per minute.
+- During sleep, metabolic rate declines, oxygen demand drops, and breathing rate decreases to 10–14 breaths per minute.
+- During vigorous physical exercise or heavy muscular work, muscle cells consume oxygen rapidly to synthesize ATP and produce copious CO₂; breathing rate accelerates up to 25–30 breaths per minute (and breaths become deeper) to supply oxygen and flush out carbon dioxide.
 
 **Explanation:**
 Award 1 mark each for: correct anatomical labels, physiological sequence, chemical secretions, and accurate biological reasoning.
@@ -3927,14 +3960,21 @@ Award 1 mark each for: correct anatomical labels, physiological sequence, chemic
 **Type:** `long_answer` | **Marks:** `5` | **Difficulty:** `hard` | **Source:** `textbook_exercise`
 
 **Question:**
-How the food gets digested in different parts of the digestive tract of humans?
+How does food get digested in different parts of the digestive tract of humans?
 
 **Answer:**
-Comprehensive 4-Mark Model Solution for 'How the food gets digested in different parts of the digestive tract of humans?':
-1. Definition and Structural Overview.
-2. Step-by-step Physiological Mechanism.
-3. Chemical equations or organ-specific secretions.
-4. Summary diagram / biological significance.
+Digestion of food along the human alimentary canal proceeds systematically:
+1. Mouth (Buccal Cavity): Teeth chew and grind food mechanically (mastication). Saliva secreted by salivary glands lubricates the bolus, and salivary amylase hydrolyzes starch into maltose (about 30% starch digested).
+2. Oesophagus: Conducts the food bolus from mouth to stomach via peristaltic muscle contractions; no enzymatic digestion occurs here.
+3. Stomach: Gastric glands in the stomach wall secrete gastric juice:
+   - Hydrochloric acid (HCl) creates an acidic pH (~1.5–2.5) to kill ingested microbes and activate the enzyme pepsin.
+   - Pepsin breaks down complex proteins into smaller peptides and peptones.
+   - Mucus coats and shields the stomach lining from acid corrosion.
+4. Small Intestine (Main Site of Digestion):
+   - Bile from the liver creates an alkaline medium and emulsifies large fat droplets into tiny micelles.
+   - Pancreatic juice from the pancreas supplies amylase (digests remaining starch), trypsin (digests peptides into amino acids), and lipase (digests emulsified fats into fatty acids and glycerol).
+   - Intestinal juice (succus entericus) contains terminal peptidases, maltase, sucrase, and lactase that finalize digestion into absorbable monomers: glucose, amino acids, fatty acids, and glycerol.
+5. Large Intestine: No enzymatic digestion; absorbs excess water and mineral salts from undigested waste, forming semi-solid feces for egestion.
 
 **Explanation:**
 Award 1 mark each for: correct anatomical labels, physiological sequence, chemical secretions, and accurate biological reasoning.
@@ -3945,14 +3985,17 @@ Award 1 mark each for: correct anatomical labels, physiological sequence, chemic
 **Type:** `long_answer` | **Marks:** `5` | **Difficulty:** `hard` | **Source:** `school_worksheet`
 
 **Question:**
-(a) Do all animals possess mouth and anus? Briefly explain with the help of examples. (b) How is food prevented from entering the wind pipe while eating?
+(a) Do all animals possess a separate mouth and anus? Briefly explain with examples. (b) How is food prevented from entering the windpipe while eating?
 
 **Answer:**
-Comprehensive 4-Mark Model Solution for '(a) Do all animals possess mouth and anus? Briefly explain with the help of examples. (b) How is food prevented from entering the wind pipe while eating?':
-1. Definition and Structural Overview.
-2. Step-by-step Physiological Mechanism.
-3. Chemical equations or organ-specific secretions.
-4. Summary diagram / biological significance.
+(a) Digestive Openings in Animals:
+No, not all animals possess separate mouth and anus openings:
+- Complete Digestive Tract (Two openings): Higher animals (such as earthworms, insects, birds, and mammals including humans) have a complete tube-like alimentary canal with an anterior mouth for ingestion and a posterior anus for egestion, allowing continuous, unidirectional digestion and regional specialization.
+- Incomplete Digestive Tract (Single opening): Primitive multicellular animals like Hydra and Planaria possess a 'blind sac' body plan with only a single opening that functions as both mouth (for ingestion) and anus (for egestion).
+- Cellular digestion: Single-celled organisms like Amoeba have no permanent mouth or anus, using temporary pseudopodia to engulf food into food vacuoles.
+
+(b) Prevention of Food Entering the Windpipe:
+The pharynx is the common crossway for food and air. At the entrance of the trachea lies the glottis, which is guarded by a flexible, leaf-shaped flap of elastic cartilage termed the epiglottis. During swallowing, muscles elevate the larynx, and the epiglottis automatically folds downward over the glottis like a trapdoor, cleanly directing the food bolus into the oesophagus and preventing food from entering the windpipe. Talking or laughing while eating can prevent the epiglottis from closing completely, causing food particles to enter the windpipe and triggering choking or coughing reflexes.
 
 **Explanation:**
 Award 1 mark each for: correct anatomical labels, physiological sequence, chemical secretions, and accurate biological reasoning.
@@ -3963,14 +4006,24 @@ Award 1 mark each for: correct anatomical labels, physiological sequence, chemic
 **Type:** `long_answer` | **Marks:** `5` | **Difficulty:** `hard` | **Source:** `school_worksheet`
 
 **Question:**
-Explain the mechanism of breathing in humans with the help of neat and labelled diagrams.
+Explain the physiological mechanism of breathing in humans, detailing the movements of the ribcage, diaphragm, and thoracic pressure changes during inhalation and exhalation.
 
 **Answer:**
-Comprehensive 4-Mark Model Solution for 'Explain the mechanism of breathing in humans with the help of neat and labelled diagrams.':
-1. Definition and Structural Overview.
-2. Step-by-step Physiological Mechanism.
-3. Chemical equations or organ-specific secretions.
-4. Summary diagram / biological significance.
+The mechanism of breathing (pulmonary ventilation) involves cyclical physical changes in thoracic cavity volume and air pressure:
+
+1. Inhalation (Inspiration - Active Phase):
+- Ribcage Movement: External intercostal muscles contract, pulling the rib cage upward and outward.
+- Diaphragm Movement: The dome-shaped diaphragm contracts and flattens downward.
+- Thoracic Volume: These combined movements significantly enlarge the thoracic cavity in all dimensions.
+- Pressure Differential: As the elastic lungs expand to fill the enlarged space, intrapulmonary pressure drops below atmospheric pressure (creating negative pressure).
+- Air Flow: Higher atmospheric pressure drives air rushing through the nostrils, trachea, and bronchi into the alveoli.
+
+2. Exhalation (Expiration - Passive Phase):
+- Ribcage Movement: External intercostal muscles relax, and the rib cage moves downward and inward under gravity and elastic recoil.
+- Diaphragm Movement: The diaphragm relaxes and returns to its upward-curved dome shape.
+- Thoracic Volume: The volume of the chest cavity decreases.
+- Pressure Differential: Decreasing lung volume compresses the air inside, raising intrapulmonary pressure above atmospheric pressure.
+- Air Flow: The higher pressure inside the lungs forces carbon-dioxide-rich air out through the respiratory passages.
 
 **Explanation:**
 Award 1 mark each for: correct anatomical labels, physiological sequence, chemical secretions, and accurate biological reasoning.
@@ -3982,17 +4035,15 @@ Award 1 mark each for: correct anatomical labels, physiological sequence, chemic
 
 **Question:**
 Give reasons for the following:
-(i) Small intestine is 7.5 metres long.
+(i) The small intestine is 7.5 metres long.
 (ii) Humans cannot digest cellulose whereas ruminants can.
 
 **Answer:**
-Comprehensive 4-Mark Model Solution for 'Give reasons for the following:
-(i) Small intestine is 7.5 metres long.
-(ii) Humans cannot digest cellulose whereas ruminants can.':
-1. Definition and Structural Overview.
-2. Step-by-step Physiological Mechanism.
-3. Chemical equations or organ-specific secretions.
-4. Summary diagram / biological significance.
+(i) Reason for 7.5 m Length of Small Intestine:
+The small intestine is the site where chemical digestion of all three major food classes (carbohydrates, proteins, fats) must be completed and all resulting nutrients absorbed. Its remarkable length of 7.5 metres, combined with internal circular folds and millions of microscopic villi, provides an extraordinarily vast surface area and prolonged contact time for digestive enzymes to act and for epithelial transport mechanisms to absorb virtually 100% of available nutrients into the bloodstream before residue passes into the colon.
+
+(ii) Why Humans Cannot Digest Cellulose Whereas Ruminants Can:
+Cellulose is a rigid, structural polysaccharide composed of beta-glucose units linked by tough beta-1,4-glycosidic bonds. Humans do not produce the enzyme cellulase necessary to break these bonds, and the human alimentary canal lacks symbiotic microorganisms that synthesize cellulase. In contrast, ruminants possess an expansive fermentation chamber (rumen and reticulum) that hosts dense populations of symbiotic anaerobic bacteria and protozoa capable of secreting cellulase, which ferment and hydrolyze cellulose into digestible volatile fatty acids.
 
 **Explanation:**
 Award 1 mark each for: correct anatomical labels, physiological sequence, chemical secretions, and accurate biological reasoning.
@@ -4003,14 +4054,18 @@ Award 1 mark each for: correct anatomical labels, physiological sequence, chemic
 **Type:** `long_answer` | **Marks:** `5` | **Difficulty:** `hard` | **Source:** `school_worksheet`
 
 **Question:**
-(a) What is the function of tiny hair and mucus present in nose? (b) State differences between breathing and respiration.
+(a) What is the function of tiny hair and mucus present in the nose? (b) State four key differences between breathing and cellular respiration.
 
 **Answer:**
-Comprehensive 4-Mark Model Solution for '(a) What is the function of tiny hair and mucus present in nose? (b) State differences between breathing and respiration.':
-1. Definition and Structural Overview.
-2. Step-by-step Physiological Mechanism.
-3. Chemical equations or organ-specific secretions.
-4. Summary diagram / biological significance.
+(a) Function of Nasal Hair and Mucus:
+- Tiny hairs (cilia): Form a physical filtration barrier in the external nostrils that traps coarse suspended airborne debris, insect particles, and dust.
+- Mucus: A sticky, viscous fluid secreted by goblet cells in the nasal mucosa that traps finer particles, smoke, and microbes, while lysozyme in the mucus neutralizes bacteria. Together with ciliated epithelium, mucus moves trapped matter towards the pharynx to be swallowed or expectorated, ensuring that clean, warm, moist air reaches the delicate lungs.
+
+(b) Differences between Breathing and Cellular Respiration:
+1. Nature: Breathing is an extracellular, mechanical physical process of ventilation; Cellular Respiration is an intracellular biochemical catabolic process.
+2. Location: Breathing occurs in respiratory organs (nostrils, trachea, lungs); Cellular Respiration occurs inside cells (cytoplasm and mitochondria).
+3. Energy: Breathing consumes energy (during muscular contraction) and produces NO energy; Cellular Respiration oxidizes glucose and produces energy stored in ATP molecules.
+4. Enzymes: Breathing does not involve metabolic enzymes; Cellular Respiration requires a coordinated series of specific intracellular enzymes.
 
 **Explanation:**
 Award 1 mark each for: correct anatomical labels, physiological sequence, chemical secretions, and accurate biological reasoning.
@@ -4021,14 +4076,18 @@ Award 1 mark each for: correct anatomical labels, physiological sequence, chemic
 **Type:** `long_answer` | **Marks:** `5` | **Difficulty:** `hard` | **Source:** `school_worksheet`
 
 **Question:**
-Draw a neat and labelled diagram of human digestive system.
+Describe the sequential structural organization and primary functions of the organs comprising the human digestive system.
 
 **Answer:**
-Comprehensive 4-Mark Model Solution for 'Draw a neat and labelled diagram of human digestive system.':
-1. Definition and Structural Overview.
-2. Step-by-step Physiological Mechanism.
-3. Chemical equations or organ-specific secretions.
-4. Summary diagram / biological significance.
+The human digestive system consists of a continuous alimentary canal (gastrointestinal tract) and associated accessory digestive glands:
+
+1. Mouth & Buccal Cavity: Ingestion, mastication by teeth, tasting by tongue, and initial starch digestion by salivary amylase.
+2. Oesophagus: Muscular tube (approx. 25 cm) that propels the food bolus into the stomach via coordinated peristaltic contractions.
+3. Stomach: J-shaped muscular reservoir that churns food into semi-liquid chyme, secretes hydrochloric acid (kills germs, provides acidic pH) and pepsin (initiates protein breakdown), protected by mucus.
+4. Small Intestine: Highly coiled 7.5 m tube receiving bile from the liver (emulsifies fats) and pancreatic juice from the pancreas (hydrolyzes carbs, proteins, fats). Intestinal enzymes finish digestion, and millions of vascular villi absorb nutrients into the blood.
+5. Large Intestine: Wider, shorter (approx. 1.5 m) tube comprising caecum and colon; absorbs water and mineral electrolytes from undigested residue and forms feces.
+6. Rectum & Anus: The rectum stores solid fecal matter temporarily until it is expelled through the anal sphincter during egestion.
+7. Accessory Glands: Salivary glands (saliva), Liver (bile synthesis and glycogen storage), and Pancreas (pancreatic enzymes and blood sugar regulation).
 
 **Explanation:**
 Award 1 mark each for: correct anatomical labels, physiological sequence, chemical secretions, and accurate biological reasoning.
@@ -4039,14 +4098,16 @@ Award 1 mark each for: correct anatomical labels, physiological sequence, chemic
 **Type:** `long_answer` | **Marks:** `5` | **Difficulty:** `hard` | **Source:** `school_worksheet`
 
 **Question:**
-Write down the functions of stomach in human beings.
+Write down the functions of the stomach in human beings.
 
 **Answer:**
-Comprehensive 4-Mark Model Solution for 'Write down the functions of stomach in human beings.':
-1. Definition and Structural Overview.
-2. Step-by-step Physiological Mechanism.
-3. Chemical equations or organ-specific secretions.
-4. Summary diagram / biological significance.
+Primary functions of the stomach in human beings include:
+1. Food Storage: Acts as an expandable muscular reservoir that temporarily stores ingested meals for 2 to 4 hours, releasing small batches into the duodenum at a controlled rate.
+2. Mechanical Digestion (Churning): The three thick muscular layers of the stomach wall rhythmically contract and churn food, physically grinding solid boluses into a uniform semi-liquid paste called chyme.
+3. Chemical Digestion of Proteins: Gastric glands secrete the proenzyme pepsinogen, which is converted in the acidic lumen into active pepsin to break down complex dietary proteins into smaller soluble peptides and peptones.
+4. Antimicrobial Sterilization: Secretes concentrated hydrochloric acid (pH 1.5 to 2.5) which destroys ingested pathogens, food-borne bacteria, and parasites.
+5. Mucosal Protection: Specialized goblet and neck cells secrete a thick layer of alkaline mucus that coats the gastric epithelium, preventing self-digestion and corrosive injury by hydrochloric acid.
+6. Hormone & Secretory Regulation: Secretes the hormone gastrin to regulate digestive juices, and secretes intrinsic factor essential for the absorption of vitamin B12 in the ileum.
 
 **Explanation:**
 Award 1 mark each for: correct anatomical labels, physiological sequence, chemical secretions, and accurate biological reasoning.
@@ -4103,22 +4164,21 @@ High-yield real-world biological application and curiosity drill.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case 1: 1. The labels I, III and IV represent ________, ________ and ________ respectively.
+Case I : The human digestive system comprises the alimentary canal and associated digestive glands: I represents the oesophagus (food pipe), II represents the stomach, III represents the pancreas, IV represents the liver, and V represents the gall bladder.
 
-![Human Digestive System with Anatomical Reference Labels I to V](images/bio_ch3_digestive_system_labels.png)
-*Human Digestive System with Anatomical Reference Labels I to V*
+1. The anatomical structures labelled I, III and IV represent ________, ________ and ________ respectively.
 
 **Options:**
-- (a) (a) duodenum, gall bladder, liver
-- (b) (b) duodenum, caecum, pancreas
-- (c) (c) gall bladder, pancreas, liver
-- (d) (d) oesophagus, pancreas, liver
+- (a) duodenum, gall bladder, liver
+- (b) duodenum, caecum, pancreas
+- (c) gall bladder, pancreas, liver
+- (d) oesophagus, pancreas, liver
 
 **Answer:**
-(d) (d) oesophagus, pancreas, liver
+(d) oesophagus, pancreas, liver
 
 **Explanation:**
-According to the chapter's biological concepts: (d) oesophagus, pancreas, liver is correct.
+I represents the oesophagus, III represents the pancreas beneath the stomach, and IV represents the liver.
 
 ---
 
@@ -4126,22 +4186,21 @@ According to the chapter's biological concepts: (d) oesophagus, pancreas, liver 
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case 1: 2. Which among the following enzyme is present in the secretion of II?
+Case I : The human digestive system comprises the alimentary canal and associated digestive glands: I represents the oesophagus (food pipe), II represents the stomach, III represents the pancreas, IV represents the liver, and V represents the gall bladder.
 
-![Human Digestive System with Anatomical Reference Labels I to V](images/bio_ch3_digestive_system_labels.png)
-*Human Digestive System with Anatomical Reference Labels I to V*
+2. Which among the following enzymes is present in the gastric juice secreted by II (stomach)?
 
 **Options:**
-- (a) (a) Trypsin
-- (b) (b) Salivary amylase
-- (c) (c) Pepsin
-- (d) (d) Protease
+- (a) Trypsin
+- (b) Salivary amylase
+- (c) Pepsin
+- (d) Protease
 
 **Answer:**
-(c) (c) Pepsin
+(c) Pepsin
 
 **Explanation:**
-According to the chapter's biological concepts: (c) Pepsin is correct.
+The gastric glands in the stomach lining secrete pepsin, which digests proteins in an acidic medium.
 
 ---
 
@@ -4149,22 +4208,21 @@ According to the chapter's biological concepts: (c) Pepsin is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case 1: 3. X, Y and Z are found in the part labelled as II. X helps Y to act. Y causes breakdown of proteins. Z protects stomach wall from the action of X. Identify X, Y and Z and select the correct option.
+Case I : The human digestive system comprises the alimentary canal and associated digestive glands: I represents the oesophagus (food pipe), II represents the stomach, III represents the pancreas, IV represents the liver, and V represents the gall bladder.
 
-![Human Digestive System with Anatomical Reference Labels I to V](images/bio_ch3_digestive_system_labels.png)
-*Human Digestive System with Anatomical Reference Labels I to V*
+3. In the stomach (II), secretions X, Y and Z act together: X creates an acidic medium to activate Y, Y causes breakdown of proteins, and Z protects the stomach wall from X. Identify X, Y and Z.
 
 **Options:**
-- (a) (a) X - Pepsin
-- (b) (b) X - Trypsin
-- (c) (c) Z - Mucus
-- (d) (d) Y - HCl
+- (a) X - Pepsin, Y - HCl, Z - Mucus
+- (b) X - Trypsin, Y - Pepsin, Z - Bile
+- (c) Z - Mucus (where X is HCl and Y is Pepsin)
+- (d) Y - HCl, X - Pepsin, Z - Saliva
 
 **Answer:**
-(c) (c) Z - Mucus
+(c) Z - Mucus (where X is HCl and Y is Pepsin)
 
 **Explanation:**
-According to the chapter's biological concepts: (c) Z - Mucus is correct.
+In the stomach, hydrochloric acid (X) activates pepsin (Y), and mucus (Z) protects the mucosal wall.
 
 ---
 
@@ -4172,22 +4230,21 @@ According to the chapter's biological concepts: (c) Z - Mucus is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case 1: 4. Which among the following stores bile?
+Case I : The human digestive system comprises the alimentary canal and associated digestive glands: I represents the oesophagus (food pipe), II represents the stomach, III represents the pancreas, IV represents the liver, and V represents the gall bladder.
 
-![Human Digestive System with Anatomical Reference Labels I to V](images/bio_ch3_digestive_system_labels.png)
-*Human Digestive System with Anatomical Reference Labels I to V*
+4. Which among the following structures stores bile juice?
 
 **Options:**
-- (a) (a) II
-- (b) (b) V
-- (c) (c) IV
-- (d) (d) III
+- (a) II (Stomach)
+- (b) V (Gall bladder)
+- (c) IV (Liver)
+- (d) III (Pancreas)
 
 **Answer:**
-(b) (b) V
+(b) V (Gall bladder)
 
 **Explanation:**
-According to the chapter's biological concepts: (b) V is correct.
+Bile produced by the liver (IV) is temporarily stored and concentrated in the gall bladder (V).
 
 ---
 
@@ -4195,23 +4252,21 @@ According to the chapter's biological concepts: (b) V is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case 1: 5. The following reaction of digestion of food is given below. Select the option that gives correct location of the given reaction.
-A. Carbohydrates -> Glucose
+Case I : The human digestive system comprises the alimentary canal and associated digestive glands: I represents the oesophagus (food pipe), II represents the stomach, III represents the pancreas, IV represents the liver, and V represents the gall bladder.
 
-![Human Digestive System with Anatomical Reference Labels I to V](images/bio_ch3_digestive_system_labels.png)
-*Human Digestive System with Anatomical Reference Labels I to V*
+5. The complete conversion of complex carbohydrates into glucose (Carbohydrates -> Glucose) is finalized in which part of the alimentary canal?
 
 **Options:**
-- (a) Option A
-- (b) Option B
-- (c) Option C
-- (d) Option D
+- (a) Small intestine
+- (b) Stomach
+- (c) Oesophagus
+- (d) Large intestine
 
 **Answer:**
-(a) Option A
+(a) Small intestine
 
 **Explanation:**
-According to the chapter's biological concepts: Option A is correct.
+Terminal digestion of carbohydrates into glucose takes place in the small intestine.
 
 ---
 
@@ -4331,12 +4386,9 @@ According to the chapter's biological concepts: gills. is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case III : The given setup shows two test tubes A and B containing boiled rice in A and boiled and chewed rice in B are taken along with Q to check the digestion of complex carbohydrates into simple sugars. To this solution, P is added as shown.
+Case III : In an experimental demonstration on carbohydrate digestion, two test tubes A and B are set up: Test tube A contains boiled rice in water, and Test tube B contains boiled and chewed rice with saliva. Chemical reagent P is added along with liquid Q to test for starch hydrolysis.
 
-Along with boiled rice, Q is added in both the test tubes. Identify Q.
-
-![Experimental Setup: Hydrolysis of Starch in Boiled Rice (Test Tube A vs Test Tube B)](images/bio_ch3_salivary_starch_experiment.png)
-*Experimental Setup: Hydrolysis of Starch in Boiled Rice (Test Tube A vs Test Tube B)*
+1. Along with boiled rice, liquid Q is added to both test tubes to make a suspension. Identify Q.
 
 **Options:**
 - (a) Alcohol
@@ -4348,7 +4400,7 @@ Along with boiled rice, Q is added in both the test tubes. Identify Q.
 (c) Water
 
 **Explanation:**
-According to the chapter's biological concepts: Water is correct.
+Water (Q) is added to both test tubes to prepare a uniform liquid suspension of boiled rice.
 
 ---
 
@@ -4356,24 +4408,21 @@ According to the chapter's biological concepts: Water is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case III : The given setup shows two test tubes A and B containing boiled rice in A and boiled and chewed rice in B are taken along with Q to check the digestion of complex carbohydrates into simple sugars. To this solution, P is added as shown.
+Case III : In an experimental demonstration on carbohydrate digestion, two test tubes A and B are set up: Test tube A contains boiled rice in water, and Test tube B contains boiled and chewed rice with saliva. Chemical reagent P is added along with liquid Q to test for starch hydrolysis.
 
-The given experiment is used to detect the presence of
-
-![Experimental Setup: Hydrolysis of Starch in Boiled Rice (Test Tube A vs Test Tube B)](images/bio_ch3_salivary_starch_experiment.png)
-*Experimental Setup: Hydrolysis of Starch in Boiled Rice (Test Tube A vs Test Tube B)*
+2. The given experiment is used to detect the presence and digestion of which nutrient in boiled rice?
 
 **Options:**
 - (a) sucrose
 - (b) cellulose
 - (c) maltose
-- (d) starch.
+- (d) starch
 
 **Answer:**
-(d) starch.
+(d) starch
 
 **Explanation:**
-According to the chapter's biological concepts: starch. is correct.
+Boiled rice is rich in starch; the iodine test detects starch digestion by salivary amylase.
 
 ---
 
@@ -4381,12 +4430,9 @@ According to the chapter's biological concepts: starch. is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case III : The given setup shows two test tubes A and B containing boiled rice in A and boiled and chewed rice in B are taken along with Q to check the digestion of complex carbohydrates into simple sugars. To this solution, P is added as shown.
+Case III : In an experimental demonstration on carbohydrate digestion, two test tubes A and B are set up: Test tube A contains boiled rice in water, and Test tube B contains boiled and chewed rice with saliva. Chemical reagent P is added along with liquid Q to test for starch hydrolysis.
 
-Solution P is used to see the change in colour in the experiment. Identify the solution.
-
-![Experimental Setup: Hydrolysis of Starch in Boiled Rice (Test Tube A vs Test Tube B)](images/bio_ch3_salivary_starch_experiment.png)
-*Experimental Setup: Hydrolysis of Starch in Boiled Rice (Test Tube A vs Test Tube B)*
+3. Solution P is used to observe the characteristic change in colour. Identify the solution P.
 
 **Options:**
 - (a) Iodine solution
@@ -4398,7 +4444,7 @@ Solution P is used to see the change in colour in the experiment. Identify the s
 (a) Iodine solution
 
 **Explanation:**
-According to the chapter's biological concepts: Iodine solution is correct.
+Dilute iodine solution gives a deep blue-black color in the presence of unhydrolyzed starch.
 
 ---
 
@@ -4406,12 +4452,9 @@ According to the chapter's biological concepts: Iodine solution is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case III : The given setup shows two test tubes A and B containing boiled rice in A and boiled and chewed rice in B are taken along with Q to check the digestion of complex carbohydrates into simple sugars. To this solution, P is added as shown.
+Case III : In an experimental demonstration on carbohydrate digestion, two test tubes A and B are set up: Test tube A contains boiled rice in water, and Test tube B contains boiled and chewed rice with saliva. Chemical reagent P is added along with liquid Q to test for starch hydrolysis.
 
-Which enzyme acts on the boiled rice on chewing?
-
-![Experimental Setup: Hydrolysis of Starch in Boiled Rice (Test Tube A vs Test Tube B)](images/bio_ch3_salivary_starch_experiment.png)
-*Experimental Setup: Hydrolysis of Starch in Boiled Rice (Test Tube A vs Test Tube B)*
+4. Which enzyme present in saliva acts on the boiled rice during chewing in Test Tube B?
 
 **Options:**
 - (a) Amylase
@@ -4423,7 +4466,7 @@ Which enzyme acts on the boiled rice on chewing?
 (a) Amylase
 
 **Explanation:**
-According to the chapter's biological concepts: Amylase is correct.
+Salivary amylase (ptyalin) converts starch into simpler disaccharide sugars.
 
 ---
 
@@ -4431,24 +4474,21 @@ According to the chapter's biological concepts: Amylase is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case III : The given setup shows two test tubes A and B containing boiled rice in A and boiled and chewed rice in B are taken along with Q to check the digestion of complex carbohydrates into simple sugars. To this solution, P is added as shown.
+Case III : In an experimental demonstration on carbohydrate digestion, two test tubes A and B are set up: Test tube A contains boiled rice in water, and Test tube B contains boiled and chewed rice with saliva. Chemical reagent P is added along with liquid Q to test for starch hydrolysis.
 
-What is the change in colour of solution in test tube B after adding P to it?
-
-![Experimental Setup: Hydrolysis of Starch in Boiled Rice (Test Tube A vs Test Tube B)](images/bio_ch3_salivary_starch_experiment.png)
-*Experimental Setup: Hydrolysis of Starch in Boiled Rice (Test Tube A vs Test Tube B)*
+5. What is the change in colour of solution in test tube B after adding iodine solution P to it?
 
 **Options:**
 - (a) Blue-black
-- (b) No change
+- (b) No change (remains brownish)
 - (c) Light pink
 - (d) Blue-green
 
 **Answer:**
-(b) No change
+(b) No change (remains brownish)
 
 **Explanation:**
-According to the chapter's biological concepts: No change is correct.
+In test tube B, starch was broken down into sugar by salivary amylase during chewing, so no blue-black color forms.
 
 ---
 
@@ -4571,24 +4611,21 @@ According to the chapter's biological concepts: A is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case V : The given diagram represents alimentary canal of a ruminant which possess a unique digestive system that allows them to better use energy from fibrous plant material than other herbivores. Stomach of these animals consists of four chambers.
+Case V : Ruminants possess a unique four-chambered digestive system comprising the rumen (1), reticulum (2), omasum (3), and abomasum (4) to digest fibrous plant cellulose.
 
-The given alimentary canal is related to
-
-![Alimentary Canal and Four-Chambered Stomach of Ruminants with Labels I to IV](images/bio_ch3_ruminant_stomach_labels.png)
-*Alimentary Canal and Four-Chambered Stomach of Ruminants with Labels I to IV*
+The four-chambered digestive system described is related to:
 
 **Options:**
 - (a) primates
 - (b) elephants
 - (c) cattle
-- (d) tigers.
+- (d) tigers
 
 **Answer:**
 (c) cattle
 
 **Explanation:**
-According to the chapter's biological concepts: cattle is correct.
+Cattle, sheep, goats, and deer are ruminants that possess a four-chambered compound stomach.
 
 ---
 
@@ -4596,15 +4633,12 @@ According to the chapter's biological concepts: cattle is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case V : The given diagram represents alimentary canal of a ruminant which possess a unique digestive system that allows them to better use energy from fibrous plant material than other herbivores. Stomach of these animals consists of four chambers.
+Case V : Ruminants possess a unique four-chambered digestive system comprising the rumen (1), reticulum (2), omasum (3), and abomasum (4) to digest fibrous plant cellulose.
 
-Identify the parts labelled as 1, 2, 3 and 4.
-
-![Alimentary Canal and Four-Chambered Stomach of Ruminants with Labels I to IV](images/bio_ch3_ruminant_stomach_labels.png)
-*Alimentary Canal and Four-Chambered Stomach of Ruminants with Labels I to IV*
+Identify the parts labelled as 1, 2, 3 and 4 in sequential order.
 
 **Options:**
-- (a) 1 - Rumen, 2 - Omasum, 3 - Reticulum, D - Abomasum
+- (a) 1 - Omasum, 2 - Reticulum, 3 - Abomasum, 4 - Rumen
 - (b) 1 - Reticulum, 2 - Abomasum, 3 - Omasum, 4 - Rumen
 - (c) 1 - Abomasum, 2 - Reticulum, 3 - Omasum, 4 - Rumen
 - (d) 1 - Rumen, 2 - Reticulum, 3 - Omasum, 4 - Abomasum
@@ -4613,7 +4647,7 @@ Identify the parts labelled as 1, 2, 3 and 4.
 (d) 1 - Rumen, 2 - Reticulum, 3 - Omasum, 4 - Abomasum
 
 **Explanation:**
-According to the chapter's biological concepts: 1 - Rumen, 2 - Reticulum, 3 - Omasum, 4 - Abomasum is correct.
+The correct sequence of chambers is: 1 - Rumen, 2 - Reticulum, 3 - Omasum, 4 - Abomasum.
 
 ---
 
@@ -4621,24 +4655,21 @@ According to the chapter's biological concepts: 1 - Rumen, 2 - Reticulum, 3 - Om
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case V : The given diagram represents alimentary canal of a ruminant which possess a unique digestive system that allows them to better use energy from fibrous plant material than other herbivores. Stomach of these animals consists of four chambers.
+Case V : Ruminants possess a unique four-chambered digestive system comprising the rumen (1), reticulum (2), omasum (3), and abomasum (4) to digest fibrous plant cellulose.
 
-Enzyme produced by the microorganisms harbouring in '1' helps in
-
-![Alimentary Canal and Four-Chambered Stomach of Ruminants with Labels I to IV](images/bio_ch3_ruminant_stomach_labels.png)
-*Alimentary Canal and Four-Chambered Stomach of Ruminants with Labels I to IV*
+Enzymes produced by the symbiotic microorganisms harbouring in chamber '1' (rumen) help in:
 
 **Options:**
 - (a) digestion of hemicellulose
 - (b) digestion of pectin
 - (c) digestion of cellulose
-- (d) digestion of glycogen.
+- (d) digestion of glycogen
 
 **Answer:**
 (c) digestion of cellulose
 
 **Explanation:**
-According to the chapter's biological concepts: digestion of cellulose is correct.
+Symbiotic bacteria in the rumen produce cellulase to ferment and break down cellulose.
 
 ---
 
@@ -4646,30 +4677,27 @@ According to the chapter's biological concepts: digestion of cellulose is correc
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case V : The given diagram represents alimentary canal of a ruminant which possess a unique digestive system that allows them to better use energy from fibrous plant material than other herbivores. Stomach of these animals consists of four chambers.
+Case V : Ruminants possess a unique four-chambered digestive system comprising the rumen (1), reticulum (2), omasum (3), and abomasum (4) to digest fibrous plant cellulose.
 
-Arrange the following steps in the process of digestion of food in ruminants in correct order.
-(I) Cud is pushed to '2'.
-(II) Food is sent to '3' and '4'.
-(III) Partial digestion of food is carried out by anaerobic bacteria that harbour in '1'.
+Arrange the following steps in the process of digestion of food in ruminants in correct chronological order:
+(I) Cud is pushed to chamber 2 (reticulum).
+(II) Food is sent to chambers 3 and 4.
+(III) Partial digestion of food is carried out by anaerobic bacteria in chamber 1 (rumen).
 (IV) Cud is brought back into the mouth for chewing.
 (V) Food is partially chewed and mixed with saliva.
 (VI) Food moves towards the intestine for complete digestion.
 
-![Alimentary Canal and Four-Chambered Stomach of Ruminants with Labels I to IV](images/bio_ch3_ruminant_stomach_labels.png)
-*Alimentary Canal and Four-Chambered Stomach of Ruminants with Labels I to IV*
-
 **Options:**
-- (a) III -> II -> IV -> VI -> V -> I
+- (a) III -> I -> II -> IV -> V -> VI
 - (b) V -> III -> I -> IV -> II -> VI
 - (c) I -> IV -> II -> VI -> III -> V
-- (d) III -> V -> I -> IV -> VI -> II
+- (d) III -> V -> IV -> I -> II -> VI
 
 **Answer:**
 (b) V -> III -> I -> IV -> II -> VI
 
 **Explanation:**
-According to the chapter's biological concepts: V -> III -> I -> IV -> II -> VI is correct.
+Food is ingested and chewed (V), fermented in rumen (III), passes to reticulum (I), regurgitated to mouth for rumination (IV), swallowed into omasum/abomasum (II), and moves to intestine (VI).
 
 ---
 
@@ -4677,24 +4705,21 @@ According to the chapter's biological concepts: V -> III -> I -> IV -> II -> VI 
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case V : The given diagram represents alimentary canal of a ruminant which possess a unique digestive system that allows them to better use energy from fibrous plant material than other herbivores. Stomach of these animals consists of four chambers.
+Case V : Ruminants possess a unique four-chambered digestive system comprising the rumen (1), reticulum (2), omasum (3), and abomasum (4) to digest fibrous plant cellulose.
 
-Humans cannot digest cellulose like ruminants as
-
-![Alimentary Canal and Four-Chambered Stomach of Ruminants with Labels I to IV](images/bio_ch3_ruminant_stomach_labels.png)
-*Alimentary Canal and Four-Chambered Stomach of Ruminants with Labels I to IV*
+Humans cannot digest cellulose like ruminants as:
 
 **Options:**
 - (a) they have longer alimentary canal
 - (b) they do not have cellulose digesting bacteria
-- (c) they are carnivores
-- (d) the enzyme for cellulose digestion is non-functional.
+- (c) human stomach is four-chambered
+- (d) salivary glands do not secrete saliva
 
 **Answer:**
 (b) they do not have cellulose digesting bacteria
 
 **Explanation:**
-According to the chapter's biological concepts: they do not have cellulose digesting bacteria is correct.
+Humans lack symbiotic cellulase-producing microorganisms in their digestive tract.
 
 ---
 
@@ -4702,24 +4727,21 @@ According to the chapter's biological concepts: they do not have cellulose diges
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case VI : During the process of inhalation and exhalation, we observe changes in movements of ribs and diaphragm. The lungs being elastic show a considerable change in size.
+Case VI : During breathing in humans, process X represents active inhalation (ribs move up and out, diaphragm contracts downward) and process Y represents exhalation (ribs move down and in, diaphragm relaxes upward into a dome).
 
-During the process 'X', the diaphragm
-
-![Thoracic Cavity Dynamics: Ribcage & Diaphragm Movements during Breathing States X and Y](images/bio_ch3_ribcage_breathing_xy.png)
-*Thoracic Cavity Dynamics: Ribcage & Diaphragm Movements during Breathing States X and Y*
+During process 'X' (inhalation), the diaphragm:
 
 **Options:**
 - (a) moves upward
 - (b) moves downward
 - (c) does not move
-- (d) expands sideways.
+- (d) expands sideways
 
 **Answer:**
 (b) moves downward
 
 **Explanation:**
-According to the chapter's biological concepts: moves downward is correct.
+During inhalation (process X), the diaphragm contracts and moves downward (flattens), expanding the chest volume.
 
 ---
 
@@ -4727,24 +4749,21 @@ According to the chapter's biological concepts: moves downward is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case VI : During the process of inhalation and exhalation, we observe changes in movements of ribs and diaphragm. The lungs being elastic show a considerable change in size.
+Case VI : During breathing in humans, process X represents active inhalation (ribs move up and out, diaphragm contracts downward) and process Y represents exhalation (ribs move down and in, diaphragm relaxes upward into a dome).
 
-Identify the process X and Y.
-
-![Thoracic Cavity Dynamics: Ribcage & Diaphragm Movements during Breathing States X and Y](images/bio_ch3_ribcage_breathing_xy.png)
-*Thoracic Cavity Dynamics: Ribcage & Diaphragm Movements during Breathing States X and Y*
+Identify processes X and Y based on thoracic mechanics.
 
 **Options:**
 - (a) X-Inhalation, Y-Exhalation
 - (b) X-Exhalation, Y-Inhalation
-- (c) X-Expiration, Y-Respiration
-- (d) X-Respiration, Y-Expiration
+- (c) Both X and Y are Inhalation
+- (d) Both X and Y are Exhalation
 
 **Answer:**
 (a) X-Inhalation, Y-Exhalation
 
 **Explanation:**
-According to the chapter's biological concepts: X-Inhalation, Y-Exhalation is correct.
+Process X is inhalation (air intake) and process Y is exhalation (expulsion of air).
 
 ---
 
@@ -4752,24 +4771,21 @@ According to the chapter's biological concepts: X-Inhalation, Y-Exhalation is co
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case VI : During the process of inhalation and exhalation, we observe changes in movements of ribs and diaphragm. The lungs being elastic show a considerable change in size.
+Case VI : During breathing in humans, process X represents active inhalation (ribs move up and out, diaphragm contracts downward) and process Y represents exhalation (ribs move down and in, diaphragm relaxes upward into a dome).
 
-Process X and Y involves
-
-![Thoracic Cavity Dynamics: Ribcage & Diaphragm Movements during Breathing States X and Y](images/bio_ch3_ribcage_breathing_xy.png)
-*Thoracic Cavity Dynamics: Ribcage & Diaphragm Movements during Breathing States X and Y*
+Processes X and Y together facilitate:
 
 **Options:**
-- (a) oxidation of food
+- (a) blood circulation
 - (b) exchange of gases
-- (c) transport of nutrients
-- (d) release of metabolic wastes.
+- (c) food digestion
+- (d) water absorption
 
 **Answer:**
 (b) exchange of gases
 
 **Explanation:**
-According to the chapter's biological concepts: exchange of gases is correct.
+Inhalation and exhalation facilitate pulmonary ventilation and exchange of respiratory gases.
 
 ---
 
@@ -4777,24 +4793,21 @@ According to the chapter's biological concepts: exchange of gases is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case VI : During the process of inhalation and exhalation, we observe changes in movements of ribs and diaphragm. The lungs being elastic show a considerable change in size.
+Case VI : During breathing in humans, process X represents active inhalation (ribs move up and out, diaphragm contracts downward) and process Y represents exhalation (ribs move down and in, diaphragm relaxes upward into a dome).
 
-What will happen when air is forced out in figure Y?
-
-![Thoracic Cavity Dynamics: Ribcage & Diaphragm Movements during Breathing States X and Y](images/bio_ch3_ribcage_breathing_xy.png)
-*Thoracic Cavity Dynamics: Ribcage & Diaphragm Movements during Breathing States X and Y*
+What happens when air is forced out during process Y (exhalation)?
 
 **Options:**
-- (a) Backward movement of ribs and diaphragm.
+- (a) Backward movement of ribs and upward relaxation of diaphragm.
 - (b) Diaphragm moves down and ribs move out.
 - (c) No change in ribs but diaphragm moves down.
-- (d) Backward movement of ribs but no change occurs in diaphragm.
+- (d) Ribs expand outward and diaphragm flattens.
 
 **Answer:**
-(a) Backward movement of ribs and diaphragm.
+(a) Backward movement of ribs and upward relaxation of diaphragm.
 
 **Explanation:**
-According to the chapter's biological concepts: Backward movement of ribs and diaphragm. is correct.
+During exhalation, ribs move downward and inward and the diaphragm relaxes upward, reducing chest cavity size.
 
 ---
 
@@ -4802,24 +4815,21 @@ According to the chapter's biological concepts: Backward movement of ribs and di
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case VI : During the process of inhalation and exhalation, we observe changes in movements of ribs and diaphragm. The lungs being elastic show a considerable change in size.
+Case VI : During breathing in humans, process X represents active inhalation (ribs move up and out, diaphragm contracts downward) and process Y represents exhalation (ribs move down and in, diaphragm relaxes upward into a dome).
 
-Which of the following does not occur during process 'Y'?
-
-![Thoracic Cavity Dynamics: Ribcage & Diaphragm Movements during Breathing States X and Y](images/bio_ch3_ribcage_breathing_xy.png)
-*Thoracic Cavity Dynamics: Ribcage & Diaphragm Movements during Breathing States X and Y*
+Which of the following does NOT occur during process 'Y' (exhalation)?
 
 **Options:**
-- (a) Air pressure increases in lungs.
-- (b) Diaphragm becomes dome shaped.
+- (a) Ribs move downwards and inwards.
+- (b) Diaphragm moves upwards to its relaxed position.
 - (c) Volume of thoracic cavity increases.
-- (d) Ribs move downward and inwards.
+- (d) Pressure inside the lungs increases relative to outside.
 
 **Answer:**
 (c) Volume of thoracic cavity increases.
 
 **Explanation:**
-According to the chapter's biological concepts: Volume of thoracic cavity increases. is correct.
+During exhalation (process Y), the volume of the thoracic cavity decreases, not increases.
 
 ---
 
@@ -4827,12 +4837,9 @@ According to the chapter's biological concepts: Volume of thoracic cavity increa
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case VII : Rohit took a clean and transparent test tube with narrow opening and poured some freshly prepared lime water in it. He made a hole in the cork and inserted a plastic straw in it. He fixed the cork in the test tube and made it air tight. He then dipped the ends of straw in lime water and blew gently through straw into it several times and observed the changes in it.
+Case VII : Rohit took a clean, transparent test tube and poured freshly prepared clear lime water into it. He inserted a drinking straw and blew gently into the lime water several times, observing a characteristic reaction.
 
-Lime water turn milky due to the presence of _______ in blown air.
-
-![Empirical Test for Carbon Dioxide: Blowing Exhaled Air through Straw into Fresh Lime Water](images/bio_ch3_limewater_exhaled_air.png)
-*Empirical Test for Carbon Dioxide: Blowing Exhaled Air through Straw into Fresh Lime Water*
+Lime water turns milky due to the presence of _______ in blown air.
 
 **Options:**
 - (a) oxygen
@@ -4844,7 +4851,7 @@ Lime water turn milky due to the presence of _______ in blown air.
 (c) carbon dioxide
 
 **Explanation:**
-According to the chapter's biological concepts: carbon dioxide is correct.
+Carbon dioxide in exhaled air reacts with calcium hydroxide to form white calcium carbonate precipitate.
 
 ---
 
@@ -4852,24 +4859,21 @@ According to the chapter's biological concepts: carbon dioxide is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case VII : Rohit took a clean and transparent test tube with narrow opening and poured some freshly prepared lime water in it. He made a hole in the cork and inserted a plastic straw in it. He fixed the cork in the test tube and made it air tight. He then dipped the ends of straw in lime water and blew gently through straw into it several times and observed the changes in it.
+Case VII : Rohit took a clean, transparent test tube and poured freshly prepared clear lime water into it. He inserted a drinking straw and blew gently into the lime water several times, observing a characteristic reaction.
 
-Which organ is majorly involved in this experiment?
-
-![Empirical Test for Carbon Dioxide: Blowing Exhaled Air through Straw into Fresh Lime Water](images/bio_ch3_limewater_exhaled_air.png)
-*Empirical Test for Carbon Dioxide: Blowing Exhaled Air through Straw into Fresh Lime Water*
+Which organ is majorly involved in producing the exhaled air used in this experiment?
 
 **Options:**
-- (a) Brain
+- (a) Heart
 - (b) Lungs
-- (c) Nasal chamber
-- (d) Stomach
+- (c) Stomach
+- (d) Kidneys
 
 **Answer:**
 (b) Lungs
 
 **Explanation:**
-According to the chapter's biological concepts: Lungs is correct.
+The lungs expel carbon dioxide produced by cellular metabolism during breathing.
 
 ---
 
@@ -4877,24 +4881,21 @@ According to the chapter's biological concepts: Lungs is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case VII : Rohit took a clean and transparent test tube with narrow opening and poured some freshly prepared lime water in it. He made a hole in the cork and inserted a plastic straw in it. He fixed the cork in the test tube and made it air tight. He then dipped the ends of straw in lime water and blew gently through straw into it several times and observed the changes in it.
+Case VII : Rohit took a clean, transparent test tube and poured freshly prepared clear lime water into it. He inserted a drinking straw and blew gently into the lime water several times, observing a characteristic reaction.
 
 Lime water turns milky due to formation of which of the following products?
-
-![Empirical Test for Carbon Dioxide: Blowing Exhaled Air through Straw into Fresh Lime Water](images/bio_ch3_limewater_exhaled_air.png)
-*Empirical Test for Carbon Dioxide: Blowing Exhaled Air through Straw into Fresh Lime Water*
 
 **Options:**
 - (a) Calcium carbonate
 - (b) Calcium oxide
-- (c) Calcium sulphate
-- (d) Calcium nitrate
+- (c) Calcium chloride
+- (d) Calcium bicarbonate
 
 **Answer:**
 (a) Calcium carbonate
 
 **Explanation:**
-According to the chapter's biological concepts: Calcium carbonate is correct.
+Ca(OH)₂ + CO₂ -> CaCO₃↓ + H₂O.
 
 ---
 
@@ -4902,24 +4903,21 @@ According to the chapter's biological concepts: Calcium carbonate is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case VII : Rohit took a clean and transparent test tube with narrow opening and poured some freshly prepared lime water in it. He made a hole in the cork and inserted a plastic straw in it. He fixed the cork in the test tube and made it air tight. He then dipped the ends of straw in lime water and blew gently through straw into it several times and observed the changes in it.
+Case VII : Rohit took a clean, transparent test tube and poured freshly prepared clear lime water into it. He inserted a drinking straw and blew gently into the lime water several times, observing a characteristic reaction.
 
 Which of the following is the chemical formula of lime water?
 
-![Empirical Test for Carbon Dioxide: Blowing Exhaled Air through Straw into Fresh Lime Water](images/bio_ch3_limewater_exhaled_air.png)
-*Empirical Test for Carbon Dioxide: Blowing Exhaled Air through Straw into Fresh Lime Water*
-
 **Options:**
-- (a) Calcium bicarbonate
-- (b) Calcium oxide
-- (c) Calcium sulphate
-- (d) Calcium hydroxide
+- (a) CaO
+- (b) CaCO₃
+- (c) CaCl₂
+- (d) Calcium hydroxide [Ca(OH)₂]
 
 **Answer:**
-(d) Calcium hydroxide
+(d) Calcium hydroxide [Ca(OH)₂]
 
 **Explanation:**
-According to the chapter's biological concepts: Calcium hydroxide is correct.
+Lime water is a dilute aqueous solution of calcium hydroxide, Ca(OH)₂.
 
 ---
 
@@ -4927,23 +4925,20 @@ According to the chapter's biological concepts: Calcium hydroxide is correct.
 **Type:** `mcq` | **Marks:** `1` | **Difficulty:** `medium` | **Source:** `school_worksheet`
 
 **Question:**
-Case VII : Rohit took a clean and transparent test tube with narrow opening and poured some freshly prepared lime water in it. He made a hole in the cork and inserted a plastic straw in it. He fixed the cork in the test tube and made it air tight. He then dipped the ends of straw in lime water and blew gently through straw into it several times and observed the changes in it.
+Case VII : Rohit took a clean, transparent test tube and poured freshly prepared clear lime water into it. He inserted a drinking straw and blew gently into the lime water several times, observing a characteristic reaction.
 
-What is the composition of air in the given case?
-
-![Empirical Test for Carbon Dioxide: Blowing Exhaled Air through Straw into Fresh Lime Water](images/bio_ch3_limewater_exhaled_air.png)
-*Empirical Test for Carbon Dioxide: Blowing Exhaled Air through Straw into Fresh Lime Water*
+What is the approximate percentage of carbon dioxide present in exhaled air?
 
 **Options:**
-- (a) Oxygen (21%)
-- (b) Carbon dioxide (4.4%)
-- (c) Nitrogen (2%)
-- (d) Carbon dioxide (0.03%)
+- (a) 0.04%
+- (b) Carbon dioxide (approx. 4.4%)
+- (c) 21%
+- (d) 16.4%
 
 **Answer:**
-(b) Carbon dioxide (4.4%)
+(b) Carbon dioxide (approx. 4.4%)
 
 **Explanation:**
-According to the chapter's biological concepts: Carbon dioxide (4.4%) is correct.
+Exhaled air contains about 4.4% carbon dioxide compared to only 0.04% in inhaled atmospheric air.
 
 ---

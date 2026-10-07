@@ -70,15 +70,7 @@ d:\Users\expor\Downloads\Codes\
 │   │   │   └── bio_ch2_adolescence.json          (157 Items • 100% TLBR Ingested)
 │   │   └── ch3_life_processes/
 │   │       ├── bio_ch3_life_processes.md
-│   │       ├── bio_ch3_life_processes.json        (250 Items • 100% TLBR Ingested)
-│   │       └── images/                           (7 Authoritative 300 DPI Cropped Diagrams)
-│   │           ├── bio_ch3_inhalation_mechanics.png
-│   │           ├── bio_ch3_se_ruminant_stomach.png
-│   │           ├── bio_ch3_digestive_system_labels.png
-│   │           ├── bio_ch3_salivary_starch_experiment.png
-│   │           ├── bio_ch3_ruminant_stomach_labels.png
-│   │           ├── bio_ch3_ribcage_breathing_xy.png
-│   │           └── bio_ch3_limewater_exhaled_air.png
+│   │       └── bio_ch3_life_processes.json        (250 Items • 100% TLBR Ingested • Pure Unicode Text)
 │   ├── chemistry/
 │   │   ├── ch1_acids_bases_salts/
 │   │   │   ├── chem_ch1_acids_bases_salts.md
@@ -265,31 +257,11 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
   - All student-facing text strictly adheres to SOP v3.3 (referencing "Main Source" and "Reference Source (Ref 1)").
   - KaTeX formatting (`$...$` and `$$...$$`) is preserved with zero truncation.
 
-### 3.6 Visual Knowledge Base & Diagram Asset Architecture
-To support diagram-based assessment questions (such as labelled anatomical organs, clinical experimental apparatus, and physiological phase charts) without compromising speed or token efficiency:
-1. **High-Resolution Vector/Raster Cropping (300 DPI)**:
-   - All textbook diagrams are cropped directly from pristine source PDFs using PyMuPDF (`fitz`) sub-pixel clipping rects (`page.get_pixmap(clip=fitz.Rect(x0, y0, x1, y1), dpi=300)`).
-   - Diagram assets are saved as lossless PNG files with clean margins and zero surrounding body text or publisher watermarks.
-2. **Directory & Mirroring Structure**:
-   - Primary Store: `KB Files/<subject>/<chapter>/images/<diagram_name>.png`
-   - Mirrored Bit-for-Bit Store: `knowledge_base/<subject>/<chapter>/images/<diagram_name>.png` and `knowledge_base/<subject>/images/<diagram_name>.png`
-3. **Structured JSON Schema Extension**:
-   - Questions requiring diagrams include an authoritative `"diagram"` metadata block:
-     ```json
-     "diagram": {
-       "image_path": "images/bio_ch3_inhalation_mechanics.png",
-       "caption": "Mechanism of Inhalation in Humans: Ribcage movement and Diaphragm contraction",
-       "alt_text": "Diagram showing mechanism of inhalation with ribs moving upwards and outwards, and diaphragm flattening downwards."
-     }
-     ```
-4. **Companion Markdown Rendering**:
-   - Compilers automatically embed images directly under the question text:
-     ```markdown
-     ![Caption](images/<diagram_name>.png)
-     *Caption*
-     ```
-5. **Dual-Store Validation**:
-   - Verification suites (`verify_biology_kbs.py`, etc.) assert file existence, non-empty filesize (>5 KB), and dual-store image mirroring.
+### 3.6 Deprecation & Removal of Image / Diagram Cropping Requirement
+* **Architectural Decision (07 October 2026)**:
+  - Extracting cropped raster diagrams from multi-page scanned PDF spreads proved inconsistent, visually noisy (e.g. clipping text snippets, variable coordinate margins), and token-inefficient.
+  - **Rule Modification**: The requirement to crop, extract, store, and link local image assets in KB files (`images/`) is **permanently revoked and removed** from the standard Knowledge Base generation workflow.
+  - **Pure Text & Unicode Standard Restored**: Knowledge Base files (`.json` and `.md`) will remain strictly focused on exhaustive pedagogical text, structured tables, formulas, KaTeX math, pure Unicode scientific notations, and zero-token deterministic assessment items.
 
 ---
 
