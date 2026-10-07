@@ -738,6 +738,74 @@
         display: block;
     }
 
+    /* Diagram Slot Styling */
+    .diagram-placeholder-card {
+        margin: 10px 0 12px 32px;
+        background: #F8FAFC;
+        border: 1px dashed #94A3B8;
+        border-radius: 8px;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 0.82rem;
+        color: #475569;
+    }
+
+    .diagram-placeholder-card .diagram-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .diagram-placeholder-card .diagram-tag {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        font-weight: 700;
+        background: #E2E8F0;
+        color: #334155;
+        padding: 2px 6px;
+        border-radius: 4px;
+        text-transform: uppercase;
+    }
+
+    .diagram-placeholder-card .btn-ask-upload {
+        background: #EEF2FF;
+        color: #4F46E5;
+        border: 1px solid #C7D2FE;
+        border-radius: 6px;
+        padding: 4px 10px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .diagram-placeholder-card .btn-ask-upload:hover {
+        background: #E0E7FF;
+    }
+
+    .diagram-rendered-box {
+        margin: 10px 0 12px 32px;
+        text-align: center;
+    }
+
+    .diagram-rendered-box img {
+        max-width: 100%;
+        max-height: 280px;
+        border-radius: 6px;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .diagram-rendered-box .diagram-caption {
+        font-size: 0.75rem;
+        font-style: italic;
+        color: #64748B;
+        margin-top: 4px;
+    }
+
     .teacher-mode .student-writing-space {
         display: none;
     }
@@ -1412,6 +1480,40 @@
                     optHtml += '</div>';
                 }
 
+                // Diagram / Visual Slot Support
+                let diagramHtml = '';
+                if (q.diagram && q.diagram.image_path) {
+                    diagramHtml = `
+                        <div class="diagram-rendered-box">
+                            <img src="${escapeHtml(q.diagram.image_path)}" alt="${escapeHtml(q.diagram.alt_text || 'Diagram')}">
+                            ${q.diagram.caption ? `<div class="diagram-caption">${escapeHtml(q.diagram.caption)}</div>` : ''}
+                        </div>
+                    `;
+                } else if (q.diagram_slot) {
+                    const slot = q.diagram_slot;
+                    if (slot.status === 'uploaded' && slot.image_path) {
+                        diagramHtml = `
+                            <div class="diagram-rendered-box">
+                                <img src="${escapeHtml(slot.image_path)}" alt="${escapeHtml(slot.description || 'Diagram')}">
+                                ${slot.description ? `<div class="diagram-caption">${escapeHtml(slot.description)}</div>` : ''}
+                            </div>
+                        `;
+                    } else {
+                        // Pending Slot: Graceful Student View
+                        diagramHtml = `
+                            <div class="diagram-placeholder-card">
+                                <div class="diagram-info">
+                                    <span class="diagram-tag">Diagram</span>
+                                    <span>${slot.book_page ? `Refer to <strong>Textbook Page ${escapeHtml(slot.book_page)}</strong>` : (slot.source_hint ? escapeHtml(slot.source_hint) : 'Refer to Textbook diagram')}</span>
+                                </div>
+                                <button type="button" class="btn-ask-upload" onclick="notifyPapaDiagram('${escapeHtml(q.id)}', '${escapeHtml(slot.book_page || '')}')">
+                                    Ask Papa to Upload 🔔
+                                </button>
+                            </div>
+                        `;
+                    }
+                }
+
                 // Writing space based on marks
                 let linesHtml = '';
                 if (q.marks === 1 && (!q.options || q.options.length === 0)) {
@@ -1441,6 +1543,7 @@
                             </div>
                             <span class="q-marks">[${q.marks}M]</span>
                         </div>
+                        ${diagramHtml}
                         ${optHtml}
                         ${linesHtml}
                         ${teacherBox}
@@ -1551,6 +1654,12 @@
             }
 
             sectionsContainer.innerHTML = html;
+        }
+
+        // Diagram Request Notification Handler (Pushti View)
+        function notifyPapaDiagram(qid, pageNum) {
+            const pageTxt = pageNum ? ` (Textbook Page ${pageNum})` : '';
+            alert(`🔔 Request Logged!\n\nPapa has been notified to upload the diagram for question ${qid}${pageTxt}.\n\nIn the meantime, please refer to your textbook!`);
         }
 
         // Initialize on load

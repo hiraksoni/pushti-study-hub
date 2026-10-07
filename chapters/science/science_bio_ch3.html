@@ -127,6 +127,50 @@
     .animate-fadeIn {
       animation: fadeIn 0.3s ease-out forwards;
     }
+
+    /* Universal Jump to Top Floating Button */
+    .pushti-jump-to-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: #ffffff;
+      border: none;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(16, 185, 129, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px) scale(0.9);
+      transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                  visibility 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 99999;
+    }
+    .pushti-jump-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+    .pushti-jump-to-top:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      transform: translateY(-3px) scale(1.06);
+    }
+    .pushti-jump-to-top svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
@@ -1033,8 +1077,8 @@
     </div>
   </div>
 
-  <!-- Search & Filter Controls -->
-  <div class="p-5 rounded-3xl bg-slate-900/90 border border-slate-800 space-y-4">
+  <!-- Sticky Search & Filter Controls -->
+  <div class="sticky top-[54px] z-30 p-4 md:p-5 rounded-2xl bg-slate-900/95 backdrop-blur-md border border-slate-800/80 shadow-xl space-y-3">
     <div class="flex flex-col md:flex-row gap-3">
       <div class="relative flex-1">
         <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
@@ -4108,7 +4152,7 @@
 </div>
       <div id="tabDrills" class="tab-pane hidden space-y-8 animate-fadeIn">
   <!-- Interactive Header with Live Score Dashboard -->
-  <div class="p-6 md:p-8 rounded-3xl bg-gradient-to-r from-emerald-950/60 via-slate-900 to-cyan-950/60 border border-emerald-800/40 shadow-xl space-y-6">
+  <div class="p-6 md:p-8 rounded-3xl bg-gradient-to-r from-emerald-950/60 via-slate-900 to-cyan-950/60 border border-emerald-800/40 shadow-xl space-y-4">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold uppercase tracking-wider mb-2">
@@ -4119,7 +4163,7 @@
       </div>
 
       <!-- Live Score Counter -->
-      <div class="flex items-center gap-4 bg-slate-950/80 p-4 rounded-2xl border border-slate-800 self-start md:self-auto">
+      <div class="flex items-center gap-4 bg-slate-950/80 p-4 rounded-2xl border border-slate-800 self-start md:self-auto shadow-inner">
         <div class="text-center">
           <div class="text-2xl font-black text-amber-400 font-mono" id="drillScore">0</div>
           <div class="text-[10px] uppercase font-bold text-slate-400">Score</div>
@@ -4136,15 +4180,25 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <!-- Sticky Drills Filter Bar with Score Badges -->
+  <div class="sticky top-[54px] z-30 py-3 px-4 rounded-2xl bg-slate-900/95 backdrop-blur-md border border-slate-800/80 shadow-xl flex flex-wrap items-center justify-between gap-3">
     <!-- Filter Buttons -->
-    <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-800/80">
+    <div class="flex flex-wrap items-center gap-2">
       <button onclick="filterDrills('all')" id="df-all" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600 text-white cursor-pointer transition-all shadow-md">All (163)</button>
       <button onclick="filterDrills('mcq')" id="df-mcq" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">MCQs</button>
       <button onclick="filterDrills('tf')" id="df-tf" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">True / False</button>
       <button onclick="filterDrills('fib')" id="df-fib" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Fill in Blanks</button>
       <button onclick="filterDrills('assertion_reason')" id="df-assertion_reason" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Assertion &amp; Reason</button>
       <button onclick="filterDrills('match')" id="df-match" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Match Columns</button>
+    </div>
+
+    <!-- Live Sticky Score Monitor -->
+    <div class="flex items-center gap-3 bg-slate-950/90 py-1.5 px-3 rounded-xl border border-slate-800 text-xs font-mono ml-auto">
+      <span class="text-slate-400">Score: <strong class="text-amber-400 font-bold" id="drillScoreSticky">0</strong></span>
+      <span class="text-slate-700">|</span>
+      <span class="text-slate-400">Answered: <strong class="text-emerald-400 font-bold" id="drillAnsweredSticky">0</strong>/<span id="drillTotalSticky">163</span></span>
     </div>
   </div>
 
@@ -10346,6 +10400,11 @@
       if (scoreEl) scoreEl.textContent = userDrillScore;
       if (ansEl) ansEl.textContent = userDrillAnswered;
 
+      const scoreElSticky = document.getElementById('drillScoreSticky');
+      const ansElSticky = document.getElementById('drillAnsweredSticky');
+      if (scoreElSticky) scoreElSticky.textContent = userDrillScore;
+      if (ansElSticky) ansElSticky.textContent = userDrillAnswered;
+
       const clickedBtn = document.getElementById(`drill-${itemIdx}-opt-${optIdx}`);
       const correctBtn = document.getElementById(`drill-${itemIdx}-opt-${correctIdx}`);
 
@@ -10386,6 +10445,32 @@
         }
       });
     }
+  </script>
+
+  <!-- Universal Jump to Top Floating Button -->
+  <button id="pushti-jump-to-top" class="pushti-jump-to-top" aria-label="Jump to top" title="Jump to Top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
+  </button>
+  <script>
+  (function() {
+    var btn = document.getElementById('pushti-jump-to-top');
+    if (!btn) return;
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(function() {
+          var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+          if (scrollY > 100) {
+            btn.classList.add('visible');
+          } else {
+            btn.classList.remove('visible');
+          }
+          ticking = false;
+        });
+      }
+    }, { passive: true });
+  })();
   </script>
 </body>
 </html>

@@ -119,6 +119,7 @@ d:\Users\expor\Downloads\Codes\
   3. **Build Before Proceeding**: If a requested chapter does not yet possess a KB file in `KB Files/`, the AI model MUST compile the chapter's dual-file KB pair first, and only then proceed with the task.
   4. **Living Knowledge Base**: Any newly acquired knowledge, teacher notes, periodic drills, school exam problems, or corrections for that chapter must be immediately appended and synchronized back into that chapter's KB file.
   5. **Smart Token Conservation**: AI assistants must proactively provide smart recommendations to minimize token usage, such as querying structured KB files, using precise line slicing, and directing users to client-side test generation tools.
+  6. **Diagram Slot & Admin Ingestion Protocol**: AI models must never attempt automated PDF image cropping. When visual diagrams are required, the compiler inserts a `diagram_slot` object (`status: "pending"`, `book_page`, `source_hint`, `description`). Student views render an authoritative *"Refer Textbook Page XX"* reference with an *"Ask Papa to Upload 🔔"* trigger; physical image upload is handled cleanly via the Parent Admin login without code duplication.
 
 ### 1.11 The "Hath Fero" Urban Planning & Deterministic Blueprint Protocol
 * **Core Philosophy (The Urban Planning Metaphor)**:

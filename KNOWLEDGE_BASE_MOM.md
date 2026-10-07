@@ -257,11 +257,26 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
   - All student-facing text strictly adheres to SOP v3.3 (referencing "Main Source" and "Reference Source (Ref 1)").
   - KaTeX formatting (`$...$` and `$$...$$`) is preserved with zero truncation.
 
-### 3.6 Deprecation & Removal of Image / Diagram Cropping Requirement
-* **Architectural Decision (07 October 2026)**:
-  - Extracting cropped raster diagrams from multi-page scanned PDF spreads proved inconsistent, visually noisy (e.g. clipping text snippets, variable coordinate margins), and token-inefficient.
-  - **Rule Modification**: The requirement to crop, extract, store, and link local image assets in KB files (`images/`) is **permanently revoked and removed** from the standard Knowledge Base generation workflow.
-  - **Pure Text & Unicode Standard Restored**: Knowledge Base files (`.json` and `.md`) will remain strictly focused on exhaustive pedagogical text, structured tables, formulas, KaTeX math, pure Unicode scientific notations, and zero-token deterministic assessment items.
+### 3.6 Diagram Slot & Admin Ingestion Protocol
+* **Architectural Standard (07 October 2026)**:
+  1. **Zero AI Token Waste on Cropping**: AI assistants must **never** perform raster image cropping, PDF clipping, or pixel guessing during Knowledge Base compilation.
+  2. **Standardized `diagram_slot` Object**: When an item references a figure, circuit, or diagram, the compiler inserts a `diagram_slot` object:
+     ```json
+     "diagram_slot": {
+       "status": "pending",
+       "image_path": null,
+       "source_hint": "Textbook Page 56, Solved Example 3: Mechanism of Inhalation",
+       "book_page": 56,
+       "description": "Mechanism of Inhalation showing ribcage and diaphragm motion"
+     }
+     ```
+  3. **Graceful Student Experience (Pushti's View)**:
+     - When `status == "pending"`, displays: `[📖 Diagram Reference: Refer to Textbook Page XX]` with an optional prompt `[Ask Papa to Upload 🔔]`.
+     - When `status == "uploaded"`, the real image is seamlessly rendered with zero layout disruption.
+  4. **Admin Ingestion Hub (Parent Portal)**:
+     - Guarded by PIN `1985` in the Admin Dashboard.
+     - Centralizes all pending diagram slots across all chapters with drag-and-drop / clipboard paste upload for the parent to add diagrams at leisure.
+     - Saves the file directly to the chapter's `images/` directory and activates the slot without code duplication.
 
 ---
 

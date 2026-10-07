@@ -58,7 +58,33 @@ Every chapter knowledge base must maintain a synchronized pair:
 
 ---
 
-## 4. Proactive Token Optimization Standard
+## 4. Diagram Slot & Admin Ingestion Protocol
+To prevent token waste, distorted crops, and coordinate guessing while preserving 100% curriculum coverage for visual questions:
+1. **Zero-Token AI Clipping Policy**: AI assistants must **NEVER** attempt automated PDF image scraping, screen clipping, or raster cropping during KB compilation.
+2. **Standardized `diagram_slot` Object**:
+   Whenever a question, solved example, or case study relies on a diagram, figure, chart, or visual apparatus, the AI compiler must insert a `diagram_slot` metadata object:
+   ```json
+   "diagram_slot": {
+     "status": "pending",
+     "image_path": null,
+     "source_hint": "Textbook Page 56, Solved Example 3: Mechanism of Inhalation",
+     "book_page": 56,
+     "description": "Mechanism of Inhalation showing ribcage and diaphragm motion"
+   }
+   ```
+   - When an image has already been uploaded or provided, set `status: "uploaded"` and `image_path: "images/<id>.png"`.
+3. **Student View Experience (Pushti's Experience)**:
+   - If `status == "pending"`: Renders an authoritative reference card: `[📖 Diagram Reference: Refer to Textbook Page XX]` with an optional prompt `[Ask Papa to Upload 🔔]`.
+   - If `status == "uploaded"`: Renders the clean image seamlessly.
+   - Zero layout shifts, zero broken image icons, and zero confusion.
+4. **Admin Ingestion Hub (Parent Login Only)**:
+   - Guarded exclusively by Admin PIN (`1985`) in the Admin portal.
+   - Lists all questions with `diagram_slot.status == "pending"`, grouped by chapter.
+   - Provides drag-and-drop, file upload, and clipboard paste for the parent to cleanly upload cropped images when convenient.
+
+---
+
+## 5. Proactive Token Optimization Standard
 Every AI assistant (Gemini, Claude, Antigravity) must practice proactive token conservation:
 1. **Suggest KB Referencing**: When the user requests a drill or revision sheet, suggest querying the KB JSON/MD rather than parsing full HTML templates.
 2. **Use Targeted Reads**: Specify exact line slices (`StartLine`/`EndLine`) when viewing files rather than loading whole 800+ line blocks.
