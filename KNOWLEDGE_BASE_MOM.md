@@ -1,10 +1,10 @@
 # PUSHTI STUDY HUB — MINUTES OF MEETING (MOM)
 **Standardized Knowledge Base (KB) Architecture & Automated Question Paper Generation Engine**
 
-* **Date & Timestamp**: 07 October 2026, 03:30 PM IST
+* **Date & Timestamp**: 07 October 2026, 09:45 PM IST
 * **Participants**: Hirak Soni (Father & Project Architect), Antigravity AI (Pair Programming Assistant)
 * **Status**: Codified & Active Standard
-* **Version**: 3.6 (Science Physics Ch1, Ch2 & Ch3 TLBR Authoritative Expansion — 668 Authoritative Items | Global Total: 4,959 Items across 86 Dossiers)
+* **Version**: 3.7 (Science Biology Ch2 & Ch3 TLBR Authoritative Expansion — 407 Authoritative Items | Global Total: 5,191 Items across 86 Dossiers)
 
 ---
 
@@ -67,10 +67,18 @@ d:\Users\expor\Downloads\Codes\
 │   ├── biology/
 │   │   ├── ch2_adolescence/
 │   │   │   ├── bio_ch2_adolescence.md
-│   │   │   └── bio_ch2_adolescence.json          (109 Items)
+│   │   │   └── bio_ch2_adolescence.json          (157 Items • 100% TLBR Ingested)
 │   │   └── ch3_life_processes/
 │   │       ├── bio_ch3_life_processes.md
-│   │       └── bio_ch3_life_processes.json        (214 Items)
+│   │       ├── bio_ch3_life_processes.json        (250 Items • 100% TLBR Ingested)
+│   │       └── images/                           (7 Authoritative 300 DPI Cropped Diagrams)
+│   │           ├── bio_ch3_inhalation_mechanics.png
+│   │           ├── bio_ch3_se_ruminant_stomach.png
+│   │           ├── bio_ch3_digestive_system_labels.png
+│   │           ├── bio_ch3_salivary_starch_experiment.png
+│   │           ├── bio_ch3_ruminant_stomach_labels.png
+│   │           ├── bio_ch3_ribcage_breathing_xy.png
+│   │           └── bio_ch3_limewater_exhaled_air.png
 │   ├── chemistry/
 │   │   ├── ch1_acids_bases_salts/
 │   │   │   ├── chem_ch1_acids_bases_salts.md
@@ -257,6 +265,32 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
   - All student-facing text strictly adheres to SOP v3.3 (referencing "Main Source" and "Reference Source (Ref 1)").
   - KaTeX formatting (`$...$` and `$$...$$`) is preserved with zero truncation.
 
+### 3.6 Visual Knowledge Base & Diagram Asset Architecture
+To support diagram-based assessment questions (such as labelled anatomical organs, clinical experimental apparatus, and physiological phase charts) without compromising speed or token efficiency:
+1. **High-Resolution Vector/Raster Cropping (300 DPI)**:
+   - All textbook diagrams are cropped directly from pristine source PDFs using PyMuPDF (`fitz`) sub-pixel clipping rects (`page.get_pixmap(clip=fitz.Rect(x0, y0, x1, y1), dpi=300)`).
+   - Diagram assets are saved as lossless PNG files with clean margins and zero surrounding body text or publisher watermarks.
+2. **Directory & Mirroring Structure**:
+   - Primary Store: `KB Files/<subject>/<chapter>/images/<diagram_name>.png`
+   - Mirrored Bit-for-Bit Store: `knowledge_base/<subject>/<chapter>/images/<diagram_name>.png` and `knowledge_base/<subject>/images/<diagram_name>.png`
+3. **Structured JSON Schema Extension**:
+   - Questions requiring diagrams include an authoritative `"diagram"` metadata block:
+     ```json
+     "diagram": {
+       "image_path": "images/bio_ch3_inhalation_mechanics.png",
+       "caption": "Mechanism of Inhalation in Humans: Ribcage movement and Diaphragm contraction",
+       "alt_text": "Diagram showing mechanism of inhalation with ribs moving upwards and outwards, and diaphragm flattening downwards."
+     }
+     ```
+4. **Companion Markdown Rendering**:
+   - Compilers automatically embed images directly under the question text:
+     ```markdown
+     ![Caption](images/<diagram_name>.png)
+     *Caption*
+     ```
+5. **Dual-Store Validation**:
+   - Verification suites (`verify_biology_kbs.py`, etc.) assert file existence, non-empty filesize (>5 KB), and dual-store image mirroring.
+
 ---
 
 ## 4. Admin Worksheet & Exam Generator Governance
@@ -350,9 +384,8 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 | **Mathematics (Cordova)** | `ch7_algebraic_expressions` | Algebraic Expressions (`MATH_CORDOVA_CH07`) | 10 | `KB Files/mathematics/reference_source_cordova/ch7_algebraic_expressions/` | ✅ Complete |
 | **Mathematics (Cordova)** | `ch11_lines_and_angles` | Lines and Angles (`MATH_CORDOVA_CH11`) | 33 | `KB Files/mathematics/reference_source_cordova/ch11_lines_and_angles/` | ✅ Complete |
 | **Mathematics (Cordova)** | `ch12_triangles_and_properties` | The Triangle and Its Properties (`MATH_CORDOVA_CH12`) | 36 | `KB Files/mathematics/reference_source_cordova/ch12_triangles_and_properties/` | ✅ Complete |
-| **Mathematics (School Worksheet)** | `midterm_2026_silver_bells` | Mid-Term Examination — Mathematics (28 Sep 2026, 80 Marks) | 50 | `KB Files/mathematics/school_worksheet/midterm_2026_silver_bells/` | ✅ Complete |
-| **Biology** | `ch2_adolescence` | Reaching the Age of Adolescence | 109 | `KB Files/biology/ch2_adolescence/` | ✅ Complete |
-| **Biology** | `ch3_life_processes` | Life Processes (Control & Coordination) | 214 | `KB Files/biology/ch3_life_processes/` | ✅ Complete |
+| **Biology** | `ch2_adolescence` | Adolescence: A Stage of Growth and Change | 157 | `KB Files/biology/ch2_adolescence/` | ✅ 100% TLBR Ingested, Pure Unicode Notation, Dual Schema & Store |
+| **Biology** | `ch3_life_processes` | Life Processes in Animals | 250 | `KB Files/biology/ch3_life_processes/` | ✅ 100% TLBR Ingested, Pure Unicode Notation, Dual Schema & Store |
 | **Chemistry** | `ch1_acids_bases_salts` | Exploring Substances: Acidic, Basic and Neutral | 197 | `KB Files/chemistry/ch1_acids_bases_salts/` | ✅ 100% TLBR Ingested, Pure Unicode Sub/Superscripts, Dual Schema & Store |
 | **Chemistry** | `ch2_metals_and_non_metals` | The World of Metals and Non-metals | 208 | `KB Files/chemistry/ch2_metals_and_non_metals/` | ✅ 100% TLBR Ingested, Pure Unicode Sub/Superscripts, Dual Schema & Store |
 | **Physics** | `ch1_electricity` | Electricity: Circuits & Components | 251 | `KB Files/physics/ch1_electricity/` | ✅ 100% TLBR Ingested, Pure Unicode Notation, Dual Schema & Store |
@@ -461,6 +494,29 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 4. **Automated Verification:** Verified and passed 100% by `scripts/verify_physics_kbs.py` with **668 total items** (Ch1: 251, Ch2: 225, Ch3: 192).
 
 ---
+
+## 10. Science (Biology) Authoritative Audit & TLBR Rule Implementation (07 October 2026)
+
+### 10.1 Scope & Source Verification
+- **Chapter 2: Adolescence: A Stage of Growth and Change (Reaching the Age of Adolescence)**
+  - **Source Material:** `source_materials/science/Bio ch 2-3.pdf` (Pages 1–12 / Book pp. 23–34)
+  - **Total Items Verified:** **157 items** (10 Solved Examples, 9 NCERT Section items, 64 MCQs [Level 1, Level 2, Level 3 HOTS], 10 Fill in the Blanks, 10 True/False, 2 Match the Following, 8 Assertion & Reason, 4 Comprehension items, 15 Very Short Answer, 10 Short Answer, 5 Long Answer, 10 Case-Based items across Cases I–II).
+  - **Biological & Endocrine Formatting:** 100% pure Unicode standard notation (Hormones: Pituitary GH, TSH, ACTH, FSH, LH; Thyroid thyroxine; Adrenal adrenaline; Pancreas insulin; Testes testosterone; Ovaries estrogen & progesterone; Sex chromosomes: 44 + XY, 44 + XX, 22 + X, 22 + Y; Menstrual cycle phases; Adam's apple larynx cartilage). Zero raw ASCII approximations.
+  - **Theory Modules:** 6 comprehensive sections covering Adolescence vs Puberty Milestones, Height Growth Equations & Bone Maturation, Secondary Sexual Characteristics & Adam's Apple, Endocrine Gland System & Hormonal Feedback Loops, Menstrual Cycle Phases & Sex Determination Genetics, and Adolescent Health, Nutrition & Mental Well-being, plus Activities 1–2, Illustrations 1–4, and Competition Windows 1–2.
+- **Chapter 3: Life Processes in Animals**
+  - **Source Material:** `source_materials/science/Bio ch 2-3.pdf` (Pages 12–34 / Book pp. 35–70)
+  - **Total Items Verified:** **250 items** (24 Solved Examples, 10 NCERT Section items, 74 MCQs [Level 1, Level 2, Level 3 HOTS], 21 Fill in the Blanks, 19 True/False, 3 Match the Following, 9 Assertion & Reason, 22 Very Short Answer, 19 Short Answer, 11 Long Answer, 3 Extra Scientific Inquiries, 35 Case-Based MCQs across Cases I–VII).
+  - **Biochemical & Physiological Formatting:** 100% pure Unicode standard notation (Chemical formulas: `Ca(OH)₂`, `CaCO₃`, `CO₂`, `O₂`, `H₂O`, `ATP`; Inhaled vs Exhaled gas percentages: 21% vs 16.4% `O₂`, 0.04% vs 4.4% `CO₂`; Equations: `C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + 38 ATP`, `Ca(OH)₂ + CO₂ → CaCO₃ ↓ + H₂O`; Digestive enzymes: ptyalin/amylase, pepsin, trypsin, lipase, maltase; Ruminant 4 chambers: Rumen, Reticulum, Omasum, Abomasum; Avian digestion: Crop, Proventriculus, Gizzard).
+  - **Theory Modules:** 6 comprehensive sections covering 5 Stages of Holozoic Nutrition & Ingestion in Lower Taxa (Amoeba pseudopodia, Paramecium cilia, Hydra nematocysts, Starfish stomach eversion), Human Digestive System Anatomy & Enzymatic Digestion, Comparative Digestion in Ruminant Herbivores & Birds, Cellular Respiration vs Mechanical Ventilation, Human Respiratory System Anatomy & Thoracic Pressure Dynamics, and Comparative Respiration across Taxa (Earthworm cutaneous, Insect tracheal, Fish gills counter-current, Frog dual breathing), plus Activities 1–2, Illustrations 1–12, and Competition Windows 1–2.
+
+### 10.2 Architectural & Quality Compliance
+1. **Dual Schema Enforcement:** Both `questions` and `assessment_items` arrays are populated with identical, validated, high-pedagogical content in Chapter 2 (157 items) and Chapter 3 (250 items).
+2. **Dual-Store Synchronization:** 100% bitwise parity mirrored between `KB Files/biology/` (hierarchical) and `knowledge_base/biology/` (flat root mirrors).
+3. **No Commercial Publisher Names:** 0 occurrences of proprietary brand names across all JSON and Markdown files.
+4. **Automated Verification:** Verified and passed 100% by `scripts/verify_biology_kbs.py` with **407 total items** (Ch2: 157, Ch3: 250).
+
+---
 *Authored & Verified: 07 October 2026 | Pushti Study Hub Core Engineering*
+
 
 

@@ -119,6 +119,7 @@ d:\Users\expor\Downloads\Codes\
   3. **Build Before Proceeding**: If a requested chapter does not yet possess a KB file in `KB Files/`, the AI model MUST compile the chapter's dual-file KB pair first, and only then proceed with the task.
   4. **Living Knowledge Base**: Any newly acquired knowledge, teacher notes, periodic drills, school exam problems, or corrections for that chapter must be immediately appended and synchronized back into that chapter's KB file.
   5. **Smart Token Conservation**: AI assistants must proactively provide smart recommendations to minimize token usage, such as querying structured KB files, using precise line slicing, and directing users to client-side test generation tools.
+  6. **Visual Knowledge Base & Diagram Asset Protocol**: For all questions involving diagrams (anatomical structures, experiment apparatus, physics circuits, ray diagrams, geometric figures), diagrams must be tightly cropped at 300 DPI directly from source PDFs via PyMuPDF (`fitz`), stored as lossless PNGs under `KB Files/<subject>/<chapter_folder>/images/`, mirrored to `knowledge_base/<subject>/<chapter_folder>/images/` and `knowledge_base/<subject>/images/`, and linked via structured `"diagram"` metadata (`image_path`, `caption`, `alt_text`) in JSON and `![caption](images/...)` in Markdown.
 
 ### 1.11 The "Hath Fero" Urban Planning & Deterministic Blueprint Protocol
 * **Core Philosophy (The Urban Planning Metaphor)**:
