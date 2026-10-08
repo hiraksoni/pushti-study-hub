@@ -33,99 +33,259 @@
     }
   </script>
 
-  <!-- Font Awesome Icons -->
+  <!-- FontAwesome 6.4.0 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    /* Custom Scrollbars */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.6);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(34, 197, 94, 0.35);
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(34, 197, 94, 0.6);
-    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(34, 197, 94, 0.35); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(34, 197, 94, 0.6); }
 
-    /* Vertical Dock Rail Mechanics */
-    #sidebarDock {
-      width: 62px;
-      transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    #sidebarDock:hover, #sidebarDock.dock-pinned {
-      width: 280px;
-    }
-    .dock-label {
-      opacity: 0;
-      pointer-events: none;
-      white-space: nowrap;
-      transition: opacity 0.2s ease;
-    }
-    #sidebarDock:hover .dock-label,
-    #sidebarDock.dock-pinned .dock-label {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .dock-tooltip {
-      display: none;
-    }
-    #sidebarDock:not(:hover):not(.dock-pinned) .nav-tab-btn:hover .dock-tooltip {
-      display: block;
-    }
+    /* Tab Transition & Display */
+    .tab-pane { display: none; opacity: 0; transition: opacity 0.25s ease-in-out; }
+    .tab-pane.active { display: block; opacity: 1; }
 
-    /* Desktop Push Margin (62px default / 280px pinned) */
-    @media (min-width: 1024px) {
-      .main-app-content {
-        margin-left: 62px;
-        transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      body.dock-is-pinned .main-app-content {
-        margin-left: 280px;
-      }
-    }
-
-    /* Tab Button Active States */
-    .nav-tab-btn.active {
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(6, 182, 212, 0.15)) !important;
-      border-color: rgba(34, 197, 94, 0.45) !important;
-      color: #4ade80 !important;
-    }
-    .nav-tab-btn.active .dock-label div:last-child {
-      color: #ffffff !important;
-      font-weight: 700;
-    }
-
-    /* 3D Flashcard Perspectives */
-    .flashcard-3d {
-      perspective: 1000px;
-    }
-    .flashcard-inner {
-      transform-style: preserve-3d;
-    }
-    .flashcard-3d.flipped .flashcard-inner {
-      transform: rotateY(180deg);
-    }
-    .flashcard-front, .flashcard-back {
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-    }
-    .flashcard-back {
-      transform: rotateY(180deg);
-    }
-
-    /* Fade-in Animation */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .animate-fadeIn {
-      animation: fadeIn 0.3s ease-out forwards;
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+
+    /* 3D Flashcard Perspectives */
+    .flashcard-3d { perspective: 1000px; }
+    .flashcard-inner { transform-style: preserve-3d; }
+    .flashcard-3d.flipped .flashcard-inner { transform: rotateY(180deg); }
+    .flashcard-front, .flashcard-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .flashcard-back { transform: rotateY(180deg); }
+
+        /* Collapsible Vertical Dock Rail (Universal Tablet & Desktop) */
+    .sidebar-dock {
+      width: 62px;
+      position: fixed;
+      top: 54px;
+      bottom: 0;
+      left: 0;
+      z-index: 900;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid rgba(51, 65, 85, 0.7);
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Only expand on mouse hover for fine pointers (Desktop), preventing sticky hover on touch tablets */
+    @media (hover: hover) and (pointer: fine) {
+      .sidebar-dock:hover {
+        width: 280px;
+        transition-delay: 0.15s;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+      }
+      .sidebar-dock:hover .tab-label-group {
+        display: flex !important;
+        width: auto !important;
+        min-width: 140px !important;
+        max-width: 200px !important;
+        margin-left: 12px !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+    }
+
+    /* Explicitly Pinned State: Locked open at 280px across tablet & desktop */
+    .sidebar-dock.pinned {
+      width: 280px !important;
+      transition-delay: 0s !important;
+      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+    }
+    .sidebar-dock.pinned .tab-label-group {
+      display: flex !important;
+      width: auto !important;
+      min-width: 140px !important;
+      max-width: 200px !important;
+      margin-left: 12px !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+
+    /* Responsive Dock Rail & Margin Push (Tablet & Desktop Safe) */
+    @media (min-width: 640px) and (max-width: 1099px) {
+      .sidebar-dock {
+        width: 62px;
+        position: fixed !important;
+        left: 0 !important;
+        top: 54px !important;
+        bottom: 0 !important;
+        z-index: 900 !important;
+      }
+      .sidebar-dock .sidebar-footer {
+        display: flex !important;
+      }
+      .main-app-content {
+        margin-left: 62px !important;
+        width: calc(100% - 62px) !important;
+        max-width: min(1600px, calc(100vw - 62px)) !important;
+        box-sizing: border-box !important;
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      /* Pinned on tablet in portrait: expands with elevated shadow */
+      .sidebar-dock.pinned {
+        width: 260px !important;
+        z-index: 950 !important;
+      }
+      .sidebar-dock.pinned ~ .main-app-content {
+        margin-left: 62px !important;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .sidebar-dock {
+        width: 62px;
+        position: fixed;
+        left: 0;
+        top: 54px;
+        bottom: 0;
+        z-index: 900;
+      }
+      .sidebar-dock .sidebar-footer {
+        display: flex !important;
+      }
+      .main-app-content {
+        margin-left: 62px !important;
+        width: calc(100% - 62px) !important;
+        max-width: min(1600px, calc(100vw - 62px)) !important;
+        box-sizing: border-box !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .sidebar-dock.pinned {
+        width: 280px !important;
+      }
+      .sidebar-dock.pinned ~ .main-app-content {
+        margin-left: 280px !important;
+        width: calc(100% - 280px) !important;
+        max-width: min(1600px, calc(100vw - 280px)) !important;
+      }
+    }
+
+    @media (max-width: 639px) {
+      .flex.flex-1.relative { flex-direction: column !important; }
+      .sidebar-dock {
+        position: sticky !important;
+        top: 54px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 48px !important;
+        max-height: 48px !important;
+        min-height: 48px !important;
+        flex-direction: row !important;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(51, 65, 85, 0.7) !important;
+        padding: 4px 6px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        z-index: 850 !important;
+      }
+      .sidebar-dock > div:first-child {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 6px !important;
+        width: 100% !important;
+        padding: 0 !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+      }
+      .sidebar-dock .nav-tab-btn {
+        width: auto !important;
+        height: 40px !important;
+        padding: 4px 10px !important;
+        flex-shrink: 0 !important;
+      }
+      .sidebar-dock .tab-label-group { display: none !important; }
+      .sidebar-dock .sidebar-footer { display: none !important; }
+      .main-app-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 14px !important;
+      }
+    }
+
+    /* Light Theme Parity */
+    html:not(.dark) body {
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    html:not(.dark) .sidebar-dock {
+      background: rgba(255, 255, 255, 0.96);
+      border-right-color: #e2e8f0;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.06);
+    }
+    html:not(.dark) .nav-tab-btn.active {
+      background: rgba(34, 197, 94, 0.18) !important;
+      border-color: rgba(22, 163, 74, 0.85) !important;
+      color: #14532d !important;
+      box-shadow: 0 2px 12px rgba(34, 197, 94, 0.25) !important;
+    }
+    html:not(.dark) .nav-tab-btn.active svg, html:not(.dark) .nav-tab-btn.active i {
+      color: #15803d !important;
+      filter: drop-shadow(0 0 6px rgba(22, 163, 74, 0.5));
+    }
+    html:not(.dark) header {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom-color: #e2e8f0;
+    }
+
+    /* Match Columns Arena Interactive Styling */
+    @keyframes matchShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+    .animate-match-shake {
+      animation: matchShake 0.4s ease-in-out;
+    }
+    .match-bubble-left.is-selected {
+      box-shadow: 0 0 0 2px #34d399, 0 0 15px rgba(52, 211, 153, 0.4);
+      border-color: #10b981 !important;
+      background: rgba(6, 78, 59, 0.7) !important;
+    }
+    .match-socket-right.is-dragover {
+      box-shadow: 0 0 0 2px #38bdf8, 0 0 15px rgba(56, 189, 248, 0.4);
+      border-color: #38bdf8 !important;
+      background: rgba(12, 74, 110, 0.7) !important;
+    }
+    .match-bubble-left.is-paired {
+      border-color: rgba(45, 212, 191, 0.6) !important;
+      background: rgba(19, 78, 74, 0.4) !important;
+    }
+    .match-socket-right.is-paired {
+      border-color: rgba(56, 189, 248, 0.6) !important;
+      background: rgba(12, 74, 110, 0.4) !important;
+    }
+    .match-item-correct {
+      border-color: #10b981 !important;
+      background: rgba(6, 95, 70, 0.65) !important;
+      color: #a7f3d0 !important;
+    }
+    .match-item-wrong {
+      border-color: #f43f5e !important;
+      background: rgba(136, 19, 55, 0.65) !important;
+      color: #fecdd3 !important;
     }
 
     /* Universal Jump to Top Floating Button */
@@ -173,233 +333,306 @@
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
+<body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col font-sans selection:bg-emerald-500/30 selection:text-emerald-200 transition-colors duration-300">
 
-  <!-- TOP COMPACT NAVIGATION HEADER -->
-  <header class="sticky top-0 z-50 h-[54px] bg-slate-900/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-800 flex items-center justify-between px-4 lg:px-6">
-    <div class="flex items-center gap-3">
-      <a href="../../science_index.html" class="flex items-center gap-2.5 text-slate-300 hover:text-white transition-colors group">
-        <div class="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all">
-          <i class="fas fa-arrow-left text-xs"></i>
+  <!-- ==================== TOP SITE HEADER (54px) ==================== -->
+  <header class="sticky top-0 z-50 bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-800 px-4 lg:px-8 py-2.5 h-[54px] flex items-center justify-between transition-colors duration-300">
+    <!-- Left: Breadcrumbs -->
+    <nav class="flex items-center gap-2 text-sm text-slate-400 overflow-x-auto whitespace-nowrap">
+      <a href="../../index.html" class="flex items-center gap-1.5 hover:text-emerald-400 transition-colors font-medium text-slate-300">
+        <i class="fas fa-home text-xs"></i>
+        <span>Home</span>
+      </a>
+      <span class="text-slate-600">/</span>
+      <a href="../../science_index.html" class="hover:text-emerald-400 transition-colors font-medium text-slate-300">
+        Science
+      </a>
+      <span class="text-slate-600">/</span>
+      <span class="text-emerald-400 font-semibold flex items-center gap-1.5">
+        <i class="fas fa-dna text-emerald-400 text-xs"></i>
+        Biology: Ch 3
+      </span>
+    </nav>
+
+    <!-- Right Cluster -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- 1. Search Button / Toggle Input -->
+      <div class="relative flex items-center">
+        <button id="globalSearchBtn" onclick="toggleGlobalSearch()" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer flex items-center justify-center" aria-label="Search" title="Search Questions">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        </button>
+        <div id="globalSearchDropdown" class="hidden absolute right-0 top-12 z-50 w-72 bg-slate-900 border border-slate-700 rounded-xl p-2 shadow-2xl">
+          <input type="text" id="quickNavSearchInput" placeholder="Quick search question topics..." oninput="handleQuickSearch(this.value)" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
         </div>
-        <span class="text-xs font-semibold uppercase tracking-wider hidden sm:inline">Science Hub</span>
+      </div>
+
+      <!-- 2. Theme Toggle -->
+      <button onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer flex items-center justify-center" aria-label="Toggle Theme" title="Toggle Theme">
+        <svg id="themeIconSvg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+      </button>
+
+      <!-- 3. Fullscreen Button -->
+      <button onclick="toggleFullScreen()" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all shadow-sm cursor-pointer" title="Toggle Fullscreen">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        <span>Fullscreen</span>
+      </button>
+
+      <!-- 4. Time Table Link -->
+      <a href="../../timetable.html" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all shadow-sm">
+        <span>📅 Time Table</span>
       </a>
 
-      <div class="h-4 w-px bg-slate-800 hidden sm:block"></div>
+      <!-- 5. Mid-Term Syllabus Link -->
+      <a href="../../midterm.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all shadow-sm">
+        <span>🎯 Mid-Term Syllabus</span>
+      </a>
 
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span class="text-xs font-mono font-bold text-emerald-400">BIO • CH 03</span>
-        <span class="text-xs text-slate-400 hidden md:inline">• Life Processes in Animals</span>
+      <!-- 6. 100% Mid-Term Ready Battery Pill -->
+      <div class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold" title="Mid-Term Syllabus Coverage">
+        <span>🔋 100% Mid-Term Ready</span>
       </div>
-    </div>
 
-    <!-- Quick Actions -->
-    <div class="flex items-center gap-2">
-      <select onchange="switchTab(this.value)" id="mobileTabSelector" class="lg:hidden bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-emerald-500">
-        <option value="tabPrimer">1. Launchpad Primer</option>
-        <option value="tabIngestion">2. Holozoic Nutrition &amp; Lower Taxa</option>
-        <option value="tabDigestive">3. Human Digestive Anatomy</option>
-        <option value="tabRuminants">4. Ruminants &amp; Birds</option>
-        <option value="tabRespiration">5. Respiration &amp; Thoracic Mechanics</option>
-        <option value="tabComparative">6. Comparative Animal Respiration</option>
-        <option value="tabActivities">7. Empirical Labs &amp; Experiments</option>
-        <option value="tabTextbook">8. Universal Solved Q&amp;A (87 Qs)</option>
-        <option value="tabDrills">9. Objective Drills (163 Qs)</option>
-        <option value="tabTraps">10. Exam Traps &amp; Flashcards</option>
-      </select>
-
-      <button onclick="window.print()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs transition-colors cursor-pointer" title="Print Study Material">
-        <i class="fas fa-print"></i>
-      </button>
-
-      <button onclick="toggleDarkMode()" id="themeToggleBtn" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 flex items-center justify-center text-xs transition-colors cursor-pointer" title="Toggle Theme">
-        <i class="fas fa-sun"></i>
-      </button>
+      <!-- 7. Session Timer -->
+      <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 font-mono text-xs">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="sessionTimerDisplay">00:00</span>
+      </div>
     </div>
   </header>
 
-  <!-- MAIN WRAPPER WITH DOCK RAIL -->
+  <!-- ==================== APP WRAPPER ==================== -->
   <div class="flex flex-1 relative min-h-[calc(100vh-54px)]">
 
-    <!-- VERTICAL DOCK RAIL (62px / 280px Standard) -->
-    <aside id="sidebarDock" class="fixed top-[54px] left-0 bottom-0 z-40 bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-md border-r border-slate-800 flex flex-col justify-between p-2 select-none shadow-2xl">
-      <!-- Top Section -->
-      <div class="space-y-1.5 overflow-y-auto overflow-x-hidden pr-0.5 max-h-[calc(100vh-130px)]">
-        <!-- 1. Primer -->
-        <button onclick="switchTab('tabPrimer')" id="navBtn-tabPrimer" class="nav-tab-btn active flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-heartbeat"></i>
+    <!-- ==================== COLLAPSIBLE VERTICAL DOCK RAIL ==================== -->
+    <aside id="sidebarDock" class="sidebar-dock group" aria-label="Chapter Navigation">
+      <div class="flex flex-col gap-1.5 p-2">
+        
+        <!-- Tab 1: Primer -->
+        <button id="navBtn-tabPrimer" onclick="switchTab('tabPrimer', this)" class="nav-tab-btn active flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="1. Launchpad Primer">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-emerald-400">
+            <i class="fas fa-heartbeat text-base"></i>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 absolute top-0.5 right-0.5 ring-2 ring-slate-900 animate-pulse"></span>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-emerald-400">Section 1 • Primer</div>
-            <div class="text-xs font-semibold text-white">Physiology Roadmap</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-emerald-400">Section 1 · Primer</span>
+            <span class="font-medium text-sm text-slate-200">Physiology Roadmap</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Launchpad Primer</div>
         </button>
 
-        <!-- 2. Ingestion -->
-        <button onclick="switchTab('tabIngestion')" id="navBtn-tabIngestion" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-utensils"></i>
+        <!-- Tab 2: Ingestion -->
+        <button id="navBtn-tabIngestion" onclick="switchTab('tabIngestion', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="2. Holozoic Nutrition & Lower Taxa">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-teal-400">
+            <i class="fas fa-utensils text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-teal-400">Section 2 • Nutrition</div>
-            <div class="text-xs font-semibold text-white">5 Stages &amp; Lower Taxa</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-teal-400">Section 2 · Nutrition</span>
+            <span class="font-medium text-sm text-slate-200">5 Stages &amp; Taxa</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Holozoic Nutrition</div>
         </button>
 
-        <!-- 3. Digestive -->
-        <button onclick="switchTab('tabDigestive')" id="navBtn-tabDigestive" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-stethoscope"></i>
+        <!-- Tab 3: Digestive -->
+        <button id="navBtn-tabDigestive" onclick="switchTab('tabDigestive', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="3. Human Digestive Anatomy">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-cyan-400">
+            <i class="fas fa-stethoscope text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-cyan-400">Section 3 • Alimentary</div>
-            <div class="text-xs font-semibold text-white">Human Digestive System</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-cyan-400">Section 3 · Alimentary</span>
+            <span class="font-medium text-sm text-slate-200">Digestive System</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Digestive Anatomy</div>
         </button>
 
-        <!-- 4. Ruminants -->
-        <button onclick="switchTab('tabRuminants')" id="navBtn-tabRuminants" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-cow"></i>
+        <!-- Tab 4: Ruminants -->
+        <button id="navBtn-tabRuminants" onclick="switchTab('tabRuminants', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="4. Ruminants & Birds">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-amber-400">
+            <i class="fas fa-hippo text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-amber-400">Section 4 • Ruminants</div>
-            <div class="text-xs font-semibold text-white">Ruminants &amp; Birds</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-amber-400">Section 4 · Herbivores</span>
+            <span class="font-medium text-sm text-slate-200">Ruminants &amp; Birds</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Ruminant Digestion</div>
         </button>
 
-        <!-- 5. Respiration -->
-        <button onclick="switchTab('tabRespiration')" id="navBtn-tabRespiration" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-lungs"></i>
+        <!-- Tab 5: Respiration -->
+        <button id="navBtn-tabRespiration" onclick="switchTab('tabRespiration', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="5. Respiration & Thoracic Mechanics">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-sky-400">
+            <i class="fas fa-lungs text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-cyan-400">Section 5 • Respiration</div>
-            <div class="text-xs font-semibold text-white">Thoracic Pressure Mechanics</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-sky-400">Section 5 · Breathing</span>
+            <span class="font-medium text-sm text-slate-200">Thoracic Mechanics</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Human Breathing</div>
         </button>
 
-        <!-- 6. Comparative -->
-        <button onclick="switchTab('tabComparative')" id="navBtn-tabComparative" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-fish"></i>
+        <!-- Tab 6: Comparative -->
+        <button id="navBtn-tabComparative" onclick="switchTab('tabComparative', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="6. Comparative Animal Respiration">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-indigo-400">
+            <i class="fas fa-fish text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-indigo-400">Section 6 • Taxa</div>
-            <div class="text-xs font-semibold text-white">Comparative Respiration</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-indigo-400">Section 6 · Fauna</span>
+            <span class="font-medium text-sm text-slate-200">Comparative Organs</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Comparative Taxa</div>
         </button>
 
-        <!-- 7. Activities -->
-        <button onclick="switchTab('tabActivities')" id="navBtn-tabActivities" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-flask"></i>
+        <!-- Tab 7: Activities -->
+        <button id="navBtn-tabActivities" onclick="switchTab('tabActivities', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="7. Empirical Labs & Experiments">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-emerald-400">
+            <i class="fas fa-vial text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-amber-400">Section 7 • Labs</div>
-            <div class="text-xs font-semibold text-white">Demonstrations &amp; Tests</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-emerald-400">Section 7 · Labs</span>
+            <span class="font-medium text-sm text-slate-200">Empirical Labs</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Empirical Labs</div>
         </button>
 
-        <!-- 8. Textbook -->
-        <button onclick="switchTab('tabTextbook')" id="navBtn-tabTextbook" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-book-reader"></i>
+        <!-- Tab 8: Textbook -->
+        <button id="navBtn-tabTextbook" onclick="switchTab('tabTextbook', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="8. Universal Solved Q&A (87 Qs)">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-blue-400">
+            <i class="fas fa-book-open text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-emerald-400">Section 8 • Solutions</div>
-            <div class="text-xs font-semibold text-white">Subjective Bank (87 Qs)</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-blue-400">Section 8 · Solved</span>
+            <span class="font-medium text-sm text-slate-200">Textbook Q&amp;A (87 Qs)</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Solved Subjective Bank</div>
         </button>
 
-        <!-- 9. Drills -->
-        <button onclick="switchTab('tabDrills')" id="navBtn-tabDrills" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-tasks"></i>
+        <!-- Tab 9: Drills -->
+        <button id="navBtn-tabDrills" onclick="switchTab('tabDrills', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="9. Objective Practice Drills (163 Qs)">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-rose-400">
+            <i class="fas fa-check-circle text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-teal-400">Section 9 • Drills</div>
-            <div class="text-xs font-semibold text-white">Objective Suite (163 Qs)</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-rose-400">Section 9 · Practice</span>
+            <span class="font-medium text-sm text-slate-200">Objective Drills (163)</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Objective Drills</div>
         </button>
 
-        <!-- 10. Traps -->
-        <button onclick="switchTab('tabTraps')" id="navBtn-tabTraps" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-brain"></i>
+        <!-- Tab 10: Traps -->
+        <button id="navBtn-tabTraps" onclick="switchTab('tabTraps', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="10. Exam Traps & Flashcards">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-amber-500">
+            <i class="fas fa-lightbulb text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-rose-400">Section 10 • Traps</div>
-            <div class="text-xs font-semibold text-white">Exam Pitfalls &amp; Cards</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-amber-500">Section 10 · HOTS</span>
+            <span class="font-medium text-sm text-slate-200">Traps &amp; Flashcards</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Exam Traps &amp; Flashcards</div>
         </button>
+        <button id="navBtn-tabGoogleHub" onclick="switchTab('tabGoogleHub', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="11. Research &amp; Video Hub">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-cyan-400">
+            <i class="fab fa-google text-base"></i>
+          </div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-cyan-400">Research &amp; Videos</span>
+            <span class="font-medium text-sm text-slate-200">Google Hub (8 Topics)</span>
+          </div>
+        </button>
+
       </div>
 
-      <!-- Bottom Dock Actions -->
-      <div class="pt-2 border-t border-slate-800 space-y-1">
-        <button onclick="toggleDockPin()" id="pinDockBtn" class="flex items-center w-full h-10 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left cursor-pointer group" title="Pin / Unpin Sidebar">
-          <div class="w-7 h-7 rounded-lg flex items-center justify-center text-sm shrink-0 text-slate-400 group-hover:text-emerald-400 transition-colors">
-            <i class="fas fa-thumbtack" id="pinIcon"></i>
+      <!-- Dock Footer: Pin Toggle -->
+            <!-- Dock Footer: Universal Pin Toggle (Tablet & Desktop Safe) -->
+      <div class="sidebar-footer p-2 border-t border-slate-800/80 flex items-center justify-center relative">
+        <button id="pinToggleBtn" onclick="toggleSidebarPin()" class="w-full h-10 px-2 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden bg-slate-800/80 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-700/80" title="Sidebar: Unpinned (Compact Dock - tap to lock open)" aria-label="Pin Sidebar Navigation" aria-pressed="false">
+          <!-- Icon Container -->
+          <div class="w-7 h-7 flex items-center justify-center flex-shrink-0 transition-transform">
+            <i id="pinToggleIcon" class="fas fa-thumbtack text-xs transition-transform duration-300 -rotate-45 text-slate-400"></i>
           </div>
-          <div class="dock-label ml-3 text-xs font-semibold text-slate-400 group-hover:text-white">Pin Sidebar</div>
+          <!-- Label Group (Visible when dock expands to 280px) -->
+          <div class="tab-label-group flex-1 flex items-center justify-between overflow-hidden whitespace-nowrap">
+            <span id="pinStatusText" class="text-xs font-semibold tracking-wide uppercase text-slate-400">Compact Dock</span>
+            <span id="pinActionHint" class="text-[10px] font-mono text-slate-500">Tap to lock</span>
+          </div>
+          <!-- Mini Status Dot (Always visible in collapsed 62px rail) -->
+          <span id="pinStatusDot" class="w-1.5 h-1.5 rounded-full bg-slate-600 absolute top-1.5 right-1.5 transition-colors"></span>
         </button>
       </div>
     </aside>
 
-    <!-- MAIN APP CONTENT AREA (Desktop Push Margin) -->
-    <main id="main-content" class="main-app-content flex-1 p-4 md:p-8 lg:p-10 max-w-7xl mx-auto w-full">
-      <!-- Tab Panes -->
-      <div id="tabPrimer" class="tab-pane active space-y-8 animate-fadeIn">
-  <!-- Hero Banner -->
-  <div class="relative overflow-hidden p-6 md:p-10 rounded-3xl bg-gradient-to-br from-emerald-950/80 via-slate-900 to-cyan-950/80 border border-emerald-500/30 shadow-2xl">
-    <div class="absolute -top-24 -right-24 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="relative z-10 space-y-4">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold uppercase tracking-wider">
-        <i class="fas fa-heartbeat"></i> Animal Physiology • Class VII Biology
-      </div>
-      <h1 class="text-3xl md:text-5xl font-black text-white tracking-tight font-heading">
-        Life Processes in Animals
-      </h1>
-      <p class="text-slate-300 text-sm md:text-base leading-relaxed max-w-3xl">
-        The master physiological blueprint of animal survival: the 5 stages of holozoic nutrition, human digestive anatomy &amp; enzymatic cascades, 
-        specialized 4-chambered ruminant digestion, cellular respiration energetics (38 ATP), human breathing thoracic mechanics, 
-        and comparative respiratory adaptations across earthworms, insects, fishes, and amphibians.
-      </p>
+    <!-- ==================== MAIN CONTENT AREA ==================== -->
+    <main class="main-app-content flex-1 max-w-7xl mx-auto w-full px-4 lg:px-8 py-6">
+      
+      <!-- HERO BANNER -->
+      <div class="mb-6 bg-gradient-to-br from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800/80 rounded-2xl p-5 md:p-6 shadow-xl relative overflow-hidden">
+        <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">
+              Science · Biology · Chapter 3
+            </div>
+            <div class="flex items-center gap-3">
+              <h1 class="text-2xl md:text-3xl font-extrabold text-white font-heading tracking-tight">
+                Life Processes in Animals
+              </h1>
+              <button onclick="speakHeroIntro()" class="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 transition-all cursor-pointer inline-flex items-center justify-center" title="Listen to Overview Narration">
+                <i class="fas fa-volume-up text-sm"></i>
+              </button>
+            </div>
+            <p class="text-slate-400 text-sm mt-1 max-w-2xl leading-relaxed">
+              Comprehensive homeschool-grade module: 5 stages of holozoic nutrition, human digestive anatomy &amp; enzymatic cascades, 4-chambered ruminant digestion, cellular respiration energetics (38 ATP), and thoracic mechanics.
+            </p>
+          </div>
 
-      <!-- Key Metrics Strip -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-800/80">
-        <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
-          <div class="text-xs uppercase text-slate-400 font-bold">Nutrition Stages</div>
-          <div class="text-xl md:text-2xl font-black text-emerald-400 font-mono mt-0.5">5 Stages</div>
-          <div class="text-[10px] text-slate-500 font-mono">Ingestion → Egestion</div>
+          <!-- Quick Navigation Badges -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800/70 text-slate-300 border border-slate-700 text-xs font-medium">Foundations Primer</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800/70 text-slate-300 border border-slate-700 text-xs font-medium">Digestive System</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800/70 text-slate-300 border border-slate-700 text-xs font-medium">Respiration</span>
+            <span class="px-2.5 py-1 rounded-lg bg-emerald-950/60 text-emerald-300 border border-emerald-800/50 text-xs font-semibold">250 Verified Qs</span>
+          </div>
         </div>
-        <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
-          <div class="text-xs uppercase text-slate-400 font-bold">Ruminant Stomach</div>
-          <div class="text-xl md:text-2xl font-black text-teal-400 font-mono mt-0.5">4 Chambers</div>
-          <div class="text-[10px] text-slate-500 font-mono">Rumen to Abomasum</div>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
-          <div class="text-xs uppercase text-slate-400 font-bold">Respiration Net</div>
-          <div class="text-xl md:text-2xl font-black text-cyan-400 font-mono mt-0.5">38 ATP</div>
-          <div class="text-[10px] text-slate-500 font-mono">Aerobic Glucose Yield</div>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
-          <div class="text-xs uppercase text-slate-400 font-bold">Authoritative Bank</div>
-          <div class="text-xl md:text-2xl font-black text-amber-400 font-mono mt-0.5">250 Items</div>
-          <div class="text-[10px] text-slate-500 font-mono">100% Verified Solutions</div>
-        </div>
+      </div>
+
+      <!-- Tab Panes -->
+      <div id="tabPrimer" class="tab-pane active space-y-6 animate-fadeIn">
+  <!-- Welcome & Confidence Card -->
+  <div class="bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-cyan-500/10 border border-emerald-500/30 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-lg">
+        🌟
+      </span>
+      <div>
+        <span class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold">Pushti's Biology Launchpad · Prerequisite Base Primer</span>
+        <h2 class="text-xl md:text-2xl font-bold text-white font-heading">
+          Life Processes: How Animals Fuel, Breathe &amp; Thrive!
+        </h2>
+      </div>
+    </div>
+    <p class="text-slate-300 text-sm leading-relaxed max-w-3xl">
+      Welcome, Pushti! Animal biology is the fascinating engineering of living engines. From the food you chew to the oxygen every cell burns for energy, every mechanism has a clear, logical purpose. Here is your master roadmap across nutrition and respiration!
+    </p>
+
+    <!-- Key Metrics Strip -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 mt-4 border-t border-slate-800/80">
+      <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
+        <div class="text-xs uppercase text-slate-400 font-bold">Nutrition Stages</div>
+        <div class="text-xl md:text-2xl font-black text-emerald-400 font-mono mt-0.5">5 Stages</div>
+        <div class="text-[10px] text-slate-500 font-mono">Ingestion → Egestion</div>
+      </div>
+      <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
+        <div class="text-xs uppercase text-slate-400 font-bold">Ruminant Stomach</div>
+        <div class="text-xl md:text-2xl font-black text-teal-400 font-mono mt-0.5">4 Chambers</div>
+        <div class="text-[10px] text-slate-500 font-mono">Rumen to Abomasum</div>
+      </div>
+      <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
+        <div class="text-xs uppercase text-slate-400 font-bold">Respiration Net</div>
+        <div class="text-xl md:text-2xl font-black text-cyan-400 font-mono mt-0.5">38 ATP</div>
+        <div class="text-[10px] text-slate-500 font-mono">Aerobic Glucose Yield</div>
+      </div>
+      <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
+        <div class="text-xs uppercase text-slate-400 font-bold">Authoritative Bank</div>
+        <div class="text-xl md:text-2xl font-black text-amber-400 font-mono mt-0.5">250 Items</div>
+        <div class="text-[10px] text-slate-500 font-mono">100% Verified Solutions</div>
       </div>
     </div>
   </div>
@@ -4187,11 +4420,11 @@
     <!-- Filter Buttons -->
     <div class="flex flex-wrap items-center gap-2">
       <button onclick="filterDrills('all')" id="df-all" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600 text-white cursor-pointer transition-all shadow-md">All (163)</button>
-      <button onclick="filterDrills('mcq')" id="df-mcq" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">MCQs</button>
-      <button onclick="filterDrills('tf')" id="df-tf" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">True / False</button>
-      <button onclick="filterDrills('fib')" id="df-fib" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Fill in Blanks</button>
-      <button onclick="filterDrills('assertion_reason')" id="df-assertion_reason" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Assertion &amp; Reason</button>
-      <button onclick="filterDrills('match')" id="df-match" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Match Columns</button>
+      <button onclick="filterDrills('mcq')" id="df-mcq" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">MCQs (110)</button>
+      <button onclick="filterDrills('tf')" id="df-tf" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">True / False (19)</button>
+      <button onclick="filterDrills('fib')" id="df-fib" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Fill in Blanks (21)</button>
+      <button onclick="filterDrills('assertion_reason')" id="df-assertion_reason" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Assertion &amp; Reason (9)</button>
+      <button onclick="filterDrills('match')" id="df-match" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Match Columns (4)</button>
     </div>
 
     <!-- Live Sticky Score Monitor -->
@@ -4245,24 +4478,282 @@
     <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match">
       <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
         <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">Item 2 • MATCH</span>
+          <span class="px-2.5 py-1 rounded-xl bg-purple-500/20 text-purple-300 font-mono text-xs font-bold">Item 2 • MATCH COLUMNS</span>
           <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-medium">Human Respiration: Organ Anatomy</span>
         </div>
         <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-semibold">medium</span>
       </div>
 
       <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
-        Match the respiratory parts in Column I with their corresponding physiological functions in Column II:<br><br>Column I:<br>(a) Nostrils<br>(b) Alveoli<br>(c) Ribcage<br>(d) Nasal passages<br>(e) Windpipe (Trachea)<br><br>Column II:<br>(i) Fresh air from outside enters the respiratory system<br>(ii) Exchange of gases (O₂ and CO₂) occurs across thin capillary membranes<br>(iii) Protects delicate thoracic organs like lungs and heart<br>(iv) Tiny hair and mucus help to trap dust, pollen, and microbes<br>(v) Air reaches the lungs through this cartilaginous tube
+        Match the respiratory parts in Column I with their corresponding physiological functions in Column II:
       </div>
-      <div class="pt-1">
-        <button onclick="toggleAnswer('ans-drill-2')" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all cursor-pointer">
-          <i class="fas fa-lightbulb text-amber-400"></i>
-          <span>Reveal Answer &amp; Explanation</span>
-        </button>
+
+      <!-- Match Instructions & Live Progress -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <i class="fas fa-hand-pointer text-cyan-400"></i>
+          <span class="hidden sm:inline">Tap item on <strong>Column I</strong>, then tap target on <strong>Column II</strong> (or drag &amp; drop).</span>
+          <span class="sm:hidden">Tap Column I, then Column II to pair.</span>
+        </div>
+        <div>
+          <span id="match-status-2" class="font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]">
+            0/5 Paired
+          </span>
+        </div>
       </div>
+
+      <!-- Interactive Dual-Column Arena -->
+      <div class="match-arena grid grid-cols-1 md:grid-cols-2 gap-4 relative" id="match-arena-2" data-idx="2" data-pairs="{&quot;a&quot;: &quot;i&quot;, &quot;b&quot;: &quot;ii&quot;, &quot;c&quot;: &quot;iii&quot;, &quot;d&quot;: &quot;iv&quot;, &quot;e&quot;: &quot;v&quot;}" data-total="5">
+        <!-- Column I (Left) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-cubes"></i> Column I (Source)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Select or Drag</span>
+          </div>
+          <div class="space-y-2" id="match-left-col-2">
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-2-a"
+               data-key="a"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 2, 'a')"
+               onclick="handleMatchItemClick(2, 'left', 'a')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                a
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Nostrils
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-2-b"
+               data-key="b"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 2, 'b')"
+               onclick="handleMatchItemClick(2, 'left', 'b')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                b
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Alveoli
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-2-c"
+               data-key="c"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 2, 'c')"
+               onclick="handleMatchItemClick(2, 'left', 'c')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                c
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Ribcage
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-2-d"
+               data-key="d"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 2, 'd')"
+               onclick="handleMatchItemClick(2, 'left', 'd')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                d
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Nasal passages
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-2-e"
+               data-key="e"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 2, 'e')"
+               onclick="handleMatchItemClick(2, 'left', 'e')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                e
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Windpipe (Trachea)
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Column II (Right) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-sky-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-bullseye"></i> Column II (Target)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Tap or Drop</span>
+          </div>
+          <div class="space-y-2" id="match-right-col-2">
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-2-i"
+               data-key="i"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 2, 'i')"
+               onclick="handleMatchItemClick(2, 'right', 'i')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                i
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Fresh air from outside enters the respiratory system
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-2-ii"
+               data-key="ii"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 2, 'ii')"
+               onclick="handleMatchItemClick(2, 'right', 'ii')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                ii
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Exchange of gases (O₂ and CO₂) occurs across thin capillary membranes
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-2-iii"
+               data-key="iii"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 2, 'iii')"
+               onclick="handleMatchItemClick(2, 'right', 'iii')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                iii
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Protects delicate thoracic organs like lungs and heart
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-2-iv"
+               data-key="iv"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 2, 'iv')"
+               onclick="handleMatchItemClick(2, 'right', 'iv')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                iv
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Tiny hair and mucus help to trap dust, pollen, and microbes
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-2-v"
+               data-key="v"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 2, 'v')"
+               onclick="handleMatchItemClick(2, 'right', 'v')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                v
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Air reaches the lungs through this cartilaginous tube
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Connected Pairs Dock -->
+      <div id="match-dock-2" class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <span><i class="fas fa-link text-indigo-400 mr-1.5"></i> Connected Pairs:</span>
+          <span id="match-dock-count-2" class="text-slate-500 font-bold">None</span>
+        </div>
+        <div id="match-pairs-list-2" class="flex flex-wrap gap-2 text-xs">
+          <span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>
+        </div>
+      </div>
+
+      <!-- Control Bar & Live Diagnostics -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="match-check-btn-2" onclick="checkMatchDrill(2)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-check-double"></i> Check Matches
+          </button>
+          <button onclick="resetMatchDrill(2)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-undo-alt"></i> Reset
+          </button>
+          <button onclick="toggleAnswer('ans-drill-2')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-lightbulb text-amber-400"></i> Solution
+          </button>
+        </div>
+        <div id="match-feedback-2" class="hidden px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all"></div>
+      </div>
+
+      <!-- Solution Drawer -->
       <div id="ans-drill-2" class="hidden p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2 text-xs md:text-sm text-slate-300">
         <div class="font-bold text-emerald-300 flex items-center gap-1.5">
-          <i class="fas fa-info-circle"></i> Explanation &amp; Concept:
+          <i class="fas fa-info-circle"></i> Correct Pairs &amp; Scientific Concept:
+        </div>
+        <div class="font-mono text-xs bg-slate-900 p-2.5 rounded-xl border border-slate-800 text-amber-300">
+          (a) - (i), (b) - (ii), (c) - (iii), (d) - (iv), (e) - (v)
         </div>
         <div>Nostrils provide the air entrance; alveoli execute gas diffusion; ribcage protects thoracic organs; nasal passages filter air; trachea conducts air.</div>
       </div>
@@ -8161,24 +8652,243 @@
     <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match">
       <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
         <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">Item 117 • MATCH</span>
+          <span class="px-2.5 py-1 rounded-xl bg-purple-500/20 text-purple-300 font-mono text-xs font-bold">Item 117 • MATCH COLUMNS</span>
           <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-medium">Human Teeth: Types and Functions</span>
         </div>
         <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-semibold">medium</span>
       </div>
 
       <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
-        Match the types of teeth in Column I with their specific dental functions in Column II:<br><br>Column I:<br>(a) Incisors<br>(b) Canines<br>(c) Premolars<br>(d) Molars<br><br>Column II:<br>(i) Piercing and tearing tough food<br>(ii) Biting and cutting food<br>(iii) Grinding and crushing food thoroughly<br>(iv) Chewing and grinding food
+        Match the types of teeth in Column I with their specific dental functions in Column II:
       </div>
-      <div class="pt-1">
-        <button onclick="toggleAnswer('ans-drill-117')" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all cursor-pointer">
-          <i class="fas fa-lightbulb text-amber-400"></i>
-          <span>Reveal Answer &amp; Explanation</span>
-        </button>
+
+      <!-- Match Instructions & Live Progress -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <i class="fas fa-hand-pointer text-cyan-400"></i>
+          <span class="hidden sm:inline">Tap item on <strong>Column I</strong>, then tap target on <strong>Column II</strong> (or drag &amp; drop).</span>
+          <span class="sm:hidden">Tap Column I, then Column II to pair.</span>
+        </div>
+        <div>
+          <span id="match-status-117" class="font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]">
+            0/4 Paired
+          </span>
+        </div>
       </div>
+
+      <!-- Interactive Dual-Column Arena -->
+      <div class="match-arena grid grid-cols-1 md:grid-cols-2 gap-4 relative" id="match-arena-117" data-idx="117" data-pairs="{&quot;a&quot;: &quot;ii&quot;, &quot;b&quot;: &quot;i&quot;, &quot;c&quot;: &quot;iv&quot;, &quot;d&quot;: &quot;iii&quot;}" data-total="4">
+        <!-- Column I (Left) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-cubes"></i> Column I (Source)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Select or Drag</span>
+          </div>
+          <div class="space-y-2" id="match-left-col-117">
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-117-a"
+               data-key="a"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 117, 'a')"
+               onclick="handleMatchItemClick(117, 'left', 'a')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                a
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Incisors
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-117-b"
+               data-key="b"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 117, 'b')"
+               onclick="handleMatchItemClick(117, 'left', 'b')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                b
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Canines
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-117-c"
+               data-key="c"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 117, 'c')"
+               onclick="handleMatchItemClick(117, 'left', 'c')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                c
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Premolars
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-117-d"
+               data-key="d"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 117, 'd')"
+               onclick="handleMatchItemClick(117, 'left', 'd')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                d
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Molars
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Column II (Right) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-sky-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-bullseye"></i> Column II (Target)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Tap or Drop</span>
+          </div>
+          <div class="space-y-2" id="match-right-col-117">
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-117-i"
+               data-key="i"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 117, 'i')"
+               onclick="handleMatchItemClick(117, 'right', 'i')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                i
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Piercing and tearing tough food
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-117-ii"
+               data-key="ii"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 117, 'ii')"
+               onclick="handleMatchItemClick(117, 'right', 'ii')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                ii
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Biting and cutting food
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-117-iii"
+               data-key="iii"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 117, 'iii')"
+               onclick="handleMatchItemClick(117, 'right', 'iii')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                iii
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Grinding and crushing food thoroughly
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-117-iv"
+               data-key="iv"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 117, 'iv')"
+               onclick="handleMatchItemClick(117, 'right', 'iv')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                iv
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Chewing and grinding food
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Connected Pairs Dock -->
+      <div id="match-dock-117" class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <span><i class="fas fa-link text-indigo-400 mr-1.5"></i> Connected Pairs:</span>
+          <span id="match-dock-count-117" class="text-slate-500 font-bold">None</span>
+        </div>
+        <div id="match-pairs-list-117" class="flex flex-wrap gap-2 text-xs">
+          <span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>
+        </div>
+      </div>
+
+      <!-- Control Bar & Live Diagnostics -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="match-check-btn-117" onclick="checkMatchDrill(117)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-check-double"></i> Check Matches
+          </button>
+          <button onclick="resetMatchDrill(117)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-undo-alt"></i> Reset
+          </button>
+          <button onclick="toggleAnswer('ans-drill-117')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-lightbulb text-amber-400"></i> Solution
+          </button>
+        </div>
+        <div id="match-feedback-117" class="hidden px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all"></div>
+      </div>
+
+      <!-- Solution Drawer -->
       <div id="ans-drill-117" class="hidden p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2 text-xs md:text-sm text-slate-300">
         <div class="font-bold text-emerald-300 flex items-center gap-1.5">
-          <i class="fas fa-info-circle"></i> Explanation &amp; Concept:
+          <i class="fas fa-info-circle"></i> Correct Pairs &amp; Scientific Concept:
+        </div>
+        <div class="font-mono text-xs bg-slate-900 p-2.5 rounded-xl border border-slate-800 text-amber-300">
+          (a) - (ii), (b) - (i), (c) - (iv), (d) - (iii)
         </div>
         <div>Incisors bite and cut, canines pierce and tear, premolars chew and grind, and molars crush and grind.</div>
       </div>
@@ -8187,24 +8897,243 @@
     <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match">
       <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
         <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">Item 118 • MATCH</span>
+          <span class="px-2.5 py-1 rounded-xl bg-purple-500/20 text-purple-300 font-mono text-xs font-bold">Item 118 • MATCH COLUMNS</span>
           <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-medium">Comparative Respiration in Animals</span>
         </div>
         <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-semibold">medium</span>
       </div>
 
       <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
-        Match the organisms in Column I with their specialized respiratory organs in Column II:<br><br>Column I:<br>(a) Cockroach<br>(b) Earthworm<br>(c) Fish<br>(d) Human<br><br>Column II:<br>(i) Moist, vascularized skin<br>(ii) Gills<br>(iii) Tracheal system and spiracles<br>(iv) Lungs and alveoli
+        Match the organisms in Column I with their specialized respiratory organs in Column II:
       </div>
-      <div class="pt-1">
-        <button onclick="toggleAnswer('ans-drill-118')" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all cursor-pointer">
-          <i class="fas fa-lightbulb text-amber-400"></i>
-          <span>Reveal Answer &amp; Explanation</span>
-        </button>
+
+      <!-- Match Instructions & Live Progress -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <i class="fas fa-hand-pointer text-cyan-400"></i>
+          <span class="hidden sm:inline">Tap item on <strong>Column I</strong>, then tap target on <strong>Column II</strong> (or drag &amp; drop).</span>
+          <span class="sm:hidden">Tap Column I, then Column II to pair.</span>
+        </div>
+        <div>
+          <span id="match-status-118" class="font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]">
+            0/4 Paired
+          </span>
+        </div>
       </div>
+
+      <!-- Interactive Dual-Column Arena -->
+      <div class="match-arena grid grid-cols-1 md:grid-cols-2 gap-4 relative" id="match-arena-118" data-idx="118" data-pairs="{&quot;a&quot;: &quot;iii&quot;, &quot;b&quot;: &quot;i&quot;, &quot;c&quot;: &quot;ii&quot;, &quot;d&quot;: &quot;iv&quot;}" data-total="4">
+        <!-- Column I (Left) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-cubes"></i> Column I (Source)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Select or Drag</span>
+          </div>
+          <div class="space-y-2" id="match-left-col-118">
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-118-a"
+               data-key="a"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 118, 'a')"
+               onclick="handleMatchItemClick(118, 'left', 'a')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                a
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Cockroach
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-118-b"
+               data-key="b"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 118, 'b')"
+               onclick="handleMatchItemClick(118, 'left', 'b')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                b
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Earthworm
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-118-c"
+               data-key="c"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 118, 'c')"
+               onclick="handleMatchItemClick(118, 'left', 'c')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                c
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Fish
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-118-d"
+               data-key="d"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 118, 'd')"
+               onclick="handleMatchItemClick(118, 'left', 'd')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                d
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Human
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Column II (Right) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-sky-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-bullseye"></i> Column II (Target)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Tap or Drop</span>
+          </div>
+          <div class="space-y-2" id="match-right-col-118">
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-118-i"
+               data-key="i"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 118, 'i')"
+               onclick="handleMatchItemClick(118, 'right', 'i')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                i
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Moist, vascularized skin
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-118-ii"
+               data-key="ii"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 118, 'ii')"
+               onclick="handleMatchItemClick(118, 'right', 'ii')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                ii
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Gills
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-118-iii"
+               data-key="iii"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 118, 'iii')"
+               onclick="handleMatchItemClick(118, 'right', 'iii')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                iii
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Tracheal system and spiracles
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-118-iv"
+               data-key="iv"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 118, 'iv')"
+               onclick="handleMatchItemClick(118, 'right', 'iv')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                iv
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Lungs and alveoli
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Connected Pairs Dock -->
+      <div id="match-dock-118" class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <span><i class="fas fa-link text-indigo-400 mr-1.5"></i> Connected Pairs:</span>
+          <span id="match-dock-count-118" class="text-slate-500 font-bold">None</span>
+        </div>
+        <div id="match-pairs-list-118" class="flex flex-wrap gap-2 text-xs">
+          <span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>
+        </div>
+      </div>
+
+      <!-- Control Bar & Live Diagnostics -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="match-check-btn-118" onclick="checkMatchDrill(118)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-check-double"></i> Check Matches
+          </button>
+          <button onclick="resetMatchDrill(118)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-undo-alt"></i> Reset
+          </button>
+          <button onclick="toggleAnswer('ans-drill-118')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-lightbulb text-amber-400"></i> Solution
+          </button>
+        </div>
+        <div id="match-feedback-118" class="hidden px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all"></div>
+      </div>
+
+      <!-- Solution Drawer -->
       <div id="ans-drill-118" class="hidden p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2 text-xs md:text-sm text-slate-300">
         <div class="font-bold text-emerald-300 flex items-center gap-1.5">
-          <i class="fas fa-info-circle"></i> Explanation &amp; Concept:
+          <i class="fas fa-info-circle"></i> Correct Pairs &amp; Scientific Concept:
+        </div>
+        <div class="font-mono text-xs bg-slate-900 p-2.5 rounded-xl border border-slate-800 text-amber-300">
+          (a) - (iii), (b) - (i), (c) - (ii), (d) - (iv)
         </div>
         <div>Cockroach respires via tracheae/spiracles; earthworm through moist skin; fish through gills; human through lungs.</div>
       </div>
@@ -8213,24 +9142,243 @@
     <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match">
       <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
         <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">Item 119 • MATCH</span>
+          <span class="px-2.5 py-1 rounded-xl bg-purple-500/20 text-purple-300 font-mono text-xs font-bold">Item 119 • MATCH COLUMNS</span>
           <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-medium">Human Digestive System: Enzymes and Secretions</span>
         </div>
         <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-semibold">medium</span>
       </div>
 
       <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
-        Match the digestive secretions in Column I with their primary physiological roles in Column II:<br><br>Column I:<br>(a) Saliva (Salivary amylase)<br>(b) Gastric juice (Pepsin + HCl)<br>(c) Bile juice<br>(d) Pancreatic juice<br><br>Column II:<br>(i) Emulsifies fat globules into fine droplets<br>(ii) Begins starch breakdown into simple sugars<br>(iii) Digests carbohydrates, proteins, and fats in small intestine<br>(iv) Kills bacteria and initiates protein digestion
+        Match the digestive secretions in Column I with their primary physiological roles in Column II:
       </div>
-      <div class="pt-1">
-        <button onclick="toggleAnswer('ans-drill-119')" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all cursor-pointer">
-          <i class="fas fa-lightbulb text-amber-400"></i>
-          <span>Reveal Answer &amp; Explanation</span>
-        </button>
+
+      <!-- Match Instructions & Live Progress -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <i class="fas fa-hand-pointer text-cyan-400"></i>
+          <span class="hidden sm:inline">Tap item on <strong>Column I</strong>, then tap target on <strong>Column II</strong> (or drag &amp; drop).</span>
+          <span class="sm:hidden">Tap Column I, then Column II to pair.</span>
+        </div>
+        <div>
+          <span id="match-status-119" class="font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]">
+            0/4 Paired
+          </span>
+        </div>
       </div>
+
+      <!-- Interactive Dual-Column Arena -->
+      <div class="match-arena grid grid-cols-1 md:grid-cols-2 gap-4 relative" id="match-arena-119" data-idx="119" data-pairs="{&quot;a&quot;: &quot;ii&quot;, &quot;b&quot;: &quot;iv&quot;, &quot;c&quot;: &quot;i&quot;, &quot;d&quot;: &quot;iii&quot;}" data-total="4">
+        <!-- Column I (Left) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-cubes"></i> Column I (Source)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Select or Drag</span>
+          </div>
+          <div class="space-y-2" id="match-left-col-119">
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-119-a"
+               data-key="a"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 119, 'a')"
+               onclick="handleMatchItemClick(119, 'left', 'a')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                a
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Saliva (Salivary amylase)
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-119-b"
+               data-key="b"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 119, 'b')"
+               onclick="handleMatchItemClick(119, 'left', 'b')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                b
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Gastric juice (Pepsin + HCl)
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-119-c"
+               data-key="c"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 119, 'c')"
+               onclick="handleMatchItemClick(119, 'left', 'c')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                c
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Bile juice
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-119-d"
+               data-key="d"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 119, 'd')"
+               onclick="handleMatchItemClick(119, 'left', 'd')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                d
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Pancreatic juice
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Column II (Right) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-sky-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-bullseye"></i> Column II (Target)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Tap or Drop</span>
+          </div>
+          <div class="space-y-2" id="match-right-col-119">
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-119-i"
+               data-key="i"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 119, 'i')"
+               onclick="handleMatchItemClick(119, 'right', 'i')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                i
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Emulsifies fat globules into fine droplets
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-119-ii"
+               data-key="ii"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 119, 'ii')"
+               onclick="handleMatchItemClick(119, 'right', 'ii')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                ii
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Begins starch breakdown into simple sugars
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-119-iii"
+               data-key="iii"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 119, 'iii')"
+               onclick="handleMatchItemClick(119, 'right', 'iii')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                iii
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Digests carbohydrates, proteins, and fats in small intestine
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-119-iv"
+               data-key="iv"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 119, 'iv')"
+               onclick="handleMatchItemClick(119, 'right', 'iv')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                iv
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Kills bacteria and initiates protein digestion
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Connected Pairs Dock -->
+      <div id="match-dock-119" class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <span><i class="fas fa-link text-indigo-400 mr-1.5"></i> Connected Pairs:</span>
+          <span id="match-dock-count-119" class="text-slate-500 font-bold">None</span>
+        </div>
+        <div id="match-pairs-list-119" class="flex flex-wrap gap-2 text-xs">
+          <span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>
+        </div>
+      </div>
+
+      <!-- Control Bar & Live Diagnostics -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="match-check-btn-119" onclick="checkMatchDrill(119)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-check-double"></i> Check Matches
+          </button>
+          <button onclick="resetMatchDrill(119)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-undo-alt"></i> Reset
+          </button>
+          <button onclick="toggleAnswer('ans-drill-119')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-lightbulb text-amber-400"></i> Solution
+          </button>
+        </div>
+        <div id="match-feedback-119" class="hidden px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all"></div>
+      </div>
+
+      <!-- Solution Drawer -->
       <div id="ans-drill-119" class="hidden p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2 text-xs md:text-sm text-slate-300">
         <div class="font-bold text-emerald-300 flex items-center gap-1.5">
-          <i class="fas fa-info-circle"></i> Explanation &amp; Concept:
+          <i class="fas fa-info-circle"></i> Correct Pairs &amp; Scientific Concept:
+        </div>
+        <div class="font-mono text-xs bg-slate-900 p-2.5 rounded-xl border border-slate-800 text-amber-300">
+          (a) - (ii), (b) - (iv), (c) - (i), (d) - (iii)
         </div>
         <div>Saliva digests starch; gastric juice sterilizes and hydrolyses proteins; bile emulsifies fats; pancreatic juice digests all macronutrients.</div>
       </div>
@@ -9911,18 +11059,126 @@
   </div>
 </div>
       <div id="tabTraps" class="tab-pane hidden space-y-8 animate-fadeIn">
+  <!-- Section Title -->
   <div class="flex items-center gap-3 border-b border-slate-800 pb-4">
     <div class="w-10 h-10 rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-lg">
-      <i class="fas fa-brain"></i>
+      <i class="fas fa-skull-crossbones"></i>
     </div>
     <div>
-      <h2 class="text-2xl font-bold text-white font-heading">Interactive Flashcards &amp; Common Exam Traps</h2>
-      <p class="text-xs text-slate-400">Click any card to flip and master tricky examination misconceptions</p>
+      <h2 class="text-2xl font-bold text-white font-heading">Exam Traps, Pitfalls &amp; 3D Flashcards</h2>
+      <p class="text-xs text-slate-400">8 High-Yield Board Exam Pitfalls &amp; 16 Interactive 3D Revision Flashcards</p>
     </div>
   </div>
 
-  <!-- Flashcards Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+  <!-- 8 Fatal Exam Traps & Misconceptions -->
+  <div class="p-6 md:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-6">
+    <div class="flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+      <h3 class="text-lg font-bold text-white font-heading">8 Fatal Board Exam Traps &amp; Common Student Misconceptions</h3>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+      <!-- Trap 1 -->
+      <div class="p-4 rounded-2xl bg-slate-950/70 border border-rose-900/40 space-y-2">
+        <div class="text-rose-400 font-bold flex items-center gap-2">
+          <i class="fas fa-exclamation-triangle"></i> Trap 1: Bile Does NOT Contain Digestive Enzymes!
+        </div>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          <strong class="text-rose-300">Fatal Mistake:</strong> Stating that bile juice chemically breaks down fats with enzymes.<br>
+          <span class="text-emerald-400 font-semibold">The Scientific Truth:</span> Bile (secreted by liver, stored in gallbladder) contains NO enzymes! It contains bile salts that <strong>mechanically emulsify</strong> large lipid fat globules into microscopic droplets to dramatically increase surface area, and neutralizes stomach acid so pancreatic lipase can act.
+        </p>
+      </div>
+
+      <!-- Trap 2 -->
+      <div class="p-4 rounded-2xl bg-slate-950/70 border border-rose-900/40 space-y-2">
+        <div class="text-rose-400 font-bold flex items-center gap-2">
+          <i class="fas fa-exclamation-triangle"></i> Trap 2: Breathing vs Cellular Respiration Confusion
+        </div>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          <strong class="text-rose-300">Fatal Mistake:</strong> Treating breathing and respiration as identical biological synonyms.<br>
+          <span class="text-emerald-400 font-semibold">The Scientific Truth:</span> <strong>Breathing</strong> is an extracellular physical process (mechanical ventilation of lungs with no energy released). <strong>Respiration</strong> is an intracellular biochemical process where glucose is oxidised enzymatically inside mitochondria to release ATP energy!
+        </p>
+      </div>
+
+      <!-- Trap 3 -->
+      <div class="p-4 rounded-2xl bg-slate-950/70 border border-rose-900/40 space-y-2">
+        <div class="text-rose-400 font-bold flex items-center gap-2">
+          <i class="fas fa-exclamation-triangle"></i> Trap 3: Ruminant Stomach: Abomasum is the Only "True" Stomach
+        </div>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          <strong class="text-rose-300">Fatal Mistake:</strong> Believing that chemical gastric juice digestion occurs in the Rumen or Reticulum.<br>
+          <span class="text-emerald-400 font-semibold">The Scientific Truth:</span> The Rumen and Reticulum host symbiotic cellulolytic bacteria and protozoa for anaerobic fermentation of cellulose. The <strong>Abomasum</strong> is the only chamber with true gastric glands that secrete hydrochloric acid and pepsin for chemical enzymatic digestion.
+        </p>
+      </div>
+
+      <!-- Trap 4 -->
+      <div class="p-4 rounded-2xl bg-slate-950/70 border border-rose-900/40 space-y-2">
+        <div class="text-rose-400 font-bold flex items-center gap-2">
+          <i class="fas fa-exclamation-triangle"></i> Trap 4: Inhalation Mechanics: Diaphragm Contracts and Flattens
+        </div>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          <strong class="text-rose-300">Fatal Mistake:</strong> Writing that the diaphragm relaxes when we inhale.<br>
+          <span class="text-emerald-400 font-semibold">The Scientific Truth:</span> During inhalation, the diaphragm <strong>contracts and moves downwards (flattens)</strong>, while external intercostal muscles pull the rib cage upwards and outwards. This expands thoracic cavity volume, lowering pulmonary pressure so air rushes in! The diaphragm relaxes (arches upward) during exhalation.
+        </p>
+      </div>
+
+      <!-- Trap 5 -->
+      <div class="p-4 rounded-2xl bg-slate-950/70 border border-rose-900/40 space-y-2">
+        <div class="text-rose-400 font-bold flex items-center gap-2">
+          <i class="fas fa-exclamation-triangle"></i> Trap 5: Salivary Amylase Acts ONLY on Starch, NOT Proteins/Fats
+        </div>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          <strong class="text-rose-300">Fatal Mistake:</strong> Assuming saliva breaks down meat, proteins, or dietary fats in the mouth.<br>
+          <span class="text-emerald-400 font-semibold">The Scientific Truth:</span> Saliva contains salivary amylase (ptyalin), which hydrolyzes ONLY <strong>cooked starch into maltose sugar</strong>. It has zero activity on proteins or fats. Protein digestion begins only in the stomach under gastric pepsin!
+        </p>
+      </div>
+
+      <!-- Trap 6 -->
+      <div class="p-4 rounded-2xl bg-slate-950/70 border border-rose-900/40 space-y-2">
+        <div class="text-rose-400 font-bold flex items-center gap-2">
+          <i class="fas fa-exclamation-triangle"></i> Trap 6: Muscle Cramps Caused by Lactic Acid Accumulation
+        </div>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          <strong class="text-rose-300">Fatal Mistake:</strong> Believing muscle cramps are caused by lack of glucose or dehydration alone.<br>
+          <span class="text-emerald-400 font-semibold">The Scientific Truth:</span> During intense running, oxygen supply cannot meet muscle demand. Muscle cells switch to <strong>anaerobic respiration</strong>, partially breaking down glucose into <strong>lactic acid</strong>. The accumulation of lactic acid crystals causes painful muscle cramps. Hot water baths relieve cramps by restoring blood circulation and oxygen supply!
+        </p>
+      </div>
+
+      <!-- Trap 7 -->
+      <div class="p-4 rounded-2xl bg-slate-950/70 border border-rose-900/40 space-y-2">
+        <div class="text-rose-400 font-bold flex items-center gap-2">
+          <i class="fas fa-exclamation-triangle"></i> Trap 7: Earthworm Cutaneous Respiration Requires Moist Skin
+        </div>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          <strong class="text-rose-300">Fatal Mistake:</strong> Thinking earthworms have tracheal tubes or lungs, or can survive with dry skin.<br>
+          <span class="text-emerald-400 font-semibold">The Scientific Truth:</span> Earthworms have no specialized respiratory organs. They breathe by <strong>cutaneous diffusion</strong> directly across their thin body wall. Atmospheric oxygen can dissolve and diffuse into capillary blood ONLY if the skin is continuously moist and slimy with mucus. If their skin dries, they suffocate and die.
+        </p>
+      </div>
+
+      <!-- Trap 8 -->
+      <div class="p-4 rounded-2xl bg-slate-950/70 border border-rose-900/40 space-y-2">
+        <div class="text-rose-400 font-bold flex items-center gap-2">
+          <i class="fas fa-exclamation-triangle"></i> Trap 8: Exhaled Air Still Contains 16.4% Oxygen (Not 0%!)
+        </div>
+        <p class="text-slate-300 text-xs leading-relaxed">
+          <strong class="text-rose-300">Fatal Mistake:</strong> Stating that exhaled air contains 100% carbon dioxide and zero oxygen.<br>
+          <span class="text-emerald-400 font-semibold">The Scientific Truth:</span> Inhaled air contains ~21% Oxygen and 0.04% Carbon dioxide. Exhaled air still contains <strong>~16.4% Oxygen</strong> and ~4.4% Carbon dioxide! The lungs extract only about 4–5% of the oxygen per breathing cycle. This remaining oxygen is why mouth-to-mouth CPR saves lives!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 16 Interactive 3D Revision Flashcards -->
+  <div class="p-6 md:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <h3 class="text-lg font-bold text-white font-heading">16 Interactive 3D Revision Flashcards</h3>
+      </div>
+      <span class="text-xs text-slate-500 font-mono">Tap any card to flip 180°</span>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
     <div class="flashcard-3d h-48 cursor-pointer select-none" onclick="this.classList.toggle('flipped')">
       <div class="flashcard-inner relative w-full h-full transition-transform duration-500">
         <div class="flashcard-front absolute inset-0 p-5 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col justify-between hover:border-emerald-500/50 transition-colors">
@@ -10228,14 +11484,395 @@
       </div>
     </div>
   </div>
+  </div>
 </div>
+    <!-- ========================================== -->
+<!-- RESEARCH & VIDEO HUB (tabGoogleHub)        -->
+<!-- ========================================== -->
+<div id="tabGoogleHub" class="tab-pane hidden space-y-8 animate-fadeIn">
+  <!-- Header Title -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+    <div>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold uppercase tracking-wider mb-2">
+        <i class="fab fa-google"></i> Multimodal Research &amp; Video Hub
+      </div>
+      <h2 class="text-3xl font-extrabold text-white font-heading">Curated Video Lectures &amp; Knowledge Vault (8 Topics)</h2>
+      <p class="text-sm text-slate-400 mt-1">Zero-rot verified search routes, visual lectures, laboratory demonstrations, and conceptual deep-dives across Biology Chapter 3: Life Processes - Nutrition & Respiration.</p>
+    </div>
+  </div>
+
+  <!-- Topics Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/20 text-emerald-300 font-bold">Protozoa</span>
+          <span class="text-xs text-slate-500 font-mono">Module #1</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-emerald-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-bacterium"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Holozoic Nutrition in Microscopic Organisms</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Observing phagocytosis in single-celled Amoeba via pseudopodia, ciliary food currents in Paramecium, and tentacular capture in Hydra.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Amoeba engulfs food particles by projecting pseudopodia (false feet), fusing around prey to form a food vacuole.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Lysosomal digestive enzymes diffuse into the food vacuole to hydrolyze complex macromolecules into simple absorbable units.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Paramecium sweeps food into its oral groove via coordinated rhythmic beating of thousands of surface cilia.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=amoeba+holozoic+nutrition+pseudopodia+phagocytosis+class+7+science" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=nutrition+in+amoeba+pseudopodia+food+vacuole+class+7+science" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-cyan-500/20 text-cyan-300 font-bold">Anatomy</span>
+          <span class="text-xs text-slate-500 font-mono">Module #2</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-cyan-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-tooth"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Human Buccal Cavity & Specialized Dentition</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Anatomical examination of heterodont dentition (incisors, canines, premolars, molars) and chemical digestion of starch by salivary amylase.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Heterodont dentition: 8 Incisors (biting/cutting), 4 Canines (piercing/tearing), 8 Premolars & 12 Molars (grinding/crushing).</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Salivary glands secrete salivary amylase (ptyalin) which breaks complex starch into sweet disaccharide maltose.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>The muscular tongue rolls food into a lubricated bolus and detects taste modalities via distinct papillae.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=human+digestive+system+buccal+cavity+teeth+types+salivary+amylase" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=types+of+teeth+incisors+canines+premolars+molars+salivary+amylase+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-purple-500/20 text-purple-300 font-bold">Physiology</span>
+          <span class="text-xs text-slate-500 font-mono">Module #3</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-purple-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-flask"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Gastric Breakdown & Small Intestinal Absorption</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Dynamic tour of the stomach's acidic environment, hepatic bile emulsification, pancreatic enzymes, and millions of microscopic nutrient-absorbing villi.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Stomach gastric juice contains hydrochloric acid (pH 1.5-2.0, kills pathogens and activates pepsinogen) and pepsin.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Bile from liver contains NO enzymes, but mechanically emulsifies large lipid globules into microscopic micelles.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Small intestinal villi provide thousands of micro-folds packed with capillaries and lacteals for nutrient assimilation.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=stomach+digestion+hcl+pepsin+small+intestine+villi+absorption+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=gastric+digestion+pepsin+hcl+bile+pancreatic+juice+villi+absorption+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-amber-500/20 text-amber-300 font-bold">Zoology</span>
+          <span class="text-xs text-slate-500 font-mono">Module #4</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-amber-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-hippo"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Ruminant Digestion & Cellulose Fermentation</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Comparative physiology of herbivores: four-chambered ruminant stomach (rumen, reticulum, omasum, abomasum), cud chewing, and microbial symbiosis.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Cows and sheep swallow grass rapidly into the rumen, where symbiotic bacteria and protozoa ferment tough cellulose.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Fermented food (cud) is regurgitated back to the mouth for thorough re-chewing when the animal rests.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>The abomasum is the sole 'true stomach' that secretes gastric juice and digestive enzymes.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=ruminant+digestive+system+rumen+reticulum+omasum+abomasum+cud+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=ruminants+nutrition+stomach+chambers+cud+chewing+cellulose+fermentation+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-sky-500/20 text-sky-300 font-bold">Biomechanics</span>
+          <span class="text-xs text-slate-500 font-mono">Module #5</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-sky-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-lungs"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Thoracic Mechanics & Diaphragm Motion in Breathing</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Physical gas ventilation mechanics: coordinated contraction of the dome-shaped diaphragm and ribcage elevation causing pressure gradients.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Inhalation: Diaphragm actively contracts and flattens down; ribs move up and outwards; thoracic volume expands.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Intrapulmonary pressure drops below atmospheric pressure, drawing fresh air into millions of alveolar sacs.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Exhalation: Diaphragm and intercostal muscles relax, decreasing volume and passively expelling carbon dioxide.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=breathing+mechanism+human+diaphragm+ribcage+animation+class+7+science" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=mechanism+of+breathing+inhalation+exhalation+diaphragm+class+7+science" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-rose-500/20 text-rose-300 font-bold">Biochemistry</span>
+          <span class="text-xs text-slate-500 font-mono">Module #6</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-rose-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Cellular Respiration: Aerobic vs Anaerobic Pathways</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Intracellular bioenergetics: breakdown of glucose inside mitochondria to generate ATP, and anaerobic fermentation causing muscle cramps.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Aerobic respiration: Glucose + 6 O2 -> 6 CO2 + 6 H2O + 38 ATP inside cellular mitochondria.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Anaerobic respiration in muscle: In oxygen debt, glucose breaks into lactic acid + 2 ATP, causing acute muscle fatigue.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Anaerobic yeast fermentation produces ethanol + CO2 + energy, forming the foundation of baking and brewing.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=cellular+respiration+aerobic+vs+anaerobic+lactic+acid+muscle+cramps+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=aerobic+vs+anaerobic+respiration+glucose+breakdown+atp+lactic+acid+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-teal-500/20 text-teal-300 font-bold">Ecology</span>
+          <span class="text-xs text-slate-500 font-mono">Module #7</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-teal-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-fish"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Comparative Respiration in Fish, Insects & Earthworms</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Evolutionary adaptations for gas exchange across animal taxa: fish gills, insect spiracles with tracheal tubes, and earthworm moist skin.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Fish possess feathery gill filaments with countercurrent blood flow that extract dissolved oxygen from water.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Insects lack lungs; air enters through lateral spiracles and travels directly to cells via a branched network of tracheae.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Earthworms breathe through moist, vascularised cutaneous skin covered with mucus; dry skin causes asphyxiation.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=respiration+in+earthworm+fish+cockroach+spiracles+tracheae+gills+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=comparative+respiration+fish+gills+earthworm+skin+insects+spiracles+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-yellow-500/20 text-yellow-300 font-bold">Botany</span>
+          <span class="text-xs text-slate-500 font-mono">Module #8</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-yellow-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-seedling"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Plant Respiration & Empirical Gas Exchange Labs</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">How plants respire day and night via stomata, lenticels, and root hairs, and verifying carbon dioxide release with limewater experiments.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Leaves breathe through microscopic stomata; woody stems breathe through lenticels; roots absorb soil air via root hairs.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>In waterlogged soil, air pockets around root hairs vanish, suffocating roots and causing agricultural root rot.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Germinating seeds release carbon dioxide gas that turns clear calcium hydroxide (limewater) milky (precipitating CaCO3).</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=respiration+in+plants+stomata+roots+limewater+carbon+dioxide+experiment+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=plant+respiration+stomata+lenticels+germinating+seeds+carbon+dioxide+test+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
     </main>
   </div>
 
-  <!-- CLIENT-SIDE JAVASCRIPT CONTROLLERS -->
+  <!-- Universal Jump to Top Floating Button -->
+  <button id="pushti-jump-to-top" class="pushti-jump-to-top" aria-label="Jump to top" title="Jump to Top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
+  </button>
+
+  <!-- ==================== CLIENT JAVASCRIPT ==================== -->
   <script>
-    // 1. Tab Switching Controller
-    function switchTab(tabId) {
+    // 1. Session Timer
+    let sessionSeconds = 0;
+    setInterval(() => {
+      sessionSeconds++;
+      const mins = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
+      const secs = String(sessionSeconds % 60).padStart(2, '0');
+      const el = document.getElementById('sessionTimerDisplay');
+      if (el) el.textContent = `${mins}:${secs}`;
+    }, 1000);
+
+    // 2. Theme Switcher
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const isDark = htmlEl.classList.toggle('dark');
+      htmlEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      updateThemeIcon(isDark);
+    }
+
+    function updateThemeIcon(isDark) {
+      const svg = document.getElementById('themeIconSvg');
+      if (!svg) return;
+      if (isDark) {
+        svg.innerHTML = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>';
+      } else {
+        svg.innerHTML = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>';
+      }
+    }
+
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-theme', 'light');
+      updateThemeIcon(false);
+    }
+
+    // 3. Fullscreen Mode
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => console.log(err));
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    // 4. Global Quick Search
+    function toggleGlobalSearch() {
+      const dd = document.getElementById('globalSearchDropdown');
+      if (!dd) return;
+      dd.classList.toggle('hidden');
+      if (!dd.classList.contains('hidden')) {
+        const inp = document.getElementById('quickNavSearchInput');
+        if (inp) inp.focus();
+      }
+    }
+
+    function handleQuickSearch(term) {
+      if (!term || term.length < 2) return;
+      switchTab('tabTextbook');
+      const input = document.getElementById('textbookSearchInput');
+      if (input) {
+        input.value = term;
+        if (typeof searchQuestions === 'function') searchQuestions(term);
+        else if (typeof searchTBQuestions === 'function') searchTBQuestions(term);
+      }
+    }
+
+    // 5. TTS Hero Overview Narration
+    function speakHeroIntro() {
+      if (!('speechSynthesis' in window)) {
+        alert('Text-to-speech is not supported in this browser.');
+        return;
+      }
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        return;
+      }
+      const title = document.querySelector('h1')?.textContent || '';
+      const desc = document.querySelector('h1 + button + p')?.textContent || document.querySelector('h1 + p')?.textContent || '';
+      const text = `${title}. ${desc}`;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.95;
+      utterance.pitch = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // 6. Sidebar Pinning (62px / 280px standard)
+    
+
+    if (localStorage.getItem('bio3_dock_pinned') === 'true') {
+      toggleSidebarPin();
+    }
+
+    // 7. Tab Switching Controller
+    function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-pane').forEach(el => {
         el.classList.add('hidden');
         el.classList.remove('active');
@@ -10246,141 +11883,36 @@
         targetPane.classList.add('active');
       }
 
-      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-        btn.classList.remove('active');
+      document.querySelectorAll('.nav-tab-btn').forEach(b => {
+        b.classList.remove('active');
       });
-      const targetBtn = document.getElementById('navBtn-' + tabId);
-      if (targetBtn) {
-        targetBtn.classList.add('active');
-      }
-
-      const mobileSel = document.getElementById('mobileTabSelector');
-      if (mobileSel) {
-        mobileSel.value = tabId;
+      if (btn) {
+        btn.classList.add('active');
+      } else {
+        const matchedBtn = document.getElementById('navBtn-' + tabId);
+        if (matchedBtn) matchedBtn.classList.add('active');
       }
 
       window.location.hash = tabId;
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Check URL Hash on load
-    window.addEventListener('DOMContentLoaded', () => {
-      const hash = window.location.hash.replace('#', '');
-      if (hash && document.getElementById(hash)) {
-        switchTab(hash);
-      }
-
-      // Check dock pin state in localStorage
-      if (localStorage.getItem('sidebar_dock_pinned_bio3') === 'true') {
-        const dock = document.getElementById('sidebarDock');
-        const icon = document.getElementById('pinIcon');
-        if (dock && icon) {
-          dock.classList.add('dock-pinned');
-          document.body.classList.add('dock-is-pinned');
-          icon.classList.add('text-emerald-400');
-        }
-      }
-    });
-
-    // 2. Dock Pin Toggle Controller
-    function toggleDockPin() {
-      const dock = document.getElementById('sidebarDock');
-      const icon = document.getElementById('pinIcon');
-      if (!dock) return;
-
-      const isPinned = dock.classList.toggle('dock-pinned');
-      document.body.classList.toggle('dock-is-pinned', isPinned);
-
-      if (icon) {
-        if (isPinned) {
-          icon.classList.add('text-emerald-400');
-        } else {
-          icon.classList.remove('text-emerald-400');
-        }
-      }
-      localStorage.setItem('sidebar_dock_pinned_bio3', isPinned ? 'true' : 'false');
+    // 8. Flashcards Controller
+    function flipFlashcard(id) {
+      const card = document.getElementById(id);
+      if (card) card.classList.toggle('flipped');
     }
 
-    // 3. Dark/Light Mode Controller
-    function toggleDarkMode() {
-      const isDark = document.documentElement.classList.toggle('dark');
-      const btn = document.getElementById('themeToggleBtn');
-      if (btn) {
-        btn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-      }
+    function toggleFlipAll() {
+      document.querySelectorAll('.flashcard-3d').forEach(c => c.classList.toggle('flipped'));
     }
 
-    // 4. Answer Toggle Helper
     function toggleAnswer(id) {
-      const el = document.getElementById(id);
-      const icon = document.getElementById('icon-' + id);
-      if (el) {
-        el.classList.toggle('hidden');
-        if (icon) {
-          icon.classList.toggle('rotate-180');
-        }
-      }
+      const ans = document.getElementById(id);
+      if (ans) ans.classList.toggle('hidden');
     }
 
-    // 5. Expand/Collapse All Solutions in Textbook
-    let allSubjExpanded = false;
-    function toggleAllSubjAnswers() {
-      allSubjExpanded = !allSubjExpanded;
-      const btn = document.getElementById('toggleAllSubjBtn');
-      document.querySelectorAll('#subjCardsContainer [id^="ans-"]').forEach(el => {
-        if (allSubjExpanded) {
-          el.classList.remove('hidden');
-        } else {
-          el.classList.add('hidden');
-        }
-      });
-      document.querySelectorAll('#subjCardsContainer [id^="icon-ans-"]').forEach(icon => {
-        if (allSubjExpanded) {
-          icon.classList.add('rotate-180');
-        } else {
-          icon.classList.remove('rotate-180');
-        }
-      });
-      if (btn) {
-        btn.textContent = allSubjExpanded ? 'Collapse All Solutions' : 'Expand All Solutions';
-      }
-    }
-
-    // 6. Search & Filter for Subjective Cards
-    function filterSubjectiveCards() {
-      const query = (document.getElementById('subjSearchInput').value || '').toLowerCase().trim();
-      let visible = 0;
-      document.querySelectorAll('.subj-card').forEach(card => {
-        const text = card.textContent.toLowerCase();
-        const matchesQuery = text.includes(query);
-        const matchesCat = currentSubjCat === 'all' || card.dataset.cat === currentSubjCat;
-        if (matchesQuery && matchesCat) {
-          card.classList.remove('hidden');
-          visible++;
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-      const counter = document.getElementById('subjCounter');
-      if (counter) {
-        counter.textContent = `Showing ${visible} of 87 solved questions`;
-      }
-    }
-
-    let currentSubjCat = 'all';
-    function filterSubjCat(cat) {
-      currentSubjCat = cat;
-      document.querySelectorAll('#subjFilterPills button').forEach(b => {
-        b.className = 'px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all';
-      });
-      const activeBtn = document.getElementById('scat-' + cat);
-      if (activeBtn) {
-        activeBtn.className = 'px-3.5 py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white cursor-pointer transition-all shadow-md shadow-emerald-600/20';
-      }
-      filterSubjectiveCards();
-    }
-
-    // 7. Interactive Drills Scoring Engine
+    // 9. Interactive Drills Scoring Engine
     let userDrillScore = 0;
     let userDrillAnswered = 0;
     const answeredDrills = new Set();
@@ -10427,7 +11959,7 @@
       if (ansBox) ansBox.classList.remove('hidden');
     }
 
-    // 8. Filter Objective Drills
+    // 10. Filter Objective Drills
     function filterDrills(type) {
       document.querySelectorAll('#df-all, #df-mcq, #df-tf, #df-fib, #df-assertion_reason, #df-match').forEach(b => {
         b.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all';
@@ -10445,12 +11977,314 @@
         }
       });
     }
+
+    // 11. Match Columns Interactive Arena Engine (Option 3)
+    const matchState = {};
+
+    function initMatchDrill(idx) {
+      if (!matchState[idx]) {
+        matchState[idx] = {
+          selectedLeft: null,
+          pairs: {},
+          checked: false
+        };
+      }
+      return matchState[idx];
+    }
+
+    function handleMatchItemClick(idx, side, key) {
+      const state = initMatchDrill(idx);
+      const arena = document.getElementById(`match-arena-${idx}`);
+      if (!arena) return;
+
+      if (state.checked) {
+        clearMatchValidation(idx);
+      }
+
+      if (side === 'left') {
+        if (state.selectedLeft === key) {
+          state.selectedLeft = null;
+        } else {
+          state.selectedLeft = key;
+        }
+      } else if (side === 'right') {
+        if (state.selectedLeft) {
+          const leftKey = state.selectedLeft;
+          const rightKey = key;
+
+          for (const lk in state.pairs) {
+            if (state.pairs[lk] === rightKey) {
+              delete state.pairs[lk];
+            }
+          }
+          state.pairs[leftKey] = rightKey;
+          state.selectedLeft = null;
+        } else {
+          for (const lk in state.pairs) {
+            if (state.pairs[lk] === key) {
+              delete state.pairs[lk];
+              break;
+            }
+          }
+        }
+      }
+
+      updateMatchUI(idx);
+    }
+
+    function handleMatchDragStart(e, idx, key) {
+      const state = initMatchDrill(idx);
+      state.selectedLeft = key;
+      e.dataTransfer.setData('text/plain', JSON.stringify({ idx, key }));
+      e.dataTransfer.effectAllowed = 'copyMove';
+      updateMatchUI(idx);
+    }
+
+    function handleMatchDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      const el = e.currentTarget;
+      if (el) el.classList.add('is-dragover');
+    }
+
+    function handleMatchDragLeave(e) {
+      const el = e.currentTarget;
+      if (el) el.classList.remove('is-dragover');
+    }
+
+    function handleMatchDrop(e, idx, rightKey) {
+      e.preventDefault();
+      const el = e.currentTarget;
+      if (el) el.classList.remove('is-dragover');
+
+      try {
+        const raw = e.dataTransfer.getData('text/plain');
+        if (!raw) return;
+        const data = JSON.parse(raw);
+        if (data.idx === idx) {
+          const leftKey = data.key;
+          const state = initMatchDrill(idx);
+          if (state.checked) clearMatchValidation(idx);
+
+          for (const lk in state.pairs) {
+            if (state.pairs[lk] === rightKey) {
+              delete state.pairs[lk];
+            }
+          }
+          state.pairs[leftKey] = rightKey;
+          state.selectedLeft = null;
+          updateMatchUI(idx);
+        }
+      } catch (err) {
+        console.error('Match drop error:', err);
+      }
+    }
+
+    function unpairMatchItem(idx, leftKey) {
+      const state = initMatchDrill(idx);
+      if (state.checked) clearMatchValidation(idx);
+      delete state.pairs[leftKey];
+      updateMatchUI(idx);
+    }
+
+    function updateMatchUI(idx) {
+      const state = initMatchDrill(idx);
+      const arena = document.getElementById(`match-arena-${idx}`);
+      if (!arena) return;
+
+      const totalItems = parseInt(arena.dataset.total || '4', 10);
+      const pairedCount = Object.keys(state.pairs).length;
+
+      const statusBadge = document.getElementById(`match-status-${idx}`);
+      if (statusBadge) {
+        statusBadge.textContent = `${pairedCount}/${totalItems} Paired`;
+        if (pairedCount === totalItems) {
+          statusBadge.className = 'font-mono font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-700/60 px-2.5 py-0.5 rounded-full text-[11px] animate-pulse';
+        } else {
+          statusBadge.className = 'font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]';
+        }
+      }
+
+      arena.querySelectorAll('.match-bubble-left').forEach(el => {
+        const k = el.dataset.key;
+        const badge = el.querySelector('.match-conn-badge');
+        const targetLbl = badge ? badge.querySelector('.target-label') : null;
+
+        el.classList.remove('is-selected', 'is-paired');
+        if (state.selectedLeft === k) {
+          el.classList.add('is-selected');
+        }
+
+        if (state.pairs[k]) {
+          el.classList.add('is-paired');
+          if (badge) {
+            badge.classList.remove('hidden');
+            if (targetLbl) targetLbl.textContent = `➔ (${state.pairs[k]})`;
+          }
+        } else {
+          if (badge) badge.classList.add('hidden');
+        }
+      });
+
+      const rightToLeft = {};
+      for (const lk in state.pairs) {
+        rightToLeft[state.pairs[lk]] = lk;
+      }
+
+      arena.querySelectorAll('.match-socket-right').forEach(el => {
+        const rk = el.dataset.key;
+        const badge = el.querySelector('.match-socket-badge');
+        const srcLbl = badge ? badge.querySelector('.source-label') : null;
+
+        el.classList.remove('is-paired');
+        if (rightToLeft[rk]) {
+          el.classList.add('is-paired');
+          if (badge) {
+            badge.classList.remove('hidden');
+            if (srcLbl) srcLbl.textContent = `⮌ [${rightToLeft[rk]}]`;
+          }
+        } else {
+          if (badge) badge.classList.add('hidden');
+        }
+      });
+
+      const dockCount = document.getElementById(`match-dock-count-${idx}`);
+      const pairsList = document.getElementById(`match-pairs-list-${idx}`);
+      if (dockCount && pairsList) {
+        if (pairedCount === 0) {
+          dockCount.textContent = 'None';
+          pairsList.innerHTML = '<span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>';
+        } else {
+          dockCount.textContent = `${pairedCount} of ${totalItems}`;
+          let html = '';
+          for (const lk in state.pairs) {
+            const rk = state.pairs[lk];
+            html += `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs font-mono font-medium">
+              <span class="text-emerald-300 font-bold">[${lk}]</span>
+              <span class="text-slate-500">➔</span>
+              <span class="text-sky-300 font-bold">(${rk})</span>
+              <button onclick="unpairMatchItem(${idx}, '${lk}')" class="ml-1 text-slate-400 hover:text-rose-400 cursor-pointer font-bold" title="Disconnect pair">×</button>
+            </span>`;
+          }
+          pairsList.innerHTML = html;
+        }
+      }
+    }
+
+    function clearMatchValidation(idx) {
+      const state = initMatchDrill(idx);
+      state.checked = false;
+      const arena = document.getElementById(`match-arena-${idx}`);
+      if (!arena) return;
+
+      arena.querySelectorAll('.match-bubble-left, .match-socket-right').forEach(el => {
+        el.classList.remove('match-item-correct', 'match-item-wrong', 'animate-match-shake');
+        const icon = el.querySelector('.status-icon');
+        if (icon) icon.innerHTML = '';
+      });
+
+      const feedback = document.getElementById(`match-feedback-${idx}`);
+      if (feedback) feedback.classList.add('hidden');
+    }
+
+    function checkMatchDrill(idx) {
+      const state = initMatchDrill(idx);
+      const arena = document.getElementById(`match-arena-${idx}`);
+      if (!arena) return;
+
+      let correctPairs = {};
+      try {
+        const raw = arena.dataset.pairs || arena.getAttribute('data-pairs') || '{}';
+        correctPairs = JSON.parse(raw.replace(/&quot;/g, '"'));
+      } catch (e) {
+        console.error('Error parsing correct pairs:', e);
+      }
+
+      const totalItems = parseInt(arena.dataset.total || '4', 10);
+      const userPairKeys = Object.keys(state.pairs);
+
+      const feedback = document.getElementById(`match-feedback-${idx}`);
+
+      if (userPairKeys.length < totalItems) {
+        if (feedback) {
+          feedback.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-950/80 border border-amber-600/70 text-amber-300 flex items-center gap-1.5';
+          feedback.innerHTML = `<i class="fas fa-exclamation-circle"></i> Connect all ${totalItems} pairs before checking! (${userPairKeys.length}/${totalItems} paired)`;
+          feedback.classList.remove('hidden');
+        }
+        return;
+      }
+
+      state.checked = true;
+      let correctCount = 0;
+
+      for (const lk in correctPairs) {
+        const correctTarget = String(correctPairs[lk]).toLowerCase();
+        const userTarget = String(state.pairs[lk] || '').toLowerCase();
+        const isMatch = (userTarget === correctTarget);
+
+        if (isMatch) correctCount++;
+
+        const leftEl = document.getElementById(`match-left-${idx}-${lk}`);
+        const rightEl = document.getElementById(`match-right-${idx}-${state.pairs[lk]}`);
+
+        if (leftEl) {
+          leftEl.classList.remove('match-item-correct', 'match-item-wrong', 'animate-match-shake');
+          leftEl.classList.add(isMatch ? 'match-item-correct' : 'match-item-wrong');
+          if (!isMatch) leftEl.classList.add('animate-match-shake');
+          const icon = leftEl.querySelector('.status-icon');
+          if (icon) icon.innerHTML = isMatch ? ' <i class="fas fa-check text-emerald-400"></i>' : ' <i class="fas fa-times text-rose-400"></i>';
+        }
+
+        if (rightEl) {
+          rightEl.classList.remove('match-item-correct', 'match-item-wrong', 'animate-match-shake');
+          rightEl.classList.add(isMatch ? 'match-item-correct' : 'match-item-wrong');
+          if (!isMatch) rightEl.classList.add('animate-match-shake');
+          const icon = rightEl.querySelector('.status-icon');
+          if (icon) icon.innerHTML = isMatch ? ' <i class="fas fa-check text-emerald-400"></i>' : ' <i class="fas fa-times text-rose-400"></i>';
+        }
+      }
+
+      if (feedback) {
+        feedback.classList.remove('hidden');
+        if (correctCount === totalItems) {
+          feedback.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-950/90 border border-emerald-500 text-emerald-200 flex items-center gap-1.5 shadow-lg shadow-emerald-500/20';
+          feedback.innerHTML = `<i class="fas fa-trophy text-amber-400"></i> 🎉 Perfect Match! All ${totalItems} pairs correctly aligned! (+1 Score)`;
+
+          if (!answeredDrills.has(idx)) {
+            answeredDrills.add(idx);
+            userDrillAnswered++;
+            userDrillScore++;
+
+            const scoreEl = document.getElementById('drillScore');
+            const ansEl = document.getElementById('drillAnswered');
+            if (scoreEl) scoreEl.textContent = userDrillScore;
+            if (ansEl) ansEl.textContent = userDrillAnswered;
+
+            const scoreElSticky = document.getElementById('drillScoreSticky');
+            const ansElSticky = document.getElementById('drillAnsweredSticky');
+            if (scoreElSticky) scoreElSticky.textContent = userDrillScore;
+            if (ansElSticky) ansElSticky.textContent = userDrillAnswered;
+          }
+
+          const ansBox = document.getElementById(`ans-drill-${idx}`);
+          if (ansBox) ansBox.classList.remove('hidden');
+        } else {
+          feedback.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-950/90 border border-rose-500/70 text-rose-200 flex items-center gap-1.5';
+          feedback.innerHTML = `<i class="fas fa-times-circle"></i> ${correctCount}/${totalItems} Correct. Adjust the mismatched pairs or tap Reset to try again!`;
+        }
+      }
+    }
+
+    function resetMatchDrill(idx) {
+      const state = initMatchDrill(idx);
+      state.pairs = {};
+      state.selectedLeft = null;
+      clearMatchValidation(idx);
+      updateMatchUI(idx);
+    }
   </script>
 
-  <!-- Universal Jump to Top Floating Button -->
-  <button id="pushti-jump-to-top" class="pushti-jump-to-top" aria-label="Jump to top" title="Jump to Top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
-  </button>
+  <!-- Universal Jump to Top Floating Button Scroll Handler -->
   <script>
   (function() {
     var btn = document.getElementById('pushti-jump-to-top');
@@ -10471,6 +12305,81 @@
       }
     }, { passive: true });
   })();
+  
+    // ==========================================
+    // Universal Pin Controller (Tablet Portrait & Desktop Safe)
+    // ==========================================
+    function updatePinButtonUI(isPinned) {
+      const btn = document.getElementById('pinToggleBtn');
+      const icon = document.getElementById('pinToggleIcon') || document.getElementById('pinIcon');
+      const dot = document.getElementById('pinStatusDot');
+      const label = document.getElementById('pinStatusText');
+      const hint = document.getElementById('pinActionHint');
+      
+      if (btn) {
+        btn.setAttribute('aria-pressed', isPinned ? 'true' : 'false');
+        if (isPinned) {
+          btn.className = 'w-full h-10 px-2 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden bg-cyan-500/20 border-cyan-500/50 text-cyan-300 ring-1 ring-cyan-500/30 shadow-[0_0_12px_rgba(6,182,212,0.25)]';
+          btn.title = 'Sidebar: Pinned (Locked Open - tap to collapse to compact dock)';
+        } else {
+          btn.className = 'w-full h-10 px-2 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden bg-slate-800/80 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-700/80';
+          btn.title = 'Sidebar: Unpinned (Compact Dock - tap to lock open)';
+        }
+      }
+      
+      if (icon) {
+        if (isPinned) {
+          icon.className = 'fas fa-thumbtack text-xs transition-transform duration-300 rotate-0 text-cyan-400 font-bold scale-110';
+        } else {
+          icon.className = 'fas fa-thumbtack text-xs transition-transform duration-300 -rotate-45 text-slate-400';
+        }
+      }
+      
+      if (dot) {
+        if (isPinned) {
+          dot.className = 'w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.9)] animate-pulse absolute top-1.5 right-1.5 transition-colors';
+        } else {
+          dot.className = 'w-1.5 h-1.5 rounded-full bg-slate-600 absolute top-1.5 right-1.5 transition-colors';
+        }
+      }
+      
+      if (label) {
+        label.textContent = isPinned ? 'Pinned (Locked)' : 'Compact Dock';
+        label.className = isPinned ? 'text-xs font-bold tracking-wide uppercase text-cyan-300' : 'text-xs font-semibold tracking-wide uppercase text-slate-400';
+      }
+      
+      if (hint) {
+        hint.textContent = isPinned ? 'Tap to collapse' : 'Tap to lock';
+        hint.className = isPinned ? 'text-[10px] font-mono text-cyan-400/80' : 'text-[10px] font-mono text-slate-500';
+      }
+    }
+
+    function toggleSidebarPin() {
+      const dock = document.getElementById('sidebarDock');
+      if (!dock) return;
+      const isPinned = dock.classList.toggle('pinned');
+      document.body.classList.toggle('dock-pinned', isPinned);
+      localStorage.setItem('pushti_dock_pinned', isPinned ? 'true' : 'false');
+      updatePinButtonUI(isPinned);
+    }
+    window.toggleDockPin = toggleSidebarPin;
+
+    // Initialize pin state on load (Default: UNPINNED compact rail)
+    (function initSidebarPin() {
+      const dock = document.getElementById('sidebarDock');
+      if (!dock) return;
+      const savedPin = localStorage.getItem('pushti_dock_pinned');
+      // Default is unpinned ("mostly we do not keep full side bar")
+      const isPinned = (savedPin === 'true');
+      if (isPinned) {
+        dock.classList.add('pinned');
+        document.body.classList.add('dock-pinned');
+      } else {
+        dock.classList.remove('pinned');
+        document.body.classList.remove('dock-pinned');
+      }
+      updatePinButtonUI(isPinned);
+    })();
   </script>
 </body>
 </html>

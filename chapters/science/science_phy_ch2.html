@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Heat Transfer & Temperature — Science Physics | Pushti Study Hub</title>
+  <title>Heat Transfer &amp; Temperature — Science Physics | Pushti Study Hub</title>
   
   <!-- Inter, Outfit & Space Mono Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,101 +33,259 @@
     }
   </script>
 
-  <!-- Font Awesome Icons -->
+  <!-- FontAwesome 6.4.0 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.6);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(245, 158, 11, 0.3);
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(245, 158, 11, 0.6);
-    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(245, 158, 11, 0.35); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(245, 158, 11, 0.6); }
 
-    /* Vertical Dock Rail Standard (62px collapsed / 280px pinned) */
-    #sidebarDock {
-      width: 62px;
-      transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      overflow-x: hidden;
-    }
-    #sidebarDock:hover,
-    #sidebarDock.dock-pinned {
-      width: 280px;
-    }
-    .dock-label {
-      opacity: 0;
-      white-space: nowrap;
-      pointer-events: none;
-      transition: opacity 0.2s ease 0.05s;
-    }
-    #sidebarDock:hover .dock-label,
-    #sidebarDock.dock-pinned .dock-label {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .dock-tooltip {
-      display: none;
-    }
-    #sidebarDock:not(:hover):not(.dock-pinned) .nav-tab-btn:hover .dock-tooltip {
-      display: block;
-    }
+    /* Tab Transition & Display */
+    .tab-pane { display: none; opacity: 0; transition: opacity 0.25s ease-in-out; }
+    .tab-pane.active { display: block; opacity: 1; }
 
-    /* Desktop Push Margin (62px default / 280px pinned) */
-    @media (min-width: 1024px) {
-      .main-app-content {
-        margin-left: 62px;
-        transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      body.dock-is-pinned .main-app-content {
-        margin-left: 280px;
-      }
-    }
-
-    /* Tab Button Active States */
-    .nav-tab-btn.active {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(217, 119, 6, 0.15)) !important;
-      border-color: rgba(245, 158, 11, 0.45) !important;
-      color: #fbbf24 !important;
-    }
-    .nav-tab-btn.active .dock-label div:last-child {
-      color: #ffffff !important;
-      font-weight: 700;
-    }
-
-    /* 3D Flashcard Perspectives */
-    .flashcard-3d {
-      perspective: 1000px;
-    }
-    .flashcard-inner {
-      transform-style: preserve-3d;
-    }
-    .flashcard-3d.flipped .flashcard-inner {
-      transform: rotateY(180deg);
-    }
-    .flashcard-front, .flashcard-back {
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-    }
-    .flashcard-back {
-      transform: rotateY(180deg);
-    }
-
-    /* Fade-in Animation */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .animate-fadeIn {
-      animation: fadeIn 0.3s ease-out forwards;
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+
+    /* 3D Flashcard Perspectives */
+    .flashcard-3d { perspective: 1000px; }
+    .flashcard-inner { transform-style: preserve-3d; }
+    .flashcard-3d.flipped .flashcard-inner { transform: rotateY(180deg); }
+    .flashcard-front, .flashcard-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .flashcard-back { transform: rotateY(180deg); }
+
+        /* Collapsible Vertical Dock Rail (Universal Tablet & Desktop) */
+    .sidebar-dock {
+      width: 62px;
+      position: fixed;
+      top: 54px;
+      bottom: 0;
+      left: 0;
+      z-index: 900;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid rgba(51, 65, 85, 0.7);
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Only expand on mouse hover for fine pointers (Desktop), preventing sticky hover on touch tablets */
+    @media (hover: hover) and (pointer: fine) {
+      .sidebar-dock:hover {
+        width: 280px;
+        transition-delay: 0.15s;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+      }
+      .sidebar-dock:hover .tab-label-group {
+        display: flex !important;
+        width: auto !important;
+        min-width: 140px !important;
+        max-width: 200px !important;
+        margin-left: 12px !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+    }
+
+    /* Explicitly Pinned State: Locked open at 280px across tablet & desktop */
+    .sidebar-dock.pinned {
+      width: 280px !important;
+      transition-delay: 0s !important;
+      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+    }
+    .sidebar-dock.pinned .tab-label-group {
+      display: flex !important;
+      width: auto !important;
+      min-width: 140px !important;
+      max-width: 200px !important;
+      margin-left: 12px !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+
+    /* Responsive Dock Rail & Margin Push (Tablet & Desktop Safe) */
+    @media (min-width: 640px) and (max-width: 1099px) {
+      .sidebar-dock {
+        width: 62px;
+        position: fixed !important;
+        left: 0 !important;
+        top: 54px !important;
+        bottom: 0 !important;
+        z-index: 900 !important;
+      }
+      .sidebar-dock .sidebar-footer {
+        display: flex !important;
+      }
+      .main-app-content {
+        margin-left: 62px !important;
+        width: calc(100% - 62px) !important;
+        max-width: min(1600px, calc(100vw - 62px)) !important;
+        box-sizing: border-box !important;
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      /* Pinned on tablet in portrait: expands with elevated shadow */
+      .sidebar-dock.pinned {
+        width: 260px !important;
+        z-index: 950 !important;
+      }
+      .sidebar-dock.pinned ~ .main-app-content {
+        margin-left: 62px !important;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .sidebar-dock {
+        width: 62px;
+        position: fixed;
+        left: 0;
+        top: 54px;
+        bottom: 0;
+        z-index: 900;
+      }
+      .sidebar-dock .sidebar-footer {
+        display: flex !important;
+      }
+      .main-app-content {
+        margin-left: 62px !important;
+        width: calc(100% - 62px) !important;
+        max-width: min(1600px, calc(100vw - 62px)) !important;
+        box-sizing: border-box !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .sidebar-dock.pinned {
+        width: 280px !important;
+      }
+      .sidebar-dock.pinned ~ .main-app-content {
+        margin-left: 280px !important;
+        width: calc(100% - 280px) !important;
+        max-width: min(1600px, calc(100vw - 280px)) !important;
+      }
+    }
+
+    @media (max-width: 639px) {
+      .flex.flex-1.relative { flex-direction: column !important; }
+      .sidebar-dock {
+        position: sticky !important;
+        top: 54px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 48px !important;
+        max-height: 48px !important;
+        min-height: 48px !important;
+        flex-direction: row !important;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(51, 65, 85, 0.7) !important;
+        padding: 4px 6px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        z-index: 850 !important;
+      }
+      .sidebar-dock > div:first-child {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 6px !important;
+        width: 100% !important;
+        padding: 0 !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+      }
+      .sidebar-dock .nav-tab-btn {
+        width: auto !important;
+        height: 40px !important;
+        padding: 4px 10px !important;
+        flex-shrink: 0 !important;
+      }
+      .sidebar-dock .tab-label-group { display: none !important; }
+      .sidebar-dock .sidebar-footer { display: none !important; }
+      .main-app-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 14px !important;
+      }
+    }
+
+    /* Light Theme Parity */
+    html:not(.dark) body {
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    html:not(.dark) .sidebar-dock {
+      background: rgba(255, 255, 255, 0.96);
+      border-right-color: #e2e8f0;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.06);
+    }
+    html:not(.dark) .nav-tab-btn.active {
+      background: rgba(245, 158, 11, 0.18) !important;
+      border-color: rgba(217, 119, 6, 0.85) !important;
+      color: #78350f !important;
+      box-shadow: 0 2px 12px rgba(245, 158, 11, 0.25) !important;
+    }
+    html:not(.dark) .nav-tab-btn.active svg, html:not(.dark) .nav-tab-btn.active i {
+      color: #b45309 !important;
+      filter: drop-shadow(0 0 6px rgba(217, 119, 6, 0.5));
+    }
+    html:not(.dark) header {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom-color: #e2e8f0;
+    }
+
+    /* Match Columns Arena Interactive Styling */
+    @keyframes matchShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+    .animate-match-shake {
+      animation: matchShake 0.4s ease-in-out;
+    }
+    .match-bubble-left.is-selected {
+      box-shadow: 0 0 0 2px #fbbf24, 0 0 15px rgba(251, 191, 36, 0.4);
+      border-color: #f59e0b !important;
+      background: rgba(120, 53, 15, 0.7) !important;
+    }
+    .match-socket-right.is-dragover {
+      box-shadow: 0 0 0 2px #38bdf8, 0 0 15px rgba(56, 189, 248, 0.4);
+      border-color: #38bdf8 !important;
+      background: rgba(12, 74, 110, 0.7) !important;
+    }
+    .match-bubble-left.is-paired {
+      border-color: rgba(251, 191, 36, 0.6) !important;
+      background: rgba(120, 53, 15, 0.4) !important;
+    }
+    .match-socket-right.is-paired {
+      border-color: rgba(56, 189, 248, 0.6) !important;
+      background: rgba(12, 74, 110, 0.4) !important;
+    }
+    .match-item-correct {
+      border-color: #10b981 !important;
+      background: rgba(6, 95, 70, 0.65) !important;
+      color: #a7f3d0 !important;
+    }
+    .match-item-wrong {
+      border-color: #f43f5e !important;
+      background: rgba(136, 19, 55, 0.65) !important;
+      color: #fecdd3 !important;
     }
 
     /* Universal Jump to Top Floating Button */
@@ -138,7 +296,7 @@
       width: 46px;
       height: 46px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #10B981, #059669);
+      background: linear-gradient(135deg, #f59e0b, #d97706);
       color: #ffffff;
       border: none;
       outline: none;
@@ -146,7 +304,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 18px rgba(16, 185, 129, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 18px rgba(245, 158, 11, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2);
       opacity: 0;
       visibility: hidden;
       transform: translateY(16px) scale(0.9);
@@ -161,7 +319,7 @@
       transform: translateY(0) scale(1);
     }
     .pushti-jump-to-top:hover {
-      background: linear-gradient(135deg, #059669, #047857);
+      background: linear-gradient(135deg, #d97706, #b45309);
       transform: translateY(-3px) scale(1.06);
     }
     .pushti-jump-to-top svg {
@@ -175,234 +333,331 @@
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-amber-500/30 selection:text-amber-200">
+<body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col font-sans selection:bg-amber-500/30 selection:text-amber-200 transition-colors duration-300">
 
-  <!-- TOPBAR HEADER (54px Sticky) -->
-  <header class="sticky top-0 z-50 h-[54px] bg-slate-900/90 backdrop-blur-md border-b border-slate-800 flex items-center justify-between px-4 lg:px-6 shadow-lg">
-    <div class="flex items-center gap-3">
-      <a href="../../science_index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-xs font-semibold px-2.5 py-1.5 rounded-lg hover:bg-slate-800">
-        <i class="fas fa-arrow-left"></i>
-        <span>Science Hub</span>
+  <!-- ==================== TOP SITE HEADER (54px) ==================== -->
+  <header class="sticky top-0 z-50 bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-800 px-4 lg:px-8 py-2.5 h-[54px] flex items-center justify-between transition-colors duration-300">
+    <!-- Left: Breadcrumbs -->
+    <nav class="flex items-center gap-2 text-sm text-slate-400 overflow-x-auto whitespace-nowrap">
+      <a href="../../index.html" class="flex items-center gap-1.5 hover:text-amber-400 transition-colors font-medium text-slate-300">
+        <i class="fas fa-home text-xs"></i>
+        <span>Home</span>
       </a>
-      <div class="h-4 w-px bg-slate-800"></div>
-      <div class="flex items-center gap-2 text-xs font-semibold text-slate-300">
-        <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-mono font-bold">Physics 02</span>
-        <span class="hidden sm:inline text-slate-400">•</span>
-        <span class="hidden sm:inline text-slate-200 font-bold">Heat Transfer &amp; Temperature</span>
-      </div>
-    </div>
-
-    <!-- Quick Badges & Actions -->
-    <div class="flex items-center gap-3">
-      <span class="hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold">
-        <i class="fas fa-certificate text-[10px]"></i> Hath Fero 100% (225 Qs)
+      <span class="text-slate-600">/</span>
+      <a href="../../science_index.html" class="hover:text-amber-400 transition-colors font-medium text-slate-300">
+        Science
+      </a>
+      <span class="text-slate-600">/</span>
+      <span class="text-amber-400 font-semibold flex items-center gap-1.5">
+        <i class="fas fa-fire text-amber-400 text-xs"></i>
+        Physics: Ch 2
       </span>
+    </nav>
 
-      <!-- Quick Nav Dropdown for Mobile -->
-      <select onchange="switchTab(this.value)" class="lg:hidden text-xs bg-slate-800 border border-slate-700 text-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:border-amber-500">
-        <option value="tabPrimer">1. Pushti's Heat Primer</option>
-        <option value="tabScales">2. Scales &amp; Conversions</option>
-        <option value="tabThermometry">3. Thermometry (Clinical/Lab)</option>
-        <option value="tabConduction">4. Conduction &amp; Insulators</option>
-        <option value="tabConvection">5. Convection &amp; Breezes</option>
-        <option value="tabRadiation">6. Radiation &amp; Absorption</option>
-        <option value="tabThermos">7. The Vacuum Flask</option>
-        <option value="tabWaterCycle">8. Water Cycle &amp; Aquifers</option>
-        <option value="tabActivities">9. Activity Lab Corner</option>
-        <option value="tabTextbook">10. Universal Solved Q&amp;A (69 Qs)</option>
-        <option value="tabDrills">11. Objective Drills (156 Qs)</option>
-        <option value="tabTraps">12. Exam Traps &amp; Flashcards</option>
-      </select>
+    <!-- Right Cluster -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- 1. Search Button / Toggle Input -->
+      <div class="relative flex items-center">
+        <button id="globalSearchBtn" onclick="toggleGlobalSearch()" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer flex items-center justify-center" aria-label="Search" title="Search Questions">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        </button>
+        <div id="globalSearchDropdown" class="hidden absolute right-0 top-12 z-50 w-72 bg-slate-900 border border-slate-700 rounded-xl p-2 shadow-2xl">
+          <input type="text" id="quickNavSearchInput" placeholder="Quick search question topics..." oninput="handleQuickSearch(this.value)" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500">
+        </div>
+      </div>
 
-      <button onclick="window.print()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs transition-colors cursor-pointer" title="Print Study Material">
-        <i class="fas fa-print"></i>
+      <!-- 2. Theme Toggle -->
+      <button onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer flex items-center justify-center" aria-label="Toggle Theme" title="Toggle Theme">
+        <svg id="themeIconSvg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
       </button>
 
-      <button onclick="toggleDarkMode()" id="themeToggleBtn" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 flex items-center justify-center text-xs transition-colors cursor-pointer" title="Toggle Theme">
-        <i class="fas fa-sun"></i>
+      <!-- 3. Fullscreen Button -->
+      <button onclick="toggleFullScreen()" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all shadow-sm cursor-pointer" title="Toggle Fullscreen">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        <span>Fullscreen</span>
       </button>
+
+      <!-- 4. Time Table Link -->
+      <a href="../../timetable.html" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all shadow-sm">
+        <span>📅 Time Table</span>
+      </a>
+
+      <!-- 5. Mid-Term Syllabus Link -->
+      <a href="../../midterm.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all shadow-sm">
+        <span>🎯 Mid-Term Syllabus</span>
+      </a>
+
+      <!-- 6. 100% Mid-Term Ready Battery Pill -->
+      <div class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold" title="Mid-Term Syllabus Coverage">
+        <span>🔋 100% Mid-Term Ready</span>
+      </div>
+
+      <!-- 7. Session Timer -->
+      <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 font-mono text-xs">
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <span id="sessionTimerDisplay">00:00</span>
+      </div>
     </div>
   </header>
 
-  <!-- MAIN WRAPPER WITH DOCK RAIL -->
+  <!-- ==================== APP WRAPPER ==================== -->
   <div class="flex flex-1 relative min-h-[calc(100vh-54px)]">
 
-    <!-- VERTICAL DOCK RAIL (62px / 280px Standard) -->
-    <aside id="sidebarDock" class="fixed top-[54px] left-0 bottom-0 z-40 bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-md border-r border-slate-800 flex flex-col justify-between p-2 select-none shadow-2xl">
-      <!-- Top Section -->
-      <div class="space-y-1.5 overflow-y-auto overflow-x-hidden pr-0.5 max-h-[calc(100vh-130px)]">
-        <!-- 1. Primer -->
-        <button onclick="switchTab('tabPrimer')" id="navBtn-tabPrimer" class="nav-tab-btn active flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-fire"></i>
+    <!-- ==================== COLLAPSIBLE VERTICAL DOCK RAIL ==================== -->
+    <aside id="sidebarDock" class="sidebar-dock group" aria-label="Chapter Navigation">
+      <div class="flex flex-col gap-1.5 p-2">
+        
+        <!-- Tab 1: Primer -->
+        <button id="navBtn-tabPrimer" onclick="switchTab('tabPrimer', this)" class="nav-tab-btn active flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="1. Launchpad Primer">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-amber-400">
+            <i class="fas fa-fire text-base"></i>
+            <span class="w-2 h-2 rounded-full bg-amber-400 absolute top-0.5 right-0.5 ring-2 ring-slate-900 animate-pulse"></span>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-amber-400">Section 1 • Primer</div>
-            <div class="text-xs font-semibold text-white">Heat Launchpad Base</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-amber-400">Section 1 · Primer</span>
+            <span class="font-medium text-sm text-slate-200">Thermal Foundations</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Thermal Primer</div>
         </button>
 
-        <!-- 2. Scales -->
-        <button onclick="switchTab('tabScales')" id="navBtn-tabScales" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-thermometer-half"></i>
+        <!-- Tab 2: Scales -->
+        <button id="navBtn-tabScales" onclick="switchTab('tabScales', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="2. Scales & Conversions">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-orange-400">
+            <i class="fas fa-thermometer-half text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-orange-400">Section 2 • Scales</div>
-            <div class="text-xs font-semibold text-white">Scales &amp; Conversions</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-orange-400">Section 2 · Scales</span>
+            <span class="font-medium text-sm text-slate-200">Celsius, Fahr &amp; Kelvin</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Temperature Scales</div>
         </button>
 
-        <!-- 3. Thermometry -->
-        <button onclick="switchTab('tabThermometry')" id="navBtn-tabThermometry" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-stethoscope"></i>
+        <!-- Tab 3: Thermometry -->
+        <button id="navBtn-tabThermometry" onclick="switchTab('tabThermometry', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="3. Thermometry Devices">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-rose-400">
+            <i class="fas fa-stethoscope text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-rose-400">Section 3 • Devices</div>
-            <div class="text-xs font-semibold text-white">Clinical vs Laboratory</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-rose-400">Section 3 · Devices</span>
+            <span class="font-medium text-sm text-slate-200">Clinical &amp; Lab Sensors</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Thermometry</div>
         </button>
 
-        <!-- 4. Conduction -->
-        <button onclick="switchTab('tabConduction')" id="navBtn-tabConduction" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-yellow-500/10 text-yellow-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-hand-holding-fire"></i>
+        <!-- Tab 4: Conduction -->
+        <button id="navBtn-tabConduction" onclick="switchTab('tabConduction', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="4. Conduction in Solids">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-amber-500">
+            <i class="fas fa-cube text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-yellow-400">Section 4 • Solids</div>
-            <div class="text-xs font-semibold text-white">Conduction &amp; Insulators</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-amber-500">Section 4 · Transfer</span>
+            <span class="font-medium text-sm text-slate-200">Conduction &amp; Metals</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Conduction</div>
         </button>
 
-        <!-- 5. Convection -->
-        <button onclick="switchTab('tabConvection')" id="navBtn-tabConvection" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-wind"></i>
+        <!-- Tab 5: Convection -->
+        <button id="navBtn-tabConvection" onclick="switchTab('tabConvection', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="5. Convection & Breezes">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-cyan-400">
+            <i class="fas fa-water text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-sky-400">Section 5 • Fluids</div>
-            <div class="text-xs font-semibold text-white">Convection &amp; Breezes</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-cyan-400">Section 5 · Fluids</span>
+            <span class="font-medium text-sm text-slate-200">Convection &amp; Breezes</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Convection</div>
         </button>
 
-        <!-- 6. Radiation -->
-        <button onclick="switchTab('tabRadiation')" id="navBtn-tabRadiation" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-satellite-dish"></i>
+        <!-- Tab 6: Radiation -->
+        <button id="navBtn-tabRadiation" onclick="switchTab('tabRadiation', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="6. Thermal Radiation">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-yellow-400">
+            <i class="fas fa-sun text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-red-400">Section 6 • Waves</div>
-            <div class="text-xs font-semibold text-white">Radiation &amp; Absorption</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-yellow-400">Section 6 · Radiant</span>
+            <span class="font-medium text-sm text-slate-200">Radiation &amp; Surfaces</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Thermal Radiation</div>
         </button>
 
-        <!-- 7. Thermos -->
-        <button onclick="switchTab('tabThermos')" id="navBtn-tabThermos" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-flask"></i>
+        <!-- Tab 7: Thermos -->
+        <button id="navBtn-tabThermos" onclick="switchTab('tabThermos', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="7. Thermos Flask">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-emerald-400">
+            <i class="fas fa-mug-hot text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-teal-400">Section 7 • Design</div>
-            <div class="text-xs font-semibold text-white">The Vacuum Flask</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-emerald-400">Section 7 · Applied</span>
+            <span class="font-medium text-sm text-slate-200">Thermos Flask Anatomy</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Vacuum Flask</div>
         </button>
 
-        <!-- 8. Water Cycle -->
-        <button onclick="switchTab('tabWaterCycle')" id="navBtn-tabWaterCycle" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-water"></i>
+        <!-- Tab 8: Water Cycle -->
+        <button id="navBtn-tabWatercycle" onclick="switchTab('tabWatercycle', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="8. Water Cycle">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-blue-400">
+            <i class="fas fa-cloud-rain text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-cyan-400">Section 8 • Nature</div>
-            <div class="text-xs font-semibold text-white">Water Cycle &amp; Aquifers</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-blue-400">Section 8 · Nature</span>
+            <span class="font-medium text-sm text-slate-200">Water Cycle Dynamics</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Water Cycle</div>
         </button>
 
-        <!-- 9. Activities -->
-        <button onclick="switchTab('tabActivities')" id="navBtn-tabActivities" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-vial"></i>
+        <!-- Tab 9: Activities -->
+        <button id="navBtn-tabActivities" onclick="switchTab('tabActivities', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="9. Activities &amp; Labs">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-teal-400">
+            <i class="fas fa-vial text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-indigo-400">Section 9 • Labs</div>
-            <div class="text-xs font-semibold text-white">Activity Lab Corner</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-teal-400">Section 9 · Labs</span>
+            <span class="font-medium text-sm text-slate-200">Empirical Labs (8 Labs)</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">NCERT Activities</div>
         </button>
 
-        <!-- 10. Textbook -->
-        <button onclick="switchTab('tabTextbook')" id="navBtn-tabTextbook" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-book-reader"></i>
+        <!-- Tab 10: Textbook -->
+        <button id="navBtn-tabTextbook" onclick="switchTab('tabTextbook', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="10. Universal Solved Q&A (69 Qs)">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-indigo-400">
+            <i class="fas fa-book-reader text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-amber-400">Section 10 • Solved</div>
-            <div class="text-xs font-semibold text-white">Textbook Q&amp;A (69 Qs)</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-indigo-400">Section 10 · Solved</span>
+            <span class="font-medium text-sm text-slate-200">Textbook Q&amp;A (69 Qs)</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Solved Q&amp;A Bank</div>
         </button>
 
-        <!-- 11. Drills -->
-        <button onclick="switchTab('tabDrills')" id="navBtn-tabDrills" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-bullseye"></i>
+        <!-- Tab 11: Drills -->
+        <button id="navBtn-tabDrills" onclick="switchTab('tabDrills', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="11. Objective Practice Drills (156 Qs)">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-rose-400">
+            <i class="fas fa-tasks text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-orange-400">Section 11 • Practice</div>
-            <div class="text-xs font-semibold text-white">Objective Drills (156 Qs)</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-rose-400">Section 11 · Practice</span>
+            <span class="font-medium text-sm text-slate-200">Objective Drills (156)</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Objective Drills</div>
         </button>
 
-        <!-- 12. Traps -->
-        <button onclick="switchTab('tabTraps')" id="navBtn-tabTraps" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-skull-crossbones"></i>
+        <!-- Tab 12: Traps -->
+        <button id="navBtn-tabTraps" onclick="switchTab('tabTraps', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="12. Exam Traps & Flashcards">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-amber-500">
+            <i class="fas fa-brain text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-rose-400">Section 12 • HOTS</div>
-            <div class="text-xs font-semibold text-white">16 Flashcards &amp; Traps</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-amber-500">Section 12 · HOTS</span>
+            <span class="font-medium text-sm text-slate-200">Traps &amp; Flashcards</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Traps &amp; Flashcards</div>
         </button>
+        <button id="navBtn-tabGoogleHub" onclick="switchTab('tabGoogleHub', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="13. Research &amp; Video Hub">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-cyan-400">
+            <i class="fab fa-google text-base"></i>
+          </div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-cyan-400">Research &amp; Videos</span>
+            <span class="font-medium text-sm text-slate-200">Google Hub (8 Topics)</span>
+          </div>
+        </button>
+
       </div>
 
-      <!-- Bottom Pin Control -->
-      <div class="pt-2 border-t border-slate-800/80 flex items-center justify-center">
-        <button id="pinToggleBtn" onclick="toggleDockPin()" class="w-10 h-10 rounded-xl bg-slate-800/60 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all cursor-pointer" title="Pin / Unpin Sidebar Dock">
-          <i class="fas fa-thumbtack text-xs" id="pinIcon"></i>
+      <!-- Dock Footer: Pin Toggle -->
+            <!-- Dock Footer: Universal Pin Toggle (Tablet & Desktop Safe) -->
+      <div class="sidebar-footer p-2 border-t border-slate-800/80 flex items-center justify-center relative">
+        <button id="pinToggleBtn" onclick="toggleSidebarPin()" class="w-full h-10 px-2 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden bg-slate-800/80 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-700/80" title="Sidebar: Unpinned (Compact Dock - tap to lock open)" aria-label="Pin Sidebar Navigation" aria-pressed="false">
+          <!-- Icon Container -->
+          <div class="w-7 h-7 flex items-center justify-center flex-shrink-0 transition-transform">
+            <i id="pinToggleIcon" class="fas fa-thumbtack text-xs transition-transform duration-300 -rotate-45 text-slate-400"></i>
+          </div>
+          <!-- Label Group (Visible when dock expands to 280px) -->
+          <div class="tab-label-group flex-1 flex items-center justify-between overflow-hidden whitespace-nowrap">
+            <span id="pinStatusText" class="text-xs font-semibold tracking-wide uppercase text-slate-400">Compact Dock</span>
+            <span id="pinActionHint" class="text-[10px] font-mono text-slate-500">Tap to lock</span>
+          </div>
+          <!-- Mini Status Dot (Always visible in collapsed 62px rail) -->
+          <span id="pinStatusDot" class="w-1.5 h-1.5 rounded-full bg-slate-600 absolute top-1.5 right-1.5 transition-colors"></span>
         </button>
       </div>
     </aside>
 
-    <!-- MAIN APP CONTENT AREA (Desktop Push Margin) -->
-    <main id="main-content" class="main-app-content flex-1 p-4 md:p-8 lg:p-10 max-w-7xl mx-auto w-full">
-      <!-- Tab Panes -->
-      <div id="tabPrimer" class="tab-pane active space-y-8 animate-fadeIn">
-  <!-- Hero Banner for Pushti -->
-  <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-950 via-slate-900 to-rose-950 border border-amber-800/40 p-6 md:p-10 shadow-2xl">
-    <div class="absolute -right-16 -top-16 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
-    
-    <div class="relative z-10">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-semibold uppercase tracking-wider mb-4">
-        <i class="fas fa-fire"></i> Pushti's Physics Launchpad • Thermal Energy Base
+    <!-- ==================== MAIN CONTENT AREA ==================== -->
+    <main class="main-app-content flex-1 max-w-7xl mx-auto w-full px-4 lg:px-8 py-6">
+      
+      <!-- HERO BANNER -->
+      <div class="mb-6 bg-gradient-to-br from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800/80 rounded-2xl p-5 md:p-6 shadow-xl relative overflow-hidden">
+        <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-2">
+              Science · Physics · Chapter 2
+            </div>
+            <div class="flex items-center gap-3">
+              <h1 class="text-2xl md:text-3xl font-extrabold text-white font-heading tracking-tight">
+                Heat Transfer &amp; Temperature
+              </h1>
+              <button onclick="speakHeroIntro()" class="p-2 rounded-xl bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 transition-all cursor-pointer inline-flex items-center justify-center" title="Listen to Overview Narration">
+                <i class="fas fa-volume-up text-sm"></i>
+              </button>
+            </div>
+            <p class="text-slate-400 text-sm mt-1 max-w-2xl leading-relaxed">
+              Comprehensive homeschool-grade module: Thermal energy vs temperature kinematics, thermometric scales (Celsius, Fahrenheit, Kelvin), 3 modes of heat transfer (Conduction, Convection, Radiation), thermos flask mechanics, and water cycle energetics.
+            </p>
+          </div>
+
+          <!-- Quick Navigation Badges -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800/70 text-slate-300 border border-slate-700 text-xs font-medium">Foundations Primer</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800/70 text-slate-300 border border-slate-700 text-xs font-medium">Heat Transfer</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800/70 text-slate-300 border border-slate-700 text-xs font-medium">Thermometry</span>
+            <span class="px-2.5 py-1 rounded-lg bg-amber-950/60 text-amber-300 border border-amber-800/50 text-xs font-semibold">225 Verified Qs</span>
+          </div>
+        </div>
       </div>
-      <h1 class="text-3xl md:text-5xl font-black text-white font-heading tracking-tight leading-tight">
-        Mastering Heat, Temperature &amp; <span class="bg-gradient-to-r from-amber-400 via-orange-300 to-rose-400 bg-clip-text text-transparent">Thermal Transfer</span>
-      </h1>
-      <p class="mt-4 text-base md:text-lg text-slate-300 max-w-3xl leading-relaxed">
-        Heat is not a mysterious fluid! It is simply <strong class="text-amber-300">microscopic kinetic energy</strong> of jiggling atoms. Once you master the crucial difference between <strong class="text-orange-300">Heat (total thermal energy)</strong> and <strong class="text-rose-300">Temperature (average molecular speedometer)</strong>, every thermometric scale and mode of heat transfer becomes totally logical.
-      </p>
+
+      <!-- Tab Panes -->
+      <div id="tabPrimer" class="tab-pane active space-y-6 animate-fadeIn">
+  <!-- Welcome & Confidence Card -->
+  <div class="bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-rose-500/10 border border-amber-500/30 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="p-2 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 text-lg">
+        🌟
+      </span>
+      <div>
+        <span class="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">Pushti's Physics Launchpad · Prerequisite Base Primer</span>
+        <h2 class="text-xl md:text-2xl font-bold text-white font-heading">
+          Heat is Microscopic Kinetic Energy of Atoms!
+        </h2>
+      </div>
+    </div>
+    <p class="text-slate-300 text-sm leading-relaxed max-w-3xl">
+      Welcome, Pushti! Heat is not a mysterious fluid — it is simply the kinetic energy of jiggling atoms. Once you master the crucial difference between Heat (total thermal energy) and Temperature (average molecular speedometer), every thermometric scale and mode of heat transfer becomes totally logical!
+    </p>
+
+    <!-- Key Metrics Strip -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 mt-4 border-t border-slate-800/80">
+      <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
+        <div class="text-xs uppercase text-slate-400 font-bold">Clinical Range</div>
+        <div class="text-xl md:text-2xl font-black text-amber-400 font-mono mt-0.5">35–42°C</div>
+        <div class="text-[10px] text-slate-500 font-mono">94–108°F Scale</div>
+      </div>
+      <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
+        <div class="text-xs uppercase text-slate-400 font-bold">Water BP / FP</div>
+        <div class="text-xl md:text-2xl font-black text-orange-400 font-mono mt-0.5">100° / 0°C</div>
+        <div class="text-[10px] text-slate-500 font-mono">Standard Press.</div>
+      </div>
+      <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
+        <div class="text-xs uppercase text-slate-400 font-bold">Transfer Modes</div>
+        <div class="text-xl md:text-2xl font-black text-rose-400 font-mono mt-0.5">3 Modes</div>
+        <div class="text-[10px] text-slate-500 font-mono">Cond / Conv / Rad</div>
+      </div>
+      <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
+        <div class="text-xs uppercase text-slate-400 font-bold">Assessment Bank</div>
+        <div class="text-xl md:text-2xl font-black text-sky-400 font-mono mt-0.5">225 Items</div>
+        <div class="text-[10px] text-slate-500 font-mono">100% NCERT Verified</div>
+      </div>
     </div>
   </div>
 
@@ -7893,27 +8148,243 @@
       </div>
     </div>
 
-    <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match">
+    <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match" id="drill-card-113">
       <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
         <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 rounded-xl bg-amber-500/20 text-amber-300 font-mono text-xs font-bold">Item 113 • MATCH</span>
+          <span class="px-2.5 py-1 rounded-xl bg-amber-500/20 text-amber-300 font-mono text-xs font-bold">Item 113 • MATCH COLUMNS</span>
           <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-medium">Heat Transfer Concepts &amp; Materials</span>
         </div>
         <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-semibold">medium</span>
       </div>
 
       <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
-        Match the terms in List-I with their corresponding definitions or categories in List-II:<br>List-I:<br>(P) Actual bulk movement of molecules<br>(Q) Rubber, cork, plastic, wood<br>(R) Boiling point of water at 1 atm<br>(S) Gold, silver, copper, iron<br><br>List-II:<br>(1) Convection<br>(2) Thermal Insulators<br>(3) 100°C (212°F)<br>(4) Thermal Conductors
+        Match the terms in List-I with their corresponding definitions or categories in List-II:
       </div>
-      <div class="pt-1">
-        <button onclick="toggleAnswer('ans-drill-113')" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all cursor-pointer">
-          <i class="fas fa-lightbulb text-amber-400"></i>
-          <span>Reveal Answer &amp; Explanation</span>
-        </button>
+
+      <!-- Match Instructions & Live Progress -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <i class="fas fa-hand-pointer text-cyan-400"></i>
+          <span class="hidden sm:inline">Tap item on <strong>Column I</strong>, then tap target on <strong>Column II</strong> (or drag &amp; drop).</span>
+          <span class="sm:hidden">Tap Column I, then Column II to pair.</span>
+        </div>
+        <div>
+          <span id="match-status-113" class="font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]">
+            0/4 Paired
+          </span>
+        </div>
       </div>
+
+      <!-- Interactive Dual-Column Arena -->
+      <div class="match-arena grid grid-cols-1 md:grid-cols-2 gap-4 relative" id="match-arena-113" data-idx="113" data-pairs="{&quot;P&quot;: &quot;1&quot;, &quot;Q&quot;: &quot;2&quot;, &quot;R&quot;: &quot;3&quot;, &quot;S&quot;: &quot;4&quot;}" data-total="4">
+        <!-- Column I (Left) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-amber-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-cubes"></i> Column I (Source)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Select or Drag</span>
+          </div>
+          <div class="space-y-2" id="match-left-col-113">
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-113-P"
+               data-key="P"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 113, 'P')"
+               onclick="handleMatchItemClick(113, 'left', 'P')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-amber-950/80 border border-amber-700/60 text-amber-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                P
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Actual bulk movement of molecules
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-113-Q"
+               data-key="Q"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 113, 'Q')"
+               onclick="handleMatchItemClick(113, 'left', 'Q')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-amber-950/80 border border-amber-700/60 text-amber-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                Q
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Rubber, cork, plastic, wood
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-113-R"
+               data-key="R"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 113, 'R')"
+               onclick="handleMatchItemClick(113, 'left', 'R')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-amber-950/80 border border-amber-700/60 text-amber-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                R
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Boiling point of water at 1 atm
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-113-S"
+               data-key="S"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 113, 'S')"
+               onclick="handleMatchItemClick(113, 'left', 'S')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-amber-950/80 border border-amber-700/60 text-amber-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                S
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Gold, silver, copper, iron
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Column II (Right) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-sky-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-bullseye"></i> Column II (Target)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Tap or Drop</span>
+          </div>
+          <div class="space-y-2" id="match-right-col-113">
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-113-1"
+               data-key="1"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 113, '1')"
+               onclick="handleMatchItemClick(113, 'right', '1')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                1
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Convection
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-113-2"
+               data-key="2"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 113, '2')"
+               onclick="handleMatchItemClick(113, 'right', '2')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                2
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Thermal Insulators
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-113-3"
+               data-key="3"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 113, '3')"
+               onclick="handleMatchItemClick(113, 'right', '3')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                3
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                100°C (212°F)
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-113-4"
+               data-key="4"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 113, '4')"
+               onclick="handleMatchItemClick(113, 'right', '4')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                4
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Thermal Conductors
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Connected Pairs Dock -->
+      <div id="match-dock-113" class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <span><i class="fas fa-link text-indigo-400 mr-1.5"></i> Connected Pairs:</span>
+          <span id="match-dock-count-113" class="text-slate-500 font-bold">None</span>
+        </div>
+        <div id="match-pairs-list-113" class="flex flex-wrap gap-2 text-xs">
+          <span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>
+        </div>
+      </div>
+
+      <!-- Control Bar & Live Diagnostics -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="match-check-btn-113" onclick="checkMatchDrill(113)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-teal-600 hover:from-amber-500 hover:to-teal-500 text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-check-double"></i> Check Matches
+          </button>
+          <button onclick="resetMatchDrill(113)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-undo-alt"></i> Reset
+          </button>
+          <button onclick="toggleAnswer('ans-drill-113')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-lightbulb text-amber-400"></i> Solution
+          </button>
+        </div>
+        <div id="match-feedback-113" class="hidden px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all"></div>
+      </div>
+
+      <!-- Solution Drawer -->
       <div id="ans-drill-113" class="hidden p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2 text-xs md:text-sm text-slate-300">
         <div class="font-bold text-amber-300 flex items-center gap-1.5">
-          <i class="fas fa-info-circle"></i> Explanation &amp; Concept:
+          <i class="fas fa-info-circle"></i> Explanation &amp; Scientific Concept:
         </div>
         <div>- Convection (P) transfers heat through bulk movement of molecules (1).
 - Rubber, wood, plastic (Q) are insulators (2).
@@ -7922,27 +8393,243 @@
       </div>
     </div>
 
-    <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match">
+    <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match" id="drill-card-114">
       <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
         <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 rounded-xl bg-amber-500/20 text-amber-300 font-mono text-xs font-bold">Item 114 • MATCH</span>
+          <span class="px-2.5 py-1 rounded-xl bg-amber-500/20 text-amber-300 font-mono text-xs font-bold">Item 114 • MATCH COLUMNS</span>
           <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-medium">Hydrological Cycle Processes</span>
         </div>
         <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-semibold">medium</span>
       </div>
 
       <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
-        Match the water cycle phenomena in List-I with their appropriate descriptions in List-II:<br>List-I:<br>(P) Vegetation releasing moisture<br>(Q) Water vapour turning into cloud droplets<br>(R) Rain, snow, sleet falling under gravity<br>(S) Seepage of water into the ground<br><br>List-II:<br>(1) Condensation<br>(2) Transpiration<br>(3) Infiltration<br>(4) Precipitation
+        Match the water cycle phenomena in List-I with their appropriate descriptions in List-II:
       </div>
-      <div class="pt-1">
-        <button onclick="toggleAnswer('ans-drill-114')" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all cursor-pointer">
-          <i class="fas fa-lightbulb text-amber-400"></i>
-          <span>Reveal Answer &amp; Explanation</span>
-        </button>
+
+      <!-- Match Instructions & Live Progress -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <i class="fas fa-hand-pointer text-cyan-400"></i>
+          <span class="hidden sm:inline">Tap item on <strong>Column I</strong>, then tap target on <strong>Column II</strong> (or drag &amp; drop).</span>
+          <span class="sm:hidden">Tap Column I, then Column II to pair.</span>
+        </div>
+        <div>
+          <span id="match-status-114" class="font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]">
+            0/4 Paired
+          </span>
+        </div>
       </div>
+
+      <!-- Interactive Dual-Column Arena -->
+      <div class="match-arena grid grid-cols-1 md:grid-cols-2 gap-4 relative" id="match-arena-114" data-idx="114" data-pairs="{&quot;P&quot;: &quot;2&quot;, &quot;Q&quot;: &quot;1&quot;, &quot;R&quot;: &quot;4&quot;, &quot;S&quot;: &quot;3&quot;}" data-total="4">
+        <!-- Column I (Left) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-amber-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-cubes"></i> Column I (Source)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Select or Drag</span>
+          </div>
+          <div class="space-y-2" id="match-left-col-114">
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-114-P"
+               data-key="P"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 114, 'P')"
+               onclick="handleMatchItemClick(114, 'left', 'P')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-amber-950/80 border border-amber-700/60 text-amber-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                P
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Vegetation releasing moisture
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-114-Q"
+               data-key="Q"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 114, 'Q')"
+               onclick="handleMatchItemClick(114, 'left', 'Q')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-amber-950/80 border border-amber-700/60 text-amber-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                Q
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Water vapour turning into cloud droplets
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-114-R"
+               data-key="R"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 114, 'R')"
+               onclick="handleMatchItemClick(114, 'left', 'R')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-amber-950/80 border border-amber-700/60 text-amber-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                R
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Rain, snow, sleet falling under gravity
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-114-S"
+               data-key="S"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 114, 'S')"
+               onclick="handleMatchItemClick(114, 'left', 'S')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-amber-950/80 border border-amber-700/60 text-amber-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                S
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Seepage of water into the ground
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Column II (Right) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-sky-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-bullseye"></i> Column II (Target)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Tap or Drop</span>
+          </div>
+          <div class="space-y-2" id="match-right-col-114">
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-114-1"
+               data-key="1"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 114, '1')"
+               onclick="handleMatchItemClick(114, 'right', '1')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                1
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Condensation
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-114-2"
+               data-key="2"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 114, '2')"
+               onclick="handleMatchItemClick(114, 'right', '2')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                2
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Transpiration
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-114-3"
+               data-key="3"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 114, '3')"
+               onclick="handleMatchItemClick(114, 'right', '3')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                3
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Infiltration
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-114-4"
+               data-key="4"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 114, '4')"
+               onclick="handleMatchItemClick(114, 'right', '4')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                4
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Precipitation
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Connected Pairs Dock -->
+      <div id="match-dock-114" class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <span><i class="fas fa-link text-indigo-400 mr-1.5"></i> Connected Pairs:</span>
+          <span id="match-dock-count-114" class="text-slate-500 font-bold">None</span>
+        </div>
+        <div id="match-pairs-list-114" class="flex flex-wrap gap-2 text-xs">
+          <span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>
+        </div>
+      </div>
+
+      <!-- Control Bar & Live Diagnostics -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="match-check-btn-114" onclick="checkMatchDrill(114)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-teal-600 hover:from-amber-500 hover:to-teal-500 text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-check-double"></i> Check Matches
+          </button>
+          <button onclick="resetMatchDrill(114)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-undo-alt"></i> Reset
+          </button>
+          <button onclick="toggleAnswer('ans-drill-114')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-lightbulb text-amber-400"></i> Solution
+          </button>
+        </div>
+        <div id="match-feedback-114" class="hidden px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all"></div>
+      </div>
+
+      <!-- Solution Drawer -->
       <div id="ans-drill-114" class="hidden p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2 text-xs md:text-sm text-slate-300">
         <div class="font-bold text-amber-300 flex items-center gap-1.5">
-          <i class="fas fa-info-circle"></i> Explanation &amp; Concept:
+          <i class="fas fa-info-circle"></i> Explanation &amp; Scientific Concept:
         </div>
         <div>- Plant water release = Transpiration (2).
 - Vapour to droplets = Condensation (1).
@@ -7951,27 +8638,204 @@
       </div>
     </div>
 
-    <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match">
+    <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match" id="drill-card-115">
       <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
         <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 rounded-xl bg-amber-500/20 text-amber-300 font-mono text-xs font-bold">Item 115 • MATCH</span>
+          <span class="px-2.5 py-1 rounded-xl bg-amber-500/20 text-amber-300 font-mono text-xs font-bold">Item 115 • MATCH COLUMNS</span>
           <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-medium">Thermal Quantities &amp; Absorption</span>
         </div>
         <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-semibold">medium</span>
       </div>
 
       <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
-        Match the thermal concepts in List-I with their descriptions in List-II:<br>List-I:<br>(P) Heat<br>(Q) Temperature<br>(R) Black matte surface<br><br>List-II:<br>(1) Measure of the degree of hotness or coldness<br>(2) Good absorber and emitter of thermal radiation<br>(3) Form of thermal energy that transfers across a temperature gradient
+        Match the thermal concepts in List-I with their descriptions in List-II:
       </div>
-      <div class="pt-1">
-        <button onclick="toggleAnswer('ans-drill-115')" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-all cursor-pointer">
-          <i class="fas fa-lightbulb text-amber-400"></i>
-          <span>Reveal Answer &amp; Explanation</span>
-        </button>
+
+      <!-- Match Instructions & Live Progress -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <i class="fas fa-hand-pointer text-cyan-400"></i>
+          <span class="hidden sm:inline">Tap item on <strong>Column I</strong>, then tap target on <strong>Column II</strong> (or drag &amp; drop).</span>
+          <span class="sm:hidden">Tap Column I, then Column II to pair.</span>
+        </div>
+        <div>
+          <span id="match-status-115" class="font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]">
+            0/3 Paired
+          </span>
+        </div>
       </div>
+
+      <!-- Interactive Dual-Column Arena -->
+      <div class="match-arena grid grid-cols-1 md:grid-cols-2 gap-4 relative" id="match-arena-115" data-idx="115" data-pairs="{&quot;P&quot;: &quot;3&quot;, &quot;Q&quot;: &quot;1&quot;, &quot;R&quot;: &quot;2&quot;}" data-total="3">
+        <!-- Column I (Left) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-amber-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-cubes"></i> Column I (Source)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Select or Drag</span>
+          </div>
+          <div class="space-y-2" id="match-left-col-115">
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-115-P"
+               data-key="P"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 115, 'P')"
+               onclick="handleMatchItemClick(115, 'left', 'P')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-amber-950/80 border border-amber-700/60 text-amber-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                P
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Heat
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-115-Q"
+               data-key="Q"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 115, 'Q')"
+               onclick="handleMatchItemClick(115, 'left', 'Q')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-amber-950/80 border border-amber-700/60 text-amber-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                Q
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Temperature
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-115-R"
+               data-key="R"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 115, 'R')"
+               onclick="handleMatchItemClick(115, 'left', 'R')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-amber-950/80 border border-amber-700/60 text-amber-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                R
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Black matte surface
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Column II (Right) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-sky-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-bullseye"></i> Column II (Target)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Tap or Drop</span>
+          </div>
+          <div class="space-y-2" id="match-right-col-115">
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-115-1"
+               data-key="1"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 115, '1')"
+               onclick="handleMatchItemClick(115, 'right', '1')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                1
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Measure of the degree of hotness or coldness
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-115-2"
+               data-key="2"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 115, '2')"
+               onclick="handleMatchItemClick(115, 'right', '2')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                2
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Good absorber and emitter of thermal radiation
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-115-3"
+               data-key="3"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 115, '3')"
+               onclick="handleMatchItemClick(115, 'right', '3')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                3
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Form of thermal energy that transfers across a temperature gradient
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Connected Pairs Dock -->
+      <div id="match-dock-115" class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <span><i class="fas fa-link text-indigo-400 mr-1.5"></i> Connected Pairs:</span>
+          <span id="match-dock-count-115" class="text-slate-500 font-bold">None</span>
+        </div>
+        <div id="match-pairs-list-115" class="flex flex-wrap gap-2 text-xs">
+          <span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>
+        </div>
+      </div>
+
+      <!-- Control Bar & Live Diagnostics -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="match-check-btn-115" onclick="checkMatchDrill(115)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-teal-600 hover:from-amber-500 hover:to-teal-500 text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-check-double"></i> Check Matches
+          </button>
+          <button onclick="resetMatchDrill(115)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-undo-alt"></i> Reset
+          </button>
+          <button onclick="toggleAnswer('ans-drill-115')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-lightbulb text-amber-400"></i> Solution
+          </button>
+        </div>
+        <div id="match-feedback-115" class="hidden px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all"></div>
+      </div>
+
+      <!-- Solution Drawer -->
       <div id="ans-drill-115" class="hidden p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2 text-xs md:text-sm text-slate-300">
         <div class="font-bold text-amber-300 flex items-center gap-1.5">
-          <i class="fas fa-info-circle"></i> Explanation &amp; Concept:
+          <i class="fas fa-info-circle"></i> Explanation &amp; Scientific Concept:
         </div>
         <div>- Heat (P) is a form of energy (3).
 - Temperature (Q) measures degree of hotness (1).
@@ -9546,7 +10410,7 @@
       <i class="fas fa-skull-crossbones"></i>
     </div>
     <div>
-      <h2 class="text-2xl font-bold text-white font-heading">Exam Traps, 3D Flashcards &amp; Video Modules</h2>
+      <h2 class="text-2xl font-bold text-white font-heading">Exam Traps &amp; 16 3D Flashcards</h2>
       <p class="text-xs text-slate-400">8 High-Frequency Exam Mistakes, 16 Interactive Flip Flashcards &amp; Curated Visual Guides</p>
     </div>
   </div>
@@ -9927,6 +10791,289 @@
     </div>
   </div>
 </div>
+    <!-- ========================================== -->
+<!-- RESEARCH & VIDEO HUB (tabGoogleHub)        -->
+<!-- ========================================== -->
+<div id="tabGoogleHub" class="tab-pane hidden space-y-8 animate-fadeIn">
+  <!-- Header Title -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+    <div>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold uppercase tracking-wider mb-2">
+        <i class="fab fa-google"></i> Multimodal Research &amp; Video Hub
+      </div>
+      <h2 class="text-3xl font-extrabold text-white font-heading">Curated Video Lectures &amp; Knowledge Vault (8 Topics)</h2>
+      <p class="text-sm text-slate-400 mt-1">Zero-rot verified search routes, visual lectures, laboratory demonstrations, and conceptual deep-dives across Physics Chapter 2: Heat & Temperature.</p>
+    </div>
+  </div>
+
+  <!-- Topics Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-amber-500/20 text-amber-300 font-bold">Thermodynamics</span>
+          <span class="text-xs text-slate-500 font-mono">Module #1</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-amber-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-temperature-high"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Heat vs Temperature & Thermal Equilibrium</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Fundamental distinction between heat energy (Joules) and temperature (degree of hotness), and how heat spontaneously flows until equilibrium.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Heat is total internal thermal energy transferred due to temperature difference; unit is Joules (J) or calories.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Temperature measures the average kinetic energy of molecular vibrations; unit is Celsius (°C), Fahrenheit (°F), or Kelvin (K).</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Thermal equilibrium occurs when two contacting objects reach identical temperatures; net heat flow drops to zero.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=heat+vs+temperature+concept+thermal+equilibrium+class+7+science" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=difference+between+heat+and+temperature+thermal+equilibrium+class+7+ncert" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-sky-500/20 text-sky-300 font-bold">Instrumentation</span>
+          <span class="text-xs text-slate-500 font-mono">Module #2</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-sky-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-thermometer-half"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Clinical vs Laboratory Thermometers & The Kink</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Engineering differences between clinical thermometers (35°C to 42°C with constriction) and laboratory thermometers (-10°C to 110°C).</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Clinical thermometers span 35°C to 42°C (94°F to 108°F), calibrated strictly around the human body mean (37°C / 98.6°F).</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>A capillary constriction (kink) right above the mercury bulb prevents mercury from falling back before reading.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Laboratory thermometers (-10°C to 110°C) lack a kink and MUST be read while immersed in the liquid.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=clinical+thermometer+vs+laboratory+thermometer+constriction+kink+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=clinical+vs+laboratory+thermometer+kink+range+reading+class+7+science" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-purple-500/20 text-purple-300 font-bold">Solid State</span>
+          <span class="text-xs text-slate-500 font-mono">Module #3</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-purple-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-cubes"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Conduction & Thermal Conductivity in Solids</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Particle-to-particle heat transfer via atomic lattice vibrations and free electrons without bodily displacement of matter.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Conduction occurs predominantly in solids: vibrating hot particles collide with adjacent cooler particles.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Metals (Cu, Al, Fe) are excellent conductors due to free delocalized valence electrons transferring kinetic energy rapidly.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Insulators (wood, plastic, air, wool) have tightly bound electrons; air trapped in wool makes it an ideal winter insulator.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=conduction+of+heat+in+solids+iron+rod+wax+pins+experiment+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=conduction+heat+transfer+solids+conductors+and+insulators+experiment+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-teal-500/20 text-teal-300 font-bold">Fluid Dynamics</span>
+          <span class="text-xs text-slate-500 font-mono">Module #4</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-teal-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-wind"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Convection Currents & Sea/Land Breeze Cycles</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Heat transfer in fluids through mass circulation caused by density differentials, powering global atmospheric winds and coastal breezes.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Heated liquid or gas expands, decreases in density, and rises; cooler, denser fluid sinks down to replace it, establishing convection currents.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Sea breeze (Day): Land heats faster than sea; warm air rises over land; cool marine breeze rushes inland.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Land breeze (Night): Land cools faster than sea; warm air rises over sea; cool land air flows toward the sea.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=convection+in+water+potassium+permanganate+sea+breeze+land+breeze+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=convection+currents+sea+breeze+land+breeze+mechanism+diagram+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-rose-500/20 text-rose-300 font-bold">Electromagnetism</span>
+          <span class="text-xs text-slate-500 font-mono">Module #5</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-rose-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-sun"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Thermal Radiation & Surface Absorption Physics</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Heat transfer via infrared electromagnetic waves that propagate through vacuum, and how black vs white surfaces absorb and emit radiant heat.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Radiation requires no material medium; solar infrared rays travel 150 million km through empty vacuum to warm Earth.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Dark, dull, matte surfaces are superior absorbers and superior emitters of thermal radiation.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Shiny, light-colored, white surfaces reflect radiant heat, explaining why light clothes are worn in hot summers.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=radiation+of+heat+black+vs+white+surfaces+experiment+class+7+science" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=thermal+radiation+black+vs+white+containers+solar+absorption+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-indigo-500/20 text-indigo-300 font-bold">Engineering</span>
+          <span class="text-xs text-slate-500 font-mono">Module #6</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-indigo-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-flask"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Physics of the Vacuum (Thermos) Flask</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Ingenious engineering by Sir James Dewar eliminating conduction, convection, and radiation to keep liquids hot or cold for hours.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Double-walled glass with vacuum between walls completely prevents heat loss by conduction and convection.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Silvered reflective coating on internal walls reflects radiant infrared waves back into the liquid.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Tight insulating plastic/cork stopper prevents heat loss by air convection currents and surface evaporation.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=how+a+thermos+flask+works+vacuum+double+walled+glass+heat+transfer+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=vacuum+flask+working+construction+conduction+convection+radiation+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-cyan-500/20 text-cyan-300 font-bold">Phase Transitions</span>
+          <span class="text-xs text-slate-500 font-mono">Module #7</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-cyan-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-tint"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Evaporative Cooling & Earthen Pots (Matka)</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Thermodynamics of evaporation: high-energy liquid molecules escape into vapour, extracting latent heat of vaporization from the remaining liquid.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Evaporation is a surface phenomenon occurring at any temperature below boiling point.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Fastest energetic water molecules escape through micro-pores in clay matkas, taking latent heat with them and cooling the water.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Perspiration (sweating) in humans cools the skin surface via the exact same thermodynamic principle.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=cooling+caused+by+evaporation+earthen+pot+matka+sweating+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=evaporative+cooling+mechanism+latent+heat+matka+water+cooling+class+7" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+
+    <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/20 text-emerald-300 font-bold">Calculations</span>
+          <span class="text-xs text-slate-500 font-mono">Module #8</span>
+        </div>
+        <div class="flex items-start gap-3 pt-1">
+          <div class="w-10 h-10 rounded-2xl bg-slate-800 text-emerald-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fas fa-calculator"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-white leading-snug">Temperature Scales & Mathematical Conversions</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Mastering the mathematical relationships between Celsius, Fahrenheit, and Kelvin temperature scales with step-by-step NCERT conversion formulas.</p>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 space-y-2">
+          <div class="text-[10px] font-mono uppercase text-slate-400 font-bold">Key Conceptual Anchors</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Fundamental scale relation: C / 5 = (F - 32) / 9.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Absolute thermodynamic temperature in Kelvin: K = °C + 273.15.</span></li><li class="flex items-start gap-2 text-slate-300 text-xs"><i class="fas fa-check-circle text-emerald-400 mt-0.5 shrink-0"></i><span>Normal human body temperature equivalence: 37°C = 98.6°F = 310.15 K.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-3 border-t border-slate-800/80">
+        <a href="https://www.youtube.com/results?search_query=celsius+to+fahrenheit+kelvin+temperature+conversion+formulas+physics" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-youtube"></i> Video Lectures
+        </a>
+        <a href="https://www.google.com/search?q=celsius+fahrenheit+kelvin+conversion+formula+examples+class+7+science" target="_blank" rel="noopener noreferrer" class="flex-1 py-2 px-3 rounded-xl bg-sky-600/20 hover:bg-sky-600 text-sky-300 hover:text-white text-xs font-semibold text-center transition-all flex items-center justify-center gap-1.5">
+          <i class="fab fa-google"></i> Web Research
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
     </main>
   </div>
 
@@ -9976,32 +11123,7 @@
     });
 
     // 2. Dock Pin Toggle Controller
-    function toggleDockPin() {
-      const dock = document.getElementById('sidebarDock');
-      const icon = document.getElementById('pinIcon');
-      if (!dock) return;
-
-      const isPinned = dock.classList.toggle('dock-pinned');
-      document.body.classList.toggle('dock-is-pinned', isPinned);
-
-      if (icon) {
-        if (isPinned) {
-          icon.classList.add('text-amber-400');
-        } else {
-          icon.classList.remove('text-amber-400');
-        }
-      }
-      localStorage.setItem('sidebar_dock_pinned_phy2', isPinned ? 'true' : 'false');
-    }
-
-    // 3. Dark/Light Mode Controller
-    function toggleDarkMode() {
-      const isDark = document.documentElement.classList.toggle('dark');
-      const btn = document.getElementById('themeToggleBtn');
-      if (btn) {
-        btn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-      }
-    }
+    
 
     // 4. Answer Toggle Helper
     function toggleAnswer(id) {
@@ -10167,10 +11289,106 @@
     </main>
   </div>
 
-  <!-- CLIENT-SIDE JAVASCRIPT CONTROLLERS -->
+  <!-- Universal Jump to Top Floating Button -->
+  <button id="pushti-jump-to-top" class="pushti-jump-to-top" aria-label="Jump to top" title="Jump to Top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
+  </button>
+
+  <!-- ==================== CLIENT JAVASCRIPT ==================== -->
   <script>
-    // 1. Tab Switching Controller
-    function switchTab(tabId) {
+    // 1. Session Timer
+    let sessionSeconds = 0;
+    setInterval(() => {
+      sessionSeconds++;
+      const mins = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
+      const secs = String(sessionSeconds % 60).padStart(2, '0');
+      const el = document.getElementById('sessionTimerDisplay');
+      if (el) el.textContent = `${mins}:${secs}`;
+    }, 1000);
+
+    // 2. Theme Switcher
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const isDark = htmlEl.classList.toggle('dark');
+      htmlEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      updateThemeIcon(isDark);
+    }
+
+    function updateThemeIcon(isDark) {
+      const svg = document.getElementById('themeIconSvg');
+      if (!svg) return;
+      if (isDark) {
+        svg.innerHTML = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>';
+      } else {
+        svg.innerHTML = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>';
+      }
+    }
+
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-theme', 'light');
+      updateThemeIcon(false);
+    }
+
+    // 3. Fullscreen Mode
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => console.log(err));
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    // 4. Global Quick Search
+    function toggleGlobalSearch() {
+      const dd = document.getElementById('globalSearchDropdown');
+      if (!dd) return;
+      dd.classList.toggle('hidden');
+      if (!dd.classList.contains('hidden')) {
+        const inp = document.getElementById('quickNavSearchInput');
+        if (inp) inp.focus();
+      }
+    }
+
+    function handleQuickSearch(term) {
+      if (!term || term.length < 2) return;
+      switchTab('tabTextbook');
+      const input = document.getElementById('subjSearchInput');
+      if (input) {
+        input.value = term;
+        if (typeof filterSubjectiveCards === 'function') filterSubjectiveCards();
+      }
+    }
+
+    // 5. TTS Hero Overview Narration
+    function speakHeroIntro() {
+      if (!('speechSynthesis' in window)) {
+        alert('Text-to-speech is not supported in this browser.');
+        return;
+      }
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        return;
+      }
+      const title = document.querySelector('h1')?.textContent || '';
+      const desc = document.querySelector('h1 + button + p')?.textContent || document.querySelector('h1 + p')?.textContent || '';
+      const text = `${title}. ${desc}`;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.95;
+      utterance.pitch = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // 6. Sidebar Pinning (62px / 280px standard)
+    
+
+    if (localStorage.getItem('phy2_dock_pinned') === 'true') {
+      toggleSidebarPin();
+    }
+
+    // 7. Tab Switching Controller
+    function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-pane').forEach(el => {
         el.classList.add('hidden');
         el.classList.remove('active');
@@ -10181,78 +11399,40 @@
         targetPane.classList.add('active');
       }
 
-      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-        btn.classList.remove('active');
+      document.querySelectorAll('.nav-tab-btn').forEach(b => {
+        b.classList.remove('active');
       });
-      const targetBtn = document.getElementById('navBtn-' + tabId);
-      if (targetBtn) {
-        targetBtn.classList.add('active');
+      if (btn) {
+        btn.classList.add('active');
+      } else {
+        const matchedBtn = document.getElementById('navBtn-' + tabId);
+        if (matchedBtn) matchedBtn.classList.add('active');
       }
 
       window.location.hash = tabId;
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Check URL Hash on load
-    window.addEventListener('DOMContentLoaded', () => {
-      const hash = window.location.hash.replace('#', '');
-      if (hash && document.getElementById(hash)) {
-        switchTab(hash);
-      }
-
-      // Check dock pin state in localStorage
-      if (localStorage.getItem('sidebar_dock_pinned_phy2') === 'true') {
-        const dock = document.getElementById('sidebarDock');
-        const icon = document.getElementById('pinIcon');
-        if (dock && icon) {
-          dock.classList.add('dock-pinned');
-          document.body.classList.add('dock-is-pinned');
-          icon.classList.add('text-amber-400');
-        }
-      }
-    });
-
-    // 2. Dock Pin Toggle Controller
-    function toggleDockPin() {
-      const dock = document.getElementById('sidebarDock');
-      const icon = document.getElementById('pinIcon');
-      if (!dock) return;
-
-      const isPinned = dock.classList.toggle('dock-pinned');
-      document.body.classList.toggle('dock-is-pinned', isPinned);
-
-      if (icon) {
-        if (isPinned) {
-          icon.classList.add('text-amber-400');
-        } else {
-          icon.classList.remove('text-amber-400');
-        }
-      }
-      localStorage.setItem('sidebar_dock_pinned_phy2', isPinned ? 'true' : 'false');
+    // 8. Flashcards Controller
+    function flipFlashcard(id) {
+      const card = document.getElementById(id);
+      if (card) card.classList.toggle('flipped');
     }
 
-    // 3. Dark/Light Mode Controller
-    function toggleDarkMode() {
-      const isDark = document.documentElement.classList.toggle('dark');
-      const btn = document.getElementById('themeToggleBtn');
-      if (btn) {
-        btn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-      }
+    function toggleFlipAll() {
+      document.querySelectorAll('.flashcard-3d').forEach(c => c.classList.toggle('flipped'));
     }
 
-    // 4. Answer Toggle Helper
     function toggleAnswer(id) {
       const el = document.getElementById(id);
       const icon = document.getElementById('icon-' + id);
       if (el) {
         el.classList.toggle('hidden');
-        if (icon) {
-          icon.classList.toggle('rotate-180');
-        }
+        if (icon) icon.classList.toggle('rotate-180');
       }
     }
 
-    // 5. Expand/Collapse All Solutions in Textbook
+    // 9. Subjective Solutions Filter & Expansion
     let allSubjExpanded = false;
     function toggleAllSubjAnswers() {
       allSubjExpanded = !allSubjExpanded;
@@ -10276,13 +11456,13 @@
       }
     }
 
-    // 6. Search & Filter for Subjective Cards
+    let currentSubjCat = 'all';
     function filterSubjectiveCards() {
-      const query = (document.getElementById('subjSearchInput').value || '').toLowerCase().trim();
+      const query = (document.getElementById('subjSearchInput')?.value || '').toLowerCase().trim();
       let visible = 0;
       document.querySelectorAll('.subj-card').forEach(card => {
         const text = card.textContent.toLowerCase();
-        const matchesQuery = text.includes(query);
+        const matchesQuery = !query || text.includes(query);
         const matchesCat = currentSubjCat === 'all' || card.dataset.cat === currentSubjCat;
         if (matchesQuery && matchesCat) {
           card.classList.remove('hidden');
@@ -10297,7 +11477,6 @@
       }
     }
 
-    let currentSubjCat = 'all';
     function filterSubjCat(cat) {
       currentSubjCat = cat;
       document.querySelectorAll('#subjFilterPills button').forEach(b => {
@@ -10310,7 +11489,7 @@
       filterSubjectiveCards();
     }
 
-    // 7. Interactive Drills Scoring Engine
+    // 10. Interactive Drills Scoring Engine
     let userDrillScore = 0;
     let userDrillAnswered = 0;
     const answeredDrills = new Set();
@@ -10341,7 +11520,7 @@
       if (clickedBtn) {
         if (isCorrect) {
           clickedBtn.classList.remove('bg-slate-950/80', 'border-slate-800');
-          clickedBtn.classList.add('bg-emerald-950/80', 'border-emerald-500', 'text-emerald-200');
+          clickedBtn.classList.add('bg-amber-950/80', 'border-amber-500', 'text-amber-200');
         } else {
           clickedBtn.classList.remove('bg-slate-950/80', 'border-slate-800');
           clickedBtn.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-200');
@@ -10350,14 +11529,14 @@
 
       if (!isCorrect && correctBtn) {
         correctBtn.classList.remove('bg-slate-950/80', 'border-slate-800');
-        correctBtn.classList.add('bg-emerald-950/80', 'border-emerald-500', 'text-emerald-200');
+        correctBtn.classList.add('bg-amber-950/80', 'border-amber-500', 'text-amber-200');
       }
 
       const ansBox = document.getElementById(`ans-drill-${itemIdx}`);
       if (ansBox) ansBox.classList.remove('hidden');
     }
 
-    // 8. Filter Objective Drills
+    // 11. Filter Objective Drills
     function filterDrills(type) {
       document.querySelectorAll('#df-all, #df-mcq, #df-tf, #df-fib, #df-assertion_reason, #df-match').forEach(b => {
         b.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all';
@@ -10376,39 +11555,313 @@
       });
     }
 
-    // 9. Interactive Temperature Converter Sync
-    function convertFromCelsius(val) {
-      const c = parseFloat(val);
-      if (isNaN(c)) return;
-      const f = (c * 9/5) + 32;
-      const k = c + 273.15;
-      document.getElementById('inputFahrenheit').value = f.toFixed(2).replace(/\.00$/, '');
-      document.getElementById('inputKelvin').value = k.toFixed(2).replace(/\.00$/, '');
+    // 12. Match Columns Interactive Arena Engine (Option 3)
+    const matchState = {};
+
+    function initMatchDrill(idx) {
+      if (!matchState[idx]) {
+        matchState[idx] = {
+          selectedLeft: null,
+          pairs: {},
+          checked: false
+        };
+      }
+      return matchState[idx];
     }
 
-    function convertFromFahrenheit(val) {
-      const f = parseFloat(val);
-      if (isNaN(f)) return;
-      const c = (f - 32) * 5/9;
-      const k = c + 273.15;
-      document.getElementById('inputCelsius').value = c.toFixed(2).replace(/\.00$/, '');
-      document.getElementById('inputKelvin').value = k.toFixed(2).replace(/\.00$/, '');
+    function handleMatchItemClick(idx, side, key) {
+      const state = initMatchDrill(idx);
+      const arena = document.getElementById(`match-arena-${idx}`);
+      if (!arena) return;
+
+      if (state.checked) {
+        clearMatchValidation(idx);
+      }
+
+      if (side === 'left') {
+        if (state.selectedLeft === key) {
+          state.selectedLeft = null;
+        } else {
+          state.selectedLeft = key;
+        }
+      } else if (side === 'right') {
+        if (state.selectedLeft) {
+          const leftKey = state.selectedLeft;
+          const rightKey = key;
+
+          for (const lk in state.pairs) {
+            if (state.pairs[lk] === rightKey) {
+              delete state.pairs[lk];
+            }
+          }
+          state.pairs[leftKey] = rightKey;
+          state.selectedLeft = null;
+        } else {
+          for (const lk in state.pairs) {
+            if (state.pairs[lk] === key) {
+              delete state.pairs[lk];
+              break;
+            }
+          }
+        }
+      }
+
+      updateMatchUI(idx);
     }
 
-    function convertFromKelvin(val) {
-      const k = parseFloat(val);
-      if (isNaN(k)) return;
-      const c = k - 273.15;
-      const f = (c * 9/5) + 32;
-      document.getElementById('inputCelsius').value = c.toFixed(2).replace(/\.00$/, '');
-      document.getElementById('inputFahrenheit').value = f.toFixed(2).replace(/\.00$/, '');
+    function handleMatchDragStart(e, idx, key) {
+      const state = initMatchDrill(idx);
+      state.selectedLeft = key;
+      e.dataTransfer.setData('text/plain', JSON.stringify({ idx, key }));
+      e.dataTransfer.effectAllowed = 'copyMove';
+      updateMatchUI(idx);
+    }
+
+    function handleMatchDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      const el = e.currentTarget;
+      if (el) el.classList.add('is-dragover');
+    }
+
+    function handleMatchDragLeave(e) {
+      const el = e.currentTarget;
+      if (el) el.classList.remove('is-dragover');
+    }
+
+    function handleMatchDrop(e, idx, rightKey) {
+      e.preventDefault();
+      const el = e.currentTarget;
+      if (el) el.classList.remove('is-dragover');
+
+      try {
+        const raw = e.dataTransfer.getData('text/plain');
+        if (!raw) return;
+        const data = JSON.parse(raw);
+        if (data.idx === idx) {
+          const leftKey = data.key;
+          const state = initMatchDrill(idx);
+          if (state.checked) clearMatchValidation(idx);
+
+          for (const lk in state.pairs) {
+            if (state.pairs[lk] === rightKey) {
+              delete state.pairs[lk];
+            }
+          }
+          state.pairs[leftKey] = rightKey;
+          state.selectedLeft = null;
+          updateMatchUI(idx);
+        }
+      } catch (err) {
+        console.error('Match drop error:', err);
+      }
+    }
+
+    function unpairMatchItem(idx, leftKey) {
+      const state = initMatchDrill(idx);
+      if (state.checked) clearMatchValidation(idx);
+      delete state.pairs[leftKey];
+      updateMatchUI(idx);
+    }
+
+    function updateMatchUI(idx) {
+      const state = initMatchDrill(idx);
+      const arena = document.getElementById(`match-arena-${idx}`);
+      if (!arena) return;
+
+      const totalItems = parseInt(arena.dataset.total || '4', 10);
+      const pairedCount = Object.keys(state.pairs).length;
+
+      const statusBadge = document.getElementById(`match-status-${idx}`);
+      if (statusBadge) {
+        statusBadge.textContent = `${pairedCount}/${totalItems} Paired`;
+        if (pairedCount === totalItems) {
+          statusBadge.className = 'font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-700/60 px-2.5 py-0.5 rounded-full text-[11px] animate-pulse';
+        } else {
+          statusBadge.className = 'font-mono font-bold text-slate-400 bg-slate-900 border border-slate-700 px-2.5 py-0.5 rounded-full text-[11px]';
+        }
+      }
+
+      arena.querySelectorAll('.match-bubble-left').forEach(el => {
+        const k = el.dataset.key;
+        const badge = el.querySelector('.match-conn-badge');
+        const targetLbl = badge ? badge.querySelector('.target-label') : null;
+
+        el.classList.remove('is-selected', 'is-paired');
+        if (state.selectedLeft === k) {
+          el.classList.add('is-selected');
+        }
+
+        if (state.pairs[k]) {
+          el.classList.add('is-paired');
+          if (badge) {
+            badge.classList.remove('hidden');
+            if (targetLbl) targetLbl.textContent = `➔ (${state.pairs[k]})`;
+          }
+        } else {
+          if (badge) badge.classList.add('hidden');
+        }
+      });
+
+      const rightToLeft = {};
+      for (const lk in state.pairs) {
+        rightToLeft[state.pairs[lk]] = lk;
+      }
+
+      arena.querySelectorAll('.match-socket-right').forEach(el => {
+        const rk = el.dataset.key;
+        const badge = el.querySelector('.match-socket-badge');
+        const srcLbl = badge ? badge.querySelector('.source-label') : null;
+
+        el.classList.remove('is-paired');
+        if (rightToLeft[rk]) {
+          el.classList.add('is-paired');
+          if (badge) {
+            badge.classList.remove('hidden');
+            if (srcLbl) srcLbl.textContent = `⮌ [${rightToLeft[rk]}]`;
+          }
+        } else {
+          if (badge) badge.classList.add('hidden');
+        }
+      });
+
+      const dockCount = document.getElementById(`match-dock-count-${idx}`);
+      const pairsList = document.getElementById(`match-pairs-list-${idx}`);
+      if (dockCount && pairsList) {
+        if (pairedCount === 0) {
+          dockCount.textContent = 'None';
+          pairsList.innerHTML = '<span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>';
+        } else {
+          dockCount.textContent = `${pairedCount} of ${totalItems}`;
+          let html = '';
+          for (const lk in state.pairs) {
+            const rk = state.pairs[lk];
+            html += `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs font-mono font-medium">
+              <span class="text-amber-300 font-bold">[${lk}]</span>
+              <span class="text-slate-500">➔</span>
+              <span class="text-sky-300 font-bold">(${rk})</span>
+              <button onclick="unpairMatchItem(${idx}, '${lk}')" class="ml-1 text-slate-400 hover:text-rose-400 cursor-pointer font-bold" title="Disconnect pair">×</button>
+            </span>`;
+          }
+          pairsList.innerHTML = html;
+        }
+      }
+    }
+
+    function clearMatchValidation(idx) {
+      const state = initMatchDrill(idx);
+      state.checked = false;
+      const arena = document.getElementById(`match-arena-${idx}`);
+      if (!arena) return;
+
+      arena.querySelectorAll('.match-bubble-left, .match-socket-right').forEach(el => {
+        el.classList.remove('match-item-correct', 'match-item-wrong', 'animate-match-shake');
+        const icon = el.querySelector('.status-icon');
+        if (icon) icon.innerHTML = '';
+      });
+
+      const feedback = document.getElementById(`match-feedback-${idx}`);
+      if (feedback) feedback.classList.add('hidden');
+    }
+
+    function checkMatchDrill(idx) {
+      const state = initMatchDrill(idx);
+      const arena = document.getElementById(`match-arena-${idx}`);
+      if (!arena) return;
+
+      let correctPairs = {};
+      try {
+        const raw = arena.dataset.pairs || arena.getAttribute('data-pairs') || '{}';
+        correctPairs = JSON.parse(raw.replace(/&quot;/g, '"'));
+      } catch (e) {
+        console.error('Error parsing correct pairs:', e);
+      }
+
+      const totalItems = parseInt(arena.dataset.total || '4', 10);
+      const userPairKeys = Object.keys(state.pairs);
+
+      const feedback = document.getElementById(`match-feedback-${idx}`);
+
+      if (userPairKeys.length < totalItems) {
+        if (feedback) {
+          feedback.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-950/80 border border-amber-600/70 text-amber-300 flex items-center gap-1.5';
+          feedback.innerHTML = `<i class="fas fa-exclamation-circle"></i> Connect all ${totalItems} pairs before checking! (${userPairKeys.length}/${totalItems} paired)`;
+          feedback.classList.remove('hidden');
+        }
+        return;
+      }
+
+      state.checked = true;
+      let correctCount = 0;
+
+      for (const lk in correctPairs) {
+        const correctTarget = String(correctPairs[lk]).toLowerCase();
+        const userTarget = String(state.pairs[lk] || '').toLowerCase();
+        const isMatch = (userTarget === correctTarget);
+
+        if (isMatch) correctCount++;
+
+        const leftEl = document.getElementById(`match-left-${idx}-${lk}`);
+        const rightEl = document.getElementById(`match-right-${idx}-${state.pairs[lk]}`);
+
+        if (leftEl) {
+          leftEl.classList.remove('match-item-correct', 'match-item-wrong', 'animate-match-shake');
+          leftEl.classList.add(isMatch ? 'match-item-correct' : 'match-item-wrong');
+          if (!isMatch) leftEl.classList.add('animate-match-shake');
+          const icon = leftEl.querySelector('.status-icon');
+          if (icon) icon.innerHTML = isMatch ? ' <i class="fas fa-check text-emerald-400"></i>' : ' <i class="fas fa-times text-rose-400"></i>';
+        }
+
+        if (rightEl) {
+          rightEl.classList.remove('match-item-correct', 'match-item-wrong', 'animate-match-shake');
+          rightEl.classList.add(isMatch ? 'match-item-correct' : 'match-item-wrong');
+          if (!isMatch) rightEl.classList.add('animate-match-shake');
+          const icon = rightEl.querySelector('.status-icon');
+          if (icon) icon.innerHTML = isMatch ? ' <i class="fas fa-check text-emerald-400"></i>' : ' <i class="fas fa-times text-rose-400"></i>';
+        }
+      }
+
+      if (feedback) {
+        feedback.classList.remove('hidden');
+        if (correctCount === totalItems) {
+          feedback.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-950/90 border border-amber-500 text-amber-200 flex items-center gap-1.5 shadow-lg shadow-amber-500/20';
+          feedback.innerHTML = `<i class="fas fa-trophy text-amber-400"></i> 🎉 Perfect Match! All ${totalItems} pairs correctly aligned! (+1 Score)`;
+
+          if (!answeredDrills.has(idx)) {
+            answeredDrills.add(idx);
+            userDrillAnswered++;
+            userDrillScore++;
+
+            const scoreEl = document.getElementById('drillScore');
+            const ansEl = document.getElementById('drillAnswered');
+            if (scoreEl) scoreEl.textContent = userDrillScore;
+            if (ansEl) ansEl.textContent = userDrillAnswered;
+
+            const scoreElSticky = document.getElementById('drillScoreSticky');
+            const ansElSticky = document.getElementById('drillAnsweredSticky');
+            if (scoreElSticky) scoreElSticky.textContent = userDrillScore;
+            if (ansElSticky) ansElSticky.textContent = userDrillAnswered;
+          }
+
+          const ansBox = document.getElementById(`ans-drill-${idx}`);
+          if (ansBox) ansBox.classList.remove('hidden');
+        } else {
+          feedback.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-950/90 border border-rose-500/70 text-rose-200 flex items-center gap-1.5';
+          feedback.innerHTML = `<i class="fas fa-times-circle"></i> ${correctCount}/${totalItems} Correct. Adjust the mismatched pairs or tap Reset to try again!`;
+        }
+      }
+    }
+
+    function resetMatchDrill(idx) {
+      const state = initMatchDrill(idx);
+      state.pairs = {};
+      state.selectedLeft = null;
+      clearMatchValidation(idx);
+      updateMatchUI(idx);
     }
   </script>
 
-  <!-- Universal Jump to Top Floating Button -->
-  <button id="pushti-jump-to-top" class="pushti-jump-to-top" aria-label="Jump to top" title="Jump to Top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
-  </button>
+  <!-- Universal Jump to Top Floating Button Scroll Handler -->
   <script>
   (function() {
     var btn = document.getElementById('pushti-jump-to-top');
@@ -10429,6 +11882,81 @@
       }
     }, { passive: true });
   })();
+  
+    // ==========================================
+    // Universal Pin Controller (Tablet Portrait & Desktop Safe)
+    // ==========================================
+    function updatePinButtonUI(isPinned) {
+      const btn = document.getElementById('pinToggleBtn');
+      const icon = document.getElementById('pinToggleIcon') || document.getElementById('pinIcon');
+      const dot = document.getElementById('pinStatusDot');
+      const label = document.getElementById('pinStatusText');
+      const hint = document.getElementById('pinActionHint');
+      
+      if (btn) {
+        btn.setAttribute('aria-pressed', isPinned ? 'true' : 'false');
+        if (isPinned) {
+          btn.className = 'w-full h-10 px-2 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden bg-cyan-500/20 border-cyan-500/50 text-cyan-300 ring-1 ring-cyan-500/30 shadow-[0_0_12px_rgba(6,182,212,0.25)]';
+          btn.title = 'Sidebar: Pinned (Locked Open - tap to collapse to compact dock)';
+        } else {
+          btn.className = 'w-full h-10 px-2 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden bg-slate-800/80 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-700/80';
+          btn.title = 'Sidebar: Unpinned (Compact Dock - tap to lock open)';
+        }
+      }
+      
+      if (icon) {
+        if (isPinned) {
+          icon.className = 'fas fa-thumbtack text-xs transition-transform duration-300 rotate-0 text-cyan-400 font-bold scale-110';
+        } else {
+          icon.className = 'fas fa-thumbtack text-xs transition-transform duration-300 -rotate-45 text-slate-400';
+        }
+      }
+      
+      if (dot) {
+        if (isPinned) {
+          dot.className = 'w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.9)] animate-pulse absolute top-1.5 right-1.5 transition-colors';
+        } else {
+          dot.className = 'w-1.5 h-1.5 rounded-full bg-slate-600 absolute top-1.5 right-1.5 transition-colors';
+        }
+      }
+      
+      if (label) {
+        label.textContent = isPinned ? 'Pinned (Locked)' : 'Compact Dock';
+        label.className = isPinned ? 'text-xs font-bold tracking-wide uppercase text-cyan-300' : 'text-xs font-semibold tracking-wide uppercase text-slate-400';
+      }
+      
+      if (hint) {
+        hint.textContent = isPinned ? 'Tap to collapse' : 'Tap to lock';
+        hint.className = isPinned ? 'text-[10px] font-mono text-cyan-400/80' : 'text-[10px] font-mono text-slate-500';
+      }
+    }
+
+    function toggleSidebarPin() {
+      const dock = document.getElementById('sidebarDock');
+      if (!dock) return;
+      const isPinned = dock.classList.toggle('pinned');
+      document.body.classList.toggle('dock-pinned', isPinned);
+      localStorage.setItem('pushti_dock_pinned', isPinned ? 'true' : 'false');
+      updatePinButtonUI(isPinned);
+    }
+    window.toggleDockPin = toggleSidebarPin;
+
+    // Initialize pin state on load (Default: UNPINNED compact rail)
+    (function initSidebarPin() {
+      const dock = document.getElementById('sidebarDock');
+      if (!dock) return;
+      const savedPin = localStorage.getItem('pushti_dock_pinned');
+      // Default is unpinned ("mostly we do not keep full side bar")
+      const isPinned = (savedPin === 'true');
+      if (isPinned) {
+        dock.classList.add('pinned');
+        document.body.classList.add('dock-pinned');
+      } else {
+        dock.classList.remove('pinned');
+        document.body.classList.remove('dock-pinned');
+      }
+      updatePinButtonUI(isPinned);
+    })();
   </script>
 </body>
 </html>

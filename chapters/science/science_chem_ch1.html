@@ -67,7 +67,7 @@
     .submodule-pane.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Collapsible Vertical Dock Rail (Maths & SST Zero-Peeking Standard) */
+        /* Collapsible Vertical Dock Rail (Universal Tablet & Desktop) */
     .sidebar-dock {
       width: 62px;
       position: fixed;
@@ -86,90 +86,70 @@
       backdrop-filter: blur(12px);
       box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
     }
-    .sidebar-dock:hover, .sidebar-dock.pinned {
-      width: 280px;
-      transition-delay: 0.15s;
+
+    /* Only expand on mouse hover for fine pointers (Desktop), preventing sticky hover on touch tablets */
+    @media (hover: hover) and (pointer: fine) {
+      .sidebar-dock:hover {
+        width: 280px;
+        transition-delay: 0.15s;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+      }
+      .sidebar-dock:hover .tab-label-group {
+        display: flex !important;
+        width: auto !important;
+        min-width: 140px !important;
+        max-width: 200px !important;
+        margin-left: 12px !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
     }
+
+    /* Explicitly Pinned State: Locked open at 280px across tablet & desktop */
     .sidebar-dock.pinned {
+      width: 280px !important;
       transition-delay: 0s !important;
+      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
     }
-
-    .tab-label-group {
-      display: flex;
-      flex-direction: column;
-      margin-left: 0;
-      width: 0;
-      min-width: 0;
-      max-width: 0;
-      opacity: 0;
-      overflow: hidden;
-      pointer-events: none;
-      white-space: nowrap;
-      transition: opacity 0.2s ease, width 0.28s ease, margin-left 0.2s ease;
-    }
-    .sidebar-dock:hover .tab-label-group,
     .sidebar-dock.pinned .tab-label-group {
-      width: auto;
-      max-width: 200px;
-      margin-left: 12px;
-      opacity: 1;
-      pointer-events: auto;
-      transition-delay: 0.12s;
-    }
-
-    /* Prominent Active Tab Highlight */
-    .nav-tab-btn {
-      position: relative;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .nav-tab-btn.active {
-      background: rgba(139, 92, 246, 0.22) !important;
-      border-color: rgba(139, 92, 246, 0.7) !important;
-      box-shadow: 0 0 18px rgba(139, 92, 246, 0.4), inset 0 0 12px rgba(139, 92, 246, 0.15) !important;
-    }
-    .nav-tab-btn.active svg, .nav-tab-btn.active i {
-      color: #c4b5fd !important;
-      filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.9));
-      transform: scale(1.15);
-    }
-    .nav-tab-btn.active .tab-indicator-pill {
+      display: flex !important;
+      width: auto !important;
+      min-width: 140px !important;
+      max-width: 200px !important;
+      margin-left: 12px !important;
       opacity: 1 !important;
-      transform: scaleY(1) !important;
-    }
-    .tab-indicator-pill {
-      position: absolute;
-      left: 0;
-      top: 15%;
-      height: 70%;
-      width: 4px;
-      background: #8b5cf6;
-      border-radius: 0 4px 4px 0;
-      box-shadow: 0 0 12px #8b5cf6;
-      opacity: 0;
-      transform: scaleY(0.4);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: auto !important;
     }
 
-        /* Responsive Dock Rail & Universal Margin Push (Tablet & Desktop Safe) */
+    /* Responsive Dock Rail & Margin Push (Tablet & Desktop Safe) */
     @media (min-width: 640px) and (max-width: 1099px) {
       .sidebar-dock {
-        width: 62px !important;
+        width: 62px;
         position: fixed !important;
         left: 0 !important;
         top: 54px !important;
         bottom: 0 !important;
         z-index: 900 !important;
       }
-      .sidebar-dock.pinned { width: 62px !important; }
-      .sidebar-dock .tab-label-group { display: none !important; }
-      .sidebar-dock .sidebar-footer { display: none !important; }
+      .sidebar-dock .sidebar-footer {
+        display: flex !important;
+      }
       .main-app-content {
         margin-left: 62px !important;
         width: calc(100% - 62px) !important;
         max-width: min(1600px, calc(100vw - 62px)) !important;
         box-sizing: border-box !important;
-        padding-left: 1.5rem !important;
-        padding-right: 1.5rem !important;
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      /* Pinned on tablet in portrait: expands with elevated shadow */
+      .sidebar-dock.pinned {
+        width: 260px !important;
+        z-index: 950 !important;
+      }
+      .sidebar-dock.pinned ~ .main-app-content {
+        margin-left: 62px !important;
       }
     }
 
@@ -182,6 +162,9 @@
         bottom: 0;
         z-index: 900;
       }
+      .sidebar-dock .sidebar-footer {
+        display: flex !important;
+      }
       .main-app-content {
         margin-left: 62px !important;
         width: calc(100% - 62px) !important;
@@ -191,21 +174,13 @@
         padding-right: 2rem !important;
         transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
-      .sidebar-dock.pinned { width: 280px !important; }
+      .sidebar-dock.pinned {
+        width: 280px !important;
+      }
       .sidebar-dock.pinned ~ .main-app-content {
         margin-left: 280px !important;
         width: calc(100% - 280px) !important;
         max-width: min(1600px, calc(100vw - 280px)) !important;
-      }
-      .sidebar-dock:hover .tab-label-group,
-      .sidebar-dock.pinned .tab-label-group {
-        display: flex !important;
-        width: auto !important;
-        min-width: 140px !important;
-        max-width: 200px !important;
-        margin-left: 12px !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
       }
     }
 
@@ -568,9 +543,20 @@
       </div>
 
       <!-- Dock Footer: Pin Toggle -->
-      <div class="sidebar-footer p-2 border-t border-slate-800/80 flex items-center justify-center">
-        <button id="pinToggleBtn" onclick="toggleSidebarPin()" class="w-10 h-10 rounded-xl bg-slate-800/60 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all cursor-pointer" title="Pin / Unpin Sidebar (Desktop)">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="17" x2="12" y2="22"></line><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"></path></svg>
+            <!-- Dock Footer: Universal Pin Toggle (Tablet & Desktop Safe) -->
+      <div class="sidebar-footer p-2 border-t border-slate-800/80 flex items-center justify-center relative">
+        <button id="pinToggleBtn" onclick="toggleSidebarPin()" class="w-full h-10 px-2 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden bg-slate-800/80 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-700/80" title="Sidebar: Unpinned (Compact Dock - tap to lock open)" aria-label="Pin Sidebar Navigation" aria-pressed="false">
+          <!-- Icon Container -->
+          <div class="w-7 h-7 flex items-center justify-center flex-shrink-0 transition-transform">
+            <i id="pinToggleIcon" class="fas fa-thumbtack text-xs transition-transform duration-300 -rotate-45 text-slate-400"></i>
+          </div>
+          <!-- Label Group (Visible when dock expands to 280px) -->
+          <div class="tab-label-group flex-1 flex items-center justify-between overflow-hidden whitespace-nowrap">
+            <span id="pinStatusText" class="text-xs font-semibold tracking-wide uppercase text-slate-400">Compact Dock</span>
+            <span id="pinActionHint" class="text-[10px] font-mono text-slate-500">Tap to lock</span>
+          </div>
+          <!-- Mini Status Dot (Always visible in collapsed 62px rail) -->
+          <span id="pinStatusDot" class="w-1.5 h-1.5 rounded-full bg-slate-600 absolute top-1.5 right-1.5 transition-colors"></span>
         </button>
       </div>
     </aside>
@@ -586,9 +572,14 @@
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/30 text-violet-400 text-xs font-semibold uppercase tracking-wider mb-2">
               Science · Chemistry · Chapter 1
             </div>
-            <h1 class="text-2xl md:text-3xl font-extrabold text-white font-heading tracking-tight">
-              Exploring Substances: Acidic, Basic and Neutral
-            </h1>
+            <div class="flex items-center gap-3">
+              <h1 class="text-2xl md:text-3xl font-extrabold text-white font-heading tracking-tight">
+                Exploring Substances: Acidic, Basic and Neutral
+              </h1>
+              <button onclick="speakHeroIntro()" class="p-2 rounded-xl bg-violet-500/20 text-violet-300 hover:bg-violet-500/30 transition-all cursor-pointer inline-flex items-center justify-center" title="Listen to Overview Narration">
+                <i class="fas fa-volume-up text-sm"></i>
+              </button>
+            </div>
             <p class="text-slate-400 text-sm mt-1 max-w-2xl">
               Comprehensive homeschool-grade module: Pushti's Atomic Foundations Primer, Arrhenius ionization, natural &amp; synthetic indicators colorimetry, exothermic neutralisation dynamics, and salt hydrolyses.
             </p>
@@ -5088,12 +5079,7 @@ List-II:
     }
 
     // --- SIDEBAR PINNING (62px / 280px standard) ---
-    function toggleSidebarPin() {
-      if (window.innerWidth < 1100) return;
-      const dock = document.getElementById('sidebarDock');
-      const isPinned = dock.classList.toggle('pinned');
-      localStorage.setItem('chem1_dock_pinned', isPinned ? 'true' : 'false');
-    }
+    
 
     // --- MAIN TAB SWITCHING ---
     function switchMainTab(tabId, btn) {
@@ -5550,6 +5536,17 @@ List-II:
       }
     }
 
+    function speakHeroIntro() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const text = "Welcome to Exploring Substances: Acidic, Basic and Neutral! In this chapter, you will master Arrhenius ionization, natural and synthetic indicators, exothermic neutralisation dynamics, and salt hydrolyses. Let's make learning an interactive adventure!";
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.0;
+        utterance.pitch = 1.05;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
     // --- INITIALIZATION ---
     document.addEventListener('DOMContentLoaded', () => {
       updateSimulator();
@@ -5588,6 +5585,81 @@ List-II:
     }, { passive: true });
   })();
   </script>
-  <script src="../../js/scroll_to_top.js"></script>
+  <script src="../../js/scroll_to_top.js">
+    // ==========================================
+    // Universal Pin Controller (Tablet Portrait & Desktop Safe)
+    // ==========================================
+    function updatePinButtonUI(isPinned) {
+      const btn = document.getElementById('pinToggleBtn');
+      const icon = document.getElementById('pinToggleIcon') || document.getElementById('pinIcon');
+      const dot = document.getElementById('pinStatusDot');
+      const label = document.getElementById('pinStatusText');
+      const hint = document.getElementById('pinActionHint');
+      
+      if (btn) {
+        btn.setAttribute('aria-pressed', isPinned ? 'true' : 'false');
+        if (isPinned) {
+          btn.className = 'w-full h-10 px-2 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden bg-cyan-500/20 border-cyan-500/50 text-cyan-300 ring-1 ring-cyan-500/30 shadow-[0_0_12px_rgba(6,182,212,0.25)]';
+          btn.title = 'Sidebar: Pinned (Locked Open - tap to collapse to compact dock)';
+        } else {
+          btn.className = 'w-full h-10 px-2 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden bg-slate-800/80 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-700/80';
+          btn.title = 'Sidebar: Unpinned (Compact Dock - tap to lock open)';
+        }
+      }
+      
+      if (icon) {
+        if (isPinned) {
+          icon.className = 'fas fa-thumbtack text-xs transition-transform duration-300 rotate-0 text-cyan-400 font-bold scale-110';
+        } else {
+          icon.className = 'fas fa-thumbtack text-xs transition-transform duration-300 -rotate-45 text-slate-400';
+        }
+      }
+      
+      if (dot) {
+        if (isPinned) {
+          dot.className = 'w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.9)] animate-pulse absolute top-1.5 right-1.5 transition-colors';
+        } else {
+          dot.className = 'w-1.5 h-1.5 rounded-full bg-slate-600 absolute top-1.5 right-1.5 transition-colors';
+        }
+      }
+      
+      if (label) {
+        label.textContent = isPinned ? 'Pinned (Locked)' : 'Compact Dock';
+        label.className = isPinned ? 'text-xs font-bold tracking-wide uppercase text-cyan-300' : 'text-xs font-semibold tracking-wide uppercase text-slate-400';
+      }
+      
+      if (hint) {
+        hint.textContent = isPinned ? 'Tap to collapse' : 'Tap to lock';
+        hint.className = isPinned ? 'text-[10px] font-mono text-cyan-400/80' : 'text-[10px] font-mono text-slate-500';
+      }
+    }
+
+    function toggleSidebarPin() {
+      const dock = document.getElementById('sidebarDock');
+      if (!dock) return;
+      const isPinned = dock.classList.toggle('pinned');
+      document.body.classList.toggle('dock-pinned', isPinned);
+      localStorage.setItem('pushti_dock_pinned', isPinned ? 'true' : 'false');
+      updatePinButtonUI(isPinned);
+    }
+    window.toggleDockPin = toggleSidebarPin;
+
+    // Initialize pin state on load (Default: UNPINNED compact rail)
+    (function initSidebarPin() {
+      const dock = document.getElementById('sidebarDock');
+      if (!dock) return;
+      const savedPin = localStorage.getItem('pushti_dock_pinned');
+      // Default is unpinned ("mostly we do not keep full side bar")
+      const isPinned = (savedPin === 'true');
+      if (isPinned) {
+        dock.classList.add('pinned');
+        document.body.classList.add('dock-pinned');
+      } else {
+        dock.classList.remove('pinned');
+        document.body.classList.remove('dock-pinned');
+      }
+      updatePinButtonUI(isPinned);
+    })();
+  </script>
 </body>
 </html>

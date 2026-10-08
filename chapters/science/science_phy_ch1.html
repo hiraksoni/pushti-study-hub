@@ -33,84 +33,259 @@
     }
   </script>
 
-  <!-- FontAwesome -->
+  <!-- FontAwesome 6.4.0 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
-    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.4); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(16, 185, 129, 0.35); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(16, 185, 129, 0.6); }
 
-    /* 3D Flip Card Effect */
+    /* Tab Transition & Display */
+    .tab-pane { display: none; opacity: 0; transition: opacity 0.25s ease-in-out; }
+    .tab-pane.active { display: block; opacity: 1; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+
+    /* 3D Flashcard Perspectives */
     .perspective-1000 { perspective: 1000px; }
     .transform-style-preserve-3d { transform-style: preserve-3d; }
     .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
     .rotate-y-180 { transform: rotateY(180deg); }
     .flipped { transform: rotateY(180deg); }
 
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fadeIn { animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-
-    /* Dock Rail Navigation Standard */
-    #sidebarDock {
+        /* Collapsible Vertical Dock Rail (Universal Tablet & Desktop) */
+    .sidebar-dock {
       width: 62px;
-      transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    #sidebarDock:hover,
-    #sidebarDock.is-pinned {
-      width: 280px;
-    }
-    .dock-label {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(-10px);
-      transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      white-space: nowrap;
-    }
-    #sidebarDock:hover .dock-label,
-    #sidebarDock.is-pinned .dock-label {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(0);
-    }
-    .main-app-content {
-      margin-left: 62px;
-      transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    #sidebarDock.is-pinned ~ .main-app-content {
-      margin-left: 280px;
+      position: fixed;
+      top: 54px;
+      bottom: 0;
+      left: 0;
+      z-index: 900;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid rgba(51, 65, 85, 0.7);
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
     }
 
-    /* Tooltip on collapsed dock */
-    .dock-tooltip {
-      display: none;
-    }
-    #sidebarDock:not(:hover):not(.is-pinned) .nav-tab-btn:hover .dock-tooltip {
-      display: block;
+    /* Only expand on mouse hover for fine pointers (Desktop), preventing sticky hover on touch tablets */
+    @media (hover: hover) and (pointer: fine) {
+      .sidebar-dock:hover {
+        width: 280px;
+        transition-delay: 0.15s;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+      }
+      .sidebar-dock:hover .tab-label-group {
+        display: flex !important;
+        width: auto !important;
+        min-width: 140px !important;
+        max-width: 200px !important;
+        margin-left: 12px !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
     }
 
-    .nav-tab-btn.active {
-      background: linear-gradient(90deg, rgba(16, 185, 129, 0.25) 0%, rgba(16, 185, 129, 0.08) 100%);
-      border-color: rgba(16, 185, 129, 0.6);
-      color: #ffffff !important;
+    /* Explicitly Pinned State: Locked open at 280px across tablet & desktop */
+    .sidebar-dock.pinned {
+      width: 280px !important;
+      transition-delay: 0s !important;
+      box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
     }
-    .nav-tab-btn.active svg,
-    .nav-tab-btn.active i {
-      color: #6ee7b7 !important;
+    .sidebar-dock.pinned .tab-label-group {
+      display: flex !important;
+      width: auto !important;
+      min-width: 140px !important;
+      max-width: 200px !important;
+      margin-left: 12px !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
     }
 
-    /* Print Styles */
-    @media print {
-      #sidebarDock, header, #pinToggleBtn, .subj-toggle-btn { display: none !important; }
-      .main-app-content { margin-left: 0 !important; }
-      .tab-pane { display: block !important; }
-      .subj-card > div:last-child { display: block !important; }
+    /* Responsive Dock Rail & Margin Push (Tablet & Desktop Safe) */
+    @media (min-width: 640px) and (max-width: 1099px) {
+      .sidebar-dock {
+        width: 62px;
+        position: fixed !important;
+        left: 0 !important;
+        top: 54px !important;
+        bottom: 0 !important;
+        z-index: 900 !important;
+      }
+      .sidebar-dock .sidebar-footer {
+        display: flex !important;
+      }
+      .main-app-content {
+        margin-left: 62px !important;
+        width: calc(100% - 62px) !important;
+        max-width: min(1600px, calc(100vw - 62px)) !important;
+        box-sizing: border-box !important;
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      /* Pinned on tablet in portrait: expands with elevated shadow */
+      .sidebar-dock.pinned {
+        width: 260px !important;
+        z-index: 950 !important;
+      }
+      .sidebar-dock.pinned ~ .main-app-content {
+        margin-left: 62px !important;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .sidebar-dock {
+        width: 62px;
+        position: fixed;
+        left: 0;
+        top: 54px;
+        bottom: 0;
+        z-index: 900;
+      }
+      .sidebar-dock .sidebar-footer {
+        display: flex !important;
+      }
+      .main-app-content {
+        margin-left: 62px !important;
+        width: calc(100% - 62px) !important;
+        max-width: min(1600px, calc(100vw - 62px)) !important;
+        box-sizing: border-box !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .sidebar-dock.pinned {
+        width: 280px !important;
+      }
+      .sidebar-dock.pinned ~ .main-app-content {
+        margin-left: 280px !important;
+        width: calc(100% - 280px) !important;
+        max-width: min(1600px, calc(100vw - 280px)) !important;
+      }
+    }
+
+    @media (max-width: 639px) {
+      .flex.flex-1.relative { flex-direction: column !important; }
+      .sidebar-dock {
+        position: sticky !important;
+        top: 54px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 48px !important;
+        max-height: 48px !important;
+        min-height: 48px !important;
+        flex-direction: row !important;
+        border-right: none !important;
+        border-bottom: 1px solid rgba(51, 65, 85, 0.7) !important;
+        padding: 4px 6px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        z-index: 850 !important;
+      }
+      .sidebar-dock > div:first-child {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 6px !important;
+        width: 100% !important;
+        padding: 0 !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+      }
+      .sidebar-dock .nav-tab-btn {
+        width: auto !important;
+        height: 40px !important;
+        padding: 4px 10px !important;
+        flex-shrink: 0 !important;
+      }
+      .sidebar-dock .tab-label-group { display: none !important; }
+      .sidebar-dock .sidebar-footer { display: none !important; }
+      .main-app-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 14px !important;
+      }
+    }
+
+    /* Light Theme Parity */
+    html:not(.dark) body {
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    html:not(.dark) .sidebar-dock {
+      background: rgba(255, 255, 255, 0.96);
+      border-right-color: #e2e8f0;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.06);
+    }
+    html:not(.dark) .nav-tab-btn.active {
+      background: rgba(16, 185, 129, 0.18) !important;
+      border-color: rgba(5, 150, 105, 0.85) !important;
+      color: #064e3b !important;
+      box-shadow: 0 2px 12px rgba(16, 185, 129, 0.25) !important;
+    }
+    html:not(.dark) .nav-tab-btn.active svg, html:not(.dark) .nav-tab-btn.active i {
+      color: #047857 !important;
+      filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.5));
+    }
+    html:not(.dark) header {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom-color: #e2e8f0;
+    }
+
+    /* Match Columns Arena Interactive Styling */
+    @keyframes matchShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-5px); }
+      40%, 80% { transform: translateX(5px); }
+    }
+    .animate-match-shake {
+      animation: matchShake 0.4s ease-in-out;
+    }
+    .match-bubble-left.is-selected {
+      box-shadow: 0 0 0 2px #10b981, 0 0 15px rgba(16, 185, 129, 0.4);
+      border-color: #10b981 !important;
+      background: rgba(6, 78, 59, 0.7) !important;
+    }
+    .match-socket-right.is-dragover {
+      box-shadow: 0 0 0 2px #38bdf8, 0 0 15px rgba(56, 189, 248, 0.4);
+      border-color: #38bdf8 !important;
+      background: rgba(12, 74, 110, 0.7) !important;
+    }
+    .match-bubble-left.is-paired {
+      border-color: rgba(16, 185, 129, 0.6) !important;
+      background: rgba(6, 78, 59, 0.4) !important;
+    }
+    .match-socket-right.is-paired {
+      border-color: rgba(56, 189, 248, 0.6) !important;
+      background: rgba(12, 74, 110, 0.4) !important;
+    }
+    .match-item-correct {
+      border-color: #10b981 !important;
+      background: rgba(6, 95, 70, 0.65) !important;
+      color: #a7f3d0 !important;
+    }
+    .match-item-wrong {
+      border-color: #f43f5e !important;
+      background: rgba(136, 19, 55, 0.65) !important;
+      color: #fecdd3 !important;
     }
 
     /* Universal Jump to Top Floating Button */
@@ -158,250 +333,337 @@
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen antialiased flex flex-col selection:bg-emerald-500/30 selection:text-emerald-200">
+<body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col font-sans selection:bg-emerald-500/30 selection:text-emerald-200 transition-colors duration-300">
 
-  <!-- TOPBAR (54px Standard) -->
+  <!-- ==================== TOP SITE HEADER (54px Standard) ==================== -->
   <header class="sticky top-0 z-50 bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-800 px-4 lg:px-8 py-2.5 h-[54px] flex items-center justify-between transition-colors duration-300">
-    <div class="flex items-center gap-3">
-      <a href="../../science_index.html" class="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-xs font-semibold">
-        <i class="fas fa-arrow-left"></i>
-        <span>Science Hub</span>
+    <!-- Left: Breadcrumbs -->
+    <nav class="flex items-center gap-2 text-sm text-slate-400 overflow-x-auto whitespace-nowrap">
+      <a href="../../index.html" class="flex items-center gap-1.5 hover:text-emerald-400 transition-colors font-medium text-slate-300">
+        <i class="fas fa-home text-xs"></i>
+        <span>Home</span>
       </a>
-      <span class="text-slate-700">/</span>
-      <div class="flex items-center gap-2">
-        <span class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-mono text-[11px] font-bold">Physics Ch 1</span>
-        <span class="text-xs md:text-sm font-bold text-white tracking-tight truncate max-w-[200px] sm:max-w-md">Electricity: Circuits & Components</span>
+      <span class="text-slate-600">/</span>
+      <a href="../../science_index.html" class="hover:text-emerald-400 transition-colors font-medium text-slate-300">
+        Science
+      </a>
+      <span class="text-slate-600">/</span>
+      <span class="text-emerald-400 font-semibold flex items-center gap-1.5">
+        <i class="fas fa-bolt text-emerald-400 text-xs"></i>
+        Physics: Ch 1
+      </span>
+    </nav>
+
+    <!-- Right Cluster -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <!-- 1. Search Button / Toggle Input -->
+      <div class="relative flex items-center">
+        <button id="globalSearchBtn" onclick="toggleGlobalSearch()" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer flex items-center justify-center" aria-label="Search" title="Search Questions">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        </button>
+        <div id="globalSearchDropdown" class="hidden absolute right-0 top-12 z-50 w-72 bg-slate-900 border border-slate-700 rounded-xl p-2 shadow-2xl">
+          <input type="text" id="quickNavSearchInput" placeholder="Quick search question topics..." oninput="handleQuickSearch(this.value)" class="w-full px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+        </div>
       </div>
-    </div>
 
-    <!-- Right Controls -->
-    <div class="flex items-center gap-3">
-      <select onchange="switchTab(this.value)" class="hidden sm:block text-xs bg-slate-900 border border-slate-800 rounded-xl px-2.5 py-1 text-slate-300 focus:outline-none focus:border-emerald-500">
-        <option value="tabPrimer">1. Pushti's Electricity Launchpad</option>
-        <option value="tabSymbols">2. Circuit Elements & Symbols</option>
-        <option value="tabCircuits">3. Circuit Dynamics & Diagnostics</option>
-        <option value="tabHeating">4. Heating Effect & Joule's Law</option>
-        <option value="tabSafety">5. Electrical Safety: Fuses & MCBs</option>
-        <option value="tabMagnetic">6. Magnetic Effect & Oersted</option>
-        <option value="tabElectromagnets">7. Electromagnets & Industrial Uses</option>
-        <option value="tabElectricBell">8. The Electric Bell Mechanism</option>
-        <option value="tabActivities">9. Activity Corner (6 Labs)</option>
-        <option value="tabTextbook">10. Universal Solved Q&A (85 Qs)</option>
-        <option value="tabDrills">11. Objective Drills (176 Qs)</option>
-        <option value="tabTraps">12. Exam Traps & Flashcards</option>
-      </select>
-
-      <button onclick="window.print()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-xs transition-colors cursor-pointer" title="Print Study Material">
-        <i class="fas fa-print"></i>
+      <!-- 2. Theme Toggle -->
+      <button onclick="toggleTheme()" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-300 hover:text-white transition-all cursor-pointer flex items-center justify-center" aria-label="Toggle Theme" title="Toggle Theme">
+        <svg id="themeIconSvg" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"></path></svg>
       </button>
 
-      <button onclick="toggleDarkMode()" id="themeToggleBtn" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 flex items-center justify-center text-xs transition-colors cursor-pointer" title="Toggle Theme">
-        <i class="fas fa-sun"></i>
+      <!-- 3. Fullscreen Button -->
+      <button onclick="toggleFullScreen()" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all shadow-sm cursor-pointer" title="Toggle Fullscreen">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        <span>Fullscreen</span>
       </button>
+
+      <!-- 4. Time Table Link -->
+      <a href="../../timetable.html" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all shadow-sm">
+        <span>📅 Time Table</span>
+      </a>
+
+      <!-- 5. Mid-Term Syllabus Link -->
+      <a href="../../midterm.html" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all shadow-sm">
+        <span>🎯 Mid-Term Syllabus</span>
+      </a>
+
+      <!-- 6. 100% Mid-Term Ready Battery Pill -->
+      <div class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold" title="Mid-Term Syllabus Coverage">
+        <span>🔋 100% Mid-Term Ready</span>
+      </div>
+
+      <!-- 7. Session Timer -->
+      <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 font-mono text-xs">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="sessionTimerDisplay">00:00</span>
+      </div>
     </div>
   </header>
 
-  <!-- MAIN WRAPPER WITH DOCK RAIL -->
+  <!-- ==================== APP WRAPPER ==================== -->
   <div class="flex flex-1 relative min-h-[calc(100vh-54px)]">
 
-    <!-- VERTICAL DOCK RAIL (62px / 280px Standard) -->
-    <aside id="sidebarDock" class="fixed top-[54px] left-0 bottom-0 z-40 bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-md border-r border-slate-800 flex flex-col justify-between p-2 select-none shadow-2xl">
-      <!-- Top Section -->
-      <div class="space-y-1.5 overflow-y-auto overflow-x-hidden pr-0.5 max-h-[calc(100vh-130px)]">
-        <!-- 1. Primer -->
-        <button onclick="switchTab('tabPrimer')" id="navBtn-tabPrimer" class="nav-tab-btn active flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-bolt"></i>
+    <!-- ==================== COLLAPSIBLE VERTICAL DOCK RAIL ==================== -->
+    <aside id="sidebarDock" class="sidebar-dock group" aria-label="Chapter Navigation">
+      <div class="flex flex-col gap-1.5 p-2">
+        
+        <!-- Tab 1: Primer -->
+        <button id="navBtn-tabPrimer" onclick="switchTab('tabPrimer', this)" class="nav-tab-btn active flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="1. Launchpad Primer">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-emerald-400">
+            <i class="fas fa-bolt text-base"></i>
+            <span class="w-2 h-2 rounded-full bg-emerald-400 absolute top-0.5 right-0.5 ring-2 ring-slate-900 animate-pulse"></span>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-emerald-400">Section 1 • Primer</div>
-            <div class="text-xs font-semibold text-white">Electricity Launchpad</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-emerald-400">Section 1 · Primer</span>
+            <span class="font-medium text-sm text-slate-200">Electricity Launchpad</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Launchpad Primer</div>
         </button>
 
-        <!-- 2. Symbols -->
-        <button onclick="switchTab('tabSymbols')" id="navBtn-tabSymbols" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-drafting-compass"></i>
+        <!-- Tab 2: Symbols -->
+        <button id="navBtn-tabSymbols" onclick="switchTab('tabSymbols', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="2. Circuit Symbols">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-teal-400">
+            <i class="fas fa-drafting-compass text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-teal-400">Section 2 • Symbols</div>
-            <div class="text-xs font-semibold text-white">Circuit Components</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-teal-400">Section 2 · Symbols</span>
+            <span class="font-medium text-sm text-slate-200">Circuit Components</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Circuit Symbols</div>
         </button>
 
-        <!-- 3. Circuits -->
-        <button onclick="switchTab('tabCircuits')" id="navBtn-tabCircuits" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-tools"></i>
+        <!-- Tab 3: Circuits -->
+        <button id="navBtn-tabCircuits" onclick="switchTab('tabCircuits', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="3. Circuit Diagnostics">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-sky-400">
+            <i class="fas fa-tools text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-sky-400">Section 3 • Loops</div>
-            <div class="text-xs font-semibold text-white">Circuit Diagnostics</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-sky-400">Section 3 · Loops</span>
+            <span class="font-medium text-sm text-slate-200">Circuit Diagnostics</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Circuit Dynamics</div>
         </button>
 
-        <!-- 4. Heating -->
-        <button onclick="switchTab('tabHeating')" id="navBtn-tabHeating" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-fire"></i>
+        <!-- Tab 4: Heating -->
+        <button id="navBtn-tabHeating" onclick="switchTab('tabHeating', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="4. Heating Effect">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-amber-400">
+            <i class="fas fa-fire text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-amber-400">Section 4 • Heating</div>
-            <div class="text-xs font-semibold text-white">Joule's Law & Nichrome</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-amber-400">Section 4 · Heating</span>
+            <span class="font-medium text-sm text-slate-200">Joule's Law &amp; Nichrome</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Heating Effect</div>
         </button>
 
-        <!-- 5. Safety -->
-        <button onclick="switchTab('tabSafety')" id="navBtn-tabSafety" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-shield-alt"></i>
+        <!-- Tab 5: Safety -->
+        <button id="navBtn-tabSafety" onclick="switchTab('tabSafety', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="5. Electrical Safety">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-rose-400">
+            <i class="fas fa-shield-alt text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-rose-400">Section 5 • Safety</div>
-            <div class="text-xs font-semibold text-white">Fuses, MCBs & Fire</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-rose-400">Section 5 · Safety</span>
+            <span class="font-medium text-sm text-slate-200">Fuses, MCBs &amp; Fire</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Electrical Safety</div>
         </button>
 
-        <!-- 6. Magnetic -->
-        <button onclick="switchTab('tabMagnetic')" id="navBtn-tabMagnetic" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-compass"></i>
+        <!-- Tab 6: Magnetic -->
+        <button id="navBtn-tabMagnetic" onclick="switchTab('tabMagnetic', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="6. Magnetic Effect">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-purple-400">
+            <i class="fas fa-compass text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-purple-400">Section 6 • Magnetic</div>
-            <div class="text-xs font-semibold text-white">Oersted's Discovery</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-purple-400">Section 6 · Magnetic</span>
+            <span class="font-medium text-sm text-slate-200">Oersted's Discovery</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Magnetic Effect</div>
         </button>
 
-        <!-- 7. Electromagnets -->
-        <button onclick="switchTab('tabElectromagnets')" id="navBtn-tabElectromagnets" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-magnet"></i>
+        <!-- Tab 7: Electromagnets -->
+        <button id="navBtn-tabElectromagnets" onclick="switchTab('tabElectromagnets', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="7. Electromagnets">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-indigo-400">
+            <i class="fas fa-magnet text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-indigo-400">Section 7 • Magnets</div>
-            <div class="text-xs font-semibold text-white">Electromagnets & Industry</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-indigo-400">Section 7 · Magnets</span>
+            <span class="font-medium text-sm text-slate-200">Electromagnets &amp; Industry</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Electromagnets</div>
         </button>
 
-        <!-- 8. Electric Bell -->
-        <button onclick="switchTab('tabElectricBell')" id="navBtn-tabElectricBell" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-bell"></i>
+        <!-- Tab 8: Electric Bell -->
+        <button id="navBtn-tabElectricBell" onclick="switchTab('tabElectricBell', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="8. Electric Bell">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-pink-400">
+            <i class="fas fa-bell text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-pink-400">Section 8 • Bell</div>
-            <div class="text-xs font-semibold text-white">Electric Bell Mechanism</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-pink-400">Section 8 · Bell</span>
+            <span class="font-medium text-sm text-slate-200">Electric Bell Mechanism</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Electric Bell</div>
         </button>
 
-        <!-- 9. Activities -->
-        <button onclick="switchTab('tabActivities')" id="navBtn-tabActivities" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-microscope"></i>
+        <!-- Tab 9: Activities -->
+        <button id="navBtn-tabActivities" onclick="switchTab('tabActivities', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="9. Activity Corner">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-emerald-400">
+            <i class="fas fa-microscope text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-emerald-400">Section 9 • Labs</div>
-            <div class="text-xs font-semibold text-white">Activity Corner (6 Labs)</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-emerald-400">Section 9 · Labs</span>
+            <span class="font-medium text-sm text-slate-200">Activity Corner (6 Labs)</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Activity Corner</div>
         </button>
 
-        <!-- 10. Textbook -->
-        <button onclick="switchTab('tabTextbook')" id="navBtn-tabTextbook" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-book-reader"></i>
+        <!-- Tab 10: Textbook -->
+        <button id="navBtn-tabTextbook" onclick="switchTab('tabTextbook', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="10. Solved Q&A Bank">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-purple-400">
+            <i class="fas fa-book-reader text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-purple-400">Section 10 • Solved</div>
-            <div class="text-xs font-semibold text-white">Textbook Q&A (85 Qs)</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-purple-400">Section 10 · Solved</span>
+            <span class="font-medium text-sm text-slate-200">Textbook Q&amp;A (85 Qs)</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Solved Q&A Bank</div>
         </button>
 
-        <!-- 11. Drills -->
-        <button onclick="switchTab('tabDrills')" id="navBtn-tabDrills" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-bullseye"></i>
+        <!-- Tab 11: Drills -->
+        <button id="navBtn-tabDrills" onclick="switchTab('tabDrills', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="11. Objective Drills">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-sky-400">
+            <i class="fas fa-bullseye text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-sky-400">Section 11 • Practice</div>
-            <div class="text-xs font-semibold text-white">Objective Drills (176 Qs)</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-sky-400">Section 11 · Practice</span>
+            <span class="font-medium text-sm text-slate-200">Objective Drills (176 Qs)</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Objective Drills</div>
         </button>
 
-        <!-- 12. Traps -->
-        <button onclick="switchTab('tabTraps')" id="navBtn-tabTraps" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer group">
-          <div class="w-7 h-7 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fas fa-skull-crossbones"></i>
+        <!-- Tab 12: Traps -->
+        <button id="navBtn-tabTraps" onclick="switchTab('tabTraps', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="12. Traps & Flashcards">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-rose-400">
+            <i class="fas fa-skull-crossbones text-base"></i>
           </div>
-          <div class="dock-label ml-3">
-            <div class="text-[10px] uppercase font-mono font-bold text-rose-400">Section 12 • HOTS</div>
-            <div class="text-xs font-semibold text-white">16 Flashcards & Traps</div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-rose-400">Section 12 · HOTS</span>
+            <span class="font-medium text-sm text-slate-200">16 Flashcards &amp; Traps</span>
           </div>
-          <div class="dock-tooltip absolute left-14 bg-slate-900 text-white text-xs px-2.5 py-1 rounded-md border border-slate-700 shadow-xl whitespace-nowrap z-50">Traps & Flashcards</div>
         </button>
+        <button id="navBtn-tabGoogleHub" onclick="switchTab('tabGoogleHub', this)" class="nav-tab-btn flex items-center w-full h-11 px-2.5 rounded-xl border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all text-left relative overflow-hidden cursor-pointer" title="13. Research &amp; Video Hub">
+          <div class="tab-indicator-pill"></div>
+          <div class="w-9 min-w-[36px] max-w-[36px] h-9 flex items-center justify-center relative flex-shrink-0 text-cyan-400">
+            <i class="fab fa-google text-base"></i>
+          </div>
+          <div class="tab-label-group">
+            <span class="font-semibold text-xs tracking-wide uppercase text-cyan-400">Research &amp; Videos</span>
+            <span class="font-medium text-sm text-slate-200">Google Hub (8 Topics)</span>
+          </div>
+        </button>
+
       </div>
 
-      <!-- Bottom Pin Control -->
-      <div class="pt-2 border-t border-slate-800/80 flex items-center justify-center">
-        <button id="pinToggleBtn" onclick="toggleDockPin()" class="w-10 h-10 rounded-xl bg-slate-800/60 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all cursor-pointer" title="Pin / Unpin Sidebar Dock">
-          <i class="fas fa-thumbtack text-xs" id="pinIcon"></i>
+      <!-- Dock Footer: Pin / Unpin Button -->
+            <!-- Dock Footer: Universal Pin Toggle (Tablet & Desktop Safe) -->
+      <div class="sidebar-footer p-2 border-t border-slate-800/80 flex items-center justify-center relative">
+        <button id="pinToggleBtn" onclick="toggleSidebarPin()" class="w-full h-10 px-2 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden bg-slate-800/80 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-700/80" title="Sidebar: Unpinned (Compact Dock - tap to lock open)" aria-label="Pin Sidebar Navigation" aria-pressed="false">
+          <!-- Icon Container -->
+          <div class="w-7 h-7 flex items-center justify-center flex-shrink-0 transition-transform">
+            <i id="pinToggleIcon" class="fas fa-thumbtack text-xs transition-transform duration-300 -rotate-45 text-slate-400"></i>
+          </div>
+          <!-- Label Group (Visible when dock expands to 280px) -->
+          <div class="tab-label-group flex-1 flex items-center justify-between overflow-hidden whitespace-nowrap">
+            <span id="pinStatusText" class="text-xs font-semibold tracking-wide uppercase text-slate-400">Compact Dock</span>
+            <span id="pinActionHint" class="text-[10px] font-mono text-slate-500">Tap to lock</span>
+          </div>
+          <!-- Mini Status Dot (Always visible in collapsed 62px rail) -->
+          <span id="pinStatusDot" class="w-1.5 h-1.5 rounded-full bg-slate-600 absolute top-1.5 right-1.5 transition-colors"></span>
         </button>
       </div>
     </aside>
 
-    <!-- MAIN APP CONTENT AREA (Desktop Push Margin) -->
-    <main id="main-content" class="main-app-content flex-1 p-4 md:p-8 lg:p-10 max-w-7xl mx-auto w-full">
+    <!-- ==================== MAIN APP CONTENT ==================== -->
+    <main id="main-content" class="main-app-content flex-1 max-w-7xl mx-auto w-full transition-all">
+
+      <!-- ==================== MASTER HERO BANNER ==================== -->
+      <div class="mb-8 rounded-3xl bg-gradient-to-r from-emerald-900/30 via-slate-900/80 to-teal-900/30 border border-emerald-500/30 p-6 md:p-8 backdrop-blur-xl relative overflow-hidden shadow-2xl">
+        <div class="absolute -right-12 -bottom-12 w-56 h-56 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-xs font-semibold">⚡ Class 7 Science · Chapter 14 (NCERT)</span>
+              <span class="text-slate-500 text-xs">•</span>
+              <span class="text-slate-400 text-xs font-medium">Electricity &amp; Circuits Mastery</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <h1 class="text-2xl md:text-3xl font-extrabold text-white font-heading tracking-tight">
+                Electricity: Circuits &amp; Components
+              </h1>
+              <button onclick="speakHeroIntro()" class="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 transition-all cursor-pointer inline-flex items-center justify-center" title="Listen to Overview Narration">
+                <i class="fas fa-volume-up text-sm"></i>
+              </button>
+            </div>
+            <p class="text-slate-400 text-sm mt-1 max-w-2xl leading-relaxed">
+              Mastering electric cell polarity, closed loops, circuit diagram symbols, heating effects (Joule's Law &amp; Nichrome), safety fuses &amp; MCBs, magnetic effects (Oersted's compass), electromagnets, and electric bells.
+            </p>
+          </div>
+
+          <!-- Quick Navigation Badges -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800/70 text-slate-300 border border-slate-700 text-xs font-medium">Circuits &amp; Symbols</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800/70 text-slate-300 border border-slate-700 text-xs font-medium">Heating &amp; Fuses</span>
+            <span class="px-2.5 py-1 rounded-lg bg-slate-800/70 text-slate-300 border border-slate-700 text-xs font-medium">Magnetic &amp; Bells</span>
+            <span class="px-2.5 py-1 rounded-lg bg-emerald-950/60 text-emerald-300 border border-emerald-800/50 text-xs font-semibold">261 Verified Qs</span>
+          </div>
+        </div>
+      </div>
+
       <!-- Tab Panes -->
       <div id="tabPrimer" class="tab-pane active space-y-8 animate-fadeIn">
-  <!-- Hero Banner for Pushti -->
-  <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 border border-emerald-800/40 p-6 md:p-10 shadow-2xl">
-    <div class="absolute -right-16 -top-16 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
-    
-    <div class="relative z-10">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-semibold uppercase tracking-wider mb-4">
-        <i class="fas fa-bolt"></i> Pushti's Physics Launchpad • Electricity Foundation Base
+  <!-- Welcome & Confidence Card -->
+  <div class="bg-gradient-to-r from-emerald-500/10 via-teal-500/10 to-sky-500/10 border border-emerald-500/30 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+    <div class="flex items-center gap-3 mb-3">
+      <span class="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-lg">
+        🌟
+      </span>
+      <div>
+        <span class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold">Pushti's Physics Launchpad · Prerequisite Base Primer</span>
+        <h2 class="text-xl md:text-2xl font-bold text-white font-heading">
+          Electricity is Continuous Flow in an Unbroken Loop!
+        </h2>
       </div>
-      <h1 class="text-3xl md:text-5xl font-black text-white font-heading tracking-tight leading-tight">
-        Mastering Electric Circuits & <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-sky-300 bg-clip-text text-transparent">Their Components</span>
-      </h1>
-      <p class="mt-4 text-base md:text-lg text-slate-300 max-w-3xl leading-relaxed">
-        Electricity isn't invisible magic! It behaves just like water flowing through pipes under pressure. Once you grasp <span class="text-emerald-300 font-semibold">cell polarities, the closed loop rule, and heating effects</span>, every circuit diagram and numerical question in this chapter becomes simple and intuitive. Let's build your physics superpower!
-      </p>
+    </div>
+    <p class="text-slate-300 text-sm leading-relaxed max-w-3xl">
+      Welcome, Pushti! Electricity isn't invisible magic — it behaves just like water flowing through pipes under pressure. Once you grasp cell polarities (+ to −), closed-loop continuity, and heating/magnetic effects, every circuit diagram and numerical in this chapter becomes simple and intuitive!
+    </p>
 
-      <!-- 4 Pillar Quick Stat Badges -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-slate-800/80">
-        <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 text-center">
-          <div class="text-xs text-slate-400">Total Cataloged Qs</div>
-          <div class="text-xl md:text-2xl font-bold text-emerald-400 font-heading">261 Qs</div>
-        </div>
-        <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 text-center">
-          <div class="text-xs text-slate-400">Objective Drills</div>
-          <div class="text-xl md:text-2xl font-bold text-sky-400 font-heading">176 Drills</div>
-        </div>
-        <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 text-center">
-          <div class="text-xs text-slate-400">Solved Q&A Bank</div>
-          <div class="text-xl md:text-2xl font-bold text-purple-400 font-heading">85 Solved</div>
-        </div>
-        <div class="p-3 rounded-2xl bg-slate-900/60 border border-slate-800 text-center">
-          <div class="text-xs text-slate-400">Guided Lab Corners</div>
-          <div class="text-xl md:text-2xl font-bold text-amber-400 font-heading">6 Labs</div>
-        </div>
+    <!-- Key Metrics Strip -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 mt-4 border-t border-slate-800/80">
+      <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
+        <div class="text-xs uppercase text-slate-400 font-bold">Total Catalog</div>
+        <div class="text-xl md:text-2xl font-black text-emerald-400 font-mono mt-0.5">261 Qs</div>
+        <div class="text-[10px] text-slate-500 font-mono">100% Comprehensive</div>
+      </div>
+      <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
+        <div class="text-xs uppercase text-slate-400 font-bold">Objective Drills</div>
+        <div class="text-xl md:text-2xl font-black text-sky-400 font-mono mt-0.5">176 Drills</div>
+        <div class="text-[10px] text-slate-500 font-mono">Interactive Scoring</div>
+      </div>
+      <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
+        <div class="text-xs uppercase text-slate-400 font-bold">Solved Q&A</div>
+        <div class="text-xl md:text-2xl font-black text-purple-400 font-mono mt-0.5">85 Solved</div>
+        <div class="text-[10px] text-slate-500 font-mono">Step-by-Step Model</div>
+      </div>
+      <div class="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800 text-center">
+        <div class="text-xs uppercase text-slate-400 font-bold">Activity Labs</div>
+        <div class="text-xl md:text-2xl font-black text-amber-400 font-mono mt-0.5">6 Labs</div>
+        <div class="text-[10px] text-slate-500 font-mono">NCERT Guided</div>
       </div>
     </div>
   </div>
+
+
 
   <!-- The 3 Core Pillars of Electricity -->
   <div class="space-y-4">
@@ -5025,7 +5287,7 @@
   </div>
 
   <!-- Live Score Dashboard -->
-  <div class="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 space-y-4 shadow-xl">
+  <div class="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 space-y-5">
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
       <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-center">
         <div class="text-xs text-slate-400 uppercase font-mono">Attempted</div>
@@ -5044,29 +5306,20 @@
         <div class="text-2xl font-bold text-amber-400 font-heading mt-1" id="drillAccuracy">0%</div>
       </div>
     </div>
-  </div>
 
-  <!-- Sticky Drills Filter Bar with Live Score Badges -->
-  <div class="sticky top-[54px] z-30 py-3 px-4 rounded-2xl bg-slate-900/95 backdrop-blur-md border border-slate-800/80 shadow-xl flex flex-wrap items-center justify-between gap-3">
     <!-- Filter Buttons Bar -->
-    <div class="flex flex-wrap items-center gap-2" id="drillFilterPills">
-      <button onclick="filterDrillType('all')" id="df-all" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600 text-white cursor-pointer transition-all shadow-md shadow-emerald-600/20">All (176)</button>
-      <button onclick="filterDrillType('mcq')" id="df-mcq" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">MCQs (131)</button>
-      <button onclick="filterDrillType('fib')" id="df-fib" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Fill Blanks (18)</button>
-      <button onclick="filterDrillType('tf')" id="df-tf" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">True / False (15)</button>
-      <button onclick="filterDrillType('ar')" id="df-ar" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Assertion-Reason (8)</button>
-      <button onclick="filterDrillType('match')" id="df-match" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Match Columns (4)</button>
-    </div>
-
-    <!-- Live Sticky Progress & Reset -->
-    <div class="flex items-center gap-3 ml-auto">
-      <div class="flex items-center gap-2.5 bg-slate-950/90 py-1.5 px-3 rounded-xl border border-slate-800 text-xs font-mono">
-        <span class="text-slate-400">Score: <strong class="text-emerald-400 font-bold" id="drillScoreSticky">0</strong></span>
-        <span class="text-slate-700">|</span>
-        <span class="text-slate-400">Answered: <strong class="text-sky-400 font-bold" id="drillAttemptedSticky">0</strong>/176</span>
+    <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-800">
+      <div class="flex flex-wrap gap-2" id="drillFilterPills">
+        <button onclick="filterDrillType('all')" id="df-all" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600 text-white cursor-pointer transition-all shadow-md shadow-emerald-600/20">All (176)</button>
+        <button onclick="filterDrillType('mcq')" id="df-mcq" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">MCQs (131)</button>
+        <button onclick="filterDrillType('fib')" id="df-fib" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Fill Blanks (18)</button>
+        <button onclick="filterDrillType('tf')" id="df-tf" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">True / False (15)</button>
+        <button onclick="filterDrillType('ar')" id="df-ar" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Assertion-Reason (8)</button>
+        <button onclick="filterDrillType('match')" id="df-match" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all">Match Columns (4)</button>
       </div>
-      <button onclick="resetDrillTest()" class="text-xs text-slate-400 hover:text-rose-400 font-semibold cursor-pointer transition-colors p-1" title="Reset Practice Test">
-        <i class="fas fa-redo-alt"></i>
+
+      <button onclick="resetDrillTest()" class="text-xs text-slate-400 hover:text-rose-400 font-semibold cursor-pointer transition-colors">
+        <i class="fas fa-redo-alt mr-1"></i> Reset Practice Test
       </button>
     </div>
   </div>
@@ -6622,29 +6875,29 @@
       </div>
 
       <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
-        Given that the elementary charge of an electron is 1.6 × 10⁻¹⁹ C, how many electrons pass through a cross-section of wire per second when it carries 1 Ampere?
+        Given that the elementary charge of an electron is $1.6 \times 10^{-19}\text{ C}$, how many electrons pass through a cross-section of wire per second when it carries 1 Ampere?
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1">
         
         <button onclick="handleMCQClick(34, 0, 1)" id="mcq-34-opt-0" class="mcq-opt-btn w-full p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-slate-700 text-left flex items-start gap-3 transition-all cursor-pointer group">
           <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">A</span>
-          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">1.6 × 10¹⁹</span>
+          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">1.6 × 10^{19}</span>
         </button>
         
         <button onclick="handleMCQClick(34, 1, 1)" id="mcq-34-opt-1" class="mcq-opt-btn w-full p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-slate-700 text-left flex items-start gap-3 transition-all cursor-pointer group">
           <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">B</span>
-          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">6.25 × 10¹⁸</span>
+          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">6.25 × 10^{18}</span>
         </button>
         
         <button onclick="handleMCQClick(34, 2, 1)" id="mcq-34-opt-2" class="mcq-opt-btn w-full p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-slate-700 text-left flex items-start gap-3 transition-all cursor-pointer group">
           <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">C</span>
-          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">6.25 × 10¹⁹</span>
+          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">6.25 × 10^{19}</span>
         </button>
         
         <button onclick="handleMCQClick(34, 3, 1)" id="mcq-34-opt-3" class="mcq-opt-btn w-full p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-slate-700 text-left flex items-start gap-3 transition-all cursor-pointer group">
           <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">D</span>
-          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">3.125 × 10¹⁸</span>
+          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">3.125 × 10^{18}</span>
         </button>
         
       </div>
@@ -6653,7 +6906,7 @@
         <div class="font-bold text-amber-300 flex items-center gap-1.5">
           <i class="fas fa-info-circle"></i> Explanation & Concept:
         </div>
-        <div>Authoritative scientific explanation: The correct option is (b) 6.25 × 10¹⁸ based on electrical principles.</div>
+        <div>Authoritative scientific explanation: The correct option is (b) 6.25 × 10^{18} based on electrical principles.</div>
       </div>
     </div>
     
@@ -7702,7 +7955,7 @@
       </div>
 
       <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
-        A conductor is connected across a constant voltage source. If its resistance is reduced to one-fourth (R/4), the current flowing through it will become:
+        A conductor is connected across a constant voltage source. If its resistance is reduced to one-fourth ($R/4$), the current flowing through it will become:
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1">
@@ -8834,22 +9087,22 @@
         
         <button onclick="handleMCQClick(83, 0, 1)" id="mcq-83-opt-0" class="mcq-opt-btn w-full p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-slate-700 text-left flex items-start gap-3 transition-all cursor-pointer group">
           <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">A</span>
-          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">3.125 × 10¹⁹</span>
+          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">3.125 × 10^{19}</span>
         </button>
         
         <button onclick="handleMCQClick(83, 1, 1)" id="mcq-83-opt-1" class="mcq-opt-btn w-full p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-slate-700 text-left flex items-start gap-3 transition-all cursor-pointer group">
           <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">B</span>
-          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">1.5625 × 10¹⁹</span>
+          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">1.5625 × 10^{19}</span>
         </button>
         
         <button onclick="handleMCQClick(83, 2, 1)" id="mcq-83-opt-2" class="mcq-opt-btn w-full p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-slate-700 text-left flex items-start gap-3 transition-all cursor-pointer group">
           <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">C</span>
-          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">6.25 × 10¹⁸</span>
+          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">6.25 × 10^{18}</span>
         </button>
         
         <button onclick="handleMCQClick(83, 3, 1)" id="mcq-83-opt-3" class="mcq-opt-btn w-full p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-slate-700 text-left flex items-start gap-3 transition-all cursor-pointer group">
           <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">D</span>
-          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">1.25 × 10¹⁹</span>
+          <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors">1.25 × 10^{19}</span>
         </button>
         
       </div>
@@ -8858,7 +9111,7 @@
         <div class="font-bold text-amber-300 flex items-center gap-1.5">
           <i class="fas fa-info-circle"></i> Explanation & Concept:
         </div>
-        <div>Authoritative scientific explanation: The correct option is (b) 1.5625 × 10¹⁹ based on electrical principles.</div>
+        <div>Authoritative scientific explanation: The correct option is (b) 1.5625 × 10^{19} based on electrical principles.</div>
       </div>
     </div>
     
@@ -12207,99 +12460,1059 @@ Question 4: How much is the electric potential of a charge at infinity taken to 
       </div>
     </div>
     
-    
-    <div class="drill-card drill-match p-6 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
-        <span class="px-2.5 py-1 rounded-xl bg-teal-500/20 text-teal-300 font-mono text-xs font-bold">Match The Columns #1</span>
-        <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-400 text-[11px]">2 Marks</span>
+        <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match" id="drill-card-173">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">Item 173 • MATCH COLUMNS</span>
+          <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-medium">Circuit Components and Functions</span>
+        </div>
+        <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-semibold">medium</span>
       </div>
 
-      <div class="text-xs md:text-sm text-slate-200 leading-relaxed font-mono bg-slate-950/80 p-4 rounded-2xl border border-slate-800">
-        Match the components in Column I (List-I) with their functions in Column II (List-II):<br>List-I (Component):<br>(P) Battery<br>(Q) Switch<br>(R) Bulb<br>(S) Wire<br><br>List-II (Function):<br>(1) Conducts electricity between components<br>(2) Lights up when current flows through it<br>(3) Controls the flow of current in the circuit<br>(4) Provides electrical energy to the circuit
+      <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
+        Match the components in Column I (List-I) with their functions in Column II (List-II):
       </div>
 
-      <div class="pt-1">
-        <button onclick="toggleAnswer('match-ans-0')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-teal-300 text-xs font-semibold cursor-pointer transition-all">
-          <i class="fas fa-check-double mr-1.5"></i> Show Correct Matching Key
-        </button>
+      <!-- Match Instructions & Live Progress -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <i class="fas fa-hand-pointer text-cyan-400"></i>
+          <span class="hidden sm:inline">Tap item on <strong>Column I</strong>, then tap target on <strong>Column II</strong> (or drag &amp; drop).</span>
+          <span class="sm:hidden">Tap Column I, then Column II to pair.</span>
+        </div>
+        <div>
+          <span id="match-status-173" class="font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]">
+            0/4 Paired
+          </span>
+        </div>
       </div>
 
-      <div id="match-ans-0" class="hidden p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2 text-xs text-slate-300 animate-fadeIn">
-        <div class="font-bold text-teal-400">Correct Alignment:</div>
-        <div class="font-mono text-white">(a) P-4, Q-3, R-2, S-1</div>
-        <div class="text-slate-400 mt-2 font-sans">- Battery (P) provides electrical energy (4).<br>- Switch (Q) controls current flow by opening/closing the circuit (3).<br>- Bulb (R) lights up when current passes through (2).<br>- Wire (S) conducts electric current between circuit elements (1).</div>
+      <!-- Interactive Dual-Column Arena -->
+      <div class="match-arena grid grid-cols-1 md:grid-cols-2 gap-4 relative" id="match-arena-173" data-idx="173" data-pairs="{&quot;P&quot;: &quot;4&quot;, &quot;Q&quot;: &quot;3&quot;, &quot;R&quot;: &quot;2&quot;, &quot;S&quot;: &quot;1&quot;}" data-total="4">
+        <!-- Column I (Left) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-cubes"></i> Column I (Source)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Select or Drag</span>
+          </div>
+          <div class="space-y-2" id="match-left-col-173">
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-173-P"
+               data-key="P"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 173, 'P')"
+               onclick="handleMatchItemClick(173, 'left', 'P')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                P
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Battery
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-173-Q"
+               data-key="Q"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 173, 'Q')"
+               onclick="handleMatchItemClick(173, 'left', 'Q')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                Q
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Switch
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-173-R"
+               data-key="R"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 173, 'R')"
+               onclick="handleMatchItemClick(173, 'left', 'R')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                R
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Bulb
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-173-S"
+               data-key="S"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 173, 'S')"
+               onclick="handleMatchItemClick(173, 'left', 'S')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                S
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Wire
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Column II (Right) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-sky-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-bullseye"></i> Column II (Target)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Tap or Drop</span>
+          </div>
+          <div class="space-y-2" id="match-right-col-173">
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-173-1"
+               data-key="1"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 173, '1')"
+               onclick="handleMatchItemClick(173, 'right', '1')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                1
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Conducts electricity between components
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-173-2"
+               data-key="2"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 173, '2')"
+               onclick="handleMatchItemClick(173, 'right', '2')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                2
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Lights up when current flows through it
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-173-3"
+               data-key="3"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 173, '3')"
+               onclick="handleMatchItemClick(173, 'right', '3')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                3
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Controls the flow of current in the circuit
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-173-4"
+               data-key="4"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 173, '4')"
+               onclick="handleMatchItemClick(173, 'right', '4')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                4
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Provides electrical energy to the circuit
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Connected Pairs Dock -->
+      <div id="match-dock-173" class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <span><i class="fas fa-link text-indigo-400 mr-1.5"></i> Connected Pairs:</span>
+          <span id="match-dock-count-173" class="text-slate-500 font-bold">None</span>
+        </div>
+        <div id="match-pairs-list-173" class="flex flex-wrap gap-2 text-xs">
+          <span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>
+        </div>
+      </div>
+
+      <!-- Control Bar & Live Diagnostics -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="match-check-btn-173" onclick="checkMatchDrill(173)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-check-double"></i> Check Matches
+          </button>
+          <button onclick="resetMatchDrill(173)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-undo-alt"></i> Reset
+          </button>
+          <button onclick="toggleAnswer('ans-drill-173')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-lightbulb text-amber-400"></i> Solution
+          </button>
+        </div>
+        <div id="match-feedback-173" class="hidden px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all"></div>
+      </div>
+
+      <!-- Solution Drawer -->
+      <div id="ans-drill-173" class="hidden p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2 text-xs md:text-sm text-slate-300">
+        <div class="font-bold text-amber-300 flex items-center gap-1.5">
+          <i class="fas fa-info-circle"></i> Explanation &amp; Scientific Concept:
+        </div>
+        <div>- Battery (P) provides electrical energy (4).
+- Switch (Q) controls current flow by opening/closing the circuit (3).
+- Bulb (R) lights up when current passes through (2).
+- Wire (S) conducts electric current between circuit elements (1).</div>
+      </div>
+    </div>    <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match" id="drill-card-174">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">Item 174 • MATCH COLUMNS</span>
+          <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-medium">Electrical Terms and Concepts</span>
+        </div>
+        <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-semibold">medium</span>
+      </div>
+
+      <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
+        Match the terms in List-I with their appropriate descriptions in List-II:
+      </div>
+
+      <!-- Match Instructions & Live Progress -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <i class="fas fa-hand-pointer text-cyan-400"></i>
+          <span class="hidden sm:inline">Tap item on <strong>Column I</strong>, then tap target on <strong>Column II</strong> (or drag &amp; drop).</span>
+          <span class="sm:hidden">Tap Column I, then Column II to pair.</span>
+        </div>
+        <div>
+          <span id="match-status-174" class="font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]">
+            0/5 Paired
+          </span>
+        </div>
+      </div>
+
+      <!-- Interactive Dual-Column Arena -->
+      <div class="match-arena grid grid-cols-1 md:grid-cols-2 gap-4 relative" id="match-arena-174" data-idx="174" data-pairs="{&quot;P&quot;: &quot;4&quot;, &quot;Q&quot;: &quot;5&quot;, &quot;R&quot;: &quot;1&quot;, &quot;S&quot;: &quot;2&quot;, &quot;T&quot;: &quot;3&quot;}" data-total="5">
+        <!-- Column I (Left) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-cubes"></i> Column I (Source)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Select or Drag</span>
+          </div>
+          <div class="space-y-2" id="match-left-col-174">
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-174-P"
+               data-key="P"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 174, 'P')"
+               onclick="handleMatchItemClick(174, 'left', 'P')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                P
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                LED or incandescent lamp
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-174-Q"
+               data-key="Q"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 174, 'Q')"
+               onclick="handleMatchItemClick(174, 'left', 'Q')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                Q
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Circuit diagram
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-174-R"
+               data-key="R"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 174, 'R')"
+               onclick="handleMatchItemClick(174, 'left', 'R')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                R
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Closed electric circuit
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-174-S"
+               data-key="S"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 174, 'S')"
+               onclick="handleMatchItemClick(174, 'left', 'S')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                S
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Dry cell
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-174-T"
+               data-key="T"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 174, 'T')"
+               onclick="handleMatchItemClick(174, 'left', 'T')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                T
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Conducting wire covering
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Column II (Right) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-sky-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-bullseye"></i> Column II (Target)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Tap or Drop</span>
+          </div>
+          <div class="space-y-2" id="match-right-col-174">
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-174-1"
+               data-key="1"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 174, '1')"
+               onclick="handleMatchItemClick(174, 'right', '1')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                1
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Complete unbroken path for electricity
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-174-2"
+               data-key="2"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 174, '2')"
+               onclick="handleMatchItemClick(174, 'right', '2')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                2
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Portable source of electric current
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-174-3"
+               data-key="3"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 174, '3')"
+               onclick="handleMatchItemClick(174, 'right', '3')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                3
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Plastic or rubber insulation
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-174-4"
+               data-key="4"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 174, '4')"
+               onclick="handleMatchItemClick(174, 'right', '4')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                4
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Converts electrical energy into light
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-174-5"
+               data-key="5"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 174, '5')"
+               onclick="handleMatchItemClick(174, 'right', '5')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                5
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Schematic representation using symbols
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Connected Pairs Dock -->
+      <div id="match-dock-174" class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <span><i class="fas fa-link text-indigo-400 mr-1.5"></i> Connected Pairs:</span>
+          <span id="match-dock-count-174" class="text-slate-500 font-bold">None</span>
+        </div>
+        <div id="match-pairs-list-174" class="flex flex-wrap gap-2 text-xs">
+          <span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>
+        </div>
+      </div>
+
+      <!-- Control Bar & Live Diagnostics -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="match-check-btn-174" onclick="checkMatchDrill(174)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-check-double"></i> Check Matches
+          </button>
+          <button onclick="resetMatchDrill(174)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-undo-alt"></i> Reset
+          </button>
+          <button onclick="toggleAnswer('ans-drill-174')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-lightbulb text-amber-400"></i> Solution
+          </button>
+        </div>
+        <div id="match-feedback-174" class="hidden px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all"></div>
+      </div>
+
+      <!-- Solution Drawer -->
+      <div id="ans-drill-174" class="hidden p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2 text-xs md:text-sm text-slate-300">
+        <div class="font-bold text-amber-300 flex items-center gap-1.5">
+          <i class="fas fa-info-circle"></i> Explanation &amp; Scientific Concept:
+        </div>
+        <div>- LED / lamp (P) emits light (4).
+- Circuit diagram (Q) uses standardized symbols (5).
+- Closed circuit (R) is a continuous pathway (1).
+- Dry cell (S) is a portable electric source (2).
+- Wire covering (T) is made of insulating plastic/rubber (3).</div>
+      </div>
+    </div>    <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match" id="drill-card-175">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">Item 175 • MATCH COLUMNS</span>
+          <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-medium">Schematic Electrical Symbols</span>
+        </div>
+        <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-semibold">medium</span>
+      </div>
+
+      <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
+        Match the circuit components in List-I with their schematic representations in List-II:
+      </div>
+
+      <!-- Match Instructions & Live Progress -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <i class="fas fa-hand-pointer text-cyan-400"></i>
+          <span class="hidden sm:inline">Tap item on <strong>Column I</strong>, then tap target on <strong>Column II</strong> (or drag &amp; drop).</span>
+          <span class="sm:hidden">Tap Column I, then Column II to pair.</span>
+        </div>
+        <div>
+          <span id="match-status-175" class="font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]">
+            0/5 Paired
+          </span>
+        </div>
+      </div>
+
+      <!-- Interactive Dual-Column Arena -->
+      <div class="match-arena grid grid-cols-1 md:grid-cols-2 gap-4 relative" id="match-arena-175" data-idx="175" data-pairs="{&quot;P&quot;: &quot;2&quot;, &quot;Q&quot;: &quot;4&quot;, &quot;R&quot;: &quot;5&quot;, &quot;S&quot;: &quot;1&quot;, &quot;T&quot;: &quot;3&quot;}" data-total="5">
+        <!-- Column I (Left) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-cubes"></i> Column I (Source)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Select or Drag</span>
+          </div>
+          <div class="space-y-2" id="match-left-col-175">
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-175-P"
+               data-key="P"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 175, 'P')"
+               onclick="handleMatchItemClick(175, 'left', 'P')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                P
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Electric Bulb
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-175-Q"
+               data-key="Q"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 175, 'Q')"
+               onclick="handleMatchItemClick(175, 'left', 'Q')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                Q
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Electric Cell
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-175-R"
+               data-key="R"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 175, 'R')"
+               onclick="handleMatchItemClick(175, 'left', 'R')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                R
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Battery of cells
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-175-S"
+               data-key="S"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 175, 'S')"
+               onclick="handleMatchItemClick(175, 'left', 'S')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                S
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Connecting Wire
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-175-T"
+               data-key="T"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 175, 'T')"
+               onclick="handleMatchItemClick(175, 'left', 'T')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                T
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Open Switch
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Column II (Right) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-sky-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-bullseye"></i> Column II (Target)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Tap or Drop</span>
+          </div>
+          <div class="space-y-2" id="match-right-col-175">
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-175-1"
+               data-key="1"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 175, '1')"
+               onclick="handleMatchItemClick(175, 'right', '1')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                1
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Straight solid line
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-175-2"
+               data-key="2"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 175, '2')"
+               onclick="handleMatchItemClick(175, 'right', '2')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                2
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                A circle with curled filament loop
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-175-3"
+               data-key="3"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 175, '3')"
+               onclick="handleMatchItemClick(175, 'right', '3')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                3
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Open line gap with two terminal dots
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-175-4"
+               data-key="4"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 175, '4')"
+               onclick="handleMatchItemClick(175, 'right', '4')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                4
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Two parallel lines (one long thin, one short thick)
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-175-5"
+               data-key="5"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 175, '5')"
+               onclick="handleMatchItemClick(175, 'right', '5')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                5
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Multiple alternating long and short parallel lines
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Connected Pairs Dock -->
+      <div id="match-dock-175" class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <span><i class="fas fa-link text-indigo-400 mr-1.5"></i> Connected Pairs:</span>
+          <span id="match-dock-count-175" class="text-slate-500 font-bold">None</span>
+        </div>
+        <div id="match-pairs-list-175" class="flex flex-wrap gap-2 text-xs">
+          <span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>
+        </div>
+      </div>
+
+      <!-- Control Bar & Live Diagnostics -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="match-check-btn-175" onclick="checkMatchDrill(175)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-check-double"></i> Check Matches
+          </button>
+          <button onclick="resetMatchDrill(175)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-undo-alt"></i> Reset
+          </button>
+          <button onclick="toggleAnswer('ans-drill-175')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-lightbulb text-amber-400"></i> Solution
+          </button>
+        </div>
+        <div id="match-feedback-175" class="hidden px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all"></div>
+      </div>
+
+      <!-- Solution Drawer -->
+      <div id="ans-drill-175" class="hidden p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2 text-xs md:text-sm text-slate-300">
+        <div class="font-bold text-amber-300 flex items-center gap-1.5">
+          <i class="fas fa-info-circle"></i> Explanation &amp; Scientific Concept:
+        </div>
+        <div>- Bulb = circle with curled filament (2).
+- Cell = long thin line and short thick line (4).
+- Battery = sequence of cells joined in series (5).
+- Wire = straight line (1).
+- Open switch = open break gap (3).</div>
+      </div>
+    </div>    <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match" id="drill-card-176">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 font-mono text-xs font-bold">Item 176 • MATCH COLUMNS</span>
+          <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-medium">Safety, Efficiency &amp; Heating Components</span>
+        </div>
+        <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-semibold">medium</span>
+      </div>
+
+      <div class="text-sm md:text-base font-semibold text-white leading-relaxed">
+        Match the items in List-I with their characteristics in List-II:
+      </div>
+
+      <!-- Match Instructions & Live Progress -->
+      <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <i class="fas fa-hand-pointer text-cyan-400"></i>
+          <span class="hidden sm:inline">Tap item on <strong>Column I</strong>, then tap target on <strong>Column II</strong> (or drag &amp; drop).</span>
+          <span class="sm:hidden">Tap Column I, then Column II to pair.</span>
+        </div>
+        <div>
+          <span id="match-status-176" class="font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]">
+            0/4 Paired
+          </span>
+        </div>
+      </div>
+
+      <!-- Interactive Dual-Column Arena -->
+      <div class="match-arena grid grid-cols-1 md:grid-cols-2 gap-4 relative" id="match-arena-176" data-idx="176" data-pairs="{&quot;P&quot;: &quot;3&quot;, &quot;Q&quot;: &quot;4&quot;, &quot;R&quot;: &quot;1&quot;, &quot;S&quot;: &quot;2&quot;}" data-total="4">
+        <!-- Column I (Left) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-cubes"></i> Column I (Source)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Select or Drag</span>
+          </div>
+          <div class="space-y-2" id="match-left-col-176">
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-176-P"
+               data-key="P"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 176, 'P')"
+               onclick="handleMatchItemClick(176, 'left', 'P')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                P
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Compact Fluorescent Lamp (CFL)
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-176-Q"
+               data-key="Q"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 176, 'Q')"
+               onclick="handleMatchItemClick(176, 'left', 'Q')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                Q
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                ISI Mark
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-176-R"
+               data-key="R"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 176, 'R')"
+               onclick="handleMatchItemClick(176, 'left', 'R')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                R
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Electric Fuse
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-bubble-left group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-left-176-S"
+               data-key="S"
+               draggable="true"
+               ondragstart="handleMatchDragStart(event, 176, 'S')"
+               onclick="handleMatchItemClick(176, 'left', 'S')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-700/60 text-emerald-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                S
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium truncate group-hover:text-white">
+                Heating Element
+              </span>
+            </div>
+            <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="target-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Column II (Right) -->
+        <div class="space-y-2.5">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-sky-400 flex items-center justify-between px-1">
+            <span class="flex items-center gap-1.5"><i class="fas fa-bullseye"></i> Column II (Target)</span>
+            <span class="text-slate-500 font-mono text-[10px]">Tap or Drop</span>
+          </div>
+          <div class="space-y-2" id="match-right-col-176">
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-176-1"
+               data-key="1"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 176, '1')"
+               onclick="handleMatchItemClick(176, 'right', '1')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                1
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Safety device containing low-melting-point alloy
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-176-2"
+               data-key="2"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 176, '2')"
+               onclick="handleMatchItemClick(176, 'right', '2')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                2
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                High-resistance Nichrome wire that gets red hot
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-176-3"
+               data-key="3"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 176, '3')"
+               onclick="handleMatchItemClick(176, 'right', '3')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                3
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Consumes less energy and produces less unwanted heat than filament bulbs
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          <div class="match-socket-right group relative p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-sky-500/50 transition-all cursor-pointer flex items-center justify-between gap-3 select-none"
+               id="match-right-176-4"
+               data-key="4"
+               ondragover="handleMatchDragOver(event)"
+               ondragleave="handleMatchDragLeave(event)"
+               ondrop="handleMatchDrop(event, 176, '4')"
+               onclick="handleMatchItemClick(176, 'right', '4')">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-sky-950/80 border border-sky-700/60 text-sky-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                4
+              </span>
+              <span class="text-xs md:text-sm text-slate-200 font-medium group-hover:text-white">
+                Certifies conformity with rigorous national safety standards
+              </span>
+            </div>
+            <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-sky-500/20 border border-sky-500/40 text-sky-300 text-[11px] font-mono font-bold flex items-center gap-1">
+              <span class="source-label"></span>
+              <span class="status-icon"></span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Connected Pairs Dock -->
+      <div id="match-dock-176" class="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-2">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 flex items-center justify-between">
+          <span><i class="fas fa-link text-indigo-400 mr-1.5"></i> Connected Pairs:</span>
+          <span id="match-dock-count-176" class="text-slate-500 font-bold">None</span>
+        </div>
+        <div id="match-pairs-list-176" class="flex flex-wrap gap-2 text-xs">
+          <span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>
+        </div>
+      </div>
+
+      <!-- Control Bar & Live Diagnostics -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="match-check-btn-176" onclick="checkMatchDrill(176)" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-check-double"></i> Check Matches
+          </button>
+          <button onclick="resetMatchDrill(176)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-undo-alt"></i> Reset
+          </button>
+          <button onclick="toggleAnswer('ans-drill-176')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5">
+            <i class="fas fa-lightbulb text-amber-400"></i> Solution
+          </button>
+        </div>
+        <div id="match-feedback-176" class="hidden px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all"></div>
+      </div>
+
+      <!-- Solution Drawer -->
+      <div id="ans-drill-176" class="hidden p-4 rounded-2xl bg-slate-950/90 border border-slate-800 space-y-2 text-xs md:text-sm text-slate-300">
+        <div class="font-bold text-amber-300 flex items-center gap-1.5">
+          <i class="fas fa-info-circle"></i> Explanation &amp; Scientific Concept:
+        </div>
+        <div>- CFL (P) provides energy efficiency over incandescent bulbs (3).
+- ISI mark (Q) guarantees certified electrical safety (4).
+- Fuse (R) prevents fire and overload damage (1).
+- Heating element (S) generates thermal energy in heating appliances (2).</div>
       </div>
     </div>
-    
-    <div class="drill-card drill-match p-6 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
-        <span class="px-2.5 py-1 rounded-xl bg-teal-500/20 text-teal-300 font-mono text-xs font-bold">Match The Columns #2</span>
-        <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-400 text-[11px]">2 Marks</span>
-      </div>
-
-      <div class="text-xs md:text-sm text-slate-200 leading-relaxed font-mono bg-slate-950/80 p-4 rounded-2xl border border-slate-800">
-        Match the terms in List-I with their appropriate descriptions in List-II:<br>List-I:<br>(P) LED or incandescent lamp<br>(Q) Circuit diagram<br>(R) Closed electric circuit<br>(S) Dry cell<br>(T) Conducting wire covering<br><br>List-II:<br>(1) Complete unbroken path for electricity<br>(2) Portable source of electric current<br>(3) Plastic or rubber insulation<br>(4) Converts electrical energy into light<br>(5) Schematic representation using symbols
-      </div>
-
-      <div class="pt-1">
-        <button onclick="toggleAnswer('match-ans-1')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-teal-300 text-xs font-semibold cursor-pointer transition-all">
-          <i class="fas fa-check-double mr-1.5"></i> Show Correct Matching Key
-        </button>
-      </div>
-
-      <div id="match-ans-1" class="hidden p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2 text-xs text-slate-300 animate-fadeIn">
-        <div class="font-bold text-teal-400">Correct Alignment:</div>
-        <div class="font-mono text-white">(c) P-4, Q-5, R-1, S-2, T-3</div>
-        <div class="text-slate-400 mt-2 font-sans">- LED / lamp (P) emits light (4).<br>- Circuit diagram (Q) uses standardized symbols (5).<br>- Closed circuit (R) is a continuous pathway (1).<br>- Dry cell (S) is a portable electric source (2).<br>- Wire covering (T) is made of insulating plastic/rubber (3).</div>
-      </div>
-    </div>
-    
-    <div class="drill-card drill-match p-6 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
-        <span class="px-2.5 py-1 rounded-xl bg-teal-500/20 text-teal-300 font-mono text-xs font-bold">Match The Columns #3</span>
-        <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-400 text-[11px]">2 Marks</span>
-      </div>
-
-      <div class="text-xs md:text-sm text-slate-200 leading-relaxed font-mono bg-slate-950/80 p-4 rounded-2xl border border-slate-800">
-        Match the circuit components in List-I with their schematic representations in List-II:<br>List-I:<br>(P) Electric Bulb<br>(Q) Electric Cell<br>(R) Battery of cells<br>(S) Connecting Wire<br>(T) Open Switch<br><br>List-II:<br>(1) Straight solid line<br>(2) A circle with curled filament loop<br>(3) Open line gap with two terminal dots<br>(4) Two parallel lines (one long thin, one short thick)<br>(5) Multiple alternating long and short parallel lines
-      </div>
-
-      <div class="pt-1">
-        <button onclick="toggleAnswer('match-ans-2')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-teal-300 text-xs font-semibold cursor-pointer transition-all">
-          <i class="fas fa-check-double mr-1.5"></i> Show Correct Matching Key
-        </button>
-      </div>
-
-      <div id="match-ans-2" class="hidden p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2 text-xs text-slate-300 animate-fadeIn">
-        <div class="font-bold text-teal-400">Correct Alignment:</div>
-        <div class="font-mono text-white">(a) P-2, Q-4, R-5, S-1, T-3</div>
-        <div class="text-slate-400 mt-2 font-sans">- Bulb = circle with curled filament (2).<br>- Cell = long thin line and short thick line (4).<br>- Battery = sequence of cells joined in series (5).<br>- Wire = straight line (1).<br>- Open switch = open break gap (3).</div>
-      </div>
-    </div>
-    
-    <div class="drill-card drill-match p-6 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
-        <span class="px-2.5 py-1 rounded-xl bg-teal-500/20 text-teal-300 font-mono text-xs font-bold">Match The Columns #4</span>
-        <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-400 text-[11px]">2 Marks</span>
-      </div>
-
-      <div class="text-xs md:text-sm text-slate-200 leading-relaxed font-mono bg-slate-950/80 p-4 rounded-2xl border border-slate-800">
-        Match the items in List-I with their characteristics in List-II:<br>List-I:<br>(P) Compact Fluorescent Lamp (CFL)<br>(Q) ISI Mark<br>(R) Electric Fuse<br>(S) Heating Element<br><br>List-II:<br>(1) Safety device containing low-melting-point alloy<br>(2) High-resistance Nichrome wire that gets red hot<br>(3) Consumes less energy and produces less unwanted heat than filament bulbs<br>(4) Certifies conformity with rigorous national safety standards
-      </div>
-
-      <div class="pt-1">
-        <button onclick="toggleAnswer('match-ans-3')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-teal-300 text-xs font-semibold cursor-pointer transition-all">
-          <i class="fas fa-check-double mr-1.5"></i> Show Correct Matching Key
-        </button>
-      </div>
-
-      <div id="match-ans-3" class="hidden p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2 text-xs text-slate-300 animate-fadeIn">
-        <div class="font-bold text-teal-400">Correct Alignment:</div>
-        <div class="font-mono text-white">(c) P-3, Q-4, R-1, S-2</div>
-        <div class="text-slate-400 mt-2 font-sans">- CFL (P) provides energy efficiency over incandescent bulbs (3).<br>- ISI mark (Q) guarantees certified electrical safety (4).<br>- Fuse (R) prevents fire and overload damage (1).<br>- Heating element (S) generates thermal energy in heating appliances (2).</div>
-      </div>
-    </div>
-    
   </div>
 </div>
       <div id="tabTraps" class="tab-pane hidden space-y-8 animate-fadeIn">
@@ -12309,8 +13522,8 @@ Question 4: How much is the electric potential of a charge at infinity taken to 
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-semibold uppercase tracking-wider mb-2">
         <i class="fas fa-skull-crossbones"></i> High-Stakes Exam Defense
       </div>
-      <h2 class="text-3xl font-extrabold text-white font-heading">Exam Traps, 16 3D Flashcards & Video Vault</h2>
-      <p class="text-sm text-slate-400 mt-1">Avoid the 8 classic misconceptions where students lose marks, plus 16 interactive flip cards and curated lectures.</p>
+      <h2 class="text-3xl font-extrabold text-white font-heading">Exam Traps &amp; 16 3D Flashcards</h2>
+      <p class="text-sm text-slate-400 mt-1">Avoid the 8 classic misconceptions where students lose marks, plus 16 interactive 3D revision flip cards.</p>
     </div>
   </div>
 
@@ -12914,16 +14127,25 @@ Question 4: How much is the electric potential of a charge at infinity taken to 
     </div>
   </div>
 
-  <!-- Curated Multimodal Video Hub -->
-  <div class="space-y-4 pt-6 border-t border-slate-800">
-    <div class="flex items-center justify-between">
-      <h3 class="text-2xl font-bold text-white font-heading flex items-center gap-2">
-        <i class="fas fa-video text-purple-400"></i> Curated Multimodal Video Lectures (8 Topics)
-      </h3>
-      <span class="text-xs text-slate-400 font-mono">Verified Zero-Rot Educational Routes</span>
-    </div>
+  <!-- Curated Multi</div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<!-- ========================================== -->
+<!-- 13. RESEARCH & VIDEO HUB (tabGoogleHub)     -->
+<!-- ========================================== -->
+<div id="tabGoogleHub" class="tab-pane hidden space-y-8 animate-fadeIn">
+  <!-- Header Title -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+    <div>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold uppercase tracking-wider mb-2">
+        <i class="fab fa-google"></i> Multimodal Research &amp; Video Hub
+      </div>
+      <h2 class="text-3xl font-extrabold text-white font-heading">Curated Video Lectures &amp; Knowledge Vault (8 Topics)</h2>
+      <p class="text-sm text-slate-400 mt-1">Zero-rot verified search routes, visual lectures, laboratory demonstrations, and conceptual deep-dives across Physics Chapter 1: Electric Current &amp; Effects.</p>
+    </div>
+  </div>
+
+  <!-- Topics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
       
     <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 flex flex-col justify-between">
       <div class="space-y-3">
@@ -13187,214 +14409,302 @@ Question 4: How much is the electric potential of a charge at infinity taken to 
           <i class="fab fa-google"></i> Web Research
         </a>
       </div>
-    </div>
     
-    </div>
   </div>
 </div>
-    </main>
-  </div>
 
-  <!-- CLIENT-SIDE JAVASCRIPT CONTROLLERS -->
+      <!-- Universal Jump to Top Floating Button -->
+  <button id="pushti-jump-to-top" class="pushti-jump-to-top" aria-label="Jump to top" title="Jump to Top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
+  </button>
+
+  <!-- ==================== CLIENT JAVASCRIPT ==================== -->
   <script>
-    // 1. Tab Switching Controller
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-pane').forEach(el => {
-        el.classList.add('hidden');
-        el.classList.remove('active');
-      });
-      const targetPane = document.getElementById(tabId);
-      if (targetPane) {
-        targetPane.classList.remove('hidden');
-        targetPane.classList.add('active');
-      }
+    // 1. Session Timer
+    let sessionSeconds = 0;
+    setInterval(() => {
+      sessionSeconds++;
+      const mins = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
+      const secs = String(sessionSeconds % 60).padStart(2, '0');
+      const el = document.getElementById('sessionTimerDisplay');
+      if (el) el.textContent = `${mins}:${secs}`;
+    }, 1000);
 
-      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      const targetBtn = document.getElementById('navBtn-' + tabId);
-      if (targetBtn) {
-        targetBtn.classList.add('active');
-      }
-
-      window.location.hash = tabId;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    // 2. Theme Switcher
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const isDark = htmlEl.classList.toggle('dark');
+      htmlEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      updateThemeIcon(isDark);
     }
 
-    // Check URL Hash on load
-    window.addEventListener('DOMContentLoaded', () => {
-      const hash = window.location.hash.replace('#', '');
-      if (hash && document.getElementById(hash)) {
-        switchTab(hash);
+    function toggleDarkMode() {
+      toggleTheme();
+    }
+
+    function updateThemeIcon(isDark) {
+      const svg = document.getElementById('themeIconSvg');
+      if (!svg) return;
+      if (isDark) {
+        svg.innerHTML = '<path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"></path>';
+      } else {
+        svg.innerHTML = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>';
+      }
+    }
+
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.setAttribute('data-theme', 'light');
+      updateThemeIcon(false);
+    }
+
+    // 3. Fullscreen Mode
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => console.log(err));
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    // 4. Global Quick Search
+    function toggleGlobalSearch() {
+      const dd = document.getElementById('globalSearchDropdown');
+      if (!dd) return;
+      dd.classList.toggle('hidden');
+      if (!dd.classList.contains('hidden')) {
+        const inp = document.getElementById('quickNavSearchInput');
+        if (inp) inp.focus();
+      }
+    }
+
+    function handleQuickSearch(term) {
+      if (!term || term.length < 2) return;
+      switchTab('tabTextbook');
+      const input = document.getElementById('subjSearchInput');
+      if (input) {
+        input.value = term;
+        if (typeof filterSubjectiveCards === 'function') filterSubjectiveCards();
+      }
+    }
+
+    // 5. Dock Rail Pin Toggle
+    
+    }
+
+    
+    }
+
+    // 6. Tab Switching
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-pane').forEach(p => {
+        p.classList.remove('active');
+        p.style.display = 'none';
+      });
+      
+      const target = document.getElementById(tabId);
+      if (target) {
+        target.style.display = 'block';
+        target.classList.add('active');
       }
 
-      // Check dock pin state in localStorage
-      if (localStorage.getItem('sidebar_dock_pinned_phy1') === 'true') {
-        const dock = document.getElementById('sidebarDock');
-        const icon = document.getElementById('pinIcon');
-        if (dock && icon) {
-          dock.classList.add('is-pinned');
-          icon.classList.add('text-emerald-400');
+      document.querySelectorAll('.nav-tab-btn').forEach(b => {
+        b.classList.remove('active');
+        const dot = b.querySelector('.animate-pulse');
+        if (dot) dot.remove();
+      });
+
+      const activeBtn = btn || document.getElementById('navBtn-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+        const iconWrap = activeBtn.querySelector('div:nth-child(2)');
+        if (iconWrap && !iconWrap.querySelector('.animate-pulse')) {
+          const pulseDot = document.createElement('span');
+          pulseDot.className = 'w-2 h-2 rounded-full bg-emerald-400 absolute top-0.5 right-0.5 ring-2 ring-slate-900 animate-pulse';
+          iconWrap.appendChild(pulseDot);
         }
+      }
+
+      const topSelect = document.querySelector('header select');
+      if (topSelect) topSelect.value = tabId;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      history.replaceState(null, null, '#' + tabId);
+    }
+
+    // 7. Hero Narration
+    function speakHeroIntro() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const text = "Welcome to Electricity: Circuits and Components! In this chapter, you will master cell polarity, closed circuits, Joule's heating effect, fuses, MCBs, Oersted's discovery of electromagnetism, and the electric bell. Let's make learning an interactive adventure!";
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.0;
+        utterance.pitch = 1.05;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // 8. Universal Jump to Top Button
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('pushti-jump-to-top');
+      if (!btn) return;
+      if (window.scrollY > 300) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
       }
     });
 
-    // 2. Dock Rail Pin Toggle
-    function toggleDockPin() {
-      const dock = document.getElementById('sidebarDock');
-      const icon = document.getElementById('pinIcon');
-      if (!dock) return;
-      dock.classList.toggle('is-pinned');
-      const isPinned = dock.classList.contains('is-pinned');
-      localStorage.setItem('sidebar_dock_pinned_phy1', isPinned);
-      if (icon) {
-        if (isPinned) {
-          icon.classList.add('text-emerald-400');
-        } else {
-          icon.classList.remove('text-emerald-400');
-        }
-      }
-    }
-
-    // 3. Theme Toggle
-    function toggleDarkMode() {
-      const html = document.documentElement;
-      html.classList.toggle('dark');
-      const isDark = html.classList.contains('dark');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      const btn = document.getElementById('themeToggleBtn');
-      if (btn) {
-        btn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-      }
-    }
-
-    // 4. Flashcards 3D Flip
-    function flipCard(cardId) {
-      const back = document.getElementById(cardId.replace('fc-', 'fc-back-'));
-      if (back) {
-        back.classList.toggle('hidden');
-      }
-    }
-
-    // 5. Solved Q&A Bank Controllers
+    // 9. Solved Q&A Bank Controllers
     function toggleAnswer(ansId) {
-      const ansDiv = document.getElementById(ansId);
-      const icon = document.getElementById('icon-' + ansId);
-      if (ansDiv) {
-        ansDiv.classList.toggle('hidden');
-        if (icon) {
-          icon.classList.toggle('rotate-180');
-        }
+      const el = document.getElementById(ansId);
+      if (!el) return;
+      const isHidden = el.classList.contains('hidden');
+      el.classList.toggle('hidden');
+      const btn = document.querySelector(`[data-target="${ansId}"]`);
+      if (btn) {
+        btn.innerHTML = isHidden
+          ? '<i class="fas fa-eye-slash mr-1"></i> Hide Model Solution'
+          : '<i class="fas fa-eye mr-1"></i> View Verified Solution';
       }
     }
 
-    let allSubjExpanded = false;
     function toggleAllSubjAnswers() {
-      allSubjExpanded = !allSubjExpanded;
-      document.querySelectorAll('#subjCardsContainer [id^="ans-"]').forEach(el => {
-        if (allSubjExpanded) {
-          el.classList.remove('hidden');
-        } else {
-          el.classList.add('hidden');
-        }
+      const answers = document.querySelectorAll('.subj-answer');
+      const anyHidden = Array.from(answers).some(a => a.classList.contains('hidden'));
+      answers.forEach(a => {
+        if (anyHidden) a.classList.remove('hidden');
+        else a.classList.add('hidden');
       });
-      document.getElementById('toggleAllSubjBtn').innerText = allSubjExpanded ? 'Collapse All Solutions' : 'Expand All Solutions';
+      const btn = document.getElementById('toggleAllSubjBtn');
+      if (btn) {
+        btn.innerHTML = anyHidden
+          ? '<i class="fas fa-eye-slash mr-1"></i> Hide All Solutions'
+          : '<i class="fas fa-eye mr-1"></i> Reveal All Solutions';
+      }
     }
 
     let currentSubjCat = 'all';
     function filterSubjCat(cat) {
       currentSubjCat = cat;
       document.querySelectorAll('#subjFilterPills button').forEach(b => {
-        b.className = 'px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all';
+        b.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all';
       });
-      const activeBtn = document.getElementById('scat-' + cat);
-      if (activeBtn) {
-        activeBtn.className = 'px-3.5 py-2 rounded-xl text-xs font-semibold bg-emerald-600 text-white cursor-pointer transition-all shadow-md shadow-emerald-600/20';
+      const act = document.getElementById('scat-' + cat);
+      if (act) {
+        act.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600 text-white cursor-pointer transition-all shadow-md shadow-emerald-600/20';
       }
-      applySubjFilters();
+      filterSubjectiveCards();
     }
 
     function filterSubjectiveCards() {
-      applySubjFilters();
-    }
-
-    function applySubjFilters() {
-      const query = (document.getElementById('subjSearchInput').value || '').toLowerCase().trim();
+      const query = (document.getElementById('subjSearchInput')?.value || '').toLowerCase().trim();
+      const diff = document.getElementById('subjDiffFilter')?.value || 'all';
       let visible = 0;
-      document.querySelectorAll('.subj-card').forEach(card => {
-        const cat = card.getAttribute('data-cat') || 'general';
-        const text = card.innerText.toLowerCase();
-        const catMatches = (currentSubjCat === 'all' || cat === currentSubjCat);
-        const searchMatches = (!query || text.includes(query));
 
-        if (catMatches && searchMatches) {
+      document.querySelectorAll('.subj-card').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const matchesQuery = !query || text.includes(query);
+        const matchesCat = currentSubjCat === 'all' || card.dataset.cat === currentSubjCat;
+        const matchesDiff = diff === 'all' || card.dataset.diff === diff;
+
+        if (matchesQuery && matchesCat && matchesDiff) {
           card.classList.remove('hidden');
           visible++;
         } else {
           card.classList.add('hidden');
         }
       });
-      document.getElementById('subjCounter').innerText = 'Showing ' + visible + ' solved questions';
+
+      const counter = document.getElementById('subjCounter');
+      if (counter) counter.textContent = `Showing ${visible} of 85 solved questions`;
     }
 
-    // 6. Objective Drills Scoring Engine
-    let drillStats = {
-      attempted: 0,
-      correct: 0,
-      incorrect: 0
-    };
+    function applySubjFilters() {
+      filterSubjectiveCards();
+    }
+
+    // 10. Objective Drills Scoring Engine
+    let drillStats = { attempted: 0, correct: 0, incorrect: 0 };
     const answeredCards = new Set();
 
     function updateDrillDashboard() {
-      document.getElementById('drillAttempted').innerText = drillStats.attempted + ' / 176';
-      document.getElementById('drillCorrect').innerText = drillStats.correct;
-      document.getElementById('drillIncorrect').innerText = drillStats.incorrect;
-      const acc = drillStats.attempted > 0 ? Math.round((drillStats.correct / drillStats.attempted) * 100) : 0;
-      document.getElementById('drillAccuracy').innerText = acc + '%';
-
-      const sScore = document.getElementById('drillScoreSticky');
-      const sAtt = document.getElementById('drillAttemptedSticky');
-      if (sScore) sScore.innerText = drillStats.correct;
-      if (sAtt) sAtt.innerText = drillStats.attempted;
+      const att = document.getElementById('drillAttempted');
+      const cor = document.getElementById('drillCorrect');
+      const inc = document.getElementById('drillIncorrect');
+      const acc = document.getElementById('drillAccuracy');
+      if (att) att.textContent = `${drillStats.attempted} / 176`;
+      if (cor) cor.textContent = drillStats.correct;
+      if (inc) inc.textContent = drillStats.incorrect;
+      if (acc) {
+        const rate = drillStats.attempted > 0 ? Math.round((drillStats.correct / drillStats.attempted) * 100) : 0;
+        acc.textContent = `${rate}%`;
+      }
     }
 
     function handleMCQClick(qIdx, selectedIdx, correctIdx) {
-      const card = document.getElementById('mcq-card-' + qIdx);
-      const isAlreadyAnswered = card.getAttribute('data-answered') === 'true';
+      const cardKey = `mcq-${qIdx}`;
+      if (answeredCards.has(cardKey)) return;
+      answeredCards.add(cardKey);
+      drillStats.attempted++;
 
-      const isCorrect = selectedIdx === correctIdx;
-      const expBox = document.getElementById('mcq-exp-' + qIdx);
-      const status = document.getElementById('mcq-status-' + qIdx);
+      const isCorrect = (selectedIdx === correctIdx);
+      if (isCorrect) drillStats.correct++;
+      else drillStats.incorrect++;
 
-      // Disable buttons for this card
-      for (let i = 0; i < 6; i++) {
-        const btn = document.getElementById('mcq-' + qIdx + '-opt-' + i);
+      updateDrillDashboard();
+
+      const btnCount = 4;
+      for (let i = 0; i < btnCount; i++) {
+        const btn = document.getElementById(`mcq-${qIdx}-opt-${i}`);
         if (btn) {
           btn.disabled = true;
+          btn.classList.add('cursor-default');
           if (i === correctIdx) {
-            btn.className = 'mcq-opt-btn w-full p-3 rounded-2xl bg-emerald-950/60 border-2 border-emerald-500 text-left flex items-start gap-3 transition-all';
+            btn.classList.remove('bg-slate-950/80', 'border-slate-800');
+            btn.classList.add('bg-emerald-950/80', 'border-emerald-500', 'text-emerald-200');
           } else if (i === selectedIdx && !isCorrect) {
-            btn.className = 'mcq-opt-btn w-full p-3 rounded-2xl bg-rose-950/60 border-2 border-rose-500 text-left flex items-start gap-3 transition-all';
+            btn.classList.remove('bg-slate-950/80', 'border-slate-800');
+            btn.classList.add('bg-rose-950/80', 'border-rose-500', 'text-rose-200');
           }
         }
       }
 
-      if (!isAlreadyAnswered) {
-        card.setAttribute('data-answered', 'true');
-        drillStats.attempted++;
-        if (isCorrect) {
-          drillStats.correct++;
-          status.innerText = '✓ Correct';
-          status.className = 'text-xs font-mono text-emerald-400 font-bold';
-        } else {
-          drillStats.incorrect++;
-          status.innerText = '✗ Incorrect';
-          status.className = 'text-xs font-mono text-rose-400 font-bold';
-        }
-        updateDrillDashboard();
+      const exp = document.getElementById(`mcq-exp-${qIdx}`);
+      if (exp) exp.classList.remove('hidden');
+    }
+
+    function handleFIBSubmit(qIdx, correctAns) {
+      const cardKey = `fib-${qIdx}`;
+      if (answeredCards.has(cardKey)) return;
+      
+      const input = document.getElementById(`fib-input-${qIdx}`);
+      if (!input) return;
+      const userVal = input.value.trim().toLowerCase();
+      if (!userVal) return;
+
+      answeredCards.add(cardKey);
+      drillStats.attempted++;
+
+      const isCorrect = userVal === correctAns.toLowerCase() || correctAns.toLowerCase().includes(userVal);
+      if (isCorrect) drillStats.correct++;
+      else drillStats.incorrect++;
+
+      updateDrillDashboard();
+      input.disabled = true;
+
+      const btn = document.getElementById(`fib-btn-${qIdx}`);
+      if (btn) btn.disabled = true;
+
+      const stat = document.getElementById(`fib-status-${qIdx}`);
+      if (stat) {
+        stat.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+        stat.className = `text-xs font-mono font-bold ${isCorrect ? 'text-emerald-400' : 'text-rose-400'}`;
       }
 
-      if (expBox) expBox.classList.remove('hidden');
+      const exp = document.getElementById(`fib-exp-${qIdx}`);
+      if (exp) exp.classList.remove('hidden');
     }
 
     function toggleFIB(ansId) {
@@ -13403,71 +14713,68 @@ Question 4: How much is the electric potential of a charge at infinity taken to 
     }
 
     function handleTFClick(qIdx, userChoice, correctChoice) {
-      const isCorrect = userChoice === correctChoice;
-      const status = document.getElementById('tf-status-' + qIdx);
-      const exp = document.getElementById('tf-exp-' + qIdx);
+      const cardKey = `tf-${qIdx}`;
+      if (answeredCards.has(cardKey)) return;
+      answeredCards.add(cardKey);
+      drillStats.attempted++;
 
-      const trueBtn = document.getElementById('tf-' + qIdx + '-true');
-      const falseBtn = document.getElementById('tf-' + qIdx + '-false');
-      trueBtn.disabled = true;
-      falseBtn.disabled = true;
+      const isCorrect = (userChoice === correctChoice);
+      if (isCorrect) drillStats.correct++;
+      else drillStats.incorrect++;
 
-      if (userChoice) {
-        trueBtn.className = isCorrect ? 'flex-1 py-2.5 rounded-xl bg-emerald-950 border-2 border-emerald-500 text-xs font-bold text-emerald-300' : 'flex-1 py-2.5 rounded-xl bg-rose-950 border-2 border-rose-500 text-xs font-bold text-rose-300';
-      } else {
-        falseBtn.className = isCorrect ? 'flex-1 py-2.5 rounded-xl bg-emerald-950 border-2 border-emerald-500 text-xs font-bold text-emerald-300' : 'flex-1 py-2.5 rounded-xl bg-rose-950 border-2 border-rose-500 text-xs font-bold text-rose-300';
+      updateDrillDashboard();
+
+      const btnTrue = document.getElementById(`tf-${qIdx}-true`);
+      const btnFalse = document.getElementById(`tf-${qIdx}-false`);
+      if (btnTrue) btnTrue.disabled = true;
+      if (btnFalse) btnFalse.disabled = true;
+
+      const chosenBtn = userChoice ? btnTrue : btnFalse;
+      if (chosenBtn) {
+        chosenBtn.classList.add(isCorrect ? 'bg-emerald-600' : 'bg-rose-600', 'text-white');
       }
 
-      if (!answeredCards.has('tf-' + qIdx)) {
-        answeredCards.add('tf-' + qIdx);
-        drillStats.attempted++;
-        if (isCorrect) {
-          drillStats.correct++;
-          status.innerText = '✓ Correct';
-          status.className = 'text-xs font-mono text-emerald-400 font-bold';
-        } else {
-          drillStats.incorrect++;
-          status.innerText = '✗ Incorrect';
-          status.className = 'text-xs font-mono text-rose-400 font-bold';
-        }
-        updateDrillDashboard();
+      const stat = document.getElementById(`tf-status-${qIdx}`);
+      if (stat) {
+        stat.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+        stat.className = `text-xs font-mono font-bold ${isCorrect ? 'text-emerald-400' : 'text-rose-400'}`;
       }
 
+      const exp = document.getElementById(`tf-exp-${qIdx}`);
       if (exp) exp.classList.remove('hidden');
     }
 
     function handleARClick(qIdx, userLetter, correctLetter) {
-      const isCorrect = userLetter === correctLetter;
-      const status = document.getElementById('ar-status-' + qIdx);
-      const exp = document.getElementById('ar-exp-' + qIdx);
+      const cardKey = `ar-${qIdx}`;
+      if (answeredCards.has(cardKey)) return;
+      answeredCards.add(cardKey);
+      drillStats.attempted++;
+
+      const isCorrect = (userLetter.toUpperCase() === correctLetter.toUpperCase());
+      if (isCorrect) drillStats.correct++;
+      else drillStats.incorrect++;
+
+      updateDrillDashboard();
 
       ['A', 'B', 'C', 'D'].forEach(letter => {
-        const btn = document.getElementById('ar-' + qIdx + '-' + letter);
+        const btn = document.getElementById(`ar-${qIdx}-${letter}`);
         if (btn) {
           btn.disabled = true;
-          if (letter === correctLetter) {
-            btn.className = 'p-2.5 rounded-xl bg-emerald-950 border-2 border-emerald-500 text-left text-xs text-white';
-          } else if (letter === userLetter && !isCorrect) {
-            btn.className = 'p-2.5 rounded-xl bg-rose-950 border-2 border-rose-500 text-left text-xs text-white';
+          if (letter === correctLetter.toUpperCase()) {
+            btn.classList.add('bg-emerald-950', 'border-emerald-500', 'text-emerald-200');
+          } else if (letter === userLetter.toUpperCase() && !isCorrect) {
+            btn.classList.add('bg-rose-950', 'border-rose-500', 'text-rose-200');
           }
         }
       });
 
-      if (!answeredCards.has('ar-' + qIdx)) {
-        answeredCards.add('ar-' + qIdx);
-        drillStats.attempted++;
-        if (isCorrect) {
-          drillStats.correct++;
-          status.innerText = '✓ Correct';
-          status.className = 'text-xs font-mono text-emerald-400 font-bold';
-        } else {
-          drillStats.incorrect++;
-          status.innerText = '✗ Incorrect';
-          status.className = 'text-xs font-mono text-rose-400 font-bold';
-        }
-        updateDrillDashboard();
+      const stat = document.getElementById(`ar-status-${qIdx}`);
+      if (stat) {
+        stat.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+        stat.className = `text-xs font-mono font-bold ${isCorrect ? 'text-emerald-400' : 'text-rose-400'}`;
       }
 
+      const exp = document.getElementById(`ar-exp-${qIdx}`);
       if (exp) exp.classList.remove('hidden');
     }
 
@@ -13475,51 +14782,444 @@ Question 4: How much is the electric potential of a charge at infinity taken to 
       document.querySelectorAll('#drillFilterPills button').forEach(b => {
         b.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer transition-all';
       });
-      const activeBtn = document.getElementById('df-' + dtype);
-      if (activeBtn) activeBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600 text-white cursor-pointer transition-all shadow-md shadow-emerald-600/20';
+      const act = document.getElementById('df-' + dtype);
+      if (act) {
+        act.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-600 text-white cursor-pointer transition-all shadow-md shadow-emerald-600/20';
+      }
 
-      document.querySelectorAll('.drill-card').forEach(c => {
+      document.querySelectorAll('#drillsCardsContainer > .drill-card').forEach(card => {
         if (dtype === 'all') {
-          c.classList.remove('hidden');
-        } else if (c.classList.contains('drill-' + dtype)) {
-          c.classList.remove('hidden');
+          card.classList.remove('hidden');
+        } else if (dtype === 'mcq' && card.classList.contains('drill-mcq')) {
+          card.classList.remove('hidden');
+        } else if (dtype === 'fib' && card.classList.contains('drill-fib')) {
+          card.classList.remove('hidden');
+        } else if (dtype === 'tf' && card.classList.contains('drill-tf')) {
+          card.classList.remove('hidden');
+        } else if (dtype === 'ar' && card.classList.contains('drill-ar')) {
+          card.classList.remove('hidden');
+        } else if (dtype === 'match' && card.classList.contains('drill-match')) {
+          card.classList.remove('hidden');
         } else {
-          c.classList.add('hidden');
+          card.classList.add('hidden');
         }
       });
     }
 
     function resetDrillTest() {
-      if (confirm('Are you sure you want to reset your score and practice answers?')) {
-        location.reload();
+      drillStats = { attempted: 0, correct: 0, incorrect: 0 };
+      answeredCards.clear();
+      updateDrillDashboard();
+      location.reload();
+    }
+
+    // 11. Match Columns Interactive Arena Engine (Option 3)
+    const matchState = {};
+
+    function initMatchDrill(idx) {
+      if (!matchState[idx]) {
+        matchState[idx] = {
+          selectedLeft: null,
+          pairs: {},
+          checked: false
+        };
+      }
+      return matchState[idx];
+    }
+
+    function handleMatchItemClick(idx, side, key) {
+      const state = initMatchDrill(idx);
+      const arena = document.getElementById(`match-arena-${idx}`);
+      if (!arena) return;
+
+      if (state.checked) {
+        clearMatchValidation(idx);
+      }
+
+      if (side === 'left') {
+        if (state.selectedLeft === key) {
+          state.selectedLeft = null;
+        } else {
+          state.selectedLeft = key;
+        }
+      } else if (side === 'right') {
+        if (state.selectedLeft) {
+          const leftKey = state.selectedLeft;
+          const rightKey = key;
+
+          for (const lk in state.pairs) {
+            if (state.pairs[lk] === rightKey) {
+              delete state.pairs[lk];
+            }
+          }
+          state.pairs[leftKey] = rightKey;
+          state.selectedLeft = null;
+        } else {
+          for (const lk in state.pairs) {
+            if (state.pairs[lk] === key) {
+              delete state.pairs[lk];
+              break;
+            }
+          }
+        }
+      }
+
+      updateMatchUI(idx);
+    }
+
+    function handleMatchDragStart(e, idx, key) {
+      const state = initMatchDrill(idx);
+      state.selectedLeft = key;
+      e.dataTransfer.setData('text/plain', JSON.stringify({ idx, key }));
+      e.dataTransfer.effectAllowed = 'link';
+      updateMatchUI(idx);
+    }
+
+    function handleMatchDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'link';
+      const socket = e.currentTarget;
+      if (socket) socket.classList.add('is-dragover');
+    }
+
+    function handleMatchDragLeave(e) {
+      const socket = e.currentTarget;
+      if (socket) socket.classList.remove('is-dragover');
+    }
+
+    function handleMatchDrop(e, idx, rightKey) {
+      e.preventDefault();
+      const socket = e.currentTarget;
+      if (socket) socket.classList.remove('is-dragover');
+
+      let leftKey = null;
+      try {
+        const raw = e.dataTransfer.getData('text/plain');
+        if (raw) {
+          const data = JSON.parse(raw);
+          if (data.idx === idx) leftKey = data.key;
+        }
+      } catch (err) {}
+
+      const state = initMatchDrill(idx);
+      if (!leftKey && state.selectedLeft) {
+        leftKey = state.selectedLeft;
+      }
+
+      if (leftKey) {
+        if (state.checked) clearMatchValidation(idx);
+        for (const lk in state.pairs) {
+          if (state.pairs[lk] === rightKey) {
+            delete state.pairs[lk];
+          }
+        }
+        state.pairs[leftKey] = rightKey;
+        state.selectedLeft = null;
+        updateMatchUI(idx);
       }
     }
-  </script>
 
-  <!-- Universal Jump to Top Floating Button -->
-  <button id="pushti-jump-to-top" class="pushti-jump-to-top" aria-label="Jump to top" title="Jump to Top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>
-  </button>
-  <script>
-  (function() {
-    var btn = document.getElementById('pushti-jump-to-top');
-    if (!btn) return;
-    var ticking = false;
-    window.addEventListener('scroll', function() {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(function() {
-          var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
-          if (scrollY > 100) {
-            btn.classList.add('visible');
-          } else {
-            btn.classList.remove('visible');
-          }
-          ticking = false;
-        });
+    function renderMatchPairingDock(idx) {
+      const dockCount = document.getElementById(`match-dock-count-${idx}`);
+      const pairsList = document.getElementById(`match-pairs-list-${idx}`);
+      if (!dockCount || !pairsList) return;
+      const state = initMatchDrill(idx);
+      const arena = document.getElementById(`match-arena-${idx}`);
+      const totalItems = arena ? parseInt(arena.dataset.total || '4', 10) : 4;
+      const keys = Object.keys(state.pairs);
+
+      if (keys.length === 0) {
+        dockCount.textContent = 'None';
+        pairsList.innerHTML = '<span class="text-slate-500 italic text-[11px] py-0.5">No pairs connected yet. Tap or drag to connect!</span>';
+        return;
       }
-    }, { passive: true });
-  })();
+
+      dockCount.textContent = `${keys.length} of ${totalItems}`;
+      let html = '';
+      keys.forEach(leftKey => {
+        const rightKey = state.pairs[leftKey];
+        html += `
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs font-mono font-medium shadow-sm animate-fadeIn">
+            <span class="text-emerald-400 font-bold">[${leftKey}]</span>
+            <span class="text-slate-500">➔</span>
+            <span class="text-sky-400 font-bold">(${rightKey})</span>
+            <button onclick="unpairMatchItem(${idx}, '${leftKey}')" class="ml-1 text-slate-400 hover:text-rose-400 transition-colors cursor-pointer font-bold" title="Disconnect pair">×</button>
+          </span>
+        `;
+      });
+      pairsList.innerHTML = html;
+    }
+
+    function unpairMatchItem(idx, leftKey) {
+      const state = initMatchDrill(idx);
+      if (state.checked) clearMatchValidation(idx);
+      if (state.pairs[leftKey]) {
+        delete state.pairs[leftKey];
+        updateMatchUI(idx);
+      }
+    }
+
+    function updateMatchUI(idx) {
+      const state = initMatchDrill(idx);
+      const arena = document.getElementById(`match-arena-${idx}`);
+      if (!arena) return;
+
+      const totalItems = parseInt(arena.dataset.total || '4', 10);
+      const pairedCount = Object.keys(state.pairs).length;
+
+      const statusBadge = document.getElementById(`match-status-${idx}`);
+      if (statusBadge) {
+        statusBadge.textContent = `${pairedCount}/${totalItems} Paired`;
+        if (pairedCount === totalItems) {
+          statusBadge.className = 'font-mono font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-700/60 px-2.5 py-0.5 rounded-full text-[11px] animate-pulse';
+        } else {
+          statusBadge.className = 'font-mono font-bold text-slate-400 bg-slate-900 border border-slate-700 px-2.5 py-0.5 rounded-full text-[11px]';
+        }
+      }
+
+      arena.querySelectorAll('.match-bubble-left').forEach(el => {
+        const k = el.dataset.key;
+        el.classList.remove('is-selected', 'is-paired');
+        const badge = el.querySelector('.match-conn-badge');
+        const targetLbl = badge ? badge.querySelector('.target-label') : null;
+
+        if (state.selectedLeft === k) {
+          el.classList.add('is-selected');
+        }
+
+        if (state.pairs[k]) {
+          el.classList.add('is-paired');
+          if (badge) {
+            badge.classList.remove('hidden');
+            if (targetLbl) targetLbl.textContent = `➔ (${state.pairs[k]})`;
+          }
+        } else {
+          if (badge) badge.classList.add('hidden');
+        }
+      });
+
+      const rightToLeft = {};
+      for (const lk in state.pairs) {
+        rightToLeft[state.pairs[lk]] = lk;
+      }
+
+      arena.querySelectorAll('.match-socket-right').forEach(el => {
+        const rk = el.dataset.key;
+        const badge = el.querySelector('.match-socket-badge');
+        const srcLbl = badge ? badge.querySelector('.source-label') : null;
+
+        el.classList.remove('is-paired');
+        if (rightToLeft[rk]) {
+          el.classList.add('is-paired');
+          if (badge) {
+            badge.classList.remove('hidden');
+            if (srcLbl) srcLbl.textContent = `⮌ [${rightToLeft[rk]}]`;
+          }
+        } else {
+          if (badge) badge.classList.add('hidden');
+        }
+      });
+
+      renderMatchPairingDock(idx);
+    }
+
+    function clearMatchValidation(idx) {
+      const state = initMatchDrill(idx);
+      state.checked = false;
+      const arena = document.getElementById(`match-arena-${idx}`);
+      if (!arena) return;
+
+      arena.querySelectorAll('.match-bubble-left, .match-socket-right').forEach(el => {
+        el.classList.remove('match-item-correct', 'match-item-wrong', 'animate-match-shake');
+        const icon = el.querySelector('.status-icon');
+        if (icon) icon.innerHTML = '';
+      });
+
+      const feedback = document.getElementById(`match-feedback-${idx}`);
+      if (feedback) feedback.classList.add('hidden');
+    }
+
+    function checkMatchDrill(idx) {
+      const state = initMatchDrill(idx);
+      const arena = document.getElementById(`match-arena-${idx}`);
+      if (!arena) return;
+
+      let correctPairs = {};
+      try {
+        const raw = arena.dataset.pairs || arena.getAttribute('data-pairs') || '{}';
+        correctPairs = JSON.parse(raw.replace(/&quot;/g, '"'));
+      } catch (e) {
+        console.error('Error parsing correct pairs:', e);
+      }
+
+      const totalItems = parseInt(arena.dataset.total || '4', 10);
+      const userPairKeys = Object.keys(state.pairs);
+      const feedback = document.getElementById(`match-feedback-${idx}`);
+
+      if (userPairKeys.length < totalItems) {
+        if (feedback) {
+          feedback.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-950/80 border border-amber-600/70 text-amber-300 flex items-center gap-1.5';
+          feedback.innerHTML = `<i class="fas fa-exclamation-circle"></i> Connect all ${totalItems} pairs before checking! (${userPairKeys.length}/${totalItems} paired)`;
+          feedback.classList.remove('hidden');
+        }
+        return;
+      }
+
+      state.checked = true;
+      let correctCount = 0;
+
+      for (const lk in correctPairs) {
+        const correctTarget = String(correctPairs[lk]).toLowerCase();
+        const userTarget = String(state.pairs[lk] || '').toLowerCase();
+        const isMatch = (userTarget === correctTarget);
+
+        if (isMatch) correctCount++;
+
+        const leftEl = document.getElementById(`match-left-${idx}-${lk}`);
+        const rightEl = document.getElementById(`match-right-${idx}-${state.pairs[lk]}`);
+
+        if (leftEl) {
+          leftEl.classList.remove('match-item-correct', 'match-item-wrong', 'animate-match-shake');
+          leftEl.classList.add(isMatch ? 'match-item-correct' : 'match-item-wrong');
+          if (!isMatch) leftEl.classList.add('animate-match-shake');
+          const icon = leftEl.querySelector('.status-icon');
+          if (icon) icon.innerHTML = isMatch ? ' <i class="fas fa-check text-emerald-400"></i>' : ' <i class="fas fa-times text-rose-400"></i>';
+        }
+
+        if (rightEl) {
+          rightEl.classList.remove('match-item-correct', 'match-item-wrong', 'animate-match-shake');
+          rightEl.classList.add(isMatch ? 'match-item-correct' : 'match-item-wrong');
+          if (!isMatch) rightEl.classList.add('animate-match-shake');
+          const icon = rightEl.querySelector('.status-icon');
+          if (icon) icon.innerHTML = isMatch ? ' <i class="fas fa-check text-emerald-400"></i>' : ' <i class="fas fa-times text-rose-400"></i>';
+        }
+      }
+
+      if (feedback) {
+        feedback.classList.remove('hidden');
+        if (correctCount === totalItems) {
+          feedback.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-950/90 border border-emerald-500 text-emerald-200 flex items-center gap-1.5 shadow-lg shadow-emerald-500/20';
+          feedback.innerHTML = `<i class="fas fa-trophy text-emerald-400"></i> 🎉 Perfect Match! All ${totalItems} pairs correctly aligned! (+1 Score)`;
+
+          const cardKey = `match-${idx}`;
+          if (!answeredCards.has(cardKey)) {
+            answeredCards.add(cardKey);
+            drillStats.attempted++;
+            drillStats.correct++;
+            updateDrillDashboard();
+          }
+
+          const ansBox = document.getElementById(`ans-drill-${idx}`);
+          if (ansBox) ansBox.classList.remove('hidden');
+        } else {
+          feedback.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-950/90 border border-rose-500/70 text-rose-200 flex items-center gap-1.5';
+          feedback.innerHTML = `<i class="fas fa-times-circle"></i> ${correctCount}/${totalItems} Correct. Adjust mismatched pairs or tap Reset to try again!`;
+        }
+      }
+    }
+
+    function resetMatchDrill(idx) {
+      const state = initMatchDrill(idx);
+      state.pairs = {};
+      state.selectedLeft = null;
+      clearMatchValidation(idx);
+      updateMatchUI(idx);
+    }
+
+    // Aliases for compatibility
+    const checkMatchAnswers = checkMatchDrill;
+    const resetMatchCard = resetMatchDrill;
+
+    // 12. Flashcard Flip
+    function flipCard(cardId) {
+      const card = typeof cardId === 'string' ? document.getElementById(cardId) : cardId;
+      if (!card) return;
+      const inner = card.querySelector('.transform-style-preserve-3d');
+      if (inner) inner.classList.toggle('flipped');
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && document.getElementById(hash)) {
+        switchTab(hash);
+      }
+    });
+  
+    // ==========================================
+    // Universal Pin Controller (Tablet Portrait & Desktop Safe)
+    // ==========================================
+    function updatePinButtonUI(isPinned) {
+      const btn = document.getElementById('pinToggleBtn');
+      const icon = document.getElementById('pinToggleIcon') || document.getElementById('pinIcon');
+      const dot = document.getElementById('pinStatusDot');
+      const label = document.getElementById('pinStatusText');
+      const hint = document.getElementById('pinActionHint');
+      
+      if (btn) {
+        btn.setAttribute('aria-pressed', isPinned ? 'true' : 'false');
+        if (isPinned) {
+          btn.className = 'w-full h-10 px-2 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden bg-cyan-500/20 border-cyan-500/50 text-cyan-300 ring-1 ring-cyan-500/30 shadow-[0_0_12px_rgba(6,182,212,0.25)]';
+          btn.title = 'Sidebar: Pinned (Locked Open - tap to collapse to compact dock)';
+        } else {
+          btn.className = 'w-full h-10 px-2 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden bg-slate-800/80 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-700/80';
+          btn.title = 'Sidebar: Unpinned (Compact Dock - tap to lock open)';
+        }
+      }
+      
+      if (icon) {
+        if (isPinned) {
+          icon.className = 'fas fa-thumbtack text-xs transition-transform duration-300 rotate-0 text-cyan-400 font-bold scale-110';
+        } else {
+          icon.className = 'fas fa-thumbtack text-xs transition-transform duration-300 -rotate-45 text-slate-400';
+        }
+      }
+      
+      if (dot) {
+        if (isPinned) {
+          dot.className = 'w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.9)] animate-pulse absolute top-1.5 right-1.5 transition-colors';
+        } else {
+          dot.className = 'w-1.5 h-1.5 rounded-full bg-slate-600 absolute top-1.5 right-1.5 transition-colors';
+        }
+      }
+      
+      if (label) {
+        label.textContent = isPinned ? 'Pinned (Locked)' : 'Compact Dock';
+        label.className = isPinned ? 'text-xs font-bold tracking-wide uppercase text-cyan-300' : 'text-xs font-semibold tracking-wide uppercase text-slate-400';
+      }
+      
+      if (hint) {
+        hint.textContent = isPinned ? 'Tap to collapse' : 'Tap to lock';
+        hint.className = isPinned ? 'text-[10px] font-mono text-cyan-400/80' : 'text-[10px] font-mono text-slate-500';
+      }
+    }
+
+    function toggleSidebarPin() {
+      const dock = document.getElementById('sidebarDock');
+      if (!dock) return;
+      const isPinned = dock.classList.toggle('pinned');
+      document.body.classList.toggle('dock-pinned', isPinned);
+      localStorage.setItem('pushti_dock_pinned', isPinned ? 'true' : 'false');
+      updatePinButtonUI(isPinned);
+    }
+    window.toggleDockPin = toggleSidebarPin;
+
+    // Initialize pin state on load (Default: UNPINNED compact rail)
+    (function initSidebarPin() {
+      const dock = document.getElementById('sidebarDock');
+      if (!dock) return;
+      const savedPin = localStorage.getItem('pushti_dock_pinned');
+      // Default is unpinned ("mostly we do not keep full side bar")
+      const isPinned = (savedPin === 'true');
+      if (isPinned) {
+        dock.classList.add('pinned');
+        document.body.classList.add('dock-pinned');
+      } else {
+        dock.classList.remove('pinned');
+        document.body.classList.remove('dock-pinned');
+      }
+      updatePinButtonUI(isPinned);
+    })();
   </script>
 </body>
 </html>
