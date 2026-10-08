@@ -5082,27 +5082,56 @@ List-II:
     
 
     // --- MAIN TAB SWITCHING ---
-    function switchMainTab(tabId, btn) {
-      document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.remove('active');
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-pane, .tab-content').forEach(p => {
+        p.classList.remove('active');
+        p.classList.add('hidden');
+        p.style.display = 'none';
       });
-      const targetTab = document.getElementById(tabId);
-      if (targetTab) {
-        targetTab.classList.add('active');
+      
+      let target = document.getElementById(tabId);
+      if (!target) {
+        // Case-insensitive fallback
+        target = Array.from(document.querySelectorAll('.tab-pane, .tab-content')).find(
+          el => el.id && el.id.toLowerCase() === (tabId || '').toLowerCase()
+        );
+      }
+      
+      if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('active');
+        target.style.display = 'block';
       }
 
       document.querySelectorAll('.nav-tab-btn').forEach(b => {
         b.classList.remove('active');
+        const dot = b.querySelector('.animate-pulse');
+        if (dot) dot.remove();
       });
-      if (btn) {
-        btn.classList.add('active');
-      } else {
-        const matchedBtn = document.getElementById(`navBtn-${tabId}`);
-        if (matchedBtn) matchedBtn.classList.add('active');
+
+      const activeBtn = btn || document.getElementById('navBtn-' + tabId) || (target ? document.getElementById('navBtn-' + target.id) : null);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+        const iconWrap = activeBtn.querySelector('div:nth-child(2)');
+        if (iconWrap && !iconWrap.querySelector('.animate-pulse')) {
+          const pulseDot = document.createElement('span');
+          pulseDot.className = 'w-2 h-2 rounded-full bg-emerald-400 absolute top-0.5 right-0.5 ring-2 ring-slate-900 animate-pulse';
+          iconWrap.appendChild(pulseDot);
+        }
       }
 
+      const topSelect = document.querySelector('header select');
+      if (topSelect) topSelect.value = tabId;
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      try {
+        history.replaceState(null, null, '#' + (target ? target.id : tabId));
+      } catch (e) {
+        window.location.hash = target ? target.id : tabId;
+      }
     }
+    window.switchTab = switchTab;
+    window.switchMainTab = switchTab;
 
     // --- DRILLS SUB-TAB SWITCHING ---
     function switchDrillsSubTab(subId, btn) {

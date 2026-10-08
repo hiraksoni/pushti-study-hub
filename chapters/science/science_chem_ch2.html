@@ -15344,24 +15344,28 @@ Zn + PbSO4 -&gt; ZnSO4 + Pb
       }
     }
 
-    // 5. Dock Rail Pin Toggle
-    
-    }
-
-    
-    }
+    // 5. Dock Rail Pin Toggle (Handled by Universal Pin Controller)
 
     // 6. Tab Switching
     function switchTab(tabId, btn) {
-      document.querySelectorAll('.tab-pane').forEach(p => {
+      document.querySelectorAll('.tab-pane, .tab-content').forEach(p => {
         p.classList.remove('active');
+        p.classList.add('hidden');
         p.style.display = 'none';
       });
       
-      const target = document.getElementById(tabId);
+      let target = document.getElementById(tabId);
+      if (!target) {
+        // Case-insensitive fallback
+        target = Array.from(document.querySelectorAll('.tab-pane, .tab-content')).find(
+          el => el.id && el.id.toLowerCase() === (tabId || '').toLowerCase()
+        );
+      }
+      
       if (target) {
-        target.style.display = 'block';
+        target.classList.remove('hidden');
         target.classList.add('active');
+        target.style.display = 'block';
       }
 
       document.querySelectorAll('.nav-tab-btn').forEach(b => {
@@ -15370,13 +15374,13 @@ Zn + PbSO4 -&gt; ZnSO4 + Pb
         if (dot) dot.remove();
       });
 
-      const activeBtn = btn || document.getElementById('navBtn-' + tabId);
+      const activeBtn = btn || document.getElementById('navBtn-' + tabId) || (target ? document.getElementById('navBtn-' + target.id) : null);
       if (activeBtn) {
         activeBtn.classList.add('active');
         const iconWrap = activeBtn.querySelector('div:nth-child(2)');
         if (iconWrap && !iconWrap.querySelector('.animate-pulse')) {
           const pulseDot = document.createElement('span');
-          pulseDot.className = 'w-2 h-2 rounded-full bg-violet-400 absolute top-0.5 right-0.5 ring-2 ring-slate-900 animate-pulse';
+          pulseDot.className = 'w-2 h-2 rounded-full bg-emerald-400 absolute top-0.5 right-0.5 ring-2 ring-slate-900 animate-pulse';
           iconWrap.appendChild(pulseDot);
         }
       }
@@ -15385,8 +15389,14 @@ Zn + PbSO4 -&gt; ZnSO4 + Pb
       if (topSelect) topSelect.value = tabId;
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      history.replaceState(null, null, '#' + tabId);
+      try {
+        history.replaceState(null, null, '#' + (target ? target.id : tabId));
+      } catch (e) {
+        window.location.hash = target ? target.id : tabId;
+      }
     }
+    window.switchTab = switchTab;
+    window.switchMainTab = switchTab;
 
     // 7. Hero Narration
     function speakHeroIntro() {
