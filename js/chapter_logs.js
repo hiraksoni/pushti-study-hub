@@ -399,6 +399,47 @@
         // ==========================================
         // TIME TABLE & SCHEDULE
         // ==========================================
+        'timetable_oct2026': {
+            id: 'timetable_oct2026',
+            title: 'School Time Table (October 23, 2026 Revision)',
+            subject: 'School Schedule & Analytics',
+            unit: 'Daily Routine & Weekly Hours',
+            author: 'SBPS Bhavnagar',
+            version: 'v3.0.0',
+            lastModified: 'October 23, 2026, 04:52 PM IST',
+            modelUsed: 'Antigravity (via DeepMind)',
+            modelBadgeColor: '#3B82F6',
+            aiProvider: 'Google DeepMind',
+            taskType: 'Schedule Modernization & Trend Analytics',
+            summary: 'Updated school timetable to official SBPS 7 Alpha schedule generated on 10/23/2026, swapping Wednesday P2 and P3 (English and Chemistry), updating weekly subject hours (+5m English, -5m Science), and preserving personalized Sanskrit track for Pushti.',
+            changesList: [
+                'Swapped Wednesday Period 2 and Period 3: English (Seema D) moved to Period 2 (8:25–9:10 AM, 45 mins), Chemistry (Roger Sir) moved to Period 3 (9:10–9:50 AM, 40 mins).',
+                'Recalculated weekly subject hours: English increased to 4h 50m (+5 mins weekly), Science adjusted to 6h 05m (-5 mins weekly). Total weekly load unchanged at 34.0 hrs/wk.',
+                'Maintained personalized Sanskrit assignment (Falguni R) for Pushti across all language slots (Mon P3, Tue P8, Fri P6, Sat P3), omitting Gujarati details.',
+                'Preserved full teacher associations (Phil for Maths, Roger Sir for Science/Lab/KB, Seema D for English, Yogita for Hindi, KG for Social Studies, VJ for AI/Robo, Parita for ICT).',
+                'Synchronized live period auto-highlighter and changelog comparison table.'
+            ],
+            history: [
+                {
+                    version: 'v3.0.0',
+                    date: 'October 23, 2026',
+                    model: 'Antigravity',
+                    notes: 'Swapped Wednesday P2 (English) and P3 (Chemistry); updated subject load analytics and changelog.'
+                },
+                {
+                    version: 'v2.1.0',
+                    date: 'September 5, 2026',
+                    model: 'Gemini 2.5 Pro',
+                    notes: 'Retained pure Sanskrit with Falguni R for Pushti (omitting Gujarati) and standardized teacher naming to Roger Sir.'
+                },
+                {
+                    version: 'v2.0.0',
+                    date: 'September 5, 2026',
+                    model: 'Gemini 2.5 Pro',
+                    notes: 'Updated schedule, added weekly hours delta calculator, and KB textbook spotlight.'
+                }
+            ]
+        },
         'timetable_sept2026': {
             id: 'timetable_sept2026',
             title: 'School Time Table (September 2026 Revision)',
