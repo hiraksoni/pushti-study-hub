@@ -1493,6 +1493,548 @@ window.SOCIAL_SCIENCE_QUESTION_BANK = {
       "answer": true,
       "explanation": "True. Endogenic forces are classified into sudden forces (earthquakes, volcanoes, landslides) and slow diastrophic orogenic forces (continental folding, faulting, and mountain building).",
       "notesRef": "Geography Ch 2 -> Section 1: Endogenic vs Exogenic Geomorphic Classification"
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Structure of the Atmosphere",
+      "id": "geo3_fib_001",
+      "type": "fib",
+      "question": "The ________ is the outermost layer of the earth's atmosphere.",
+      "answer": "Exosphere",
+      "explanation": "The exosphere is the outermost layer extending from 700 km up to 10,000 km, where it gradually merges into outer space."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Greenhouse Effect & Global Warming",
+      "id": "geo3_fib_002",
+      "type": "fib",
+      "question": "The increase in the temperature of the earth as a result of heat trapped by the atmosphere is called ________.",
+      "answer": "global warming",
+      "explanation": "When excess greenhouse gases trap outgoing terrestrial radiation, the average temperature of the earth increases, causing global warming."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Temperature & Solar Energy",
+      "id": "geo3_fib_003",
+      "type": "fib",
+      "question": "The temperature of a place largely depends on its ________.",
+      "answer": "insolation",
+      "explanation": "Insolation is the incoming solar energy intercepted by the earth; higher insolation results in higher temperatures."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Measurement of Temperature",
+      "id": "geo3_fib_004",
+      "type": "fib",
+      "question": "On the Celsius scale, the temperature at which water freezes is ________.",
+      "answer": "0°C",
+      "explanation": "On the Celsius scale, 0°C is the freezing point of water and 100°C is the boiling point."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Types of Winds",
+      "id": "geo3_fib_005",
+      "type": "fib",
+      "question": "________ winds are unique to certain areas and are known by different names across the world.",
+      "answer": "Local",
+      "explanation": "Local winds blow over small areas for short durations and have distinctive regional names such as the Loo, Chinook, Harmattan, and Foehn."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Composition of the Atmosphere",
+      "id": "geo3_fib_006",
+      "type": "fib",
+      "question": "The second most abundant gas present in the earth's atmosphere is ________, accounting for approximately 21% of total volume.",
+      "answer": "oxygen",
+      "explanation": "Nitrogen constitutes 78%, followed by oxygen at 21%, which is utilized by living organisms for respiration."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Structure of the Atmosphere: Ozone",
+      "id": "geo3_fib_007",
+      "type": "fib",
+      "question": "The ozone layer, which protects life on earth from harmful solar ultraviolet radiation, is located in the ________.",
+      "answer": "Stratosphere",
+      "explanation": "The stratosphere (12–50 km) houses the ozone layer and is free of weather clouds, making it ideal for jet aircraft."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Air Pressure Measurement",
+      "id": "geo3_fib_008",
+      "type": "fib",
+      "question": "Atmospheric pressure is measured using an instrument called a ________.",
+      "answer": "barometer",
+      "explanation": "A barometer measures the weight of the air column in units of millibars (mb)."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Measurement of Moisture",
+      "id": "geo3_fib_009",
+      "type": "fib",
+      "question": "The instrument used to measure the amount of humidity or moisture present in the air is called a ________.",
+      "answer": "hygrometer",
+      "explanation": "A hygrometer calculates relative humidity in the ambient atmosphere."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Precipitation & Mountains",
+      "id": "geo3_fib_010",
+      "type": "fib",
+      "question": "In relief rainfall, the side of the mountain protected from wind that receives minimal precipitation is called the ________ side.",
+      "answer": "leeward",
+      "explanation": "The windward side receives heavy rain as clouds rise, while descending dry air leaves the leeward side in a dry rain shadow."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Atmospheric Composition",
+      "id": "geo3_mcq_001",
+      "type": "mcq",
+      "question": "How much nitrogen is present in the atmosphere?",
+      "options": [
+        "(a) 21%",
+        "(b) 60%",
+        "(c) 78%",
+        "(d) 30%"
+      ],
+      "answer": "(c) 78%",
+      "explanation": "Nitrogen makes up 78% of the dry atmosphere by volume, making it the dominant gas."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Weather and Climate",
+      "id": "geo3_mcq_002",
+      "type": "mcq",
+      "question": "What is the day-to-day or even hour-by-hour change in the atmosphere of a place called?",
+      "options": [
+        "(a) Air pressure",
+        "(b) Climate",
+        "(c) Weather",
+        "(d) Humidity"
+      ],
+      "answer": "(c) Weather",
+      "explanation": "Weather denotes short-term, hour-to-hour or day-to-day fluctuations in the atmosphere."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Atmospheric Moisture",
+      "id": "geo3_mcq_003",
+      "type": "mcq",
+      "question": "What is the amount of water vapour or moisture present in the air at a given time called?",
+      "options": [
+        "(a) Temperature",
+        "(b) Rainfall",
+        "(c) Humidity",
+        "(d) Wind"
+      ],
+      "answer": "(c) Humidity",
+      "explanation": "Humidity is the measure of the concentration of water vapour suspended in ambient air."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Meteorological Instruments",
+      "id": "geo3_mcq_004",
+      "type": "mcq",
+      "question": "Which instrument is used to measure rainfall at a particular place?",
+      "options": [
+        "(a) Rain gauge",
+        "(b) Anemometer",
+        "(c) Hygrometer",
+        "(d) Barometer"
+      ],
+      "answer": "(a) Rain gauge",
+      "explanation": "A rain gauge collects and measures the depth of liquid precipitation over a given time interval."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Monsoon Dynamics",
+      "id": "geo3_mcq_005",
+      "type": "mcq",
+      "question": "Which periodic winds bring rain to India from June to September?",
+      "options": [
+        "(a) Southeast monsoon",
+        "(b) Southwest monsoon",
+        "(c) Trade winds",
+        "(d) Northwest monsoon"
+      ],
+      "answer": "(b) Southwest monsoon",
+      "explanation": "The southwest monsoon winds originate in the southern oceans and bring widespread agricultural rain to India from June to September."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Atmospheric Layers: Mesosphere",
+      "id": "geo3_mcq_006",
+      "type": "mcq",
+      "question": "In which layer of the earth's atmosphere do meteors burn up upon entry from outer space?",
+      "options": [
+        "(a) Troposphere",
+        "(b) Stratosphere",
+        "(c) Mesosphere",
+        "(d) Thermosphere"
+      ],
+      "answer": "(c) Mesosphere",
+      "explanation": "The mesosphere (50–80 km) is the coldest layer, where frictional resistance incinerates meteors."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Radio Communication",
+      "id": "geo3_mcq_007",
+      "type": "mcq",
+      "question": "Which layer of the atmosphere helps in long-distance radio communication by reflecting radio waves back to earth?",
+      "options": [
+        "(a) Troposphere",
+        "(b) Mesosphere",
+        "(c) Thermosphere",
+        "(d) Exosphere"
+      ],
+      "answer": "(c) Thermosphere",
+      "explanation": "The thermosphere contains the ionosphere with electrically charged particles that reflect terrestrial radio waves back to earth."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Factors Affecting Temperature: Continentality",
+      "id": "geo3_mcq_008",
+      "type": "mcq",
+      "question": "Why does Mumbai experience equable, moderate temperatures year-round while Nagpur experiences sharp seasonal extremes?",
+      "options": [
+        "(a) Mumbai is at a higher altitude than Nagpur",
+        "(b) Mumbai is cooled and moderated by the sea, while Nagpur experiences continentality",
+        "(c) Nagpur is located directly on the Equator",
+        "(d) Mumbai receives heavy snowfall in winter"
+      ],
+      "answer": "(b) Mumbai is cooled and moderated by the sea, while Nagpur experiences continentality",
+      "explanation": "Due to water's high heat capacity, coastal proximity moderates coastal temperatures, while inland cities experience continentality with large thermal variations."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Thermodynamics of Air Pressure",
+      "id": "geo3_mcq_009",
+      "type": "mcq",
+      "question": "Which of the following physical statements correctly describes the relationship between temperature and air pressure?",
+      "options": [
+        "(a) High temperature causes air to compress and sink, forming high-pressure areas",
+        "(b) High temperature causes air to expand and rise, forming low-pressure areas",
+        "(c) Low temperature causes air to become lighter and ascend into the stratosphere",
+        "(d) Temperature has no physical influence on atmospheric air density"
+      ],
+      "answer": "(b) High temperature causes air to expand and rise, forming low-pressure areas",
+      "explanation": "Heating causes gas molecules to expand and become less dense, creating an ascending air column and a low-pressure surface area."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Meteorological Instruments: Wind",
+      "id": "geo3_mcq_010",
+      "type": "mcq",
+      "question": "Which instrument is used to determine the exact direction from which the wind is blowing?",
+      "options": [
+        "(a) Anemometer",
+        "(b) Wind vane",
+        "(c) Barometer",
+        "(d) Thermometer"
+      ],
+      "answer": "(b) Wind vane",
+      "explanation": "A wind vane indicates the direction of wind origination, whereas an anemometer measures wind velocity."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Pressure Belts",
+      "id": "geo3_mcq_011",
+      "type": "mcq",
+      "question": "The Subtropical High-Pressure belts located around 30°N and 30°S latitudes are formed primarily due to:",
+      "options": [
+        "(a) Intense solar heating at the poles",
+        "(b) Air rising from the equatorial belt cooling, becoming dense, and descending over the subtropics",
+        "(c) Heavy continuous snowfall over the oceans",
+        "(d) The burning of meteors in the upper mesosphere"
+      ],
+      "answer": "(b) Air rising from the equatorial belt cooling, becoming dense, and descending over the subtropics",
+      "explanation": "Air that ascends at the hot equator moves poleward aloft, cools, becomes heavy, and subsides over 30° latitude belts, creating high pressure."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Local Winds",
+      "id": "geo3_mcq_012",
+      "type": "mcq",
+      "question": "The hot, dry, and dusty local wind that blows across the plains of northern India in summer is called:",
+      "options": [
+        "(a) Chinook",
+        "(b) Harmattan",
+        "(c) The Loo",
+        "(d) Foehn"
+      ],
+      "answer": "(c) The Loo",
+      "explanation": "The Loo is a fierce, scorching local summer wind blowing across northern and northwestern Indian plains."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Types of Rainfall: Convectional",
+      "id": "geo3_mcq_013",
+      "type": "mcq",
+      "question": "Which type of rainfall is characterized by intense daytime solar heating, rapid vertical air ascent, and afternoon thunderstorms with lightning?",
+      "options": [
+        "(a) Orographic rainfall",
+        "(b) Relief rainfall",
+        "(c) Convectional rainfall",
+        "(d) Frontal rainfall"
+      ],
+      "answer": "(c) Convectional rainfall",
+      "explanation": "Convectional rainfall occurs commonly in equatorial regions like the Congo and Amazon Basins due to strong surface heating."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Types of Rainfall: Cyclonic",
+      "id": "geo3_mcq_014",
+      "type": "mcq",
+      "question": "Cyclonic (frontal) rainfall occurs when:",
+      "options": [
+        "(a) Winds encounter a tall mountain barrier and ascend its slopes",
+        "(b) A warm, light air mass meets a cold, dense air mass and rises over it along a front",
+        "(c) Deserts heat up and create permanent anticyclones",
+        "(d) Ocean currents stop circulating completely"
+      ],
+      "answer": "(b) A warm, light air mass meets a cold, dense air mass and rises over it along a front",
+      "explanation": "When contrasting air masses meet, the lighter warm air is forced above the denser cold air along a front, cooling and precipitating."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Altitude and Temperature",
+      "id": "geo3_mcq_015",
+      "type": "mcq",
+      "question": "Why are mountain hill stations like Shimla significantly cooler than plains like Lucknow?",
+      "options": [
+        "(a) Air at higher altitudes is less dense, allowing heat to escape more easily",
+        "(b) Mountain rocks generate artificial refrigeration",
+        "(c) Lucknow is closer to the North Pole than Shimla",
+        "(d) The Sun never rises over mountain hill stations"
+      ],
+      "answer": "(a) Air at higher altitudes is less dense, allowing heat to escape more easily",
+      "explanation": "Atmospheric density decreases with height; thinner air holds less heat, resulting in lower temperatures at higher altitudes."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Latitude and Insolation",
+      "id": "geo3_tf_001",
+      "type": "tf",
+      "question": "The equatorial region is hot because the rays of the sun are more spread out near the equator.",
+      "answer": false,
+      "explanation": "Correction: The equatorial region is hot because sunrays fall directly (vertically) and are concentrated over a smaller surface area, not spread out."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Ocean Currents",
+      "id": "geo3_tf_002",
+      "type": "tf",
+      "question": "A warm ocean current increases the temperature of the region it is passing through.",
+      "answer": true,
+      "explanation": "Warm ocean currents heat the overlying air masses, raising coastal temperatures."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Temperature & Pressure",
+      "id": "geo3_tf_003",
+      "type": "tf",
+      "question": "Higher temperatures create low-pressure areas.",
+      "answer": true,
+      "explanation": "Intense heating causes air particles to expand, become lighter, and ascend, reducing surface barometric pressure."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Humidity & Temperature",
+      "id": "geo3_tf_004",
+      "type": "tf",
+      "question": "Humidity increases at a lower temperature because warm air can hold more moisture.",
+      "answer": false,
+      "explanation": "Correction: Warmer air has greater moisture-holding capacity than cold air; as air cools, its water vapour holding capacity decreases."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Relief Rainfall",
+      "id": "geo3_tf_005",
+      "type": "tf",
+      "question": "During relief rainfall, the leeward side of the mountains receives heavy rain.",
+      "answer": false,
+      "explanation": "Correction: The windward slope receives heavy rainfall, whereas the leeward side remains relatively dry in a rain shadow area."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Atmospheric Retention",
+      "id": "geo3_tf_006",
+      "type": "tf",
+      "question": "The earth's gravitational pull holds the blanket of atmosphere from drifting away into outer space.",
+      "answer": true,
+      "explanation": "Earth's gravity draws gas molecules toward its centre, maintaining the atmospheric envelope."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Aviation & Weather",
+      "id": "geo3_tf_007",
+      "type": "tf",
+      "question": "Commercial jet aeroplanes fly primarily in the troposphere because of dense storm clouds.",
+      "answer": false,
+      "explanation": "Correction: Jet aeroplanes fly in the stratosphere because it is dry, free of clouds, and avoids tropospheric turbulence."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Air Density & Altitude",
+      "id": "geo3_tf_008",
+      "type": "tf",
+      "question": "Atmospheric pressure is highest at sea level and decreases as altitude increases.",
+      "answer": true,
+      "explanation": "At sea level, the vertical column of air pressing down is deepest; with increasing elevation, the air column shortens and air density drops."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Wind Movement",
+      "id": "geo3_tf_009",
+      "type": "tf",
+      "question": "Winds naturally blow from regions of low atmospheric pressure to regions of high atmospheric pressure.",
+      "answer": false,
+      "explanation": "Correction: Winds always rush from areas of high pressure to fill empty low-pressure troughs."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Moisture & Barometric Density",
+      "id": "geo3_tf_010",
+      "type": "tf",
+      "question": "Moist air containing water vapour exerts less atmospheric pressure than dry air.",
+      "answer": true,
+      "explanation": "Water vapour (H₂O) has a lower molecular mass (~18) than diatomic nitrogen (N₂, ~28) and oxygen (O₂, ~32), making humid air less dense than dry air."
+    },
+    {
+      "subject": "geography",
+      "chapterNum": 3,
+      "chapterTitle": "Atmosphere",
+      "difficulty": "above_average",
+      "notesRef": "Geography Chapter 3: Atmosphere -> Layers of the Atmosphere",
+      "id": "geo3_mtf_001",
+      "type": "mtf",
+      "question": "Match the atmospheric layers in Column A with their distinctive features in Column B:",
+      "columnA": [
+        "1. Stratosphere",
+        "2. Exosphere",
+        "3. Thermosphere",
+        "4. Troposphere",
+        "5. Mesosphere"
+      ],
+      "columnB": [
+        "A. Satellites orbit here",
+        "B. Rainfall, storms, and weather occur",
+        "C. Burning of incoming meteors",
+        "D. Reflection of radio waves",
+        "E. Ozone layer protects from UV rays"
+      ],
+      "correctMatches": {
+        "0": 4,
+        "1": 0,
+        "2": 3,
+        "3": 1,
+        "4": 2
+      },
+      "explanation": "Stratosphere contains the ozone layer; Exosphere is where satellites orbit; Thermosphere reflects radio waves via ionosphere; Troposphere hosts all weather phenomena; Mesosphere burns meteors."
     }
   ],
   "history": [
