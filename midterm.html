@@ -972,6 +972,82 @@
         }
     </style>
 
+
+        /* Assessment Top Tab Switcher */
+        .assess-switcher-bar {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 61px;
+            z-index: 980;
+            background: var(--bg-color);
+            padding: 12px 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .assess-tab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .assess-tab-btn:hover {
+            color: var(--text-main);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+        .assess-tab-btn.active {
+            background: var(--primary);
+            color: #ffffff !important;
+            border-color: var(--primary);
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+        }
+        .badge-status-upcoming {
+            font-size: 0.7rem;
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            font-family: 'Space Mono', monospace;
+        }
+        .assess-tab-btn.active .badge-status-upcoming {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+        .badge-status-archived {
+            font-size: 0.7rem;
+            background: rgba(16, 185, 129, 0.15);
+            color: #10B981;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            font-family: 'Space Mono', monospace;
+        }
+        .assess-tab-btn.active .badge-status-archived {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+        .assess-pane {
+            display: none;
+        }
+        .assess-pane.active {
+            display: block;
+        }
+
 </head>
 <body>
 <header class="site-header" style="display:flex; justify-content:space-between; align-items:center; padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: var(--bg-main, #0F0F1A); position: sticky; top: 0; z-index: 1000;">
@@ -994,8 +1070,7 @@
             </button>
             
             <a href="./timetable.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">📅 Time Table</a>
-            <a href="./midterm.html" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:14px; padding: 6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:20px;">🎯 Mid-Term Syllabus</a>
-
+            
             <div class="user-profile-wrapper" style="position:relative;">
                 <div id="global-user-avatar" style="cursor:pointer; border-radius:50%; overflow:hidden; width:40px; height:40px; border:2px solid var(--accent);" onclick="const d = document.getElementById('global-dropdown'); d.style.display = d.style.display === 'none' ? 'flex' : 'none';">
                     <img src="https://ui-avatars.com/api/?name=Pushti&background=8B5CF6&color=ffffff&rounded=true&bold=true" alt="User" style="width:100%; height:100%; object-fit:cover;">
@@ -1097,6 +1172,465 @@ document.addEventListener("DOMContentLoaded", function() {
         document.body.setAttribute('data-theme', savedTheme);
         </script>
 
+        
+    <!-- ASSESSMENTS TOP TAB SWITCHER -->
+    <div class="assess-switcher-bar">
+        <button type="button" class="assess-tab-btn active" id="btn-assess-upcoming" onclick="switchAssessTab('upcoming')">
+            <i class="fas fa-calendar-check"></i> Upcoming Assessment (Post Mid-Term)
+            <span class="badge-status-upcoming">DATES TBD</span>
+        </button>
+        <button type="button" class="assess-tab-btn" id="btn-assess-midterm" onclick="switchAssessTab('midterm')">
+            <i class="fas fa-box-archive"></i> Mid-Term Assessment (Archive)
+            <span class="badge-status-archived">COMPLETED</span>
+        </button>
+    </div>
+
+    <!-- PANE 1: UPCOMING ASSESSMENT (ACTIVE BY DEFAULT) -->
+    <div id="pane-upcoming" class="assess-pane active">
+        
+        <!-- HERO BANNER: UPCOMING ASSESSMENT -->
+        <div class="header">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
+                <h1 style="margin-bottom:0;">Alpha 7 — Upcoming Assessment Syllabus</h1>
+                <div style="background: rgba(239, 68, 68, 0.1); color: #EF4444; border: 2px solid #EF4444; padding: 6px 16px; border-radius: 8px; font-weight: 700; font-family: 'Space Mono', monospace; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 6px rgba(239,68,68,0.2);">
+                    <i class="fas fa-calendar-clock"></i> <span>DATES TBD (SCHEDULE AWAITED)</span>
+                </div>
+            </div>
+            <p style="margin-top:12px;">CBSE Grade 7 Curriculum &bull; Post Mid-Term Phase &bull; Academic Year 2026–2027</p>
+
+            <!-- Notice Alert Card -->
+            <div style="max-width: 960px; margin: 18px auto 0; text-align: left; background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(16,185,129,0.08)); border: 1px solid var(--border); border-left: 4px solid var(--primary); border-radius: 10px; padding: 14px 20px;">
+                <div style="font-weight: 700; color: var(--text-main); font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <i class="fas fa-circle-info" style="color: var(--primary);"></i> Upcoming Assessment Preparation Syllabus &amp; Model Pattern
+                </div>
+                <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+                    <strong>Mid-Term is over</strong> and all chapters listed below represent the active curriculum for the upcoming assessment across all 7 core subjects. Specific chapters from Mid-Term that will be retained for re-testing will be updated immediately upon official notification from SBPS. The examination pattern (marks weightings, question typologies, and section blueprints) is modeled as standard.
+                </p>
+            </div>
+        </div>
+
+        <!-- UPCOMING ASSESSMENT TABLE -->
+        <div class="tt-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="center-col" width="60">Sr. No.</th>
+                        <th class="center-col" width="130">Date</th>
+                        <th class="center-col" width="160">Subject</th>
+                        <th>Upcoming Assessment Syllabus (New Chapters &amp; Units)</th>
+                        <th class="center-col" width="180">Exam Pattern (Preserved)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- Row 1: ICT -->
+                    <tr id="upcoming-ict">
+                        <td class="center-col">1.</td>
+                        <td class="center-col date-cell">
+                            <span style="display:inline-block; padding:2px 8px; border-radius:10px; background:rgba(239,68,68,0.15); color:#EF4444; font-size:0.75rem; font-weight:800; font-family:'Space Mono', monospace;">TBD</span><br>
+                            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">Upcoming</span>
+                        </td>
+                        <td class="center-col">
+                            <a href="ict_index.html" class="subj-badge tech" style="text-decoration:none;" title="Open ICT Subject Hub">ICT</a>
+                            <div class="subj-battery-pill" style="color:#10B981;" title="5 of 5 Chapters Ready (100%)">
+                                <span class="battery-meter"><span class="battery-body"><span class="battery-fill" style="width:100%;"></span></span><span class="battery-cap"></span></span> 100%
+                            </div>
+                        </td>
+                        <td>
+                            <div class="syllabus-content">
+                                <div class="s-category open">Upcoming Syllabus Chapters (5)</div>
+                                <ul class="syllabus-list open">
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/ict/ict_ch1.html" class="ch-title-link">Ch-1 Number System</a>
+                                        <a href="chapters/ict/ict_ch1.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
+                                        <a href="source_materials/chapters/ict/ict-ch1-number-system.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/ict/ict_ch1.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/ict/ict_ch1.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                            <a href="chapters/ict/ict_ch1.html#tab-long" class="topic-pill"><i class="fas fa-file-lines"></i> 4+M Qs</a>
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/ict/ict_ch2.html" class="ch-title-link">Ch-2 Advanced Features of Excel</a>
+                                        <a href="chapters/ict/ict_ch2.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
+                                        <a href="source_materials/chapters/ict/ict-ch2-excel.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/ict/ict_ch2.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/ict/ict_ch2.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                            <a href="chapters/ict/ict_ch2.html#tab-long" class="topic-pill"><i class="fas fa-file-lines"></i> 4+M Qs</a>
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/ict/ict_ch3.html" class="ch-title-link">Ch-3 Artificial Intelligence</a>
+                                        <a href="chapters/ict/ict_ch3.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
+                                        <a href="source_materials/chapters/ict/ict-ch3-ai.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/ict/ict_ch3.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/ict/ict_ch3.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                            <a href="chapters/ict/ict_ch3.html#tab-long" class="topic-pill"><i class="fas fa-file-lines"></i> 4+M Qs</a>
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/ict/ict_ch4.html" class="ch-title-link">Ch-4 Working with HTML Tags and CSS</a>
+                                        <a href="chapters/ict/ict_ch4.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
+                                        <a href="source_materials/chapters/ict/ict-ch4-html-css.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/ict/ict_ch4.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/ict/ict_ch4.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                            <a href="chapters/ict/ict_ch4.html#tab-long" class="topic-pill"><i class="fas fa-file-lines"></i> 4+M Qs</a>
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/ict/ict_ch5.html" class="ch-title-link">Ch-5 Lists and Images in HTML</a>
+                                        <a href="chapters/ict/ict_ch5.html" class="pill-gemini"><i class="fas fa-sparkles"></i> Gemini</a>
+                                        <a href="source_materials/chapters/ict/ict-ch5-html-lists-images.html" class="pill-claude"><i class="fas fa-brain"></i> Claude</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/ict/ict_ch5.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/ict/ict_ch5.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                            <a href="chapters/ict/ict_ch5.html#tab-long" class="topic-pill"><i class="fas fa-file-lines"></i> 4+M Qs</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="center-col">
+                            <div class="exam-pattern-links">
+                                <div class="pattern-badge badge-ict-mcq" style="cursor:default;"><span>MCQs (Q1)</span> <span class="badge-mark">10 M</span></div>
+                                <div class="pattern-badge badge-ict-obj" style="cursor:default;"><span>Obj / Fill (Q2)</span> <span class="badge-mark">10 M</span></div>
+                                <div class="pattern-badge badge-ict-short" style="cursor:default;"><span>Short (Q3/Q4)</span> <span class="badge-mark">10 M</span></div>
+                                <div class="pattern-badge badge-ict-long" style="cursor:default;"><span>Coding/Lab (Q5)</span> <span class="badge-mark">10 M</span></div>
+                                <div class="pattern-badge badge-summary" style="background:linear-gradient(135deg, rgba(6,182,212,0.15), rgba(16,185,129,0.15)); border-color:#06B6D4; cursor:default;"><span>Total</span> <span class="badge-mark" style="background:#06B6D4; color:#fff;">40 M</span></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Row 2: Mathematics -->
+                    <tr id="upcoming-maths">
+                        <td class="center-col">2.</td>
+                        <td class="center-col date-cell">
+                            <span style="display:inline-block; padding:2px 8px; border-radius:10px; background:rgba(239,68,68,0.15); color:#EF4444; font-size:0.75rem; font-weight:800; font-family:'Space Mono', monospace;">TBD</span><br>
+                            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">Upcoming</span>
+                        </td>
+                        <td class="center-col">
+                            <a href="maths_index.html" class="subj-badge math" style="text-decoration:none;" title="Open Mathematics Hub">Maths</a>
+                            <div class="subj-battery-pill" style="color:#10B981;" title="All 8 Chapters Active">
+                                <span class="battery-meter"><span class="battery-body"><span class="battery-fill" style="width:100%;"></span></span><span class="battery-cap"></span></span> 8 Ch Active
+                            </div>
+                        </td>
+                        <td>
+                            <div class="syllabus-content">
+                                <div style="font-size:0.8rem; color:#b45309; margin-bottom:8px; background:rgba(245,158,11,0.1); border:1px dashed rgba(245,158,11,0.35); padding:6px 12px; border-radius:6px;">
+                                    <i class="fas fa-circle-info"></i> <strong>Syllabus Scope:</strong> All 8 primary chapters are active. Exact chapters from Mid-Term to be re-evaluated will be synchronized once school circular is published.
+                                </div>
+                                <div class="s-category open">Core Teaching Chapters (8)</div>
+                                <ul class="syllabus-list open">
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/maths/maths_ch1.html" class="ch-title-link">Ch.1 Large Numbers Around Us</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/maths/maths_ch1.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/maths/maths_ch1.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                            <a href="chapters/maths/maths_ch1.html#tab-long" class="topic-pill"><i class="fas fa-file-lines"></i> 4+M Qs</a>
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/maths/maths_ch2.html" class="ch-title-link">Ch.2 Arithmetic Expressions</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/maths/maths_ch2.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/maths/maths_ch2.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                            <a href="chapters/maths/maths_ch2.html#tab-long" class="topic-pill"><i class="fas fa-file-lines"></i> 4+M Qs</a>
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/maths/maths_ch3.html" class="ch-title-link">Ch.3 Decimals</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/maths/maths_ch3.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/maths/maths_ch3.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                            <a href="chapters/maths/maths_ch3.html#tab-long" class="topic-pill"><i class="fas fa-file-lines"></i> 4+M Qs</a>
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/maths/maths_ch4.html" class="ch-title-link">Ch.4 Simple Equations</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/maths/maths_ch4.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/maths/maths_ch4.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/maths/maths_ch5.html" class="ch-title-link">Ch.5 Lines and Angles</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/maths/maths_ch5.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/maths/maths_ch5.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/maths/maths_ch6.html" class="ch-title-link">Ch.6 Triangles and Their Properties</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/maths/maths_ch6.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/maths/maths_ch6.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/maths/maths_ch7.html" class="ch-title-link">Ch.7 Comparing Quantities</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/maths/maths_ch7.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/maths/maths_ch7.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                        </div>
+                                    </li>
+                                    <li style="margin-bottom:8px;">
+                                        <a href="chapters/maths/maths_ch8.html" class="ch-title-link">Ch.8 Rational Numbers</a>
+                                        <div class="subtopic-pills-row">
+                                            <a href="chapters/maths/maths_ch8.html#tab-omr" class="topic-pill"><i class="fas fa-check-circle"></i> OMR (1M)</a>
+                                            <a href="chapters/maths/maths_ch8.html#tab-short" class="topic-pill"><i class="fas fa-pen"></i> 2/3M Qs</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="center-col">
+                            <div class="exam-pattern-links">
+                                <div class="pattern-badge badge-math-secA" style="cursor:default;"><span>Sec A (MCQ)</span> <span class="badge-mark">20 M</span></div>
+                                <div class="pattern-badge badge-math-secB" style="cursor:default;"><span>Sec B (2M)</span> <span class="badge-mark">12 M</span></div>
+                                <div class="pattern-badge badge-math-secC" style="cursor:default;"><span>Sec C (3M)</span> <span class="badge-mark">24 M</span></div>
+                                <div class="pattern-badge badge-math-secD" style="cursor:default;"><span>Sec D (4M)</span> <span class="badge-mark">16 M</span></div>
+                                <div class="pattern-badge badge-math-secE" style="cursor:default;"><span>Sec E (Case)</span> <span class="badge-mark">8 M</span></div>
+                                <div class="pattern-badge badge-summary" style="background:linear-gradient(135deg, rgba(99,102,241,0.15), rgba(16,185,129,0.15)); border-color:#6366F1; cursor:default;"><span>Total</span> <span class="badge-mark" style="background:#6366F1; color:#fff;">80 M</span></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Row 3: Sanskrit -->
+                    <tr id="upcoming-sanskrit">
+                        <td class="center-col">3.</td>
+                        <td class="center-col date-cell">
+                            <span style="display:inline-block; padding:2px 8px; border-radius:10px; background:rgba(239,68,68,0.15); color:#EF4444; font-size:0.75rem; font-weight:800; font-family:'Space Mono', monospace;">TBD</span><br>
+                            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">Upcoming</span>
+                        </td>
+                        <td class="center-col">
+                            <a href="sanskrit_index.html" class="subj-badge lang" style="text-decoration:none;" title="Open Sanskrit Subject Hub">Sanskrit</a>
+                            <div class="subj-battery-pill" style="color:#10B981;" title="6 Chapters Ready">
+                                <span class="battery-meter"><span class="battery-body"><span class="battery-fill" style="width:100%;"></span></span><span class="battery-cap"></span></span> 6 Ch Ready
+                            </div>
+                        </td>
+                        <td>
+                            <div class="syllabus-content">
+                                <div class="s-category open">सुरुचिः पाठ्यपुस्तकम् (साहित्यम्)</div>
+                                <ul class="syllabus-list open">
+                                    <li style="margin-bottom:6px;"><span class="ch-title-link">अध्यायः १ - वन्दे भारतम्</span></li>
+                                    <li style="margin-bottom:6px;"><span class="ch-title-link">अध्यायः २ - नित्यं पिबामः सुभाषितरसम्</span></li>
+                                    <li style="margin-bottom:6px;"><span class="ch-title-link">अध्यायः ३ - मित्राय नमः</span></li>
+                                    <li style="margin-bottom:6px;"><span class="ch-title-link">अध्यायः ४ - न ज्ञायते चेत् अस्मत् ब्राह्मणत्वम्</span></li>
+                                    <li style="margin-bottom:6px;"><span class="ch-title-link">अध्यायः ५ - सेवा हि परमो धर्मः</span></li>
+                                    <li style="margin-bottom:6px;"><span class="ch-title-link">अध्यायः ६ - क्रीडामः वयं रङ्गनाट्यशालाम्</span></li>
+                                </ul>
+                                <div class="s-category open">व्याकरणम् व रचनात्मक लेखनम्</div>
+                                <ul class="syllabus-list open">
+                                    <li>शब्दरूपाणि: बालक, लता, फल, मुनि, नदी</li>
+                                    <li>धातुरूपाणि: पठ्, गम्, अस्, कृ, भू (लट्, लृट्, लङ्)</li>
+                                    <li>अव्ययानि, सन्धिः (स्वरसन्धि), चित्रवर्णनम् व पत्रलेखनम्</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="center-col">
+                            <div class="exam-pattern-links">
+                                <div class="pattern-badge badge-san-khanda" style="cursor:default;"><span>खण्ड 'क' (अपठित)</span> <span class="badge-mark">10 M</span></div>
+                                <div class="pattern-badge badge-san-writing" style="cursor:default;"><span>खण्ड 'ख' (रचनात्मक)</span> <span class="badge-mark">15 M</span></div>
+                                <div class="pattern-badge badge-san-grammar" style="cursor:default;"><span>खण्ड 'ग' (व्याकरण)</span> <span class="badge-mark">25 M</span></div>
+                                <div class="pattern-badge badge-san-literature" style="cursor:default;"><span>खण्ड 'घ' (साहित्य)</span> <span class="badge-mark">30 M</span></div>
+                                <div class="pattern-badge badge-summary" style="background:linear-gradient(135deg, rgba(139,92,246,0.15), rgba(16,185,129,0.15)); border-color:#8B5CF6; cursor:default;"><span>Total</span> <span class="badge-mark" style="background:#8B5CF6; color:#fff;">80 M</span></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Row 4: Social Science -->
+                    <tr id="upcoming-social">
+                        <td class="center-col">4.</td>
+                        <td class="center-col date-cell">
+                            <span style="display:inline-block; padding:2px 8px; border-radius:10px; background:rgba(239,68,68,0.15); color:#EF4444; font-size:0.75rem; font-weight:800; font-family:'Space Mono', monospace;">TBD</span><br>
+                            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">Upcoming</span>
+                        </td>
+                        <td class="center-col">
+                            <a href="social_science_index.html" class="subj-badge soc" style="text-decoration:none;" title="Open Social Science Subject Hub">Social Science</a>
+                            <div class="subj-battery-pill" style="color:#10B981;" title="Complete Subject Suite">
+                                <span class="battery-meter"><span class="battery-body"><span class="battery-fill" style="width:100%;"></span></span><span class="battery-cap"></span></span> All Units Active
+                            </div>
+                        </td>
+                        <td>
+                            <div class="syllabus-content">
+                                <div class="s-category open">History (Our Pasts-II)</div>
+                                <ul class="syllabus-list open">
+                                    <li>Ch 6: The First Indian Empires</li>
+                                    <li>Ch 7: India in the Iron Age</li>
+                                    <li>Ch 8: India from 4th to 7th Century CE (Gupta Empire)</li>
+                                    <li>Ch 1: Tracing Changes Through a Thousand Years</li>
+                                    <li>Ch 2: New Kings and Kingdoms &amp; Delhi Sultans</li>
+                                </ul>
+                                <div class="s-category open">Geography (Our Environment)</div>
+                                <ul class="syllabus-list open">
+                                    <li>Ch 1: Interior of the Earth</li>
+                                    <li>Ch 2: Our Changing Earth</li>
+                                    <li>Ch 3: Air &amp; Atmospheric Dynamics</li>
+                                    <li>Ch 4: Water &amp; Oceanic Circulation</li>
+                                </ul>
+                                <div class="s-category open">Civics (Social &amp; Political Life-II)</div>
+                                <ul class="syllabus-list open">
+                                    <li>Ch 13: Understanding Gender</li>
+                                    <li>Ch 14: How Does Democracy Work? (Government in Health)</li>
+                                    <li>Ch 17: Markets Around Us</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="center-col">
+                            <div class="exam-pattern-links">
+                                <div class="pattern-badge badge-sst-hist" style="cursor:default;"><span>History</span> <span class="badge-mark">25 M</span></div>
+                                <div class="pattern-badge badge-sst-geo" style="cursor:default;"><span>Geography</span> <span class="badge-mark">25 M</span></div>
+                                <div class="pattern-badge badge-sst-civ" style="cursor:default;"><span>Civics</span> <span class="badge-mark">25 M</span></div>
+                                <div class="pattern-badge badge-sst-hist" style="cursor:default;"><span>Map Skill</span> <span class="badge-mark">5 M</span></div>
+                                <div class="pattern-badge badge-summary" style="background:linear-gradient(135deg, rgba(245,158,11,0.15), rgba(16,185,129,0.15)); border-color:#F59E0B; cursor:default;"><span>Total</span> <span class="badge-mark" style="background:#F59E0B; color:#fff;">80 M</span></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Row 5: Hindi -->
+                    <tr id="upcoming-hindi">
+                        <td class="center-col">5.</td>
+                        <td class="center-col date-cell">
+                            <span style="display:inline-block; padding:2px 8px; border-radius:10px; background:rgba(239,68,68,0.15); color:#EF4444; font-size:0.75rem; font-weight:800; font-family:'Space Mono', monospace;">TBD</span><br>
+                            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">Upcoming</span>
+                        </td>
+                        <td class="center-col">
+                            <a href="hindi_index.html" class="subj-badge lang" style="text-decoration:none;" title="Open Hindi Subject Hub">Hindi</a>
+                            <div class="subj-battery-pill" style="color:#10B981;" title="8 Chapters Ready">
+                                <span class="battery-meter"><span class="battery-body"><span class="battery-fill" style="width:100%;"></span></span><span class="battery-cap"></span></span> 8 Ch Ready
+                            </div>
+                        </td>
+                        <td>
+                            <div class="syllabus-content">
+                                <div class="s-category open">वसंत साहित्य (8 पाठ)</div>
+                                <ul class="syllabus-list open">
+                                    <li style="margin-bottom:6px;"><a href="chapters/hindi/hindi_ch1.html" class="ch-title-link">पाठ १: हमको मन की शक्ति देना (गुलज़ार - प्रार्थना)</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/hindi/hindi_ch2.html" class="ch-title-link">पाठ २: बूढ़ी काकी (मुंशी प्रेमचंद - कहानी)</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/hindi/hindi_ch3.html" class="ch-title-link">पाठ ३: असफलता से सीख (प्रेरणादायी काव्य)</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/hindi/hindi_ch4.html" class="ch-title-link">पाठ ४: प्रकृति का संदेश (सोहनलाल द्विवेदी)</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/hindi/hindi_ch5.html" class="ch-title-link">पाठ ५: मिठाईवाला (भगवतीप्रसाद वाजपेयी)</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/hindi/hindi_ch6.html" class="ch-title-link">पाठ ६: रक्त और हमारा शरीर (यतीश अग्रवाल)</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/hindi/hindi_ch7.html" class="ch-title-link">पाठ ७: पापा खो गए (विजय तेंदुलकर - नाटक)</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/hindi/hindi_ch8.html" class="ch-title-link">पाठ ८: शाम-एक किसान (सर्वेश्वर दयाल सक्सेना)</a></li>
+                                </ul>
+                                <div class="s-category open">व्याकरण वाटिका एवं रचनात्मक लेखन</div>
+                                <ul class="syllabus-list open">
+                                    <li>व्याकरण वाटिका: भाषा-लिपि (G1), वर्ण-विचार (G2), संधि (G3), शब्द-विचार (G4), उपसर्ग-प्रत्यय (G6), समास (G7), मुहावरे व लोकोक्तियाँ (G22)</li>
+                                    <li>रचनात्मक लेखन: संवाद लेखन, विज्ञापन निर्माण, चित्र वर्णन, अनौपचारिक पत्र</li>
+                                    <li>अपठित बोध: अपठित गद्यांश व काव्यांश</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="center-col">
+                            <div class="exam-pattern-links">
+                                <div class="pattern-badge badge-hin-secA" style="cursor:default;"><span>खंड 'क' (अपठित)</span> <span class="badge-mark">14 M</span></div>
+                                <div class="pattern-badge badge-hin-secB" style="cursor:default;"><span>खंड 'ख' (व्याकरण)</span> <span class="badge-mark">16 M</span></div>
+                                <div class="pattern-badge badge-hin-secC" style="cursor:default;"><span>खंड 'ग' (वसंत)</span> <span class="badge-mark">30 M</span></div>
+                                <div class="pattern-badge badge-hin-secD" style="cursor:default;"><span>खंड 'घ' (रचनात्मक)</span> <span class="badge-mark">20 M</span></div>
+                                <div class="pattern-badge badge-summary" style="background:linear-gradient(135deg, rgba(217,70,239,0.15), rgba(16,185,129,0.15)); border-color:#d946ef; cursor:default;"><span>Total</span> <span class="badge-mark" style="background:#d946ef; color:#fff;">80 M</span></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Row 6: English -->
+                    <tr id="upcoming-english">
+                        <td class="center-col">6.</td>
+                        <td class="center-col date-cell">
+                            <span style="display:inline-block; padding:2px 8px; border-radius:10px; background:rgba(239,68,68,0.15); color:#EF4444; font-size:0.75rem; font-weight:800; font-family:'Space Mono', monospace;">TBD</span><br>
+                            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">Upcoming</span>
+                        </td>
+                        <td class="center-col">
+                            <a href="english_index.html" class="subj-badge lang" style="text-decoration:none;" title="Open English Subject Hub">English</a>
+                            <div class="subj-battery-pill" style="color:#10B981;" title="9 Chapters Ready">
+                                <span class="battery-meter"><span class="battery-body"><span class="battery-fill" style="width:100%;"></span></span><span class="battery-cap"></span></span> 9 Ch Ready
+                            </div>
+                        </td>
+                        <td>
+                            <div class="syllabus-content">
+                                <div class="s-category open">Literature Reader (9 Chapters)</div>
+                                <ul class="syllabus-list open">
+                                    <li style="margin-bottom:6px;"><a href="chapters/english/lit_ch1.html" class="ch-title-link">Ch 1: A Hero (R.K. Narayan)</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/english/lit_ch2.html" class="ch-title-link">Ch 2: The Flower-School (Rabindranath Tagore)</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/english/lit_ch3.html" class="ch-title-link">Ch 3: The Model Millionaire (Oscar Wilde)</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/english/lit_ch4.html" class="ch-title-link">Ch 4: Florence Nightingale</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/english/lit_ch5.html" class="ch-title-link">Ch 5: The Bangle Sellers (Sarojini Naidu)</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/english/lit_ch6.html" class="ch-title-link">Ch 6: A Game of Chess</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/english/lit_ch7.html" class="ch-title-link">Ch 7: The Mountain and the Squirrel</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/english/lit_ch8.html" class="ch-title-link">Ch 8: The Open Window (Saki)</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/english/lit_ch9.html" class="ch-title-link">Ch 9: The Lumber Room (Saki)</a></li>
+                                </ul>
+                                <div class="s-category open">Applied Grammar &amp; Writing Skills</div>
+                                <ul class="syllabus-list open">
+                                    <li>Grammar: Ch 1 (Nouns), Ch 2 (Pronouns), Ch 3 (Adjectives), Ch 4 (Verbs), Ch 5 (Adverbs), Ch 6 (Prepositions), Ch 7 (Conjunctions), Ch 8 (Tenses), Ch 9 (Voice), Ch 10 (Speech), Ch 17 (Punctuation), Ch 26 (Vocab)</li>
+                                    <li>Writing: Notice Writing, Diary Entry, Informal Letter, Story Writing</li>
+                                    <li>Reading Comprehension &amp; ASL Preparation</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="center-col">
+                            <div class="exam-pattern-links">
+                                <div class="pattern-badge badge-eng-secA" style="cursor:default;"><span>Sec A (Reading)</span> <span class="badge-mark">20 M</span></div>
+                                <div class="pattern-badge badge-eng-secB" style="cursor:default;"><span>Sec B (Writing/Gram)</span> <span class="badge-mark">30 M</span></div>
+                                <div class="pattern-badge badge-eng-secC" style="cursor:default;"><span>Sec C (Literature)</span> <span class="badge-mark">30 M</span></div>
+                                <div class="pattern-badge badge-summary" style="background:linear-gradient(135deg, rgba(126,34,206,0.15), rgba(16,185,129,0.15)); border-color:#7E22CE; cursor:default;"><span>Total</span> <span class="badge-mark" style="background:#7E22CE; color:#fff;">80 M</span></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Row 7: Science -->
+                    <tr id="upcoming-science">
+                        <td class="center-col">7.</td>
+                        <td class="center-col date-cell">
+                            <span style="display:inline-block; padding:2px 8px; border-radius:10px; background:rgba(239,68,68,0.15); color:#EF4444; font-size:0.75rem; font-weight:800; font-family:'Space Mono', monospace;">TBD</span><br>
+                            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;">Upcoming</span>
+                        </td>
+                        <td class="center-col">
+                            <a href="science_index.html" class="subj-badge sci" style="text-decoration:none;" title="Open Science Subject Hub">Science</a>
+                            <div class="subj-battery-pill" style="color:#10B981;" title="7 Chapters Ready">
+                                <span class="battery-meter"><span class="battery-body"><span class="battery-fill" style="width:100%;"></span></span><span class="battery-cap"></span></span> 7 Ch Ready
+                            </div>
+                        </td>
+                        <td>
+                            <div class="syllabus-content">
+                                <div class="s-category open">Biology (Curiosity NCERT)</div>
+                                <ul class="syllabus-list open">
+                                    <li style="margin-bottom:6px;"><a href="chapters/science/science_bio_ch2.html" class="ch-title-link">Ch.2 Adolescence: A Stage of Growth and Change</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/science/science_bio_ch3.html" class="ch-title-link">Ch.3 Life Processes in Animals (Digestion &amp; Respiration)</a></li>
+                                </ul>
+                                <div class="s-category open">Chemistry (Curiosity NCERT)</div>
+                                <ul class="syllabus-list open">
+                                    <li style="margin-bottom:6px;"><a href="chapters/science/science_chem_ch1.html" class="ch-title-link">Ch.1 Exploring Substances: Acids, Bases and Neutral</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/science/science_chem_ch2.html" class="ch-title-link">Ch.2 The World of Metals and Non-Metals</a></li>
+                                </ul>
+                                <div class="s-category open">Physics (Curiosity NCERT)</div>
+                                <ul class="syllabus-list open">
+                                    <li style="margin-bottom:6px;"><a href="chapters/science/science_phy_ch1.html" class="ch-title-link">Ch.1 Electricity: Circuits and their Components</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/science/science_phy_ch2.html" class="ch-title-link">Ch.2 Heat Transfer in Nature</a></li>
+                                    <li style="margin-bottom:6px;"><a href="chapters/science/science_phy_ch3.html" class="ch-title-link">Ch.3 Measurement of Time and Motion</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="center-col">
+                            <div class="exam-pattern-links">
+                                <div class="pattern-badge badge-bio" style="cursor:default;"><span>Biology</span> <span class="badge-mark">27 M</span></div>
+                                <div class="pattern-badge badge-chem" style="cursor:default;"><span>Chemistry</span> <span class="badge-mark">26 M</span></div>
+                                <div class="pattern-badge badge-phy" style="cursor:default;"><span>Physics</span> <span class="badge-mark">27 M</span></div>
+                                <div class="pattern-badge badge-summary" style="background:linear-gradient(135deg, rgba(16,185,129,0.15), rgba(99,102,241,0.15)); border-color:#15803D; cursor:default;"><span>Total</span> <span class="badge-mark" style="background:#15803D; color:#fff;">80 M</span></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- PANE 2: MID-TERM ASSESSMENT (ARCHIVE) -->
+    <div id="pane-midterm" class="assess-pane">
         <div class="header">
         <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap;">
             <h1 style="margin-bottom:0;">Alpha 7 - Mid Term Assessment</h1>
@@ -2165,6 +2699,8 @@ document.addEventListener("DOMContentLoaded", function() {
             </tbody>
         </table>
     </div>
+    </div>
+
 
     <script>
         // Inherit Dark Mode from parent dashboard
@@ -2252,6 +2788,38 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script src="js/scroll_to_top.js"></script>
+
+    <script>
+    function switchAssessTab(tab) {
+        const upPane = document.getElementById('pane-upcoming');
+        const midPane = document.getElementById('pane-midterm');
+        const upBtn = document.getElementById('btn-assess-upcoming');
+        const midBtn = document.getElementById('btn-assess-midterm');
+
+        if (tab === 'midterm') {
+            if (upPane) upPane.classList.remove('active');
+            if (midPane) midPane.classList.add('active');
+            if (upBtn) upBtn.classList.remove('active');
+            if (midBtn) midBtn.classList.add('active');
+            window.location.hash = 'midterm';
+        } else {
+            if (upPane) upPane.classList.add('active');
+            if (midPane) midPane.classList.remove('active');
+            if (upBtn) upBtn.classList.add('active');
+            if (midBtn) midBtn.classList.remove('active');
+            window.location.hash = 'upcoming';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash === '#midterm') {
+            switchAssessTab('midterm');
+        } else {
+            switchAssessTab('upcoming');
+        }
+    });
+    </script>
+
 </body>
 </html>
 
