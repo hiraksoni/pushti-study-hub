@@ -1,10 +1,10 @@
 # PUSHTI STUDY HUB — MINUTES OF MEETING (MOM)
 **Standardized Knowledge Base (KB) Architecture & Automated Question Paper Generation Engine**
 
-* **Date & Timestamp**: 07 October 2026, 09:45 PM IST
+* **Date & Timestamp**: 25 October 2026, 06:30 PM IST
 * **Participants**: Hirak Soni (Father & Project Architect), Antigravity AI (Pair Programming Assistant)
 * **Status**: Codified & Active Standard
-* **Version**: 3.7 (Science Biology Ch2 & Ch3 TLBR Authoritative Expansion — 407 Authoritative Items | Global Total: 5,191 Items across 86 Dossiers)
+* **Version**: 3.9 (Science Biology Ch4 Life Processes in Plants Authoritative Expansion & Diagram Slot Implementation — 191 Authoritative Items | Global Total: 5,442 Items across 88 Dossiers)
 
 ---
 
@@ -68,9 +68,12 @@ d:\Users\expor\Downloads\Codes\
 │   │   ├── ch2_adolescence/
 │   │   │   ├── bio_ch2_adolescence.md
 │   │   │   └── bio_ch2_adolescence.json          (157 Items • 100% TLBR Ingested)
-│   │   └── ch3_life_processes/
-│   │       ├── bio_ch3_life_processes.md
-│   │       └── bio_ch3_life_processes.json        (250 Items • 100% TLBR Ingested • Pure Unicode Text)
+│   │   ├── ch3_life_processes/
+│   │   │   ├── bio_ch3_life_processes.md
+│   │   │   └── bio_ch3_life_processes.json        (250 Items • 100% TLBR Ingested • Pure Unicode Text)
+│   │   └── ch4_life_processes_plants/
+│   │       ├── bio_ch4_life_processes_plants.md
+│   │       └── bio_ch4_life_processes_plants.json (191 Items • 100% Ingested • Diagram Slot Protocol)
 │   ├── chemistry/
 │   │   ├── ch1_acids_bases_salts/
 │   │   │   ├── chem_ch1_acids_bases_salts.md
@@ -91,7 +94,8 @@ d:\Users\expor\Downloads\Codes\
 │   ├── social_science/
 │   │   ├── geography/
 │   │   │   ├── ch1_interior_earth/               (54 Items)
-│   │   │   └── ch2_changing_earth/               (36 Items)
+│   │   │   ├── ch2_changing_earth/               (36 Items)
+│   │   │   └── ch3_atmosphere/                   (60 Items • 100% Ingested • Diagram Slot Protocol)
 │   │   ├── history/
 │   │   │   ├── ch6_first_empires/                (51 Items)
 │   │   │   ├── ch7_iron_age/                     (20 Items)
@@ -503,7 +507,52 @@ In Mathematics, curriculum content originates from two distinct, non-overlapping
 4. **Automated Verification:** Verified and passed 100% by `scripts/verify_biology_kbs.py` with **407 total items** (Ch2: 157, Ch3: 250).
 
 ---
-*Authored & Verified: 07 October 2026 | Pushti Study Hub Core Engineering*
+
+## 11. Social Science (Geography) Authoritative Expansion & Diagram Slot Implementation (25 October 2026)
+
+### 11.1 Scope & Source Verification
+- **Chapter 3: Atmosphere**
+  - **Source Material:** `source_materials/social_science/geography_ch3_atmosphere.pdf` (16 pages / Book pp. 37–52)
+  - **Total Items Verified:** **60 items** (5 Fill in the Blanks, 5 MCQs, 5 True/False, 5 Match the Following, 10 Short Answer, 14 Long Answer, 11 Higher Order Thinking Skills, 10 Competency-Based items).
+  - **Atmospheric & Climatological Formatting:** 100% pure Unicode standard notation (Units: `°C`, `°F`, `%`, `mb`, `km`; Arrows: `→`; Gases: `N₂` 78%, `O₂` 21%, `Ar` 0.93%, `CO₂` 0.04%; Barometric conversions: `1013.25 mb` at MSL; zero raw ASCII approximations).
+  - **Theory Modules:** 7 comprehensive sections covering Composition of Atmosphere & Gravity Retention, 5 Atmospheric Layers (Troposphere, Stratosphere, Mesosphere, Thermosphere, Exosphere), Greenhouse Effect & Global Warming, Weather vs Climate & 5 Weather Elements, Factors Influencing Temperature & Insolation, Atmospheric Pressure Belts & Dynamic Wind Systems (Permanent, Seasonal, Local), and Humidity, Condensation & 3 Rainfall Types (Convectional, Orographic, Cyclonic) + Indian Southwest Monsoon.
+  - **Diagram Slot Protocol (SOP §1.10 Tenet 6 & KB Rules §4):**
+    - Zero token waste / zero poor image clipping.
+    - 4 structured visual diagram slots created with `status: "pending"` and `image_path: null`:
+      1. `geo_ch3_la_005`: Book Page 45, Fig. 3.22 (Global Atmospheric Pressure Belts & Wind Circulation)
+      2. `geo_ch3_la_006`: Book Page 48, Fig. 3.32 (Cyclonic Frontal Rainfall Mechanism)
+      3. `geo_ch3_la_007`: Book Page 49, Fig. 3.33 (Monsoon in India — Arabian Sea & Bay of Bengal Branches)
+      4. `geo_ch3_hots_004`: Book Page 48, Fig. 3.31 (Relief/Orographic Rainfall & Rain Shadow Effect)
+    - Fully prepared for manual admin crop/upload via the admin interface without disrupting student learning.
+
+### 11.2 Architectural & Quality Compliance
+1. **Dual Schema Enforcement:** Both `questions` and `assessment_items` arrays are populated with identical, validated, high-pedagogical content (60 items).
+2. **Dual-Store Synchronization:** 100% bitwise parity mirrored between `KB Files/social_science/geography/ch3_atmosphere/` and `knowledge_base/social_science/geography/ch3_atmosphere/`.
+3. **No Commercial Publisher Names:** 0 occurrences of proprietary brand names across all JSON and Markdown files.
+4. **Automated Verification:** Verified and passed 100% (33/33 tests) by `scripts/verify_geography_kbs.py` with **60 total items**.
+
+---
+
+## 12. Science (Biology) Chapter 4 Authoritative Ingestion & Diagram Slot Implementation (25 October 2026)
+
+### 12.1 Scope & Source Verification
+- **Chapter 4: Life Processes in Plants**
+  - **Curriculum:** Class 7 Science (Biology)
+  - **Total Items Verified:** **191 items** (7 Illustrations, 12 Solved Examples, 10 NCERT Section Exercises, 30 Level 1 MCQs, 20 Level 2 MCQs, 10 Level 3 HOTS MCQs, 15 Fill in the Blanks, 12 True or False, 10 Assertion & Reason, 20 Very Short Answer, 15 Short Answer, 5 Long Answer, 25 Case-Based items across Cases I–V).
+  - **Biochemical & Physiological Formatting:** 100% pure Unicode standard notation (Chemical formulas: `6CO₂ + 12H₂O → C₆H₁₂O₆ + 6O₂ + 6H₂O`, `CO₂`, `O₂`, `H₂O`, `ATP`, `KOH`, `NaOH`, `Ca(OH)₂`, `CaCO₃`, `NaHCO₃`; Temperature: `25°C to 40°C`; Arrows: `→`, `↑`, `↓`; zero raw ASCII approximations).
+  - **Theory Modules:** 7 comprehensive sections covering Plant Growth Dynamics & Pots A/B/C Experiment, *Vrikshayurveda* Ancient Insights, Autotrophic vs Heterotrophic Nutrition & Sun as Ultimate Energy Source, Photosynthesis Biochemical Mechanics & Balanced Equation, *Hydrilla* O₂ Evolution Experiment, Scientist Rustom Hormusji Dastur (1896–1961), Chloroplast Ultrastructure (double membrane, stroma, thylakoids, grana, stroma lamellae, cpDNA, 70S ribosomes), Stomatal Turgor Mechanics (guard cells), Factors Affecting Photosynthesis (Light intensity & wavelength [blue/red vs green], Temperature bell-curve & enzyme denaturation, CO₂, Water), Phyllotaxy & Masked Foliar Pigments (*Coleus*), Iodine Starch Assay & Moll's Half-Leaf CO₂ Experiment, Adaptations in Xerophytes & Algae, Vascular Transport (unidirectional xylem ascent of sap vs bidirectional phloem translocation of sucrose), Balsam Twig Dye Experiment, Plant Cellular Respiration across Organs (stomata, lenticels, root hairs, pneumatophores), Day vs Night Diurnal Balance & Compensation Point, and Limewater Seed Respiration.
+  - **Diagram Slot Protocol (SOP §1.10 Tenet 6 & KB Rules §4):**
+    - 15 dedicated pending diagram slots configured with `status: "pending"` and `image_path: null`.
+    - Ready for manual admin crop and upload in admin view without interrupting student learning.
+
+### 12.2 Architectural & Quality Compliance
+1. **Dual Schema Parity:** Top-level `questions` and `assessment_items` arrays are 100% identical (191 items).
+2. **Dual-Store Synchronization:** 100% bitwise parity mirrored between `KB Files/biology/ch4_life_processes_plants/` and `knowledge_base/biology/ch4_life_processes_plants/`.
+3. **No Commercial Publisher Names:** 0 occurrences of proprietary brand names across all JSON and Markdown files.
+4. **Automated Verification:** Verified and passed 100% (66/66 checks) by `scripts/verify_biology_ch4_kbs.py` with **191 total items**.
+
+---
+*Authored & Verified: 25 October 2026 | Pushti Study Hub Core Engineering*
 
 
 

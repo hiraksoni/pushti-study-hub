@@ -1,0 +1,2723 @@
+# -*- coding: utf-8 -*-
+"""
+Full item repository for Class 7 Biology Chapter 4: Life Processes in Plants.
+Contains all 191 items:
+- 7 Illustrations
+- 12 Solved Examples
+- 10 NCERT Section items
+- 30 Level 1 MCQs
+- 20 Level 2 MCQs
+- 10 Level 3 MCQs
+- 15 Fill in the Blanks
+- 12 True or False
+- 10 Assertion & Reason
+- 20 Very Short Answer
+- 15 Short Answer
+- 5 Long Answer
+- 25 Case-Based Items (5 cases x 5 questions)
+Total: 191 items
+"""
+
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
+
+assessment_items = [
+    # =========================================================================
+    # PART 1: ILLUSTRATIONS (7 Items)
+    # =========================================================================
+    {
+        "id": "bio_ch4_ill_001",
+        "source": "textbook_illustration",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Iodine Starch Test",
+        "question": "While performing the iodine test on a leaf, what is the purpose of boiling the leaf in water?",
+        "answer": "Boiling the leaf in water for 5 to 10 minutes kills the leaf cells by stopping all enzymatic and metabolic reactions, and breaks down the cell membranes so that the iodine solution can easily penetrate inside the cellular tissue to react with starch.",
+        "explanation": "Boiling inactivates metabolic enzymes and permeabilizes the lipid bilayer membranes, permitting chemical reagent entry."
+    },
+    {
+        "id": "bio_ch4_ill_002",
+        "source": "textbook_illustration",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Chlorophyll and Photosynthesis",
+        "question": "Why are only green plant parts, especially leaves, capable of synthesising food?",
+        "answer": "Green plant parts contain the green pigment chlorophyll housed within chloroplasts. Chlorophyll uniquely possesses the biochemical capacity to trap radiant solar energy and convert it into chemical energy, which is essential to synthesise glucose from carbon dioxide (CO₂) and water (H₂O). Non-green parts lack adequate chlorophyll and cannot trap sunlight.",
+        "explanation": "Chlorophyll is the primary solar-harvesting pigment that drives photolysis and ATP/NADPH synthesis during photosynthesis."
+    },
+    {
+        "id": "bio_ch4_ill_003",
+        "source": "textbook_illustration",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 3,
+        "topic": "Photosynthesis Equation",
+        "question": "What is photosynthesis? Write its balanced chemical equation.",
+        "answer": "Photosynthesis is the physicochemical process by which green plants synthesise complex organic food (glucose) from simple inorganic raw materials (carbon dioxide and water) using solar energy captured by chlorophyll, with the release of molecular oxygen.\nBalanced chemical equation:\n6CO₂ + 12H₂O → C₆H₁₂O₆ + 6O₂ + 6H₂O (in the presence of Sunlight and Chlorophyll)",
+        "explanation": "The reaction uses 6 moles of CO₂ and 12 moles of H₂O to generate 1 mole of glucose, 6 moles of oxygen, and 6 moles of water.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Photosynthesis Biochemical Process Schematic",
+            "description": "Schematic diagram showing sunlight absorption by leaf chlorophyll, CO₂ uptake via stomata, water ascent from roots, and O₂ release."
+        }
+    },
+    {
+        "id": "bio_ch4_ill_004",
+        "source": "textbook_illustration",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Factors Affecting Photosynthesis",
+        "question": "How does carbon dioxide (CO₂) affect the rate of photosynthesis?",
+        "answer": "Carbon dioxide is the vital carbon substrate for photosynthesis. An increase in CO₂ concentration increases the rate of photosynthesis up to an optimum level, provided light and temperature are not limiting. However, extremely high CO₂ concentrations become toxic, causing stomatal closure and inhibiting the process.",
+        "explanation": "CO₂ is the limiting substrate in ambient air (0.04%); increasing it boosts carboxylation up to saturation."
+    },
+    {
+        "id": "bio_ch4_ill_005",
+        "source": "textbook_illustration",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Raw Material Uptake",
+        "question": "Which plant parts help to take in water and carbon dioxide (CO₂) for photosynthesis?",
+        "answer": "Water is absorbed from the soil by root hairs, and carbon dioxide (CO₂) is taken in from the atmosphere through microscopic pores called stomata on the leaf surfaces.",
+        "explanation": "Roots absorb soil moisture via osmosis; stomata allow atmospheric CO₂ diffusion."
+    },
+    {
+        "id": "bio_ch4_ill_006",
+        "source": "textbook_illustration",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Light Intensity and Photosynthesis",
+        "question": "How does the rate of photosynthesis get affected by light intensity?",
+        "answer": "The rate of photosynthesis increases linearly with increasing light intensity up to a certain saturation point. Beyond light saturation, the rate levels off because other factors (e.g., CO₂ or temperature) become limiting. Under extremely high light intensity, photo-oxidation occurs, which bleaches chlorophyll and decreases the rate.",
+        "explanation": "Light intensity drives the light-dependent reactions, but excessive irradiance causes chlorophyll photo-damage."
+    },
+    {
+        "id": "bio_ch4_ill_007",
+        "source": "textbook_illustration",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Root Respiration and Overwatering",
+        "question": "What would happen if a potted plant is overwatered?",
+        "answer": "Excess water completely fills and displaces all air spaces between soil particles. As a result, the root cells cannot obtain oxygen required for aerobic cellular respiration. This causes root hypoxia/suffocation, accumulation of toxic fermentation products, rotting of the roots, and eventual death of the plant.",
+        "explanation": "Root cells require aerobic soil oxygen to generate ATP for active mineral absorption and cell maintenance.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Root Aeration vs Waterlogging Diagram",
+            "description": "Cross-sectional illustration showing root hairs surrounded by soil particles with air spaces vs water-saturated suffocated soil."
+        }
+    },
+
+    # =========================================================================
+    # PART 2: SOLVED EXAMPLES (12 Items)
+    # =========================================================================
+    {
+        "id": "bio_ch4_se_001",
+        "source": "solved_example",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Starch Diagnostic Assay",
+        "question": "If after putting iodine (I₂) solution over a leaf, the colour of the leaf is yellow-brown, what can be interpreted?",
+        "answer": "A yellow-brown colour indicates that starch is absent in the leaf, meaning that photosynthesis did not take place or the plant was destarched.",
+        "explanation": "Iodine forms an intense blue-black complex only in the presence of starch; in its absence, it retains its natural yellow-brown iodine colour."
+    },
+    {
+        "id": "bio_ch4_se_002",
+        "source": "solved_example",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 3,
+        "topic": "Ecosystem Energetics",
+        "question": "Sun is the ultimate source of energy for all living organisms. Justify this statement.",
+        "answer": "Solar energy is captured by green plants (producers) and converted into chemical energy (glucose and starch) through photosynthesis. Herbivores obtain energy by feeding directly on plants, and carnivores obtain energy by consuming herbivores. Decomposers break down dead matter across all trophic levels. Therefore, every food chain and all biological metabolic life on Earth directly or indirectly depend on the solar energy harvested by green plants.",
+        "explanation": "Without solar irradiation, photosynthetic carbon assimilation ceases, collapsing the biospheric food pyramid."
+    },
+    {
+        "id": "bio_ch4_se_003",
+        "source": "solved_example",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 3,
+        "topic": "Abiotic Factors in Plant Growth",
+        "question": "Explain the importance of sunlight and water on the growth of plants.",
+        "answer": "Sunlight and water are critical abiotic factors for plant survival and morphogenesis:\n1. Sunlight: Provides radiant energy for photosynthesis, governs stomatal opening, and directs phototropism and flowering photoperiods.\n2. Water: Acts as an essential reactant in photosynthesis, maintains cell turgidity allowing leaves to stay erect, dissolves and transports soil mineral nutrients through xylem, and prevents thermal stress through transpirational cooling.",
+        "explanation": "Deficiency in sunlight causes etiolation, while deficiency in water leads to loss of turgor and wilting."
+    },
+    {
+        "id": "bio_ch4_se_004",
+        "source": "solved_example",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Chloroplast Specificity",
+        "question": "Why can our body not make food from carbon dioxide and water like plants do?",
+        "answer": "Human and animal cells lack chloroplasts containing the green pigment chlorophyll. Chlorophyll is the unique biological pigment capable of absorbing solar photons and initiating photolysis of water. Without chloroplasts and chlorophyll, animal cells cannot harness sunlight to convert CO₂ and H₂O into organic carbohydrates.",
+        "explanation": "Autotrophy requires specialized light-harvesting photosystems present exclusively in photosynthetic plastids."
+    },
+    {
+        "id": "bio_ch4_se_005",
+        "source": "solved_example",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Vascular Transport Mechanics",
+        "question": "How do water and minerals absorbed by the roots reach the leaves?",
+        "answer": "Water and minerals absorbed by root hairs move into the root vascular bundle and travel upward through continuous, capillary-like tubes called xylem vessels. The xylem vessels run continuously through roots, stems, branches, and leaf petioles, delivering sap to the leaves via transpirational pull and root pressure.",
+        "explanation": "Ascent of sap occurs through interconnected non-living xylem vessel elements and tracheids."
+    },
+    {
+        "id": "bio_ch4_se_006",
+        "source": "solved_example",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Ethanol Bleaching in Starch Assay",
+        "question": "What is the significance of boiling the leaf in ethanol while testing for starch?",
+        "answer": "Boiling the leaf in ethanol removes and dissolves the green chlorophyll pigment (decolorization), making the leaf pale and bleached. This is essential because the dark green colour of chlorophyll would otherwise mask and obscure the blue-black colour change with iodine solution.",
+        "explanation": "Chlorophyll is alcohol-soluble; extracting it leaves an unpigmented tissue background for clear iodine observation."
+    },
+    {
+        "id": "bio_ch4_se_007",
+        "source": "solved_example",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 3,
+        "topic": "Autotrophic vs Heterotrophic Nutrition",
+        "question": "Differentiate between autotrophic and heterotrophic nutrition.",
+        "answer": "Differences:\n1. Definition: Autotrophic nutrition is the mode where organisms synthesise their own organic food from simple inorganic raw materials (CO₂, H₂O) using sunlight. Heterotrophic nutrition is the mode where organisms cannot synthesise food and must depend on other plants or animals for preformed organic matter.\n2. Chlorophyll: Present in autotrophs; absent in heterotrophs.\n3. Ecological Role: Autotrophs are producers; heterotrophs are consumers and decomposers.\n4. Examples: Autotrophs: Green plants, algae, cyanobacteria. Heterotrophs: Animals, fungi, humans, non-green parasitic plants.",
+        "explanation": "Autotrophs are energetic transducers of solar power; heterotrophs are consumers of autotrophic biomass."
+    },
+    {
+        "id": "bio_ch4_se_008",
+        "source": "solved_example",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Forms of Carbohydrates in Plants",
+        "question": "In what form is food prepared, transported, and stored in plants?",
+        "answer": "Food is prepared as simple monosaccharide glucose, transported through phloem as soluble disaccharide sucrose, and stored in leaves, stems, and roots as insoluble polysaccharide starch.",
+        "explanation": "Glucose is the synthesized unit, sucrose is the mobile transport sugar, and starch is the osmotic-neutral storage form."
+    },
+    {
+        "id": "bio_ch4_se_009",
+        "source": "solved_example",
+        "type": "sa",
+        "difficulty": "hard",
+        "marks": 3,
+        "topic": "Diurnal Gas Exchange",
+        "question": "In an experiment, plant A in light releases gas X, while plant B covered with a black box releases gas Y. Identify X and Y and explain.",
+        "answer": "Gas X is oxygen (O₂), and Gas Y is carbon dioxide (CO₂).\nExplanation: Plant A is exposed to light, so both photosynthesis and respiration occur. However, the rate of photosynthesis is much faster than respiration, so oxygen is evolved as a net product (Gas X). Plant B is kept in darkness, so photosynthesis ceases completely while cellular respiration continues; hence, the plant consumes O₂ and releases carbon dioxide (Gas Y).",
+        "explanation": "In light, photosynthetic O₂ evolution outpaces respiratory O₂ uptake. In darkness, only catabolic CO₂ release occurs."
+    },
+    {
+        "id": "bio_ch4_se_010",
+        "source": "solved_example",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Nighttime Plant Respiration",
+        "question": "Why is it advised not to sleep under trees at night?",
+        "answer": "At night, in the absence of sunlight, photosynthesis does not take place, but cellular respiration continues. Trees consume oxygen from their immediate surroundings and release large volumes of carbon dioxide (CO₂). Sleeping under a tree at night can lead to breathing discomfort and suffocation due to the localized accumulation of CO₂ and depleted O₂.",
+        "explanation": "Trees are net CO₂ emitters and net O₂ consumers during the dark period."
+    },
+    {
+        "id": "bio_ch4_se_011",
+        "source": "solved_example",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Plant Respiratory Organs",
+        "question": "How do plants respire? Name the organs involved.",
+        "answer": "Plants carry out aerobic respiration through simple diffusion across specialized organs:\n1. Leaves: Through stomata.\n2. Woody stems: Through porous openings called lenticels in the bark.\n3. Roots: Through epidermal root hairs absorbing oxygen present in soil pore spaces.",
+        "explanation": "Plants do not have a centralized respiratory system; gas exchange occurs locally via stomata, lenticels, and root hairs."
+    },
+    {
+        "id": "bio_ch4_se_012",
+        "source": "solved_example",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Vascular System of Plants",
+        "question": "What do you understand by the vascular system of plants?",
+        "answer": "The vascular system is an internal continuous conducting network of complex tissues running throughout roots, stems, and leaves. It consists of xylem (vessels and tracheids for transporting water and dissolved minerals upward) and phloem (sieve tubes and companion cells for transporting soluble organic food bidirectionally).",
+        "explanation": "Xylem and phloem together constitute the vascular bundles facilitating long-distance transport in tracheophytes."
+    },
+
+    # =========================================================================
+    # PART 3: NCERT SECTION (10 Items)
+    # =========================================================================
+    {
+        "id": "bio_ch4_ncert_001",
+        "source": "ncert_exercise",
+        "type": "la",
+        "difficulty": "medium",
+        "marks": 4,
+        "topic": "Photosynthesis vs Respiration Comparison",
+        "question": "Complete the comparative table between Photosynthesis and Respiration across Raw materials, Products, Word equation, and Importance.",
+        "answer": "Comparative Table:\n1. Raw materials:\n- Photosynthesis: Carbon dioxide (CO₂) and Water (H₂O)\n- Respiration: Glucose (C₆H₁₂O₆) and Oxygen (O₂)\n2. Products:\n- Photosynthesis: Glucose (C₆H₁₂O₆), Oxygen (O₂), and Water (H₂O)\n- Respiration: Carbon dioxide (CO₂), Water (H₂O), and Energy (ATP)\n3. Word equation:\n- Photosynthesis: Carbon dioxide + Water → Glucose + Oxygen (in presence of Sunlight and Chlorophyll)\n- Respiration: Glucose + Oxygen → Carbon dioxide + Water + Energy (ATP)\n4. Importance:\n- Photosynthesis: Produces organic food and releases oxygen, sustaining life on Earth.\n- Respiration: Releases usable metabolic energy (ATP) required for all vital cellular processes.",
+        "explanation": "Photosynthesis is an anabolic energy-storing process; cellular respiration is a catabolic energy-releasing process."
+    },
+    {
+        "id": "bio_ch4_ncert_002",
+        "source": "ncert_exercise",
+        "type": "sa",
+        "difficulty": "hard",
+        "marks": 3,
+        "topic": "Ecosystem Impact of Photosynthesis Loss",
+        "question": "Imagine a situation where all the organisms that carry out photosynthesis on the Earth have disappeared. What would be the impact on living organisms?",
+        "answer": "Impact on living organisms:\n1. Collapse of Food Chains: Primary food production would halt immediately, causing starvation and extinction of herbivores, followed by carnivores and all heterotrophs.\n2. Oxygen Depletion: Atmospheric oxygen generation would cease; continuous respiration and combustion would rapidly deplete existing O₂ reserves.\n3. Carbon Dioxide Accumulation: Atmospheric CO₂ would skyrocket, causing catastrophic global warming and climate breakdown.\n4. Extinction of Life: Almost all aerobic life forms would perish, leaving only a few anaerobic chemotrophic microorganisms.",
+        "explanation": "Photosynthetic organisms represent the biospheric base for chemical energy and global oxygen renewal."
+    },
+    {
+        "id": "bio_ch4_ncert_003",
+        "source": "ncert_exercise",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 3,
+        "topic": "Tuber Starch Translocation",
+        "question": "A potato slice shows the presence of starch with iodine solution. Where does the starch in potatoes come from? Where is the food synthesised in the plant, and how does it reach the potato?",
+        "answer": "1. Synthesis: Food is initially synthesised in the green leaves through photosynthesis in the form of simple sugar (glucose).\n2. Translocation: Glucose is converted into soluble sucrose and loaded into the phloem sieve tubes. It travels downward through the stem via phloem translocation to the underground stem tuber (potato).\n3. Storage: In the potato tuber cells, sucrose is converted into insoluble starch granules (amylose and amylopectin) and stored as reserve food.",
+        "explanation": "Leaves are the source; phloem translocates sucrose to the underground storage sink (potato tuber) where it polymerizes into starch."
+    },
+    {
+        "id": "bio_ch4_ncert_004",
+        "source": "ncert_exercise",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Leaf Morphology and Photosynthetic Efficiency",
+        "question": "Does the broad and flat structure of leaves make plants more efficient for photosynthesis? Justify your answer.",
+        "answer": "Yes. The broad and flattened leaf blade (lamina) provides a large surface area to intercept and absorb maximum incident solar radiation. In addition, its thin lamina ensures short diffusion distances for CO₂ entering through stomata into photosynthetic mesophyll cells, maximizing photosynthetic efficiency.",
+        "explanation": "A high surface-area-to-volume ratio optimizes both light harvesting and gaseous diffusion."
+    },
+    {
+        "id": "bio_ch4_ncert_005",
+        "source": "ncert_exercise",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Respiration Equation Identification",
+        "question": "X is broken down using Y to release carbon dioxide, Z, and energy:\nX + Y → Carbon dioxide + Z + Energy\nIdentify X, Y, and Z.",
+        "answer": "X = Glucose (C₆H₁₂O₆)\nY = Oxygen (O₂)\nZ = Water (H₂O)",
+        "explanation": "This represents the standard aerobic respiration equation where glucose is oxidised by oxygen."
+    },
+    {
+        "id": "bio_ch4_ncert_006",
+        "source": "ncert_exercise",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 3,
+        "topic": "Light Requirement Experiment",
+        "question": "Krishna set up an experiment with two potted plants of the same size, placing one in sunlight and the other in a dark room:\n(i) What idea might she be testing?\n(ii) What are the visible differences after a few days?\n(iii) Which plant's leaves confirm the iodine test for starch?",
+        "answer": "(i) She is testing whether sunlight is necessary for photosynthesis.\n(ii) The plant in sunlight remains erect, healthy, and vibrant green. The plant in the dark turns pale yellowish (etiolation), exhibits wilting, and shows stunted growth.\n(iii) The leaves of the plant kept in sunlight will turn blue-black with iodine, confirming the presence of starch. The dark-kept plant will stain yellow-brown (no starch).",
+        "explanation": "Light is mandatory to energize chlorophyll; without light, starch synthesis halts and stored starch is consumed."
+    },
+    {
+        "id": "bio_ch4_ncert_007",
+        "source": "ncert_exercise",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 4,
+        "topic": "Photosynthesis Factor Permutations",
+        "question": "Vani sets up an experiment with four conditions: (a) Sunlight with CO₂, (b) Sunlight without CO₂, (c) Dark with CO₂, (d) Dark without CO₂:\n(i) In which plant(s) will starch be formed?\n(ii) In which plant(s) will starch not be formed?\n(iii) In which plant(s) will oxygen be generated?\n(iv) In which plant(s) will oxygen not be generated?",
+        "answer": "(i) Starch will be formed in plant (a) only.\n(ii) Starch will not be formed in plants (b), (c), and (d).\n(iii) Oxygen will be generated in plant (a) only.\n(iv) Oxygen will not be generated in plants (b), (c), and (d).",
+        "explanation": "Photosynthesis requires both sunlight and CO₂ simultaneously. If either is missing, neither starch nor oxygen is produced."
+    },
+    {
+        "id": "bio_ch4_ncert_008",
+        "source": "ncert_exercise",
+        "type": "sa",
+        "difficulty": "hard",
+        "marks": 4,
+        "topic": "Bicarbonate Indicator System",
+        "question": "Ananya sets up 4 test tubes containing bicarbonate indicator (Red at normal atmospheric CO₂, Yellow at high CO₂, Purple at low CO₂):\nTube A: Contains a snail in light.\nTube B: Contains a water plant in light.\nTube C: Contains both a snail and a water plant in light.\nTube D: Contains only water (control).\nPredict and explain the color change in each tube.",
+        "answer": "1. Tube A (Snail): Turns Yellow. The snail carries out cellular respiration only, releasing CO₂ into the solution. Elevated CO₂ raises carbonic acid concentration, turning the indicator yellow.\n2. Tube B (Water plant in light): Turns Purple. Photosynthesis consumes dissolved CO₂ much faster than respiration releases it, depleting CO₂ and turning the indicator purple.\n3. Tube C (Snail + Plant in light): Stays Red. CO₂ released by snail respiration is utilized by the water plant for photosynthesis, maintaining CO₂ balance at normal levels.\n4. Tube D (Water only): Stays Red. Control tube with no living organism; CO₂ concentration remains at equilibrium with air.",
+        "explanation": "Hydrogencarbonate/bicarbonate indicator responds to pH changes caused by dissolved CO₂ levels.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Bicarbonate Indicator Four-Tube System",
+            "description": "Diagram of four illuminated test tubes with bicarbonate indicator illustrating color states: A (yellow), B (purple), C (red), D (red)."
+        }
+    },
+    {
+        "id": "bio_ch4_ncert_009",
+        "source": "ncert_exercise",
+        "type": "sa",
+        "difficulty": "hard",
+        "marks": 3,
+        "topic": "Temperature and Transpiration Rate Design",
+        "question": "Design an experiment to observe if water transportation in plants is quicker in warm or cold conditions.",
+        "answer": "1. Procedure: Take two identical fresh leafy twigs of balsam/white carnation and place them in two separate beakers containing equal volumes of water stained with red eosin dye. Keep Beaker 1 in a warm environment (30°C–35°C under a lamp) and Beaker 2 in a cold room or refrigerator (10°C–15°C).\n2. Observation: In Beaker 1 (warm), the red dye ascends rapidly into stem nodes, leaf veins, and petals within 1 to 2 hours. In Beaker 2 (cold), the upward movement of dye is markedly slower.\n3. Conclusion: Water transportation is quicker in warm conditions because higher ambient temperatures accelerate stomatal transpiration, creating a stronger transpirational pull.",
+        "explanation": "Elevated temperatures increase the vapor pressure deficit, accelerating transpirational pull and xylem sap velocity."
+    },
+    {
+        "id": "bio_ch4_ncert_010",
+        "source": "ncert_exercise",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 3,
+        "topic": "Atmospheric Gas Balance",
+        "question": "Photosynthesis and respiration are essential to maintain balance in nature. Discuss.",
+        "answer": "Photosynthesis and respiration form a complementary biological cycle that stabilizes atmospheric chemistry:\n1. Photosynthesis removes carbon dioxide from the atmosphere and releases oxygen as a by-product.\n2. Cellular respiration in plants, animals, and microbes consumes oxygen and releases carbon dioxide back into the atmosphere.\n3. Together, these two opposing processes prevent toxic accumulation of CO₂ and depletion of O₂, maintaining the global oxygen-carbon dioxide balance necessary for aerobic life.",
+        "explanation": "Photosynthesis acts as a carbon sink and oxygen source; respiration acts as a carbon source and oxygen sink."
+    },
+
+    # =========================================================================
+    # PART 4: LEVEL 1 MCQS (30 Items)
+    # =========================================================================
+    {
+        "id": "bio_ch4_mcq_001",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Photosynthetic Organisms",
+        "question": "Which of the following organisms are capable of performing photosynthesis?",
+        "options": ["(a) Algae", "(b) Green plants", "(c) Insectivorous plants", "(d) All of these"],
+        "answer": "(d) All of these",
+        "explanation": "Algae, green plants, and green insectivorous plants (e.g., pitcher plant) possess chlorophyll and carry out photosynthesis (insectivorous plants trap insects only to supplement nitrogen)."
+    },
+    {
+        "id": "bio_ch4_mcq_002",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Autotroph vs Heterotroph",
+        "question": "Which of the following organisms is not an autotroph?",
+        "options": ["(a) Pitcher plant", "(b) Mango tree", "(c) Alga", "(d) Fungus"],
+        "answer": "(d) Fungus",
+        "explanation": "Fungi lack chlorophyll and cannot perform photosynthesis; they are saprotrophic or parasitic heterotrophs."
+    },
+    {
+        "id": "bio_ch4_mcq_003",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Modes of Nutrition",
+        "question": "The mode of nutrition in which an organism cannot prepare its own food and depends on other organisms for its nutrition is referred to as:",
+        "options": ["(a) autotrophic mode of nutrition", "(b) heterotrophic mode of nutrition", "(c) symbiotic mode of nutrition", "(d) none of these"],
+        "answer": "(b) heterotrophic mode of nutrition",
+        "explanation": "Heterotrophic nutrition (*heteros* = other; *trophos* = nourishment) involves deriving organic nutrients from other organisms."
+    },
+    {
+        "id": "bio_ch4_mcq_004",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Autotroph Definition",
+        "question": "Green plants are called autotrophs because:",
+        "options": ["(a) they prepare their own food by photosynthesis", "(b) they cannot prepare their own food", "(c) they convert organic matter into simple soluble form", "(d) they depend on bacteria to obtain N₂-nutrition"],
+        "answer": "(a) they prepare their own food by photosynthesis",
+        "explanation": "Autotrophs manufacture complex organic glucose from simple inorganic substances (CO₂ and H₂O) using light."
+    },
+    {
+        "id": "bio_ch4_mcq_005",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Plant Morphogenesis",
+        "question": "As a plant grows:",
+        "options": ["(a) new leaves are formed", "(b) branches emerge", "(c) its height increases", "(d) all of these"],
+        "answer": "(d) all of these",
+        "explanation": "Plant growth encompasses cell division and expansion leading to new leaves, branches, stem girth, and height."
+    },
+    {
+        "id": "bio_ch4_mcq_006",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Energy Transformation",
+        "question": "Photosynthesis converts:",
+        "options": ["(a) solar energy to mechanical energy", "(b) mechanical energy to solar energy", "(c) solar energy to chemical energy", "(d) chemical energy to solar energy"],
+        "answer": "(c) solar energy to chemical energy",
+        "explanation": "Photosynthesis absorbs light photons and locks the energy within the chemical covalent bonds of glucose."
+    },
+    {
+        "id": "bio_ch4_mcq_007",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Photosynthesis Raw Materials",
+        "question": "Which of the following raw materials is available in the air for photosynthesis?",
+        "options": ["(a) Oxygen", "(b) Carbon dioxide", "(c) Nitrogen", "(d) Hydrogen"],
+        "answer": "(b) Carbon dioxide",
+        "explanation": "Carbon dioxide (CO₂) present in ambient air diffuses into foliage through stomata."
+    },
+    {
+        "id": "bio_ch4_mcq_008",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Carbohydrate Chemistry",
+        "question": "Carbohydrates are mainly made up of which of the following elements?",
+        "options": ["(a) Carbon and hydrogen only", "(b) Oxygen and carbon only", "(c) Carbon, oxygen, and nitrogen", "(d) Carbon, hydrogen, and oxygen"],
+        "answer": "(d) Carbon, hydrogen, and oxygen",
+        "explanation": "Carbohydrates (such as glucose, C₆H₁₂O₆) consist of carbon (C), hydrogen (H), and oxygen (O)."
+    },
+    {
+        "id": "bio_ch4_mcq_009",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Seed Germination",
+        "question": "During seed germination, ________ emerges from the soil:",
+        "options": ["(a) root", "(b) fruit", "(c) shoot", "(d) flower"],
+        "answer": "(c) shoot",
+        "explanation": "The plumule develops into the shoot which emerges upward above the soil, while the radicle grows downward as the root."
+    },
+    {
+        "id": "bio_ch4_mcq_010",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Primary Site of Photosynthesis",
+        "question": "In which of the labelled parts (I-Flower, II-Leaf, III-Stem, IV-Root) does photosynthesis primarily take place?",
+        "options": ["(a) I", "(b) II", "(c) III", "(d) IV"],
+        "answer": "(b) II",
+        "explanation": "Part II (Leaf) has the greatest concentration of chloroplast-bearing mesophyll cells and stomata.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Flowering Plant Organ Identification",
+            "description": "Diagram of a plant with labelled parts: I-Flower, II-Leaf, III-Stem, IV-Root."
+        }
+    },
+    {
+        "id": "bio_ch4_mcq_011",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Photosynthesis Word Equation",
+        "question": "Which of the following equations correctly represents the process of photosynthesis?",
+        "options": [
+            "(a) Carbon dioxide + Water → Carbohydrates + Proteins (with Chlorophyll & Sunlight)",
+            "(b) Carbon dioxide + Carbohydrates → Oxygen + Water (with Chlorophyll & Sunlight)",
+            "(c) Carbon dioxide + Water → Carbohydrates + Oxygen (with Chlorophyll & Sunlight)",
+            "(d) Oxygen + Water → Carbon dioxide + Carbohydrates (with Chlorophyll & Sunlight)"
+        ],
+        "answer": "(c) Carbon dioxide + Water → Carbohydrates + Oxygen (with Chlorophyll & Sunlight)",
+        "explanation": "Inorganic CO₂ and water combine in the presence of chlorophyll and solar energy to yield carbohydrates and oxygen."
+    },
+    {
+        "id": "bio_ch4_mcq_012",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Primary Photosynthetic Product",
+        "question": "Green plants synthesise their food in the form of:",
+        "options": ["(a) starch", "(b) glucose", "(c) proteins", "(d) cellulose"],
+        "answer": "(b) glucose",
+        "explanation": "Glucose (C₆H₁₂O₆) is the immediate monosaccharide product synthesized during the Calvin cycle."
+    },
+    {
+        "id": "bio_ch4_mcq_013",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Photosynthesis Definition",
+        "question": "The production of carbohydrates from CO₂ and H₂O in the presence of chlorophyll using sunlight energy and releasing O₂ is called:",
+        "options": ["(a) respiration", "(b) photosynthesis", "(c) transpiration", "(d) oxidation"],
+        "answer": "(b) photosynthesis",
+        "explanation": "This is the classic definition of photosynthetic assimilation."
+    },
+    {
+        "id": "bio_ch4_mcq_014",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Photosynthesis Facts",
+        "question": "Select the incorrect statement:",
+        "options": [
+            "(a) Leaves are the food factories of plants.",
+            "(b) Water and minerals are absorbed by roots from soil and transported to leaves.",
+            "(c) Raw materials required for photosynthesis are carbohydrates and oxygen.",
+            "(d) Chlorophyll pigment of leaves helps to capture the energy of sunlight."
+        ],
+        "answer": "(c) Raw materials required for photosynthesis are carbohydrates and oxygen.",
+        "explanation": "Carbohydrates and oxygen are the products of photosynthesis, not the raw materials (which are CO₂ and H₂O)."
+    },
+    {
+        "id": "bio_ch4_mcq_015",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "End Products of Photosynthesis",
+        "question": "Which of the following options contains end-products of photosynthesis?",
+        "options": ["(a) C₆H₁₂O₆ + O₂", "(b) CO₂ + H₂O", "(c) C₆H₁₂O₆ + CO₂", "(d) CO₂ + O₂"],
+        "answer": "(a) C₆H₁₂O₆ + O₂",
+        "explanation": "The primary end products are hexose sugar (C₆H₁₂O₆) and molecular oxygen (O₂)."
+    },
+    {
+        "id": "bio_ch4_mcq_016",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Leaf Gas Exchange Organs",
+        "question": "Which of the following structures is concerned with exchange of gases?",
+        "options": ["(a) Stomata", "(b) Xylem", "(c) Phloem", "(d) Root hairs"],
+        "answer": "(a) Stomata",
+        "explanation": "Stomata are microscopic pores located on leaves that regulate intake of CO₂ and output of O₂ and water vapour."
+    },
+    {
+        "id": "bio_ch4_mcq_017",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Stomata Functions",
+        "question": "Which of the following statements is correct regarding stomata?",
+        "options": [
+            "(a) Stomata are tiny pores present on leaf surface.",
+            "(b) They help in gaseous exchange during photosynthesis.",
+            "(c) The opening and closing of stomata depends on guard cells.",
+            "(d) All of these"
+        ],
+        "answer": "(d) All of these",
+        "explanation": "All three statements accurately characterize stomatal morphology and physiology."
+    },
+    {
+        "id": "bio_ch4_mcq_018",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Stomatal Guard Cells",
+        "question": "Select the correct statement:",
+        "options": [
+            "(a) Guard cells help in opening and closing of stomata.",
+            "(b) Stomata present on leaf surface help in gaseous exchange.",
+            "(c) Stomata are tiny pores present on leaves.",
+            "(d) All of these"
+        ],
+        "answer": "(d) All of these",
+        "explanation": "Guard cell turgidity regulates the stomatal aperture for gas exchange."
+    },
+    {
+        "id": "bio_ch4_mcq_019",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Stomatal Distribution",
+        "question": "Select the incorrect statement regarding stomata:",
+        "options": [
+            "(a) These are stomata present on the surface of leaves.",
+            "(b) These structures help in gaseous exchange in plants.",
+            "(c) These are surrounded by guard cells.",
+            "(d) Stomata is never present on the lower surface of leaves."
+        ],
+        "answer": "(d) Stomata is never present on the lower surface of leaves.",
+        "explanation": "In fact, stomata are most densely concentrated on the lower (abaxial) surface of leaves to minimize water loss."
+    },
+    {
+        "id": "bio_ch4_mcq_020",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Phloem Transport Terminology",
+        "question": "The process of transportation of sugars through phloem in a plant is called:",
+        "options": ["(a) transpiration", "(b) respiration", "(c) osmosis", "(d) translocation"],
+        "answer": "(d) translocation",
+        "explanation": "Translocation refers specifically to the transport of soluble organic nutrients (sugars) through phloem sieve tubes."
+    },
+    {
+        "id": "bio_ch4_mcq_021",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Root Hair Physiology",
+        "question": "Select the correct statement out of the following:",
+        "options": [
+            "(a) Root hairs increase the surface area of the root for absorption.",
+            "(b) Root hairs are in contact with water between soil particles.",
+            "(c) Root hairs absorb water from soil by the process of osmosis.",
+            "(d) All of these"
+        ],
+        "answer": "(d) All of these",
+        "explanation": "Root hairs are unicellular epidermal extensions that expand root surface area and absorb soil water via osmosis."
+    },
+    {
+        "id": "bio_ch4_mcq_022",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Phloem Anatomy",
+        "question": "Phloem has cells called ________ that are placed one above the other to form long tubes through which food is transported:",
+        "options": ["(a) sieve tubes", "(b) vessels", "(c) chloroplasts", "(d) corpuscles"],
+        "answer": "(a) sieve tubes",
+        "explanation": "Sieve tube elements are elongated cells arranged end-to-end with perforated sieve plates for sugar conduction."
+    },
+    {
+        "id": "bio_ch4_mcq_023",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Bidirectional Vascular Transport",
+        "question": "Pipe-like tissue consisting of specialized cells forming two-way transport in plants is:",
+        "options": ["(a) Xylem tissue", "(b) Vascular tissue", "(c) Root hairs", "(d) Phloem tissue"],
+        "answer": "(d) Phloem tissue",
+        "explanation": "Phloem conducts food bidirectionally (upward and downward), whereas xylem transport is strictly unidirectional (upward)."
+    },
+    {
+        "id": "bio_ch4_mcq_024",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Root Functions",
+        "question": "Which of the following does not represent the usual functions of roots?",
+        "options": [
+            "(a) Absorption of water and minerals from soil",
+            "(b) Anchor the plant in ground",
+            "(c) Take in carbon dioxide and release oxygen during photosynthesis",
+            "(d) Store food in certain plants"
+        ],
+        "answer": "(c) Take in carbon dioxide and release oxygen during photosynthesis",
+        "explanation": "Roots do not photosynthesise or take in CO₂ for photosynthesis; gaseous CO₂ uptake occurs via leaf stomata."
+    },
+    {
+        "id": "bio_ch4_mcq_025",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Phloem Directionality",
+        "question": "(i) ________ transports (ii) ________ in both upward and downward directions:",
+        "options": [
+            "(a) (i) - Xylem; (ii) - water",
+            "(b) (i) - Phloem; (ii) - water",
+            "(c) (i) - Xylem; (ii) - food",
+            "(d) (i) - Phloem; (ii) - food"
+        ],
+        "answer": "(d) (i) - Phloem; (ii) - food",
+        "explanation": "Phloem transports organic food bidirectionally from source leaves to developing sinks (shoots and roots)."
+    },
+    {
+        "id": "bio_ch4_mcq_026",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Stem Functions",
+        "question": "Which one of the following is not a function of the stem?",
+        "options": [
+            "(a) Supports the plant",
+            "(b) Carries water and minerals from roots to leaves",
+            "(c) Carries food from leaves to roots",
+            "(d) Produces seeds"
+        ],
+        "answer": "(d) Produces seeds",
+        "explanation": "Seeds are produced inside fruits developed from the ovary of flowers, not by vegetative stems."
+    },
+    {
+        "id": "bio_ch4_mcq_027",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Xylem Dye Experiment",
+        "question": "A balsam twig is placed in water with red ink. After one day:",
+        "options": [
+            "(a) stem breaks away",
+            "(b) roots die",
+            "(c) leaves are shed",
+            "(d) stem becomes red in colour"
+        ],
+        "answer": "(d) stem becomes red in colour",
+        "explanation": "Red-stained water is drawn upward through xylem vessels, visibly tinting the stem vascular strands and leaf veins.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Balsam Twig in Red Ink Demonstration",
+            "description": "Illustration of a leafy twig in red-ink water showing stem transverse section with red-stained xylem vessels."
+        }
+    },
+    {
+        "id": "bio_ch4_mcq_028",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Plant Respiration Products",
+        "question": "During respiration, plants:",
+        "options": [
+            "(a) release O₂ and take in CO₂",
+            "(b) release H₂O and take in O₂",
+            "(c) release CO₂ and take in O₂",
+            "(d) both (b) and (c)"
+        ],
+        "answer": "(d) both (b) and (c)",
+        "explanation": "Aerobic respiration consumes O₂ and releases CO₂ along with water vapour (H₂O) and metabolic energy."
+    },
+    {
+        "id": "bio_ch4_mcq_029",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Substrate of Respiration",
+        "question": "During respiration, ________ is broken down:",
+        "options": ["(a) oxygen", "(b) water", "(c) glucose", "(d) carbon dioxide"],
+        "answer": "(c) glucose",
+        "explanation": "Hexose glucose is catabolically oxidized to CO₂ and H₂O to yield ATP."
+    },
+    {
+        "id": "bio_ch4_mcq_030",
+        "source": "textbook_mcq_l1",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Plant Metabolism Facts",
+        "question": "Select the correct statement:",
+        "options": [
+            "(a) Energy produced during respiration is used by plants for growth.",
+            "(b) All parts of a plant, green or non-green, carry out respiration.",
+            "(c) Plants have different mechanisms for synthesising, transporting, and utilising food.",
+            "(d) All of these"
+        ],
+        "answer": "(d) All of these",
+        "explanation": "All living plant tissues respire continuously to power vegetative growth, biosynthesis, and ion absorption."
+    },
+
+    # =========================================================================
+    # PART 5: LEVEL 2 MCQS (20 Items)
+    # =========================================================================
+    {
+        "id": "bio_ch4_mcq_031",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Immediate Limiting Factors",
+        "question": "Which of the following factors will not have an immediate effect on photosynthesis in a plant?\n(i) Amount of water, (ii) Amount of fertiliser, (iii) Concentration of CO₂, (iv) Concentration of O₂, (v) Intensity of light.",
+        "options": ["(a) (i) and (iii)", "(b) (ii) and (iv)", "(c) (i), (ii) and (iii)", "(d) (ii), (iii) and (v)"],
+        "answer": "(b) (ii) and (iv)",
+        "explanation": "Fertilisers (ii) affect long-term mineral nutrition and O₂ (iv) does not immediately limit photosynthetic carboxylation; in contrast, light, CO₂, and water immediately alter reaction kinetics."
+    },
+    {
+        "id": "bio_ch4_mcq_032",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Destarching Assay",
+        "question": "A potted plant is kept in dark for 2 days. A leaf is tested with iodine solution. The leaf turns:",
+        "options": [
+            "(a) yellow-brown indicating absence of starch",
+            "(b) blue-black indicating presence of starch",
+            "(c) yellow-brown indicating presence of starch",
+            "(d) blue-black indicating absence of starch"
+        ],
+        "answer": "(a) yellow-brown indicating absence of starch",
+        "explanation": "Keeping a plant in the dark for 48 hours halts photosynthesis, causing the plant to consume all stored starch reserves."
+    },
+    {
+        "id": "bio_ch4_mcq_033",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Autotrophic Groups",
+        "question": "Which of the following options contains autotrophic organisms only?",
+        "options": [
+            "(a) Rose, Cuscuta, Hydrilla",
+            "(b) Nepenthes, Rafflesia, Hibiscus",
+            "(c) Bougainvillea, rose, Hibiscus",
+            "(d) Cuscuta, pitcher plant, mistletoe"
+        ],
+        "answer": "(c) Bougainvillea, rose, Hibiscus",
+        "explanation": "Bougainvillea, rose, and Hibiscus are purely autotrophic green plants (*Cuscuta* and *Rafflesia* are parasitic heterotrophs)."
+    },
+    {
+        "id": "bio_ch4_mcq_034",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Hydrilla Bubble Identification",
+        "question": "Bubbles produced in water by an illuminated Hydrilla plant are mainly:",
+        "options": ["(a) Hydrogen", "(b) Oxygen", "(c) Nitrogen", "(d) Ammonia"],
+        "answer": "(b) Oxygen",
+        "explanation": "During photosynthesis in light, photolysis of water produces molecular oxygen gas which bubbles upward.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Hydrilla Funnel Apparatus Bubbles",
+            "description": "Apparatus showing water plant Hydrilla beneath inverted funnel producing gas bubbles in the test tube."
+        }
+    },
+    {
+        "id": "bio_ch4_mcq_035",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Light Screen Experiment",
+        "question": "A destarched leaf covered partly with black paper strips is exposed to sunlight for 8 hours and tested with iodine. Only the uncovered part turns blue-black. Conclusion:",
+        "options": [
+            "(a) CO₂ is necessary for photosynthesis",
+            "(b) Light is necessary for photosynthesis",
+            "(c) Chlorophyll is necessary for photosynthesis",
+            "(d) Water is necessary for photosynthesis"
+        ],
+        "answer": "(b) Light is necessary for photosynthesis",
+        "explanation": "Only the leaf region receiving solar illumination synthesised starch, demonstrating that light is indispensable.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Black Paper Strip Experiment Setup",
+            "description": "Leaf partly shielded with black paper strip before and after iodine test showing stained vs unstained regions."
+        }
+    },
+    {
+        "id": "bio_ch4_mcq_036",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Temperature Kinetics Graph",
+        "question": "Which graph correctly represents the effect of temperature on the rate of photosynthesis?",
+        "options": [
+            "(a) Continuously rising linear graph",
+            "(b) Continuously declining line graph",
+            "(c) Horizontal constant straight line",
+            "(d) Bell-shaped curve rising to an optimum at 25°C–40°C and declining sharply above 40°C"
+        ],
+        "answer": "(d) Bell-shaped curve rising to an optimum at 25°C–40°C and declining sharply above 40°C",
+        "explanation": "Enzyme catalytic activity rises with temperature to an optimum (~35°C), above which thermal denaturation inactivates photosynthetic enzymes.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Photosynthetic Rate vs Temperature Curve",
+            "description": "Graph showing bell-shaped curve of photosynthetic rate versus temperature with peak between 25°C and 40°C."
+        }
+    },
+    {
+        "id": "bio_ch4_mcq_037",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Variegated Leaf Analysis",
+        "question": "A destarched, variegated leaf is partly covered by black paper and kept in light. Which disc will test positive for starch?\n* Disc 1: Green, exposed to light\n* Disc 2: White, exposed to light\n* Disc 3: Green, under black paper\n* Disc 4: White, under black paper",
+        "options": ["(a) 1 only", "(b) 1 and 2", "(c) 2 and 3", "(d) 1 and 3"],
+        "answer": "(a) 1 only",
+        "explanation": "Starch synthesis requires BOTH chlorophyll and sunlight simultaneously. Disc 1 is the only disc having both chlorophyll (green) and sunlight (uncovered).",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Variegated Leaf Disc Experiment",
+            "description": "Variegated leaf showing four zones: green uncovered (Disc 1), white uncovered (Disc 2), green covered (Disc 3), white covered (Disc 4)."
+        }
+    },
+    {
+        "id": "bio_ch4_mcq_038",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Guard Cell Osmotic Action",
+        "question": "Opening and closing of stomata is dependent on guard cells. When guard cells (i) ________, stomata open and when they (ii) ________, stomata close:",
+        "options": [
+            "(a) (i) - swell, (ii) - shrink",
+            "(b) (i) - swell, (ii) - gain water",
+            "(c) (i) - shrink, (ii) - swell",
+            "(d) (i) - shrink, (ii) - lose water"
+        ],
+        "answer": "(a) (i) - swell, (ii) - shrink",
+        "explanation": "When guard cells absorb water and swell (become turgid), their curved outer walls stretch and pull the pore open; when they lose water and shrink (become flaccid), the pore closes.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Open and Closed Stomatal Aperture Diagram",
+            "description": "Comparative diagram showing turgid swollen guard cells forming an open pore vs flaccid shrunken guard cells closing the pore."
+        }
+    },
+    {
+        "id": "bio_ch4_mcq_039",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Pigment Absorption Spectrum",
+        "question": "Select the mismatched pair:",
+        "options": [
+            "(a) CO₂ – Raw material of photosynthesis",
+            "(b) Chlorophyll – Absorbs green light",
+            "(c) Stomata – Present on leaf surface",
+            "(d) O₂ – By-product of photosynthesis"
+        ],
+        "answer": "(b) Chlorophyll – Absorbs green light",
+        "explanation": "Chlorophyll absorbs blue and red wavelengths; it reflects and transmits green light (which is why leaves appear green)."
+    },
+    {
+        "id": "bio_ch4_mcq_040",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Vascular Organ Routing",
+        "question": "Water and minerals in soil are absorbed by A and transported to B by vessels...",
+        "options": [
+            "(a) A = roots, B = leaves",
+            "(b) A = leaves, B = roots",
+            "(c) A = leaves, B = stem",
+            "(d) A = stem, B = leaves"
+        ],
+        "answer": "(a) A = roots, B = leaves",
+        "explanation": "Water is absorbed by roots (A) and transported upward to the photosynthetic leaves (B) via xylem conduits."
+    },
+    {
+        "id": "bio_ch4_mcq_041",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Respirometer Manometry",
+        "question": "In a respirometer setup with germinating seeds and soda lime (which absorbs CO₂), the fluid drop in the capillary tube will:",
+        "options": [
+            "(a) move away from the test tube",
+            "(b) move towards the test tube because of carbon dioxide intake",
+            "(c) move towards the test tube because of oxygen intake by seeds",
+            "(d) not move"
+        ],
+        "answer": "(c) move towards the test tube because of oxygen intake by seeds",
+        "explanation": "Germinating seeds consume O₂. The CO₂ released is absorbed by soda lime. This causes a net reduction in gas volume and pressure inside the sealed tube, pulling the indicator fluid drop inward towards the seeds.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Seed Respirometer Apparatus Diagram",
+            "description": "Sealed tube containing germinating seeds, soda lime basket, and horizontal capillary manometer with colored droplet."
+        }
+    },
+    {
+        "id": "bio_ch4_mcq_042",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Plant Aeration Pathways",
+        "question": "Select the correct statement regarding plant respiration:",
+        "options": [
+            "(a) Root cells need oxygen to generate energy.",
+            "(b) Stomata help in gaseous exchange.",
+            "(c) Roots obtain O₂ from air trapped in soil.",
+            "(d) All of these"
+        ],
+        "answer": "(d) All of these",
+        "explanation": "All living plant cells require O₂; gas exchange occurs through stomata in leaves and epidermal root hairs in soil."
+    },
+    {
+        "id": "bio_ch4_mcq_043",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Dark Gaseous Flux",
+        "question": "When a plant is kept in total darkness, its rate of CO₂ release increases because:",
+        "options": [
+            "(a) photosynthesis stops but respiration continues",
+            "(b) photosynthesis increases and uses more CO₂",
+            "(c) plant switches to anaerobic respiration",
+            "(d) leaf stores more oxygen at night"
+        ],
+        "answer": "(a) photosynthesis stops but respiration continues",
+        "explanation": "In darkness, photosynthetic CO₂ fixation stops completely, so all CO₂ generated by continuous aerobic respiration is released externally."
+    },
+    {
+        "id": "bio_ch4_mcq_044",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Seed Viability and Respiration",
+        "question": "Boiled seeds do not turn limewater milky, whereas germinating seeds do. This concludes:",
+        "options": [
+            "(a) Boiled seeds respire faster",
+            "(b) Germinating seeds produce CO₂ during respiration",
+            "(c) Boiling activates respiration",
+            "(d) Germination needs CO₂ and produces O₂"
+        ],
+        "answer": "(b) Germinating seeds produce CO₂ during respiration",
+        "explanation": "Boiling denatures enzymes and kills the embryo cells, terminating respiration. Living germinating seeds respire actively, releasing CO₂ that precipitates limewater as calcium carbonate."
+    },
+    {
+        "id": "bio_ch4_mcq_045",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Plant Ontogeny Sequence",
+        "question": "What is the correct sequential order of plant growth stages?\nI. Formation of leaves and branches\nII. Formation of flowers\nIII. Formation of fruits and seeds\nIV. Germination of seeds",
+        "options": [
+            "(a) I → II → III → IV",
+            "(b) IV → I → II → III",
+            "(c) IV → II → I → III",
+            "(d) II → III → IV → I"
+        ],
+        "answer": "(b) IV → I → II → III",
+        "explanation": "Ontogeny begins with seed germination (IV), advances to vegetative leaf/branch development (I), transitions to flowering (II), and culminates in fruit/seed formation (III)."
+    },
+    {
+        "id": "bio_ch4_mcq_046",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Gas Exchange Structures",
+        "question": "Which structures help in gaseous exchange in plants?\nI. Stomata, II. Lenticels, III. Fruit wall, IV. Cuticle",
+        "options": ["(a) I, II and IV", "(b) Only I and II", "(c) II and III", "(d) All of these"],
+        "answer": "(b) Only I and II",
+        "explanation": "Stomata in leaves and lenticels in woody stems are the primary porous aerating structures in plants (cuticle is waxy and impedes gas diffusion)."
+    },
+    {
+        "id": "bio_ch4_mcq_047",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Phloem Transport Mechanism",
+        "question": "Transportation of food through phloem is (i) ________ and takes place through cells of (ii) ________:",
+        "options": [
+            "(a) (i) Transpiration, (ii) Xylem",
+            "(b) (i) Translocation, (ii) Stomata",
+            "(c) (i) Translocation, (ii) Phloem",
+            "(d) (i) Osmosis, (ii) Root hairs"
+        ],
+        "answer": "(c) (i) Translocation, (ii) Phloem",
+        "explanation": "The movement of organic solutes via phloem sieve tubes is known as translocation."
+    },
+    {
+        "id": "bio_ch4_mcq_048",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Plant Growth Fundamentals",
+        "question": "Which of the following statements is not correct?",
+        "options": [
+            "(a) Nutrients along with water are essential for growth.",
+            "(b) As a plant grows, height increases and stem thickens.",
+            "(c) Plants require both sunlight and water.",
+            "(d) None of these"
+        ],
+        "answer": "(d) None of these",
+        "explanation": "All listed statements (a, b, and c) are factually correct; therefore, option (d) is the right selection."
+    },
+    {
+        "id": "bio_ch4_mcq_049",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Limewater Assay Role",
+        "question": "What is the role of calcium hydroxide Ca(OH)₂ (limewater) in respiration experiments?",
+        "options": [
+            "(a) It absorbs oxygen.",
+            "(b) It supplies nutrients to seeds.",
+            "(c) It is used to detect carbon dioxide.",
+            "(d) It removes moisture from air."
+        ],
+        "answer": "(c) It is used to detect carbon dioxide.",
+        "explanation": "Clear limewater reacts with carbon dioxide to precipitate insoluble calcium carbonate (CaCO₃), turning the solution characteristically milky."
+    },
+    {
+        "id": "bio_ch4_mcq_050",
+        "source": "textbook_mcq_l2",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Compensation Point Dynamics",
+        "question": "In a closed sealed illuminated jar containing both a plant and an animal, oxygen levels remain constant because:",
+        "options": [
+            "(a) Oxygen is neither consumed nor released.",
+            "(b) Oxygen produced in photosynthesis equals that used in respiration.",
+            "(c) Animal stops respiring in light.",
+            "(d) Plant consumes more oxygen than animal."
+        ],
+        "answer": "(b) Oxygen produced in photosynthesis equals that used in respiration.",
+        "explanation": "When photosynthetic O₂ production rate equals total community respiratory O₂ consumption rate, dynamic gaseous equilibrium is achieved."
+    },
+
+    # =========================================================================
+    # PART 6: LEVEL 3 MCQS (HOTS & COMPETENCY) (10 Items)
+    # =========================================================================
+    {
+        "id": "bio_ch4_mcq_051",
+        "source": "textbook_mcq_l3",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Bicarbonate Carbon Supplementation",
+        "question": "An illuminated Hydrilla setup is placed in water containing sodium bicarbonate (NaHCO₃). What will be observed regarding gas production?",
+        "options": [
+            "(a) Gas production halts completely.",
+            "(b) The gas produced is mainly carbon dioxide.",
+            "(c) The gas bubbles consist solely of hydrogen gas.",
+            "(d) The bubbles produced in the water within the test tube are mainly of oxygen gas and are produced at an accelerated rate."
+        ],
+        "answer": "(d) The bubbles produced in the water within the test tube are mainly of oxygen gas and are produced at an accelerated rate.",
+        "explanation": "Sodium bicarbonate (NaHCO₃) dissolves and hydrolyses to enrich the water with dissolved CO₂, relieving carbon limitation and accelerating photosynthetic oxygen evolution."
+    },
+    {
+        "id": "bio_ch4_mcq_052",
+        "source": "textbook_mcq_l3",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Diurnal Photosynthetic Curve",
+        "question": "A graph plotting the rate of photosynthesis versus ambient temperature from 7 AM to 1 PM on a sunny day shows:",
+        "options": [
+            "(a) A bell-shaped curve that rises to an optimum peak around 35°C–40°C before declining as temperatures exceed 40°C",
+            "(b) A continuously decreasing straight line",
+            "(c) An exponential curve that rises continuously without any upper limit",
+            "(d) A fluctuating zigzag with no defined pattern"
+        ],
+        "answer": "(a) A bell-shaped curve that rises to an optimum peak around 35°C–40°C before declining as temperatures exceed 40°C",
+        "explanation": "As the morning warms, enzyme kinetics accelerate until the thermal optimum (~35°C); past midday, excess heat denatures Rubisco and closes stomata, reducing the rate.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Diurnal Photosynthetic Rate vs Temperature Curve",
+            "description": "Bell-shaped kinetic response curve showing peak photosynthetic assimilation rate between 30°C and 40°C."
+        }
+    },
+    {
+        "id": "bio_ch4_mcq_053",
+        "source": "textbook_mcq_l3",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Bifacial Leaf Anatomy",
+        "question": "Which statement supports the fact that the upper leaf surface of a dorsiventral leaf is darker green than the lower surface?",
+        "options": [
+            "(a) The upper palisade mesophyll contains more chloroplasts and is tightly packed to intercept incident sunlight.",
+            "(b) The lower surface contains no chlorophyll whatsoever.",
+            "(c) The cuticle on the lower surface absorbs green light.",
+            "(d) Stomata present on the upper surface produce green pigment."
+        ],
+        "answer": "(a) The upper palisade mesophyll contains more chloroplasts and is tightly packed to intercept incident sunlight.",
+        "explanation": "The upper palisade parenchyma consists of columnar cells packed with chloroplasts oriented perpendicular to light, whereas the lower spongy mesophyll has loose cells with fewer chloroplasts."
+    },
+    {
+        "id": "bio_ch4_mcq_054",
+        "source": "textbook_mcq_l3",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Light Transmission Filter Screen",
+        "question": "A destarched leaf covered with Black paper strip (A), White paper strip (B), and Transparent cellophane strip (C) is tested for starch after solar exposure. What is the result?",
+        "options": [
+            "(a) All portions turn blue-black.",
+            "(b) Portion C turns yellow-brown while A and B turn blue-black.",
+            "(c) Only A and B portions remain yellow-brown/colourless while portion C and the rest of the leaf turn blue-black.",
+            "(d) The entire leaf remains yellow-brown."
+        ],
+        "answer": "(c) Only A and B portions remain yellow-brown/colourless while portion C and the rest of the leaf turn blue-black.",
+        "explanation": "Black paper (A) absorbs light; white paper (B) reflects light. Neither allows photon penetration, so no starch forms (yellow-brown). Transparent cellophane (C) and uncovered areas transmit sunlight, driving photosynthesis and starch formation (blue-black)."
+    },
+    {
+        "id": "bio_ch4_mcq_055",
+        "source": "textbook_mcq_l3",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Thermogenic Respiration",
+        "question": "Farheen kept germinating seeds in vacuum flask X and boiled dead seeds in vacuum flask Y with thermometers inserted. What will happen to the temperature?",
+        "options": [
+            "(a) Temperature of flask Y increases because dead seeds decompose.",
+            "(b) Temperature of flask X increases because it has living respiring seeds.",
+            "(c) Temperature in both flasks drops to 0°C.",
+            "(d) Temperature in both flasks remains identical."
+        ],
+        "answer": "(b) Temperature of flask X increases because it has living respiring seeds.",
+        "explanation": "Aerobic respiration in germinating seeds is an exothermic metabolic process; a fraction of chemical energy is released as heat, raising the temperature in flask X."
+    },
+    {
+        "id": "bio_ch4_mcq_056",
+        "source": "textbook_mcq_l3",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Dark Respiration Sealed Jar",
+        "question": "A potted plant is kept in a sealed glass bell jar along with a beaker of limewater in total darkness. What occurs?",
+        "options": [
+            "(a) Limewater remains clear because plants only respire in light.",
+            "(b) Limewater turns milky due to CO₂ released by plant respiration.",
+            "(c) In light, the plant would have used CO₂ for photosynthesis, preventing or reducing milkiness.",
+            "(d) Both (b) and (c)"
+        ],
+        "answer": "(d) Both (b) and (c)",
+        "explanation": "In darkness, the plant only respires, emitting CO₂ that precipitates limewater. In light, photosynthetic CO₂ fixation would consume this gas."
+    },
+    {
+        "id": "bio_ch4_mcq_057",
+        "source": "textbook_mcq_l3",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Vascular Solute Transport Directionality",
+        "question": "Regarding substances P (O₂), Q (CO₂), R (Water and minerals), and S (Carbohydrates/sugars), which statement is incorrect?",
+        "options": [
+            "(a) P is evolved during light reactions.",
+            "(b) Q is absorbed through stomata.",
+            "(c) R is conducted upward through xylem vessels.",
+            "(d) Both R and S show unidirectional movement only."
+        ],
+        "answer": "(d) Both R and S show unidirectional movement only.",
+        "explanation": "Statement (d) is false: while water (R) moves unidirectionally upward in xylem, carbohydrates (S) exhibit bidirectional transport in phloem."
+    },
+    {
+        "id": "bio_ch4_mcq_058",
+        "source": "textbook_mcq_l3",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Fair Test Scientific Design",
+        "question": "To rigorously test whether plants absorb water primarily through roots, which two setups provide the correct fair test comparison?",
+        "options": [
+            "(a) Two identical plants in graduated cylinders with water and oil layer: Plant P with roots intact, Plant Q with roots excised.",
+            "(b) Plant P in soil and Plant Q in dry sand.",
+            "(c) Plant P kept in sunlight and Plant Q kept in dark with roots intact.",
+            "(d) Plant P with leaves intact and Plant Q with leaves defoliated."
+        ],
+        "answer": "(a) Two identical plants in graduated cylinders with water and oil layer: Plant P with roots intact, Plant Q with roots excised.",
+        "explanation": "An effective scientific control isolates a single independent variable: root presence versus root absence under identical atmospheric conditions."
+    },
+    {
+        "id": "bio_ch4_mcq_059",
+        "source": "textbook_mcq_l3",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Transpiration Pull Dynamics",
+        "question": "A telemetry sensor graph measuring the diurnal rate of water sap movement through the trunk and leafy canopy branches reveals that:",
+        "options": [
+            "(a) The increase in water movement begins in the lower roots first.",
+            "(b) The greatest increase in the rate of water movement first occurs in the upper canopy branches.",
+            "(c) Water movement in trunk and branches occurs at identical rates simultaneously.",
+            "(d) Water movement stops completely at 12 noon."
+        ],
+        "answer": "(b) The greatest increase in the rate of water movement first occurs in the upper canopy branches.",
+        "explanation": "Transpiration pull originates in the leaves when stomata open in response to morning sunlight; the resulting negative tension is transmitted downward through branches to the trunk.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Sap Flow Velocity in Branches vs Trunk Graph",
+            "description": "Diurnal line graph showing velocity of sap ascent peaking earlier in upper branches than in the lower trunk."
+        }
+    },
+    {
+        "id": "bio_ch4_mcq_060",
+        "source": "textbook_mcq_l3",
+        "type": "mcq",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Allometric Scaling and Diffusion",
+        "question": "Why can plants rely on simple diffusion alone for internal gas exchange, whereas animals require active muscular ventilation and cardiovascular circulation?",
+        "options": [
+            "(a) Plants possess internal muscular pumps.",
+            "(b) The extensive branching habit, flattened foliage, and intercellular air spaces of plants provide an exceptionally high surface area-to-volume ratio, placing virtually every living cell close to the plant surface.",
+            "(c) Plants consume ten times more oxygen than mammals.",
+            "(d) Stomata pump air into internal chambers under positive pressure."
+        ],
+        "answer": "(b) The extensive branching habit, flattened foliage, and intercellular air spaces of plants provide an exceptionally high surface area-to-volume ratio, placing virtually every living cell close to the plant surface.",
+        "explanation": "Plants have lower metabolic rates and a branched morphology where living cells reside in thin peripheral mantles with short diffusion pathways."
+    },
+
+    # =========================================================================
+    # PART 7: FILL IN THE BLANKS (15 Items)
+    # =========================================================================
+    {
+        "id": "bio_ch4_fib_001",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Nutrition Terminology",
+        "question": "The process of taking in food and utilising it for various life processes is called ________.",
+        "answer": "nutrition",
+        "explanation": "Nutrition encompasses the ingestion, digestion, absorption, and assimilation of food substances."
+    },
+    {
+        "id": "bio_ch4_fib_002",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Autotrophs Definition",
+        "question": "________ are organisms that can synthesise their own food with the help of simple inorganic substances.",
+        "answer": "Autotrophs",
+        "explanation": "Autotrophs produce organic compounds from simple inorganic substrates using light or chemical energy."
+    },
+    {
+        "id": "bio_ch4_fib_003",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Heterotrophs Definition",
+        "question": "The organisms which obtain their food from other organisms are called ________.",
+        "answer": "heterotrophs",
+        "explanation": "Heterotrophs cannot fix carbon and depend upon producers directly or indirectly."
+    },
+    {
+        "id": "bio_ch4_fib_004",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Photosynthesis Requirements",
+        "question": "________, sunlight, carbon dioxide, and water are essential components required for photosynthesis.",
+        "answer": "Chlorophyll",
+        "explanation": "Chlorophyll is the light-absorbing pigment without which photosynthesis cannot proceed."
+    },
+    {
+        "id": "bio_ch4_fib_005",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Primary Photosynthate",
+        "question": "________ is the immediate product of photosynthesis.",
+        "answer": "Glucose",
+        "explanation": "Glucose (C₆H₁₂O₆) is the immediate monosaccharide produced during the light-independent reactions."
+    },
+    {
+        "id": "bio_ch4_fib_006",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Universal Energy Source",
+        "question": "The ultimate source of energy on the Earth is the ________.",
+        "answer": "Sun",
+        "explanation": "Solar thermonuclear energy fuels photosynthesis, powering terrestrial and aquatic ecosystems."
+    },
+    {
+        "id": "bio_ch4_fib_007",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Energy Conversion in Plants",
+        "question": "During photosynthesis, green plants convert solar energy into ________ energy.",
+        "answer": "chemical",
+        "explanation": "Radiant photon energy is transduced into covalent bond energy of carbohydrates."
+    },
+    {
+        "id": "bio_ch4_fib_008",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Starch Diagnostic",
+        "question": "The occurrence of photosynthesis can be tested by the presence of ________ in the leaf.",
+        "answer": "starch",
+        "explanation": "Glucose produced during photosynthesis is polymerized into starch for storage in leaf chloroplasts."
+    },
+    {
+        "id": "bio_ch4_fib_009",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Xylem Architecture",
+        "question": "Water and minerals are transported from the roots to the leaves by xylem ________ that run like pipes throughout the plant.",
+        "answer": "vessels",
+        "explanation": "Xylem vessels form continuous non-living capillary conduits throughout the plant."
+    },
+    {
+        "id": "bio_ch4_fib_010",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Respiration Definition",
+        "question": "The chemical breakdown of food to release energy is called ________.",
+        "answer": "respiration",
+        "explanation": "Cellular respiration oxidizes hexose sugars to produce ATP energy."
+    },
+    {
+        "id": "bio_ch4_fib_011",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Leaf Stomata",
+        "question": "Exchange of gases in plants occurs through openings present on the surface of leaves which are called ________.",
+        "answer": "stomata",
+        "explanation": "Stomata are regulated microscopic pores on leaf surfaces."
+    },
+    {
+        "id": "bio_ch4_fib_012",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Phloem Function",
+        "question": "________ tissue is involved in transportation of food in plants.",
+        "answer": "Phloem",
+        "explanation": "Phloem conducts soluble organic food bidirectionally."
+    },
+    {
+        "id": "bio_ch4_fib_013",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Pioneering Indian Botanist",
+        "question": "In India, ________ studied the process of photosynthesis and the effects of water and temperature.",
+        "answer": "Rustom Hormusji Dastur",
+        "explanation": "Professor R. H. Dastur carried out pioneering research on photosynthesis kinetics in Bombay."
+    },
+    {
+        "id": "bio_ch4_fib_014",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Xylem Conduction",
+        "question": "________ and ________ absorbed by root hairs are transported by xylem to the leaves.",
+        "answer": "Water; minerals",
+        "explanation": "Water and dissolved mineral ions form the xylem sap conducted upward."
+    },
+    {
+        "id": "bio_ch4_fib_015",
+        "source": "fill_in_the_blanks",
+        "type": "fib",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Nutrient Solutes",
+        "question": "________ present in water are important for the growth of plants.",
+        "answer": "Nutrients (or Minerals)",
+        "explanation": "Dissolved inorganic mineral nutrients (nitrogen, phosphorus, potassium, etc.) are essential for plant morphogenesis."
+    },
+
+    # =========================================================================
+    # PART 8: TRUE OR FALSE (12 Items)
+    # =========================================================================
+    {
+        "id": "bio_ch4_tf_001",
+        "source": "true_false",
+        "type": "tf",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Chemical Properties of KOH",
+        "question": "Potassium hydroxide (KOH) produces CO₂.",
+        "answer": "False",
+        "explanation": "Potassium hydroxide (KOH) absorbs CO₂ from the surrounding air (forming K₂CO₃ and H₂O); it does not produce CO₂."
+    },
+    {
+        "id": "bio_ch4_tf_002",
+        "source": "true_false",
+        "type": "tf",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Ethanol Extraction of Chlorophyll",
+        "question": "While testing a leaf for starch, it is boiled in alcohol to remove chlorophyll.",
+        "answer": "True",
+        "explanation": "Ethanol dissolves out green chlorophyll, bleaching the leaf white so that iodine color change is clearly visible."
+    },
+    {
+        "id": "bio_ch4_tf_003",
+        "source": "true_false",
+        "type": "tf",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Algal Autotrophy",
+        "question": "Algae are autotrophic organisms.",
+        "answer": "True",
+        "explanation": "Algae possess chlorophyll within plastids and carry out oxygenic photosynthesis."
+    },
+    {
+        "id": "bio_ch4_tf_004",
+        "source": "true_false",
+        "type": "tf",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Vascular Functional Assignment",
+        "question": "Leaves transport food to roots through xylem.",
+        "answer": "False",
+        "explanation": "Food is translocated to roots through phloem tissue; xylem transports water and minerals."
+    },
+    {
+        "id": "bio_ch4_tf_005",
+        "source": "true_false",
+        "type": "tf",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Photosynthesis Gas Exchange",
+        "question": "Photosynthesis increases the concentration of CO₂ in the atmosphere.",
+        "answer": "False",
+        "explanation": "Photosynthesis absorbs and removes CO₂ from the atmosphere, reducing its concentration."
+    },
+    {
+        "id": "bio_ch4_tf_006",
+        "source": "true_false",
+        "type": "tf",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Plant Respiration Continuity",
+        "question": "Plants carry out respiration only at night.",
+        "answer": "False",
+        "explanation": "Respiration is a continuous vital metabolic process that occurs 24 hours a day, both day and night."
+    },
+    {
+        "id": "bio_ch4_tf_007",
+        "source": "true_false",
+        "type": "tf",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Vascular Directionality",
+        "question": "Phloem moves only upward, xylem moves both ways.",
+        "answer": "False",
+        "explanation": "Xylem moves only upward (unidirectional), whereas phloem translocates nutrients both upward and downward (bidirectional)."
+    },
+    {
+        "id": "bio_ch4_tf_008",
+        "source": "true_false",
+        "type": "tf",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Water Conducting Tissue",
+        "question": "Transportation of water and minerals occurs mainly through phloem.",
+        "answer": "False",
+        "explanation": "Water and mineral conduction occurs through xylem vessels and tracheids."
+    },
+    {
+        "id": "bio_ch4_tf_009",
+        "source": "true_false",
+        "type": "tf",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Comparative Gaseous Diffusion Rates",
+        "question": "Rate of exchange of gases in plants is much slower than in animals.",
+        "answer": "True",
+        "explanation": "Plants have significantly lower basal metabolic rates and rely entirely on passive diffusion rather than active ventilation."
+    },
+    {
+        "id": "bio_ch4_tf_010",
+        "source": "true_false",
+        "type": "tf",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Phloem Conduits",
+        "question": "Thin tube-like structures present in plants for transport of food are called phloem.",
+        "answer": "True",
+        "explanation": "Phloem sieve tubes form long conduits specialized for food translocation."
+    },
+    {
+        "id": "bio_ch4_tf_011",
+        "source": "true_false",
+        "type": "tf",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Universal Growth Prerequisite",
+        "question": "All living beings grow and need food for their growth.",
+        "answer": "True",
+        "explanation": "Organic nutrition provides energy and carbon skeletons required for biomass accumulation and growth."
+    },
+    {
+        "id": "bio_ch4_tf_012",
+        "source": "true_false",
+        "type": "tf",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Germinating Seed Gas Evolution",
+        "question": "Germinating seeds release oxygen during respiration.",
+        "answer": "False",
+        "explanation": "Respiration consumes oxygen and releases carbon dioxide."
+    },
+
+    # =========================================================================
+    # PART 9: ASSERTION & REASON (10 Items)
+    # =========================================================================
+    {
+        "id": "bio_ch4_ar_001",
+        "source": "assertion_reason",
+        "type": "assertion_reason",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Leaf Food Factory Rationale",
+        "question": "Assertion (A): Leaves are referred to as food factories of plants.\nReason (R): CO₂ from air is taken in through stomata.\nChoose the correct option:\n(a) Both A and R are true and R is the correct explanation of A.\n(b) Both A and R are true but R is not the correct explanation of A.\n(c) A is true but R is false.\n(d) A is false but R is true.",
+        "options": [
+            "(a) Both A and R are true and R is the correct explanation of A.",
+            "(b) Both A and R are true but R is not the correct explanation of A.",
+            "(c) A is true but R is false.",
+            "(d) A is false but R is true."
+        ],
+        "answer": "(b) Both A and R are true but R is not the correct explanation of A.",
+        "explanation": "Both statements are true. However, R is not the complete explanation of A; leaves are food factories because they contain chloroplasts with chlorophyll that synthesize food using sunlight, water, and CO₂."
+    },
+    {
+        "id": "bio_ch4_ar_002",
+        "source": "assertion_reason",
+        "type": "assertion_reason",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Photosynthetic Sites",
+        "question": "Assertion (A): Survival of living organisms depends on food made by plants.\nReason (R): Photosynthesis can take place only in leaves and no other plant part.\nChoose the correct option:\n(a) Both A and R are true and R is the correct explanation of A.\n(b) Both A and R are true but R is not the correct explanation of A.\n(c) A is true but R is false.\n(d) A is false but R is true.",
+        "options": [
+            "(a) Both A and R are true and R is the correct explanation of A.",
+            "(b) Both A and R are true but R is not the correct explanation of A.",
+            "(c) A is true but R is false.",
+            "(d) A is false but R is true."
+        ],
+        "answer": "(c) A is true but R is false.",
+        "explanation": "Assertion is true. Reason is false because photosynthesis can also occur in other green plant parts, such as green stems, sepals, and phylloclades (e.g., cactus stems)."
+    },
+    {
+        "id": "bio_ch4_ar_003",
+        "source": "assertion_reason",
+        "type": "assertion_reason",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Multifactorial Photosynthesis",
+        "question": "Assertion (A): Rate of photosynthesis is affected by light, temperature, water, and CO₂.\nReason (R): Rate increases with higher light intensity and decreases with low light.\nChoose the correct option:\n(a) Both A and R are true and R is the correct explanation of A.\n(b) Both A and R are true but R is not the correct explanation of A.\n(c) A is true but R is false.\n(d) A is false but R is true.",
+        "options": [
+            "(a) Both A and R are true and R is the correct explanation of A.",
+            "(b) Both A and R are true but R is not the correct explanation of A.",
+            "(c) A is true but R is false.",
+            "(d) A is false but R is true."
+        ],
+        "answer": "(b) Both A and R are true but R is not the correct explanation of A.",
+        "explanation": "Both statements are correct facts, but R describes only one factor (light) and does not explain the broader multifactorial dependence stated in A."
+    },
+    {
+        "id": "bio_ch4_ar_004",
+        "source": "assertion_reason",
+        "type": "assertion_reason",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Masked Pigment Foliage",
+        "question": "Assertion (A): Coloured leaves other than green also possess chlorophyll, but do not appear green.\nReason (R): Large amounts of red, brown, and other non-green pigments mask the green colour of chlorophyll.\nChoose the correct option:\n(a) Both A and R are true and R is the correct explanation of A.\n(b) Both A and R are true but R is not the correct explanation of A.\n(c) A is true but R is false.\n(d) A is false but R is true.",
+        "options": [
+            "(a) Both A and R are true and R is the correct explanation of A.",
+            "(b) Both A and R are true but R is not the correct explanation of A.",
+            "(c) A is true but R is false.",
+            "(d) A is false but R is true."
+        ],
+        "answer": "(a) Both A and R are true and R is the correct explanation of A.",
+        "explanation": "In plants like *Coleus*, dense anthocyanins and carotenoids mask underlying chlorophyll, so the leaves appear non-green yet perform photosynthesis."
+    },
+    {
+        "id": "bio_ch4_ar_005",
+        "source": "assertion_reason",
+        "type": "assertion_reason",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Trophic Classification",
+        "question": "Assertion (A): Green plants are producers and heterotrophs are consumers.\nReason (R): Green plants prepare their own food; heterotrophs depend on them directly or indirectly.\nChoose the correct option:\n(a) Both A and R are true and R is the correct explanation of A.\n(b) Both A and R are true but R is not the correct explanation of A.\n(c) A is true but R is false.\n(d) A is false but R is true.",
+        "options": [
+            "(a) Both A and R are true and R is the correct explanation of A.",
+            "(b) Both A and R are true but R is not the correct explanation of A.",
+            "(c) A is true but R is false.",
+            "(d) A is false but R is true."
+        ],
+        "answer": "(a) Both A and R are true and R is the correct explanation of A.",
+        "explanation": "Producers manufacture biomass via autotrophy, while consumers ingest autotrophic biomass."
+    },
+    {
+        "id": "bio_ch4_ar_006",
+        "source": "assertion_reason",
+        "type": "assertion_reason",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Stomatal Functionality",
+        "question": "Assertion (A): Stomata are minute pores on the lower leaf surface and young stems.\nReason (R): Stomata carry out absorption of water from the soil.\nChoose the correct option:\n(a) Both A and R are true and R is the correct explanation of A.\n(b) Both A and R are true but R is not the correct explanation of A.\n(c) A is true but R is false.\n(d) A is false but R is true.",
+        "options": [
+            "(a) Both A and R are true and R is the correct explanation of A.",
+            "(b) Both A and R are true but R is not the correct explanation of A.",
+            "(c) A is true but R is false.",
+            "(d) A is false but R is true."
+        ],
+        "answer": "(c) A is true but R is false.",
+        "explanation": "Assertion is true. Reason is false: roots absorb water from soil; stomata regulate gaseous exchange and transpiration."
+    },
+    {
+        "id": "bio_ch4_ar_007",
+        "source": "assertion_reason",
+        "type": "assertion_reason",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Autotroph Syllogism",
+        "question": "Assertion (A): Green plants are autotrophs.\nReason (R): Green plants can synthesise their own food from simple inorganic substances.\nChoose the correct option:\n(a) Both A and R are true and R is the correct explanation of A.\n(b) Both A and R are true but R is not the correct explanation of A.\n(c) A is true but R is false.\n(d) A is false but R is true.",
+        "options": [
+            "(a) Both A and R are true and R is the correct explanation of A.",
+            "(b) Both A and R are true but R is not the correct explanation of A.",
+            "(c) A is true but R is false.",
+            "(d) A is false but R is true."
+        ],
+        "answer": "(a) Both A and R are true and R is the correct explanation of A.",
+        "explanation": "The defining characteristic of autotrophs is the ability to synthesize organic food internally."
+    },
+    {
+        "id": "bio_ch4_ar_008",
+        "source": "assertion_reason",
+        "type": "assertion_reason",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Chlorophyll Role vs Color",
+        "question": "Assertion (A): Chlorophyll is important for plants.\nReason (R): Chlorophyll is green in colour.\nChoose the correct option:\n(a) Both A and R are true and R is the correct explanation of A.\n(b) Both A and R are true but R is not the correct explanation of A.\n(c) A is true but R is false.\n(d) A is false but R is true.",
+        "options": [
+            "(a) Both A and R are true and R is the correct explanation of A.",
+            "(b) Both A and R are true but R is not the correct explanation of A.",
+            "(c) A is true but R is false.",
+            "(d) A is false but R is true."
+        ],
+        "answer": "(b) Both A and R are true but R is not the correct explanation of A.",
+        "explanation": "Both statements are true, but chlorophyll's importance lies in its ability to trap solar photons, not simply because it appears green."
+    },
+    {
+        "id": "bio_ch4_ar_009",
+        "source": "assertion_reason",
+        "type": "assertion_reason",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Woody Stem Respiration",
+        "question": "Assertion (A): All living cells of roots, stems, and leaves respire day and night.\nReason (R): In higher plants, respiration in leaves and older stems takes place through stomata.\nChoose the correct option:\n(a) Both A and R are true and R is the correct explanation of A.\n(b) Both A and R are true but R is not the correct explanation of A.\n(c) A is true but R is false.\n(d) A is false but R is true.",
+        "options": [
+            "(a) Both A and R are true and R is the correct explanation of A.",
+            "(b) Both A and R are true but R is not the correct explanation of A.",
+            "(c) A is true but R is false.",
+            "(d) A is false but R is true."
+        ],
+        "answer": "(c) A is true but R is false.",
+        "explanation": "Assertion is true. Reason is false: older woody stems have cork bark and respire through lenticels, not stomata."
+    },
+    {
+        "id": "bio_ch4_ar_010",
+        "source": "assertion_reason",
+        "type": "assertion_reason",
+        "difficulty": "hard",
+        "marks": 1,
+        "topic": "Light Intensity Dynamics",
+        "question": "Assertion (A): Only a small portion of light reaching Earth is used in photosynthesis.\nReason (R): Under low light intensity, rate of photosynthesis is high.\nChoose the correct option:\n(a) Both A and R are true and R is the correct explanation of A.\n(b) Both A and R are true but R is not the correct explanation of A.\n(c) A is true but R is false.\n(d) A is false but R is true.",
+        "options": [
+            "(a) Both A and R are true and R is the correct explanation of A.",
+            "(b) Both A and R are true but R is not the correct explanation of A.",
+            "(c) A is true but R is false.",
+            "(d) A is false but R is true."
+        ],
+        "answer": "(c) A is true but R is false.",
+        "explanation": "Assertion is true (plants use only ~1–2% of incident photosynthetically active radiation). Reason is false because under low light intensity, the rate of photosynthesis is correspondingly low."
+    },
+
+    # =========================================================================
+    # PART 10: VERY SHORT ANSWER (20 Items)
+    # =========================================================================
+    {
+        "id": "bio_ch4_vsa_001",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Chemical Equation of Photosynthesis",
+        "question": "Write down the balanced chemical equation for photosynthesis.",
+        "answer": "6CO₂ + 12H₂O → C₆H₁₂O₆ + 6O₂ + 6H₂O (in the presence of Sunlight and Chlorophyll)",
+        "explanation": "The balanced equation details reactant stoichiometry and product formation."
+    },
+    {
+        "id": "bio_ch4_vsa_002",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Role of Chlorophyll",
+        "question": "What is the role of chlorophyll in photosynthesis?",
+        "answer": "Chlorophyll traps radiant solar energy and converts it into chemical energy to drive the synthesis of carbohydrates.",
+        "explanation": "Chlorophyll is the photoreceptive pigment in thylakoids."
+    },
+    {
+        "id": "bio_ch4_vsa_003",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Function of Xylem",
+        "question": "What is the main function of xylem?",
+        "answer": "Xylem transports water and dissolved mineral nutrients absorbed by roots upward to stems and leaves.",
+        "explanation": "Conducts xylem sap unidirectionally upward."
+    },
+    {
+        "id": "bio_ch4_vsa_004",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Raw Materials of Photosynthesis",
+        "question": "What are the raw materials required for photosynthesis?",
+        "answer": "Carbon dioxide (CO₂) and water (H₂O).",
+        "explanation": "These inorganic compounds supply carbon, hydrogen, and oxygen for glucose synthesis."
+    },
+    {
+        "id": "bio_ch4_vsa_005",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Definition of Nutrients",
+        "question": "Define nutrients.",
+        "answer": "Nutrients are chemical substances that an organism obtains from its environment to provide energy, build biomass, and sustain vital physiological functions.",
+        "explanation": "Nutrients encompass carbohydrates, proteins, fats, vitamins, and minerals."
+    },
+    {
+        "id": "bio_ch4_vsa_006",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Definition of Nutrition",
+        "question": "Define nutrition.",
+        "answer": "Nutrition is the biological process of taking in food and utilizing its constituent nutrients for energy, growth, repair, and metabolism.",
+        "explanation": "Includes intake and cellular utilization of food."
+    },
+    {
+        "id": "bio_ch4_vsa_007",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Elemental Composition of Carbohydrates",
+        "question": "What are the main elements present in carbohydrates?",
+        "answer": "Carbon (C), Hydrogen (H), and Oxygen (O).",
+        "explanation": "Carbohydrates conform to the general formula C_x(H₂O)_y."
+    },
+    {
+        "id": "bio_ch4_vsa_008",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Nutritional Examples",
+        "question": "Give one example each of an autotroph and a heterotroph.",
+        "answer": "Autotroph: Mango tree (or any green plant / algae); Heterotroph: Human (or cow / fungus).",
+        "explanation": "Plants make food autotrophically; animals and fungi are heterotrophs."
+    },
+    {
+        "id": "bio_ch4_vsa_009",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Photosynthesis Products",
+        "question": "What are the products of photosynthesis?",
+        "answer": "Glucose (carbohydrate), Oxygen (O₂), and Water (H₂O).",
+        "explanation": "Glucose is stored or metabolized; oxygen is evolved into the air."
+    },
+    {
+        "id": "bio_ch4_vsa_010",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Definition of Stomata",
+        "question": "Define stomata.",
+        "answer": "Stomata are microscopic pores present on the epidermis of leaves and young stems, bounded by guard cells, that facilitate gaseous exchange and transpiration.",
+        "explanation": "Regulated apertures for CO₂, O₂, and water vapour flux."
+    },
+    {
+        "id": "bio_ch4_vsa_011",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Thermodynamics of Photosynthesis",
+        "question": "What energy conversion takes place during photosynthesis?",
+        "answer": "Solar (light) energy is converted into chemical energy stored in the chemical bonds of carbohydrates.",
+        "explanation": "Electromagnetic radiant photons are converted into potential chemical bond energy."
+    },
+    {
+        "id": "bio_ch4_vsa_012",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Translocation Definition",
+        "question": "Name the process by which food is transported in plants.",
+        "answer": "Translocation.",
+        "explanation": "The movement of organic solutes via phloem sieve tubes."
+    },
+    {
+        "id": "bio_ch4_vsa_013",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Water Conducting Tissue Identification",
+        "question": "Which tissue is responsible for transportation of water and minerals?",
+        "answer": "Xylem tissue.",
+        "explanation": "Xylem vessels and tracheids conduct water."
+    },
+    {
+        "id": "bio_ch4_vsa_014",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Chlorophyll Definition",
+        "question": "What is chlorophyll?",
+        "answer": "Chlorophyll is a green, light-trapping pigment located in the thylakoid membranes of chloroplasts.",
+        "explanation": "Responsible for the green hue of foliage and primary photon absorption."
+    },
+    {
+        "id": "bio_ch4_vsa_015",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Laboratory Safety in Biology",
+        "question": "Why should caustic soda (NaOH / KOH) not be handled without supervision?",
+        "answer": "Caustic soda is highly alkaline and corrosive; it can cause severe chemical burns and permanent tissue damage on contact with skin or eyes.",
+        "explanation": "Requires protective gloves and eye protection."
+    },
+    {
+        "id": "bio_ch4_vsa_016",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Definition of Cellular Respiration",
+        "question": "Define respiration.",
+        "answer": "Respiration is the biochemical catabolic process in which organic food molecules (glucose) are oxidised inside living cells to release usable energy in the form of ATP, along with CO₂ and H₂O.",
+        "explanation": "Cellular oxidative phosphorylation providing ATP."
+    },
+    {
+        "id": "bio_ch4_vsa_017",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Role of NaOH in Half-Leaf Assay",
+        "question": "What is the role of sodium hydroxide (or KOH) in the photosynthesis experiment?",
+        "answer": "It chemically absorbs and removes carbon dioxide (CO₂) from the sealed experimental chamber.",
+        "explanation": "Creates a carbon dioxide-free test environment."
+    },
+    {
+        "id": "bio_ch4_vsa_018",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Photon Trapping Molecule",
+        "question": "Which molecule is used to trap solar energy during photosynthesis?",
+        "answer": "Chlorophyll.",
+        "explanation": "Chlorophyll *a* and accessory pigments form light-harvesting complexes."
+    },
+    {
+        "id": "bio_ch4_vsa_019",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Stomatal Regulators",
+        "question": "Which structures help in controlling opening and closing of stomata?",
+        "answer": "Guard cells.",
+        "explanation": "Pair of specialized turgor-sensitive epidermal cells enclosing the pore."
+    },
+    {
+        "id": "bio_ch4_vsa_020",
+        "source": "very_short_answer",
+        "type": "vsa",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Non-Green Plant Pigmentation",
+        "question": "Are all plants green in colour?",
+        "answer": "No. Non-green parasitic plants (e.g., *Cuscuta* / dodder) lack chlorophyll entirely, while plants with coloured foliage (*Coleus*, crotons) possess non-green pigments (carotenoids, anthocyanins) that mask their green chlorophyll.",
+        "explanation": "Foliage coloration depends on the relative concentration of chlorophyll versus anthocyanins/carotenoids."
+    },
+
+    # =========================================================================
+    # PART 11: SHORT ANSWER (15 Items)
+    # =========================================================================
+    {
+        "id": "bio_ch4_sa_001",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Autotrophy and Photosynthesis",
+        "question": "Define: (i) Autotrophic nutrition, (ii) Photosynthesis.",
+        "answer": "(i) Autotrophic nutrition: The mode of nutrition in which organisms manufacture their own organic food from simple inorganic raw materials (CO₂ and H₂O) using external solar or chemical energy.\n(ii) Photosynthesis: The anabolic biochemical process by which green plant parts convert carbon dioxide and water into glucose and oxygen in the presence of sunlight and chlorophyll.",
+        "explanation": "Autotrophic nutrition is the general mode; photosynthesis is the specific phototrophic process."
+    },
+    {
+        "id": "bio_ch4_sa_002",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Limiting Factors Summary",
+        "question": "Enlist the principal factors affecting the rate of photosynthesis.",
+        "answer": "The rate of photosynthesis is governed by:\n1. Light intensity and light quality (wavelength).\n2. Carbon dioxide (CO₂) concentration.\n3. Ambient temperature.\n4. Water availability in the soil.",
+        "explanation": "These four environmental factors operate synergistically according to the law of limiting factors."
+    },
+    {
+        "id": "bio_ch4_sa_003",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Animal Dependence on Plants",
+        "question": "How are animals directly or indirectly dependent on plants?",
+        "answer": "Animals depend on plants in two essential ways:\n1. Nutrition: Herbivores consume plants directly for organic nutrients; carnivores eat herbivores that fed on plants. All animal food chains trace back to photosynthetic producers.\n2. Respiration: All aerobic animals require oxygen (O₂) to breathe and survive, which is continuously replenished into the atmosphere exclusively by plant photosynthesis.",
+        "explanation": "Plants provide both the base organic food supply and the atmospheric oxygen reserve."
+    },
+    {
+        "id": "bio_ch4_sa_004",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Uptake of Photosynthetic Substrates",
+        "question": "How do plants obtain raw materials for photosynthesis?",
+        "answer": "1. Carbon dioxide (CO₂): Diffuses directly from the atmosphere into leaf mesophyll cells through stomatal pores.\n2. Water (H₂O): Absorbed from soil moisture by epidermal root hairs via osmosis, then transported upward through continuous xylem vessels to the leaves.",
+        "explanation": "CO₂ is absorbed aerially via stomata; water is acquired subterraneously via root hairs."
+    },
+    {
+        "id": "bio_ch4_sa_005",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Ascent of Sap Conduction",
+        "question": "How are water and minerals transported to the food factories (leaves) of a plant?",
+        "answer": "Water and dissolved mineral ions are transported upward from roots to leaves through xylem vessels. These non-living, interconnected tubular conduits form a continuous vascular pipeline driven by capillary action, root pressure, and predominantly transpirational pull generated by water evaporation from leaf stomata.",
+        "explanation": "Transpirational pull pulls a continuous water column through xylem conduits."
+    },
+    {
+        "id": "bio_ch4_sa_006",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 3,
+        "topic": "Biospheric Value of Photosynthesis",
+        "question": "In the absence of photosynthesis, life is not possible on Earth. Justify this statement.",
+        "answer": "Without photosynthesis:\n1. Total collapse of food webs: All primary organic food production would cease, leading to global starvation of all heterotrophic organisms (animals, fungi, humans).\n2. Depletion of atmospheric oxygen: No new oxygen would be generated, causing aerobic organisms to suffocate as existing O₂ is consumed by respiration and decomposition.\n3. Runaway greenhouse effect: Accumulating CO₂ would trigger lethal global overheating. Hence, life as we know it cannot exist without photosynthesis.",
+        "explanation": "Photosynthesis is the sole biological mechanism capturing solar energy and liberating atmospheric O₂."
+    },
+    {
+        "id": "bio_ch4_sa_007",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 3,
+        "topic": "Iodine Starch Assay Protocol",
+        "question": "Briefly describe the procedure to test the presence of starch in a leaf using iodine solution.",
+        "answer": "1. Boil the plucked leaf in water for 5–10 minutes to kill cells and soften cell walls.\n2. Transfer the leaf into a test tube containing ethanol and place it in a boiling water bath until chlorophyll dissolves and the leaf turns completely white/pale.\n3. Remove the bleached leaf, wash it in lukewarm water to soften it, and spread it in a petri dish.\n4. Add a few drops of dilute iodine solution. Appearance of a deep blue-black colour confirms the presence of starch.",
+        "explanation": "Standard protocol: thermal killing → alcohol decolorization → water softening → iodine complexation."
+    },
+    {
+        "id": "bio_ch4_sa_008",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "hard",
+        "marks": 2,
+        "topic": "Stomatal Occlusion by Oil",
+        "question": "What happens if both surfaces of a plant's leaves are coated with oil or petroleum jelly?",
+        "answer": "The oil film mechanically clogs and seals all stomatal apertures. As a result:\n1. Gaseous exchange halts: The leaf cannot absorb CO₂ for photosynthesis or O₂ for respiration.\n2. Transpiration stops: Transpirational pull and cooling cease. Consequently, the plant fails to produce food, suffocates, overheats, wilts, and eventually dies.",
+        "explanation": "Stomatal occlusion terminates both gaseous intake and the ascent of sap."
+    },
+    {
+        "id": "bio_ch4_sa_009",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 3,
+        "topic": "Comparative Respiratory Organs in Plants",
+        "question": "Describe the respiratory structures found in different parts of plants.",
+        "answer": "Plants carry out gaseous exchange through:\n1. Leaves: Microscopic epidermal pores called stomata.\n2. Woody stems: Porous lens-shaped raised openings in the outer bark called lenticels.\n3. Roots: Epiblema and root hairs absorbing soil pore oxygen.\n4. Swamp/mangrove plants: Specialized upright negative-geotropic aerial breathing roots called pneumatophores studded with lenticels.",
+        "explanation": "Each plant organ features specialized adaptations for localized gaseous diffusion."
+    },
+    {
+        "id": "bio_ch4_sa_010",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Physiological Functions of Roots",
+        "question": "Explain the major physiological roles of roots in plants.",
+        "answer": "Roots perform four primary functions:\n1. Anchorage: Firmly anchor the plant body into the substrate.\n2. Absorption: Absorb water and essential inorganic mineral ions from soil.\n3. Conduction: Direct absorbed sap upward into the stem xylem.\n4. Storage and Soil Conservation: Store reserve nutrients in modified forms (e.g., carrot, radish) and bind soil particles to prevent erosion.",
+        "explanation": "Roots provide structural stability, fluid absorption, and ecological soil binding."
+    },
+    {
+        "id": "bio_ch4_sa_011",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Water Bath Safety Protocol",
+        "question": "Why should alcohol (ethanol) never be heated directly over an open flame?",
+        "answer": "Alcohol is an extremely volatile, highly inflammable organic solvent with a very low flash point. Heating it directly over a Bunsen flame can cause its vapors to ignite instantly and cause an explosive laboratory fire. Therefore, it must always be heated safely inside a water bath.",
+        "explanation": "A water bath ensures indirect thermal transfer below the auto-ignition threshold of alcohol vapors."
+    },
+    {
+        "id": "bio_ch4_sa_012",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 3,
+        "topic": "Respiration vs Photosynthesis Divergence",
+        "question": "Give three fundamental differences between respiration and photosynthesis.",
+        "answer": "Differences:\n1. Metabolism: Photosynthesis is an anabolic (constructive) process that synthesises glucose; respiration is a catabolic (destructive) process that breaks down glucose.\n2. Cellular Site & Light: Photosynthesis occurs only in chlorophyll-bearing cells in the presence of light; respiration occurs continuously in all living cells day and night.\n3. Gas Exchange: Photosynthesis takes in CO₂ and releases O₂; respiration takes in O₂ and releases CO₂.",
+        "explanation": "Photosynthesis stores solar energy in biomass; cellular respiration liberates that energy as ATP."
+    },
+    {
+        "id": "bio_ch4_sa_013",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Fate of Glucose in Respiration",
+        "question": "What happens to glucose during cellular respiration?",
+        "answer": "During cellular respiration, glucose is oxidised in the presence of oxygen through enzymatic pathways. It is completely broken down into carbon dioxide (CO₂) and water (H₂O), releasing chemical energy stored in the form of ATP molecules to power cellular metabolism.",
+        "explanation": "Hexose glucose undergoes glycolysis and aerobic mitochondrial oxidation to yield ATP."
+    },
+    {
+        "id": "bio_ch4_sa_014",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Vital Necessity of Gaseous Exchange",
+        "question": "Gaseous exchange in plants is very important. Justify this statement.",
+        "answer": "Gaseous exchange is vital because:\n1. It supplies carbon dioxide (CO₂) required by chloroplasts during daytime for photosynthesis to produce food.\n2. It provides oxygen (O₂) continuously (day and night) to living mitochondria across leaves, stems, and roots to perform cellular respiration and generate metabolic ATP.",
+        "explanation": "Without gas exchange, neither autotrophic carbon fixation nor cellular energy production can occur."
+    },
+    {
+        "id": "bio_ch4_sa_015",
+        "source": "short_answer",
+        "type": "sa",
+        "difficulty": "medium",
+        "marks": 2,
+        "topic": "Light Spectrum and Intensity",
+        "question": "How does sunlight affect the rate of photosynthesis in terms of intensity and quality?",
+        "answer": "1. Intensity: Photosynthesis increases linearly with rising light intensity up to an optimum point, beyond which it plateaus or declines due to photo-oxidation.\n2. Quality (Wavelength): Chlorophyll absorbs photons maximally in the blue (430–450 nm) and red (640–660 nm) spectral regions, yielding the highest photosynthetic rates, whereas green light is reflected and yields little or no photosynthesis.",
+        "explanation": "Chlorophyll pigments display distinct blue and red absorption peaks."
+    },
+
+    # =========================================================================
+    # PART 12: LONG ANSWER (5 Items)
+    # =========================================================================
+    {
+        "id": "bio_ch4_la_001",
+        "source": "long_answer",
+        "type": "la",
+        "difficulty": "medium",
+        "marks": 5,
+        "topic": "Photosynthesis Comprehensive Mechanism",
+        "question": "What is photosynthesis? Explain the complete process step-by-step with balanced chemical formulation and mention the functions of its raw materials.",
+        "answer": "Photosynthesis is the physicochemical process by which green leaves and photosynthetic cells synthesize organic carbohydrates (glucose) from carbon dioxide and water using radiant solar energy trapped by chlorophyll, evolving oxygen as a by-product.\n\nBalanced Equation:\n6CO₂ + 12H₂O → C₆H₁₂O₆ + 6O₂ + 6H₂O (in the presence of Sunlight and Chlorophyll)\n\nKey Step-by-Step Events:\n1. Absorption: Chlorophyll pigments embedded in chloroplast thylakoid membranes absorb solar photons (principally blue and red wavelengths).\n2. Light Energy Transduction & Photolysis: Solar energy is converted into chemical energy (ATP and NADPH); water absorbed by roots is split (photolysis), liberating molecular oxygen (O₂) into the atmosphere.\n3. Carbon Dioxide Fixation: Carbon dioxide diffusing through stomata is enzymatically reduced in the stroma into simple hexose sugar (glucose).\n4. Polymerization: Synthesised glucose is converted into sucrose for phloem translocation, and surplus glucose is polymerized into insoluble starch for long-term storage.",
+        "explanation": "Comprehensive overview of photosynthetic light absorption, photolysis, reduction, and starch storage.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Photosynthesis Complete Mechanism Diagram",
+            "description": "Labelled diagram of leaf internal anatomy illustrating chloroplasts, sunlight interception, stomatal CO₂ uptake, xylem water delivery, and sugar/O₂ products."
+        }
+    },
+    {
+        "id": "bio_ch4_la_002",
+        "source": "long_answer",
+        "type": "la",
+        "difficulty": "hard",
+        "marks": 5,
+        "topic": "Light Screen Experiment & Leaf Functions",
+        "question": "(a) A potted destarched green plant has a leaf partly covered with a strip of black paper and is exposed to bright sunlight for 6 hours:\n(i) What difference in colour will be observed between the covered and uncovered parts when tested with iodine?\n(ii) Explain the biochemical basis for this difference.\n(iii) If the black paper is removed and the plant is kept in sunlight for 3 days, what will happen upon repeating the iodine test?\n(b) State the roles of (i) Stomata, (ii) Chlorophyll.",
+        "answer": "(a) Experimental Analysis:\n(i) Colour difference: The uncovered part exposed to sunlight turns deep blue-black; the covered part shielded by black paper stains pale yellow-brown.\n(ii) Biochemical basis: The uncovered region received solar photons, allowing chlorophyll to carry out photosynthesis and synthesise starch. The covered part was deprived of light, so no starch was synthesized.\n(iii) After 3 days in sunlight: The previously covered region receives light, resumes photosynthesis, synthesises starch, and will now turn blue-black with iodine.\n\n(b) Organelle Roles:\n(i) Stomata: Regulate transpirational water loss and allow diffusion of CO₂ into the leaf and O₂ out into the air.\n(ii) Chlorophyll: Traps radiant photon energy from sunlight and transfers it to reaction centers to drive the chemical synthesis of glucose.",
+        "explanation": "Rigorous experimental verification of the absolute necessity of light for starch formation."
+    },
+    {
+        "id": "bio_ch4_la_003",
+        "source": "long_answer",
+        "type": "la",
+        "difficulty": "medium",
+        "marks": 5,
+        "topic": "Physiological Roles of Leaves",
+        "question": "Explain the major physiological roles of leaves in higher plants.",
+        "answer": "Leaves are specialized vegetative organs that perform four vital physiological functions:\n1. Photosynthesis: Primary site for food production. Possess broad laminae and abundant chloroplast-rich palisade mesophyll to maximize sunlight capture and carbon assimilation.\n2. Gaseous Exchange: Epidermal stomatal pores enable intake of CO₂ and release of O₂ during the day for photosynthesis, and oxygen intake for cellular respiration day and night.\n3. Transpiration: Controlled evaporation of water vapour through stomata generates negative hydrostatic tension (transpirational pull) that drives the ascent of water and mineral ions from roots, while providing evaporative cooling.\n4. Vegetative Reproduction and Storage: In certain species (e.g., *Bryophyllum*), leaves develop epiphyllous adventitious buds for vegetative propagation; in fleshy leaves (e.g., onion, aloe), they store water and reserve food.",
+        "explanation": "Leaves serve as photosynthetic solar collectors, transpirational cooling pumps, and gas exchangers."
+    },
+    {
+        "id": "bio_ch4_la_004",
+        "source": "long_answer",
+        "type": "la",
+        "difficulty": "hard",
+        "marks": 5,
+        "topic": "Colorimetric Bicarbonate Gas Dynamics",
+        "question": "Three identical sealed test tubes containing bicarbonate indicator solution (Red at equilibrium, Yellow at high CO₂, Purple at low CO₂) are placed in bright sunlight:\nTube A contains pond weed (Hydrilla).\nTube B contains a freshwater snail.\nTube C contains both pond weed and a freshwater snail.\nPredict, explain, and justify the color change in each tube after 4 hours.",
+        "answer": "1. Tube A (Pond weed in light):\n- Result: Turns Purple.\n- Justification: In bright sunlight, the photosynthetic rate of the pond weed is 10 to 20 times faster than its respiration rate. It absorbs dissolved CO₂ rapidly from the solution, lowering CO₂ levels below normal atmospheric equilibrium, raising pH, and turning the bicarbonate indicator purple.\n\n2. Tube B (Freshwater snail in light):\n- Result: Turns Yellow.\n- Justification: The snail is a heterotroph that carries out cellular respiration continuously and cannot photosynthesize. It consumes O₂ and releases CO₂. The accumulated CO₂ dissolves to form carbonic acid, lowering the pH and turning the indicator yellow.\n\n3. Tube C (Pond weed + Freshwater snail in light):\n- Result: Stays Red.\n- Justification: Dynamic gaseous equilibrium is established. The carbon dioxide released by snail respiration is utilized by the illuminated pond weed for photosynthesis, while the oxygen evolved by the plant supports snail respiration. The net CO₂ concentration remains balanced at normal atmospheric levels, keeping the indicator red.",
+        "explanation": "Demonstrates the reciprocal ecological balance of CO₂ and O₂ between autotrophs and heterotrophs.",
+        "diagram_slot": {
+            "status": "pending",
+            "image_path": None,
+            "book_page": None,
+            "source_hint": "Bicarbonate Three-Tube Colorimetric Setup",
+            "description": "Three illuminated tubes containing bicarbonate indicator: Tube A (Hydrilla, purple), Tube B (snail, yellow), Tube C (Hydrilla+snail, red)."
+        }
+    },
+    {
+        "id": "bio_ch4_la_005",
+        "source": "long_answer",
+        "type": "la",
+        "difficulty": "medium",
+        "marks": 5,
+        "topic": "Experimental Protocol for Starch Storage",
+        "question": "Provide a detailed experimental procedure with scientific precautions to prove that food manufactured during photosynthesis is stored as starch in green leaves.",
+        "answer": "Experimental Protocol:\n1. Solar Exposure: Pluck a healthy green leaf from a potted plant that has been exposed to bright sunlight for at least 4 to 6 hours.\n2. Cell Termination: Place the leaf in a beaker of boiling water for 5 to 10 minutes. This softens the cell walls, arrests all enzyme activity, and permeabilizes the plasma membranes.\n3. Decolorization (Chlorophyll Extraction): Transfer the boiled leaf into a test tube containing 95% ethanol. Place this test tube into a boiling water bath. Continue boiling gently until the ethanol turns emerald green and the leaf becomes completely bleached white.\n4. Rehydration: Carefully lift the brittle, bleached leaf with forceps and dip it briefly into a beaker of lukewarm water to soften it.\n5. Iodine Application: Spread the softened leaf flat in a white petri dish and add drops of dilute iodine solution across its surface.\n6. Observation & Conclusion: The leaf immediately develops an intense blue-black colouration. This proves conclusively that excess glucose produced by photosynthesis is converted and stored as insoluble starch.\n\nKey Precautions:\n- Ethanol is highly flammable; never heat it directly over a naked flame; always use a water bath.\n- Do not over-boil the leaf in water to prevent complete tissue disintegration.",
+        "explanation": "Standard 5-step diagnostic assay demonstrating starch storage in photosynthetic tissues."
+    },
+
+    # =========================================================================
+    # PART 13: CASE BASED QUESTIONS (25 Items: 5 Cases x 5 Questions)
+    # =========================================================================
+    # CASE I: Photosynthesis Equation and Components
+    {
+        "id": "bio_ch4_case_001",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case I: Photosynthesis Equation",
+        "question": "Refer to the given reaction:\nAir (A: CO₂) + Water → B: Glucose + D: Oxygen (in the presence of Sunlight and C: Chlorophyll)\nWhich component provides green colour to plants?",
+        "options": ["(a) C (Chlorophyll)", "(b) A (CO₂)", "(c) B (Glucose)", "(d) D (Oxygen)"],
+        "answer": "(a) C (Chlorophyll)",
+        "explanation": "Chlorophyll (C) is the green pigment in chloroplasts that absorbs sunlight and reflects green wavelengths."
+    },
+    {
+        "id": "bio_ch4_case_002",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case I: Photosynthesis Equation",
+        "question": "B is the primary product of photosynthesis. What is B?",
+        "options": ["(a) Starch", "(b) Glucose", "(c) Cellulose", "(d) Protein"],
+        "answer": "(b) Glucose",
+        "explanation": "The immediate hexose carbohydrate synthesized during photosynthesis is glucose (B)."
+    },
+    {
+        "id": "bio_ch4_case_003",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case I: Photosynthesis Equation",
+        "question": "D in the equation represents:",
+        "options": ["(a) Carbon dioxide", "(b) Nitrogen", "(c) Oxygen", "(d) Hydrogen"],
+        "answer": "(c) Oxygen",
+        "explanation": "Oxygen (D) is evolved as a vital by-product from the photolysis of water."
+    },
+    {
+        "id": "bio_ch4_case_004",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case I: Photosynthesis Equation",
+        "question": "Which of the following is essential raw material for photosynthesis?",
+        "options": ["(a) Carbon dioxide", "(b) Oxygen", "(c) Water", "(d) Both (a) and (c)"],
+        "answer": "(d) Both (a) and (c)",
+        "explanation": "Photosynthesis requires both carbon dioxide (A) and water as inorganic raw materials."
+    },
+    {
+        "id": "bio_ch4_case_005",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Case I: Photosynthesis Equation",
+        "question": "Which statement regarding the equation is incorrect?",
+        "options": [
+            "(a) A is absorbed through leaf stomata.",
+            "(b) Water is absorbed by roots from soil.",
+            "(c) D is released through stomata.",
+            "(d) B ultimately gets converted into glucose."
+        ],
+        "answer": "(d) B ultimately gets converted into glucose.",
+        "explanation": "B is already glucose; it ultimately gets polymerized into starch for storage."
+    },
+
+    # CASE II: Starch and Light Screen Experiment
+    {
+        "id": "bio_ch4_case_006",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Case II: Starch Experiment",
+        "question": "Why was the potted plant kept in total darkness for two days before beginning the experiment?",
+        "options": [
+            "(a) To kill leaf pests",
+            "(b) To soften the cell walls",
+            "(c) To remove stored starch from leaves (destarching)",
+            "(d) To absorb more water"
+        ],
+        "answer": "(c) To remove stored starch from leaves (destarching)",
+        "explanation": "Keeping the plant in darkness for 48 hours halts photosynthesis, allowing the plant to mobilize and consume all pre-existing leaf starch."
+    },
+    {
+        "id": "bio_ch4_case_007",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case II: Starch Experiment",
+        "question": "What was the purpose of covering a part of the leaf with black paper?",
+        "options": [
+            "(a) To prevent dust from settling",
+            "(b) To test whether sunlight is necessary for photosynthesis",
+            "(c) To protect the leaf from heat",
+            "(d) To increase chlorophyll production"
+        ],
+        "answer": "(b) To test whether sunlight is necessary for photosynthesis",
+        "explanation": "The black paper creates a light-deprived control zone on the same leaf."
+    },
+    {
+        "id": "bio_ch4_case_008",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case II: Starch Experiment",
+        "question": "Why was the leaf boiled in alcohol (ethanol) over a water bath?",
+        "options": [
+            "(a) To dissolve starch",
+            "(b) To remove chlorophyll and bleach the leaf",
+            "(c) To stain the leaf blue",
+            "(d) To make the leaf waterproof"
+        ],
+        "answer": "(b) To remove chlorophyll and bleach the leaf",
+        "explanation": "Alcohol extracts green chlorophyll, making the tissue pale so that iodine staining can be clearly visualized."
+    },
+    {
+        "id": "bio_ch4_case_009",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case II: Starch Experiment",
+        "question": "What does the appearance of a blue-black colour with iodine solution indicate?",
+        "options": [
+            "(a) Presence of glucose",
+            "(b) Presence of starch",
+            "(c) Presence of protein",
+            "(d) Presence of fats"
+        ],
+        "answer": "(b) Presence of starch",
+        "explanation": "Iodine reacts specifically with starch polymers to produce a blue-black coloration."
+    },
+    {
+        "id": "bio_ch4_case_010",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Case II: Starch Experiment",
+        "question": "Why did the covered part of the leaf not turn blue-black?",
+        "options": [
+            "(a) It did not get sunlight, so no starch was formed.",
+            "(b) It did not get water.",
+            "(c) The black paper absorbed all iodine.",
+            "(d) Alcohol killed the covered cells."
+        ],
+        "answer": "(a) It did not get sunlight, so no starch was formed.",
+        "explanation": "Deprived of light photons, the shielded portion could not carry out photosynthesis and synthesise starch."
+    },
+
+    # CASE III: Vascular System
+    {
+        "id": "bio_ch4_case_011",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case III: Vascular Transport",
+        "question": "Roots absorb substance A from soil and transport it upward to leaves. What is A?",
+        "options": ["(a) Glucose", "(b) Water and minerals", "(c) Carbon dioxide", "(d) Chlorophyll"],
+        "answer": "(b) Water and minerals",
+        "explanation": "Roots absorb soil moisture containing dissolved mineral ions."
+    },
+    {
+        "id": "bio_ch4_case_012",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Case III: Vascular Transport",
+        "question": "Which option correctly identifies tissues B (transporting water upward) and C (transporting food both ways)?",
+        "options": [
+            "(a) B - Phloem, C - Xylem",
+            "(b) B - Stomata, C - Guard cells",
+            "(c) B - Xylem - Bidirectional transport",
+            "(d) C - Phloem - Bidirectional transport"
+        ],
+        "answer": "(d) C - Phloem - Bidirectional transport",
+        "explanation": "Tissue B is xylem (unidirectional upward transport of water); tissue C is phloem (bidirectional translocation of food)."
+    },
+    {
+        "id": "bio_ch4_case_013",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case III: Vascular Transport",
+        "question": "Which of the following is correct regarding glucose synthesised in leaves?",
+        "options": [
+            "(a) It is transported by xylem downward only.",
+            "(b) It is transported by phloem to all other parts of the plant.",
+            "(c) It evaporates into the air.",
+            "(d) It remains permanently in leaves without moving."
+        ],
+        "answer": "(b) It is transported by phloem to all other parts of the plant.",
+        "explanation": "Soluble photosynthate (sucrose) is translocated through phloem sieve tubes to roots, shoot tips, and storage organs."
+    },
+    {
+        "id": "bio_ch4_case_014",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case III: Vascular Transport",
+        "question": "Select the correct option regarding the function of tissue B (Xylem):",
+        "options": [
+            "(a) It transports water and dissolved minerals from roots to aerial parts.",
+            "(b) It synthesises food.",
+            "(c) It carries carbon dioxide to roots.",
+            "(d) It absorbs light."
+        ],
+        "answer": "(a) It transports water and dissolved minerals from roots to aerial parts.",
+        "explanation": "Xylem vessels conduct water and mineral ions upward from root systems."
+    },
+    {
+        "id": "bio_ch4_case_015",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Case III: Vascular Transport",
+        "question": "In which direction does transportation occur in tissue C (Phloem)?",
+        "options": [
+            "(a) Only upward direction",
+            "(b) In both upward and downward directions (bidirectional)",
+            "(c) Only downward direction",
+            "(d) Only radially inward"
+        ],
+        "answer": "(b) In both upward and downward directions (bidirectional)",
+        "explanation": "Phloem translocation is bidirectional to supply both apical growing buds and subterranean root systems."
+    },
+
+    # CASE IV: Root Aeration and Respiration
+    {
+        "id": "bio_ch4_case_016",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case IV: Root Aeration",
+        "question": "Which kind of cells in roots directly absorb soil water and dissolved oxygen from air spaces?",
+        "options": ["(a) Xylem vessels", "(b) Root hair cells", "(c) Guard cells", "(d) Sieve tubes"],
+        "answer": "(b) Root hair cells",
+        "explanation": "Root hair cells are unicellular epidermal extensions in direct contact with soil air and water films."
+    },
+    {
+        "id": "bio_ch4_case_017",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Case IV: Root Aeration",
+        "question": "Overwatering a potted plant directly impairs which of the following?",
+        "options": [
+            "(a) Root respiration (breathing)",
+            "(b) Root growth and mineral absorption",
+            "(c) Photosynthesis in flowers",
+            "(d) Both (a) and (b)"
+        ],
+        "answer": "(d) Both (a) and (b)",
+        "explanation": "Overwatering expels soil air, suffocating roots (a) and preventing ATP generation needed for growth and active mineral uptake (b)."
+    },
+    {
+        "id": "bio_ch4_case_018",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Case IV: Root Aeration",
+        "question": "Which specialized structures are present in mangrove swamp trees (Y) to take in atmospheric air?",
+        "options": [
+            "(a) Spines",
+            "(b) Tendrils",
+            "(c) Aerial breathing roots (Pneumatophores)",
+            "(d) Sieve plates"
+        ],
+        "answer": "(c) Aerial breathing roots (Pneumatophores)",
+        "explanation": "Mangroves grow in anoxic waterlogged mud and produce negative-geotropic pneumatophores studded with lenticels."
+    },
+    {
+        "id": "bio_ch4_case_019",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Case IV: Root Aeration",
+        "question": "Mangrove trees require pneumatophores because:",
+        "options": [
+            "(a) They lack leaves.",
+            "(b) They grow in swampy, waterlogged soil where soil oxygen is deficient.",
+            "(c) They do not require photosynthesis.",
+            "(d) Their stems cannot transport water."
+        ],
+        "answer": "(b) They grow in swampy, waterlogged soil where soil oxygen is deficient.",
+        "explanation": "Tidal marsh soils are saturated with brackish water and completely lack dissolved O₂."
+    },
+    {
+        "id": "bio_ch4_case_020",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case IV: Root Aeration",
+        "question": "Which functions are performed by plant root systems?",
+        "options": [
+            "(a) Absorption of water and mineral nutrients",
+            "(b) Anchorage of the plant body",
+            "(c) Storage of reserve food in certain species",
+            "(d) All of these"
+        ],
+        "answer": "(d) All of these",
+        "explanation": "Roots absorb water/nutrients, provide anchorage, and can store food (e.g., taproot modifications)."
+    },
+
+    # CASE V: Xylem Conduction Experiment
+    {
+        "id": "bio_ch4_case_021",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case V: Xylem Conduction",
+        "question": "In an experiment testing water movement, why was red ink added to tumbler B containing a leafy shoot?",
+        "options": [
+            "(a) To provide nutrients to the shoot",
+            "(b) To visually trace how water moves inside the plant",
+            "(c) To kill bacteria in water",
+            "(d) To make the petals red for decoration"
+        ],
+        "answer": "(b) To visually trace how water moves inside the plant",
+        "explanation": "The red dye acts as an inert tracer to map the internal vascular path of water ascent."
+    },
+    {
+        "id": "bio_ch4_case_022",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Case V: Xylem Conduction",
+        "question": "What does the spreading of red colour into stem nodes and leaf veins prove?",
+        "options": [
+            "(a) Food moves downward through phloem.",
+            "(b) Water moves upward through xylem.",
+            "(c) Respiration produces red colour.",
+            "(d) Chlorophyll is converted into red dye."
+        ],
+        "answer": "(b) Water moves upward through xylem",
+        "explanation": "Upward conduction of dye demonstrates the ascent of water sap through xylem conduits."
+    },
+    {
+        "id": "bio_ch4_case_023",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "easy",
+        "marks": 1,
+        "topic": "Case V: Xylem Conduction",
+        "question": "Why did the leafy shoot in tumbler A (plain water) remain unchanged in colour?",
+        "options": [
+            "(a) It stopped absorbing water.",
+            "(b) It carried out anaerobic respiration.",
+            "(c) The plain water had no coloured dye to trace its movement (control setup).",
+            "(d) The plant died immediately."
+        ],
+        "answer": "(c) The plain water had no coloured dye to trace its movement (control setup).",
+        "explanation": "Tumbler A served as the control setup with uncoloured water."
+    },
+    {
+        "id": "bio_ch4_case_024",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Case V: Xylem Conduction",
+        "question": "Under a microscope, red lines seen inside the cut transverse section of the stem represent:",
+        "options": [
+            "(a) Phloem sieve tubes",
+            "(b) Xylem vessels carrying coloured water",
+            "(c) Cortical parenchyma cells",
+            "(d) Pith cells"
+        ],
+        "answer": "(b) Xylem vessels carrying coloured water",
+        "explanation": "Only the continuous lumen and lignified secondary walls of xylem vessels are stained by the ascending dye."
+    },
+    {
+        "id": "bio_ch4_case_025",
+        "source": "case_based",
+        "type": "mcq",
+        "difficulty": "medium",
+        "marks": 1,
+        "topic": "Case V: Xylem Conduction",
+        "question": "What conclusion can be drawn from the entire balsam twig activity?",
+        "options": [
+            "(a) Water and dissolved minerals move upward through xylem vessels.",
+            "(b) Food is translocated downward through phloem.",
+            "(c) Stomata absorb water directly from air.",
+            "(d) Transpiration only occurs at night."
+        ],
+        "answer": "(a) Water and dissolved minerals move upward through xylem vessels.",
+        "explanation": "Conclusively verifies that xylem tissue functions as the upward conduit for water and mineral transport."
+    }
+]
+
+print(f"Total assessment items defined: {len(assessment_items)}")
