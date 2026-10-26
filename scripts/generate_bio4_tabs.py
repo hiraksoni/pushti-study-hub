@@ -1,12 +1,37 @@
 # -*- coding: utf-8 -*-
 """
-Tab generator functions for Biology Chapter 4: "Life Processes in Plants".
+Authoritative Tab generator functions for Biology Chapter 4: "Life Processes in Plants".
+All questions, theory, drills, match arenas, traps, and video hubs.
 """
+import re
+import json
 
 def esc(text):
     if text is None:
         return ""
     return str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+
+def check_mcq_correct(ans, opt, idx):
+    opt_letter = chr(65 + idx)
+    ans_str = str(ans).strip().lower()
+    opt_str = str(opt).strip().lower()
+    
+    if ans_str == opt_str:
+        return True
+    if ans_str == opt_letter.lower():
+        return True
+    if ans_str == f'({opt_letter.lower()})':
+        return True
+    if ans_str.startswith(f'({opt_letter.lower()})') or ans_str.startswith(f'{opt_letter.lower()}.') or ans_str.startswith(f'{opt_letter.lower()})'):
+        return True
+    clean_ans = re.sub(r'^\([a-dA-D]\)\s*|^[a-dA-D][\.\)]\s*', '', str(ans)).strip().lower()
+    clean_opt = re.sub(r'^\([a-dA-D]\)\s*|^[a-dA-D][\.\)]\s*', '', str(opt)).strip().lower()
+    if clean_ans and clean_ans == clean_opt:
+        return True
+    return False
+
+def clean_option_text(opt):
+    return re.sub(r'^\([a-dA-D]\)\s*|^[a-dA-D][\.\)]\s*', '', str(opt)).strip()
 
 def build_tab_primer():
     return """<!-- ========================================== -->
@@ -24,7 +49,7 @@ def build_tab_primer():
         Life Processes in Plants
       </h1>
       <p class="text-slate-300 text-sm md:text-base leading-relaxed max-w-3xl">
-        The master biological blueprint of terrestrial flora: the vegetative and reproductive phases of growth, 
+        The master biological blueprint of terrestrial flora: vegetative and reproductive phases of growth, 
         solar energy conversion through autotrophic photosynthesis, chloroplast ultrastructure &amp; stomatal guard cell mechanics, 
         limiting factor kinetics, unidirectional xylem sap ascent vs. bidirectional phloem translocation, 
         and plant cellular respiration across organs and diurnal day/night cycles.
@@ -1002,10 +1027,13 @@ def build_tab_textbook(subj_questions):
         marks = q.get('marks', 1 if raw_type == 'vsa' else (5 if raw_type == 'la' else 3))
         difficulty = q.get('difficulty', 'medium')
         diff_badge = 'bg-emerald-500/20 text-emerald-300' if difficulty == 'easy' else ('bg-amber-500/20 text-amber-300' if difficulty == 'medium' else 'bg-rose-500/20 text-rose-300')
-        qtext = esc(q.get('question_text', ''))
+        
+        # FIXED: Look up 'question', 'question_text', or 'text'
+        q_raw = q.get('question') or q.get('question_text') or q.get('text') or ''
+        qtext = esc(q_raw)
 
         # Categorize for pills
-        topic_lower = (topic + " " + qtext).lower()
+        topic_lower = (topic + " " + q_raw).lower()
         cat = 'general'
         if any(k in topic_lower for k in ['growth', 'pot a', 'pot b', 'pot c', 'vrikshayurveda', 'parashara', 'vegetative', 'reproductive', 'nutrition', 'autotroph', 'heterotroph']):
             cat = 'growth'
@@ -1019,7 +1047,7 @@ def build_tab_textbook(subj_questions):
             cat = 'respiration'
 
         answer = esc(q.get('answer') or q.get('model_answer') or '')
-        reasoning = esc(q.get('scientific_reasoning', ''))
+        reasoning = esc(q.get('explanation') or q.get('scientific_reasoning') or '')
         rubric = q.get('marking_rubric')
 
         diagram_slot = q.get('diagram_slot')
@@ -1070,11 +1098,11 @@ def build_tab_textbook(subj_questions):
       {diagram_html}
 
       <div class="pt-1">
-        <button onclick="toggleAnswer(this)" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-semibold transition-colors flex items-center gap-2 cursor-pointer">
+        <button onclick="toggleAnswer('ans-{qid}')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-semibold transition-colors flex items-center gap-2 cursor-pointer">
           <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
           <span>Show Verified Solution</span>
         </button>
-        <div class="answer-box hidden mt-4 p-5 rounded-2xl bg-slate-950 border border-emerald-900/40 text-slate-200 text-xs md:text-sm leading-relaxed space-y-3">
+        <div id="ans-{qid}" class="answer-box hidden mt-4 p-5 rounded-2xl bg-slate-950 border border-emerald-900/40 text-slate-200 text-xs md:text-sm leading-relaxed space-y-3">
           <div class="text-white font-medium">
             {answer.replace(chr(10), '<br>')}
           </div>
@@ -1088,7 +1116,6 @@ def build_tab_textbook(subj_questions):
     return "\n".join(html)
 
 def build_match_arena_html(arena_id, title, desc, pairs_dict, left_items, right_items):
-    import json
     pairs_json = esc(json.dumps(pairs_dict))
     
     left_html = []
@@ -1099,12 +1126,12 @@ def build_match_arena_html(arena_id, title, desc, pairs_dict, left_items, right_
              draggable="true"
              ondragstart="handleMatchDragStart(event, {arena_id}, '{k}')"
              onclick="handleMatchItemClick({arena_id}, 'left', '{k}')">
-          <div class="flex items-center gap-2.5">
+          <div class="flex items-center gap-2.5 min-w-0">
             <span class="w-7 h-7 rounded-xl bg-slate-800 text-emerald-400 font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-slate-700">{k}</span>
             <span class="text-xs text-slate-200 font-medium leading-snug">{esc(text)}</span>
           </div>
-          <div class="match-status-badge text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-slate-900 text-slate-500 border border-slate-800 shrink-0">
-            Unpaired
+          <div class="match-conn-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono font-bold flex items-center gap-1">
+            <span class="target-label"></span>
           </div>
         </div>""")
         
@@ -1117,22 +1144,25 @@ def build_match_arena_html(arena_id, title, desc, pairs_dict, left_items, right_
              ondragleave="handleMatchDragLeave(event)"
              ondrop="handleMatchDrop(event, {arena_id}, '{k}')"
              onclick="handleMatchItemClick({arena_id}, 'right', '{k}')">
-          <div class="flex items-center gap-2.5">
+          <div class="flex items-center gap-2.5 min-w-0">
             <span class="w-7 h-7 rounded-xl bg-slate-800 text-teal-400 font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-slate-700">{k}</span>
             <span class="text-xs text-slate-200 font-medium leading-snug">{esc(text)}</span>
           </div>
-          <div class="match-paired-tag hidden text-[10px] font-mono font-bold px-2 py-0.5 rounded-md bg-teal-500/20 text-teal-300 border border-teal-500/40 shrink-0">
-            Paired
+          <div class="match-socket-badge hidden shrink-0 px-2 py-0.5 rounded-md bg-teal-500/20 border border-teal-500/40 text-teal-300 text-[11px] font-mono font-bold flex items-center gap-1">
+            <span class="source-label"></span>
           </div>
         </div>""")
 
-    return f"""    <div class="match-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4 drill-card" data-type="match">
+    return f"""    <div class="drill-card p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all space-y-4" data-type="match">
       <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
         <div class="flex items-center gap-2">
           <span class="px-2.5 py-1 rounded-xl bg-purple-500/20 text-purple-300 font-mono text-xs font-bold">Interactive Arena #{arena_id}</span>
           <span class="px-2 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-[11px] font-medium">{esc(title)}</span>
         </div>
-        <span class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold">Match Columns (Drag or Click)</span>
+        <div class="flex items-center gap-2">
+          <span id="match-status-{arena_id}" class="font-mono font-bold text-amber-400 bg-amber-950/60 border border-amber-800/50 px-2.5 py-0.5 rounded-full text-[11px]">0/{len(left_items)} Paired</span>
+          <span class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold">Match Columns (Drag or Click)</span>
+        </div>
       </div>
 
       <div class="text-xs md:text-sm text-slate-300 leading-relaxed">
@@ -1167,7 +1197,7 @@ def build_match_arena_html(arena_id, title, desc, pairs_dict, left_items, right_
 
 def build_tab_drills(obj_questions):
     html = []
-    total_drills = len(obj_questions) + 4 # 4 match arenas
+    total_drills = len(obj_questions) + 4
     count_mcq = sum(1 for q in obj_questions if q.get('type') in ['mcq'])
     count_tf = sum(1 for q in obj_questions if q.get('type') in ['tf', 'true_false'])
     count_fib = sum(1 for q in obj_questions if q.get('type') in ['fib', 'fill_in_the_blank'])
@@ -1233,7 +1263,7 @@ def build_tab_drills(obj_questions):
   <div class="space-y-4" id="drillsCardsContainer">
 """)
 
-    # Append 4 Match Arenas
+    # 4 Match Arenas
     arenas = [
         (1, "Plant Cell Organelles & Cellular Roles", "Match each organelle/structure with its precise biochemical or physiological role in plant cells.",
          {"I": "C", "II": "A", "III": "D", "IV": "B", "V": "E"},
@@ -1259,7 +1289,7 @@ def build_tab_drills(obj_questions):
     for a_id, a_title, a_desc, a_pairs, a_left, a_right in arenas:
         html.append(build_match_arena_html(a_id, a_title, a_desc, a_pairs, a_left, a_right))
 
-    # Append all objective questions
+    # All objective questions
     for idx, q in enumerate(obj_questions, 5):
         qid = q.get('id', f'oq_{idx}')
         raw_type = q.get('type', 'mcq')
@@ -1267,10 +1297,14 @@ def build_tab_drills(obj_questions):
         topic = q.get('topic', 'Plant Physiology')
         diff = q.get('difficulty', 'medium')
         diff_badge = 'bg-emerald-500/20 text-emerald-300' if diff == 'easy' else ('bg-amber-500/20 text-amber-300' if diff == 'medium' else 'bg-rose-500/20 text-rose-300')
-        qtext = esc(q.get('question_text', ''))
+        
+        # FIXED: Look up 'question', 'question_text', or 'text'
+        q_raw = q.get('question') or q.get('question_text') or q.get('text') or ''
+        qtext = esc(q_raw)
+
         options = q.get('options', [])
         answer = q.get('answer', '')
-        explanation = esc(q.get('explanation', '') or q.get('scientific_reasoning', '') or f"The correct answer is {answer}.")
+        explanation = esc(q.get('explanation') or q.get('scientific_reasoning') or f"The correct answer is {answer}.")
 
         diagram_slot = q.get('diagram_slot')
         diagram_html = ""
@@ -1289,11 +1323,11 @@ def build_tab_drills(obj_questions):
         if qtype == 'mcq' or qtype == 'assertion_reason':
             for opt_idx, opt in enumerate(options):
                 opt_letter = chr(65 + opt_idx)
-                opt_text = esc(opt)
-                is_correct = "true" if (str(answer).strip().upper() == opt_letter or str(answer).strip() == opt) else "false"
+                opt_clean = clean_option_text(opt)
+                is_correct = "true" if check_mcq_correct(answer, opt, opt_idx) else "false"
                 opts_html.append(f"""          <button onclick="handleDrillClick(this, {is_correct}, '{explanation}')" class="w-full text-left p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-800/60 transition-all flex items-start gap-3 cursor-pointer group select-none">
             <span class="w-7 h-7 rounded-xl bg-slate-900 group-hover:bg-emerald-500/20 text-slate-400 group-hover:text-emerald-300 font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-slate-800 transition-colors">{opt_letter}</span>
-            <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors leading-relaxed pt-0.5">{opt_text}</span>
+            <span class="text-xs md:text-sm text-slate-300 group-hover:text-white transition-colors leading-relaxed pt-0.5">{esc(opt_clean)}</span>
           </button>""")
         elif qtype == 'tf':
             for opt in ['True', 'False']:
@@ -1518,7 +1552,7 @@ def build_flashcards_html():
 
     cards_html = []
     for idx, (title, front, back) in enumerate(flashcards_data, 1):
-        card = f"""      <div class="flashcard-3d h-56 cursor-pointer select-none" onclick="flipFlashcard(this)">
+        card = f"""      <div class="flashcard-3d h-56 cursor-pointer select-none" onclick="this.classList.toggle('flipped'); flipFlashcard(this)">
         <div class="flashcard-inner relative w-full h-full transition-transform duration-500 transform-gpu">
           <!-- Front -->
           <div class="flashcard-front absolute inset-0 p-5 rounded-2xl bg-slate-950 border border-slate-800 hover:border-emerald-500/50 flex flex-col justify-between transition-colors shadow-lg">

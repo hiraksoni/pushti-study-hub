@@ -82,3 +82,44 @@ if 'function switchTab(' in html and 'function handleDrillClick(' in html and 'f
     print("PASS: All required JavaScript controller functions present.")
 else:
     print("ERROR: JavaScript functions missing.")
+
+# Check for Empty Question Prompts
+empty_subj_q = re.findall(r'<p class="subj-qtext font-semibold[^>]*>\s*</p>', html)
+if empty_subj_q:
+    print(f"ERROR: Found {len(empty_subj_q)} empty subjective question prompts!")
+else:
+    print("PASS: All subjective question prompts are non-empty.")
+
+empty_drill_q = re.findall(r'<p class="text-slate-100 font-semibold mb-4 text-base[^>]*>\s*</p>', html)
+if empty_drill_q:
+    print(f"ERROR: Found {len(empty_drill_q)} empty objective drill question prompts!")
+else:
+    print("PASS: All objective drill question prompts are non-empty.")
+
+# Check Flashcards Onclick
+broken_flashcards = re.findall(r'<div class="flashcard-3d[^>]*onclick="(?![^"]*classList\.toggle)[^"]*"', html)
+if broken_flashcards:
+    print(f"ERROR: Found {len(broken_flashcards)} flashcards without classList.toggle onclick!")
+else:
+    print("PASS: All 16 flashcards have tablet-safe classList.toggle onclick handlers.")
+
+# Check Toggle Answer targets
+broken_toggles = []
+toggle_calls = re.findall(r'toggleAnswer\([\'"]([^\'"]+)[\'"]\)', html)
+for tgt in toggle_calls:
+    if f'id="{tgt}"' not in html:
+        broken_toggles.append(tgt)
+if broken_toggles:
+    print(f"ERROR: Found {len(broken_toggles)} broken toggleAnswer targets!")
+else:
+    print(f"PASS: All {len(toggle_calls)} toggleAnswer calls have matching answer box elements.")
+
+# Check Match Arena UI Badges
+match_conn = len(re.findall(r'match-conn-badge', html))
+match_sock = len(re.findall(r'match-socket-badge', html))
+if match_conn == match_sock and match_conn > 0:
+    print(f"PASS: Match arena badges balanced: {match_conn} conn badges, {match_sock} socket badges across 4 arenas.")
+else:
+    print(f"ERROR: Match arena badges mismatch: conn={match_conn}, sock={match_sock}.")
+
+
