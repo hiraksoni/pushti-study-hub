@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pushti's Super-Memory Academy | All-In-One Master Hub</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    /* Prevent entire window from scrolling - guarantees sticky / frozen sidebar */
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #000000;
+      color: #f4f4f5;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    /* Fixed Left Sidebar */
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 280px;
+      height: 100vh;
+      background: #09090b;
+      border-right: 1px solid #18181b;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+    }
+
+    /* Hidden State */
+    #sidebar.sidebar-hidden {
+      transform: translateX(-100%);
+    }
+
+    /* Main Scrollable Viewport */
+    #main-viewport {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 280px;
+      height: 100vh;
+      overflow-y: auto;
+      background: #000000;
+      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #main-viewport.sidebar-hidden {
+      left: 0;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000000;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #27272a;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3f3f46;
+    }
+
+    /* Glows */
+    .glow-amber {
+      box-shadow: 0 0 30px -5px rgba(245, 158, 11, 0.2);
+    }
+    .glow-emerald {
+      box-shadow: 0 0 30px -5px rgba(16, 185, 129, 0.2);
+    }
+
+    /* Vertical Tab Active State */
+    .v-tab-active {
+      background: #18181b;
+      border-left: 3px solid #f59e0b;
+      color: #ffffff !important;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="bg-black text-zinc-100 antialiased select-none">
+
+  <!-- ==================== FIXED, NON-MOVING, PINNABLE / HIDEABLE SIDEBAR ==================== -->
+  <aside id="sidebar">
+    
+    <!-- Top Branding & Hide / Pin Toggle -->
+    <div>
+      <!-- Back to Pushti Study Hub link -->
+      <div class="px-3 pt-3">
+        <a href="../index.html" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900/90 hover:bg-zinc-800 text-zinc-400 hover:text-amber-400 border border-zinc-800 text-xs font-semibold transition group">
+          <span class="text-zinc-500 group-hover:text-amber-400">←</span>
+          <span>Back to Pushti Study Hub</span>
+        </a>
+      </div>
+
+      <div class="p-4 border-b border-zinc-900 flex items-center justify-between">
+        <div class="flex items-center gap-3 overflow-hidden" id="sidebarBrand">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-black text-base shrink-0">
+            🌟
+          </div>
+          <div class="truncate">
+            <div class="text-[10px] font-black tracking-widest uppercase text-amber-400">All-in-One Master Hub</div>
+            <div class="text-sm font-bold text-white truncate">Pushti's Memory Lab</div>
+          </div>
+        </div>
+        
+        <!-- Hide / Pin Toggle Button -->
+        <button onclick="toggleSidebarHide()" class="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white transition shrink-0 flex items-center gap-1 text-xs" title="Hide / Unpin Sidebar">
+          <span class="text-xs">❮</span>
+          <span class="text-[11px] font-medium hidden sm:inline">Hide</span>
+        </button>
+      </div>
+
+      <!-- Seminar Target Box -->
+      <div class="p-3 mx-3 my-3 rounded-xl bg-zinc-900/60 border border-zinc-800/80 text-xs" id="sidebarTargetBox">
+        <div class="flex items-center justify-between text-zinc-400 mb-1">
+          <span class="text-[10px] uppercase font-bold tracking-wider text-amber-400">Grand Demo Day</span>
+          <span class="text-xs font-mono font-bold text-white">Nov 2</span>
+        </div>
+        <div class="text-[11px] text-zinc-300">
+          CBSE Class 7 • Magic of Memory (Dharmesh Pithva)
+        </div>
+      </div>
+
+      <!-- Non-moving Vertical Navigation Tabs -->
+      <nav class="px-2 space-y-1 overflow-y-auto max-h-[calc(100vh-270px)]" id="verticalNav">
+        <div class="pt-1 pb-1 px-3 text-[10px] font-bold tracking-wider uppercase text-zinc-600">Core Program</div>
+        
+        <button onclick="switchTab('aha-lab')" class="v-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 transition text-left v-tab-active" data-tab="aha-lab">
+          <span class="text-base shrink-0">⚡</span>
+          <span class="truncate">1. The "Aha!" Experience Lab</span>
+        </button>
+
+        <button onclick="switchTab('techniques')" class="v-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 transition text-left" data-tab="techniques">
+          <span class="text-base shrink-0">🧩</span>
+          <span class="truncate">2. Core Techniques Decoded</span>
+        </button>
+
+        <button onclick="switchTab('practice-arena')" class="v-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 transition text-left" data-tab="practice-arena">
+          <span class="text-base shrink-0">🎮</span>
+          <span class="truncate">3. Interactive Practice Arena</span>
+        </button>
+
+        <div class="pt-3 pb-1 px-3 text-[10px] font-bold tracking-wider uppercase text-zinc-600">Class 7 School & World</div>
+
+        <button onclick="switchTab('school-vault')" class="v-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 transition text-left" data-tab="school-vault">
+          <span class="text-base shrink-0">📚</span>
+          <span class="truncate">4. Class 7 Subject Vault</span>
+        </button>
+
+        <button onclick="switchTab('world-masters')" class="v-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 transition text-left" data-tab="world-masters">
+          <span class="text-base shrink-0">🌍</span>
+          <span class="truncate">5. World Champions & Wisdom</span>
+        </button>
+
+        <button onclick="switchTab('schedule-hub')" class="v-tab-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 transition text-left" data-tab="schedule-hub">
+          <span class="text-base shrink-0">🗓️</span>
+          <span class="truncate">6. Schedule & WhatsApp Hub</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Bottom Profile Card -->
+    <div class="p-3 border-t border-zinc-900 bg-zinc-950/80 text-xs">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xs shrink-0 border border-amber-500/30">
+          P
+        </div>
+        <div class="truncate">
+          <div class="font-bold text-zinc-200 truncate">Pushti (Age 12)</div>
+          <div class="text-[11px] text-zinc-500">CBSE Class 7 • 2026</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN INDEPENDENTLY SCROLLING VIEWPORT ==================== -->
+  <main id="main-viewport">
+    
+    <!-- Floating "Open / Pin Menu" Trigger (Visible when Sidebar is Hidden) -->
+    <div id="floatingMenuBtn" class="fixed top-4 left-4 z-40 hidden">
+      <button onclick="toggleSidebarHide()" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-900/90 border border-amber-500/40 text-amber-400 hover:bg-zinc-800 text-xs font-bold shadow-lg backdrop-blur transition">
+        <span>☰</span>
+        <span>Pin / Show Menu</span>
+      </button>
+    </div>
+
+    <div class="p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto space-y-6">
+
+      <!-- Top Header Breadcrumb & Status -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-900">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold mb-1">
+            <a href="../index.html" class="text-zinc-400 hover:text-amber-400 underline decoration-zinc-700">Pushti Study Hub</a>
+            <span>•</span>
+            <span>SAVYASANCHI "MAGIC OF MEMORY"</span>
+            <span>•</span>
+            <span>OCT 26 – NOV 1</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight" id="mainSectionTitle">
+            The "Aha!" Experience Lab: Feeling the Superpower
+          </h1>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1 bg-zinc-900 border border-zinc-800 rounded-lg text-xs font-mono text-emerald-400">
+            Live & Updated
+          </span>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 1: THE AHA! EXPERIENCE LAB ==================== -->
+      <section id="content-aha-lab" class="tab-panel space-y-6">
+        <div class="bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border border-amber-500/30 rounded-2xl p-6 glow-amber">
+          <div class="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">
+            <span>💡 Overcoming the Age-12 Trap</span>
+            <span>•</span>
+            <span>Knowing vs. Experiencing</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black text-white">
+            Why Information is NOT Knowledge Without Experience
+          </h2>
+          <p class="text-sm text-zinc-400 mt-2 leading-relaxed">
+            At age 12, hearing an explanation makes you think: <em>"Oh yeah, that's simple, you just connect words. I get it."</em>
+            <br>
+            <strong>Taking information for granted without experiencing it leads to boredom!</strong> 
+            The moment you experience the electric thrill of reciting 15 words backwards without a single mistake, your brain realizes: 
+            <em>"This isn't homework. I just unlocked a cheat-code for school!"</em>
+          </p>
+        </div>
+
+        <!-- The Live 60-Second Side-by-Side Experiment -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Experiment A: Normal Way -->
+          <div class="bg-zinc-950 border border-zinc-900 rounded-2xl p-6 flex flex-col justify-between">
+            <div>
+              <span class="inline-block px-2.5 py-0.5 rounded-full bg-red-500/10 text-red-400 text-xs font-semibold mb-3">
+                EXPERIMENT A: THE "NORMAL" WAY
+              </span>
+              <h3 class="text-lg font-bold text-white">Mechanical Rote Memory</h3>
+              <p class="text-xs text-zinc-400 mt-1 mb-4">
+                Read these 10 words 3 times, then close your eyes and try to recite them:
+              </p>
+              <div class="bg-black p-4 rounded-xl border border-zinc-900 text-xs font-mono space-y-1 text-zinc-300">
+                <div>1. Brick • 2. Spoon • 3. Cloud • 4. Frog • 5. Blanket</div>
+                <div>6. Clock • 7. Tree • 8. Bottle • 9. Shoe • 10. Coin</div>
+              </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-zinc-900">
+              <div class="text-xs text-red-400 font-semibold mb-1">What Happens in the Brain?</div>
+              <p class="text-xs text-zinc-500 leading-relaxed">
+                By word #5 or #6, your working memory overflows. The brain's <strong>Deletion Filter</strong> wipes them out because plain words are boring. Reciting backwards is almost impossible.
+              </p>
+            </div>
+          </div>
+
+          <!-- Experiment B: Cartoon Director Way -->
+          <div class="bg-zinc-950 border border-emerald-500/30 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden glow-emerald">
+            <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
+            <div>
+              <span class="inline-block px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-3">
+                EXPERIMENT B: THE "CARTOON DIRECTOR" WAY
+              </span>
+              <h3 class="text-lg font-bold text-white">The V.A.K. Super-Chain</h3>
+              <p class="text-xs text-zinc-400 mt-1 mb-4">
+                Don't read words. Direct this 20-second mental movie:
+              </p>
+              <div class="bg-black p-4 rounded-xl border border-emerald-500/20 text-xs space-y-2 text-zinc-300">
+                <div>
+                  <span class="font-bold text-emerald-400">1. Brick & Spoon:</span> A giant red <strong>Brick</strong> takes a golden <strong>Spoon</strong> and digs into a fluffy white <strong>Cloud</strong>!
+                </div>
+                <div>
+                  <span class="font-bold text-emerald-400">2. Cloud & Frog:</span> Rain falls from the cloud, and a neon-green <strong>Frog</strong> jumps out with an electric guitar wrapped in a furry pink <strong>Blanket</strong>!
+                </div>
+              </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-zinc-900">
+              <div class="text-xs text-emerald-400 font-semibold mb-1">The "Aha!" Superpower:</div>
+              <p class="text-xs text-zinc-400 leading-relaxed">
+                Close your eyes. What was wrapped in the blanket? Frog! What was before frog? Cloud! You can recite backwards effortlessly! <strong>Your brain didn't get smarter — you just spoke its native language (pictures, sounds, actions).</strong>
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- WhatsApp Official Operational Secrets Box -->
+        <div class="bg-zinc-950 border border-indigo-500/30 rounded-2xl p-6">
+          <h3 class="text-base font-bold text-white mb-3 flex items-center gap-2">
+            <span>📱</span> Dharmesh Sir's Official Operational Secrets (From WhatsApp)
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <div class="p-3 bg-black rounded-xl border border-zinc-900">
+              <div class="font-bold text-indigo-400 mb-1">1. Notebook Rule</div>
+              <p class="text-zinc-400">In your notebook, write <strong>ONLY words</strong> (numbered 1 to 15). The story must stay <strong>strictly in your head</strong> as a movie!</p>
+            </div>
+            <div class="p-3 bg-black rounded-xl border border-zinc-900">
+              <div class="font-bold text-purple-400 mb-1">2. Language Freedom</div>
+              <p class="text-zinc-400">Make stories in <strong>English, Hindi, or Gujarati</strong>. Any language that makes the cartoon punchy and fun is completely valid!</p>
+            </div>
+            <div class="p-3 bg-black rounded-xl border border-zinc-900">
+              <div class="font-bold text-emerald-400 mb-1">3. Flexible Peg Anchors</div>
+              <p class="text-zinc-400">If <strong>30 = City + J</strong>, you can use <em>Jamnagar</em> or <em>Jaipur</em>. You don't have to be rigidly stuck to the printed word!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 2: CORE TECHNIQUES DECODED ==================== -->
+      <section id="content-techniques" class="tab-panel hidden space-y-6">
+        <div class="bg-zinc-950 border border-zinc-900 rounded-2xl p-6">
+          <h2 class="text-xl font-bold text-white mb-2">🧩 The 3 Core Pillars of Memory Science</h2>
+          <p class="text-sm text-zinc-400 mb-6">
+            Every technique taught in the seminar originates from 3 foundational cognitive mechanisms:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Pillar 1 -->
+            <div class="bg-black p-5 rounded-xl border border-zinc-900 flex flex-col justify-between">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-bold text-lg mb-3">1</div>
+                <h3 class="text-base font-bold text-white">The Peg System</h3>
+                <p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                  <strong>What it is:</strong> A mental filing cabinet with 100 numbered hooks. You don't memorize numbers; you hang facts onto pre-existing visual anchors.
+                </p>
+                <div class="mt-3 p-3 bg-zinc-950 rounded-lg border border-zinc-800 text-xs text-zinc-300">
+                  <span class="font-semibold text-indigo-400">The Coordinate Code:</span><br>
+                  Tens Digit = Category (0–9)<br>
+                  Units Digit = Alphabet Position (1–0 / A–J)
+                </div>
+              </div>
+              <div class="mt-4 text-xs font-semibold text-indigo-400">Formula: Tens = Category, Units = Letter</div>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="bg-black p-5 rounded-xl border border-zinc-900 flex flex-col justify-between">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold text-lg mb-3">2</div>
+                <h3 class="text-base font-bold text-white">The Linking Story Method</h3>
+                <p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                  <strong>What it is:</strong> A chain-reaction memory system. Instead of remembering 15 separate words, you only remember how Word A causes an explosion with Word B.
+                </p>
+                <div class="mt-3 p-3 bg-zinc-950 rounded-lg border border-zinc-800 text-xs text-zinc-300">
+                  <span class="font-semibold text-purple-400">The C.R.A.Z.Y. Rule:</span><br>
+                  • <strong>C</strong>olossal Size (huge/tiny)<br>
+                  • <strong>R</strong>idiculous Action (explosions)<br>
+                  • <strong>A</strong>ction verbs (moving, crashing)<br>
+                  • <strong>Z</strong>ap senses (VAK sounds/smells)<br>
+                  • <strong>Y</strong>ou are in the scene!
+                </div>
+              </div>
+              <div class="mt-4 text-xs font-semibold text-purple-400">Rule: Link only pairs (1 to 2, 2 to 3)</div>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="bg-black p-5 rounded-xl border border-zinc-900 flex flex-col justify-between">
+              <div>
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-lg mb-3">3</div>
+                <h3 class="text-base font-bold text-white">Active Recall & Index System</h3>
+                <p class="text-xs text-zinc-400 mt-2 leading-relaxed">
+                  <strong>What it is:</strong> Pages 1 to 50 index linking for Class 7. Anchors Lesson Number, Lesson Name, and Starting Page Number into permanent memory.
+                </p>
+                <div class="mt-3 p-3 bg-zinc-950 rounded-lg border border-zinc-800 text-xs text-zinc-300">
+                  <span class="font-semibold text-emerald-400">Index System Target:</span><br>
+                  • Lesson # $\rightarrow$ Lesson Name<br>
+                  • Lesson Name $\rightarrow$ Starting Page #
+                </div>
+              </div>
+              <div class="mt-4 text-xs font-semibold text-emerald-400">Law: Retrieval builds permanent synapses</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- The 100-Peg Matrix Interactive Reference -->
+        <div class="bg-zinc-950 border border-zinc-900 rounded-2xl p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+            <div>
+              <h3 class="text-base font-bold text-white">🗺️ The "Magic Table" 100-Peg Reference Map</h3>
+              <p class="text-xs text-zinc-400">Tens Digit = Category • Units Digit = Letter (1=A to 0=J)</p>
+            </div>
+            <div class="text-xs font-mono px-3 py-1 bg-black rounded-lg border border-zinc-800 text-amber-400">
+              Formula: [Category] + [Letter] = [Peg Word]
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead>
+                <tr class="border-b border-zinc-900 bg-black">
+                  <th class="p-2 font-bold text-amber-400">Row (Category)</th>
+                  <th class="p-2 text-center font-bold">A (1)</th>
+                  <th class="p-2 text-center font-bold">B (2)</th>
+                  <th class="p-2 text-center font-bold">C (3)</th>
+                  <th class="p-2 text-center font-bold">D (4)</th>
+                  <th class="p-2 text-center font-bold">E (5)</th>
+                  <th class="p-2 text-center font-bold">F (6)</th>
+                  <th class="p-2 text-center font-bold">G (7)</th>
+                  <th class="p-2 text-center font-bold">H (8)</th>
+                  <th class="p-2 text-center font-bold">I (9)</th>
+                  <th class="p-2 text-center font-bold">J (0)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-zinc-900 font-mono">
+                <tr class="hover:bg-zinc-900/50 transition"><td class="p-2 font-semibold text-amber-400 whitespace-nowrap">0: Actor/Boy</td><td class="p-2 text-center">01: Akshay</td><td class="p-2 text-center">02: Boby</td><td class="p-2 text-center">03: Chunky</td><td class="p-2 text-center">04: Dharmendra</td><td class="p-2 text-center">05: Emraan</td><td class="p-2 text-center">06: Farhan</td><td class="p-2 text-center">07: Govinda</td><td class="p-2 text-center">08: Hrithik</td><td class="p-2 text-center">09: Imran</td><td class="p-2 text-center">00: John</td></tr>
+                <tr class="hover:bg-zinc-900/50 transition"><td class="p-2 font-semibold text-amber-400 whitespace-nowrap">1: Actress/Girl</td><td class="p-2 text-center">11: Aliya</td><td class="p-2 text-center">12: Bipasa</td><td class="p-2 text-center">13: Celina</td><td class="p-2 text-center">14: Deepika</td><td class="p-2 text-center">15: Esha</td><td class="p-2 text-center">16: Farida</td><td class="p-2 text-center">17: Genelia</td><td class="p-2 text-center">18: Hema</td><td class="p-2 text-center">19: Ileana</td><td class="p-2 text-center">10: Jaya</td></tr>
+                <tr class="hover:bg-zinc-900/50 transition"><td class="p-2 font-semibold text-amber-400 whitespace-nowrap">2: Film</td><td class="p-2 text-center">21: Agneepath</td><td class="p-2 text-center">22: Bahubali</td><td class="p-2 text-center">23: Chup Chup ke</td><td class="p-2 text-center">24: Drishyam</td><td class="p-2 text-center">25: Ek Tha Tiger</td><td class="p-2 text-center">26: Fanna</td><td class="p-2 text-center">27: Gabbar</td><td class="p-2 text-center">28: Hera-Pheri</td><td class="p-2 text-center">29: Ishq</td><td class="p-2 text-center">20: Jannat</td></tr>
+                <tr class="hover:bg-zinc-900/50 transition"><td class="p-2 font-semibold text-amber-400 whitespace-nowrap">3: City</td><td class="p-2 text-center">31: Ahmedabad</td><td class="p-2 text-center">32: Banglore</td><td class="p-2 text-center">33: Chennai</td><td class="p-2 text-center">34: Delhi</td><td class="p-2 text-center">35: Ernakulam</td><td class="p-2 text-center">36: Faridabad</td><td class="p-2 text-center">37: Gandhinagar</td><td class="p-2 text-center">38: Himmatnagar</td><td class="p-2 text-center">39: Indore</td><td class="p-2 text-center">30: Jamnagar *(Jaipur)*</td></tr>
+                <tr class="hover:bg-zinc-900/50 transition"><td class="p-2 font-semibold text-amber-400 whitespace-nowrap">4: Country</td><td class="p-2 text-center">41: Argentina</td><td class="p-2 text-center">42: Bangladesh</td><td class="p-2 text-center">43: China</td><td class="p-2 text-center">44: Denmark</td><td class="p-2 text-center">45: England</td><td class="p-2 text-center">46: France</td><td class="p-2 text-center">47: Germany</td><td class="p-2 text-center">48: Holand</td><td class="p-2 text-center">49: India</td><td class="p-2 text-center">40: Japan</td></tr>
+                <tr class="hover:bg-zinc-900/50 transition"><td class="p-2 font-semibold text-amber-400 whitespace-nowrap">5: Item</td><td class="p-2 text-center">51: Axe</td><td class="p-2 text-center">52: Ball</td><td class="p-2 text-center">53: Chair</td><td class="p-2 text-center">54: Doll</td><td class="p-2 text-center">55: Engine</td><td class="p-2 text-center">56: File</td><td class="p-2 text-center">57: Glass</td><td class="p-2 text-center">58: Hat</td><td class="p-2 text-center">59: Injection</td><td class="p-2 text-center">50: Jug</td></tr>
+                <tr class="hover:bg-zinc-900/50 transition"><td class="p-2 font-semibold text-amber-400 whitespace-nowrap">6: Relation</td><td class="p-2 text-center">61: Aunty</td><td class="p-2 text-center">62: Brother</td><td class="p-2 text-center">63: Cousin</td><td class="p-2 text-center">64: Daughter</td><td class="p-2 text-center">65: Enemy</td><td class="p-2 text-center">66: Friend</td><td class="p-2 text-center">67: Grand Mother</td><td class="p-2 text-center">68: Husband</td><td class="p-2 text-center">69: In-Law</td><td class="p-2 text-center">60: Jiju</td></tr>
+                <tr class="hover:bg-zinc-900/50 transition"><td class="p-2 font-semibold text-amber-400 whitespace-nowrap">7: Food</td><td class="p-2 text-center">71: Apple</td><td class="p-2 text-center">72: Banana</td><td class="p-2 text-center">73: Cherry</td><td class="p-2 text-center">74: Dhosa</td><td class="p-2 text-center">75: Egg</td><td class="p-2 text-center">76: Faluda</td><td class="p-2 text-center">77: Grapes</td><td class="p-2 text-center">78: Hotdog</td><td class="p-2 text-center">79: Ice Cream</td><td class="p-2 text-center">70: Jalebi</td></tr>
+                <tr class="hover:bg-zinc-900/50 transition"><td class="p-2 font-semibold text-amber-400 whitespace-nowrap">8: Animal</td><td class="p-2 text-center">81: Ant</td><td class="p-2 text-center">82: Butter fly</td><td class="p-2 text-center">83: Cat</td><td class="p-2 text-center">84: Dog</td><td class="p-2 text-center">85: Elephant</td><td class="p-2 text-center">86: Fox</td><td class="p-2 text-center">87: Goat</td><td class="p-2 text-center">88: Horse</td><td class="p-2 text-center">89: ill-Fish</td><td class="p-2 text-center">80: Jackel</td></tr>
+                <tr class="hover:bg-zinc-900/50 transition"><td class="p-2 font-semibold text-amber-400 whitespace-nowrap">9: Subject</td><td class="p-2 text-center">91: Account</td><td class="p-2 text-center">92: Biology</td><td class="p-2 text-center">93: Chemistry</td><td class="p-2 text-center">94: Drawing</td><td class="p-2 text-center">95: Economics</td><td class="p-2 text-center">96: Finance</td><td class="p-2 text-center">97: Geography</td><td class="p-2 text-center">98: History</td><td class="p-2 text-center">99: I.T.</td><td class="p-2 text-center">90: Journalism</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 3: INTERACTIVE PRACTICE ARENA ==================== -->
+      <section id="content-practice-arena" class="tab-panel hidden space-y-6">
+        <!-- Game 1: Speed Peg Quiz -->
+        <div class="bg-zinc-950 border border-zinc-900 rounded-2xl p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-zinc-900">
+            <div>
+              <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold mb-1">
+                ⚡ INSTANT RECALL DRILL
+              </span>
+              <h3 class="text-lg font-bold text-white">The Magic Peg Coordinate Challenge</h3>
+              <p class="text-xs text-zinc-400">Beat the 3-second timer. Use the coordinate formula!</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="text-right">
+                <div class="text-xs text-zinc-500">Streak</div>
+                <div class="text-xl font-bold text-amber-400 font-mono" id="streakCounter">0 🔥</div>
+              </div>
+              <button onclick="generatePegQuiz()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black rounded-xl text-xs font-bold transition">
+                Next Challenge
+              </button>
+            </div>
+          </div>
+
+          <div class="py-8 flex flex-col items-center justify-center text-center">
+            <div class="text-xs uppercase tracking-widest text-zinc-500 mb-2 font-semibold" id="quizModeLabel">
+              WHAT IS THE PEG WORD FOR:
+            </div>
+            <div class="text-5xl sm:text-6xl font-black text-amber-400 font-mono tracking-tight my-2" id="quizPrompt">
+              51
+            </div>
+            <div class="text-xs text-zinc-400 mt-1 font-mono" id="quizHint">
+              Hint: Category [5] = Item • Letter [1] = A
+            </div>
+
+            <div class="mt-6 flex flex-col items-center gap-3">
+              <button onclick="revealPegAnswer()" id="revealBtn" class="px-5 py-2.5 bg-black border border-zinc-800 hover:border-amber-500 rounded-xl text-xs font-semibold text-white transition">
+                👁️ Reveal Answer
+              </button>
+              <div id="quizAnswer" class="hidden text-2xl font-bold text-emerald-400 bg-emerald-500/10 px-6 py-2 rounded-xl border border-emerald-500/20">
+                Axe!
+              </div>
+              <div class="flex gap-2 mt-2 hidden" id="feedbackBtns">
+                <button onclick="scoreQuiz(true)" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-medium">
+                  ✓ Correct!
+                </button>
+                <button onclick="scoreQuiz(false)" class="px-4 py-1.5 bg-red-600/80 hover:bg-red-700 text-white rounded-lg text-xs font-medium">
+                  ✗ Need Practice
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game 2: 15-Word Story Generator & Reverse Recaller -->
+        <div class="bg-zinc-950 border border-zinc-900 rounded-2xl p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-zinc-900">
+            <div>
+              <span class="inline-block px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-400 text-xs font-semibold mb-1">
+                🎬 CARTOON DIRECTOR LAB
+              </span>
+              <h3 class="text-lg font-bold text-white">15-Word Story Builder & Reverse Recaller</h3>
+              <p class="text-xs text-zinc-400">Remember: Write only words in notebook; the movie stays in your mind!</p>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="generateWordList('fun')" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-semibold transition">
+                Everyday Objects
+              </button>
+              <button onclick="generateWordList('science')" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold transition">
+                Class 7 Science Terms
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <div id="wordListDisplay" class="grid grid-cols-3 sm:grid-cols-5 gap-2 font-mono text-xs text-center">
+              <!-- Dynamically populated -->
+            </div>
+
+            <div class="mt-6 flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-zinc-900">
+              <div class="text-xs text-zinc-400">
+                <strong>Challenge:</strong> Recite forward (1 to 15), then backwards (15 down to 1)!
+              </div>
+              <button onclick="toggleWordsVisibility()" id="hideWordsBtn" class="px-4 py-2 bg-black border border-zinc-800 hover:border-purple-500 rounded-xl text-xs font-semibold transition">
+                🙈 Hide Words & Test Recall
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 4: CLASS 7 CBSE SUBJECT VAULT ==================== -->
+      <section id="content-school-vault" class="tab-panel hidden space-y-6">
+        <div class="bg-zinc-950 border border-zinc-900 rounded-2xl p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+            <div>
+              <h2 class="text-xl font-bold text-white">📚 CBSE Class 7 Subject Superpowers</h2>
+              <p class="text-xs text-zinc-400">Connecting Science (Pages 1–50) and History (Delhi Sultanate) directly into memory anchors</p>
+            </div>
+            <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-lg text-xs font-semibold shrink-0">
+              School Exam Ready
+            </span>
+          </div>
+
+          <!-- Module 1: Science Index Pages 1 to 50 -->
+          <div class="p-5 bg-black rounded-xl border border-zinc-900 mb-6">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-base font-bold text-indigo-400 flex items-center gap-2">
+                <span>🔬</span> Science Index: Triple-Lock Anchors (Pages 1 to 50)
+              </h3>
+              <span class="text-xs text-zinc-500 font-mono">Pegs 01–04</span>
+            </div>
+            <p class="text-xs text-zinc-400 mb-4">
+              As per Savyasanchi WhatsApp rules for Class 8 and below: Remember <strong>Lesson Number $\rightarrow$ Lesson Name $\rightarrow$ Starting Page Number</strong>!
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div class="p-3 bg-zinc-950 rounded-lg border border-zinc-800">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-bold text-white">Lesson 1: Nutrition in Plants</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono">Starts at Page 1</span>
+                </div>
+                <p class="text-zinc-400"><strong>Peg 01 (Akshay):</strong> Akshay Kumar dressed in leafy clothes standing on a gold #1 medal (Page 1) doing photosynthesis!</p>
+              </div>
+              <div class="p-3 bg-zinc-950 rounded-lg border border-zinc-800">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-bold text-white">Lesson 2: Nutrition in Animals</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono">Starts at Page 11</span>
+                </div>
+                <p class="text-zinc-400"><strong>Peg 02 (Boby):</strong> Boby Deol wrestling a tiger between goalposts of 11 (Page 11) feeding it a burger!</p>
+              </div>
+              <div class="p-3 bg-zinc-950 rounded-lg border border-zinc-800">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-bold text-white">Lesson 3: Heat</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono">Starts at Page 35</span>
+                </div>
+                <p class="text-zinc-400"><strong>Peg 03 (Chunky):</strong> Chunky Panday on a boiling stove in Ernakulam (35) holding a thermometer as steam blows!</p>
+              </div>
+              <div class="p-3 bg-zinc-950 rounded-lg border border-zinc-800">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-bold text-white">Lesson 4: Acids, Bases & Salts</span>
+                  <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono">Starts at Page 49</span>
+                </div>
+                <p class="text-zinc-400"><strong>Peg 04 (Dharmendra):</strong> Dharmendra roaring at India border (49) dipping litmus sheets into lemon acid and soap!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 2: History Delhi Sultanate 5 Dynasties -->
+          <div class="p-5 bg-black rounded-xl border border-zinc-900">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-base font-bold text-amber-400 flex items-center gap-2">
+                <span>🏛️</span> History: The 5 Delhi Sultanate Dynasties (1206–1526 AD)
+              </h3>
+              <span class="text-xs text-amber-400 font-mono">S-K-T-S-L</span>
+            </div>
+            <p class="text-xs text-zinc-400 mb-3">
+              Mnemonic Sentence: <strong>S</strong>ome <strong>K</strong>ings <strong>T</strong>hrow <strong>S</strong>weet <strong>L</strong>addoos!
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 text-xs">
+              <div class="p-3 bg-zinc-950 rounded-lg border border-cyan-500/30">
+                <span class="text-cyan-400 font-bold">1. Mamluk (Slave)</span>
+                <div class="text-[10px] text-zinc-500 font-mono">1206-1290 AD</div>
+                <p class="text-[11px] text-zinc-400 mt-1">Slave snaps glowing chains! (Qutbuddin Aibak, Razia Sultan)</p>
+              </div>
+              <div class="p-3 bg-zinc-950 rounded-lg border border-rose-500/30">
+                <span class="text-rose-400 font-bold">2. Khalji</span>
+                <div class="text-[10px] text-zinc-500 font-mono">1290-1320 AD</div>
+                <p class="text-[11px] text-zinc-400 mt-1">Splat of hot spicy <strong>Kal-Ji</strong> curry! (Alauddin Khalji's markets)</p>
+              </div>
+              <div class="p-3 bg-zinc-950 rounded-lg border border-amber-500/30">
+                <span class="text-amber-400 font-bold">3. Tughlaq</span>
+                <div class="text-[10px] text-zinc-500 font-mono">1320-1414 AD</div>
+                <p class="text-[11px] text-zinc-400 mt-1">Jumps into a giant water <strong>Tub (Tub-luck)</strong> with fake coins!</p>
+              </div>
+              <div class="p-3 bg-zinc-950 rounded-lg border border-emerald-500/30">
+                <span class="text-emerald-400 font-bold">4. Sayyid</span>
+                <div class="text-[10px] text-zinc-500 font-mono">1414-1451 AD</div>
+                <p class="text-[11px] text-zinc-400 mt-1">Saint <strong>Say-Ji</strong> bows politely! (Khizr Khan after Timur)</p>
+              </div>
+              <div class="p-3 bg-zinc-950 rounded-lg border border-purple-500/30">
+                <span class="text-purple-400 font-bold">5. Lodi</span>
+                <div class="text-[10px] text-zinc-500 font-mono">1451-1526 AD</div>
+                <p class="text-[11px] text-zinc-400 mt-1">Bowls a giant sweet <strong>Lodi (Laddoo)</strong> cannonball! (Panipat 1526)</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== TAB 5: WORLD MASTERS & DEEP WISDOM ==================== -->
+      <section id="content-world-masters" class="tab-panel hidden space-y-6">
+        <div class="bg-zinc-950 border border-zinc-900 rounded-2xl p-6">
+          <h2 class="text-xl font-bold text-white mb-2">🌍 The Global Memory Hall of Fame</h2>
+          <p class="text-sm text-zinc-400 leading-relaxed mb-6">
+            Dharmesh Pithva's seminar is rooted in a rich global tradition developed by ancient Greek philosophers, refined by World Memory Champions, and practiced by high performers globally:
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Master 1 -->
+            <div class="bg-black p-5 rounded-xl border border-zinc-900">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold">HL</div>
+                <div>
+                  <h3 class="text-sm font-bold text-white">Harry Lorayne & Jerry Lucas</h3>
+                  <p class="text-xs text-zinc-500">Authors of <em>The Memory Book</em> (Classic Masterpiece)</p>
+                </div>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed">
+                Harry Lorayne proved that anyone could memorize entire telephone directories by turning numbers into vivid cartoon pictures.
+              </p>
+              <div class="mt-3 p-3 bg-zinc-950 rounded-lg text-xs border border-zinc-800 text-zinc-300">
+                <span class="font-semibold text-amber-400">Core Lesson for Pushti:</span> "Memory is creative imagination. The more ridiculous and slapstick the action, the deeper the brain stores it."
+              </div>
+            </div>
+
+            <!-- Master 2 -->
+            <div class="bg-black p-5 rounded-xl border border-zinc-900">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">DO</div>
+                <div>
+                  <h3 class="text-sm font-bold text-white">Dominic O'Brien</h3>
+                  <p class="text-xs text-zinc-500">8-Time World Memory Champion & Author of <em>How to Develop a Perfect Memory</em></p>
+                </div>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed">
+                Dominic won the World Championship 8 times using the <strong>P.A.O. System</strong> (Person - Action - Object).
+              </p>
+              <div class="mt-3 p-3 bg-zinc-950 rounded-lg text-xs border border-zinc-800 text-zinc-300">
+                <span class="font-semibold text-blue-400">Comparison with Dharmesh Sir's Table:</span> Dharmesh Pithva’s Row 0 (Actors) and Row 5 (Items) is a simplified adaptation of Dominic's PAO system tailored for Indian students!
+              </div>
+            </div>
+
+            <!-- Master 3 -->
+            <div class="bg-black p-5 rounded-xl border border-zinc-900">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-full bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold">TB</div>
+                <div>
+                  <h3 class="text-sm font-bold text-white">Tony Buzan</h3>
+                  <p class="text-xs text-zinc-500">Inventor of <em>Mind Mapping</em> & Founder of World Memory Championships</p>
+                </div>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed">
+                Tony Buzan taught that human brains think in <strong>radiant branches, colors, and rhythms</strong>, not in boring linear bullet points.
+              </p>
+              <div class="mt-3 p-3 bg-zinc-950 rounded-lg text-xs border border-zinc-800 text-zinc-300">
+                <span class="font-semibold text-purple-400">Core Lesson for Pushti:</span> "Don't study with black and blue pens alone! Use colors, doodles, and spatial diagrams to awaken both brain hemispheres."
+              </div>
+            </div>
+
+            <!-- Master 4 -->
+            <div class="bg-black p-5 rounded-xl border border-zinc-900">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">JK</div>
+                <div>
+                  <h3 class="text-sm font-bold text-white">Jim Kwik</h3>
+                  <p class="text-xs text-zinc-500">Brain Coach to Top CEOs & Author of <em>Limitless</em></p>
+                </div>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed">
+                Jim Kwik discovered that learning is not a fixed talent, but a set of learnable habits.
+              </p>
+              <div class="mt-3 p-3 bg-zinc-950 rounded-lg text-xs border border-zinc-800 text-zinc-300">
+                <span class="font-semibold text-emerald-400">Kwik's Rule on Boredom:</span> "If knowledge isn't linked with emotion and action, it turns into apathy. Turn study topics into high-stakes rescue missions!"
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 6: SCHEDULE & WHATSAPP HUB ==================== -->
+      <section id="content-schedule-hub" class="tab-panel hidden space-y-6">
+        <div class="bg-zinc-950 border border-zinc-900 rounded-2xl p-6">
+          <h2 class="text-xl font-bold text-white mb-2">🗓️ Live Seminar Schedule & WhatsApp Alerts</h2>
+          <p class="text-xs text-zinc-400 mb-6">
+            Official timeline and direct contacts from Savyasanchi – The Life School:
+          </p>
+
+          <!-- Alerts Banner -->
+          <div class="p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs space-y-2 mb-6">
+            <div class="font-bold text-amber-400 text-sm">⚠️ CRITICAL TIME CHANGE FOR FRIDAY, 30 OCTOBER:</div>
+            <div class="text-zinc-200">
+              1. <strong>Student Training:</strong> 5:00 PM to 8:00 PM (instead of 6:30 PM).<br>
+              2. <strong>Parenting Training (For Parents):</strong> 9:00 PM to 11:00 PM at <strong>યશવંતરાય નાટ્યગૃહ (Yashvantrai Natyagruh)</strong>.
+            </div>
+          </div>
+
+          <!-- Faculty Helplines -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs mb-6">
+            <div class="p-3 bg-black rounded-xl border border-zinc-900">
+              <div class="font-bold text-white">Dharmesh Sir</div>
+              <div class="text-amber-400 font-mono mt-1">93771 17712</div>
+              <div class="text-zinc-500 font-mono">94262 49626</div>
+            </div>
+            <div class="p-3 bg-black rounded-xl border border-zinc-900">
+              <div class="font-bold text-white">Ashish Sir</div>
+              <div class="text-amber-400 font-mono mt-1">98796 78911</div>
+            </div>
+            <div class="p-3 bg-black rounded-xl border border-zinc-900">
+              <div class="font-bold text-white">Ankur Sir</div>
+              <div class="text-amber-400 font-mono mt-1">90672 79494</div>
+            </div>
+          </div>
+
+          <!-- 7-Day Timeline -->
+          <div class="space-y-2 text-xs font-mono">
+            <div class="p-2.5 bg-black rounded-lg border border-zinc-900 flex justify-between">
+              <span>Oct 26 (Day 1)</span>
+              <span class="text-zinc-400">Peg System 00-99 • 15-Word Linking • Pages 1-50 Index</span>
+              <span class="text-emerald-400">✓ Complete</span>
+            </div>
+            <div class="p-2.5 bg-black rounded-lg border border-amber-500/30 flex justify-between">
+              <span class="text-amber-400 font-bold">Oct 27 (Day 2 - Tonight)</span>
+              <span class="text-zinc-300">Step 2: Words to Picture Transition • 6:30 - 9:30 PM</span>
+              <span class="text-amber-400">⏳ In Session</span>
+            </div>
+            <div class="p-2.5 bg-black rounded-lg border border-zinc-900 flex justify-between">
+              <span>Oct 28 (Day 3)</span>
+              <span class="text-zinc-400">Complex Lists & Speed Anchors • 6:30 - 9:30 PM</span>
+              <span class="text-zinc-500">Upcoming</span>
+            </div>
+            <div class="p-2.5 bg-black rounded-lg border border-zinc-900 flex justify-between">
+              <span>Oct 29 (Day 4)</span>
+              <span class="text-zinc-400">Number Memory & Speed Drills • 6:30 - 9:30 PM</span>
+              <span class="text-zinc-500">Upcoming</span>
+            </div>
+            <div class="p-2.5 bg-black rounded-lg border border-zinc-900 flex justify-between">
+              <span>Oct 30 (Day 5)</span>
+              <span class="text-amber-400">Students 5-8 PM • Parents 9-11 PM @ Natyagruh</span>
+              <span class="text-zinc-500">Upcoming</span>
+            </div>
+            <div class="p-2.5 bg-black rounded-lg border border-zinc-900 flex justify-between">
+              <span>Oct 31 (Day 6)</span>
+              <span class="text-zinc-400">Reverse Demonstration & Stage Tricks • 6:30 - 9:30 PM</span>
+              <span class="text-zinc-500">Upcoming</span>
+            </div>
+            <div class="p-2.5 bg-black rounded-lg border border-zinc-900 flex justify-between">
+              <span>Nov 01 (Day 7)</span>
+              <span class="text-zinc-400">Final Dress Rehearsal • 6:30 - 9:30 PM</span>
+              <span class="text-zinc-500">Upcoming</span>
+            </div>
+            <div class="p-3 bg-amber-500/10 border border-amber-500/40 rounded-lg flex justify-between text-white font-bold">
+              <span>Nov 02 (DEMO DAY)</span>
+              <span>🌟 GRAND STAGE DEMO IN FRONT OF AUDIENCE</span>
+              <span class="text-amber-400">Target Milestone</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.v-tab-btn').forEach(btn => {
+        btn.classList.remove('v-tab-active');
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.classList.add('v-tab-active');
+        }
+      });
+
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.add('hidden');
+      });
+
+      const active = document.getElementById('content-' + tabId);
+      if (active) active.classList.remove('hidden');
+
+      const titles = {
+        'aha-lab': 'The "Aha!" Experience Lab: Feeling the Superpower',
+        'techniques': 'Core Techniques Decoded: The Peg System & Linking Rules',
+        'practice-arena': 'Interactive Practice Arena: Peg Drills & Story Builder',
+        'school-vault': 'CBSE Class 7 Subject Vault: Science & History Anchors',
+        'world-masters': 'World Champions & Deep Wisdom: Lorayne, Buzan, Dominic & Kwik',
+        'schedule-hub': 'Live Seminar Schedule & WhatsApp Hub'
+      };
+      if (titles[tabId]) {
+        document.getElementById('mainSectionTitle').innerText = titles[tabId];
+      }
+
+      document.getElementById('main-viewport').scrollTop = 0;
+    }
+
+    let isSidebarHidden = false;
+    function toggleSidebarHide() {
+      const sidebar = document.getElementById('sidebar');
+      const viewport = document.getElementById('main-viewport');
+      const floatingBtn = document.getElementById('floatingMenuBtn');
+
+      isSidebarHidden = !isSidebarHidden;
+
+      if (isSidebarHidden) {
+        sidebar.classList.add('sidebar-hidden');
+        viewport.classList.add('sidebar-hidden');
+        floatingBtn.classList.remove('hidden');
+      } else {
+        sidebar.classList.remove('sidebar-hidden');
+        viewport.classList.remove('sidebar-hidden');
+        floatingBtn.classList.add('hidden');
+      }
+    }
+
+    const pegDatabase = {
+      "01": "Akshay", "02": "Boby", "03": "Chunky", "04": "Dharmendra", "05": "Emraan", "06": "Farhan", "07": "Govinda", "08": "Hrithik", "09": "Imran", "00": "John",
+      "11": "Aliya", "12": "Bipasa", "13": "Celina", "14": "Deepika", "15": "Esha", "16": "Farida", "17": "Genelia", "18": "Hema", "19": "Ileana", "10": "Jaya",
+      "21": "Agneepath", "22": "Bahubali", "23": "Chup Chup ke", "24": "Drishyam", "25": "Ek Tha Tiger", "26": "Fanna", "27": "Gabbar", "28": "Hera-Pheri", "29": "Ishq", "20": "Jannat",
+      "31": "Ahmedabad", "32": "Banglore", "33": "Chennai", "34": "Delhi", "35": "Ernakulam", "36": "Faridabad", "37": "Gandhinagar", "38": "Himmatnagar", "39": "Indore", "30": "Jamnagar (or Jaipur)",
+      "41": "Argentina", "42": "Bangladesh", "43": "China", "44": "Denmark", "45": "England", "46": "France", "47": "Germany", "48": "Holand", "49": "India", "40": "Japan",
+      "51": "Axe", "52": "Ball", "53": "Chair", "54": "Doll", "55": "Engine", "56": "File", "57": "Glass", "58": "Hat", "59": "Injection", "50": "Jug",
+      "61": "Aunty", "62": "Brother", "63": "Cousin", "64": "Daughter", "65": "Enemy", "66": "Friend", "67": "Grand Mother", "68": "Husband", "69": "In-Law", "60": "Jiju",
+      "71": "Apple", "72": "Banana", "73": "Cherry", "74": "Dhosa", "75": "Egg", "76": "Faluda", "77": "Grapes", "78": "Hotdog", "79": "Ice Cream", "70": "Jalebi",
+      "81": "Ant", "82": "Butter fly", "83": "Cat", "84": "Dog", "85": "Elephant", "86": "Fox", "87": "Goat", "88": "Horse", "89": "ill-Fish", "80": "Jackel",
+      "91": "Account", "92": "Biology", "93": "Chemistry", "94": "Drawing", "95": "Economics", "96": "Finance", "97": "Geography", "98": "History", "99": "I.T.", "90": "Journalism"
+    };
+
+    const categories = ["Actor/Boy", "Actress/Girl", "Film", "City", "Country", "Item", "Relation", "Food", "Animal", "Subject"];
+    const letters = {"1":"A", "2":"B", "3":"C", "4":"D", "5":"E", "6":"F", "7":"G", "8":"H", "9":"I", "0":"J"};
+
+    let currentQuizNum = "51";
+    let streak = 0;
+
+    function generatePegQuiz() {
+      const keys = Object.keys(pegDatabase);
+      currentQuizNum = keys[Math.floor(Math.random() * keys.length)];
+      const tens = currentQuizNum[0];
+      const units = currentQuizNum[1];
+      const categoryName = categories[parseInt(tens)];
+      const letterChar = letters[units];
+
+      document.getElementById('quizPrompt').innerText = currentQuizNum;
+      document.getElementById('quizHint').innerText = `Hint: Category [${tens}] = ${categoryName} • Letter [${units}] = ${letterChar}`;
+      document.getElementById('quizAnswer').innerText = pegDatabase[currentQuizNum] + "!";
+      document.getElementById('quizAnswer').classList.add('hidden');
+      document.getElementById('revealBtn').classList.remove('hidden');
+      document.getElementById('feedbackBtns').classList.add('hidden');
+    }
+
+    function revealPegAnswer() {
+      document.getElementById('quizAnswer').classList.remove('hidden');
+      document.getElementById('revealBtn').classList.add('hidden');
+      document.getElementById('feedbackBtns').classList.remove('hidden');
+    }
+
+    function scoreQuiz(isCorrect) {
+      if (isCorrect) {
+        streak++;
+      } else {
+        streak = 0;
+      }
+      document.getElementById('streakCounter').innerText = streak + " 🔥";
+      generatePegQuiz();
+    }
+
+    const funWords = ["Bicycle", "Monkey", "Ice Cream", "Textbook", "Elephant", "Sunglasses", "Pizza", "Rocket", "Alarm Clock", "Watermelon", "Parrot", "Backpack", "Rainbow", "Guitar", "Gold Medal"];
+    const scienceWords = ["Sunlight", "Chlorophyll", "Stomata", "Amoeba", "Pseudopodia", "Thermometer", "Mercury", "Litmus Paper", "Lemon", "Baking Soda", "Rust", "Oxygen", "Stethoscope", "Blood", "Magnet"];
+    let wordsHidden = false;
+
+    function generateWordList(type) {
+      const list = (type === 'science') ? scienceWords : funWords;
+      const container = document.getElementById('wordListDisplay');
+      container.innerHTML = '';
+      wordsHidden = false;
+      document.getElementById('hideWordsBtn').innerText = "🙈 Hide Words & Test Recall";
+
+      list.forEach((word, index) => {
+        const item = document.createElement('div');
+        item.className = 'p-2.5 bg-black rounded-lg border border-zinc-800 flex flex-col items-center justify-center';
+        item.innerHTML = `<span class="text-amber-400 font-bold mb-1">#${index + 1}</span><span class="font-semibold word-text text-zinc-200">${word}</span>`;
+        container.appendChild(item);
+      });
+    }
+
+    function toggleWordsVisibility() {
+      const wordElements = document.querySelectorAll('.word-text');
+      wordsHidden = !wordsHidden;
+      wordElements.forEach(el => {
+        el.style.visibility = wordsHidden ? 'hidden' : 'visible';
+      });
+      document.getElementById('hideWordsBtn').innerText = wordsHidden ? "👁️ Reveal Words" : "🙈 Hide Words & Test Recall";
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      generatePegQuiz();
+      generateWordList('fun');
+    });
+  </script>
+</body>
+</html>
