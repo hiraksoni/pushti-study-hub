@@ -19,16 +19,14 @@
 ## 🗓️ Master Seminar Schedule & Important Alerts
 
 ```mermaid
-timeline
-    title 7-Day Training to Grand Demo Roadmap
-    Oct 26 (Day 1) : Peg Matrix (00-99) : 15-Word Linking : Index 1-50 Pages
-    Oct 27 (Day 2 - Today) : Step 2 Words to Picture : 6:30 PM - 9:30 PM
-    Oct 28 (Day 3) : Technique Expansion : 6:30 PM - 9:30 PM
-    Oct 29 (Day 4) : Speed Drills & Dates : 6:30 PM - 9:30 PM
-    Oct 30 (Day 5 - TIME CHANGE) : Student Session 5:00 PM - 8:00 PM : 👨‍👩‍👧 PARENTING SESSION 9:00 PM - 11:00 PM at Yashvantrai Natyagruh
-    Oct 31 (Day 6) : Advanced Demonstration Drills : 6:30 PM - 9:30 PM
-    Nov 01 (Day 7) : Final Dress Rehearsal : 6:30 PM - 9:30 PM
-    Nov 02 (DEMO DAY) : 🌟 LIVE STAGE PERFORMANCE : Parents & Audience Demo
+flowchart LR
+    D1["Day 1 (26 Oct)<br>Peg Matrix (00-99)<br>15-Word Linking"] --> D2["Day 2 (27 Oct)<br>A.I.R. System<br>Pages 1-20 Science"]
+    D2 --> D3["Day 3 (28 Oct)<br>Dr. Bruno 5-Step<br>S.Q. / R.Q. Highway"]
+    D3 --> D4["Day 4 (29 Oct)<br>Speed Drills<br>Historical Dates"]
+    D4 --> D5["Day 5 (30 Oct)<br>5-8 PM Session<br>9-11 PM Natyagruh"]
+    D5 --> D6["Day 6 (31 Oct)<br>Reverse Fluency<br>Stage Prep"]
+    D6 --> D7["Day 7 (01 Nov)<br>Grand Dress Rehearsal"]
+    D7 --> DEMO["🌟 DEMO DAY (02 Nov)<br>Grand Stage Performance"]
 ```
 
 > [!WARNING]
@@ -64,7 +62,7 @@ timeline
 |:---:|:---:|:---:|:---|:---:|:---|
 | **Day 1** | 26/10/2026 | 6:30 PM – 9:30 PM | • Peg System (00–99)<br>• 15-Word Linking Method<br>• Index System (Pages 1–50) | $\checkmark$ Complete | [`Day 01 26102026/Pushti_Day01_Master_Workbook.md`](file:///D:/Users/expor/Downloads/Codes/source_materials/Pushti%20Magic%20Memory/Day%2001%2026102026/Pushti_Day01_Master_Workbook.md) |
 | **Day 2** | **27/10/2026** | **6:30 PM – 9:30 PM** | • A.I.R. System (Association, Imagination, Ridiculous)<br>• Input vs Output Golden Law<br>• Inverted Triangle Registration (Pages 1–20 Science)<br>• Sherlock Holmes Observation Method | $\checkmark$ **Complete** | [`Day 02 27102026/Pushti_Day02_Master_Workbook.md`](file:///D:/Users/expor/Downloads/Codes/source_materials/Pushti%20Magic%20Memory/Day%2002%2027102026/Pushti_Day02_Master_Workbook.md) |
-| **Day 3** | 28/10/2026 | 6:30 PM – 9:30 PM | • Expansion to larger datasets & abstract terms | 📅 Upcoming | To be prepared |
+| **Day 3** | **28/10/2026** | **6:30 PM – 9:30 PM** | • Giordano Bruno 5-Step System (ડૉ. બ્રુનો સિસ્ટમ)<br>• Block System (બ્લોક સિસ્ટમ) &amp; Relational Chunking<br>• S.Q. &amp; R.Q. Two-Way Question Highway<br>• Science Pages 21–40 Addressing (Ruminants &amp; Heat) | $\checkmark$ **Complete** | [`Day 03 28102026/Pushti_Day03_Master_Workbook.md`](file:///D:/Users/expor/Downloads/Codes/source_materials/Pushti%20Magic%20Memory/Day%2003%2028102026/Pushti_Day03_Master_Workbook.md) |
 | **Day 4** | 29/10/2026 | 6:30 PM – 9:30 PM | • Speed drills, numerical memory, dates | 📅 Upcoming | To be prepared |
 | **Day 5** | **30/10/2026** | **5:00 PM – 8:00 PM** | • Multi-subject integration<br>• **Parenting Session: 9–11 PM @ Yashvantrai Natyagruh** | 📅 Upcoming | Special Friday schedule |
 | **Day 6** | 31/10/2026 | 6:30 PM – 9:30 PM | • Fluency, reverse indexing, stage tricks | 📅 Upcoming | To be prepared |
